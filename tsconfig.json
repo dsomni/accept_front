@@ -23,6 +23,7 @@
       "@utils/*": ["src/utils/*"],
       "@locale/*": ["src/locale/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/layouts/*"],
       "@styles/*": ["styles/*"]
     }
   },

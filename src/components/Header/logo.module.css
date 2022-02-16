@@ -1,0 +1,9 @@
+.logoWrapper {
+  color: inherit !important;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  font-weight: 700;
+}

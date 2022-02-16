@@ -1,0 +1,55 @@
+.burger {
+  margin: 20px;
+  position: absolute;
+  top: 0px;
+  left: 0;
+}
+.logoWrapper {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.sideBarWrapper {
+  min-width: 800px;
+}
+
+.linkWrapper {
+  display: flex;
+  flex-direction: column;
+  line-height: 19px;
+  letter-spacing: 3px;
+}
+
+.linkDiv {
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit !important;
+  margin: 30px 10%;
+  user-select: none;
+  width: fit-content;
+}
+
+.linkDiv:hover {
+  zoom: 110%;
+}
+.CityLang {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15%;
+  justify-content: flex-end;
+}
+.top {
+  width: 90%;
+  line-height: 19px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10%;
+  margin: 20px;
+  justify-content: space-between;
+}
