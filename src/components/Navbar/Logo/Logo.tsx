@@ -6,15 +6,13 @@ import { capitalize } from '@utils/capitalize';
 import Link from 'next/link';
 import styles from './logo.module.css';
 
-const Logo: FC<{ fontSize: number }> = ({ fontSize }) => {
+const Logo: FC = () => {
   const { locale } = useLocale();
   return (
-    <Link href="/about">
+    <Link href="/">
       <a className={styles.logoWrapper}>
         <Image src={logo} width={64} height={64} alt="" />
-        <div style={{ fontSize: `${fontSize}rem`, lineHeight: '37px' }}>
-          {capitalize(locale.accept)}
-        </div>
+        <div className={styles.name}>{capitalize(locale.accept)}</div>
       </a>
     </Link>
   );

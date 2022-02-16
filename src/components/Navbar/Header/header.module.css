@@ -1,16 +1,19 @@
 .link {
   text-decoration: none;
-  font-size: 1.2rem !important;
+  font-size: 1em;
   color: inherit !important;
 }
 
 .link:hover {
-  zoom: 110%;
+  background-color: rgba(20, 195, 255, 0.1);
 }
 .header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 32px 24px 32px;
+  padding: 24px 70px 24px 32px;
+}
+.paddingLinks {
+  padding: 5px 16px;
 }

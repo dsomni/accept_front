@@ -1,0 +1,40 @@
+.burger {
+  margin: 2em 1em;
+  position: absolute;
+}
+.logoWrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.linkWrapper {
+  font-size: 1.4em;
+  line-height: 2em;
+  letter-spacing: 3px;
+  padding-left: 100px;
+  padding-top: 100px;
+}
+
+.linkDiv {
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit !important;
+  font-size: 1em;
+  user-select: none;
+}
+
+.collapse {
+  margin: 0;
+}
+.drawerContent {
+  background-color: white;
+  width: 100%;
+  padding-bottom: 2em;
+}
+.noHoverLink:hover {
+  background-color: unset;
+}

@@ -4,19 +4,14 @@ import IHeaderLink from '@custom-types/IHeaderLink';
 import styles from '../header.module.css';
 import { useLocale } from '@hooks/useLocale';
 
-export const HeaderLink: FC<{ link: IHeaderLink; current: string }> = ({
+export const HeaderLink: FC<{ link: IHeaderLink; propClass?: string }> = ({
   link,
-  current,
+  propClass,
 }) => {
   const { locale } = useLocale();
   return (
     <Link href={link.href}>
-      <a
-        className={styles.link}
-        style={link.current(current) ? { fontWeight: '700' } : {}}
-      >
-        {link.text(locale)}
-      </a>
+      <a className={styles.link + ' ' + propClass}>{link.text(locale)}</a>
     </Link>
   );
 };
