@@ -26,9 +26,11 @@ export default NextAuth({
   ],
   session: {
     strategy: 'jwt',
+    maxAge: 24 * 60 * 60,
   },
   secret: 'jopa', // openssl rand -base64 32
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60,
+  theme: {
+    colorScheme: 'light', // "auto" | "dark" | "light"
+    // logo: '/public/logo.svg', // Absolute URL to image
   },
 });
