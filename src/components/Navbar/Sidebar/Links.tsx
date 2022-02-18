@@ -4,6 +4,7 @@ import { HeaderLink } from '../Header/Links/HeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import styles from './sideBar.module.css';
 import { Burger, Group } from '@mantine/core';
+import SignIn from '../SignIn/SignIn';
 
 export const Links: FC<{
   links: IHeaderLink[];
@@ -19,6 +20,7 @@ export const Links: FC<{
     <>
       <Burger className={styles.burger} opened={true} onClick={onClose} />
       <Group direction="column" className={styles.linkWrapper}>
+        <SignIn />
         {links.map((link, index) => (
           <div key={index}>
             {link.text(locale) == 'dropdown' ? (

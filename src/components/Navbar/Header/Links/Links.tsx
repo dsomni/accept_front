@@ -6,6 +6,7 @@ import { capitalize } from '@utils/capitalize';
 import CustomDropdown from '@components/CustomDropdown/CustomDropdown';
 import { useLocale } from '@hooks/useLocale';
 import styles from '../header.module.css';
+import SignIn from '@components/Navbar/SignIn/SignIn';
 
 const Links: FC<{
   links: IHeaderLink[];
@@ -28,6 +29,7 @@ const Links: FC<{
             )}
           </div>
         ))}
+        <SignIn />
       </Group>
     </div>
   );

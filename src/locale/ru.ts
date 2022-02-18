@@ -1,6 +1,8 @@
 const mainHeaderLinks = {
   main: 'главная',
   about: 'о нас',
+  signin: 'вход',
+  signout: 'выход',
   projects: 'проекты',
 };
 

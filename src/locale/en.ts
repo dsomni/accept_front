@@ -1,6 +1,8 @@
 const mainHeaderLinks = {
   main: 'main',
   about: 'about',
+  signin: 'signIn',
+  signout: 'signOut',
   projects: 'projects',
 };
 
