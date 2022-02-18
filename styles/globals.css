@@ -2,7 +2,6 @@ html,
 body {
   margin: 0 !important;
   padding: 0 !important;
-  min-width: 500px;
   font-size: 14px;
 }
 
@@ -21,7 +20,7 @@ body {
 }
 
 * {
-  font-family: 'Exo 2', sans-serif !important;
+  font-family: 'Exo 2' !important;
 }
 
 *,

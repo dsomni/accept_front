@@ -6,7 +6,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import styles from './navbar.module.css';
 
 const Navbar: FC = () => {
-  const isBreakpoint = useMediaQuery(1080);
+  const isBreakpoint = useMediaQuery(800);
   return (
     <div className={styles.wrapper}>
       {isBreakpoint ? (
