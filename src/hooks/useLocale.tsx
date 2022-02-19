@@ -52,7 +52,6 @@ export const LocaleProvider: FC = ({ children }) => {
       };
     });
   }, []);
-
   const { locale } = useRouter();
   const [value, setValue] = useState<ILocaleContext>(() => ({
     locale: locales[locale as IAvailableLang],

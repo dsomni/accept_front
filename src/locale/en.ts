@@ -12,6 +12,22 @@ const projects = {
   tournaments: 'tournaments',
 };
 
+const auth = {
+  submit: 'signIn',
+  placeholders: {
+    login: 'login',
+    password: 'password',
+  },
+  labels: {
+    login: 'login',
+    password: 'password',
+  },
+  errors: {
+    login: 'Login too short(min length 5)',
+    password: 'Password too short(min length 5)',
+  },
+};
+
 const date = {
   sunday: 'sunday',
   monday: 'monday',
@@ -43,6 +59,7 @@ const en = {
   projects,
   date,
   months,
+  auth,
 };
 
 export default en;

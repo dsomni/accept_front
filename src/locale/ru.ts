@@ -12,6 +12,22 @@ const projects = {
   tournaments: 'турниры',
 };
 
+const auth = {
+  submit: 'войти',
+  placeholders: {
+    login: 'логин',
+    password: 'пароль',
+  },
+  labels: {
+    login: 'логин',
+    password: 'пароль',
+  },
+  errors: {
+    login: 'логин короче 5 символов',
+    password: 'Пароль короче 5 символов',
+  },
+};
+
 const date = {
   sunday: 'воскресенье',
   monday: 'понедельник',
@@ -43,6 +59,7 @@ const ru = {
   projects,
   date,
   months,
+  auth,
 };
 
 export default ru;

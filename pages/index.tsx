@@ -1,16 +1,13 @@
-import { useSession } from 'next-auth/react';
+import { useUser } from '@hooks/useUser';
+import { DefaultLayout } from '@layouts/DefaultLayout';
+import { ReactElement } from 'react';
 
 function IndexPage() {
-  const { data: session, status } = useSession();
-  return (
-    <>
-      {status === 'authenticated' ? (
-        <p>Signed in as {session?.user?.name}</p>
-      ) : (
-        <p>Not authenticated</p>
-      )}
-    </>
-  );
-}
+  const { user } = useUser();
 
+  return <>{user ? <p>SignIn as {user.name}</p> : <p>Not signIn</p>}</>;
+}
+IndexPage.getLayout = (page: ReactElement) => {
+  return <DefaultLayout>{page}</DefaultLayout>;
+};
 export default IndexPage;

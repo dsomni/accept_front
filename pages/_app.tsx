@@ -1,18 +1,24 @@
 import { LocaleProvider } from '@hooks/useLocale';
-import { DefaultLayout } from '@layouts/DefaultLayout';
+import { UserProvider } from '@hooks/useUser';
 import '@styles/globals.css';
-import { SessionProvider } from 'next-auth/react';
+import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import { ReactElement, ReactNode } from 'react';
 
-function Accept({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function Accept({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
-    <SessionProvider>
-      <LocaleProvider>
-        <DefaultLayout>
-          <Component {...pageProps} />
-        </DefaultLayout>
-      </LocaleProvider>
-    </SessionProvider>
+    <UserProvider>
+      <LocaleProvider>{getLayout(<Component {...pageProps} />)}</LocaleProvider>
+    </UserProvider>
   );
 }
 

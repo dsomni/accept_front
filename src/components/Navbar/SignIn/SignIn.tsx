@@ -1,17 +1,19 @@
 import { FC, memo } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import { useLocale } from '@hooks/useLocale';
-import styles from './signIn.module.css';
 import { Button } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
+import { useUser } from '@hooks/useUser';
+import { useRouter } from 'next/router';
+import styles from './signIn.module.css';
 
 const SignIn: FC = () => {
   const { locale } = useLocale();
-  const { data: session, status } = useSession();
+  const { user, signOut } = useUser();
+  const router = useRouter();
   return (
     <>
-      {!(status === 'authenticated') ? (
-        <Button className={styles.button} onClick={() => signIn()}>
+      {!user ? (
+        <Button className={styles.button} onClick={() => router.push('/login')}>
           {capitalize(locale.mainHeaderLinks.signin)}
         </Button>
       ) : (
@@ -23,4 +25,4 @@ const SignIn: FC = () => {
   );
 };
 
-export default memo(SignIn);
+export default SignIn;

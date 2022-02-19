@@ -15,3 +15,9 @@ export interface IUser {
   gradeLetter: number | undefined;
   groupNumber: number | undefined;
 }
+
+export interface IUserContext {
+  user: IUser | undefined;
+  signIn: (login: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+}
