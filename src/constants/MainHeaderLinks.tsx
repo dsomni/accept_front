@@ -17,15 +17,15 @@ const mainLinks: IHeaderLink[] = [
 ];
 const projectLinks: IHeaderLink[] = [
   {
-    text: (locale) => capitalize(locale.projects.education),
+    text: (locale) => capitalize(locale.projects.education.title),
     href: '/edu',
   },
   {
-    text: (locale) => capitalize(locale.projects.courses),
+    text: (locale) => capitalize(locale.projects.courses.title),
     href: '/courses',
   },
   {
-    text: (locale) => capitalize(locale.projects.tournaments),
+    text: (locale) => capitalize(locale.projects.tournaments.title),
     href: '/tournaments',
   },
 ];
