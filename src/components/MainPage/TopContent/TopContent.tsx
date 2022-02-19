@@ -1,5 +1,4 @@
 import { FC, memo } from 'react';
-import Image from 'next/image';
 import { useLocale } from '@hooks/useLocale';
 import styles from './topContent.module.css';
 import { capitalize } from '@utils/capitalize';

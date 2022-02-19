@@ -29,6 +29,7 @@ The platform provides opportunities to create \
 and take various courses. You can also consolidate the theory \
 testing of practical skills',
   },
+  view: 'view',
 };
 
 const auth = {

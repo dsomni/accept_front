@@ -1,19 +1,20 @@
-import { useUser } from '@hooks/useUser';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { ReactElement } from 'react';
 import { cardList } from '@constants/CardList';
 import TopContent from '@components/MainPage/TopContent/TopContent';
+import { ProjectCard } from '@components/MainPage/ProjectCard/ProjectCard';
 
 function IndexPage() {
+  console.log(cardList);
   return (
-    <div>
+    <>
       <TopContent />
       <div>
-        {/* {cardList.map((card, index) => {
-          <ProjectCard left={index % 2} card={card} />;
-        })} */}
+        {cardList.map((card, index) => {
+          return <ProjectCard key={index} left={index % 2 == 0} card={card} />;
+        })}
       </div>
-    </div>
+    </>
   );
 }
 IndexPage.getLayout = (page: ReactElement) => {
