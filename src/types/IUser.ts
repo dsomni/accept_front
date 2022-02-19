@@ -17,7 +17,8 @@ export interface IUser {
 }
 
 export interface IUserContext {
-  user: IUser | undefined;
+  user: IUser | undefined | null;
   signIn: (login: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  refresh: () => Promise<void>;
 }

@@ -29,6 +29,14 @@ export const UserProvider: FC = ({ children }) => {
       }));
     }
   }, []);
+
+  const refresh = useCallback(async () => {
+    const res = await fetch('/api/auth/refresh');
+    if (res.status === 200) {
+      await whoAmI();
+    }
+  }, [whoAmI]);
+
   const signIn = useCallback(
     async (login: string, password: string) => {
       const res = await fetch('/api/auth/signin', {
@@ -60,9 +68,10 @@ export const UserProvider: FC = ({ children }) => {
   }, [whoAmI]);
 
   const [value, setValue] = useState<IUserContext>(() => ({
-    user: undefined,
+    user: null,
     signIn,
     signOut,
+    refresh,
   }));
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

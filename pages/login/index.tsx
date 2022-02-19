@@ -30,7 +30,7 @@ const Login: FC = () => {
 
   useEffect(() => {
     if (user) {
-      router.push('/');
+      router.push((router.query.referrer as string) || '/');
     }
   }, [user, router]);
 

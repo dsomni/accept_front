@@ -13,7 +13,17 @@ const SignIn: FC = () => {
   return (
     <>
       {!user ? (
-        <Button className={styles.button} onClick={() => router.push('/login')}>
+        <Button
+          className={styles.button}
+          onClick={() =>
+            router.push({
+              pathname: '/login',
+              query: {
+                referrer: router.asPath,
+              },
+            })
+          }
+        >
           {capitalize(locale.mainHeaderLinks.signin)}
         </Button>
       ) : (
