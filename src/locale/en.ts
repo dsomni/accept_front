@@ -73,6 +73,16 @@ const months = {
   december: 'december',
 };
 
+const pages = {
+  tasks: {
+    task: {
+      description: 'description',
+      send: 'send',
+      results: 'results',
+    },
+  },
+};
+
 const en = {
   accept: 'accept',
   mainHeaderLinks,
@@ -80,6 +90,7 @@ const en = {
   date,
   months,
   auth,
+  pages,
 };
 
 export default en;

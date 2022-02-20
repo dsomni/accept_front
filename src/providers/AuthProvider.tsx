@@ -18,8 +18,6 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     refresh().then(() => {
-      // console.log(user);
-      // console.log(router);
       if (user === undefined) {
         router.push({
           pathname: '/login',

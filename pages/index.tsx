@@ -5,7 +5,6 @@ import TopContent from '@components/MainPage/TopContent/TopContent';
 import { ProjectCard } from '@components/MainPage/ProjectCard/ProjectCard';
 
 function IndexPage() {
-  console.log(cardList);
   return (
     <>
       <TopContent />

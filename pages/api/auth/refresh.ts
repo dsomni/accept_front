@@ -13,7 +13,6 @@ export default async function refresh(
       method: 'POST',
       headers: req.headers as { [key: string]: string },
     });
-    // console.log(data, headers);
     if (response.status === 200) {
       const data = await response.json();
       res.setHeader('Set-Cookie', [

@@ -66,6 +66,16 @@ const months = {
   december: 'декабря',
 };
 
+const pages = {
+  tasks: {
+    task: {
+      description: 'Описание',
+      send: 'Отправка',
+      results: 'Результаты',
+    },
+  },
+};
+
 const ru = {
   accept: 'accept',
   mainHeaderLinks,
@@ -73,6 +83,7 @@ const ru = {
   date,
   months,
   auth,
+  pages,
 };
 
 export default ru;

@@ -112,11 +112,11 @@
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
 "@mantine/core@^3.6.7":
-  version "3.6.7"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-3.6.7.tgz#14c46e5dd9f6369aa82a8c210cf8babf4ab3e699"
-  integrity sha512-MTNMeAWLy0Da6QpZu2ARgXO9BTe8dBl8FeZVANK/IyG4LF0qyU12SpOofbu86uWeMQsylIglBKXAlcDeVdqugA==
+  version "3.6.9"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-3.6.9.tgz#7c7852c2c4076f52976f5072631ce37416dda644"
+  integrity sha512-OtRrXWKJm+uh6uPwmj8hEuUZ0tz0UEOJrAVJ8151omuDlmXCSwQ80lRuowUCtYtbWl5Hf0YZeNrJcUY4eXFceQ==
   dependencies:
-    "@mantine/styles" "3.6.7"
+    "@mantine/styles" "3.6.9"
     "@popperjs/core" "^2.9.3"
     "@radix-ui/react-scroll-area" "^0.1.1"
     clsx "^1.1.1"
@@ -140,9 +140,9 @@
     react-dropzone "^11.4.2"
 
 "@mantine/hooks@^3.6.7":
-  version "3.6.7"
-  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-3.6.7.tgz#fb5b7267e118c12f2f62130439e374893014214d"
-  integrity sha512-fcCsz0KK3JK68pCf9AEj4sB0dFJTCSdSYR14uEmv1qRis0NHayNHf2xkcwrXRm28F47rgTl4o8zwub37M/A/Xg==
+  version "3.6.9"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-3.6.9.tgz#af0af815b5c0fc91c42cbd76530a2ff4a1d8f87b"
+  integrity sha512-F3nwbph3nOrv6/zigSYqrsSdqavA5SR+8IxatGdoLjNe7w9XJxO7d557mh6/1kr9o69GY8+cUWyDJ5XYIrotYA==
 
 "@mantine/modals@^3.6.7":
   version "3.6.7"
@@ -158,9 +158,9 @@
     react-transition-group "^4.4.2"
 
 "@mantine/prism@^3.6.7":
-  version "3.6.7"
-  resolved "https://registry.yarnpkg.com/@mantine/prism/-/prism-3.6.7.tgz#05e70c28ca6f8f54b53f6bd4dfcddd0f191f5ad8"
-  integrity sha512-OjeHvq4obQrA6TuF+T9DsWfUJnANN2uhguaNrD1Ndh7K+jm7CJqY4kZ0zfXjrC+h1X0u83sh14dHceLbSll3wg==
+  version "3.6.9"
+  resolved "https://registry.yarnpkg.com/@mantine/prism/-/prism-3.6.9.tgz#7294ce4d7717fb82ccba98e24841f8e55eedf3ea"
+  integrity sha512-yAXm6hGgQv3JCCKiju7le8a5Yc3Y0wQ0XwvZfZKETDkzOuG2qw+zdJrJnMPKTmzNYyBw8n7CbY4uNj1ZjdQDVg==
   dependencies:
     clsx "^1.1.1"
     prism-react-renderer "^1.2.1"
@@ -175,10 +175,10 @@
     quill-mention "^3.0.8"
     react-quill "2.0.0-beta.4"
 
-"@mantine/styles@3.6.7":
-  version "3.6.7"
-  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-3.6.7.tgz#e27d4a81b0c1c46deca31c1c20e67732198a0d86"
-  integrity sha512-Oh7Fx2H52BQpWjk/1mwDAlzOnGgljk5auHbXtwI61XezJMtcJNTG38Vn+xlksvC4yHaHDHOwtgKRx4ARVOwsbg==
+"@mantine/styles@3.6.9":
+  version "3.6.9"
+  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-3.6.9.tgz#b9d45900de820e40bba1cf4c40e0ff1a7ff849e6"
+  integrity sha512-gvdvEeVHeUqwb2nONWiOZ7+0ml6DPDvLFvrsmvrznjrNk+eofFWX2kCvGK8cYDgIvg8UmyTB49MFByMiL1Hq+A==
   dependencies:
     "@emotion/cache" "^11.7.1"
     "@emotion/react" "^11.7.1"
@@ -191,6 +191,21 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@modulz/radix-icons/-/radix-icons-4.0.0.tgz#628a7826a4569dd2e3331e266d8d2e26c7d6753c"
   integrity sha512-d79T4cYvMGMocVC/q1WiMO578FPFfUoxmXIkduc8cUQAPDr7thuEV5HrCHhqqqkoVaYD0QPct180ilcNUyGPrg==
+
+"@monaco-editor/loader@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/loader/-/loader-1.2.0.tgz#373fad69973384624e3d9b60eefd786461a76acd"
+  integrity sha512-cJVCG/T/KxXgzYnjKqyAgsKDbH9mGLjcXxN6AmwumBwa2rVFkwvGcUj1RJtD0ko4XqLqJxwqsN/Z/KURB5f1OQ==
+  dependencies:
+    state-local "^1.0.6"
+
+"@monaco-editor/react@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/react/-/react-4.3.1.tgz#d65bcbf174c39b6d4e7fec43d0cddda82b70a12a"
+  integrity sha512-f+0BK1PP/W5I50hHHmwf11+Ea92E5H1VZXs+wvKplWUWOfyMa1VVwqkJrXjRvbcqHL+XdIGYWhWNdi4McEvnZg==
+  dependencies:
+    "@monaco-editor/loader" "^1.2.0"
+    prop-types "^15.7.2"
 
 "@next/env@12.0.10":
   version "12.0.10"
@@ -1939,6 +1954,11 @@ source-map-js@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
+
+state-local@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/state-local/-/state-local-1.0.7.tgz#da50211d07f05748d53009bee46307a37db386d5"
+  integrity sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==
 
 string.prototype.matchall@^4.0.6:
   version "4.0.6"
