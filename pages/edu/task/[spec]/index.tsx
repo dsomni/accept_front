@@ -13,7 +13,7 @@ function Task(props: { task: ITaskDisplay }) {
   return (
     <TaskLayout
       description={<TaskDescription task={task} />}
-      send={<TaskSend />}
+      send={<TaskSend spec={task.spec} />}
       results={<TaskResults />}
     />
   );

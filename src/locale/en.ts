@@ -80,6 +80,11 @@ const pages = {
       send: 'send',
       results: 'results',
     },
+    status: {
+      error: 'Error on task submit',
+      ok: 'Attempt successfully submited',
+    },
+    submit: 'submit',
   },
 };
 
