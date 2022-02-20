@@ -69,11 +69,7 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
       <div className={styles.notification}>
         <Notify answer={answer} error={error} setAnswer={setAnswer} />
       </div>
-      <Select
-        data={languages}
-        value={lang}
-        onChange={(e) => setLang(e.target.value)}
-      />
+      <Select data={languages} value={lang} onChange={(e) => setLang(e.target.value)} />
       <Textarea
         placeholder="your code here"
         onChange={(e) => setCode(e.target.value)}
@@ -90,11 +86,7 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
         // onReject={(files) => console.log('rejected files', files[0])}
       >
         {(status) => (
-          <Group
-            position="center"
-            spacing="xl"
-            style={{ minHeight: 220, pointerEvents: 'none' }}
-          >
+          <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
             <ImageUploadIcon
               status={status}
               style={{
@@ -109,8 +101,7 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
                 Drag images here or click to select files
               </Text>
               <Text size="sm" color="dimmed" inline mt={7}>
-                Attach as many files as you like, each file should not exceed
-                5mb
+                Attach as many files as you like, each file should not exceed 5mb
               </Text>
             </div>
           </Group>
@@ -122,7 +113,8 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
 
 export default memo(TaskSend);
 
-function ImageUploadIcon({ status, ...props }) {
+function ImageUploadIcon({ ...props }) {
+  const status = props.status;
   if (status.accepted) {
     return <UploadIcon {...props} />;
   }
