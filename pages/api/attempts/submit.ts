@@ -3,15 +3,12 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/attempt';
 
-export default async function ListTasks(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  // console.log(req.body);
+export default async function Attempt(req: NextApiRequest, res: NextApiResponse) {
   const response = await fetch(`${url}`, {
     method: 'POST',
+    credentials: 'include',
     body: req.body,
-    headers: req.headers as { [key: string]: string },
+    headers: { 'content-type': 'application/json' },
   });
   const status = response.status;
   const data = await response.json();

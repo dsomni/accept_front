@@ -14,19 +14,11 @@ const Notify: FC<{
     <>
       {answer &&
         (error ? (
-          <Notification
-            icon={<Cross1Icon />}
-            color="red"
-            onClose={() => setAnswer(false)}
-          >
+          <Notification icon={<Cross1Icon />} color="red" onClose={() => setAnswer(false)}>
             {locale.pages.tasks.status.error}
           </Notification>
         ) : (
-          <Notification
-            icon={<CheckIcon />}
-            color="red"
-            onClose={() => setAnswer(false)}
-          >
+          <Notification icon={<CheckIcon />} color="green" onClose={() => setAnswer(false)}>
             {locale.pages.tasks.status.ok}
           </Notification>
         ))}

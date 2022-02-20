@@ -7,6 +7,7 @@ import TaskSend from '@components/Task/TaskSend';
 import TaskResults from '@components/Task/TaskResults';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { env } from 'process';
+import { getServerUrl } from '@utils/getServerUrl';
 
 function Task(props: { task: ITaskDisplay }) {
   const task = props.task;
@@ -25,10 +26,7 @@ Task.getLayout = (page: ReactNode) => {
 
 export default Task;
 
-const SERVER_URL =
-  env.NODE_ENV === 'production'
-    ? 'https://produrl.com'
-    : 'http://localhost:8080';
+const SERVER_URL = getServerUrl();
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params || typeof params?.spec !== 'string') {
@@ -48,7 +46,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         task,
       },
-      revalidate: 30 * 60,
     };
   }
   return {
