@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  width: 70vw;
+  margin: 50px 15vw 0 15vw;
+}
+.example {
+  display: flex;
+  flex-direction: row;
+  gap: 2vw;
+  width: 100%;
+}
+.exampleInput {
+  width: 34vw;
+}

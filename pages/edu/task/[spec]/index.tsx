@@ -1,12 +1,11 @@
 import TaskDescription from '@components/Task/TaskDescription';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { memo, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ITaskDisplay } from '@custom-types/ITask';
 import TaskSend from '@components/Task/TaskSend';
 import TaskResults from '@components/Task/TaskResults';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { env } from 'process';
 import { getServerUrl } from '@utils/getServerUrl';
 
 function Task(props: { task: ITaskDisplay }) {

@@ -79,6 +79,34 @@ const pages = {
       send: 'Отправка',
       results: 'Результаты',
     },
+    add: {
+      steps: {
+        first: {
+          label: 'шаг первый',
+          description: 'основная информация о задаче',
+        },
+        second: {
+          label: 'шаг второй',
+          description: 'тип задачи и примеры',
+        },
+        third: {
+          label: 'шаг третий',
+          description: 'тесты или чекер',
+        },
+        fourth: {
+          label: 'шаг четвёртый',
+          description: 'предпросмотр',
+        },
+      },
+      title: 'название',
+      description: 'описание',
+      inputFormat: 'входные данные',
+      outputFormat: 'выходные данные',
+      inputExample: 'пример входных данных',
+      outputExample: 'пример выходных данных',
+      grade: 'класс',
+      isChecker: 'чекер',
+    },
     status: {
       error: 'Ошибка при отправке',
       ok: 'Попытка успешно отправлена',

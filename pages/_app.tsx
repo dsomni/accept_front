@@ -19,7 +19,11 @@ const SERVER_URL = getServerUrl();
 
 function getTaskSpec(url: string): string {
   const list = url.split('/');
-  if (url.startsWith('/edu/task') && list.length == 4 && list[3].length > 6) {
+  if (
+    url.startsWith('/edu/task') &&
+    list.length == 4 &&
+    list[3].length > 6
+  ) {
     return list[3];
   }
   return '';
@@ -30,23 +34,27 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on('beforeHistoryChange', async (url, { shallow }) => {
-      console.log(url);
-      const task_spec = getTaskSpec(url);
-      // has spec
-      if (task_spec) {
-        console.log('task', task_spec);
-        await fetch(`${SERVER_URL}/api/revalidate/task`, {
-          method: 'POST',
-          body: JSON.stringify({ spec: task_spec }),
-        });
+    router.events.on(
+      'beforeHistoryChange',
+      async (url, { shallow }) => {
+        const task_spec = getTaskSpec(url);
+        // has spec
+        if (task_spec) {
+          console.log('task', task_spec);
+          await fetch(`${SERVER_URL}/api/revalidate/task`, {
+            method: 'POST',
+            body: JSON.stringify({ spec: task_spec }),
+          });
+        }
       }
-    });
+    );
   }, [router]);
 
   return (
     <UserProvider>
-      <LocaleProvider>{getLayout(<Component {...pageProps} />)}</LocaleProvider>
+      <LocaleProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </LocaleProvider>
     </UserProvider>
   );
 }

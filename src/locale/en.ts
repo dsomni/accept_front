@@ -80,6 +80,34 @@ const pages = {
       send: 'send',
       results: 'results',
     },
+    add: {
+      steps: {
+        first: {
+          label: 'first step',
+          description: 'main task info',
+        },
+        second: {
+          label: 'second step',
+          description: 'task type and examples',
+        },
+        third: {
+          label: 'third step',
+          description: 'tests or checker',
+        },
+        fourth: {
+          label: 'fourth step',
+          description: 'preview',
+        },
+      },
+      title: 'title',
+      description: 'description',
+      inputFormat: 'input description',
+      outputFormat: 'output description',
+      inputExample: 'input example',
+      outputExample: 'output example',
+      grade: 'grade',
+      isChecker: 'checker',
+    },
     status: {
       error: 'Error on task submit',
       ok: 'Attempt successfully submited',
