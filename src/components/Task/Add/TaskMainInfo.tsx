@@ -1,5 +1,6 @@
+import CustomEditor from '@components/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
-import { NumberInput, Textarea, TextInput } from '@mantine/core';
+import { NumberInput, TextInput } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
 import styles from './mainInfo.module.css';
@@ -9,27 +10,29 @@ const TaskMainInfo: FC<{ form: any }> = ({ form }) => {
   return (
     <div className={styles.wrapper}>
       <TextInput
-        label={capitalize(locale.pages.tasks.add.title)}
+        label={capitalize(locale.tasks.add.title)}
         required
         {...form.getInputProps('title')}
       />
-      <Textarea
-        label={capitalize(locale.pages.tasks.add.description)}
-        required
+      <CustomEditor
+        label={capitalize(locale.tasks.add.description)}
+        onChange={(value) => form.setFieldValue('description', value)}
         {...form.getInputProps('description')}
       />
-      <Textarea
-        label={capitalize(locale.pages.tasks.add.inputFormat)}
-        required
+      <CustomEditor
+        label={capitalize(locale.tasks.add.inputFormat)}
+        onChange={(value) => form.setFieldValue('inputFormat', value)}
         {...form.getInputProps('inputFormat')}
       />
-      <Textarea
-        label={capitalize(locale.pages.tasks.add.outputFormat)}
-        required
+      <CustomEditor
+        label={capitalize(locale.tasks.add.outputFormat)}
+        onChange={(value) =>
+          form.setFieldValue('outputFormat', value)
+        }
         {...form.getInputProps('outputFormat')}
       />
       <NumberInput
-        label={capitalize(locale.pages.tasks.add.grade)}
+        label={capitalize(locale.tasks.add.grade)}
         required
         {...form.getInputProps('grade')}
       />

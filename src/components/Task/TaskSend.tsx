@@ -1,5 +1,14 @@
-import { Button, Group, NativeSelect as Select, Text } from '@mantine/core';
-import { ImageIcon, UploadIcon, CrossCircledIcon } from '@modulz/radix-icons';
+import {
+  Button,
+  Group,
+  NativeSelect as Select,
+  Text,
+} from '@mantine/core';
+import {
+  ImageIcon,
+  UploadIcon,
+  CrossCircledIcon,
+} from '@modulz/radix-icons';
 import { FC, memo, useCallback, useState } from 'react';
 import { Textarea } from '@mantine/core';
 import { FullScreenDropzone } from '@mantine/dropzone';
@@ -56,7 +65,9 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
 
   const onDrop = useCallback((files: File[]) => {
     if (files[0]) {
-      const language = languages.find((item) => item.type === files[0].type);
+      const language = languages.find(
+        (item) => item.type === files[0].type
+      );
       if (language) {
         setLang(language.value);
       }
@@ -69,14 +80,18 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
       <div className={styles.notification}>
         <Notify answer={answer} error={error} setAnswer={setAnswer} />
       </div>
-      <Select data={languages} value={lang} onChange={(e) => setLang(e.target.value)} />
+      <Select
+        data={languages}
+        value={lang}
+        onChange={(e) => setLang(e.target.value)}
+      />
       <Textarea
         placeholder="your code here"
         onChange={(e) => setCode(e.target.value)}
         minRows={20}
         value={code}
       />
-      <Button onClick={handleSubmit}>{locale.pages.tasks.submit}</Button>
+      <Button onClick={handleSubmit}>{locale.tasks.submit}</Button>
       <FullScreenDropzone
         disabled={false}
         accept={['', 'text/x-python', 'text/x-c++src', 'text/rust']}
@@ -86,7 +101,11 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
         // onReject={(files) => console.log('rejected files', files[0])}
       >
         {(status) => (
-          <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
+          <Group
+            position="center"
+            spacing="xl"
+            style={{ minHeight: 220, pointerEvents: 'none' }}
+          >
             <ImageUploadIcon
               status={status}
               style={{
@@ -101,7 +120,8 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
                 Drag images here or click to select files
               </Text>
               <Text size="sm" color="dimmed" inline mt={7}>
-                Attach as many files as you like, each file should not exceed 5mb
+                Attach as many files as you like, each file should not
+                exceed 5mb
               </Text>
             </div>
           </Group>

@@ -11,11 +11,11 @@ const TaskLayout: FC<{
 
   return (
     <Tabs grow style={{ width: '100%', height: '100%' }}>
-      <Tabs.Tab label={locale.pages.tasks.task.description}>
+      <Tabs.Tab label={locale.tasks.description}>
         {description}
       </Tabs.Tab>
-      <Tabs.Tab label={locale.pages.tasks.task.send}>{send}</Tabs.Tab>
-      <Tabs.Tab label={locale.pages.tasks.task.results}>{results}</Tabs.Tab>
+      <Tabs.Tab label={locale.tasks.send}>{send}</Tabs.Tab>
+      <Tabs.Tab label={locale.tasks.results}>{results}</Tabs.Tab>
     </Tabs>
   );
 };

@@ -73,47 +73,43 @@ const months = {
   december: 'december',
 };
 
-const pages = {
-  tasks: {
-    task: {
-      description: 'description',
-      send: 'send',
-      results: 'results',
-    },
-    add: {
-      steps: {
-        first: {
-          label: 'first step',
-          description: 'main task info',
-        },
-        second: {
-          label: 'second step',
-          description: 'task type and examples',
-        },
-        third: {
-          label: 'third step',
-          description: 'tests or checker',
-        },
-        fourth: {
-          label: 'fourth step',
-          description: 'preview',
-        },
+const tasks = {
+  description: 'description',
+  send: 'send',
+  results: 'results',
+  add: {
+    steps: {
+      first: {
+        label: 'first step',
+        description: 'main task info',
       },
-      title: 'title',
-      description: 'description',
-      inputFormat: 'input description',
-      outputFormat: 'output description',
-      inputExample: 'input example',
-      outputExample: 'output example',
-      grade: 'grade',
-      isChecker: 'checker',
+      second: {
+        label: 'second step',
+        description: 'task type and examples',
+      },
+      third: {
+        label: 'third step',
+        description: 'tests or checker',
+      },
+      fourth: {
+        label: 'fourth step',
+        description: 'preview',
+      },
     },
-    status: {
-      error: 'Error on task submit',
-      ok: 'Attempt successfully submited',
-    },
-    submit: 'submit',
+    title: 'title',
+    description: 'description',
+    inputFormat: 'input description',
+    outputFormat: 'output description',
+    inputExample: 'input example',
+    outputExample: 'output example',
+    grade: 'grade',
+    isChecker: 'checker',
   },
+  status: {
+    error: 'Error on task submit',
+    ok: 'Attempt successfully submited',
+  },
+  submit: 'submit',
 };
 
 const credentials = {
@@ -129,7 +125,7 @@ const en = {
   date,
   months,
   auth,
-  pages,
+  tasks,
 };
 
 export default en;

@@ -6,11 +6,10 @@ import styles from './typeInfo.module.css';
 
 const TaskTypeInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
-  console.log(form.values.examples);
   return (
     <div className={styles.wrapper}>
       <Switch
-        label={capitalize(locale.pages.tasks.add.isChecker)}
+        label={capitalize(locale.tasks.add.isChecker)}
         {...form.getInputProps('isChecker')}
       />
       {form.values.examples &&
@@ -18,13 +17,13 @@ const TaskTypeInfo: FC<{ form: any }> = ({ form }) => {
           <div key={index} className={styles.example}>
             <Textarea
               className={styles.exampleInput}
-              label={capitalize(locale.pages.tasks.add.inputExample)}
+              label={capitalize(locale.tasks.add.inputExample)}
             >
               {value[0]}
             </Textarea>
             <Textarea
               className={styles.exampleInput}
-              label={capitalize(locale.pages.tasks.add.outputExample)}
+              label={capitalize(locale.tasks.add.outputExample)}
             >
               {value[1]}
             </Textarea>

@@ -43,31 +43,27 @@ function AddTask() {
         breakpoint="sm"
       >
         <Stepper.Step
-          label={capitalize(locale.pages.tasks.add.steps.first.label)}
+          label={capitalize(locale.tasks.add.steps.first.label)}
           description={capitalize(
-            locale.pages.tasks.add.steps.first.description
+            locale.tasks.add.steps.first.description
           )}
         />
         <Stepper.Step
-          label={capitalize(
-            locale.pages.tasks.add.steps.second.label
-          )}
+          label={capitalize(locale.tasks.add.steps.second.label)}
           description={capitalize(
-            locale.pages.tasks.add.steps.second.description
+            locale.tasks.add.steps.second.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.pages.tasks.add.steps.third.label)}
+          label={capitalize(locale.tasks.add.steps.third.label)}
           description={capitalize(
-            locale.pages.tasks.add.steps.third.description
+            locale.tasks.add.steps.third.description
           )}
         />
         <Stepper.Step
-          label={capitalize(
-            locale.pages.tasks.add.steps.fourth.label
-          )}
+          label={capitalize(locale.tasks.add.steps.fourth.label)}
           description={capitalize(
-            locale.pages.tasks.add.steps.fourth.description
+            locale.tasks.add.steps.fourth.description
           )}
         />
       </Stepper>

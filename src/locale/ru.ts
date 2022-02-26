@@ -72,47 +72,43 @@ const months = {
   december: 'декабря',
 };
 
-const pages = {
-  tasks: {
-    task: {
-      description: 'Описание',
-      send: 'Отправка',
-      results: 'Результаты',
-    },
-    add: {
-      steps: {
-        first: {
-          label: 'шаг первый',
-          description: 'основная информация о задаче',
-        },
-        second: {
-          label: 'шаг второй',
-          description: 'тип задачи и примеры',
-        },
-        third: {
-          label: 'шаг третий',
-          description: 'тесты или чекер',
-        },
-        fourth: {
-          label: 'шаг четвёртый',
-          description: 'предпросмотр',
-        },
+const tasks = {
+  description: 'Описание',
+  send: 'Отправка',
+  results: 'Результаты',
+  add: {
+    steps: {
+      first: {
+        label: 'шаг первый',
+        description: 'основная информация о задаче',
       },
-      title: 'название',
-      description: 'описание',
-      inputFormat: 'входные данные',
-      outputFormat: 'выходные данные',
-      inputExample: 'пример входных данных',
-      outputExample: 'пример выходных данных',
-      grade: 'класс',
-      isChecker: 'чекер',
+      second: {
+        label: 'шаг второй',
+        description: 'тип задачи и примеры',
+      },
+      third: {
+        label: 'шаг третий',
+        description: 'тесты или чекер',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
+        description: 'предпросмотр',
+      },
     },
-    status: {
-      error: 'Ошибка при отправке',
-      ok: 'Попытка успешно отправлена',
-    },
-    submit: 'Отправить',
+    title: 'название',
+    description: 'описание',
+    inputFormat: 'входные данные',
+    outputFormat: 'выходные данные',
+    inputExample: 'пример входных данных',
+    outputExample: 'пример выходных данных',
+    grade: 'класс',
+    isChecker: 'чекер',
   },
+  status: {
+    error: 'Ошибка при отправке',
+    ok: 'Попытка успешно отправлена',
+  },
+  submit: 'Отправить',
 };
 
 const credentials = {
@@ -128,7 +124,7 @@ const ru = {
   date,
   months,
   auth,
-  pages,
+  tasks,
 };
 
 export default ru;
