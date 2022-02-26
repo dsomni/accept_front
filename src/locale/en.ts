@@ -116,8 +116,14 @@ const pages = {
   },
 };
 
+const credentials = {
+  company: 'Blue Crane Inc.',
+  startYear: '2020',
+};
+
 const en = {
   accept: 'accept',
+  credentials,
   mainHeaderLinks,
   projects,
   date,

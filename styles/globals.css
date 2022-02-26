@@ -30,3 +30,11 @@ body {
 *::after {
   box-sizing: border-box !important;
 }
+
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #3e3e3e;
+}
