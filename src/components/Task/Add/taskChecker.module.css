@@ -1,0 +1,19 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 0;
+}
+
+.codeArea {
+  width: 70vw;
+}
+
+.listWrapper {
+  margin: 50px 0;
+  width: 70vw;
+  gap: 5vh;
+  display: flex;
+  flex-direction: column;
+}

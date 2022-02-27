@@ -16,6 +16,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import styles from './taskSend.module.css';
 import Notify from '@components/Notify/Notify';
+import { capitalize } from '@utils/capitalize';
 
 const languages = [
   {
@@ -86,7 +87,7 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
         onChange={(e) => setLang(e.target.value)}
       />
       <Textarea
-        placeholder="your code here"
+        placeholder={capitalize(locale.placeholders.code)}
         onChange={(e) => setCode(e.target.value)}
         minRows={20}
         value={code}

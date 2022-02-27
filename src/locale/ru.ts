@@ -84,14 +84,18 @@ const tasks = {
       },
       second: {
         label: 'шаг второй',
-        description: 'тип задачи и примеры',
+        description: 'описание',
       },
       third: {
         label: 'шаг третий',
-        description: 'тесты или чекер',
+        description: 'тип задачи и примеры',
       },
       fourth: {
         label: 'шаг четвёртый',
+        description: 'тесты или чекер',
+      },
+      fifth: {
+        label: 'шаг пятый',
         description: 'предпросмотр',
       },
     },
@@ -103,6 +107,15 @@ const tasks = {
     outputExample: 'пример выходных данных',
     grade: 'класс',
     isChecker: 'чекер',
+    textType: 'текстовая задача',
+    codeType: 'задача со сдачей кода',
+    isCode: 'тип задачи',
+    checker: 'чекер',
+    tests: 'тесты',
+    inputTest: 'входные данные',
+    outputTest: 'выходные данные',
+    test: 'тест',
+    example: 'пример',
   },
   status: {
     error: 'Ошибка при отправке',
@@ -116,8 +129,20 @@ const credentials = {
   startYear: '2020',
 };
 
+const form = {
+  next: 'следующий шаг',
+  back: 'назад',
+  create: 'создать',
+};
+
+const placeholders = {
+  code: 'вставьте ваш код сюда',
+};
+
 const ru = {
   accept: 'accept',
+  loading: 'загрузка',
+  placeholders,
   credentials,
   mainHeaderLinks,
   projects,
@@ -125,6 +150,7 @@ const ru = {
   months,
   auth,
   tasks,
+  form,
 };
 
 export default ru;

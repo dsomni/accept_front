@@ -85,14 +85,18 @@ const tasks = {
       },
       second: {
         label: 'second step',
-        description: 'task type and examples',
+        description: 'description',
       },
       third: {
         label: 'third step',
-        description: 'tests or checker',
+        description: 'task type and examples',
       },
       fourth: {
         label: 'fourth step',
+        description: 'tests or checker',
+      },
+      fifth: {
+        label: 'fifth step',
         description: 'preview',
       },
     },
@@ -104,12 +108,27 @@ const tasks = {
     outputExample: 'output example',
     grade: 'grade',
     isChecker: 'checker',
+    textType: 'text task',
+    codeType: 'code task',
+    isCode: 'task type',
+    checker: 'checker',
+    tests: 'tests',
+    inputTest: 'input',
+    outputTest: 'output',
+    test: 'test',
+    example: 'example',
   },
   status: {
     error: 'Error on task submit',
-    ok: 'Attempt successfully submited',
+    ok: 'Attempt successfully submitted',
   },
   submit: 'submit',
+};
+
+const form = {
+  next: 'next step',
+  back: 'back',
+  create: 'create',
 };
 
 const credentials = {
@@ -117,8 +136,14 @@ const credentials = {
   startYear: '2020',
 };
 
+const placeholders = {
+  code: 'place your code here',
+};
+
 const en = {
   accept: 'accept',
+  loading: 'loading',
+  placeholders,
   credentials,
   mainHeaderLinks,
   projects,
@@ -126,6 +151,7 @@ const en = {
   months,
   auth,
   tasks,
+  form,
 };
 
 export default en;

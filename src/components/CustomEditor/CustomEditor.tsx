@@ -1,4 +1,6 @@
+import { useLocale } from '@hooks/useLocale';
 import { InputWrapper } from '@mantine/core';
+import { capitalize } from '@utils/capitalize';
 import { FC, memo, useEffect, useRef, useState } from 'react';
 
 const editorConfiguration = {
@@ -15,6 +17,8 @@ const CustomEditor: FC<{
   value: string;
   label: string;
 }> = ({ onChange, name, value, label }) => {
+  const { locale } = useLocale();
+
   const editorRef = useRef<any>();
   const { CKEditor, Editor } = editorRef.current || {
     CKEditor: {},
@@ -34,7 +38,7 @@ const CustomEditor: FC<{
   return (
     <div>
       {isLoaded ? (
-        <InputWrapper label={label}>
+        <InputWrapper label={label} size="lg">
           <CKEditor
             name={name}
             editor={Editor}
@@ -47,7 +51,7 @@ const CustomEditor: FC<{
           />
         </InputWrapper>
       ) : (
-        <div>Loading...</div>
+        <div>{capitalize(locale.loading) + '...'}</div>
       )}
     </div>
   );

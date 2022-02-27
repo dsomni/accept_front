@@ -5,12 +5,13 @@
   width: 70vw;
   margin: 50px 15vw 0 15vw;
 }
-
-.radioGroups {
+.example {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
-  row-gap: 25px;
-  column-gap: 100px;
-  align-items: center;
+  gap: 2vw;
+  width: 100%;
+}
+
+.addButton span {
+  font-size: 2rem;
 }
