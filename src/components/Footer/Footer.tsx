@@ -3,12 +3,16 @@ import styles from './footer.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
+import { LanguageSelector } from '@components/LanguageSelector/LanguageSelector';
 
 const Footer: FC = () => {
   const { locale } = useLocale();
 
   return (
     <div className={styles.wrapper}>
+      <div>
+        <LanguageSelector />
+      </div>
       <div className={styles.githubs}>
         <div className={styles.github1}>
           <Link href="https://github.com/dsomni">
