@@ -77,7 +77,7 @@ const tasks = {
   description: 'description',
   send: 'send',
   results: 'results',
-  add: {
+  form: {
     steps: {
       first: {
         label: 'first step',

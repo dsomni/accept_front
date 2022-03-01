@@ -76,7 +76,7 @@ const tasks = {
   description: 'Описание',
   send: 'Отправка',
   results: 'Результаты',
-  add: {
+  form: {
     steps: {
       first: {
         label: 'шаг первый',

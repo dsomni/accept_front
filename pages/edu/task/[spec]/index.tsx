@@ -1,20 +1,20 @@
-import TaskDescription from '@components/Task/TaskDescription';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
 import { ReactNode } from 'react';
 import { ITaskDisplay } from '@custom-types/ITask';
-import TaskSend from '@components/Task/TaskSend';
-import TaskResults from '@components/Task/TaskResults';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
+import Description from '@components/Task/Description/Description';
+import Send from '@components/Task/Send/Send';
+import Results from '@components/Task/Results/Results';
 
 function Task(props: { task: ITaskDisplay }) {
   const task = props.task;
   return (
     <TaskLayout
-      description={<TaskDescription task={task} />}
-      send={<TaskSend spec={task.spec} />}
-      results={<TaskResults />}
+      description={<Description task={task} />}
+      send={<Send spec={task.spec} />}
+      results={<Results />}
     />
   );
 }

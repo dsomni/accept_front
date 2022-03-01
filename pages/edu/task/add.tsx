@@ -1,5 +1,3 @@
-import TaskMainInfo from '@components/Task/Add/TaskMainInfo';
-import TaskExamples from '@components/Task/Add/TaskExamples';
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { Button, Group, Stepper } from '@mantine/core';
@@ -7,10 +5,12 @@ import { useForm } from '@mantine/hooks';
 import { capitalize } from '@utils/capitalize';
 import { ReactNode, useState } from 'react';
 import styles from '@styles/edu/task.add.module.css';
-import TaskTests from '@components/Task/Add/TaskTests';
-import TaskChecker from '@components/Task/Add/TaskChecker';
-import TaskPreview from '@components/Task/Add/TaskPreview';
-import TaskDescriptionInfo from '@components/Task/Add/TaskDescriptionInfo/TaskDescriptionInfo';
+import Tests from '@components/Task/Form/Tests/Tests';
+import Checker from '@components/Task/Form/Checker/Checker';
+import Preview from '@components/Task/Form/Preview/Preview';
+import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
+import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
+import Examples from '@components/Task/Form/Examples/Examples';
 
 function AddTask() {
   const { locale } = useLocale();
@@ -56,47 +56,47 @@ function AddTask() {
         breakpoint="sm"
       >
         <Stepper.Step
-          label={capitalize(locale.tasks.add.steps.first.label)}
+          label={capitalize(locale.tasks.form.steps.first.label)}
           description={capitalize(
-            locale.tasks.add.steps.first.description
+            locale.tasks.form.steps.first.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.add.steps.second.label)}
+          label={capitalize(locale.tasks.form.steps.second.label)}
           description={capitalize(
-            locale.tasks.add.steps.second.description
+            locale.tasks.form.steps.second.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.add.steps.third.label)}
+          label={capitalize(locale.tasks.form.steps.third.label)}
           description={capitalize(
-            locale.tasks.add.steps.third.description
+            locale.tasks.form.steps.third.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.add.steps.fourth.label)}
+          label={capitalize(locale.tasks.form.steps.fourth.label)}
           description={capitalize(
-            locale.tasks.add.steps.fourth.description
+            locale.tasks.form.steps.fourth.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.add.steps.fifth.label)}
+          label={capitalize(locale.tasks.form.steps.fifth.label)}
           description={capitalize(
-            locale.tasks.add.steps.fifth.description
+            locale.tasks.form.steps.fifth.description
           )}
         />
       </Stepper>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        {currentStep === 0 && <TaskMainInfo form={form} />}
-        {currentStep === 1 && <TaskDescriptionInfo form={form} />}
-        {currentStep === 2 && <TaskExamples form={form} />}
+        {currentStep === 0 && <MainInfo form={form} />}
+        {currentStep === 1 && <DescriptionInfo form={form} />}
+        {currentStep === 2 && <Examples form={form} />}
         {currentStep === 3 && form.values.isChecker === 'tests' && (
-          <TaskTests form={form} />
+          <Tests form={form} />
         )}
         {currentStep === 3 && form.values.isChecker === 'checker' && (
-          <TaskChecker form={form} />
+          <Checker form={form} />
         )}
-        {currentStep === 4 && <TaskPreview form={form} />}
+        {currentStep === 4 && <Preview form={form} />}
       </form>
       <Group position="center" mt="xl" className={styles.buttons}>
         <Button variant="default" onClick={prevStep}>

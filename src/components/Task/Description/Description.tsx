@@ -1,8 +1,8 @@
 import { FC, memo, useEffect, useRef } from 'react';
 import { ITaskDisplay } from '@custom-types/ITask';
-import styles from './taskDescription.module.css';
+import styles from './description.module.css';
 
-const TaskDescription: FC<{ task: ITaskDisplay }> = ({ task }) => {
+const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
   const description = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (description.current)
@@ -16,4 +16,4 @@ const TaskDescription: FC<{ task: ITaskDisplay }> = ({ task }) => {
   );
 };
 
-export default memo(TaskDescription);
+export default memo(Description);

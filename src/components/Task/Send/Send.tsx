@@ -14,7 +14,7 @@ import { Textarea } from '@mantine/core';
 import { FullScreenDropzone } from '@mantine/dropzone';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
-import styles from './taskSend.module.css';
+import styles from './send.module.css';
 import Notify from '@components/Notify/Notify';
 import { capitalize } from '@utils/capitalize';
 
@@ -36,7 +36,7 @@ const languages = [
   },
 ];
 
-const TaskSend: FC<{ spec: string }> = ({ spec }) => {
+const Send: FC<{ spec: string }> = ({ spec }) => {
   const [lang, setLang] = useState('cpp');
   const [code, setCode] = useState('');
   const { locale } = useLocale();
@@ -132,7 +132,7 @@ const TaskSend: FC<{ spec: string }> = ({ spec }) => {
   );
 };
 
-export default memo(TaskSend);
+export default memo(Send);
 
 function ImageUploadIcon({ ...props }) {
   const status = props.status;

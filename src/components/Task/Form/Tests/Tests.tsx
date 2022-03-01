@@ -4,18 +4,18 @@ import { Button } from '@mantine/core';
 
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback } from 'react';
-import styles from './taskExamples.module.css';
+import styles from './tests.module.css';
 
-const TaskExamples: FC<{ form: any }> = ({ form }) => {
+const Tests: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
   const onDeleteExample = useCallback(
     (index: number) => {
       form.setFieldValue(
-        'examples',
+        'tests',
         (() => {
-          form.values.examples.splice(index, 1);
-          return form.values.examples;
+          form.values.tests.splice(index, 1);
+          return form.values.tests;
         })()
       );
     },
@@ -24,22 +24,23 @@ const TaskExamples: FC<{ form: any }> = ({ form }) => {
 
   return (
     <div className={styles.wrapper}>
-      {form.values.examples &&
-        form.values.examples.map(
+      {form.values.tests &&
+        form.values.tests.map(
           (value: [string, string], index: number) => (
             <div key={index} className={styles.example}>
               <ListItem
-                field="examples"
+                field="tests"
                 label={
-                  capitalize(locale.tasks.add.example) +
+                  capitalize(locale.tasks.form.test) +
                   ' #' +
                   (index + 1)
                 }
-                InLabel={capitalize(locale.tasks.add.inputExample)}
-                OutLabel={capitalize(locale.tasks.add.outputExample)}
+                InLabel={capitalize(locale.tasks.form.inputTest)}
+                OutLabel={capitalize(locale.tasks.form.outputTest)}
                 form={form}
                 index={index}
                 onDelete={onDeleteExample}
+                maxRows={7}
               />
             </div>
           )
@@ -51,10 +52,10 @@ const TaskExamples: FC<{ form: any }> = ({ form }) => {
         variant="light"
         onClick={() =>
           form.setFieldValue(
-            'examples',
+            'tests',
             (() => {
-              form.values.examples.push(['', '']);
-              return form.values.examples;
+              form.values.tests.push(['', '']);
+              return form.values.tests;
             })()
           )
         }
@@ -65,4 +66,4 @@ const TaskExamples: FC<{ form: any }> = ({ form }) => {
   );
 };
 
-export default memo(TaskExamples);
+export default memo(Tests);

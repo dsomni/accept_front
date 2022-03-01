@@ -2,25 +2,25 @@ import CustomEditor from '@components/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
-import styles from './taskDescriptionInfo.module.css';
+import styles from './descriptionInfo.module.css';
 
-const TaskDescriptionInfo: FC<{ form: any }> = ({ form }) => {
+const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
   return (
     <div className={styles.wrapper}>
       <CustomEditor
-        label={capitalize(locale.tasks.add.description)}
+        label={capitalize(locale.tasks.form.description)}
         onChange={(value) => form.setFieldValue('description', value)}
         {...form.getInputProps('description')}
       />
       <CustomEditor
-        label={capitalize(locale.tasks.add.inputFormat)}
+        label={capitalize(locale.tasks.form.inputFormat)}
         onChange={(value) => form.setFieldValue('inputFormat', value)}
         {...form.getInputProps('inputFormat')}
       />
       <CustomEditor
-        label={capitalize(locale.tasks.add.outputFormat)}
+        label={capitalize(locale.tasks.form.outputFormat)}
         onChange={(value) =>
           form.setFieldValue('outputFormat', value)
         }
@@ -30,4 +30,4 @@ const TaskDescriptionInfo: FC<{ form: any }> = ({ form }) => {
   );
 };
 
-export default memo(TaskDescriptionInfo);
+export default memo(DescriptionInfo);

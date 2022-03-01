@@ -3,9 +3,9 @@ import { useLocale } from '@hooks/useLocale';
 import { Button, Textarea } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
-import styles from './taskChecker.module.css';
+import styles from './checker.module.css';
 
-const TaskChecker: FC<{ form: any }> = ({ form }) => {
+const Checker: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
   return (
@@ -16,7 +16,7 @@ const TaskChecker: FC<{ form: any }> = ({ form }) => {
         minRows={20}
         maxRows={60}
         size="lg"
-        label={capitalize(locale.tasks.add.checker)}
+        label={capitalize(locale.tasks.form.checker)}
         {...form.getInputProps('checker')}
       />
       <div className={styles.listWrapper}>
@@ -26,13 +26,13 @@ const TaskChecker: FC<{ form: any }> = ({ form }) => {
               <div key={index}>
                 <ListItem
                   label={
-                    capitalize(locale.tasks.add.test) +
+                    capitalize(locale.tasks.form.test) +
                     ' #' +
                     (index + 1)
                   }
                   field="tests"
-                  InLabel={capitalize(locale.tasks.add.inputTest)}
-                  OutLabel={capitalize(locale.tasks.add.outputTest)}
+                  InLabel={capitalize(locale.tasks.form.inputTest)}
+                  OutLabel={capitalize(locale.tasks.form.outputTest)}
                   form={form}
                   index={index}
                   onDelete={() => {}}
@@ -64,4 +64,4 @@ const TaskChecker: FC<{ form: any }> = ({ form }) => {
   );
 };
 
-export default memo(TaskChecker);
+export default memo(Checker);
