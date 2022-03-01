@@ -7,46 +7,69 @@ import {
 } from '@modulz/radix-icons';
 import { removeOneElement } from '@utils/remove';
 import { ItemComponent } from '../ItemComponent/ItemComponent';
-
 export interface Item {
   value: string;
   label: string;
-  checked?: boolean;
 }
-
 export type TransferListData = [Item[], Item[]];
+
+const difference = (a1: any[], a2: any[]): any[] =>
+  a1.filter((x) => !a2.includes(x));
 
 export const CustomTransferList: FC<{
   value: TransferListData;
   onChange: (_: TransferListData) => void;
   titles: [string, string];
 }> = ({ value, onChange, titles }) => {
-  const [localValue, setLocalValue] =
-    useState<TransferListData>(value);
-  let selectedLeft: Item[] = [];
-  let selectedRight: Item[] = [];
+  const [valueLeft, setValueLeft] = useState(value[0]);
+  const [valueRight, setValueRight] = useState(value[1]);
+
+  const [selectedLeft, setSelectedLeft] = useState<Item[]>([]);
+  const [selectedRight, setSelectedRight] = useState<Item[]>([]);
 
   const handleLeftMove = useCallback(() => {
-    const newLeft = value[0]
-      .filter((item) => !selectedLeft.includes(item))
-      .map((item) => ({ ...item, checked: false }));
-    const newRight = value[1]
-      .concat(selectedLeft)
-      .map((item) => ({ ...item, checked: false }));
+    setValueLeft((valueLeft) => difference(valueLeft, selectedLeft));
+    setValueRight((valueRight) => valueRight.concat(selectedLeft));
+    setSelectedLeft([]);
+  }, [selectedLeft]);
 
-    onChange([newLeft, newRight]);
-  }, [onChange, value]);
+  const handleLRightMove = useCallback(() => {
+    setValueRight((valueRight) =>
+      difference(valueRight, selectedRight)
+    );
+    setValueLeft((valueLeft) => valueLeft.concat(selectedRight));
+    setSelectedRight([]);
+  }, [selectedRight]);
 
-  const handleRightMove = useCallback(() => {
-    const newRight = value[1]
-      .filter((item) => !selectedRight.includes(item))
-      .map((item) => ({ ...item, checked: false }));
-    const newLeft = value[0]
-      .concat(selectedRight)
-      .map((item) => ({ ...item, checked: false }));
+  const selectLeft = useCallback(
+    (item) => {
+      const isSelected = selectedLeft.includes(item);
+      if (!isSelected) {
+        setSelectedLeft((selectedLeft) => {
+          selectedLeft.push(item);
+          return selectedLeft;
+        });
+      } else {
+        setSelectedLeft(removeOneElement(selectedLeft, item));
+      }
+    },
+    [selectedLeft]
+  );
 
-    onChange([newLeft, newRight]);
-  }, [onChange, value]);
+  const selectRight = useCallback(
+    (item) => {
+      const isSelected = selectedRight.includes(item);
+      if (!isSelected) {
+        setSelectedRight((selectedRight) => {
+          selectedRight.push(item);
+          return selectedRight;
+        });
+      } else {
+        setSelectedRight(removeOneElement(selectedRight, item));
+      }
+    },
+    [selectedRight]
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -70,17 +93,11 @@ export const CustomTransferList: FC<{
           </ActionIcon>
         </div>
         <div className={styles.content}>
-          {value[0].map((item, index) => (
+          {valueLeft.map((item, index) => (
             <ItemComponent
               key={index}
               item={item}
-              onSelect={(checked: boolean) => {
-                if (checked) {
-                  selectedLeft.push(item);
-                } else {
-                  removeOneElement(selectedLeft, item);
-                }
-              }}
+              onSelect={selectLeft}
             />
           ))}
         </div>
@@ -90,7 +107,7 @@ export const CustomTransferList: FC<{
         <div className={styles.header}>
           <ActionIcon
             onClick={() => {
-              handleRightMove();
+              handleLRightMove();
             }}
             className={styles.move}
             tabIndex={5}
@@ -105,20 +122,11 @@ export const CustomTransferList: FC<{
           </div>
         </div>
         <div className={styles.content}>
-          {value[1].map((item, index) => (
+          {valueRight.map((item, index) => (
             <ItemComponent
               key={index}
               item={item}
-              onSelect={(checked: boolean) => {
-                if (checked) {
-                  selectedRight.push(item);
-                } else {
-                  selectedRight = removeOneElement(
-                    selectedRight,
-                    item
-                  );
-                }
-              }}
+              onSelect={selectRight}
             />
           ))}
         </div>

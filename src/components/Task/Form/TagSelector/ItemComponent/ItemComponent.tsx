@@ -10,25 +10,22 @@ import styles from './itemComponent.module.css';
 
 export const ItemComponent: FC<{
   item: Item;
-  onSelect: (event: any) => void;
+  onSelect: (_: Item) => void;
 }> = ({ item, onSelect }) => {
-  const [checked, setChecked] = useState(item.checked);
-  useEffect(() => {
-    onSelect(checked);
-  }, [checked, onSelect]);
-
   useEffect(() => {
     console.log(item.label);
-  }, []);
+  }, [item]);
 
   return (
     <div className={styles.itemWrapper}>
       <div
         className={styles.item}
-        onClick={() => setChecked((checked) => !checked)}
+        onClick={() => {
+          onSelect(item);
+        }}
       >
         <Checkbox
-          checked={checked}
+          checked={false}
           onChange={() => {}}
           tabIndex={-1}
           sx={{ pointerEvents: 'none' }}

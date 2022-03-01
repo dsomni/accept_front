@@ -50,11 +50,13 @@ const TagSelector: FC<{
 
   return (
     <div className={styles.wrapper}>
-      <CustomTransferList
-        value={tags}
-        onChange={handleChange}
-        titles={['Available', 'Used']}
-      />
+      {tags[0].length > 0 && (
+        <CustomTransferList
+          value={tags}
+          onChange={handleChange}
+          titles={['Available', 'Used']}
+        />
+      )}
     </div>
   );
 };
