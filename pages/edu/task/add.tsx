@@ -53,7 +53,7 @@ function AddTask() {
         iconPosition="right"
         active={currentStep}
         onStepClick={setCurrentStep}
-        breakpoint="sm"
+        breakpoint={1000}
       >
         <Stepper.Step
           label={capitalize(locale.tasks.form.steps.first.label)}

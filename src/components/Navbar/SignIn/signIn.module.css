@@ -1,7 +1,6 @@
 .button {
   all: unset;
   font-size: 1em;
-  padding: 5px 16px;
 }
 
 .button:hover {
