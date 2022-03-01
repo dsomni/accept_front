@@ -1,22 +1,28 @@
-import { FC } from 'react';
+import { FC, forwardRef } from 'react';
 import styles from './languageSelector.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { Select } from '@mantine/core';
+import { List, ListItem, Select } from '@mantine/core';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export const LanguageSelector: FC = () => {
-  const { lang, langList, set } = useLocale();
+  const { lang, set } = useLocale();
+  const router = useRouter();
+
+  const nextLang = lang === 'ru' ? 'en' : 'ru';
 
   return (
     <>
-      <Select
-        classNames={{ input: styles.input }}
-        defaultValue={lang}
-        value={lang}
-        onChange={(e: any) => set(e)}
-        data={langList.map((lang) => {
-          return { value: lang, label: lang.toUpperCase() };
-        })}
-      />
+      <Link href={router.asPath} locale={nextLang}>
+        <a
+          onClick={() => {
+            set(nextLang);
+          }}
+          className={styles.lang}
+        >
+          {nextLang.toUpperCase()}
+        </a>
+      </Link>
     </>
   );
 };

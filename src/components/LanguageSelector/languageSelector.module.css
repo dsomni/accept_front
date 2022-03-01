@@ -1,7 +1,5 @@
-.input {
-  background-color: #0000;
-  color: #fff;
-  border: none;
-  font-size: 1rem;
-  width: 5rem;
+.lang {
+  color: white;
+  font-size: 1.3rem;
+  text-decoration: none;
 }

@@ -4,7 +4,6 @@ body {
   padding: 0 !important;
   --removed-scroll-width: 0 !important;
   font-size: 14px;
-  /* min-width: 620px; */
 }
 
 @media only screen and (max-width: 1080px) {
