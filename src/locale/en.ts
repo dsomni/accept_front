@@ -117,6 +117,12 @@ const tasks = {
     outputTest: 'output',
     test: 'test',
     example: 'example',
+    tagSelector: {
+      available: 'available tags',
+      used: 'used tags',
+      edit: 'edit tag',
+      delete: 'delete tag',
+    },
   },
   status: {
     error: 'Error on task submit',
@@ -129,6 +135,7 @@ const form = {
   next: 'next step',
   back: 'back',
   create: 'create',
+  search: 'search',
 };
 
 const credentials = {
@@ -140,9 +147,21 @@ const placeholders = {
   code: 'place your code here',
 };
 
+const errors = {
+  minLength: (title: string, len: number) =>
+    `${title} should not be shorter than ${len} characters`,
+};
+
 const en = {
   accept: 'accept',
+  name: 'title',
   loading: 'loading',
+  save: 'save',
+  delete: 'delete',
+  cancel: 'cancel',
+  yes: 'yes',
+  no: 'no',
+  errors,
   placeholders,
   credentials,
   mainHeaderLinks,

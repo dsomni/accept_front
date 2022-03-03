@@ -1,6 +1,8 @@
 import { ITag } from '@custom-types/ITag';
 import { useFetch } from '@hooks/useFetch';
-import { TransferList, TransferListData } from '@mantine/core';
+import { useLocale } from '@hooks/useLocale';
+import { TransferListData } from '@mantine/core';
+import { capitalize } from '@utils/capitalize';
 import {
   FC,
   memo,
@@ -16,6 +18,8 @@ const TagSelector: FC<{
   initialTags: string[];
   setUsed: (_: any) => void;
 }> = ({ initialTags, setUsed }) => {
+  const { locale } = useLocale();
+
   const [tags, setTags] = useState<TransferListData>([[], []]);
 
   const [baseTags, setBaseTags] = useState<ITag[]>([]);
@@ -40,21 +44,16 @@ const TagSelector: FC<{
     setTags([newBaseTags, newUsedTags]);
   }, [baseTags, initialTags]);
 
-  const handleChange = useCallback(
-    (value: TransferListData) => {
-      setTags(value);
-      setUsed(value[1].map((item) => item.value));
-    },
-    [setTags, setUsed]
-  );
-
   return (
     <div className={styles.wrapper}>
       {tags[0].length > 0 && (
         <CustomTransferList
           value={tags}
-          onChange={handleChange}
-          titles={['Available', 'Used']}
+          onChange={setUsed}
+          titles={[
+            capitalize(locale.tasks.form.tagSelector.available),
+            capitalize(locale.tasks.form.tagSelector.used),
+          ]}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
 .itemWrapper {
-  width: 90%;
+  width: 100%;
   display: flex;
   padding: 10px;
   flex-direction: row;
@@ -12,6 +12,7 @@
   flex-direction: row;
   align-items: center;
   gap: 5px;
+  user-select: none;
 }
 .item {
   cursor: pointer;

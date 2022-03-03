@@ -116,6 +116,12 @@ const tasks = {
     outputTest: 'выходные данные',
     test: 'тест',
     example: 'пример',
+    tagSelector: {
+      available: 'все теги',
+      used: 'выбранные теги',
+      edit: 'редактировать тег',
+      delete: 'удалить тег',
+    },
   },
   status: {
     error: 'Ошибка при отправке',
@@ -133,15 +139,28 @@ const form = {
   next: 'следующий шаг',
   back: 'назад',
   create: 'создать',
+  search: 'найти',
 };
 
 const placeholders = {
   code: 'вставьте ваш код сюда',
 };
 
+const errors = {
+  minLength: (title: string, len: number) =>
+    `${title} должен быть не короче ${len} символов`,
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
+  name: 'название',
+  save: 'сохранить',
+  delete: 'удалить',
+  cancel: 'отмена',
+  yes: 'да',
+  no: 'нет',
+  errors,
   placeholders,
   credentials,
   mainHeaderLinks,
