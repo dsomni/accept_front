@@ -73,9 +73,19 @@ const months = {
 };
 
 const tasks = {
-  description: 'Описание',
-  send: 'Отправка',
-  results: 'Результаты',
+  description: {
+    self: 'описание',
+    format: {
+      input: 'входные данные',
+      output: 'выходные данные',
+    },
+    examples: {
+      input: 'входные данные',
+      output: 'выходные данные',
+    },
+  },
+  send: 'отправка',
+  results: 'результаты',
   form: {
     steps: {
       first: {
@@ -106,7 +116,7 @@ const tasks = {
     inputExample: 'пример входных данных',
     outputExample: 'пример выходных данных',
     grade: 'класс',
-    isChecker: 'чекер',
+    checkType: 'чекер',
     textType: 'текстовая задача',
     codeType: 'задача со сдачей кода',
     isCode: 'тип задачи',

@@ -74,7 +74,17 @@ const months = {
 };
 
 const tasks = {
-  description: 'description',
+  description: {
+    self: 'description',
+    format: {
+      input: 'input format',
+      output: 'output format',
+    },
+    examples: {
+      input: 'input data',
+      output: 'output data',
+    },
+  },
   send: 'send',
   results: 'results',
   form: {
@@ -107,7 +117,7 @@ const tasks = {
     inputExample: 'input example',
     outputExample: 'output example',
     grade: 'grade',
-    isChecker: 'checker',
+    checkType: 'checker',
     textType: 'text task',
     codeType: 'code task',
     isCode: 'task type',

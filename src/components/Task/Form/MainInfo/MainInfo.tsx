@@ -12,7 +12,7 @@ import styles from './mainInfo.module.css';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
-  const innitialTags = useMemo(() => form.values.tags, []);
+  const innitialTags = useMemo(() => form.values.tags, []); // eslint-disable-line
 
   return (
     <div className={styles.wrapper}>
@@ -40,7 +40,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           onChange={(value) => {
             form.setFieldValue('type', value);
             value === 'text'
-              ? form.setFieldValue('isChecker', 'tests')
+              ? form.setFieldValue('checkType', 'tests')
               : () => {};
           }}
         >
@@ -55,8 +55,8 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         {form.values.type === 'code' && (
           <RadioGroup
             size="lg"
-            label={capitalize(locale.tasks.form.isChecker)}
-            {...form.getInputProps('isChecker')}
+            label={capitalize(locale.tasks.form.checkType)}
+            {...form.getInputProps('checkType')}
           >
             <Radio value="tests">
               {capitalize(locale.tasks.form.tests)}

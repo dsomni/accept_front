@@ -1,4 +1,5 @@
 import ListItem from '@components/ListItem/ListItem';
+import { ITest } from '@custom-types/ITest';
 import { useLocale } from '@hooks/useLocale';
 import { Button } from '@mantine/core';
 
@@ -25,25 +26,23 @@ const Examples: FC<{ form: any }> = ({ form }) => {
   return (
     <div className={styles.wrapper}>
       {form.values.examples &&
-        form.values.examples.map(
-          (value: [string, string], index: number) => (
-            <div key={index} className={styles.example}>
-              <ListItem
-                field="examples"
-                label={
-                  capitalize(locale.tasks.form.example) +
-                  ' #' +
-                  (index + 1)
-                }
-                InLabel={capitalize(locale.tasks.form.inputExample)}
-                OutLabel={capitalize(locale.tasks.form.outputExample)}
-                form={form}
-                index={index}
-                onDelete={onDeleteExample}
-              />
-            </div>
-          )
-        )}
+        form.values.examples.map((_: ITest, index: number) => (
+          <div key={index} className={styles.example}>
+            <ListItem
+              field="examples"
+              label={
+                capitalize(locale.tasks.form.example) +
+                ' #' +
+                (index + 1)
+              }
+              InLabel={capitalize(locale.tasks.form.inputExample)}
+              OutLabel={capitalize(locale.tasks.form.outputExample)}
+              form={form}
+              index={index}
+              onDelete={onDeleteExample}
+            />
+          </div>
+        ))}
       <Button
         size="lg"
         className={styles.addButton}

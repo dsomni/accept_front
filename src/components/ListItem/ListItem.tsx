@@ -47,9 +47,9 @@ const ListItem: FC<{
           }
           minRows={2}
           maxRows={maxRows}
-          value={form.values[field][index][0]}
+          value={form.values[field][index]['inputData']}
           onChange={(e) => {
-            form.values[field][index][0] = e.target.value;
+            form.values[field][index]['inputData'] = e.target.value;
             form.setFieldValue(field, form.values[field]);
           }}
         />
@@ -61,9 +61,10 @@ const ListItem: FC<{
             label={<div className={styles.label}>{OutLabel}</div>}
             minRows={2}
             maxRows={maxRows}
-            value={form.values[field][index][1]}
+            value={form.values[field][index]['outputData']}
             onChange={(e) => {
-              form.values[field][index][1] = e.target.value;
+              form.values[field][index]['outputData'] =
+                e.target.value;
               form.setFieldValue(field, form.values[field]);
             }}
           />
