@@ -6,12 +6,13 @@ import {
   TextInput,
 } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import TagSelector from '../TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
+  const innitialTags = useMemo(() => form.values.tags, []);
 
   return (
     <div className={styles.wrapper}>
@@ -22,7 +23,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         {...form.getInputProps('title')}
       />
       <TagSelector
-        initialTags={form.values.tags}
+        initialTags={innitialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
       />
       <NumberInput

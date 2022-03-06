@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './selectField.module.css';
-import { TagItem } from '../TagItem/TagItem';
-import { Item } from '../CustomTransferList/CustomTransferList';
+import { TagItem } from '../../TagItem/TagItem';
+import { Item } from '../CustomTransferList';
 import { TextInput, Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
@@ -15,14 +15,15 @@ export const SelectField: FC<{
   title: string;
   values: Item[];
   handleSelect: (_: Item) => void;
-}> = ({ title, values, handleSelect }) => {
+  refetch: () => void;
+}> = ({ title, values, handleSelect, refetch }) => {
   const [displayed, setDisplayed] = useState(values);
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
 
   const fuse = useMemo(
     () => new Fuse(values, fuse_options),
-    [values, values.length]
+    [values, values.length] // eslint-disable-line
   );
 
   const search = useCallback(
@@ -60,6 +61,7 @@ export const SelectField: FC<{
             key={index}
             item={item}
             onSelect={() => handleSelect(item)}
+            refetch={refetch}
           />
         ))}
       </div>

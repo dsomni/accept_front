@@ -1,6 +1,6 @@
 import { removeOneElement } from '@utils/removeOneElement';
-import { FC, useCallback, useState } from 'react';
-import { SelectField } from '../SelectField/SelectField';
+import { FC, useCallback } from 'react';
+import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 
 export interface Item {
@@ -19,14 +19,25 @@ const cmpItem = (a: Item, b: Item) => {
   return -1;
 };
 
-export const CustomTransferList: FC<{
-  value: TransferListData;
-  onChange: (_: Item[]) => void;
-  titles: [string, string];
-}> = ({ value, onChange, titles }) => {
-  const [options, setOptions] = useState(value[0].sort());
-  const [chosen, setChosen] = useState(value[1].sort());
+type callback = (_: Item[]) => Item[];
 
+export const CustomTransferList: FC<{
+  options: Item[];
+  chosen: Item[];
+  setOptions: (_: callback) => void;
+  setChosen: (_: callback) => void;
+  setUsed: (_: Item[]) => void;
+  titles: [string, string];
+  refetch: () => void;
+}> = ({
+  options,
+  chosen,
+  setOptions,
+  setChosen,
+  setUsed,
+  titles,
+  refetch,
+}) => {
   const handleSelectLeft = useCallback(
     (item: Item) => {
       setOptions((options) => {
@@ -36,9 +47,9 @@ export const CustomTransferList: FC<{
         chosen.push(item);
         return chosen.sort(cmpItem);
       });
-      onChange(chosen.sort(cmpItem));
+      setUsed(chosen);
     },
-    [onChange, chosen]
+    [chosen, setUsed, setChosen, setOptions]
   );
   const handleSelectRight = useCallback(
     (item: Item) => {
@@ -49,9 +60,9 @@ export const CustomTransferList: FC<{
         options.push(item);
         return options.sort(cmpItem);
       });
-      onChange(chosen.sort(cmpItem));
+      setUsed(chosen);
     },
-    [onChange, chosen]
+    [chosen, setUsed, setChosen, setOptions]
   );
 
   return (
@@ -61,6 +72,7 @@ export const CustomTransferList: FC<{
           title={titles[0]}
           values={options}
           handleSelect={handleSelectLeft}
+          refetch={refetch}
         />
       </div>
       <div className={styles.rightWrapper}>
@@ -68,6 +80,7 @@ export const CustomTransferList: FC<{
           title={titles[1]}
           values={chosen}
           handleSelect={handleSelectRight}
+          refetch={refetch}
         />
       </div>
     </div>

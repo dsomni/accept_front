@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import {
   ActionIcon,
   Button,
@@ -9,41 +9,53 @@ import {
 import { Pencil1Icon } from '@modulz/radix-icons';
 import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { useForm } from '@mantine/hooks';
 import { Item } from '../../CustomTransferList/CustomTransferList';
 import { capitalize } from '@utils/capitalize';
 
-const EditTag: FC<{ item: Item }> = ({ item }) => {
+const EditTag: FC<{ item: Item; refetch: () => void }> = ({
+  item,
+  refetch,
+}) => {
   const [opened, setOpened] = useState(false);
   const { locale } = useLocale();
+  const [title, setTitle] = useState(item.label);
+  const [error, setError] = useState('');
 
-  const form = useForm({
-    initialValues: {
-      title: item.label,
-    },
+  const validate = useCallback((title: string) => {
+    if (title.length >= 3) {
+      return true;
+    }
+    return false;
+  }, []);
 
-    validationRules: {
-      title: (value: string) => value.length >= 3,
+  const onBlur = useCallback(
+    (title) => {
+      if (validate(title)) {
+        return setError('');
+      }
+      return setError(
+        capitalize(locale.errors.minLength(locale.name, 3))
+      );
     },
-
-    errorMessages: {
-      title: capitalize(locale.errors.minLength(locale.name, 3)),
-    },
-  });
+    [locale, validate]
+  );
 
   const handleSubmit = useCallback(
-    (values) => {
-      if (form.validate()) {
+    (title) => {
+      if (validate(title)) {
         fetch('/api/tags/edit', {
           method: 'POST',
           body: JSON.stringify({
             spec: item.value,
-            title: values.title,
+            title: title,
           }),
+        }).then(() => {
+          refetch();
+          setOpened(false);
         });
       }
     },
-    [item, form]
+    [item, refetch, validate]
   );
 
   return (
@@ -71,18 +83,17 @@ const EditTag: FC<{ item: Item }> = ({ item }) => {
           title: styles.modalTitle,
         }}
       >
-        <form
-          className={styles.form}
-          onSubmit={form.onSubmit(handleSubmit)}
-        >
+        <div>
           <TextInput
             className={styles.input}
             autoFocus
             required
             label={capitalize(locale.name)}
             size="md"
-            onBlur={(e: any) => form.validateField('title')}
-            {...form.getInputProps('title')}
+            onChange={(e: any) => setTitle(e.target.value)}
+            onBlur={() => onBlur(title)}
+            error={error}
+            defaultValue={item.label}
           />
           <Group
             position="right"
@@ -96,11 +107,15 @@ const EditTag: FC<{ item: Item }> = ({ item }) => {
             >
               {capitalize(locale.cancel)}
             </Button>
-            <Button variant="outline" color="green" type="submit">
+            <Button
+              variant="outline"
+              color="green"
+              onClick={() => handleSubmit(title)}
+            >
               {capitalize(locale.save)}
             </Button>
           </Group>
-        </form>
+        </div>
       </Modal>
     </div>
   );

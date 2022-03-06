@@ -1,6 +1,6 @@
-import { ActionIcon, TransferListItem } from '@mantine/core';
-import { TrashIcon, Pencil1Icon } from '@modulz/radix-icons';
-import { FC, useEffect, useState } from 'react';
+import { ActionIcon } from '@mantine/core';
+import { TrashIcon } from '@modulz/radix-icons';
+import { FC } from 'react';
 import { Item } from '../CustomTransferList/CustomTransferList';
 import EditTag from './EditTag/EditTag';
 import styles from './tagItem.module.css';
@@ -8,14 +8,15 @@ import styles from './tagItem.module.css';
 export const TagItem: FC<{
   item: Item;
   onSelect: () => void;
-}> = ({ item, onSelect }) => {
+  refetch: () => void;
+}> = ({ item, onSelect, refetch }) => {
   return (
     <div className={styles.itemWrapper}>
       <div className={styles.item} onClick={() => onSelect()}>
         <div>{item.label}</div>
       </div>
       <div className={styles.actions}>
-        <EditTag item={item} />
+        <EditTag item={item} refetch={refetch} />
         <ActionIcon
           onClick={() => {}}
           tabIndex={5}
