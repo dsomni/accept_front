@@ -120,8 +120,10 @@ const tasks = {
     tagSelector: {
       available: 'available tags',
       used: 'used tags',
+      add: 'add tag',
       edit: 'edit tag',
       delete: 'delete tag',
+      addPlaceholder: "enter tag's name",
       deleteConfidence:
         'are you sure you want to permanently delete the tag?',
     },

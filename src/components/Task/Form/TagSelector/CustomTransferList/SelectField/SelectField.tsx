@@ -6,6 +6,7 @@ import { TextInput, Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import Fuse from 'fuse.js';
+import AddTag from './AddTag/AddTag';
 
 const fuse_options: Fuse.IFuseOptions<Item> = {
   keys: ['label'],
@@ -54,6 +55,7 @@ export const SelectField: FC<{
             onChange={(e: any) => setSearchText(e.target.value)}
           />
         </div>
+        <AddTag refetch={refetch} />
       </div>
       <div className={styles.content}>
         {displayed.map((item, index) => (
