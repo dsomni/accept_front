@@ -83,7 +83,7 @@ const EditTag: FC<{ item: Item; refetch: () => void }> = ({
           title: styles.modalTitle,
         }}
       >
-        <div>
+        <div className={styles.form}>
           <TextInput
             className={styles.input}
             autoFocus

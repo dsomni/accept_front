@@ -121,6 +121,8 @@ const tasks = {
       used: 'выбранные теги',
       edit: 'редактировать тег',
       delete: 'удалить тег',
+      deleteConfidence:
+        'вы уверены что хотите безвозвратно удалить этот тег?',
     },
   },
   status: {
@@ -160,6 +162,7 @@ const ru = {
   cancel: 'отмена',
   yes: 'да',
   no: 'нет',
+  sure: 'я уверен(а)',
   errors,
   placeholders,
   credentials,

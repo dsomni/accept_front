@@ -19,5 +19,5 @@
   width: 90%;
 }
 .actions {
-  width: 10%;
+  width: fit-content;
 }

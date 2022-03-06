@@ -122,6 +122,8 @@ const tasks = {
       used: 'used tags',
       edit: 'edit tag',
       delete: 'delete tag',
+      deleteConfidence:
+        'are you sure you want to permanently delete the tag?',
     },
   },
   status: {
@@ -161,6 +163,7 @@ const en = {
   cancel: 'cancel',
   yes: 'yes',
   no: 'no',
+  sure: "I'm sure",
   errors,
   placeholders,
   credentials,

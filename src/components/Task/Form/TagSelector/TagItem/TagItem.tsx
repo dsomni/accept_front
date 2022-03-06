@@ -1,7 +1,6 @@
-import { ActionIcon } from '@mantine/core';
-import { TrashIcon } from '@modulz/radix-icons';
 import { FC } from 'react';
 import { Item } from '../CustomTransferList/CustomTransferList';
+import DeleteTag from './DeleteTag/DeleteTag';
 import EditTag from './EditTag/EditTag';
 import styles from './tagItem.module.css';
 
@@ -17,15 +16,7 @@ export const TagItem: FC<{
       </div>
       <div className={styles.actions}>
         <EditTag item={item} refetch={refetch} />
-        <ActionIcon
-          onClick={() => {}}
-          tabIndex={5}
-          color="red"
-          variant="hover"
-          size="lg"
-        >
-          <TrashIcon width={20} height={20} />
-        </ActionIcon>
+        <DeleteTag item={item} refetch={refetch} />
       </div>
     </div>
   );
