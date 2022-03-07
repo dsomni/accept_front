@@ -29,6 +29,7 @@ export const CustomTransferList: FC<{
   setUsed: (_: Item[]) => void;
   titles: [string, string];
   refetch: () => void;
+  classNames: object;
 }> = ({
   options,
   chosen,
@@ -37,6 +38,7 @@ export const CustomTransferList: FC<{
   setUsed,
   titles,
   refetch,
+  classNames,
 }) => {
   const handleSelectLeft = useCallback(
     (item: Item) => {
@@ -69,6 +71,7 @@ export const CustomTransferList: FC<{
     <div className={styles.wrapper}>
       <div className={styles.leftWrapper}>
         <SelectField
+          classNames={classNames}
           title={titles[0]}
           values={options}
           handleSelect={handleSelectLeft}
@@ -78,6 +81,7 @@ export const CustomTransferList: FC<{
       </div>
       <div className={styles.rightWrapper}>
         <SelectField
+          classNames={classNames}
           title={titles[1]}
           values={chosen}
           handleSelect={handleSelectRight}

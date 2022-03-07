@@ -89,7 +89,7 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
       <Textarea
         placeholder={capitalize(locale.placeholders.code)}
         onChange={(e) => setCode(e.target.value)}
-        minRows={20}
+        minRows={40}
         value={code}
       />
       <Button onClick={handleSubmit}>{locale.tasks.submit}</Button>

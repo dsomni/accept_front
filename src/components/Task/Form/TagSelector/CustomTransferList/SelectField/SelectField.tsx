@@ -18,7 +18,15 @@ export const SelectField: FC<{
   handleSelect: (_: Item) => void;
   refetch: () => void;
   displayAdd?: boolean;
-}> = ({ title, values, handleSelect, refetch, displayAdd }) => {
+  classNames: any;
+}> = ({
+  title,
+  values,
+  handleSelect,
+  refetch,
+  displayAdd,
+  classNames,
+}) => {
   const [displayed, setDisplayed] = useState(values);
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
@@ -46,7 +54,10 @@ export const SelectField: FC<{
 
   return (
     <>
-      <Text size="lg" className={styles.title}>
+      <Text
+        size="lg"
+        className={styles.title + ' ' + classNames.label}
+      >
         {title}
       </Text>
       <div className={styles.header}>

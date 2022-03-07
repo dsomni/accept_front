@@ -8,7 +8,8 @@ import { Item } from './CustomTransferList/CustomTransferList';
 const TagSelector: FC<{
   initialTags: string[];
   setUsed: (_: any) => void;
-}> = ({ setUsed }) => {
+  classNames?: object;
+}> = ({ setUsed, classNames }) => {
   const { locale } = useLocale();
 
   const [selectedTags, setSelectedTags] = useState<Item[]>([]);
@@ -54,6 +55,7 @@ const TagSelector: FC<{
           setUsed={setUsed}
           setChosen={setSelectedTags}
           setOptions={setAvailableTags}
+          classNames={classNames ? classNames : {}}
           titles={[
             capitalize(locale.tasks.form.tagSelector.available),
             capitalize(locale.tasks.form.tagSelector.used),

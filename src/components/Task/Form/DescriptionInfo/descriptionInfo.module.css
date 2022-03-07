@@ -8,3 +8,14 @@
 .wrapper > * {
   width: 70vw;
 }
+.hintWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+.label {
+  font-size: 1.4rem;
+}
+.subLabel {
+  font-size: 1.2rem;
+}

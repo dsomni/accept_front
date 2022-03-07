@@ -3,7 +3,7 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { Button, Group, Stepper } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { capitalize } from '@utils/capitalize';
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import styles from '@styles/edu/task.add.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
 import Checker from '@components/Task/Form/Checker/Checker';
@@ -16,8 +16,12 @@ import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/Custo
 
 function AddTask() {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(0);
   const { user } = useUser();
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const nextStep = () =>
     setCurrentStep((current) =>
@@ -32,7 +36,7 @@ function AddTask() {
     initialValues: {
       spec: '',
       title: 'Простые числа',
-      author: user?.login || '',
+      author: '',
       tags: [],
       verdict: undefined,
       lastUpdate: 0,
@@ -43,6 +47,11 @@ function AddTask() {
       outputFormat:
         'Выведите все простые числа меньшие n в одну строку через пробел. Если простых нет выведите "NO".',
       grade: 11,
+      hasHint: true,
+      hintContent: '',
+      hintAlarmType: 'attempts',
+      hintAlarm: 0,
+      remark: '',
       examples: [
         { inputData: '1', outputData: 'NO' },
         { inputData: '15', outputData: '2 3 5 7 11 13' },
@@ -58,7 +67,7 @@ function AddTask() {
         { inputData: '1', outputData: '1' },
         { inputData: '1', outputData: '1' },
       ],
-      checker: '',
+      checkerCode: '',
       checkerLang: 'py',
       checkType: 'tests', //"tests" or "checker"
       type: 'code', //"code" or "text"
@@ -67,20 +76,34 @@ function AddTask() {
   });
 
   const handleSubmit = useCallback(() => {
-    console.log(form.values);
+    let body: any = {
+      ...form.values,
+      tags: form.values['tags'].map((tag: Item) => tag.value),
+      author: user?.login || '',
+    };
+    if (form.values['checkType'] === 'checker') {
+      body.checker = {
+        sourceCode: form.values['checkerCode'],
+        language: form.values['checkerLang'],
+        version: 0,
+      };
+    }
+    if (form.values['remark'].trim() === '') {
+      body.remark = undefined;
+    }
+    if (form.values['hasHint']) {
+      body.hint = {
+        content: form.values['hintContent'],
+        alarmType: form.values['hintAlarmType'],
+        alarm: form.values['hintAlarm'],
+      };
+    }
+    console.log(body);
     fetch('/api/tasks/add', {
       method: 'POST',
-      body: JSON.stringify({
-        ...form.values,
-        tags: form.values['tags'].map((tag: Item) => tag.value),
-        checker: {
-          sourceCode: form.values['checker'],
-          language: form.values['checkerLang'],
-          version: 0,
-        },
-      }),
+      body: JSON.stringify(body),
     });
-  }, [form.values]);
+  }, [form.values, user?.login]);
 
   return (
     <>

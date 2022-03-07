@@ -17,7 +17,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         maxRows={60}
         size="lg"
         label={capitalize(locale.tasks.form.checker)}
-        {...form.getInputProps('checker')}
+        {...form.getInputProps('checkerCode')}
       />
       <div className={styles.listWrapper}>
         {form.values.tests &&

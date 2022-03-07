@@ -3,6 +3,7 @@ import {
   NumberInput,
   Radio,
   RadioGroup,
+  Switch,
   TextInput,
 } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
@@ -17,16 +18,25 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
   return (
     <div className={styles.wrapper}>
       <TextInput
+        classNames={{
+          label: styles.label,
+        }}
         size="lg"
         label={capitalize(locale.tasks.form.title)}
         required
         {...form.getInputProps('title')}
       />
       <TagSelector
+        classNames={{
+          label: styles.label,
+        }}
         initialTags={innitialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
       />
       <NumberInput
+        classNames={{
+          label: styles.label,
+        }}
         size="lg"
         label={capitalize(locale.tasks.form.grade)}
         required
@@ -34,7 +44,10 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
       />
       <div className={styles.radioGroups}>
         <RadioGroup
-          size="lg"
+          classNames={{
+            label: styles.label,
+          }}
+          size="md"
           label={capitalize(locale.tasks.form.isCode)}
           {...form.getInputProps('type')}
           onChange={(value) => {
@@ -54,7 +67,10 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
 
         {form.values.type === 'code' && (
           <RadioGroup
-            size="lg"
+            classNames={{
+              label: styles.label,
+            }}
+            size="md"
             label={capitalize(locale.tasks.form.checkType)}
             {...form.getInputProps('checkType')}
           >
@@ -66,6 +82,14 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
             </Radio>
           </RadioGroup>
         )}
+        <Switch
+          classNames={{
+            label: styles.label,
+          }}
+          label={capitalize(locale.tasks.form.hint.title)}
+          size="lg"
+          {...form.getInputProps('hasHint', { type: 'checkbox' })}
+        />
       </div>
     </div>
   );

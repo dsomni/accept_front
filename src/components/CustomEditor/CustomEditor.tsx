@@ -16,7 +16,8 @@ const CustomEditor: FC<{
   name: string;
   value: string;
   label: string;
-}> = ({ onChange, name, value, label }) => {
+  classNames?: object;
+}> = ({ onChange, name, value, label, classNames }) => {
   const { locale } = useLocale();
 
   const editorRef = useRef<any>();
@@ -38,7 +39,7 @@ const CustomEditor: FC<{
   return (
     <div>
       {isLoaded ? (
-        <InputWrapper label={label} size="lg">
+        <InputWrapper classNames={classNames} label={label} size="lg">
           <CKEditor
             name={name}
             editor={Editor}
