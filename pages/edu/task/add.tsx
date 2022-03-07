@@ -16,7 +16,7 @@ import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/Custo
 
 function AddTask() {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(4);
   const { user } = useUser();
 
   const nextStep = () =>

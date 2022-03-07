@@ -81,6 +81,7 @@ const tasks = {
       output: 'output format',
     },
     examples: {
+      title: 'examples',
       input: 'input data',
       output: 'output data',
     },

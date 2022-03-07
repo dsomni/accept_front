@@ -80,6 +80,7 @@ const tasks = {
       output: 'выходные данные',
     },
     examples: {
+      title: 'примеры',
       input: 'входные данные',
       output: 'выходные данные',
     },

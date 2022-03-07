@@ -17,7 +17,8 @@ export const SelectField: FC<{
   values: Item[];
   handleSelect: (_: Item) => void;
   refetch: () => void;
-}> = ({ title, values, handleSelect, refetch }) => {
+  displayAdd?: boolean;
+}> = ({ title, values, handleSelect, refetch, displayAdd }) => {
   const [displayed, setDisplayed] = useState(values);
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
@@ -55,7 +56,7 @@ export const SelectField: FC<{
             onChange={(e: any) => setSearchText(e.target.value)}
           />
         </div>
-        <AddTag refetch={refetch} />
+        {displayAdd && <AddTag refetch={refetch} />}
       </div>
       <div className={styles.content}>
         {displayed.map((item, index) => (

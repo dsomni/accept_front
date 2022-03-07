@@ -4,6 +4,7 @@ import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
+import CopyButton from '@components/CopyButton/CopyButton';
 
 const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
   const description = useRef<HTMLDivElement>(null);
@@ -44,31 +45,38 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
           </div>
         </div>
       </div>
-      <Table
-        striped
-        highlightOnHover
-        verticalSpacing="md"
-        className={styles.table}
-      >
-        <thead>
-          <tr>
-            <td className={styles.tableHeader}>
-              {capitalize(locale.tasks.description.examples.input)}
-            </td>
-            <td className={styles.tableHeader}>
-              {capitalize(locale.tasks.description.examples.output)}
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {task.examples.map((example, index) => (
+      <div className={styles.examplesLabel}>
+        {capitalize(locale.tasks.description.examples.title)}
+      </div>
+      {task.examples.map((example, index) => (
+        <Table
+          key={index}
+          striped
+          verticalSpacing="md"
+          className={styles.table}
+        >
+          <tbody>
+            <tr>
+              <div className={styles.exampleHeader}>
+                {capitalize(locale.tasks.description.examples.input)}
+                <CopyButton toCopy={example.inputData} />
+              </div>
+            </tr>
             <tr key={index}>
               <td>{example.inputData}</td>
+            </tr>
+            <tr>
+              <div className={styles.exampleHeader}>
+                {capitalize(locale.tasks.description.examples.output)}
+                <CopyButton toCopy={example.outputData || ''} />
+              </div>
+            </tr>
+            <tr>
               <td>{example.outputData}</td>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      ))}
     </div>
   );
 };

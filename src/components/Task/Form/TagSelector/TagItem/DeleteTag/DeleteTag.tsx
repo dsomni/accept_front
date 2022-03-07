@@ -63,7 +63,7 @@ const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
           >
             <Button
               variant="outline"
-              color="red"
+              color="green"
               autoFocus
               onClick={() => setOpened(false)}
             >
@@ -71,10 +71,10 @@ const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
             </Button>
             <Button
               variant="outline"
-              color="green"
+              color="red"
               onClick={() => handleSubmit()}
             >
-              {capitalize(locale.sure)}
+              {capitalize(locale.delete)}
             </Button>
           </Group>
         </div>

@@ -73,6 +73,7 @@ export const CustomTransferList: FC<{
           values={options}
           handleSelect={handleSelectLeft}
           refetch={refetch}
+          displayAdd
         />
       </div>
       <div className={styles.rightWrapper}>

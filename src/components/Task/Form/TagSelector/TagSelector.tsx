@@ -1,13 +1,9 @@
-import { ITag } from '@custom-types/ITag';
-import { useFetch } from '@hooks/useFetch';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { CustomTransferList } from './CustomTransferList/CustomTransferList';
 import styles from './tagSelector.module.css';
 import { Item } from './CustomTransferList/CustomTransferList';
-
-type callback = (_: Item[]) => Item[];
 
 const TagSelector: FC<{
   initialTags: string[];
@@ -16,13 +12,13 @@ const TagSelector: FC<{
   const { locale } = useLocale();
 
   const [selectedTags, setSelectedTags] = useState<Item[]>([]);
-  const [avaliableTags, setAvaliableTags] = useState<Item[]>([]);
+  const [availableTags, setAvailableTags] = useState<Item[]>([]);
 
   const refetch = useCallback(async () => {
     fetch('/api/tags/list').then((res) => {
       if (res.status === 200) {
         res.json().then((res) => {
-          let newAvaliableTags: Item[] = [];
+          let newAvailableTags: Item[] = [];
           let newSelectedTags: Item[] = [];
           let tag;
           let selectedSpecs = selectedTags.map((item) => item.value);
@@ -34,11 +30,11 @@ const TagSelector: FC<{
             if (selectedSpecs.includes(tag.value)) {
               newSelectedTags.push(tag);
             } else {
-              newAvaliableTags.push(tag);
+              newAvailableTags.push(tag);
             }
           }
           setSelectedTags(newSelectedTags);
-          setAvaliableTags(newAvaliableTags);
+          setAvailableTags(newAvailableTags);
         });
       }
     });
@@ -53,11 +49,11 @@ const TagSelector: FC<{
       {
         <CustomTransferList
           refetch={refetch}
-          options={avaliableTags}
+          options={availableTags}
           chosen={selectedTags}
           setUsed={setUsed}
           setChosen={setSelectedTags}
-          setOptions={setAvaliableTags}
+          setOptions={setAvailableTags}
           titles={[
             capitalize(locale.tasks.form.tagSelector.available),
             capitalize(locale.tasks.form.tagSelector.used),
