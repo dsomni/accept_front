@@ -1,13 +1,17 @@
 import { useLocale } from '@hooks/useLocale';
 import { Notification } from '@mantine/core';
-import { FC, memo } from 'react';
+import { FC, memo, ReactNode } from 'react';
 import { Cross1Icon, CheckIcon } from '@modulz/radix-icons';
+import { capitalize } from '@utils/capitalize';
+import styles from './notify.module.css';
 
 const Notify: FC<{
   answer: boolean;
   error: boolean;
   setAnswer: (_: boolean) => void;
-}> = ({ answer, error, setAnswer }) => {
+  status?: string;
+  description?: ReactNode | string;
+}> = ({ answer, error, setAnswer, status, description }) => {
   const { locale } = useLocale();
 
   return (
@@ -15,19 +19,29 @@ const Notify: FC<{
       {answer &&
         (error ? (
           <Notification
-            icon={<Cross1Icon />}
+            icon={<Cross1Icon width={40} height={40} />}
             color="red"
             onClose={() => setAnswer(false)}
+            title={capitalize(status ? status : locale.error)}
+            classNames={{
+              title: styles.title,
+              icon: styles.icon,
+            }}
           >
-            {locale.tasks.status.error}
+            {description}
           </Notification>
         ) : (
           <Notification
-            icon={<CheckIcon />}
+            icon={<CheckIcon width={40} height={40} />}
             color="green"
             onClose={() => setAnswer(false)}
+            title={capitalize(status ? status : locale.success)}
+            classNames={{
+              title: styles.title,
+              icon: styles.icon,
+            }}
           >
-            {locale.tasks.status.ok}
+            {description}
           </Notification>
         ))}
     </>

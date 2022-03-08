@@ -2,6 +2,7 @@
   width: 100%;
   position: fixed;
   bottom: 20px;
+  z-index: 15;
   display: flex;
   justify-content: center;
   align-items: center;

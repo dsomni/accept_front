@@ -88,6 +88,12 @@ const tasks = {
   },
   send: 'send',
   results: 'results',
+  errors: {
+    create: {
+      error: 'can not create the task',
+      success: 'task was successfully created',
+    },
+  },
   form: {
     steps: {
       first: {
@@ -185,7 +191,10 @@ const en = {
   cancel: 'cancel',
   yes: 'yes',
   no: 'no',
-  sure: "I'm sure",
+  sure: "i'm sure",
+  error: 'error',
+  success: 'successes',
+  language: 'language',
   errors,
   placeholders,
   credentials,

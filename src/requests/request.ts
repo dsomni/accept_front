@@ -15,7 +15,7 @@ export const sendRequest = <ISend, IReceive>(
     options.body = JSON.stringify(body as object);
   }
   return fetch(withPrefix(path), options)
-    .then((res) => res.json())
+    .then((res) => (res.status === 200 ? res.json() : false))
     .then((res) => res as IReceive)
     .catch((e) => false);
 };

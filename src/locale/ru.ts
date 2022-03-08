@@ -87,6 +87,12 @@ const tasks = {
   },
   send: 'отправка',
   results: 'результаты',
+  errors: {
+    create: {
+      error: 'ошибка при создании задачи',
+      success: 'задача успешно создана',
+    },
+  },
   form: {
     steps: {
       first: {
@@ -185,6 +191,9 @@ const ru = {
   yes: 'да',
   no: 'нет',
   sure: 'я уверен(а)',
+  error: 'ошибка',
+  success: 'успешно',
+  language: 'язык',
   errors,
   placeholders,
   credentials,

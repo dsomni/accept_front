@@ -13,6 +13,7 @@ const ListItem: FC<{
   maxRows?: number;
   single?: boolean;
   onDelete: (index: number) => void;
+  classNames?: any;
 }> = ({
   label,
   InLabel,
@@ -23,6 +24,7 @@ const ListItem: FC<{
   onDelete,
   form,
   field,
+  classNames,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -33,7 +35,7 @@ const ListItem: FC<{
           className={styles.exampleInput}
           autosize
           label={
-            <div className={styles.label}>
+            <div className={styles.label + ' ' + classNames?.label}>
               {InLabel}
               <ActionIcon
                 onClick={() => onDelete(index)}
@@ -58,7 +60,11 @@ const ListItem: FC<{
             size="lg"
             autosize
             className={styles.exampleInput}
-            label={<div className={styles.label}>{OutLabel}</div>}
+            label={
+              <div className={styles.label + ' ' + classNames?.label}>
+                {OutLabel}
+              </div>
+            }
             minRows={2}
             maxRows={maxRows}
             value={form.values[field][index]['outputData']}

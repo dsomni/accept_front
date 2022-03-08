@@ -1,4 +1,6 @@
+import CodeArea from '@components/CodeArea/CodeArea';
 import ListItem from '@components/ListItem/ListItem';
+import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Textarea } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
@@ -10,7 +12,32 @@ const Checker: FC<{ form: any }> = ({ form }) => {
 
   return (
     <div className={styles.wrapper}>
+      <CodeArea
+        classNames={{
+          label: styles.label,
+        }}
+        label={capitalize(locale.tasks.form.checker)}
+        setLanguage={(value) =>
+          form.setFieldValue('checkerLang', value)
+        }
+        setCode={(value) => form.setFieldValue('checkerCode', value)}
+        formProps={form.getInputProps('checkerCode')}
+      />
+      {/* <div className={styles.langSelector}>
+        <ProgrammingLangSelector
+          classNames={{
+            label: styles.label,
+          }}
+          setValue={(value) =>
+            form.setFieldValue('checkerLang', value)
+          }
+        />
+      </div>
+
       <Textarea
+        classNames={{
+          label: styles.label,
+        }}
         className={styles.codeArea}
         placeholder={capitalize(locale.placeholders.code)}
         minRows={20}
@@ -18,7 +45,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         size="lg"
         label={capitalize(locale.tasks.form.checker)}
         {...form.getInputProps('checkerCode')}
-      />
+      /> */}
       <div className={styles.listWrapper}>
         {form.values.tests &&
           form.values.tests.map(
@@ -30,6 +57,9 @@ const Checker: FC<{ form: any }> = ({ form }) => {
                     ' #' +
                     (index + 1)
                   }
+                  classNames={{
+                    label: styles.label,
+                  }}
                   field="tests"
                   InLabel={capitalize(locale.tasks.form.inputTest)}
                   OutLabel={capitalize(locale.tasks.form.outputTest)}

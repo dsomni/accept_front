@@ -1,9 +1,8 @@
 .wrapper {
-  width: 100%;
+  width: 70vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 50px 0;
+  margin: 50px 15vw;
 }
 
 .codeArea {
@@ -16,4 +15,13 @@
   gap: 5vh;
   display: flex;
   flex-direction: column;
+}
+
+.langSelector {
+  margin-bottom: 16px;
+  max-width: 50%;
+}
+
+.label {
+  font-size: 1.3rem;
 }
