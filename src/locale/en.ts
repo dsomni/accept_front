@@ -98,6 +98,12 @@ const tasks = {
       success: 'task was successfully updated',
     },
   },
+  list: {
+    title: 'title',
+    author: 'author',
+    grade: 'grade',
+    verdict: 'verdict',
+  },
   form: {
     steps: {
       first: {
@@ -180,11 +186,17 @@ const credentials = {
 
 const placeholders = {
   code: 'place your code here',
+  search: 'search',
+  showColumns: 'pick columns to show',
 };
 
 const errors = {
   minLength: (title: string, len: number) =>
     `${title} should not be shorter than ${len} characters`,
+};
+
+const table = {
+  perPage: 'per page',
 };
 
 const en = {
@@ -200,6 +212,8 @@ const en = {
   error: 'error',
   success: 'successes',
   language: 'language',
+  all: 'all',
+  table,
   errors,
   placeholders,
   credentials,

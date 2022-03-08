@@ -40,7 +40,6 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
         const task_spec = getTaskSpec(url);
         // has spec
         if (task_spec) {
-          console.log('task', task_spec);
           await fetch(`${SERVER_URL}/api/revalidate/task`, {
             method: 'POST',
             body: JSON.stringify({ spec: task_spec }),

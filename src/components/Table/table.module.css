@@ -1,0 +1,56 @@
+.wrapper {
+  width: 80vw;
+  margin: 20px 10vw 10vh 10vw;
+  height: 100%;
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.label {
+  font-size: 1.3rem;
+}
+.selected {
+  font-size: 1.1rem;
+}
+
+.searchWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  column-gap: 32px;
+  row-gap: 10px;
+}
+.columnSelect,
+.search {
+  width: 25%;
+  min-width: 350px;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.pagesWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 30%;
+  justify-content: space-between;
+}
+.pageNavigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.perPageWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.selectPerPage {
+  width: 100px;
+}

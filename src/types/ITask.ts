@@ -1,6 +1,17 @@
 import { IHint } from './IHint';
 import { ITest } from './ITest';
 
+interface IChecker {
+  sourceCode: string;
+  language: string;
+  version: string | undefined;
+}
+
+interface IConstraints {
+  time: number | undefined;
+  memory: number | undefined;
+}
+
 export interface ITaskDisplay {
   spec: string;
   title: string;
@@ -22,11 +33,6 @@ export interface ITaskDisplay {
   type: string;
 
   verdict: string | undefined;
-}
-
-export interface IConstraints {
-  time: number | undefined;
-  memory: number | undefined;
 }
 
 export interface ITask {
@@ -57,8 +63,10 @@ export interface ITask {
   tests: ITest[];
   checker: IChecker | undefined;
 }
-interface IChecker {
-  sourceCode: string;
-  language: string;
-  version: string | undefined;
+
+export interface ITaskList {
+  title: string;
+  tags: string[];
+  author: string;
+  verdict: string | undefined;
 }

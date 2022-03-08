@@ -99,10 +99,8 @@ function AddTask() {
         alarm: form.values['hintAlarm'],
       };
     }
-    // console.log(body);
     sendRequest<ITask, ITaskDisplay>('tasks/add', 'POST', body).then(
       (res) => {
-        console.log(res);
         setAnswer(true);
         if (res) {
           setNotificationStatus(defaultStatuses.ok);

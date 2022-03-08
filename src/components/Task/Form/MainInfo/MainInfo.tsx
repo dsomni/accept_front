@@ -15,7 +15,6 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
   const initialTags = useMemo(
     () => {
-      console.log(form.values.tags);
       return form.values.tags;
     },
     [form.values.spec] // eslint-disable-line

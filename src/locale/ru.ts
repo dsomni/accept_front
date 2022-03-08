@@ -97,6 +97,12 @@ const tasks = {
       success: 'задача успешно изменена',
     },
   },
+  list: {
+    title: 'название задачи',
+    author: 'автор',
+    grade: 'класс',
+    verdict: 'вердикт',
+  },
   form: {
     steps: {
       first: {
@@ -179,11 +185,17 @@ const form = {
 
 const placeholders = {
   code: 'вставьте ваш код сюда',
+  search: 'поиск',
+  showColumns: 'выберете поля',
 };
 
 const errors = {
   minLength: (title: string, len: number) =>
     `${title} должен быть не короче ${len} символов`,
+};
+
+const table = {
+  perPage: 'на странице',
 };
 
 const ru = {
@@ -199,6 +211,8 @@ const ru = {
   error: 'ошибка',
   success: 'успешно',
   language: 'язык',
+  all: 'все',
+  table,
   errors,
   placeholders,
   credentials,
