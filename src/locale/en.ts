@@ -93,6 +93,10 @@ const tasks = {
       error: 'can not create the task',
       success: 'task was successfully created',
     },
+    edit: {
+      error: 'can not edit the task',
+      success: 'task was successfully updated',
+    },
   },
   form: {
     steps: {
@@ -166,6 +170,7 @@ const form = {
   back: 'back',
   create: 'create',
   search: 'search',
+  update: 'update',
 };
 
 const credentials = {

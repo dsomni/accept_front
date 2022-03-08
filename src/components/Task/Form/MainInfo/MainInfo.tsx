@@ -13,7 +13,13 @@ import styles from './mainInfo.module.css';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
-  const innitialTags = useMemo(() => form.values.tags, []); // eslint-disable-line
+  const initialTags = useMemo(
+    () => {
+      console.log(form.values.tags);
+      return form.values.tags;
+    },
+    [form.values.spec] // eslint-disable-line
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -30,7 +36,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         classNames={{
           label: styles.label,
         }}
-        initialTags={innitialTags}
+        initialTags={initialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
       />
       <NumberInput

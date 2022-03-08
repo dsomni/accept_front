@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/task-display-mode';
+const url = 'http://' + env.API_ENDPOINT + '/api/task';
 
-export default async function TaskToDisplay(
+export default async function FullTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

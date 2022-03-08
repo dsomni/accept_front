@@ -19,7 +19,7 @@ const Notify: FC<{
       {answer &&
         (error ? (
           <Notification
-            icon={<Cross1Icon width={40} height={40} />}
+            icon={<Cross1Icon width={20} height={20} />}
             color="red"
             onClose={() => setAnswer(false)}
             title={capitalize(status ? status : locale.error)}
@@ -32,7 +32,7 @@ const Notify: FC<{
           </Notification>
         ) : (
           <Notification
-            icon={<CheckIcon width={40} height={40} />}
+            icon={<CheckIcon width={30} height={30} />}
             color="green"
             onClose={() => setAnswer(false)}
             title={capitalize(status ? status : locale.success)}

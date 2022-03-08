@@ -8,13 +8,14 @@ import { sendRequest } from '@requests/request';
 import { ITag } from '@custom-types/ITag';
 
 const TagSelector: FC<{
-  initialTags: string[];
+  initialTags: Item[];
   setUsed: (_: any) => void;
   classNames?: object;
-}> = ({ setUsed, classNames }) => {
+}> = ({ setUsed, classNames, initialTags }) => {
   const { locale } = useLocale();
 
-  const [selectedTags, setSelectedTags] = useState<Item[]>([]);
+  const [selectedTags, setSelectedTags] =
+    useState<Item[]>(initialTags);
   const [availableTags, setAvailableTags] = useState<Item[]>([]);
 
   const refetch = useCallback(async () => {
