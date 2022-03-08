@@ -5,6 +5,7 @@ import styles from './deleteTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { Item } from '../../CustomTransferList/CustomTransferList';
 import { capitalize } from '@utils/capitalize';
+import { isSuccessful } from '@requests/request';
 
 const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
   item,
@@ -14,14 +15,13 @@ const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
   const { locale } = useLocale();
 
   const handleSubmit = useCallback(() => {
-    fetch('/api/tags/delete', {
-      method: 'POST',
-      body: JSON.stringify({
-        spec: item.value,
-      }),
-    }).then(() => {
-      refetch();
-      setOpened(false);
+    isSuccessful('tags/delete', 'POST', {
+      spec: item.value,
+    }).then((success) => {
+      if (success) {
+        refetch();
+        setOpened(false);
+      }
     });
   }, [item, refetch]);
 

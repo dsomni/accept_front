@@ -1,3 +1,4 @@
+import { ITag } from '@custom-types/ITag';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 

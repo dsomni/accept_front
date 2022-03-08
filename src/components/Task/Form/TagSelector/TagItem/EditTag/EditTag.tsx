@@ -11,6 +11,7 @@ import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { Item } from '../../CustomTransferList/CustomTransferList';
 import { capitalize } from '@utils/capitalize';
+import { isSuccessful } from '@requests/request';
 
 const EditTag: FC<{ item: Item; refetch: () => void }> = ({
   item,
@@ -43,15 +44,14 @@ const EditTag: FC<{ item: Item; refetch: () => void }> = ({
   const handleSubmit = useCallback(
     (title) => {
       if (validate(title)) {
-        fetch('/api/tags/edit', {
-          method: 'POST',
-          body: JSON.stringify({
-            spec: item.value,
-            title: title,
-          }),
-        }).then(() => {
-          refetch();
-          setOpened(false);
+        isSuccessful('tags/edit', 'POST', {
+          spec: item.value,
+          title: title,
+        }).then((success) => {
+          if (success) {
+            refetch();
+            setOpened(false);
+          }
         });
       }
     },

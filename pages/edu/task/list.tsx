@@ -1,24 +1,29 @@
 import { ITaskDisplay } from '@custom-types/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
+import { sendRequest } from '@requests/request';
 import { ReactNode, useEffect, useState } from 'react';
 
 function TaskList() {
   const [list, setList] = useState<ITaskDisplay[]>([]);
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch('/api/tasks/list').then((res) => {
-      if (res.status == 200) {
-        res.json().then((res) => setList(res));
-        return;
+    sendRequest<{}, ITaskDisplay[]>('tasks/list', 'GET').then(
+      (res) => {
+        if (res) {
+          return setList(res);
+        }
+        setError(true);
       }
-      res.json().then((res) => setError(res));
-    });
+    );
   }, []);
 
   return (
     <div>
-      {list && list.map((item, index) => <div key={index}>{item.title}</div>)}
+      {list &&
+        list.map((item, index) => (
+          <div key={index}>{item.title}</div>
+        ))}
     </div>
   );
 }

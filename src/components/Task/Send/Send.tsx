@@ -17,6 +17,7 @@ import { useUser } from '@hooks/useUser';
 import styles from './send.module.css';
 import Notify from '@components/Notify/Notify';
 import { capitalize } from '@utils/capitalize';
+import { isSuccessful } from '@requests/request';
 
 const languages = [
   {
@@ -45,23 +46,15 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
   const [answer, setAnswer] = useState(false);
 
   const handleSubmit = useCallback(() => {
-    fetch('/api/attempts/submit', {
-      method: 'POST',
-      body: JSON.stringify({
-        author: user?.login,
-        task: spec,
-        language: lang,
-        programText: code,
-      }),
-    })
-      .then((res) => {
-        setError(res.status !== 200);
-        setAnswer(true);
-      })
-      .catch((e) => {
-        setError(true);
-        setAnswer(true);
-      });
+    isSuccessful('attempts/submit', 'POST', {
+      author: user?.login,
+      task: spec,
+      language: lang,
+      programText: code,
+    }).then((success) => {
+      setError(!success);
+      setAnswer(true);
+    });
   }, [lang, code, user, spec]);
 
   const onDrop = useCallback((files: File[]) => {

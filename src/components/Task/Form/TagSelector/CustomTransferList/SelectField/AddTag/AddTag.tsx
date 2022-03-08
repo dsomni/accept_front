@@ -10,6 +10,7 @@ import { PlusIcon } from '@modulz/radix-icons';
 import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
+import { isSuccessful } from '@requests/request';
 
 const AddTag: FC<{ refetch: () => void }> = ({ refetch }) => {
   const [opened, setOpened] = useState(false);
@@ -39,14 +40,13 @@ const AddTag: FC<{ refetch: () => void }> = ({ refetch }) => {
   const handleSubmit = useCallback(
     (title) => {
       if (validate(title)) {
-        fetch('/api/tags/add', {
-          method: 'POST',
-          body: JSON.stringify({
-            title: title,
-          }),
-        }).then(() => {
-          refetch();
-          setOpened(false);
+        isSuccessful('tags/add', 'POST', {
+          title: title,
+        }).then((success) => {
+          if (success) {
+            refetch();
+            setOpened(false);
+          }
         });
       }
     },

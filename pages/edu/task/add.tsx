@@ -13,15 +13,16 @@ import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionIn
 import Examples from '@components/Task/Form/Examples/Examples';
 import { useUser } from '@hooks/useUser';
 import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
+import { isSuccessful } from '@requests/request';
 
 function AddTask() {
   const { locale } = useLocale();
   const [currentStep, setCurrentStep] = useState(0);
   const { user } = useUser();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   const nextStep = () =>
     setCurrentStep((current) =>
@@ -98,10 +99,12 @@ function AddTask() {
         alarm: form.values['hintAlarm'],
       };
     }
-    console.log(body);
-    fetch('/api/tasks/add', {
-      method: 'POST',
-      body: JSON.stringify(body),
+    isSuccessful('tasks/add', 'POST', body).then((success) => {
+      if (success) {
+        console.log('success');
+      } else {
+        console.log('error');
+      }
     });
   }, [form.values, user?.login]);
 

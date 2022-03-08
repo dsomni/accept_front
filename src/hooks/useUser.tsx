@@ -1,5 +1,6 @@
 import { ILocaleContext } from '@custom-types/ILocale';
 import { IUser, IUserContext } from '@custom-types/IUser';
+import { sendRequest, isSuccessful } from '@requests/request';
 import { userInfo } from 'os';
 import {
   createContext,
@@ -14,15 +15,16 @@ const UserContext = createContext<IUserContext>(null!);
 
 export const UserProvider: FC = ({ children }) => {
   const whoAmI = useCallback(async () => {
-    const response = await fetch('/api/auth/whoami');
-    if (response.status === 200) {
-      const user = await response.json();
+    const response = await sendRequest<{}, IUser>(
+      'auth/whoami',
+      'GET'
+    );
+    if (response) {
       setValue((prev) => ({
         ...prev,
-        user: user as IUser,
+        user: response,
       }));
-    }
-    if (response.status === 401) {
+    } else {
       setValue((prev) => ({
         ...prev,
         user: undefined,
@@ -31,22 +33,19 @@ export const UserProvider: FC = ({ children }) => {
   }, []);
 
   const refresh = useCallback(async () => {
-    const res = await fetch('/api/auth/refresh');
-    if (res.status === 200) {
+    const success = await isSuccessful('auth/refresh', 'GET');
+    if (success) {
       await whoAmI();
     }
   }, [whoAmI]);
 
   const signIn = useCallback(
     async (login: string, password: string) => {
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
-        body: JSON.stringify({
-          login: login,
-          password: password,
-        }),
+      const res = await isSuccessful('auth/signin', 'POST', {
+        login: login,
+        password: password,
       });
-      if (res.status == 200) {
+      if (res) {
         await whoAmI();
       }
     },
@@ -54,8 +53,8 @@ export const UserProvider: FC = ({ children }) => {
   );
 
   const signOut = useCallback(async () => {
-    const res = await fetch('/api/auth/signout');
-    if (res.status == 200) {
+    const success = await isSuccessful('auth/signout', 'GET');
+    if (success) {
       setValue((prev) => ({
         ...prev,
         user: undefined,
@@ -74,7 +73,11 @@ export const UserProvider: FC = ({ children }) => {
     refresh,
   }));
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={value}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export function useUser() {
