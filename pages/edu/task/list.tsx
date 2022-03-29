@@ -160,7 +160,6 @@ function TaskList() {
 
   const rowFilter = useCallback(
     (row) => {
-      // console.log(row.tags, currentTags);
       return hasSubarray(row.tags, currentTags);
     },
     [currentTags]

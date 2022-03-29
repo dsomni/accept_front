@@ -115,14 +115,18 @@ const Table: FC<{
             rowsToSort.sort(
               (a: any, b: any) => order * column.sortFunction(a, b)
             );
-            return rowsToSort;
+            return rowsToSort.filter(
+              (row) => !!rowFilter && rowFilter(row)
+            );
           });
         } else {
-          setLocalRows(rows);
+          setLocalRows(
+            rows.filter((row) => !!rowFilter && rowFilter(row))
+          );
         }
       }
     },
-    [localColumns, rows]
+    [localColumns, rows, rowFilter]
   );
 
   const fuse = useMemo(
@@ -174,7 +178,13 @@ const Table: FC<{
 
   const beforeSelection = useCallback(() => {
     handleSearch('', true);
-  }, [handleSearch]);
+    setLocalColumns((localColumns) =>
+      localColumns.map((column) => {
+        column.sorted = column.allowMiddleState ? 0 : 1;
+        return column;
+      })
+    );
+  }, [handleSearch, setLocalColumns]);
 
   return (
     <div className={styles.wrapper + ' ' + classNames.wrapper}>
