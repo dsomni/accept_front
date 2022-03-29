@@ -18,6 +18,7 @@ import Fuse from 'fuse.js';
 import {
   FC,
   memo,
+  ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -26,6 +27,9 @@ import {
 import InnerTable from './InnerTable/InnerTable';
 import styles from './table.module.css';
 
+type callback = (list: any[]) => any[];
+type setter = (_: callback) => void;
+
 const Table: FC<{
   columns: ITableColumn[];
   rows: any[];
@@ -33,6 +37,8 @@ const Table: FC<{
   defaultOnPage: number;
   onPage: number[];
   searchKeys: string[];
+  additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
+  rowFilter?: (_: any) => boolean;
 }> = ({
   columns,
   rows,
@@ -40,6 +46,8 @@ const Table: FC<{
   defaultOnPage,
   onPage,
   searchKeys,
+  additionalSearch,
+  rowFilter,
 }) => {
   const [localRows, setLocalRows] = useState(rows);
   const [search, setSearch] = useState('');
@@ -118,22 +126,36 @@ const Table: FC<{
   );
 
   const fuse = useMemo(
-    () =>
-      new Fuse(rows, {
+    () => {
+      return new Fuse(rows, {
         keys: searchKeys.filter((column) =>
           selectedColumns.includes(column)
         ),
-      }),
+      });
+    },
     [rows, selectedColumns] // eslint-disable-line
   );
 
   const handleSearch = useCallback(
-    (value: string) => {
+    (value: string, shouldCancelFilter?: boolean) => {
       setSearch(value);
       if (value !== '') {
-        setLocalRows(fuse.search(value).map((result) => result.item));
+        setLocalRows(
+          fuse
+            .search(value)
+            .map((result) => result.item)
+            .filter(
+              (row) =>
+                shouldCancelFilter || (!!rowFilter && rowFilter(row))
+            )
+        );
       } else {
-        setLocalRows(rows);
+        setLocalRows(
+          rows.filter(
+            (row) =>
+              shouldCancelFilter || (!!rowFilter && rowFilter(row))
+          )
+        );
       }
       setLocalColumns((localColumns) =>
         localColumns.map((column) => {
@@ -142,13 +164,17 @@ const Table: FC<{
         })
       );
     },
-    [fuse, rows]
+    [fuse, rows, rowFilter]
   );
 
   const lastPage = useMemo(
     () => Math.floor(localRows.length / perPage),
     [localRows, perPage]
   );
+
+  const beforeSelection = useCallback(() => {
+    handleSearch('', true);
+  }, [handleSearch]);
 
   return (
     <div className={styles.wrapper + ' ' + classNames.wrapper}>
@@ -178,9 +204,11 @@ const Table: FC<{
               )}
             />
           </div>
+          {additionalSearch &&
+            additionalSearch(setLocalRows, beforeSelection)}
         </div>
         <InnerTable
-          columns={localColumns}
+          columns={localColumns.filter((column) => !column.hidden)}
           classNames={classNames}
           rows={
             perPage

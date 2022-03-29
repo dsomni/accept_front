@@ -65,7 +65,8 @@ export interface ITask {
 }
 
 export interface ITaskList {
-  title: string;
+  spec: string;
+  title: any;
   tags: string[];
   author: string;
   verdict: string | undefined;

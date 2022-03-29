@@ -3,15 +3,26 @@ import { ITableColumn } from '@custom-types/ITable';
 import { ITaskList } from '@custom-types/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import {
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from 'react';
 import styles from '@styles/edu/task.list.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
+import { ITag } from '@custom-types/ITag';
+import { MultiSelect } from '@mantine/core';
+import { hasSubarray } from '@utils/hasSubarray';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);
+  const [tags, setTags] = useState(new Map<string, ITag>());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [currentTags, setCurrentTags] = useState<string[]>([]);
   const { locale } = useLocale();
 
   const columns: ITableColumn[] = useMemo(
@@ -25,8 +36,20 @@ function TaskList() {
         sorted: 0,
         allowMiddleState: true,
         hidable: false,
+        hidden: true,
+        size: 0,
+      },
+      {
+        label: capitalize(locale.tasks.list.title),
+        key: 'titleDisplay',
+        sortable: true,
+        sortFunction: (a: any, b: any) =>
+          a.title > b.title ? 1 : a.title == b.title ? 0 : -1,
+        sorted: 0,
+        allowMiddleState: true,
+        hidable: false,
         hidden: false,
-        size: '9',
+        size: 9,
       },
       {
         label: capitalize(locale.tasks.list.author),
@@ -38,7 +61,7 @@ function TaskList() {
         allowMiddleState: true,
         hidable: true,
         hidden: false,
-        size: '3',
+        size: 3,
       },
       {
         label: capitalize(locale.tasks.list.grade),
@@ -50,7 +73,7 @@ function TaskList() {
         allowMiddleState: false,
         hidable: true,
         hidden: false,
-        size: '1',
+        size: 2,
       },
       {
         label: capitalize(locale.tasks.list.verdict),
@@ -61,7 +84,7 @@ function TaskList() {
         allowMiddleState: false,
         hidable: true,
         hidden: false,
-        size: '1',
+        size: 2,
       },
     ],
     [locale]
@@ -69,11 +92,61 @@ function TaskList() {
 
   useEffect(() => {
     let cleanUp = false;
+
+    sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
+      if (!cleanUp) {
+        if (res) {
+          let newTags = new Map<string, ITag>();
+          for (let i = 0; i < res.length; i++)
+            newTags.set(res[i].spec, res[i]);
+          setTags(newTags);
+        }
+      }
+    });
+
+    return () => {
+      cleanUp = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cleanUp = false;
     setLoading(true);
     sendRequest<{}, ITaskList[]>('tasks/list', 'GET').then((res) => {
       if (!cleanUp) {
         if (res) {
-          setList(res);
+          setList(
+            res.map((item) => {
+              return {
+                ...item,
+                tags: item.tags.map(
+                  (tag) => tags.get(tag)?.title || ''
+                ),
+                titleDisplay: (
+                  <div className={styles.titleWrapper}>
+                    <a
+                      className={styles.title}
+                      href={`/edu/task/${item.spec}`}
+                    >
+                      {item.title}
+                    </a>
+                    {!!tags && (
+                      <span className={styles.tags}>
+                        {item.tags.map((tag, idx) => (
+                          <div className={styles.tag} key={idx}>
+                            {tags.get(tag)?.title +
+                              (idx == item.tags.length - 1
+                                ? ''
+                                : ', ')}
+                          </div>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                ),
+              };
+            })
+          );
         } else {
           setError(true);
         }
@@ -83,18 +156,51 @@ function TaskList() {
     return () => {
       cleanUp = true;
     };
-  }, []);
+  }, [tags]);
+
+  const rowFilter = useCallback(
+    (row) => {
+      // console.log(row.tags, currentTags);
+      return hasSubarray(row.tags, currentTags);
+    },
+    [currentTags]
+  );
+
+  const tagSearch = useCallback(
+    (setter, beforeSelect) => (
+      <div className={styles.selectWrapper}>
+        <MultiSelect
+          classNames={{
+            value: styles.selected,
+          }}
+          data={Array.from(tags.values()).map((tag) => tag.title)}
+          onChange={(value: string[]) => {
+            beforeSelect();
+            setCurrentTags(value);
+            if (value.length > 0) {
+              setter(() =>
+                list.filter((row) => hasSubarray(row.tags, value))
+              );
+            } else {
+              setter(() => list);
+            }
+          }}
+          placeholder={capitalize(locale.placeholders.showColumns)}
+        />
+      </div>
+    ),
+    [locale, list, tags]
+  );
 
   return (
     <div>
-      {!loading && (
+      {!loading && !!tags && (
         <Table
           columns={columns}
           rows={list}
           classNames={{
             wrapper: styles.wrapper,
             table: styles.table,
-            title: styles.title,
             author: styles.author,
             grade: styles.grade,
             verdict: styles.verdict,
@@ -106,6 +212,8 @@ function TaskList() {
           defaultOnPage={10}
           onPage={[5, 10]}
           searchKeys={['title', 'author', 'grade']}
+          rowFilter={rowFilter}
+          additionalSearch={tagSearch}
         />
       )}
     </div>

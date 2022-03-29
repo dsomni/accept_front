@@ -12,12 +12,6 @@
   flex-direction: row; */
   display: grid;
 }
-
-.title {
-  /* width: 50%; */
-  text-align: left;
-}
-
 .author {
   /* width: 25%; */
   text-align: left;
@@ -56,4 +50,44 @@
 
 .even {
   background-color: #f8f8f8;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  column-gap: 2em;
+  row-gap: 10px;
+  padding-right: 5%;
+  flex-wrap: wrap;
+}
+
+.title {
+  text-decoration: none;
+  text-align: left;
+  font-size: 1.15em;
+  color: #3f97f0;
+}
+
+.title:hover {
+  color: #005cd4;
+}
+
+.tags {
+  font-size: 0.7em;
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: right;
+  color: grey;
+}
+
+.selected {
+  font-size: 1.1rem;
+}
+.selectWrapper {
+  width: 25%;
+  min-width: 350px;
 }

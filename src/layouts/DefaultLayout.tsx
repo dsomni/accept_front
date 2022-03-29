@@ -10,7 +10,7 @@ export const DefaultLayout: FC = ({ children }) => {
         <title>Accept</title>
       </Head>
       <Navbar />
-      <main>{children}</main>
+      <main style={{ minHeight: '100vh' }}>{children}</main>
       <Footer />
     </>
   );

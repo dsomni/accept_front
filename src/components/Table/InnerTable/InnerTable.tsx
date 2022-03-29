@@ -14,13 +14,18 @@ const InnerTable: FC<{
     [columns]
   );
 
-  const gridTemplate = useMemo(
-    () => ({
+  const gridTemplate = useMemo(() => {
+    let total = 0;
+    columns.forEach((column) => {
+      total += column.size;
+    });
+    return {
       gridTemplateColumns:
-        columns.map((column) => column.size).join('fr ') + 'fr',
-    }),
-    [columns]
-  );
+        columns
+          .map((column) => (column.size / total) * 100)
+          .join('% ') + '%',
+    };
+  }, [columns]);
 
   return (
     <table className={classNames.table}>

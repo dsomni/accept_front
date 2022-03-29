@@ -6,7 +6,8 @@
   min-height: 65vh;
   margin: 5vh 5vw;
   padding: 0 0 15px 0;
-  box-shadow: 0 -6px 6px -3px rgb(0 0 0 / 20%), 0 -10px 14px 1px rgb(0 0 0 / 14%),
+  box-shadow: 0 -6px 6px -3px rgb(0 0 0 / 20%),
+    0 -10px 14px 1px rgb(0 0 0 / 14%),
     0 -4px 18px 3px rgb(0 0 0 / 12%);
   border-radius: 2%;
 }
@@ -55,7 +56,7 @@
   margin: 6px 20px;
   font-weight: 600;
   padding: 0.8em;
-  border: 2px solid rgba(28, 126, 214, 0.75);
+  border: 2px solid #1c7ed6bf;
   width: fit-content;
   height: fit-content;
 }

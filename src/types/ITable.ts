@@ -9,5 +9,5 @@ export interface ITableColumn {
   sortFunction: (a: any, b: any) => -1 | 0 | 1;
   hidable: boolean;
   hidden: boolean;
-  size: string;
+  size: number;
 }
