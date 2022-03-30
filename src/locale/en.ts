@@ -199,6 +199,34 @@ const table = {
   perPage: 'per page',
 };
 
+const assignmentSchema = {
+  errors: {
+    create: {
+      error: 'can not create the assignment schema',
+      success: 'assignment schema was successfully created',
+    },
+  },
+  form: {
+    steps: {
+      first: {
+        label: 'first step',
+        description: 'main assignment info',
+      },
+      second: {
+        label: 'second step',
+        description: 'tasks',
+      },
+      third: {
+        label: 'third step',
+        description: 'preview',
+      },
+    },
+    title: 'title',
+    description: 'description',
+    defaultDuration: 'defaultDuration',
+  },
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -224,6 +252,7 @@ const en = {
   auth,
   tasks,
   form,
+  assignmentSchema,
 };
 
 export default en;
