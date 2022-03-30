@@ -60,7 +60,9 @@ const Form: FC<{
       </Stepper>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         {currentStep === 0 && <MainInfo form={form} />}
-        {currentStep === 1 && <TaskAdding form={form} />}
+        {currentStep === 1 && (
+          <TaskAdding form={form} initialTasks={[]} />
+        )}
         {currentStep === 2 && <Preview form={form} />}
         <Group position="center" mt="xl" className={styles.buttons}>
           {currentStep !== 0 && (

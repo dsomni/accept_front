@@ -6,3 +6,6 @@
 .wrapper > :first-child {
   width: 70vw;
 }
+.label {
+  font-size: 1.4rem;
+}

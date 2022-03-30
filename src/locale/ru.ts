@@ -222,7 +222,11 @@ const assignmentSchema = {
     },
     title: 'название',
     description: 'описание',
-    defaultDuration: 'Длительность по умолчанию',
+    defaultDuration: 'длительность по умолчанию',
+    taskSelector: {
+      available: 'все задачи',
+      used: 'выбранные задачи',
+    },
   },
 };
 

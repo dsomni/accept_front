@@ -3,14 +3,13 @@ import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import styles from './taskSelector.module.css';
-// import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
 import { sendRequest } from '@requests/request';
-// import { CustomTransferList } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
 import { ITaskDisplay } from '@custom-types/ITask';
 import {
   CustomTransferList,
   Item,
 } from '@components/CustomTransferList/CustomTransferList';
+import { TaskItem } from './TaskItem/TaskItem';
 
 const TaskSelector: FC<{
   initialTasks: Item[];
@@ -22,8 +21,10 @@ const TaskSelector: FC<{
   const [selectedTasks, setSelectedTasks] =
     useState<Item[]>(initialTasks);
   const [availableTasks, setAvailableTasks] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const refetch = useCallback(async () => {
+    setLoading(true);
     sendRequest<{}, ITaskDisplay[]>('tasks/list', 'GET').then(
       (tasks) => {
         if (!tasks) return;
@@ -44,6 +45,7 @@ const TaskSelector: FC<{
         }
         setSelectedTasks(newSelectedTasks);
         setAvailableTasks(newAvailableTasks);
+        setLoading(false);
       }
     );
   }, [selectedTasks]);
@@ -52,23 +54,38 @@ const TaskSelector: FC<{
     refetch();
   }, []); // eslint-disable-line
 
+  const itemComponent = useCallback(
+    (item, handleSelect) => {
+      return (
+        <TaskItem
+          item={item}
+          onSelect={() => handleSelect(item)}
+          refetch={refetch}
+        />
+      );
+    },
+    [refetch]
+  );
+
   return (
     <div className={styles.wrapper}>
-      {
-        // <CustomTransferList
-        //   refetch={refetch}
-        //   options={availableTasks}
-        //   chosen={selectedTasks}
-        //   setUsed={setUsed}
-        //   setChosen={setSelectedTasks}
-        //   setOptions={setAvailableTasks}
-        //   classNames={classNames ? classNames : {}}
-        //   titles={[
-        //     capitalize(locale.tasks.form.tagSelector.available),
-        //     capitalize(locale.tasks.form.tagSelector.used),
-        //   ]}
-        // />
-      }
+      {!loading && (
+        <CustomTransferList
+          defaultOptions={availableTasks}
+          defaultChosen={selectedTasks}
+          setUsed={setUsed}
+          classNames={classNames ? classNames : {}}
+          titles={[
+            capitalize(
+              locale.assignmentSchema.form.taskSelector.available
+            ),
+            capitalize(
+              locale.assignmentSchema.form.taskSelector.used
+            ),
+          ]}
+          itemComponent={itemComponent}
+        />
+      )}
     </div>
   );
 };

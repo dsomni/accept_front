@@ -1,14 +1,12 @@
-import { FC, memo, useMemo } from 'react';
+import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { FC, memo, useMemo, useState } from 'react';
 import TaskSelector from '../TaskSelector/TaskSelector';
 import styles from './taskAdding.module.css';
 
-const TaskAdding: FC<{ form: any }> = ({ form }) => {
-  const initialTasks = useMemo(
-    () => {
-      return form.values.tasks;
-    },
-    [form.values.spec] // eslint-disable-line
-  );
+const TaskAdding: FC<{ form: any; initialTasks: Item[] }> = ({
+  form,
+  initialTasks,
+}) => {
   return (
     <>
       <div className={styles.wrapper}>

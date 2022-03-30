@@ -224,6 +224,10 @@ const assignmentSchema = {
     title: 'title',
     description: 'description',
     defaultDuration: 'default duration',
+    taskSelector: {
+      available: 'available tasks',
+      used: 'used tasks',
+    },
   },
 };
 
