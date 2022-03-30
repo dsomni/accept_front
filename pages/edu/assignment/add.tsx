@@ -13,24 +13,11 @@ import { Item } from '@components/CustomTransferList/CustomTransferList';
 
 const initialValues = {
   spec: '',
-  title: 'Уроки французского',
+  title: '',
   author: '',
   description: 'Хороший урок, мне нравится',
-  tasks: [
-    {
-      value: '3b3bdfd7-8972-4bba-947e-4db53aea044a',
-      label: 'Название Задачи',
-    },
-    {
-      value: '1f2348d8-9a6e-4760-afdc-9c7c8e792f88',
-      label: 'Простые числа',
-    },
-    {
-      value: 'a8eacb59-8b8c-4758-b774-d656f1e39834',
-      label: 'Простые числа 2',
-    },
-  ],
-  defaultDuration: 0, // secs, mins, hours???
+  tasks: [],
+  defaultDuration: 0, // minutes
 };
 
 function AddAssignmentSchema() {
@@ -63,6 +50,7 @@ function AddAssignmentSchema() {
       ...form.values,
       tasks: form.values['tasks'].map((task: Item) => task.value),
       author: user?.login || '',
+      duration: form.values.defaultDuration * 60 * 1000, // from minutes to millis
     };
     sendRequest<IAssignmentSchema, IAssignmentSchema>(
       'assignments/schema/add',

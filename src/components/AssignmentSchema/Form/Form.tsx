@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Stepper } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
-import { FC, memo, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import styles from '@styles/edu/task.add.module.css';
 import MainInfo from './MainInfo/MainInfo';
 import TaskAdding from './TaskAdding/TaskAdding';
@@ -14,7 +14,7 @@ const Form: FC<{
   buttonLabel: string;
 }> = ({ form, handleSubmit, buttonLabel }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () =>
     setCurrentStep((current) =>
@@ -67,7 +67,7 @@ const Form: FC<{
           )}
         />
       </Stepper>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <div>
         {currentStep === 0 && <MainInfo form={form} />}
         {currentStep === 1 && (
           <TaskAdding form={form} initialTasks={form.values.tasks} />
@@ -81,15 +81,19 @@ const Form: FC<{
             </Button>
           )}
           <Button
-            onClick={currentStep !== 3 ? nextStep : () => {}}
-            type={currentStep !== 3 ? 'button' : 'submit'}
+            onClick={
+              currentStep !== 3
+                ? nextStep
+                : form.onSubmit(handleSubmit)
+            }
+            type={currentStep === 3 ? 'submit' : 'button'}
           >
             {currentStep === 3
               ? buttonLabel
               : capitalize(locale.form.next)}
           </Button>
         </Group>
-      </form>
+      </div>
     </>
   );
 };
