@@ -15,7 +15,10 @@ const TaskAdding: FC<{ form: any; initialTasks: Item[] }> = ({
             label: styles.label,
           }}
           initialTasks={initialTasks}
-          setUsed={(value) => form.setFieldValue('tasks', value)}
+          setUsed={(value) => {
+            console.log(form.values);
+            form.setFieldValue('tasks', value);
+          }}
         />
       </div>
     </>

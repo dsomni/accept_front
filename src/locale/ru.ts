@@ -217,6 +217,10 @@ const assignmentSchema = {
       },
       third: {
         label: 'шаг третий',
+        description: 'порядок задач',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
         description: 'предпросмотр',
       },
     },

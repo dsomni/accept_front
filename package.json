@@ -22,12 +22,14 @@
     "@mantine/prism": "^3.6.7",
     "@mantine/rte": "^3.6.7",
     "@types/fuse": "^2.6.0",
+    "@types/react-beautiful-dnd": "^13.1.2",
     "ckeditor5-custom-build": "file:./ckeditor5-custom",
     "cookie": "^0.4.2",
     "dayjs": "^1.10.7",
     "fuse.js": "^6.5.3",
     "next": "^12.1.0",
     "react": "17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "17.0.2"
   },
   "devDependencies": {

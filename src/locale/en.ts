@@ -214,10 +214,14 @@ const assignmentSchema = {
       },
       second: {
         label: 'second step',
-        description: 'tasks',
+        description: 'add tasks',
       },
       third: {
         label: 'third step',
+        description: 'order tasks',
+      },
+      fourth: {
+        label: 'fourth step',
         description: 'preview',
       },
     },
