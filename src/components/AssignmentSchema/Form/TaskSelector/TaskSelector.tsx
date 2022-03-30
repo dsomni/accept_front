@@ -3,10 +3,14 @@ import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import styles from './taskSelector.module.css';
-import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
+// import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
 import { sendRequest } from '@requests/request';
-import { CustomTransferList } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
+// import { CustomTransferList } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
 import { ITaskDisplay } from '@custom-types/ITask';
+import {
+  CustomTransferList,
+  Item,
+} from '@components/CustomTransferList/CustomTransferList';
 
 const TaskSelector: FC<{
   initialTasks: Item[];
@@ -51,19 +55,19 @@ const TaskSelector: FC<{
   return (
     <div className={styles.wrapper}>
       {
-        <CustomTransferList
-          refetch={refetch}
-          options={availableTasks}
-          chosen={selectedTasks}
-          setUsed={setUsed}
-          setChosen={setSelectedTasks}
-          setOptions={setAvailableTasks}
-          classNames={classNames ? classNames : {}}
-          titles={[
-            capitalize(locale.tasks.form.tagSelector.available),
-            capitalize(locale.tasks.form.tagSelector.used),
-          ]}
-        />
+        // <CustomTransferList
+        //   refetch={refetch}
+        //   options={availableTasks}
+        //   chosen={selectedTasks}
+        //   setUsed={setUsed}
+        //   setChosen={setSelectedTasks}
+        //   setOptions={setAvailableTasks}
+        //   classNames={classNames ? classNames : {}}
+        //   titles={[
+        //     capitalize(locale.tasks.form.tagSelector.available),
+        //     capitalize(locale.tasks.form.tagSelector.used),
+        //   ]}
+        // />
       }
     </div>
   );

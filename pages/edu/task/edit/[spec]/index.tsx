@@ -11,7 +11,6 @@ import {
 } from 'react';
 import styles from '@styles/edu/task.edit.module.css';
 import { useForm } from '@mantine/hooks';
-import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
 import { useUser } from '@hooks/useUser';
@@ -19,6 +18,7 @@ import { ITag } from '@custom-types/ITag';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
+import { Item } from '@components/CustomTransferList/CustomTransferList';
 
 function EditTask() {
   const { locale } = useLocale();

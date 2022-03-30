@@ -3,9 +3,9 @@ import { ActionIcon, Button, Group, Modal } from '@mantine/core';
 import { TrashIcon } from '@modulz/radix-icons';
 import styles from './deleteTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { Item } from '../../CustomTransferList/CustomTransferList';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
+import { Item } from '@components/CustomTransferList/CustomTransferList';
 
 const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
   item,

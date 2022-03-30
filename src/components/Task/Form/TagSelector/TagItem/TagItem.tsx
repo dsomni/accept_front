@@ -1,5 +1,5 @@
+import { Item } from '@components/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
-import { Item } from '../CustomTransferList/CustomTransferList';
 import DeleteTag from './DeleteTag/DeleteTag';
 import EditTag from './EditTag/EditTag';
 import styles from './tagItem.module.css';
