@@ -3,13 +3,13 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/hooks';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { useUser } from '@hooks/useUser';
-import { Item } from '@components/Task/Form/TagSelector/CustomTransferList/CustomTransferList';
 import { sendRequest } from '@requests/request';
 import Notify from '@components/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import Form from '@components/Task/Form/Form';
 import styles from '@styles/edu/task.add.module.css';
 import { capitalize } from '@utils/capitalize';
+import { Item } from '@components/CustomTransferList/CustomTransferList';
 
 const initialValues = {
   spec: '',

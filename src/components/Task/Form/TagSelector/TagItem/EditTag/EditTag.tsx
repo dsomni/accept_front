@@ -9,9 +9,9 @@ import {
 import { Pencil1Icon } from '@modulz/radix-icons';
 import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { Item } from '../../CustomTransferList/CustomTransferList';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
+import { Item } from '@components/CustomTransferList/CustomTransferList';
 
 const EditTag: FC<{ item: Item; refetch: () => void }> = ({
   item,

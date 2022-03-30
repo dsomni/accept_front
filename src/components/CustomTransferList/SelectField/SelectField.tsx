@@ -1,12 +1,17 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import styles from './selectField.module.css';
-import { TagItem } from '../../TagItem/TagItem';
 import { Item } from '../CustomTransferList';
 import { TextInput, Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import Fuse from 'fuse.js';
-import AddTag from './AddTag/AddTag';
 
 const fuse_options: Fuse.IFuseOptions<Item> = {
   keys: ['label'],
@@ -16,15 +21,15 @@ export const SelectField: FC<{
   title: string;
   values: Item[];
   handleSelect: (_: Item) => void;
-  refetch: () => void;
-  displayAdd?: boolean;
+  rightComponent?: () => ReactNode;
+  itemComponent: (item: any, onSelect: any) => ReactNode;
   classNames: any;
 }> = ({
   title,
   values,
   handleSelect,
-  refetch,
-  displayAdd,
+  rightComponent,
+  itemComponent,
   classNames,
 }) => {
   const [displayed, setDisplayed] = useState(values);
@@ -67,16 +72,11 @@ export const SelectField: FC<{
             onChange={(e: any) => setSearchText(e.target.value)}
           />
         </div>
-        {displayAdd && <AddTag refetch={refetch} />}
+        {!!rightComponent && rightComponent()}
       </div>
       <div className={styles.content}>
         {displayed.map((item, index) => (
-          <TagItem
-            key={index}
-            item={item}
-            onSelect={() => handleSelect(item)}
-            refetch={refetch}
-          />
+          <div key={index}>{itemComponent(item, handleSelect)}</div>
         ))}
       </div>
     </>

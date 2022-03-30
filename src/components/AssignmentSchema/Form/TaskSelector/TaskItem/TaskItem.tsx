@@ -1,10 +1,9 @@
 import { Item } from '@components/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
-import DeleteTag from './DeleteTag/DeleteTag';
-import EditTag from './EditTag/EditTag';
-import styles from './tagItem.module.css';
+import OpenTask from './OpenTask/OpenTask';
+import styles from './taskItem.module.css';
 
-export const TagItem: FC<{
+export const TaskItem: FC<{
   item: Item;
   onSelect: () => void;
   refetch: () => void;
@@ -12,11 +11,10 @@ export const TagItem: FC<{
   return (
     <div className={styles.itemWrapper}>
       <div className={styles.item} onClick={() => onSelect()}>
-        <div>{item.label}</div>
+        <div className={styles.label}>{item.label}</div>
       </div>
       <div className={styles.actions}>
-        <EditTag item={item} refetch={refetch} />
-        <DeleteTag item={item} refetch={refetch} />
+        <OpenTask spec={item.value} />
       </div>
     </div>
   );

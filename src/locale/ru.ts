@@ -198,6 +198,45 @@ const table = {
   perPage: 'на странице',
 };
 
+const assignmentSchema = {
+  errors: {
+    create: {
+      error: 'ошибка при создании шаблона задания',
+      success: 'шаблон задания успешно создан',
+    },
+  },
+  form: {
+    steps: {
+      first: {
+        label: 'шаг первый',
+        description: 'основная информация',
+      },
+      second: {
+        label: 'шаг второй',
+        description: 'добавление задач',
+      },
+      third: {
+        label: 'шаг третий',
+        description: 'порядок задач',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
+        description: 'предпросмотр',
+      },
+    },
+    title: 'название',
+    description: 'описание',
+    defaultDuration: 'длительность по умолчанию (мин.)',
+    taskOrdering: {
+      title: 'выберете порядок задач',
+    },
+    taskSelector: {
+      available: 'все задачи',
+      used: 'выбранные задачи',
+    },
+  },
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
@@ -223,6 +262,7 @@ const ru = {
   auth,
   tasks,
   form,
+  assignmentSchema,
 };
 
 export default ru;

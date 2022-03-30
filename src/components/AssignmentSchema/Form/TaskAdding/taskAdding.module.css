@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+.wrapper > :first-child {
+  width: 70vw;
+}
+.label {
+  font-size: 1.4rem;
+}

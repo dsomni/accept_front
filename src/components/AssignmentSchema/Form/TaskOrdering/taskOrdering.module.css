@@ -1,0 +1,32 @@
+.wrapperList {
+  display: flex;
+  justify-content: center;
+}
+
+.label {
+  font-size: 1.3rem;
+}
+
+.itemWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 25px;
+}
+
+.dragButton {
+  width: 20px;
+  height: 20px;
+}
+.head {
+  font-size: 1.4rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  width: 70vw;
+  margin: 50px 15vw 50px 15vw;
+}

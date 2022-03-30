@@ -199,6 +199,45 @@ const table = {
   perPage: 'per page',
 };
 
+const assignmentSchema = {
+  errors: {
+    create: {
+      error: 'can not create the assignment schema',
+      success: 'assignment schema was successfully created',
+    },
+  },
+  form: {
+    steps: {
+      first: {
+        label: 'first step',
+        description: 'main assignment info',
+      },
+      second: {
+        label: 'second step',
+        description: 'add tasks',
+      },
+      third: {
+        label: 'third step',
+        description: 'order tasks',
+      },
+      fourth: {
+        label: 'fourth step',
+        description: 'preview',
+      },
+    },
+    title: 'title',
+    description: 'description',
+    defaultDuration: 'default duration (minutes)',
+    taskOrdering: {
+      title: 'change the tasks order if necessary',
+    },
+    taskSelector: {
+      available: 'available tasks',
+      used: 'used tasks',
+    },
+  },
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -224,6 +263,7 @@ const en = {
   auth,
   tasks,
   form,
+  assignmentSchema,
 };
 
 export default en;

@@ -1,11 +1,15 @@
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import { CustomTransferList } from './CustomTransferList/CustomTransferList';
 import styles from './tagSelector.module.css';
-import { Item } from './CustomTransferList/CustomTransferList';
 import { sendRequest } from '@requests/request';
 import { ITag } from '@custom-types/ITag';
+import {
+  CustomTransferList,
+  Item,
+} from '@components/CustomTransferList/CustomTransferList';
+import { TagItem } from './TagItem/TagItem';
+import AddTag from './AddTag/AddTag';
 
 const TagSelector: FC<{
   initialTags: Item[];
@@ -17,8 +21,10 @@ const TagSelector: FC<{
   const [selectedTags, setSelectedTags] =
     useState<Item[]>(initialTags);
   const [availableTags, setAvailableTags] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const refetch = useCallback(async () => {
+    setLoading(true);
     sendRequest<{}, ITag[]>('tags/list', 'GET').then((tags) => {
       if (!tags) return;
       let newAvailableTags: Item[] = [];
@@ -38,6 +44,7 @@ const TagSelector: FC<{
       }
       setSelectedTags(newSelectedTags);
       setAvailableTags(newAvailableTags);
+      setLoading(false);
     });
   }, [selectedTags]);
 
@@ -45,23 +52,35 @@ const TagSelector: FC<{
     refetch();
   }, []); // eslint-disable-line
 
+  const itemComponent = useCallback(
+    (item, handleSelect) => {
+      return (
+        <TagItem
+          item={item}
+          onSelect={() => handleSelect(item)}
+          refetch={refetch}
+        />
+      );
+    },
+    [refetch]
+  );
+
   return (
     <div className={styles.wrapper}>
-      {
+      {!loading && (
         <CustomTransferList
-          refetch={refetch}
-          options={availableTags}
-          chosen={selectedTags}
+          defaultOptions={availableTags}
+          defaultChosen={selectedTags}
           setUsed={setUsed}
-          setChosen={setSelectedTags}
-          setOptions={setAvailableTags}
           classNames={classNames ? classNames : {}}
           titles={[
             capitalize(locale.tasks.form.tagSelector.available),
             capitalize(locale.tasks.form.tagSelector.used),
           ]}
+          itemComponent={itemComponent}
+          rightComponent={() => <AddTag refetch={refetch} />}
         />
-      }
+      )}
     </div>
   );
 };
