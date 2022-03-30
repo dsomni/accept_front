@@ -223,7 +223,7 @@ const assignmentSchema = {
     },
     title: 'title',
     description: 'description',
-    defaultDuration: 'defaultDuration',
+    defaultDuration: 'default duration',
   },
 };
 
