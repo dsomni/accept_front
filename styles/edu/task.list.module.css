@@ -67,11 +67,11 @@
   text-decoration: none;
   text-align: left;
   font-size: 1.15em;
-  color: #3f97f0;
+  color: var(---primary);
 }
 
 .title:hover {
-  color: #005cd4;
+  color: var(---secondary);
 }
 
 .tags {

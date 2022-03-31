@@ -13,10 +13,23 @@ import { Item } from '@components/CustomTransferList/CustomTransferList';
 
 const initialValues = {
   spec: '',
-  title: '',
+  title: 'Уроки французского',
   author: '',
   description: 'Хороший урок, мне нравится',
-  tasks: [],
+  tasks: [
+    {
+      label: 'Название Задачи',
+      value: '3b3bdfd7-8972-4bba-947e-4db53aea044a',
+    },
+    {
+      label: 'Простые числа',
+      value: '1f2348d8-9a6e-4760-afdc-9c7c8e792f88',
+    },
+    {
+      label: 'Простые числа 2',
+      value: 'a8eacb59-8b8c-4758-b774-d656f1e39834',
+    },
+  ],
   defaultDuration: 0, // minutes
 };
 

@@ -3,7 +3,6 @@ export const reorderList = (
   from: number,
   to: number
 ): any[] => {
-  console.log(list, from, to);
   let new_list;
   if (from < to) {
     new_list = list.slice(0, from);

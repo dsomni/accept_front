@@ -91,7 +91,6 @@ const Tests: FC<{ form: any }> = ({ form }) => {
             if (index >= length) continue;
             tests[index].outputData = output;
           }
-          // console.log('file');
         }
         tests = tests.filter(
           (test) => test.inputData !== '' && test.outputData !== ''
@@ -111,7 +110,6 @@ const Tests: FC<{ form: any }> = ({ form }) => {
           accept={['*', '']}
           onDrop={onDrop}
           onReject={(files) => {
-            console.log(files);
             setDrag(false);
           }}
         >
