@@ -7,5 +7,49 @@
 }
 
 .title {
-  font-size: 1.7rem;
+  font-size: 1.85rem;
+}
+
+.description {
+  padding: 10px 0px;
+  font-size: 1.2rem;
+}
+
+.tableWrapper {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.tableWrapper tr {
+  display: grid;
+  grid-template-columns: 40% 30% 20% 10%;
+}
+
+.column {
+  text-align: left;
+}
+
+.row {
+  font-size: 1.2rem;
+  padding: 15px;
+  border-bottom: 1px solid black;
+}
+
+.tableWrapper thead tr:first-child {
+  border-bottom: 2px solid black;
+}
+
+.even {
+  background-color: #f8f8f8;
+}
+
+.tableTitle {
+  text-decoration: none;
+  text-align: left;
+  font-size: 1.15em;
+  color: var(---primary);
+}
+
+.tableTitle:hover {
+  color: var(---secondary);
 }

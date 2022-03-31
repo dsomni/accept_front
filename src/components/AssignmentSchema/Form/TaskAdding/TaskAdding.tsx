@@ -16,7 +16,6 @@ const TaskAdding: FC<{ form: any; initialTasks: Item[] }> = ({
           }}
           initialTasks={initialTasks}
           setUsed={(value) => {
-            console.log(form.values);
             form.setFieldValue('tasks', value);
           }}
         />

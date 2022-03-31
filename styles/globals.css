@@ -6,6 +6,11 @@ body {
   font-size: 14px;
 }
 
+:root {
+  ---primary: #3f97f0;
+  ---secondary: #005cd4;
+}
+
 @media only screen and (max-width: 1080px) {
   html,
   body {
