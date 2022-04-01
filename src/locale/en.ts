@@ -205,6 +205,10 @@ const assignmentSchema = {
       error: 'can not create the assignment schema',
       success: 'assignment schema was successfully created',
     },
+    edit: {
+      error: 'can not edit the assignment schema',
+      success: 'assignment schema was successfully updated',
+    },
   },
   form: {
     steps: {
