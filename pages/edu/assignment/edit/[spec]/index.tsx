@@ -35,7 +35,9 @@ function EditAssignmentSchema() {
 
   const [assignmentSchema, setAssignmentSchema] =
     useState<IAssignmentSchema>(null!);
-  const [tasks, setTasks] = useState<ITaskDisplay[]>([]);
+  const [tasks, setTasks] = useState<Map<string, ITaskDisplay>>(
+    new Map()
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -53,7 +55,11 @@ function EditAssignmentSchema() {
     sendRequest<{}, ITaskDisplay[]>(`tasks/list`, 'GET').then(
       (res) => {
         if (res) {
-          setTasks(res);
+          const tasks = new Map<string, ITaskDisplay>();
+          for (let i = 0; i < res.length; i++) {
+            tasks.set(res[i].spec, res[i]);
+          }
+          setTasks(tasks);
         }
       }
     );
@@ -65,13 +71,11 @@ function EditAssignmentSchema() {
   const formValues = useMemo(
     () => ({
       ...assignmentSchema,
-      tasks: tasks
-        .filter((task: ITaskDisplay) =>
-          assignmentSchema?.tasks.includes(task.spec)
-        )
+      tasks: assignmentSchema?.tasks
+        .map((spec) => tasks.get(spec) || null!)
         .map((task: ITaskDisplay) => ({
-          label: task.title,
-          value: task.spec,
+          label: task?.title,
+          value: task?.spec,
         })),
     }),
     [tasks, assignmentSchema]
@@ -109,12 +113,7 @@ function EditAssignmentSchema() {
         setError(true);
       }
     });
-  }, [
-    form.values,
-    user?.login,
-    defaultStatuses,
-    assignmentSchema?.spec,
-  ]);
+  }, [form.values, defaultStatuses, assignmentSchema?.spec]);
 
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(false);

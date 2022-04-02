@@ -79,6 +79,7 @@ const TagSelector: FC<{
           ]}
           itemComponent={itemComponent}
           rightComponent={() => <AddTag refetch={refetch} />}
+          shouldSortChosen={true}
         />
       )}
     </div>

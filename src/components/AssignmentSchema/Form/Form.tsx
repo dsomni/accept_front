@@ -14,7 +14,7 @@ const Form: FC<{
   buttonLabel: string;
 }> = ({ form, handleSubmit, buttonLabel }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () =>
     setCurrentStep((current) =>

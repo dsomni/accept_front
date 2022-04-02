@@ -35,6 +35,7 @@ export const CustomTransferList: FC<{
   classNames: object;
   rightComponent?: () => ReactNode;
   itemComponent: (item: any, onSelect: any) => ReactNode;
+  shouldSortChosen?: boolean;
 }> = ({
   defaultOptions,
   defaultChosen,
@@ -43,9 +44,14 @@ export const CustomTransferList: FC<{
   classNames,
   rightComponent,
   itemComponent,
+  shouldSortChosen,
 }) => {
-  const [chosen, setChosen] = useState(defaultChosen);
-  const [options, setOptions] = useState(defaultOptions);
+  const [chosen, setChosen] = useState(
+    shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
+  );
+  const [options, setOptions] = useState(
+    defaultOptions.sort(cmpItem)
+  );
 
   const handleSelectLeft = useCallback(
     (item: Item) => {
@@ -54,8 +60,10 @@ export const CustomTransferList: FC<{
       });
       setChosen((chosen) => {
         chosen.push(item);
-        return chosen.sort(cmpItem);
+        if (shouldSortChosen) return chosen.sort(cmpItem);
+        return chosen;
       });
+
       setUsed(chosen);
     },
     [chosen, setUsed]
