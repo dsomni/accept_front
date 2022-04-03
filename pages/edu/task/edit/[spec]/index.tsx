@@ -2,7 +2,6 @@ import Notify from '@components/Notify/Notify';
 import Form from '@components/Task/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import {
-  FC,
   ReactNode,
   useCallback,
   useEffect,
@@ -19,11 +18,14 @@ import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { getServerUrl } from '@utils/getServerUrl';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
-function EditTask() {
+function EditTask(props: { task: ITask }) {
   const { locale } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
+  const task = props.task;
 
   const defaultStatuses = useMemo(
     () => ({
@@ -33,27 +35,13 @@ function EditTask() {
     [locale]
   );
 
-  const [task, setTask] = useState<ITask>(null!);
   const [tags, setTags] = useState<ITag[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     let cleanUp = false;
-    if (typeof router.query.spec === 'string') {
-      sendRequest<{ spec: string }, ITask>(
-        `tasks/task-full`,
-        'POST',
-        {
-          spec: router.query.spec,
-        }
-      ).then((res) => {
-        if (res) {
-          setTask(res);
-        }
-      });
-    }
     sendRequest<{}, ITag[]>(`tags/list`, 'GET').then((res) => {
-      if (res) {
+      if (res && !cleanUp) {
         setTags(res);
       }
     });
@@ -168,3 +156,40 @@ EditTask.getLayout = (page: ReactNode) => {
 };
 
 export default EditTask;
+
+const SERVER_URL = getServerUrl();
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params || typeof params?.spec !== 'string') {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+  const task = await fetch(`${SERVER_URL}/api/tasks/task`, {
+    method: 'POST',
+    body: JSON.stringify({ spec: params.spec }),
+  });
+  if (task.status === 200) {
+    return {
+      props: {
+        task: await task.json(),
+      },
+    };
+  }
+  return {
+    redirect: {
+      permanent: false,
+      destination: '/Not-Found',
+    },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};

@@ -39,18 +39,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const task = await fetch(`${SERVER_URL}/api/tasks/task`, {
     method: 'POST',
     body: JSON.stringify({ spec: params.spec }),
-  }).then((res) => res.json());
-  if (task) {
+  });
+  if (task.status === 200) {
     return {
       props: {
-        task,
+        task: await task.json(),
       },
     };
   }
   return {
     redirect: {
       permanent: false,
-      destination: '/',
+      destination: '/Not-Found',
     },
   };
 };

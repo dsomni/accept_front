@@ -32,20 +32,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     {
       method: 'GET',
     }
-  ).then((res) => {
-    return res.json();
-  });
-  if (assignment) {
+  );
+  if (assignment.status === 200) {
     return {
       props: {
-        assignment,
+        assignment: await assignment.json(),
       },
     };
   }
   return {
     redirect: {
       permanent: false,
-      destination: '/',
+      destination: '/Not-Found',
     },
   };
 };
