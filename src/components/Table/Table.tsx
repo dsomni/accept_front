@@ -39,6 +39,7 @@ const Table: FC<{
   searchKeys: string[];
   additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
   rowFilter?: (_: any) => boolean;
+  searchWeight?: number;
 }> = ({
   columns,
   rows,
@@ -48,6 +49,7 @@ const Table: FC<{
   searchKeys,
   additionalSearch,
   rowFilter,
+  searchWeight,
 }) => {
   const [localRows, setLocalRows] = useState(rows);
   const [search, setSearch] = useState('');
@@ -132,9 +134,7 @@ const Table: FC<{
   const fuse = useMemo(
     () => {
       return new Fuse(rows, {
-        keys: searchKeys.filter((column) =>
-          selectedColumns.includes(column)
-        ),
+        keys: searchKeys,
       });
     },
     [rows, selectedColumns] // eslint-disable-line
@@ -218,7 +218,7 @@ const Table: FC<{
             additionalSearch(setLocalRows, beforeSelection)}
         </div>
         <InnerTable
-          columns={localColumns.filter((column) => !column.hidden)}
+          columns={localColumns}
           classNames={classNames}
           rows={
             perPage

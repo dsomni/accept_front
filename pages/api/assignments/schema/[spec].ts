@@ -8,6 +8,7 @@ export default async function AssignmentSchema(
   res: NextApiResponse
 ) {
   const response = await fetch(`${url}/${req.query.spec}`);
+  console.log(response);
   const status = response.status;
   const data = await response.json();
   res.status(status).json(data);

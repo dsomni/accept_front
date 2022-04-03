@@ -13,14 +13,13 @@ import {
 import styles from '@styles/edu/task.list.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
-import { MultiSelect } from '@mantine/core';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 
 const DESCR_SLICE = 35;
 
 function AssignmentList() {
-  const [list, setList] = useState<IAssignmentSchema[]>([]);
+  const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
@@ -33,19 +32,11 @@ function AssignmentList() {
         key: 'title',
         sortable: true,
         sortFunction: (a: any, b: any) =>
-          a.title > b.title ? 1 : a.title == b.title ? 0 : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: false,
-        hidden: true,
-        size: 0,
-      },
-      {
-        label: capitalize(locale.assignmentSchema.list.title),
-        key: 'titleDisplay',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.title > b.title ? 1 : a.title == b.title ? 0 : -1,
+          a.title.value > b.title.value
+            ? 1
+            : a.title.value == b.title.value
+            ? 0
+            : -1,
         sorted: 0,
         allowMiddleState: true,
         hidable: false,
@@ -72,16 +63,21 @@ function AssignmentList() {
         sorted: 0,
         allowMiddleState: false,
         hidable: true,
-        hidden: false,
+        hidden: true,
         size: 8,
       },
       {
         label: capitalize(locale.assignmentSchema.list.taskCount),
         key: 'taskCount',
-        sortable: false,
-        sortFunction: () => 0,
+        sortable: true,
+        sortFunction: (a: any, b: any) =>
+          a.taskCount > b.taskCount
+            ? 1
+            : a.taskCount == b.taskCount
+            ? 0
+            : -1,
         sorted: 0,
-        allowMiddleState: false,
+        allowMiddleState: true,
         hidable: true,
         hidden: false,
         size: 3,
@@ -106,16 +102,19 @@ function AssignmentList() {
               description:
                 item.description.slice(0, DESCR_SLICE) +
                 (item.description.length <= DESCR_SLICE ? '' : '...'),
-              titleDisplay: (
-                <div className={styles.titleWrapper}>
-                  <a
-                    className={styles.title}
-                    href={`/edu/assignemnt/${item.spec}`}
-                  >
-                    {item.title}
-                  </a>
-                </div>
-              ),
+              title: {
+                value: item.title,
+                display: (
+                  <div className={styles.titleWrapper}>
+                    <a
+                      className={styles.title}
+                      href={`/edu/assignment/${item.spec}`}
+                    >
+                      {item.title}
+                    </a>
+                  </div>
+                ),
+              },
             };
           })
         );
@@ -155,7 +154,7 @@ function AssignmentList() {
           }}
           defaultOnPage={10}
           onPage={[5, 10]}
-          searchKeys={['title', 'author']}
+          searchKeys={['title.value', 'author']}
           rowFilter={rowFilter}
         />
       )}

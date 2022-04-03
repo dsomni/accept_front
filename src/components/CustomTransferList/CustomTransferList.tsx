@@ -66,7 +66,7 @@ export const CustomTransferList: FC<{
 
       setUsed(chosen);
     },
-    [chosen, setUsed]
+    [chosen, setUsed, shouldSortChosen]
   );
   const handleSelectRight = useCallback(
     (item: Item) => {

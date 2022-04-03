@@ -32,19 +32,11 @@ function TaskList() {
         key: 'title',
         sortable: true,
         sortFunction: (a: any, b: any) =>
-          a.title > b.title ? 1 : a.title == b.title ? 0 : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: false,
-        hidden: true,
-        size: 0,
-      },
-      {
-        label: capitalize(locale.tasks.list.title),
-        key: 'titleDisplay',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.title > b.title ? 1 : a.title == b.title ? 0 : -1,
+          a.title.value > b.title.value
+            ? 1
+            : a.title.value == b.title.value
+            ? 0
+            : -1,
         sorted: 0,
         allowMiddleState: true,
         hidable: false,
@@ -122,28 +114,31 @@ function TaskList() {
                 tags: item.tags.map(
                   (tag) => tags.get(tag)?.title || ''
                 ),
-                titleDisplay: (
-                  <div className={styles.titleWrapper}>
-                    <a
-                      className={styles.title}
-                      href={`/edu/task/${item.spec}`}
-                    >
-                      {item.title}
-                    </a>
-                    {!!tags && (
-                      <span className={styles.tags}>
-                        {item.tags.map((tag, idx) => (
-                          <div className={styles.tag} key={idx}>
-                            {tags.get(tag)?.title +
-                              (idx == item.tags.length - 1
-                                ? ''
-                                : ', ')}
-                          </div>
-                        ))}
-                      </span>
-                    )}
-                  </div>
-                ),
+                title: {
+                  title: item.title,
+                  display: (
+                    <div className={styles.titleWrapper}>
+                      <a
+                        className={styles.title}
+                        href={`/edu/task/${item.spec}`}
+                      >
+                        {item.title}
+                      </a>
+                      {!!tags && (
+                        <span className={styles.tags}>
+                          {item.tags.map((tag, idx) => (
+                            <div className={styles.tag} key={idx}>
+                              {tags.get(tag)?.title +
+                                (idx == item.tags.length - 1
+                                  ? ''
+                                  : ', ')}
+                            </div>
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                  ),
+                },
               };
             })
           );
@@ -210,7 +205,7 @@ function TaskList() {
           }}
           defaultOnPage={10}
           onPage={[5, 10]}
-          searchKeys={['title', 'author', 'grade']}
+          searchKeys={['title.value', 'author', 'grade']}
           rowFilter={rowFilter}
           additionalSearch={tagSearch}
         />
