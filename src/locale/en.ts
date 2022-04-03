@@ -240,6 +240,12 @@ const assignmentSchema = {
       used: 'used tasks',
     },
   },
+  list: {
+    title: 'title',
+    author: 'author',
+    description: 'description',
+    taskCount: 'task count',
+  },
 };
 
 const en = {

@@ -239,6 +239,12 @@ const assignmentSchema = {
       used: 'выбранные задачи',
     },
   },
+  list: {
+    title: 'название задания',
+    author: 'автор',
+    description: 'описание',
+    taskCount: 'кол-во задач',
+  },
 };
 
 const ru = {
