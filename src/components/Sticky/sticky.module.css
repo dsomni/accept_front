@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 7px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.question {
+  font-size: 1.1rem;
+}
+.modalTitle {
+  font-size: 1.4rem;
+}

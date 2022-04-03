@@ -63,7 +63,9 @@ const Table: FC<{
       .filter((column) => !column.hidable || !column.hidden)
       .map((column) => column.key)
   );
-  const [localColumns, setLocalColumns] = useState(columns);
+  const [localColumns, setLocalColumns] = useState(
+    columns.filter((column) => !column.hidden)
+  );
 
   const availableColumns = useMemo(
     () =>
@@ -137,7 +139,7 @@ const Table: FC<{
         keys: searchKeys,
       });
     },
-    [rows, selectedColumns] // eslint-disable-line
+    [rows] // eslint-disable-line
   );
 
   const handleSearch = useCallback(

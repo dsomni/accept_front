@@ -3,7 +3,7 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/assignment_schema';
 
-export default async function AddTask(
+export default async function AddAssignmentSchema(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
