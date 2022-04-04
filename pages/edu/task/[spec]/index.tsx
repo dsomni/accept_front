@@ -1,21 +1,41 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
+import Sticky from '@components/Sticky/Sticky';
+import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 
 function Task(props: { task: ITaskDisplay }) {
   const task = props.task;
+  const [activeModal, setActiveModal] = useState(false);
+
+  const actions = [
+    {
+      color: 'red',
+      icon: undefined,
+      onClick: () => setActiveModal(true),
+    },
+  ];
   return (
-    <TaskLayout
-      description={<Description task={task} />}
-      send={<Send spec={task.spec} />}
-      results={<Results />}
-    />
+    <>
+      <DeleteModal
+        title={'Delete task'}
+        active={activeModal}
+        setActive={setActiveModal}
+        task={task.spec}
+      />
+      <Sticky actions={actions} color={'--prime'} />
+      <TaskLayout
+        description={<Description task={task} />}
+        send={<Send spec={task.spec} />}
+        results={<Results />}
+      />
+    </>
   );
 }
 
