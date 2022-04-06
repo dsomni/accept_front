@@ -62,7 +62,7 @@ function TaskList() {
         sortFunction: (a: any, b: any) =>
           a.grade > b.grade ? 1 : a.grade == b.grade ? 0 : -1,
         sorted: 0,
-        allowMiddleState: false,
+        allowMiddleState: true,
         hidable: true,
         hidden: false,
         size: 2,

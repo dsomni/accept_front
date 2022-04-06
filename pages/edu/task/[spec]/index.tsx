@@ -9,25 +9,32 @@ import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
 import Sticky from '@components/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
+import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
+import { useRouter } from 'next/router';
 
 function Task(props: { task: ITaskDisplay }) {
   const task = props.task;
   const [activeModal, setActiveModal] = useState(false);
+  const router = useRouter();
 
   const actions = [
     {
+      color: 'green',
+      icon: <Pencil1Icon height={20} width={20} />,
+      onClick: () => router.push(`/edu/task/edit/${task.spec}`),
+    },
+    {
       color: 'red',
-      icon: undefined,
+      icon: <TrashIcon height={20} width={20} />,
       onClick: () => setActiveModal(true),
     },
   ];
   return (
     <>
       <DeleteModal
-        title={'Delete task'}
         active={activeModal}
         setActive={setActiveModal}
-        task={task.spec}
+        task={task}
       />
       <Sticky actions={actions} color={'--prime'} />
       <TaskLayout
