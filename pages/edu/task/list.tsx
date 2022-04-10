@@ -16,6 +16,9 @@ import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/ITag';
 import { MultiSelect } from '@mantine/core';
 import { hasSubarray } from '@utils/hasSubarray';
+import router, { useRouter } from 'next/router';
+import { PlusIcon } from '@modulz/radix-icons';
+import Sticky from '@components/Sticky/Sticky';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);
@@ -81,18 +84,20 @@ function TaskList() {
     ],
     [locale]
   );
+  const [loadingTags, setLoadingTags] = useState(true);
 
   useEffect(() => {
     let cleanUp = false;
 
+    setLoadingTags(true);
     sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
-      if (!cleanUp) {
-        if (res) {
-          let newTags = new Map<string, ITag>();
-          for (let i = 0; i < res.length; i++)
-            newTags.set(res[i].spec, res[i]);
-          setTags(newTags);
-        }
+      console.log(res);
+      if (res && !cleanUp) {
+        let newTags = new Map<string, ITag>();
+        for (let i = 0; i < res.length; i++)
+          newTags.set(res[i].spec, res[i]);
+        setTags(newTags);
+        setLoadingTags(false);
       }
     });
 
@@ -151,7 +156,7 @@ function TaskList() {
     return () => {
       cleanUp = true;
     };
-  }, [tags]);
+  }, [tags, loadingTags]);
 
   const rowFilter = useCallback(
     (row) => {
@@ -179,7 +184,7 @@ function TaskList() {
               setter(() => list);
             }
           }}
-          placeholder={capitalize(locale.placeholders.showColumns)}
+          placeholder={capitalize(locale.placeholders.selectTags)}
         />
       </div>
     ),
@@ -188,7 +193,7 @@ function TaskList() {
 
   return (
     <div>
-      {!loading && !!tags && (
+      {!loading && tags.size > 0 && (
         <Table
           columns={columns}
           rows={list}
@@ -210,6 +215,18 @@ function TaskList() {
           additionalSearch={tagSearch}
         />
       )}
+      <Sticky
+        color={'--primary'}
+        actions={[
+          {
+            color: 'green',
+            onClick: () => {
+              router.push(`/edu/task/add/`);
+            },
+            icon: <PlusIcon height={20} width={20} />,
+          },
+        ]}
+      />
     </div>
   );
 }

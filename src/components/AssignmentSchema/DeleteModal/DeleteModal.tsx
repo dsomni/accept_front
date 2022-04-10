@@ -1,4 +1,5 @@
 import Notify from '@components/Notify/Notify';
+import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
@@ -19,15 +20,15 @@ import styles from './deleteModal.module.css';
 const DeleteModal: FC<{
   active: boolean;
   setActive: (_: boolean) => void;
-  task: ITaskDisplay;
-}> = ({ active, setActive, task }) => {
+  assignment: IAssignmentSchema;
+}> = ({ active, setActive, assignment }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);
   const { locale } = useLocale();
   const router = useRouter();
   const defaultStatuses = useMemo(
     () => ({
-      error: locale.tasks.delete.error,
-      ok: locale.tasks.delete.success,
+      error: locale.assignmentSchema.delete.error,
+      ok: locale.assignmentSchema.delete.success,
     }),
     [locale]
   );
@@ -36,33 +37,16 @@ const DeleteModal: FC<{
   const [notificationDescription, setNotificationDescription] =
     useState('');
 
-  useEffect(() => {
-    let cleanUp = false;
-
-    sendRequest<{}, ITask[]>(
-      `/tasks/connected_assignments/${task.spec}`,
-      'POST'
-    ).then((res) => {
-      if (res && !cleanUp) {
-        setAssignments(res);
-      }
-    });
-
-    return () => {
-      cleanUp = true;
-    };
-  }, [task]);
-
   const handleDelete = useCallback(() => {
     let cleanUp = false;
-    isSuccessful<{}>('/tasks/delete', 'POST', {
-      spec: task.spec,
+    isSuccessful<{}>('/assignments/schema/delete', 'POST', {
+      spec: assignment.spec,
     }).then((res) => {
       setActive(false);
       if (res && !cleanUp) {
         setNotify(true);
         setNotificationDescription(capitalize(defaultStatuses.ok));
-        router.push('/edu/task/list');
+        router.push('/edu/assignment/list');
       } else {
         setNotify(true);
         setError(true);
@@ -74,7 +58,7 @@ const DeleteModal: FC<{
       cleanUp = true;
     };
   }, [
-    task.spec,
+    assignment,
     defaultStatuses.ok,
     defaultStatuses.error,
     setActive,
@@ -98,8 +82,8 @@ const DeleteModal: FC<{
         onClose={() => setActive(false)}
         size="lg"
         title={
-          capitalize(locale.tasks.modals.delete) +
-          ` '${task.title}' ?`
+          capitalize(locale.assignmentSchema.modals.delete) +
+          ` '${assignment.title}'`
         }
         classNames={{
           title: styles.modalTitle,

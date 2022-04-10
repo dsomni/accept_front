@@ -178,6 +178,10 @@ const tasks = {
     ok: 'Attempt successfully submitted',
   },
   submit: 'submit',
+  delete: {
+    success: 'the task was successfully deleted',
+    error: 'error when deleting the task',
+  },
 };
 
 const form = {
@@ -197,6 +201,7 @@ const placeholders = {
   code: 'place your code here',
   search: 'search',
   showColumns: 'pick columns to show',
+  selectTags: 'select tags',
 };
 
 const errors = {
@@ -261,6 +266,10 @@ const assignmentSchema = {
     author: 'author',
     description: 'description',
     taskCount: 'task count',
+  },
+  delete: {
+    success: 'the assignment schema was successfully deleted',
+    error: 'error when deleting the assignment schema',
   },
 };
 

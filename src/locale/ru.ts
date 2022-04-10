@@ -177,6 +177,10 @@ const tasks = {
     ok: 'Попытка успешно отправлена',
   },
   submit: 'Отправить',
+  delete: {
+    success: 'задача успешно удалена',
+    error: 'ошибка при удалении задачи',
+  },
 };
 
 const credentials = {
@@ -196,6 +200,7 @@ const placeholders = {
   code: 'вставьте ваш код сюда',
   search: 'поиск',
   showColumns: 'выберете поля',
+  selectTags: 'выберете теги',
 };
 
 const errors = {
@@ -260,6 +265,10 @@ const assignmentSchema = {
     author: 'автор',
     description: 'описание',
     taskCount: 'кол-во задач',
+  },
+  delete: {
+    success: 'шаблон задания успешно удалён',
+    error: 'ошибка при удалении шаблона задания',
   },
 };
 

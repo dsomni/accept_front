@@ -1,6 +1,5 @@
 import Table from '@components/Table/Table';
 import { ITableColumn } from '@custom-types/ITable';
-import { ITaskList } from '@custom-types/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -15,6 +14,9 @@ import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import Sticky from '@components/Sticky/Sticky';
+import { useRouter } from 'next/router';
+import { PlusIcon } from '@modulz/radix-icons';
 
 const DESCR_SLICE = 35;
 
@@ -24,6 +26,7 @@ function AssignmentList() {
   const [error, setError] = useState(false);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
   const { locale } = useLocale();
+  const router = useRouter();
 
   const columns: ITableColumn[] = useMemo(
     () => [
@@ -158,6 +161,18 @@ function AssignmentList() {
           rowFilter={rowFilter}
         />
       )}
+      <Sticky
+        color={'--primary'}
+        actions={[
+          {
+            color: 'green',
+            onClick: () => {
+              router.push(`/edu/assignment/add/`);
+            },
+            icon: <PlusIcon height={20} width={20} />,
+          },
+        ]}
+      />
     </div>
   );
 }
