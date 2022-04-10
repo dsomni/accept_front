@@ -7,15 +7,16 @@ import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
 import { Item } from '@components/CustomTransferList/CustomTransferList';
 
-const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
-  item,
-  refetch,
-}) => {
+const DeleteTag: FC<{
+  item: Item;
+  deleteURL: string;
+  refetch: () => void;
+}> = ({ item, refetch, deleteURL }) => {
   const [opened, setOpened] = useState(false);
   const { locale } = useLocale();
 
   const handleSubmit = useCallback(() => {
-    isSuccessful('tags/delete', 'POST', {
+    isSuccessful(deleteURL, 'POST', {
       spec: item.value,
     }).then((success) => {
       if (success) {
@@ -23,7 +24,7 @@ const DeleteTag: FC<{ item: Item; refetch: () => void }> = ({
         setOpened(false);
       }
     });
-  }, [item, refetch]);
+  }, [item, refetch, deleteURL]);
 
   return (
     <div className={styles.wrapper}>

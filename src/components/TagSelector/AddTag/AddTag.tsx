@@ -12,7 +12,10 @@ import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
 
-const AddTag: FC<{ refetch: () => void }> = ({ refetch }) => {
+const AddTag: FC<{ refetch: () => void; addURL: string }> = ({
+  refetch,
+  addURL,
+}) => {
   const [opened, setOpened] = useState(false);
   const { locale } = useLocale();
   const [title, setTitle] = useState('');
@@ -40,7 +43,7 @@ const AddTag: FC<{ refetch: () => void }> = ({ refetch }) => {
   const handleSubmit = useCallback(
     (title) => {
       if (validate(title)) {
-        isSuccessful('tags/add', 'POST', {
+        isSuccessful(addURL, 'POST', {
           title: title,
         }).then((success) => {
           if (success) {
@@ -50,7 +53,7 @@ const AddTag: FC<{ refetch: () => void }> = ({ refetch }) => {
         });
       }
     },
-    [refetch, validate]
+    [addURL, refetch, validate]
   );
 
   return (

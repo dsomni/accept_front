@@ -19,11 +19,17 @@ import { capitalize } from '@utils/capitalize';
 import { Item } from '@components/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
+import { ITag } from '@custom-types/ITag';
 
 function EditAssignmentSchema() {
   const { locale } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
+
+  const [tags, setTags] = useState<ITag[]>([]);
+  const router = useRouter();
+
+  const [readyTags, setReadyTags] = useState(false);
 
   const defaultStatuses = useMemo(
     () => ({
@@ -38,7 +44,6 @@ function EditAssignmentSchema() {
   const [tasks, setTasks] = useState<Map<string, ITaskDisplay>>(
     new Map()
   );
-  const router = useRouter();
 
   useEffect(() => {
     let cleanUp = false;
@@ -63,6 +68,15 @@ function EditAssignmentSchema() {
         }
       }
     );
+    setReadyTags(false);
+    sendRequest<{}, ITag[]>(`assignment_tags/list`, 'GET').then(
+      (res) => {
+        if (res && !cleanUp) {
+          setTags(res);
+          setReadyTags(true);
+        }
+      }
+    );
     return () => {
       cleanUp = true;
     };
@@ -71,6 +85,11 @@ function EditAssignmentSchema() {
   const formValues = useMemo(
     () => ({
       ...assignmentSchema,
+      tags: tags
+        .filter((tag: ITag) =>
+          assignmentSchema?.tags.includes(tag.spec)
+        )
+        .map((tag: ITag) => ({ label: tag.title, value: tag.spec })),
       tasks: assignmentSchema?.tasks
         .map((spec) => tasks.get(spec) || null!)
         .map((task: ITaskDisplay) => ({
@@ -78,7 +97,7 @@ function EditAssignmentSchema() {
           value: task?.spec,
         })),
     }),
-    [tasks, assignmentSchema]
+    [tasks, tags, assignmentSchema, readyTags] // eslint-disable-line
   );
   const form = useForm({
     initialValues: formValues,
@@ -96,6 +115,7 @@ function EditAssignmentSchema() {
     let body: any = {
       ...form.values,
       tasks: form.values['tasks'].map((task: Item) => task.value),
+      tags: form.values['tags'].map((tag: Item) => tag.value),
     };
     sendRequest<IAssignmentSchema, IAssignmentSchema>(
       `assignments/schema/edit/${assignmentSchema.spec}`,
@@ -133,7 +153,7 @@ function EditAssignmentSchema() {
           description={notificationDescription}
         />
       </div>
-      {ready && (
+      {ready && readyTags && (
         <Form
           form={form}
           handleSubmit={handleSubmit}

@@ -4,5 +4,6 @@ export interface IAssignmentSchema {
   author: string;
   description: string;
   tasks: string[];
+  tags: string[];
   defaultDuration: number;
 }
