@@ -19,6 +19,7 @@ import { hasSubarray } from '@utils/hasSubarray';
 import router, { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import Sticky from '@components/Sticky/Sticky';
+import TagSearch from '@components/TagSearch/TagSearch';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);
@@ -166,28 +167,15 @@ function TaskList() {
 
   const tagSearch = useCallback(
     (setter, beforeSelect) => (
-      <div className={styles.selectWrapper}>
-        <MultiSelect
-          classNames={{
-            value: styles.selected,
-          }}
-          data={Array.from(tags.values()).map((tag) => tag.title)}
-          onChange={(value: string[]) => {
-            beforeSelect();
-            setCurrentTags(value);
-            if (value.length > 0) {
-              setter(() =>
-                list.filter((row) => hasSubarray(row.tags, value))
-              );
-            } else {
-              setter(() => list);
-            }
-          }}
-          placeholder={capitalize(locale.placeholders.selectTags)}
-        />
-      </div>
+      <TagSearch
+        setterFunc={setter}
+        beforeSelect={beforeSelect}
+        tags={tags}
+        setCurrentTags={setCurrentTags}
+        rowList={list}
+      />
     ),
-    [locale, list, tags]
+    [list, tags]
   );
 
   return (
