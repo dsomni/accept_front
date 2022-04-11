@@ -1,3 +1,4 @@
+import { callback } from '@custom-types/atomic';
 import { ActionIcon, Textarea } from '@mantine/core';
 import { TrashIcon } from '@modulz/radix-icons';
 import { FC, memo } from 'react';
@@ -12,7 +13,7 @@ const ListItem: FC<{
   field: string;
   maxRows?: number;
   single?: boolean;
-  onDelete: (index: number) => void;
+  onDelete: callback<number, void>;
   classNames?: any;
 }> = ({
   label,

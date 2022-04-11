@@ -10,10 +10,11 @@ import {
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import { TaskItem } from './TaskItem/TaskItem';
+import { setter } from '@custom-types/atomic';
 
 const TaskSelector: FC<{
   initialTasks: Item[];
-  setUsed: (_: any) => void;
+  setUsed: setter<any>;
   classNames?: object;
 }> = ({ setUsed, classNames, initialTasks }) => {
   const { locale } = useLocale();

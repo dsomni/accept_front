@@ -12,11 +12,12 @@ import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import { pureCallback } from '@custom-types/atomic';
 
 const EditTag: FC<{
   item: Item;
   updateURL: string;
-  refetch: () => void;
+  refetch: pureCallback<void>;
 }> = ({ item, refetch, updateURL }) => {
   const [opened, setOpened] = useState(false);
   const { locale } = useLocale();

@@ -7,10 +7,11 @@ import MainInfo from './MainInfo/MainInfo';
 import TaskAdding from './TaskAdding/TaskAdding';
 import Preview from './Preview/Preview';
 import { TaskOrdering } from './TaskOrdering/TaskOrdering';
+import { pureCallback } from '@custom-types/atomic';
 
 const Form: FC<{
   form: any;
-  handleSubmit: () => void;
+  handleSubmit: pureCallback<void>;
   buttonLabel: string;
 }> = ({ form, handleSubmit, buttonLabel }) => {
   const { locale } = useLocale();

@@ -20,6 +20,15 @@
   padding: var(---md3) 0;
 }
 
+.table {
+  margin-bottom: var(---md2);
+}
+
+.table td {
+  font-size: var(---p3) !important;
+  padding: var(---md1) var(---md3) !important;
+}
+
 .table tr {
   width: 70%;
   border: 1px solid #dee2e6;
@@ -30,9 +39,8 @@
 }
 
 .exampleHeader {
-  font-size: var(---p1);
+  font-size: var(---p2);
   height: 2.5rem;
-  padding: 0 var(---md1);
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -2,6 +2,7 @@ import { useLocale } from '@hooks/useLocale';
 import { Select } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
+import { callback } from '@custom-types/atomic';
 
 type Lang = 'py' | 'cpp' | 'rs';
 
@@ -21,7 +22,7 @@ const Languages: { label: string; value: Lang }[] = [
 ];
 
 const ProgrammingLangSelector: FC<{
-  setValue: (_: Lang) => void;
+  setValue: callback<Lang, void>;
   classNames?: object;
 }> = ({ setValue, classNames }) => {
   const { locale } = useLocale();

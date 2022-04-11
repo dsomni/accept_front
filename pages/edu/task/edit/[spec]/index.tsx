@@ -36,13 +36,16 @@ function EditTask(props: { task: ITask }) {
   );
 
   const [tags, setTags] = useState<ITag[]>([]);
+  const [readyTags, setReadyTags] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     let cleanUp = false;
+    setReadyTags(false);
     sendRequest<{}, ITag[]>(`tags/list`, 'GET').then((res) => {
       if (res && !cleanUp) {
         setTags(res);
+        setReadyTags(true);
       }
     });
     return () => {
@@ -63,7 +66,7 @@ function EditTask(props: { task: ITask }) {
         .filter((tag: ITag) => task?.tags.includes(tag.spec))
         .map((tag: ITag) => ({ label: tag.title, value: tag.spec })),
     }),
-    [tags, task]
+    [tags, task, readyTags] //eslint-disable-line
   );
   const form = useForm({
     initialValues: formValues,
@@ -140,7 +143,7 @@ function EditTask(props: { task: ITask }) {
           description={notificationDescription}
         />
       </div>
-      {ready && (
+      {ready && readyTags && (
         <Form
           form={form}
           handleSubmit={handleSubmit}

@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: var(---lg3) 15vw 0 15vw;
+  margin: var(---lg3) 15vw;
 }
 
 .radioGroups {

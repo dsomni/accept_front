@@ -5,12 +5,13 @@ import { useLocale } from '@hooks/useLocale';
 import styles from './sideBar.module.css';
 import { Burger, Group } from '@mantine/core';
 import SignIn from '../SignIn/SignIn';
+import { pureCallback } from '@custom-types/atomic';
 
 export const Links: FC<{
   links: IHeaderLink[];
   dropdownLinks: IHeaderLink[];
   dropdownLabel: string;
-  onClose: () => void;
+  onClose: pureCallback<void>;
 }> = ({ links, dropdownLinks, dropdownLabel, onClose }) => {
   const [openCollapse, setOpenCollapse] = useState(false);
 

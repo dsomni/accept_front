@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
+import { setter, pureCallback } from '@custom-types/atomic';
 
 export interface Item {
   value: string;
@@ -25,15 +26,13 @@ const cmpItem = (a: Item, b: Item) => {
   return -1;
 };
 
-type callback = (_: Item[]) => Item[];
-
 export const CustomTransferList: FC<{
   defaultOptions: Item[];
   defaultChosen: Item[];
-  setUsed: (_: Item[]) => void;
+  setUsed: setter<Item[]>;
   titles: [string, string];
   classNames: object;
-  rightComponent?: () => ReactNode;
+  rightComponent?: pureCallback<ReactNode>;
   itemComponent: (item: any, onSelect: any) => ReactNode;
   shouldSortChosen?: boolean;
 }> = ({

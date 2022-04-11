@@ -18,6 +18,7 @@ import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
 import { capitalize } from '@utils/capitalize';
 import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
+import { callback } from '@custom-types/atomic';
 
 const languages = [
   {
@@ -39,15 +40,15 @@ const languages = [
 
 const CodeArea: FC<{
   label: string;
-  setLanguage: (_: string) => void;
-  setCode: (_: string) => void;
+  setLanguage: callback<string, void>;
+  setCode: callback<string, void>;
   formProps?: any;
   classNames?: object;
 }> = ({ label, setLanguage, setCode, formProps, classNames }) => {
   const { locale } = useLocale();
 
   const [drag, setDrag] = useState(false);
-  const dragable = useRef<HTMLDivElement>(null);
+  const draggable = useRef<HTMLDivElement>(null);
 
   const dragStart = useCallback(() => {
     setDrag(true);
@@ -57,7 +58,7 @@ const CodeArea: FC<{
   }, []);
 
   useEffect(() => {
-    const current = dragable.current;
+    const current = draggable.current;
     if (current) {
       current.addEventListener('dragenter', dragStart);
       current.addEventListener('dragleave', () => setDrag(false));
@@ -68,7 +69,7 @@ const CodeArea: FC<{
         current.removeEventListener('dragleave', dragEnd);
       }
     };
-  }, [dragable, dragStart, dragEnd]);
+  }, [draggable, dragStart, dragEnd]);
 
   const onDrop = useCallback(
     (files: File[]) => {
@@ -87,7 +88,7 @@ const CodeArea: FC<{
   );
 
   return (
-    <div ref={dragable}>
+    <div ref={draggable}>
       <div className={styles.langSelector}>
         <ProgrammingLangSelector setValue={setLanguage} />
       </div>

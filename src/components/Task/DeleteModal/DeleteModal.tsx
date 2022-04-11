@@ -15,10 +15,11 @@ import {
   useMemo,
 } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
+import { callback } from '@custom-types/atomic';
 
 const DeleteModal: FC<{
   active: boolean;
-  setActive: (_: boolean) => void;
+  setActive: callback<boolean, void>;
   task: ITaskDisplay;
 }> = ({ active, setActive, task }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);

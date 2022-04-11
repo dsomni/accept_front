@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import { FC, memo, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
-import styles from './send.module.css';
+import notificationStyles from '@styles/ui/notification.module.css';
 import Notify from '@ui/Notify/Notify';
 import { isSuccessful } from '@requests/request';
 import CodeArea from '@ui/CodeArea/CodeArea';
@@ -31,7 +31,7 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
 
   return (
     <div>
-      <div className={styles.notification}>
+      <div className={notificationStyles.notification}>
         <Notify answer={answer} error={error} setAnswer={setAnswer} />
       </div>
       <CodeArea label={''} setLanguage={setLang} setCode={setCode} />

@@ -2,6 +2,7 @@ import { useLocale } from '@hooks/useLocale';
 import { InputWrapper } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useEffect, useRef, useState } from 'react';
+import { setter } from '@custom-types/atomic';
 
 const editorConfiguration = {
   simpleUpload: {
@@ -12,7 +13,7 @@ const editorConfiguration = {
 };
 
 const CustomEditor: FC<{
-  onChange: (_: any) => void;
+  onChange: setter<any>;
   name: string;
   value: string;
   label: string;

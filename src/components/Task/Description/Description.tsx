@@ -57,19 +57,27 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
         >
           <tbody>
             <tr>
-              <div className={styles.exampleHeader}>
-                {capitalize(locale.tasks.description.examples.input)}
-                <CopyButton toCopy={example.inputData} />
-              </div>
+              <td>
+                <div className={styles.exampleHeader}>
+                  {capitalize(
+                    locale.tasks.description.examples.input
+                  )}
+                  <CopyButton toCopy={example.inputData} />
+                </div>
+              </td>
             </tr>
             <tr key={index}>
               <td>{example.inputData}</td>
             </tr>
             <tr>
-              <div className={styles.exampleHeader}>
-                {capitalize(locale.tasks.description.examples.output)}
-                <CopyButton toCopy={example.outputData || ''} />
-              </div>
+              <td>
+                <div className={styles.exampleHeader}>
+                  {capitalize(
+                    locale.tasks.description.examples.output
+                  )}
+                  <CopyButton toCopy={example.outputData || ''} />
+                </div>
+              </td>
             </tr>
             <tr>
               <td>{example.outputData}</td>

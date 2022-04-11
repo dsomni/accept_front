@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import styles from '@styles/edu/task.edit.module.css';
+import notificationStyles from '@styles/ui/notification.module.css';
 import { useForm } from '@mantine/hooks';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
@@ -144,7 +144,7 @@ function EditAssignmentSchema() {
     useState('');
   return (
     <div>
-      <div className={styles.notification}>
+      <div className={notificationStyles.notification}>
         <Notify
           answer={answer}
           error={error}

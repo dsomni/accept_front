@@ -1,3 +1,4 @@
+import { pureCallback } from '@custom-types/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
 import DeleteTag from './DeleteTag/DeleteTag';
@@ -6,8 +7,8 @@ import styles from './tagItem.module.css';
 
 export const TagItem: FC<{
   item: Item;
-  onSelect: () => void;
-  refetch: () => void;
+  onSelect: pureCallback<void>;
+  refetch: pureCallback<void>;
   updateURL: string;
   deleteURL: string;
 }> = ({ item, onSelect, refetch, updateURL, deleteURL }) => {

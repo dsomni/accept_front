@@ -1,5 +1,6 @@
 import en from '@locale/en';
 import ru from '@locale/ru';
+import { setter } from './atomic';
 
 export const locales = {
   ru,
@@ -12,7 +13,7 @@ export interface ILocaleContext {
   langList: IAvailableLang[];
   weekDays: string[];
   months: string[];
-  set: (lang: IAvailableLang) => void;
+  set: setter<IAvailableLang>;
 }
 
 export type IAvailableLang = keyof typeof locales;

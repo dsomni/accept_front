@@ -9,10 +9,11 @@ import Preview from '@components/Task/Form/Preview/Preview';
 import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
+import { pureCallback } from '@custom-types/atomic';
 
 const Form: FC<{
   form: any;
-  handleSubmit: () => void;
+  handleSubmit: pureCallback<void>;
   buttonLabel: string;
 }> = ({ form, handleSubmit, buttonLabel }) => {
   const { locale } = useLocale();
@@ -83,9 +84,11 @@ const Form: FC<{
           mt="xl"
           className={stepperStyles.buttons}
         >
-          <Button variant="default" onClick={prevStep}>
-            {capitalize(locale.form.back)}
-          </Button>
+          {currentStep !== 0 && (
+            <Button variant="default" onClick={prevStep}>
+              {capitalize(locale.form.back)}
+            </Button>
+          )}
           <Button
             onClick={currentStep !== 4 ? nextStep : () => {}}
             type={currentStep !== 4 ? 'button' : 'submit'}

@@ -1,3 +1,4 @@
+import { setter } from '@custom-types/atomic';
 import { ITableColumn } from '@custom-types/ITable';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -27,9 +28,6 @@ import {
 import InnerTable from './InnerTable/InnerTable';
 import styles from './table.module.css';
 
-type callback = (list: any[]) => any[];
-type setter = (_: callback) => void;
-
 const Table: FC<{
   columns: ITableColumn[];
   rows: any[];
@@ -58,7 +56,9 @@ const Table: FC<{
 
   const { locale } = useLocale();
 
-  const [selectedColumns, setSelectedColumns] = useState(
+  const [selectedColumns, setSelectedColumns] = useState<
+    string[] | undefined
+  >(
     columns
       .filter((column) => !column.hidable || !column.hidden)
       .map((column) => column.key)
@@ -80,7 +80,7 @@ const Table: FC<{
 
   const handleChange = useCallback(
     (value: string[]) => {
-      setSelectedColumns(value.sort());
+      setSelectedColumns(value.length > 0 ? value.sort() : undefined);
       setLocalColumns(
         columns.filter(
           (column) => !column.hidable || value.includes(column.key)

@@ -36,7 +36,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           label: styles.label,
         }}
         initialTags={initialTags}
-        setUsed={(value) => form.setFieldValue('tags', value)}
+        setUsed={(value: any) => form.setFieldValue('tags', value)}
         fetchURL={'tags/list'}
         addURL={'tags/add'}
         updateURL={'tags/edit'}

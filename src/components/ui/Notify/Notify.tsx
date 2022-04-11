@@ -4,11 +4,12 @@ import { FC, memo, ReactNode } from 'react';
 import { Cross1Icon, CheckIcon } from '@modulz/radix-icons';
 import { capitalize } from '@utils/capitalize';
 import styles from './notify.module.css';
+import { setter } from '@custom-types/atomic';
 
 const Notify: FC<{
   answer: boolean;
   error: boolean;
-  setAnswer: (_: boolean) => void;
+  setAnswer: setter<boolean>;
   status?: string;
   description?: ReactNode | string;
 }> = ({ answer, error, setAnswer, status, description }) => {

@@ -1,3 +1,4 @@
+import { setter } from '@custom-types/atomic';
 import { ITag } from '@custom-types/ITag';
 import { useLocale } from '@hooks/useLocale';
 import { MultiSelect } from '@mantine/core';
@@ -6,14 +7,11 @@ import { hasSubarray } from '@utils/hasSubarray';
 import { FC, memo } from 'react';
 import styles from './tagSearch.module.css';
 
-type callback = (list: any[]) => any[];
-type setter = (_: callback) => void;
-
 const TagSearch: FC<{
   setterFunc: setter;
   beforeSelect: any;
   tags: Map<string, ITag>;
-  setCurrentTags: (value: any) => void;
+  setCurrentTags: setter<any>;
   rowList: any[];
 }> = ({
   setterFunc,
@@ -29,6 +27,7 @@ const TagSearch: FC<{
       <MultiSelect
         classNames={{
           value: styles.selected,
+          searchInput: styles.label,
         }}
         data={Array.from(tags.values()).map((tag) => tag.title)}
         onChange={(value: string[]) => {

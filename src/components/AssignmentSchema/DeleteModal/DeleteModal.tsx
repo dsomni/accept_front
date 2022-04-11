@@ -1,25 +1,19 @@
 import Notify from '@ui/Notify/Notify';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
-import { ITask, ITaskDisplay } from '@custom-types/ITask';
+import { ITask } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
-import { isSuccessful, sendRequest } from '@requests/request';
+import { isSuccessful } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-} from 'react';
+import { FC, memo, useCallback, useState, useMemo } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
+import { setter } from '@custom-types/atomic';
 
 const DeleteModal: FC<{
   active: boolean;
-  setActive: (_: boolean) => void;
+  setActive: setter<boolean>;
   assignment: IAssignmentSchema;
 }> = ({ active, setActive, assignment }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);

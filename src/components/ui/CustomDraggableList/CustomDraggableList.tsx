@@ -6,12 +6,12 @@ import {
   Droppable,
   Draggable,
 } from 'react-beautiful-dnd';
-import styles from './customDraggableList.module.css';
 import { DragHandleDots2Icon } from '@modulz/radix-icons';
+import { callback } from '@custom-types/atomic';
 
 export const CustomDraggableList: FC<{
   values: Item[];
-  setValues: (values: Item[]) => void;
+  setValues: callback<Item[], void>;
   classNames?: any;
 }> = ({ values, setValues, classNames }) => {
   const [loaded, setLoaded] = useState(false);

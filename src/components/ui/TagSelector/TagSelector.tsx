@@ -10,10 +10,11 @@ import {
 } from '@ui/CustomTransferList/CustomTransferList';
 import { TagItem } from './TagItem/TagItem';
 import AddTag from './AddTag/AddTag';
+import { setter } from '@custom-types/atomic';
 
 const TagSelector: FC<{
   initialTags: Item[];
-  setUsed: (_: any) => void;
+  setUsed: setter<any>;
   classNames?: object;
   fetchURL: string;
   addURL: string;

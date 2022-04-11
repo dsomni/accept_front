@@ -5,3 +5,6 @@
   width: 25%;
   min-width: 350px;
 }
+.label {
+  font-size: var(---p2);
+}

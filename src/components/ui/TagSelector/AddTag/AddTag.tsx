@@ -11,8 +11,9 @@ import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
+import { pureCallback } from '@custom-types/atomic';
 
-const AddTag: FC<{ refetch: () => void; addURL: string }> = ({
+const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   refetch,
   addURL,
 }) => {
