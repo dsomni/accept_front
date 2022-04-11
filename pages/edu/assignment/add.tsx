@@ -6,7 +6,7 @@ import { useUser } from '@hooks/useUser';
 import { sendRequest } from '@requests/request';
 import Notify from '@ui/Notify/Notify';
 import Form from '@components/AssignmentSchema/Form/Form';
-import styles from '@styles/edu/task.add.module.css';
+import notificationStyles from '@styles/ui/notification.module.css';
 import { capitalize } from '@utils/capitalize';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
@@ -74,7 +74,7 @@ function AddAssignmentSchema() {
 
   return (
     <>
-      <div className={styles.notification}>
+      <div className={notificationStyles.notification}>
         <Notify
           answer={answer}
           error={error}

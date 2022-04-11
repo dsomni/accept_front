@@ -6,14 +6,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
-  font-size: 1.2rem;
+  gap: var(---lg1);
+  font-size: var(---p1);
 }
 
 .githubs {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  gap: var(---lg1);
   align-items: center;
 }
 

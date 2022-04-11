@@ -1,14 +1,7 @@
-.stepper {
-  width: 70vw;
-  margin: 100px 15vw 0 15vw;
-}
-.buttons {
-  margin: 25px 0 100px 0;
-}
 .notification {
   width: 100%;
   position: fixed;
-  bottom: 20px;
+  bottom: var(---md3);
   z-index: 15;
   display: flex;
   justify-content: center;

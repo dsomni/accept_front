@@ -1,7 +1,7 @@
 .notification {
   width: 100%;
   position: fixed;
-  bottom: 20px;
+  bottom: var(---md3);
   z-index: 15;
   display: flex;
   justify-content: center;

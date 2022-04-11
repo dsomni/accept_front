@@ -1,4 +1,4 @@
 .sortIcon {
-  height: 24px;
-  width: 24px;
+  height: var(---lg1);
+  width: var(---lg1);
 }

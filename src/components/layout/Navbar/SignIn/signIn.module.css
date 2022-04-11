@@ -1,8 +1,8 @@
 .button {
   all: unset;
-  font-size: 1em;
+  font-size: var(---h4);
 }
 
 .button:hover {
-  background-color: rgba(20, 195, 255, 0.1);
+  background-color: #14c3ff1a;
 }

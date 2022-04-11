@@ -7,7 +7,7 @@ import { sendRequest } from '@requests/request';
 import Notify from '@ui/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import Form from '@components/Task/Form/Form';
-import styles from '@styles/edu/task.add.module.css';
+import notificationStyles from '@styles/ui/notification.module.css';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
@@ -117,7 +117,7 @@ function AddTask() {
 
   return (
     <>
-      <div className={styles.notification}>
+      <div className={notificationStyles.notification}>
         <Notify
           answer={answer}
           error={error}

@@ -1,15 +1,15 @@
 .dropdownBth {
   all: unset;
   font-size: 1em;
-  padding: 10px;
+  padding: var(---md1);
 }
 
 .dropdownBth:hover {
-  background-color: rgba(20, 195, 255, 0.1);
+  background-color: #14c3ff1a;
 }
 
 .items {
-  font-size: 1.3rem;
+  font-size: var(---h4);
 }
 .items:hover {
   background-color: #eee;

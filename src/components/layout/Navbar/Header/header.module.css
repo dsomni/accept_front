@@ -1,19 +1,19 @@
 .link {
   text-decoration: none;
-  font-size: 1em;
+  font-size: var(---h4);
   color: inherit !important;
 }
 
 .link:hover {
-  background-color: rgba(20, 195, 255, 0.1);
+  background-color: #14c3ff1a;
 }
 .header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 70px 24px 32px;
+  padding: var(---lg1) 70px var(---lg1) var(---lg2);
 }
 .paddingLinks {
-  padding: 5px 16px;
+  padding: var(---sm) var(---md2);
 }

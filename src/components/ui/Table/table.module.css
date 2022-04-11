@@ -1,26 +1,26 @@
 .wrapper {
   width: 80vw;
-  margin: 20px 10vw 10vh 10vw;
+  margin: var(---md3) 10vw 10vh 10vw;
   height: 100%;
-  font-size: 1.3rem;
+  font-size: var(---h4);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .label {
-  font-size: 1.3rem;
+  font-size: var(---h4);
 }
 .selected {
-  font-size: 1.1rem;
+  font-size: var(---p2);
 }
 
 .searchWrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 20px;
-  column-gap: 32px;
-  row-gap: 10px;
+  margin-bottom: var(---md3);
+  column-gap: var(---lg2);
+  row-gap: var(---md1);
 }
 .columnSelect,
 .search {
@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: 16px;
+  margin-top: var(---md2);
 }
 .pagesWrapper {
   display: flex;
@@ -49,8 +49,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: var(---md1);
 }
 .selectPerPage {
-  width: 100px;
+  width: var(---xl1);
 }

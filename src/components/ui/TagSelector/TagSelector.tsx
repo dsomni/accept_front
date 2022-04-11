@@ -76,7 +76,7 @@ const TagSelector: FC<{
         />
       );
     },
-    [refetch]
+    [refetch, deleteURL, updateURL]
   );
 
   return (

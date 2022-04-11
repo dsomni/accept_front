@@ -10,7 +10,7 @@ import {
   useState,
   useCallback,
 } from 'react';
-import styles from '@styles/edu/task.list.module.css';
+import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/ITag';
@@ -122,17 +122,20 @@ function TaskList() {
                 title: {
                   value: item.title,
                   display: (
-                    <div className={styles.titleWrapper}>
+                    <div className={tableStyles.titleWrapper}>
                       <a
-                        className={styles.title}
+                        className={tableStyles.title}
                         href={`/edu/task/${item.spec}`}
                       >
                         {item.title}
                       </a>
                       {!!tags && (
-                        <span className={styles.tags}>
+                        <span className={tableStyles.tags}>
                           {item.tags.map((tag, idx) => (
-                            <div className={styles.tag} key={idx}>
+                            <div
+                              className={tableStyles.tag}
+                              key={idx}
+                            >
                               {tags.get(tag)?.title +
                                 (idx == item.tags.length - 1
                                   ? ''
@@ -185,15 +188,15 @@ function TaskList() {
           columns={columns}
           rows={list}
           classNames={{
-            wrapper: styles.wrapper,
-            table: styles.table,
-            author: styles.author,
-            grade: styles.grade,
-            verdict: styles.verdict,
-            headerCell: styles.headerCell,
-            cell: styles.cell,
-            even: styles.even,
-            odd: styles.odd,
+            wrapper: tableStyles.wrapper,
+            table: tableStyles.table,
+            author: tableStyles.author,
+            grade: tableStyles.grade,
+            verdict: tableStyles.verdict,
+            headerCell: tableStyles.headerCell,
+            cell: tableStyles.cell,
+            even: tableStyles.even,
+            odd: tableStyles.odd,
           }}
           defaultOnPage={10}
           onPage={[5, 10]}

@@ -3,9 +3,9 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: 50px 15vw 0 15vw;
+  margin: var(---lg3) 15vw 0 15vw;
 }
 
 .addButton span {
-  font-size: 2rem;
+  font-size: var(---h1);
 }

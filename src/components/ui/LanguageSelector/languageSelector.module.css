@@ -1,5 +1,5 @@
 .lang {
   color: white;
-  font-size: 1.3rem;
+  font-size: var(---h4);
   text-decoration: none;
 }

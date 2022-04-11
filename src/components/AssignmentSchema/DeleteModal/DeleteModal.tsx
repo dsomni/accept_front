@@ -15,7 +15,7 @@ import {
   useState,
   useMemo,
 } from 'react';
-import styles from './deleteModal.module.css';
+import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -67,7 +67,7 @@ const DeleteModal: FC<{
 
   return (
     <>
-      <div className={styles.notification}>
+      <div className={deleteModalStyles.notification}>
         <Notify
           answer={notify}
           error={error}
@@ -86,11 +86,11 @@ const DeleteModal: FC<{
           ` '${assignment.title}'`
         }
         classNames={{
-          title: styles.modalTitle,
+          title: deleteModalStyles.modalTitle,
         }}
       >
-        <div className={styles.form}>
-          <div className={styles.question}>
+        <div className={deleteModalStyles.form}>
+          <div className={deleteModalStyles.question}>
             {capitalize(locale.tasks.modals.deleteConfidence)}
           </div>
           {assignments.length > 0 && (
@@ -100,12 +100,12 @@ const DeleteModal: FC<{
                   ` (${assignments.length}):`}
               </div>
               <br />
-              <div className={styles.assignmentList}>
+              <div className={deleteModalStyles.assignmentList}>
                 {assignments.map((assignment, index) => (
                   <div key={index}>
                     <Link href={`/edu/assignment/${assignment.spec}`}>
                       <a
-                        className={styles.assignmentLink}
+                        className={deleteModalStyles.assignmentLink}
                         target="_blank"
                       >
                         {assignment.title}
@@ -119,7 +119,7 @@ const DeleteModal: FC<{
           <Group
             position="right"
             spacing="lg"
-            className={styles.buttons}
+            className={deleteModalStyles.buttons}
           >
             <Button
               variant="outline"

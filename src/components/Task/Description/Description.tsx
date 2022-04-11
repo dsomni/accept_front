@@ -81,4 +81,4 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
   );
 };
 
-export default Description;
+export default memo(Description);

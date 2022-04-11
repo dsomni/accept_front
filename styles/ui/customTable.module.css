@@ -4,46 +4,39 @@
 .table {
   width: 100%;
   border-spacing: 0px !important;
-  /* border-left: solid 1px #3a3a3a; */
 }
 
 .table tr {
-  /* display: flex;
-  flex-direction: row; */
   display: grid;
 }
 .author {
-  /* width: 25%; */
   text-align: left;
 }
 
 .grade {
-  /* width: 12.5%; */
   text-align: left;
 }
 
 .verdict {
-  /* width: 12.5%; */
   text-align: left;
 }
 
 .cell {
-  font-size: 1.4rem;
+  font-size: var(---h4);
 }
 .headerCell,
 .cell {
-  padding: 16px;
-  /* border-right: solid 1px #3a3a3a; */
+  padding: var(---md2);
   border-bottom: solid 1px #3a3a3a;
 }
 
 .headerCell {
-  font-size: 1.5rem;
+  font-size: var(---h3);
   user-select: none;
   border-bottom: solid 2px black;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(---sm);
   flex-direction: row;
   cursor: pointer;
 }
@@ -58,7 +51,7 @@
   justify-content: space-between;
   align-items: flex-end;
   column-gap: 2em;
-  row-gap: 10px;
+  row-gap: var(---md1);
   padding-right: 5%;
   flex-wrap: wrap;
 }
@@ -77,7 +70,7 @@
 .tags {
   font-size: 0.7em;
   display: flex;
-  gap: 5px;
+  gap: var(---sm);
   flex-direction: row;
   flex-wrap: wrap;
   text-align: right;
