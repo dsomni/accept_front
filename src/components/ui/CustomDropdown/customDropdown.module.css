@@ -1,0 +1,16 @@
+.dropdownBth {
+  all: unset;
+  font-size: 1em;
+  padding: var(---md1);
+}
+
+.dropdownBth:hover {
+  background-color: #14c3ff1a;
+}
+
+.items {
+  font-size: var(---h4);
+}
+.items:hover {
+  background-color: #eee;
+}

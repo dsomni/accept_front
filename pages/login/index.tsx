@@ -1,5 +1,10 @@
 import { useLocale } from '@hooks/useLocale';
-import { Button, Center, PasswordInput, TextInput } from '@mantine/core';
+import {
+  Button,
+  Center,
+  PasswordInput,
+  TextInput,
+} from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { capitalize } from '@utils/capitalize';
 import Image from 'next/image';
@@ -44,12 +49,21 @@ const Login: FC = () => {
           width: '100%',
           height: '100vh',
           flexDirection: 'column',
-          gap: '40px',
+          gap: 'var(---lg2)',
         }}
       >
-        <Center style={{ flexDirection: 'column', gap: '10px' }}>
-          <Image src={logo} width={128} height={128} alt="Logo image" />
-          <div style={{ fontSize: '1.5em', lineHeight: '20px' }}>
+        <Center
+          style={{ flexDirection: 'column', gap: 'var(---md1)' }}
+        >
+          <Image
+            src={logo}
+            width={128}
+            height={128}
+            alt="Logo image"
+          />
+          <div
+            style={{ fontSize: '1.5em', lineHeight: 'var(---md3)' }}
+          >
             {capitalize(locale.accept)}
           </div>
         </Center>
@@ -57,7 +71,11 @@ const Login: FC = () => {
           onSubmit={form.onSubmit((values) =>
             signIn(values.login, values.password)
           )}
-          style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(---md3)',
+          }}
         >
           <TextInput
             required
@@ -70,10 +88,14 @@ const Login: FC = () => {
             required
             id="password"
             label={capitalize(locale.auth.labels.password)}
-            placeholder={capitalize(locale.auth.placeholders.password)}
+            placeholder={capitalize(
+              locale.auth.placeholders.password
+            )}
             {...form.getInputProps('password')}
           />
-          <Button type="submit">{capitalize(locale.auth.submit)}</Button>
+          <Button type="submit">
+            {capitalize(locale.auth.submit)}
+          </Button>
         </form>
       </Center>
     </div>

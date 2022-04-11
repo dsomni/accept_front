@@ -4,7 +4,7 @@ import { getServerUrl } from '@utils/getServerUrl';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import Description from '@components/AssignmentSchema/Description/Description';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import Sticky from '@components/Sticky/Sticky';
+import Sticky from '@ui/Sticky/Sticky';
 import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
 import { useRouter } from 'next/router';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';

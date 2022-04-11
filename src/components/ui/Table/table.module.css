@@ -1,0 +1,56 @@
+.wrapper {
+  width: 80vw;
+  margin: var(---md3) 10vw 10vh 10vw;
+  height: 100%;
+  font-size: var(---h4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.label {
+  font-size: var(---p2);
+}
+.selected {
+  font-size: var(---p2);
+}
+
+.searchWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: var(---md3);
+  column-gap: var(---lg2);
+  row-gap: var(---md1);
+}
+.columnSelect,
+.search {
+  width: 25%;
+  min-width: 350px;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: var(---md2);
+}
+.pagesWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 30%;
+  justify-content: space-between;
+}
+.pageNavigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.perPageWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(---md1);
+}
+.selectPerPage {
+  width: var(---xl1);
+}

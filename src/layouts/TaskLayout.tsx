@@ -1,9 +1,7 @@
-import Sticky from '@components/Sticky/Sticky';
-import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useLocale } from '@hooks/useLocale';
 import { Tabs } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
-import { FC, memo, ReactNode, useState } from 'react';
+import { FC, memo, ReactNode } from 'react';
 
 const TaskLayout: FC<{
   description: ReactNode;

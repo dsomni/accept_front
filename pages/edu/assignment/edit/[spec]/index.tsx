@@ -1,4 +1,4 @@
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import { useLocale } from '@hooks/useLocale';
 import {
   FC,
@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import styles from '@styles/edu/task.edit.module.css';
+import notificationStyles from '@styles/ui/notification.module.css';
 import { useForm } from '@mantine/hooks';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
@@ -16,7 +16,7 @@ import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
 import { ITag } from '@custom-types/ITag';
@@ -144,7 +144,7 @@ function EditAssignmentSchema() {
     useState('');
   return (
     <div>
-      <div className={styles.notification}>
+      <div className={notificationStyles.notification}>
         <Notify
           answer={answer}
           error={error}

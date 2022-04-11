@@ -1,0 +1,21 @@
+.searchBar {
+  width: 100%;
+}
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.content {
+  max-height: 500px;
+  min-height: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin-top: var(---md1);
+  /* border: solid #000 1px; */
+}
+.title {
+  padding: var(---md1) 0;
+}

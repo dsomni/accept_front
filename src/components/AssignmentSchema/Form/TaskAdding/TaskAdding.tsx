@@ -1,4 +1,4 @@
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC, memo, useMemo, useState } from 'react';
 import TaskSelector from '../TaskSelector/TaskSelector';
 import styles from './taskAdding.module.css';

@@ -1,4 +1,4 @@
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import Form from '@components/Task/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import styles from '@styles/edu/task.edit.module.css';
+import notificationStyles from '@styles/ui/notification.module.css';
 import { useForm } from '@mantine/hooks';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
@@ -17,7 +17,7 @@ import { ITag } from '@custom-types/ITag';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
@@ -36,13 +36,16 @@ function EditTask(props: { task: ITask }) {
   );
 
   const [tags, setTags] = useState<ITag[]>([]);
+  const [readyTags, setReadyTags] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     let cleanUp = false;
+    setReadyTags(false);
     sendRequest<{}, ITag[]>(`tags/list`, 'GET').then((res) => {
       if (res && !cleanUp) {
         setTags(res);
+        setReadyTags(true);
       }
     });
     return () => {
@@ -63,7 +66,7 @@ function EditTask(props: { task: ITask }) {
         .filter((tag: ITag) => task?.tags.includes(tag.spec))
         .map((tag: ITag) => ({ label: tag.title, value: tag.spec })),
     }),
-    [tags, task]
+    [tags, task, readyTags] //eslint-disable-line
   );
   const form = useForm({
     initialValues: formValues,
@@ -131,7 +134,7 @@ function EditTask(props: { task: ITask }) {
     useState('');
   return (
     <div>
-      <div className={styles.notification}>
+      <div className={notificationStyles.notification}>
         <Notify
           answer={answer}
           error={error}
@@ -140,7 +143,7 @@ function EditTask(props: { task: ITask }) {
           description={notificationDescription}
         />
       </div>
-      {ready && (
+      {ready && readyTags && (
         <Form
           form={form}
           handleSubmit={handleSubmit}

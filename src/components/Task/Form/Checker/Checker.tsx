@@ -1,5 +1,5 @@
-import CodeArea from '@components/CodeArea/CodeArea';
-import ListItem from '@components/ListItem/ListItem';
+import CodeArea from '@ui/CodeArea/CodeArea';
+import ListItem from '@ui/ListItem/ListItem';
 import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Textarea } from '@mantine/core';

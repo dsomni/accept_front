@@ -4,23 +4,23 @@
 }
 
 .label {
-  font-size: 1.3rem;
+  font-size: var(---h4);
 }
 
 .itemWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
-  padding: 25px;
+  gap: var(---sm);
+  padding: var(---lg1);
 }
 
 .dragButton {
-  width: 20px;
-  height: 20px;
+  width: var(---md3);
+  height: var(---md3);
 }
 .head {
-  font-size: 1.4rem;
+  font-size: var(---h4);
 }
 
 .wrapper {
@@ -28,5 +28,5 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: 50px 15vw 50px 15vw;
+  margin: var(---lg3) 15vw var(---lg3) 15vw;
 }

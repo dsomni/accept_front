@@ -1,8 +1,0 @@
-.button {
-  all: unset;
-  font-size: 1em;
-}
-
-.button:hover {
-  background-color: rgba(20, 195, 255, 0.1);
-}

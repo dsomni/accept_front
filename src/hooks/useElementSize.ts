@@ -1,6 +1,7 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
 
 import useEventListener from '@hooks/useEventListener';
+import { setter } from '@custom-types/atomic';
 
 interface Size {
   width: number;
@@ -8,7 +9,7 @@ interface Size {
 }
 
 function useElementSize<T extends HTMLElement = HTMLDivElement>(): [
-  (node: T | null) => void,
+  setter<T | null>,
   Size
 ] {
   const [ref, setRef] = useState<T | null>(null);

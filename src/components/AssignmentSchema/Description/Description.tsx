@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ITaskDisplay } from '@custom-types/ITask';
 import styles from './description.module.css';
 import { useLocale } from '@hooks/useLocale';
-import PrimitiveTable from '@components/PrimitiveTable/PrimitiveTable';
+import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';

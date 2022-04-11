@@ -3,25 +3,41 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   --removed-scroll-width: 0 !important;
-  font-size: 14px;
+  font-size: var(---md2);
 }
 
 :root {
   ---primary: #3f97f0;
   ---secondary: #005cd4;
+  ---h1: 2rem;
+  ---h2: 1.8rem;
+  ---h3: 1.6rem;
+  ---h4: 1.4rem;
+  ---p1: 1.2rem;
+  ---p2: 1.1rem;
+  ---p3: 1rem;
+  ---sm: 5px;
+  ---md1: 10px;
+  ---md2: 16px;
+  ---md3: 20px;
+  ---lg1: 24px;
+  ---lg2: 36px;
+  ---lg3: 48px;
+  ---lg4: 80px;
+  ---xl1: 100px;
 }
 
 @media only screen and (max-width: 1080px) {
   html,
   body {
-    font-size: 16px;
+    font-size: var(---md2);
   }
 }
 
 @media only screen and (max-width: 800px) {
   html,
   body {
-    font-size: 18px;
+    font-size: var(---md3);
   }
 }
 
@@ -36,7 +52,7 @@ body {
 }
 
 *::-webkit-scrollbar {
-  width: 4px;
+  width: var(---sm);
 }
 
 *::-webkit-scrollbar-thumb {

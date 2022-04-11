@@ -1,23 +1,23 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 20px 40px;
-  font-size: 1rem;
+  gap: var(---md1);
+  padding: var(---md3) var(---lg2);
+  font-size: var(---p2);
 }
 
 .title {
-  font-size: 1.85rem;
+  font-size: var(---h2);
 }
 
 .description {
-  padding: 10px 0px;
-  font-size: 1.2rem;
+  padding: var(---md1) 0px;
+  font-size: var(---p1);
 }
 
 .tableWrapper {
   width: 100%;
-  margin-top: 15px;
+  margin-top: var(---md2);
 }
 
 .tableWrapper tr {
@@ -30,8 +30,8 @@
 }
 
 .row {
-  font-size: 1.2rem;
-  padding: 15px;
+  font-size: var(---p1);
+  padding: var(---md2);
   border-bottom: 1px solid black;
 }
 
@@ -46,7 +46,7 @@
 .tableTitle {
   text-decoration: none;
   text-align: left;
-  font-size: 1.15em;
+  font-size: var(---p1);
   color: var(---primary);
 }
 

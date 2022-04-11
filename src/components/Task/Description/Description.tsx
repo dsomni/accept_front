@@ -4,7 +4,7 @@ import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
-import CopyButton from '@components/CopyButton/CopyButton';
+import CopyButton from '@ui/CopyButton/CopyButton';
 
 const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
   const description = useRef<HTMLDivElement>(null);
@@ -57,19 +57,27 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
         >
           <tbody>
             <tr>
-              <div className={styles.exampleHeader}>
-                {capitalize(locale.tasks.description.examples.input)}
-                <CopyButton toCopy={example.inputData} />
-              </div>
+              <td>
+                <div className={styles.exampleHeader}>
+                  {capitalize(
+                    locale.tasks.description.examples.input
+                  )}
+                  <CopyButton toCopy={example.inputData} />
+                </div>
+              </td>
             </tr>
             <tr key={index}>
               <td>{example.inputData}</td>
             </tr>
             <tr>
-              <div className={styles.exampleHeader}>
-                {capitalize(locale.tasks.description.examples.output)}
-                <CopyButton toCopy={example.outputData || ''} />
-              </div>
+              <td>
+                <div className={styles.exampleHeader}>
+                  {capitalize(
+                    locale.tasks.description.examples.output
+                  )}
+                  <CopyButton toCopy={example.outputData || ''} />
+                </div>
+              </td>
             </tr>
             <tr>
               <td>{example.outputData}</td>
@@ -81,4 +89,4 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
   );
 };
 
-export default Description;
+export default memo(Description);

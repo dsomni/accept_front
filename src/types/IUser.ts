@@ -1,3 +1,5 @@
+import { pureCallback } from './atomic';
+
 enum Roles {
   USER = 'user',
   STUDENT = 'student',
@@ -19,6 +21,6 @@ export interface IUser {
 export interface IUserContext {
   user: IUser | undefined | null;
   signIn: (login: string, password: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  refresh: () => Promise<void>;
+  signOut: pureCallback<Promise<void>>;
+  refresh: pureCallback<Promise<void>>;
 }

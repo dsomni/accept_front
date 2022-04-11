@@ -1,0 +1,8 @@
+.button {
+  all: unset;
+  font-size: var(---h4);
+}
+
+.button:hover {
+  background-color: #14c3ff1a;
+}

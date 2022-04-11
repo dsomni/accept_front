@@ -1,0 +1,24 @@
+.itemWrapper {
+  width: 100%;
+  display: flex;
+  padding: var(---md1);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.item,
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(---sm);
+  user-select: none;
+}
+.item {
+  cursor: pointer;
+  font-size: var(---p1);
+  width: 90%;
+}
+.actions {
+  width: fit-content;
+}

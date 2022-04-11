@@ -2,17 +2,18 @@ import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Stepper } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useState } from 'react';
-import styles from '@styles/edu/task.add.module.css';
+import stepperStyles from '@styles/ui/stepper.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
 import Checker from '@components/Task/Form/Checker/Checker';
 import Preview from '@components/Task/Form/Preview/Preview';
 import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
+import { pureCallback } from '@custom-types/atomic';
 
 const Form: FC<{
   form: any;
-  handleSubmit: () => void;
+  handleSubmit: pureCallback<void>;
   buttonLabel: string;
 }> = ({ form, handleSubmit, buttonLabel }) => {
   const { locale } = useLocale();
@@ -30,7 +31,7 @@ const Form: FC<{
   return (
     <>
       <Stepper
-        className={styles.stepper}
+        className={stepperStyles.stepper}
         iconPosition="right"
         active={currentStep}
         onStepClick={setCurrentStep}
@@ -78,10 +79,16 @@ const Form: FC<{
           <Checker form={form} />
         )}
         {currentStep === 4 && <Preview form={form} />}
-        <Group position="center" mt="xl" className={styles.buttons}>
-          <Button variant="default" onClick={prevStep}>
-            {capitalize(locale.form.back)}
-          </Button>
+        <Group
+          position="center"
+          mt="xl"
+          className={stepperStyles.buttons}
+        >
+          {currentStep !== 0 && (
+            <Button variant="default" onClick={prevStep}>
+              {capitalize(locale.form.back)}
+            </Button>
+          )}
           <Button
             onClick={currentStep !== 4 ? nextStep : () => {}}
             type={currentStep !== 4 ? 'button' : 'submit'}

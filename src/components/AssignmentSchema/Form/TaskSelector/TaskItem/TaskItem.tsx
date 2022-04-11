@@ -1,12 +1,13 @@
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
 import OpenTask from './OpenTask/OpenTask';
 import styles from './taskItem.module.css';
+import { pureCallback } from '@custom-types/atomic';
 
 export const TaskItem: FC<{
   item: Item;
-  onSelect: () => void;
-  refetch: () => void;
+  onSelect: pureCallback<void>;
+  refetch: pureCallback<void>;
 }> = ({ item, onSelect, refetch }) => {
   return (
     <div className={styles.itemWrapper}>

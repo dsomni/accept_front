@@ -1,4 +1,4 @@
-import Table from '@components/Table/Table';
+import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ITable';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
@@ -9,17 +9,17 @@ import {
   useState,
   useCallback,
 } from 'react';
-import styles from '@styles/edu/assignment.list.module.css';
+import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
-import Sticky from '@components/Sticky/Sticky';
+import Sticky from '@ui/Sticky/Sticky';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import { ITag } from '@custom-types/ITag';
 import { MultiSelect } from '@mantine/core';
-import TagSearch from '@components/TagSearch/TagSearch';
+import TagSearch from '@ui/TagSearch/TagSearch';
 
 const DESCR_SLICE = 35;
 
@@ -141,17 +141,20 @@ function AssignmentList() {
                 title: {
                   value: item.title,
                   display: (
-                    <div className={styles.titleWrapper}>
+                    <div className={tableStyles.titleWrapper}>
                       <a
-                        className={styles.title}
+                        className={tableStyles.title}
                         href={`/edu/assignment/${item.spec}`}
                       >
                         {item.title}
                       </a>
                       {!!tags && (
-                        <span className={styles.tags}>
+                        <span className={tableStyles.tags}>
                           {item.tags.map((tag, idx) => (
-                            <div className={styles.tag} key={idx}>
+                            <div
+                              className={tableStyles.tag}
+                              key={idx}
+                            >
                               {tags.get(tag)?.title +
                                 (idx == item.tags.length - 1
                                   ? ''
@@ -204,15 +207,15 @@ function AssignmentList() {
           columns={columns}
           rows={list}
           classNames={{
-            wrapper: styles.wrapper,
-            table: styles.table,
-            author: styles.author,
-            grade: styles.grade,
-            verdict: styles.verdict,
-            headerCell: styles.headerCell,
-            cell: styles.cell,
-            even: styles.even,
-            odd: styles.odd,
+            wrapper: tableStyles.wrapper,
+            table: tableStyles.table,
+            author: tableStyles.author,
+            grade: tableStyles.grade,
+            verdict: tableStyles.verdict,
+            headerCell: tableStyles.headerCell,
+            cell: tableStyles.cell,
+            even: tableStyles.even,
+            odd: tableStyles.odd,
           }}
           defaultOnPage={10}
           onPage={[5, 10]}

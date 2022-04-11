@@ -1,0 +1,78 @@
+.wrapper {
+  min-height: 70vh;
+}
+.table {
+  width: 100%;
+  border-spacing: 0px !important;
+}
+
+.table tr {
+  display: grid;
+}
+.author {
+  text-align: left;
+}
+
+.grade {
+  text-align: left;
+}
+
+.verdict {
+  text-align: left;
+}
+
+.cell {
+  font-size: var(---h4);
+}
+.headerCell,
+.cell {
+  padding: var(---md2);
+  border-bottom: solid 1px #3a3a3a;
+}
+
+.headerCell {
+  font-size: var(---h3);
+  user-select: none;
+  border-bottom: solid 2px black;
+  display: flex;
+  align-items: center;
+  gap: var(---sm);
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.even {
+  background-color: #f8f8f8;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  column-gap: 2em;
+  row-gap: var(---md1);
+  padding-right: 5%;
+  flex-wrap: wrap;
+}
+
+.title {
+  text-decoration: none;
+  text-align: left;
+  font-size: 1.15em;
+  color: var(---primary);
+}
+
+.title:hover {
+  color: var(---secondary);
+}
+
+.tags {
+  font-size: 0.7em;
+  display: flex;
+  gap: var(---sm);
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: right;
+  color: grey;
+}

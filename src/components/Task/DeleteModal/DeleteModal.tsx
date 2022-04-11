@@ -1,4 +1,4 @@
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
@@ -14,11 +14,12 @@ import {
   useState,
   useMemo,
 } from 'react';
-import styles from './deleteModal.module.css';
+import deleteModalStyles from '@styles/ui/deleteModal.module.css';
+import { callback } from '@custom-types/atomic';
 
 const DeleteModal: FC<{
   active: boolean;
-  setActive: (_: boolean) => void;
+  setActive: callback<boolean, void>;
   task: ITaskDisplay;
 }> = ({ active, setActive, task }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);
@@ -83,7 +84,7 @@ const DeleteModal: FC<{
 
   return (
     <>
-      <div className={styles.notification}>
+      <div className={deleteModalStyles.notification}>
         <Notify
           answer={notify}
           error={error}
@@ -102,11 +103,11 @@ const DeleteModal: FC<{
           ` '${task.title}' ?`
         }
         classNames={{
-          title: styles.modalTitle,
+          title: deleteModalStyles.modalTitle,
         }}
       >
-        <div className={styles.form}>
-          <div className={styles.question}>
+        <div className={deleteModalStyles.form}>
+          <div className={deleteModalStyles.question}>
             {capitalize(locale.tasks.modals.deleteConfidence)}
           </div>
           {assignments.length > 0 && (
@@ -116,12 +117,12 @@ const DeleteModal: FC<{
                   ` (${assignments.length}):`}
               </div>
               <br />
-              <div className={styles.assignmentList}>
+              <div className={deleteModalStyles.assignmentList}>
                 {assignments.map((assignment, index) => (
                   <div key={index}>
                     <Link href={`/edu/assignment/${assignment.spec}`}>
                       <a
-                        className={styles.assignmentLink}
+                        className={deleteModalStyles.assignmentLink}
                         target="_blank"
                       >
                         {assignment.title}
@@ -135,7 +136,7 @@ const DeleteModal: FC<{
           <Group
             position="right"
             spacing="lg"
-            className={styles.buttons}
+            className={deleteModalStyles.buttons}
           >
             <Button
               variant="outline"
