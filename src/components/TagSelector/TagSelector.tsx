@@ -15,7 +15,19 @@ const TagSelector: FC<{
   initialTags: Item[];
   setUsed: (_: any) => void;
   classNames?: object;
-}> = ({ setUsed, classNames, initialTags }) => {
+  fetchURL: string;
+  addURL: string;
+  updateURL: string;
+  deleteURL: string;
+}> = ({
+  setUsed,
+  classNames,
+  initialTags,
+  fetchURL,
+  addURL,
+  updateURL,
+  deleteURL,
+}) => {
   const { locale } = useLocale();
 
   const [selectedTags, setSelectedTags] =
@@ -25,7 +37,7 @@ const TagSelector: FC<{
 
   const refetch = useCallback(async () => {
     setLoading(true);
-    sendRequest<{}, ITag[]>('tags/list', 'GET').then((tags) => {
+    sendRequest<{}, ITag[]>(fetchURL, 'GET').then((tags) => {
       if (!tags) return;
       let newAvailableTags: Item[] = [];
       let newSelectedTags: Item[] = [];
@@ -46,7 +58,7 @@ const TagSelector: FC<{
       setAvailableTags(newAvailableTags);
       setLoading(false);
     });
-  }, [selectedTags]);
+  }, [fetchURL, selectedTags]);
 
   useEffect(() => {
     refetch();
@@ -59,6 +71,8 @@ const TagSelector: FC<{
           item={item}
           onSelect={() => handleSelect(item)}
           refetch={refetch}
+          updateURL={updateURL}
+          deleteURL={deleteURL}
         />
       );
     },
@@ -78,7 +92,10 @@ const TagSelector: FC<{
             capitalize(locale.tasks.form.tagSelector.used),
           ]}
           itemComponent={itemComponent}
-          rightComponent={() => <AddTag refetch={refetch} />}
+          rightComponent={() => (
+            <AddTag addURL={addURL} refetch={refetch} />
+          )}
+          shouldSortChosen={true}
         />
       )}
     </div>

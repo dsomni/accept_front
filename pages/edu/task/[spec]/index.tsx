@@ -1,21 +1,48 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
+import Sticky from '@components/Sticky/Sticky';
+import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
+import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
+import { useRouter } from 'next/router';
 
 function Task(props: { task: ITaskDisplay }) {
   const task = props.task;
+  const [activeModal, setActiveModal] = useState(false);
+  const router = useRouter();
+
+  const actions = [
+    {
+      color: 'green',
+      icon: <Pencil1Icon height={20} width={20} />,
+      onClick: () => router.push(`/edu/task/edit/${task.spec}`),
+    },
+    {
+      color: 'red',
+      icon: <TrashIcon height={20} width={20} />,
+      onClick: () => setActiveModal(true),
+    },
+  ];
   return (
-    <TaskLayout
-      description={<Description task={task} />}
-      send={<Send spec={task.spec} />}
-      results={<Results />}
-    />
+    <>
+      <DeleteModal
+        active={activeModal}
+        setActive={setActiveModal}
+        task={task}
+      />
+      <Sticky actions={actions} color={'--prime'} />
+      <TaskLayout
+        description={<Description task={task} />}
+        send={<Send spec={task.spec} />}
+        results={<Results />}
+      />
+    </>
   );
 }
 
@@ -39,18 +66,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const task = await fetch(`${SERVER_URL}/api/tasks/task`, {
     method: 'POST',
     body: JSON.stringify({ spec: params.spec }),
-  }).then((res) => res.json());
-  if (task) {
+  });
+  if (task.status === 200) {
     return {
       props: {
-        task,
+        task: await task.json(),
       },
     };
   }
   return {
     redirect: {
       permanent: false,
-      destination: '/',
+      destination: '/Not-Found',
     },
   };
 };

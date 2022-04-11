@@ -8,15 +8,25 @@ export const TagItem: FC<{
   item: Item;
   onSelect: () => void;
   refetch: () => void;
-}> = ({ item, onSelect, refetch }) => {
+  updateURL: string;
+  deleteURL: string;
+}> = ({ item, onSelect, refetch, updateURL, deleteURL }) => {
   return (
     <div className={styles.itemWrapper}>
       <div className={styles.item} onClick={() => onSelect()}>
         <div>{item.label}</div>
       </div>
       <div className={styles.actions}>
-        <EditTag item={item} refetch={refetch} />
-        <DeleteTag item={item} refetch={refetch} />
+        <EditTag
+          item={item}
+          refetch={refetch}
+          updateURL={updateURL}
+        />
+        <DeleteTag
+          item={item}
+          refetch={refetch}
+          deleteURL={deleteURL}
+        />
       </div>
     </div>
   );

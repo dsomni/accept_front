@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useMemo } from 'react';
-import TagSelector from '../TagSelector/TagSelector';
+import TagSelector from '@components/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
@@ -37,6 +37,10 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         }}
         initialTags={initialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
+        fetchURL={'tags/list'}
+        addURL={'tags/add'}
+        updateURL={'tags/edit'}
+        deleteURL={'tags/delete'}
       />
       <NumberInput
         classNames={{

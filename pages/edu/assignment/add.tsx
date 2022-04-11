@@ -16,20 +16,8 @@ const initialValues = {
   title: 'Уроки французского',
   author: '',
   description: 'Хороший урок, мне нравится',
-  tasks: [
-    {
-      label: 'Название Задачи',
-      value: '3b3bdfd7-8972-4bba-947e-4db53aea044a',
-    },
-    {
-      label: 'Простые числа',
-      value: '1f2348d8-9a6e-4760-afdc-9c7c8e792f88',
-    },
-    {
-      label: 'Простые числа 2',
-      value: 'a8eacb59-8b8c-4758-b774-d656f1e39834',
-    },
-  ],
+  tasks: [],
+  tags: [],
   defaultDuration: 0, // minutes
 };
 
@@ -62,8 +50,9 @@ function AddAssignmentSchema() {
     let body: any = {
       ...form.values,
       tasks: form.values['tasks'].map((task: Item) => task.value),
+      tags: form.values['tags'].map((tag: Item) => tag.value),
       author: user?.login || '',
-      duration: form.values.defaultDuration * 60 * 1000, // from minutes to millis
+      duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
     sendRequest<IAssignmentSchema, IAssignmentSchema>(
       'assignments/schema/add',

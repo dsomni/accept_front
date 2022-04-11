@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/tag';
+const url = 'http://' + env.API_ENDPOINT + '/api/assignment_schema';
 
 export default async function ListTasks(
-  req: NextApiRequest,
+  _: NextApiRequest,
   res: NextApiResponse
 ) {
   const response = await fetch(url);

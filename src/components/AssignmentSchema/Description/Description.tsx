@@ -22,21 +22,22 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
 
   useEffect(() => {
     let cleanUp = false;
-    sendRequest<string[], ITaskDisplay[]>(
-      'tasks/task-spec-list',
-      'POST',
-      assignment.tasks
-    ).then((res) => {
-      if (!cleanUp && res) {
-        const tasks = new Map<string, ITaskDisplay>();
-        for (let i = 0; i < res.length; i++) {
-          tasks.set(res[i].spec, res[i]);
+    if (assignment.tasks.length)
+      sendRequest<string[], ITaskDisplay[]>(
+        'tasks/task-spec-list',
+        'POST',
+        assignment.tasks
+      ).then((res) => {
+        if (!cleanUp && res) {
+          const tasks = new Map<string, ITaskDisplay>();
+          for (let i = 0; i < res.length; i++) {
+            tasks.set(res[i].spec, res[i]);
+          }
+          setTasks(
+            assignment.tasks.map((spec) => tasks.get(spec) || null!)
+          );
         }
-        setTasks(
-          assignment.tasks.map((spec) => tasks.get(spec) || null!)
-        );
-      }
-    });
+      });
 
     return () => {
       cleanUp = true;

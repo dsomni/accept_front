@@ -74,6 +74,15 @@ const months = {
 };
 
 const tasks = {
+  modals: {
+    add: 'add task',
+    edit: 'edit task',
+    delete: 'delete task',
+    deleteConfidence:
+      'are you sure you want to permanently delete the task?',
+    usedInAssignments:
+      'this task is currently used in the following assignments',
+  },
   description: {
     self: 'description',
     format: {
@@ -169,6 +178,10 @@ const tasks = {
     ok: 'Attempt successfully submitted',
   },
   submit: 'submit',
+  delete: {
+    success: 'the task was successfully deleted',
+    error: 'error when deleting the task',
+  },
 };
 
 const form = {
@@ -188,6 +201,7 @@ const placeholders = {
   code: 'place your code here',
   search: 'search',
   showColumns: 'pick columns to show',
+  selectTags: 'select tags',
 };
 
 const errors = {
@@ -200,10 +214,21 @@ const table = {
 };
 
 const assignmentSchema = {
+  modals: {
+    add: 'add assignment schema',
+    edit: 'edit assignment schema',
+    delete: 'delete assignment schema',
+    deleteConfidence:
+      'are you sure you want to permanently delete the assignment schema?',
+  },
   errors: {
     create: {
       error: 'can not create the assignment schema',
       success: 'assignment schema was successfully created',
+    },
+    edit: {
+      error: 'can not edit the assignment schema',
+      success: 'assignment schema was successfully updated',
     },
   },
   form: {
@@ -235,6 +260,16 @@ const assignmentSchema = {
       available: 'available tasks',
       used: 'used tasks',
     },
+  },
+  list: {
+    title: 'title',
+    author: 'author',
+    description: 'description',
+    taskCount: 'task count',
+  },
+  delete: {
+    success: 'the assignment schema was successfully deleted',
+    error: 'error when deleting the assignment schema',
   },
 };
 

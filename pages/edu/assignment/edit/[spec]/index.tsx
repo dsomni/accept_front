@@ -1,7 +1,7 @@
 import Notify from '@components/Notify/Notify';
-import Form from '@components/Task/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import {
+  FC,
   ReactNode,
   useCallback,
   useEffect,
@@ -10,41 +10,73 @@ import {
 } from 'react';
 import styles from '@styles/edu/task.edit.module.css';
 import { useForm } from '@mantine/hooks';
-import { ITask, ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
 import { useUser } from '@hooks/useUser';
-import { ITag } from '@custom-types/ITag';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@components/CustomTransferList/CustomTransferList';
-import { getServerUrl } from '@utils/getServerUrl';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import Form from '@components/AssignmentSchema/Form/Form';
+import { ITag } from '@custom-types/ITag';
 
-function EditTask(props: { task: ITask }) {
+function EditAssignmentSchema() {
   const { locale } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
-  const task = props.task;
-
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.tasks.errors.edit.error,
-      ok: locale.tasks.errors.edit.success,
-    }),
-    [locale]
-  );
 
   const [tags, setTags] = useState<ITag[]>([]);
   const router = useRouter();
 
+  const [readyTags, setReadyTags] = useState(false);
+
+  const defaultStatuses = useMemo(
+    () => ({
+      error: locale.assignmentSchema.errors.edit.error,
+      ok: locale.assignmentSchema.errors.edit.success,
+    }),
+    [locale]
+  );
+
+  const [assignmentSchema, setAssignmentSchema] =
+    useState<IAssignmentSchema>(null!);
+  const [tasks, setTasks] = useState<Map<string, ITaskDisplay>>(
+    new Map()
+  );
+
   useEffect(() => {
     let cleanUp = false;
-    sendRequest<{}, ITag[]>(`tags/list`, 'GET').then((res) => {
-      if (res && !cleanUp) {
-        setTags(res);
+    if (typeof router.query.spec === 'string') {
+      sendRequest<{ spec: string }, IAssignmentSchema>(
+        `assignments/schema/${router.query.spec}`,
+        'GET'
+      ).then((res) => {
+        if (res) {
+          setAssignmentSchema(res);
+        }
+      });
+    }
+    sendRequest<{}, ITaskDisplay[]>(`tasks/list`, 'GET').then(
+      (res) => {
+        if (res) {
+          const tasks = new Map<string, ITaskDisplay>();
+          for (let i = 0; i < res.length; i++) {
+            tasks.set(res[i].spec, res[i]);
+          }
+          setTasks(tasks);
+        }
       }
-    });
+    );
+    setReadyTags(false);
+    sendRequest<{}, ITag[]>(`assignment_tags/list`, 'GET').then(
+      (res) => {
+        if (res && !cleanUp) {
+          setTags(res);
+          setReadyTags(true);
+        }
+      }
+    );
     return () => {
       cleanUp = true;
     };
@@ -52,18 +84,20 @@ function EditTask(props: { task: ITask }) {
 
   const formValues = useMemo(
     () => ({
-      ...task,
-      checkerCode: task?.checker?.sourceCode,
-      checkerLang: task?.checker?.language,
-      hasHint: task?.hint ? true : false,
-      hintContent: task?.hint?.content,
-      hintAlarmType: task?.hint?.alarmType,
-      hintAlarm: task?.hint?.alarm,
+      ...assignmentSchema,
       tags: tags
-        .filter((tag: ITag) => task?.tags.includes(tag.spec))
+        .filter((tag: ITag) =>
+          assignmentSchema?.tags.includes(tag.spec)
+        )
         .map((tag: ITag) => ({ label: tag.title, value: tag.spec })),
+      tasks: assignmentSchema?.tasks
+        .map((spec) => tasks.get(spec) || null!)
+        .map((task: ITaskDisplay) => ({
+          label: task?.title,
+          value: task?.spec,
+        })),
     }),
-    [tags, task]
+    [tasks, tags, assignmentSchema, readyTags] // eslint-disable-line
   );
   const form = useForm({
     initialValues: formValues,
@@ -72,7 +106,7 @@ function EditTask(props: { task: ITask }) {
 
   useEffect(() => {
     form.setValues(formValues);
-    if (task) {
+    if (assignmentSchema) {
       setReady(true);
     }
   }, [formValues]); // eslint-disable-line
@@ -80,32 +114,11 @@ function EditTask(props: { task: ITask }) {
   const handleSubmit = useCallback(() => {
     let body: any = {
       ...form.values,
+      tasks: form.values['tasks'].map((task: Item) => task.value),
       tags: form.values['tags'].map((tag: Item) => tag.value),
-      author: user?.login || '',
-      lastUpdate: new Date().getTime(),
     };
-    if (form.values['checkType'] === 'checker') {
-      body.checker = {
-        sourceCode: form.values['checkerCode'],
-        language: form.values['checkerLang'],
-        version: 0,
-      };
-    }
-    if (
-      form.values['remark'] &&
-      form.values['remark'].trim() === ''
-    ) {
-      body.remark = undefined;
-    }
-    if (form.values['hasHint']) {
-      body.hint = {
-        content: form.values['hintContent'],
-        alarmType: form.values['hintAlarmType'],
-        alarm: form.values['hintAlarm'],
-      };
-    }
-    sendRequest<ITask, ITaskDisplay>(
-      `tasks/edit/${task.spec}`,
+    sendRequest<IAssignmentSchema, IAssignmentSchema>(
+      `assignments/schema/edit/${assignmentSchema.spec}`,
       'POST',
       body
     ).then((res) => {
@@ -120,7 +133,7 @@ function EditTask(props: { task: ITask }) {
         setError(true);
       }
     });
-  }, [form.values, user?.login, defaultStatuses, task?.spec]);
+  }, [form.values, defaultStatuses, assignmentSchema?.spec]);
 
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(false);
@@ -140,7 +153,7 @@ function EditTask(props: { task: ITask }) {
           description={notificationDescription}
         />
       </div>
-      {ready && (
+      {ready && readyTags && (
         <Form
           form={form}
           handleSubmit={handleSubmit}
@@ -151,45 +164,8 @@ function EditTask(props: { task: ITask }) {
   );
 }
 
-EditTask.getLayout = (page: ReactNode) => {
+EditAssignmentSchema.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default EditTask;
-
-const SERVER_URL = getServerUrl();
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
-  const task = await fetch(`${SERVER_URL}/api/tasks/task`, {
-    method: 'POST',
-    body: JSON.stringify({ spec: params.spec }),
-  });
-  if (task.status === 200) {
-    return {
-      props: {
-        task: await task.json(),
-      },
-    };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/Not-Found',
-    },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
-};
+export default EditAssignmentSchema;

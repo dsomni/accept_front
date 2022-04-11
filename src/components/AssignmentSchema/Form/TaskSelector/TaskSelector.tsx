@@ -26,20 +26,38 @@ const TaskSelector: FC<{
   const refetch = useCallback(async () => {
     setLoading(true);
     sendRequest<{}, ITaskDisplay[]>('tasks/list', 'GET').then(
-      (tasks) => {
-        if (!tasks) return;
+      (res) => {
+        if (!res) return;
+        const tasks = new Map<string, ITaskDisplay>();
+        for (let i = 0; i < res.length; i++) {
+          tasks.set(res[i].spec, res[i]);
+        }
+        // setTasks(
+        //   assignment.tasks.map(
+        //     (spec) => tasks.get(spec) || null!
+        //   )
+        // );
         let newAvailableTasks: Item[] = [];
         let newSelectedTasks: Item[] = [];
         let task;
         let selectedSpecs = selectedTasks.map((item) => item.value);
-        for (let i = 0; i < tasks.length; i++) {
+
+        selectedSpecs.map((spec: string) => {
+          const task = tasks.get(spec);
+          if (task) {
+            newSelectedTasks.push({
+              value: task.spec,
+              label: task.title,
+            });
+          }
+        });
+
+        for (let i = 0; i < res.length; i++) {
           task = {
-            value: tasks[i].spec,
-            label: tasks[i].title,
+            value: res[i].spec,
+            label: res[i].title,
           };
-          if (selectedSpecs.includes(task.value)) {
-            newSelectedTasks.push(task);
-          } else {
+          if (!selectedSpecs.includes(task.value)) {
             newAvailableTasks.push(task);
           }
         }

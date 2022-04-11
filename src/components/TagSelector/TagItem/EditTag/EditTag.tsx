@@ -13,10 +13,11 @@ import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
 import { Item } from '@components/CustomTransferList/CustomTransferList';
 
-const EditTag: FC<{ item: Item; refetch: () => void }> = ({
-  item,
-  refetch,
-}) => {
+const EditTag: FC<{
+  item: Item;
+  updateURL: string;
+  refetch: () => void;
+}> = ({ item, refetch, updateURL }) => {
   const [opened, setOpened] = useState(false);
   const { locale } = useLocale();
   const [title, setTitle] = useState(item.label);
@@ -44,7 +45,7 @@ const EditTag: FC<{ item: Item; refetch: () => void }> = ({
   const handleSubmit = useCallback(
     (title) => {
       if (validate(title)) {
-        isSuccessful('tags/edit', 'POST', {
+        isSuccessful(updateURL, 'POST', {
           spec: item.value,
           title: title,
         }).then((success) => {
@@ -55,7 +56,7 @@ const EditTag: FC<{ item: Item; refetch: () => void }> = ({
         });
       }
     },
-    [item, refetch, validate]
+    [item, refetch, validate, updateURL]
   );
 
   return (

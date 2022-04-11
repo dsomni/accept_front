@@ -1,6 +1,5 @@
 import Table from '@components/Table/Table';
 import { ITableColumn } from '@custom-types/ITable';
-import { ITaskList } from '@custom-types/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -10,29 +9,32 @@ import {
   useState,
   useCallback,
 } from 'react';
-import styles from '@styles/edu/task.list.module.css';
+import styles from '@styles/edu/assignment.list.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
+import { hasSubarray } from '@utils/hasSubarray';
+import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import Sticky from '@components/Sticky/Sticky';
+import { useRouter } from 'next/router';
+import { PlusIcon } from '@modulz/radix-icons';
 import { ITag } from '@custom-types/ITag';
 import { MultiSelect } from '@mantine/core';
-import { hasSubarray } from '@utils/hasSubarray';
-import router, { useRouter } from 'next/router';
-import { PlusIcon } from '@modulz/radix-icons';
-import Sticky from '@components/Sticky/Sticky';
 import TagSearch from '@components/TagSearch/TagSearch';
 
-function TaskList() {
-  const [list, setList] = useState<ITaskList[]>([]);
-  const [tags, setTags] = useState(new Map<string, ITag>());
+const DESCR_SLICE = 35;
+
+function AssignmentList() {
+  const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
   const { locale } = useLocale();
+  const router = useRouter();
 
   const columns: ITableColumn[] = useMemo(
     () => [
       {
-        label: capitalize(locale.tasks.list.title),
+        label: capitalize(locale.assignmentSchema.list.title),
         key: 'title',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -45,10 +47,10 @@ function TaskList() {
         allowMiddleState: true,
         hidable: false,
         hidden: false,
-        size: 9,
+        size: 6,
       },
       {
-        label: capitalize(locale.tasks.list.author),
+        label: capitalize(locale.assignmentSchema.list.author),
         key: 'author',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -60,46 +62,54 @@ function TaskList() {
         size: 3,
       },
       {
-        label: capitalize(locale.tasks.list.grade),
-        key: 'grade',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.grade > b.grade ? 1 : a.grade == b.grade ? 0 : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: true,
-        hidden: false,
-        size: 2,
-      },
-      {
-        label: capitalize(locale.tasks.list.verdict),
-        key: 'verdict',
+        label: capitalize(locale.assignmentSchema.list.description),
+        key: 'description',
         sortable: false,
         sortFunction: () => 0,
         sorted: 0,
         allowMiddleState: false,
         hidable: true,
+        hidden: true,
+        size: 8,
+      },
+      {
+        label: capitalize(locale.assignmentSchema.list.taskCount),
+        key: 'taskCount',
+        sortable: true,
+        sortFunction: (a: any, b: any) =>
+          a.taskCount > b.taskCount
+            ? 1
+            : a.taskCount == b.taskCount
+            ? 0
+            : -1,
+        sorted: 0,
+        allowMiddleState: true,
+        hidable: true,
         hidden: false,
-        size: 2,
+        size: 3,
       },
     ],
     [locale]
   );
+
+  const [tags, setTags] = useState(new Map<string, ITag>());
   const [loadingTags, setLoadingTags] = useState(true);
 
   useEffect(() => {
     let cleanUp = false;
 
     setLoadingTags(true);
-    sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
-      if (res && !cleanUp) {
-        let newTags = new Map<string, ITag>();
-        for (let i = 0; i < res.length; i++)
-          newTags.set(res[i].spec, res[i]);
-        setTags(newTags);
-        setLoadingTags(false);
+    sendRequest<{}, ITag[]>('assignment_tags/list', 'GET').then(
+      (res) => {
+        if (res && !cleanUp) {
+          let newTags = new Map<string, ITag>();
+          for (let i = 0; i < res.length; i++)
+            newTags.set(res[i].spec, res[i]);
+          setTags(newTags);
+          setLoadingTags(false);
+        }
       }
-    });
+    );
 
     return () => {
       cleanUp = true;
@@ -109,7 +119,10 @@ function TaskList() {
   useEffect(() => {
     let cleanUp = false;
     setLoading(true);
-    sendRequest<{}, ITaskList[]>('tasks/list', 'GET').then((res) => {
+    sendRequest<{}, IAssignmentSchema[]>(
+      'assignments/schema/list',
+      'GET'
+    ).then((res) => {
       if (!cleanUp) {
         if (res) {
           setList(
@@ -119,13 +132,19 @@ function TaskList() {
                 tags: item.tags.map(
                   (tag) => tags.get(tag)?.title || ''
                 ),
+                taskCount: item.tasks.length,
+                description:
+                  item.description.slice(0, DESCR_SLICE) +
+                  (item.description.length <= DESCR_SLICE
+                    ? ''
+                    : '...'),
                 title: {
                   value: item.title,
                   display: (
                     <div className={styles.titleWrapper}>
                       <a
                         className={styles.title}
-                        href={`/edu/task/${item.spec}`}
+                        href={`/edu/assignment/${item.spec}`}
                       >
                         {item.title}
                       </a>
@@ -180,7 +199,7 @@ function TaskList() {
 
   return (
     <div>
-      {!loading && tags.size > 0 && (
+      {!loading && !loadingTags && (
         <Table
           columns={columns}
           rows={list}
@@ -197,7 +216,7 @@ function TaskList() {
           }}
           defaultOnPage={10}
           onPage={[5, 10]}
-          searchKeys={['title.value', 'author', 'grade']}
+          searchKeys={['title.value', 'author']}
           rowFilter={rowFilter}
           additionalSearch={tagSearch}
         />
@@ -208,7 +227,7 @@ function TaskList() {
           {
             color: 'green',
             onClick: () => {
-              router.push(`/edu/task/add/`);
+              router.push(`/edu/assignment/add/`);
             },
             icon: <PlusIcon height={20} width={20} />,
           },
@@ -218,8 +237,8 @@ function TaskList() {
   );
 }
 
-TaskList.getLayout = (page: ReactNode) => {
+AssignmentList.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default TaskList;
+export default AssignmentList;

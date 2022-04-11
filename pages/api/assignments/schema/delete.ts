@@ -3,15 +3,14 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/assignment_schema';
 
-export default async function AddAssignmentSchema(
+export default async function DeleteAssignmentSchema(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(`${url}`, {
-    method: 'POST',
+  const spec = JSON.parse(req.body).spec;
+  const response = await fetch(`${url}/${spec}`, {
+    method: 'DELETE',
     credentials: 'include',
-    body: req.body,
-    headers: { 'content-type': 'application/json' },
   });
   const status = response.status;
   const data = await response.json();
