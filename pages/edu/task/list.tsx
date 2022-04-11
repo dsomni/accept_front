@@ -91,7 +91,6 @@ function TaskList() {
 
     setLoadingTags(true);
     sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
-      console.log(res);
       if (res && !cleanUp) {
         let newTags = new Map<string, ITag>();
         for (let i = 0; i < res.length; i++)

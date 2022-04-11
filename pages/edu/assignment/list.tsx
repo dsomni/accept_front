@@ -9,7 +9,7 @@ import {
   useState,
   useCallback,
 } from 'react';
-import styles from '@styles/edu/task.list.module.css';
+import styles from '@styles/edu/assignment.list.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
@@ -17,6 +17,8 @@ import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import Sticky from '@components/Sticky/Sticky';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
+import { ITag } from '@custom-types/ITag';
+import { MultiSelect } from '@mantine/core';
 
 const DESCR_SLICE = 35;
 
@@ -44,7 +46,7 @@ function AssignmentList() {
         allowMiddleState: true,
         hidable: false,
         hidden: false,
-        size: 5,
+        size: 6,
       },
       {
         label: capitalize(locale.assignmentSchema.list.author),
@@ -89,6 +91,30 @@ function AssignmentList() {
     [locale]
   );
 
+  const [tags, setTags] = useState(new Map<string, ITag>());
+  const [loadingTags, setLoadingTags] = useState(true);
+
+  useEffect(() => {
+    let cleanUp = false;
+
+    setLoadingTags(true);
+    sendRequest<{}, ITag[]>('assignment_tags/list', 'GET').then(
+      (res) => {
+        if (res && !cleanUp) {
+          let newTags = new Map<string, ITag>();
+          for (let i = 0; i < res.length; i++)
+            newTags.set(res[i].spec, res[i]);
+          setTags(newTags);
+          setLoadingTags(false);
+        }
+      }
+    );
+
+    return () => {
+      cleanUp = true;
+    };
+  }, []);
+
   useEffect(() => {
     let cleanUp = false;
     setLoading(true);
@@ -96,40 +122,59 @@ function AssignmentList() {
       'assignments/schema/list',
       'GET'
     ).then((res) => {
-      if (res && !cleanUp) {
-        setList(
-          res.map((item) => {
-            return {
-              ...item,
-              taskCount: item.tasks.length,
-              description:
-                item.description.slice(0, DESCR_SLICE) +
-                (item.description.length <= DESCR_SLICE ? '' : '...'),
-              title: {
-                value: item.title,
-                display: (
-                  <div className={styles.titleWrapper}>
-                    <a
-                      className={styles.title}
-                      href={`/edu/assignment/${item.spec}`}
-                    >
-                      {item.title}
-                    </a>
-                  </div>
+      if (!cleanUp) {
+        if (res) {
+          setList(
+            res.map((item) => {
+              return {
+                ...item,
+                tags: item.tags.map(
+                  (tag) => tags.get(tag)?.title || ''
                 ),
-              },
-            };
-          })
-        );
-      } else {
-        setError(true);
+                taskCount: item.tasks.length,
+                description:
+                  item.description.slice(0, DESCR_SLICE) +
+                  (item.description.length <= DESCR_SLICE
+                    ? ''
+                    : '...'),
+                title: {
+                  value: item.title,
+                  display: (
+                    <div className={styles.titleWrapper}>
+                      <a
+                        className={styles.title}
+                        href={`/edu/assignment/${item.spec}`}
+                      >
+                        {item.title}
+                      </a>
+                      {!!tags && (
+                        <span className={styles.tags}>
+                          {item.tags.map((tag, idx) => (
+                            <div className={styles.tag} key={idx}>
+                              {tags.get(tag)?.title +
+                                (idx == item.tags.length - 1
+                                  ? ''
+                                  : ', ')}
+                            </div>
+                          ))}
+                        </span>
+                      )}
+                    </div>
+                  ),
+                },
+              };
+            })
+          );
+        } else {
+          setError(true);
+        }
+        setLoading(false);
       }
-      setLoading(false);
     });
     return () => {
       cleanUp = true;
     };
-  }, []);
+  }, [tags, loadingTags]);
 
   const rowFilter = useCallback(
     (row) => {
@@ -138,9 +183,35 @@ function AssignmentList() {
     [currentTags]
   );
 
+  const tagSearch = useCallback(
+    (setter, beforeSelect) => (
+      <div className={styles.selectWrapper}>
+        <MultiSelect
+          classNames={{
+            value: styles.selected,
+          }}
+          data={Array.from(tags.values()).map((tag) => tag.title)}
+          onChange={(value: string[]) => {
+            beforeSelect();
+            setCurrentTags(value);
+            if (value.length > 0) {
+              setter(() =>
+                list.filter((row) => hasSubarray(row.tags, value))
+              );
+            } else {
+              setter(() => list);
+            }
+          }}
+          placeholder={capitalize(locale.placeholders.selectTags)}
+        />
+      </div>
+    ),
+    [locale, list, tags]
+  );
+
   return (
     <div>
-      {!loading && (
+      {!loading && !loadingTags && (
         <Table
           columns={columns}
           rows={list}
@@ -159,6 +230,7 @@ function AssignmentList() {
           onPage={[5, 10]}
           searchKeys={['title.value', 'author']}
           rowFilter={rowFilter}
+          additionalSearch={tagSearch}
         />
       )}
       <Sticky
