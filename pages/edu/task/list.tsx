@@ -120,7 +120,7 @@ function TaskList() {
                   (tag) => tags.get(tag)?.title || ''
                 ),
                 title: {
-                  title: item.title,
+                  value: item.title,
                   display: (
                     <div className={styles.titleWrapper}>
                       <a
