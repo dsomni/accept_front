@@ -1,4 +1,4 @@
-import CustomEditor from '@components/CustomEditor/CustomEditor';
+import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
 import { RadioGroup, Radio, NumberInput } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';

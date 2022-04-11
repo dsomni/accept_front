@@ -3,9 +3,9 @@ import { FC, memo, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import styles from './send.module.css';
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import { isSuccessful } from '@requests/request';
-import CodeArea from '@components/CodeArea/CodeArea';
+import CodeArea from '@ui/CodeArea/CodeArea';
 
 const Send: FC<{ spec: string }> = ({ spec }) => {
   const { locale } = useLocale();

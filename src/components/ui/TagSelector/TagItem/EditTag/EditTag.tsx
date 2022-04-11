@@ -11,7 +11,7 @@ import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
 const EditTag: FC<{
   item: Item;

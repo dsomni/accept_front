@@ -7,7 +7,7 @@ import { getServerUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
-import Sticky from '@components/Sticky/Sticky';
+import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
 import { useRouter } from 'next/router';

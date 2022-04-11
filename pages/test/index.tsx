@@ -1,4 +1,4 @@
-import CustomEditor from '@components/CustomEditor/CustomEditor';
+import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import AuthProvider from 'src/providers/AuthProvider';

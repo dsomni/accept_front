@@ -1,4 +1,4 @@
-import { CustomDraggableList } from '@components/CustomDraggableList/CustomDraggableList';
+import { CustomDraggableList } from '@ui/CustomDraggableList/CustomDraggableList';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { FC } from 'react';

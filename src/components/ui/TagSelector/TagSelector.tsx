@@ -7,7 +7,7 @@ import { ITag } from '@custom-types/ITag';
 import {
   CustomTransferList,
   Item,
-} from '@components/CustomTransferList/CustomTransferList';
+} from '@ui/CustomTransferList/CustomTransferList';
 import { TagItem } from './TagItem/TagItem';
 import AddTag from './AddTag/AddTag';
 

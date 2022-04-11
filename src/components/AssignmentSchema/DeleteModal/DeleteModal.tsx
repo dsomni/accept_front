@@ -1,4 +1,4 @@
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';

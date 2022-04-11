@@ -3,8 +3,8 @@ import { NumberInput, TextInput } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useMemo } from 'react';
 import styles from './mainInfo.module.css';
-import CustomEditor from '@components/CustomEditor/CustomEditor';
-import TagSelector from '@components/TagSelector/TagSelector';
+import CustomEditor from '@ui/CustomEditor/CustomEditor';
+import TagSelector from '@ui/TagSelector/TagSelector';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();

@@ -1,4 +1,4 @@
-import { HeaderLink } from '@components/Navbar/Header/Links/HeaderLink';
+import { HeaderLink } from '@components/layout/Navbar/Header/Links/HeaderLink';
 import IHeaderLink from '@custom-types/IHeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Menu } from '@mantine/core';
@@ -15,7 +15,9 @@ const CustomDropdown: FC<{ links: IHeaderLink[]; label: string }> = ({
     <Menu
       position="bottom"
       gutter={19}
-      control={<Button className={styles.dropdownBth}>{label}</Button>}
+      control={
+        <Button className={styles.dropdownBth}>{label}</Button>
+      }
     >
       {links.map((link, index) => (
         <Menu.Item

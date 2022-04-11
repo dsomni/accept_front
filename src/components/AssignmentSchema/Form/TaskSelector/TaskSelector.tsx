@@ -8,7 +8,7 @@ import { ITaskDisplay } from '@custom-types/ITask';
 import {
   CustomTransferList,
   Item,
-} from '@components/CustomTransferList/CustomTransferList';
+} from '@ui/CustomTransferList/CustomTransferList';
 import { TaskItem } from './TaskItem/TaskItem';
 
 const TaskSelector: FC<{

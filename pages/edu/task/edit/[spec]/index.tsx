@@ -1,4 +1,4 @@
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import Form from '@components/Task/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -17,7 +17,7 @@ import { ITag } from '@custom-types/ITag';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 

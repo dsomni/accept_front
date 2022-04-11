@@ -1,4 +1,4 @@
-import Notify from '@components/Notify/Notify';
+import Notify from '@ui/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';

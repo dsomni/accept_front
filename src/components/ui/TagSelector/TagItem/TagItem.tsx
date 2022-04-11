@@ -1,4 +1,4 @@
-import { Item } from '@components/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
 import DeleteTag from './DeleteTag/DeleteTag';
 import EditTag from './EditTag/EditTag';

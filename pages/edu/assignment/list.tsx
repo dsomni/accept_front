@@ -1,4 +1,4 @@
-import Table from '@components/Table/Table';
+import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ITable';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
@@ -14,12 +14,12 @@ import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
-import Sticky from '@components/Sticky/Sticky';
+import Sticky from '@ui/Sticky/Sticky';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import { ITag } from '@custom-types/ITag';
 import { MultiSelect } from '@mantine/core';
-import TagSearch from '@components/TagSearch/TagSearch';
+import TagSearch from '@ui/TagSearch/TagSearch';
 
 const DESCR_SLICE = 35;
 

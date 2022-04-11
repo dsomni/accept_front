@@ -24,14 +24,10 @@
       "@locale/*": ["src/locale/*"],
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/layouts/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@ui/*": ["src/components/ui/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/components/AssignmentSchema/Form/TaskSelector/TaskItem/OpenTask"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

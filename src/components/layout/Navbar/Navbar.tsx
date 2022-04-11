@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
-import Header from '@components/Navbar/Header/Header';
+import Header from '@components/layout/Navbar/Header/Header';
 import { links } from '@constants/MainHeaderLinks';
-import { Sidebar } from '@components/Navbar/Sidebar/Sidebar';
+import { Sidebar } from '@components/layout/Navbar/Sidebar/Sidebar';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import styles from './navbar.module.css';
 

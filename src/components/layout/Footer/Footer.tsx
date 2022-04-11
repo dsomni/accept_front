@@ -3,7 +3,7 @@ import styles from './footer.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
-import { LanguageSelector } from '@components/LanguageSelector/LanguageSelector';
+import { LanguageSelector } from '@ui/LanguageSelector/LanguageSelector';
 
 const Footer: FC = () => {
   const { locale } = useLocale();

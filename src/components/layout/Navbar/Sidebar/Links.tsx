@@ -18,7 +18,11 @@ export const Links: FC<{
 
   return (
     <>
-      <Burger className={styles.burger} opened={true} onClick={onClose} />
+      <Burger
+        className={styles.burger}
+        opened={true}
+        onClick={onClose}
+      />
       <Group direction="column" className={styles.linkWrapper}>
         <SignIn />
         {links.map((link, index) => (
@@ -49,7 +53,10 @@ export const Links: FC<{
                 </div>
               </>
             ) : (
-              <HeaderLink link={link} propClass={styles.noHoverLink} />
+              <HeaderLink
+                link={link}
+                propClass={styles.noHoverLink}
+              />
             )}
           </div>
         ))}

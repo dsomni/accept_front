@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useMemo } from 'react';
-import TagSelector from '@components/TagSelector/TagSelector';
+import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {

@@ -37,7 +37,9 @@ export const Sidebar: FC<{
             <Links
               links={links}
               dropdownLinks={dropdown}
-              dropdownLabel={capitalize(locale.mainHeaderLinks.projects)}
+              dropdownLabel={capitalize(
+                locale.mainHeaderLinks.projects
+              )}
               onClose={() => setOpen(false)}
             />
           </div>

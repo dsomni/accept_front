@@ -1,4 +1,4 @@
-import ListItem from '@components/ListItem/ListItem';
+import ListItem from '@ui/ListItem/ListItem';
 import { ITest } from '@custom-types/ITest';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Text } from '@mantine/core';

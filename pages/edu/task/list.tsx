@@ -1,4 +1,4 @@
-import Table from '@components/Table/Table';
+import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ITable';
 import { ITaskList } from '@custom-types/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -18,8 +18,8 @@ import { MultiSelect } from '@mantine/core';
 import { hasSubarray } from '@utils/hasSubarray';
 import router, { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
-import Sticky from '@components/Sticky/Sticky';
-import TagSearch from '@components/TagSearch/TagSearch';
+import Sticky from '@ui/Sticky/Sticky';
+import TagSearch from '@ui/TagSearch/TagSearch';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);

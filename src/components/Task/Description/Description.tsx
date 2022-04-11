@@ -4,7 +4,7 @@ import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
-import CopyButton from '@components/CopyButton/CopyButton';
+import CopyButton from '@ui/CopyButton/CopyButton';
 
 const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
   const description = useRef<HTMLDivElement>(null);

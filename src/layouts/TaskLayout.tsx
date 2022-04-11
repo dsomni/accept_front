@@ -1,4 +1,4 @@
-import Sticky from '@components/Sticky/Sticky';
+import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useLocale } from '@hooks/useLocale';
 import { Tabs } from '@mantine/core';
