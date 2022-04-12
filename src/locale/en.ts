@@ -203,6 +203,7 @@ const placeholders = {
   showColumns: 'pick columns to show',
   selectTags: 'select tags',
   selectGroups: 'select groups',
+  title: 'enter title',
 };
 
 const errors = {
@@ -283,6 +284,23 @@ const users = {
   },
 };
 
+const groups = {
+  add: 'add group',
+  title: 'title',
+  students: 'students',
+  selectedStudents: 'selected students',
+  errors: {
+    create: {
+      error: 'error when creating the group',
+      success: 'group was created successfully',
+    },
+    edit: {
+      error: 'error when updating the group',
+      success: 'group was updated successfully',
+    },
+  },
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -297,6 +315,9 @@ const en = {
   success: 'successes',
   language: 'language',
   all: 'all',
+  create: 'create',
+  edit: 'edit',
+  groups,
   table,
   errors,
   placeholders,

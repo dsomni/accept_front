@@ -28,9 +28,10 @@ const MultiSearch: FC<{
   return (
     <div className={styles.selectWrapper}>
       <MultiSelect
+        searchable
         classNames={{
           value: styles.selected,
-          searchInput: styles.label,
+          input: styles.inputElem,
         }}
         data={displayData(items)}
         onChange={(value: string[]) => {

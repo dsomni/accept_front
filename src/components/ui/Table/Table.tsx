@@ -196,7 +196,7 @@ const Table: FC<{
             <Input
               icon={<MagnifyingGlassIcon />}
               classNames={{
-                input: styles.label,
+                input: styles.inputElem,
               }}
               onChange={(e: any) => handleSearch(e.target.value)}
               placeholder={capitalize(locale.placeholders.search)}
@@ -207,6 +207,7 @@ const Table: FC<{
             <MultiSelect
               classNames={{
                 value: styles.selected,
+                input: styles.inputElem,
               }}
               data={availableColumns}
               value={selectedColumns}

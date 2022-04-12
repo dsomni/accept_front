@@ -13,6 +13,7 @@ import { setter, pureCallback } from '@custom-types/atomic';
 export interface Item {
   value: string;
   label: string;
+  [key: string]: any;
 }
 export type TransferListData = [Item[], Item[]];
 

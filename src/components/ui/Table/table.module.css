@@ -7,13 +7,19 @@
   flex-direction: column;
   justify-content: space-between;
 }
-.label {
+.inputElem {
   font-size: var(---p2);
+  min-height: var(---lg3);
+  display: flex;
 }
 .selected {
   font-size: var(---p2);
+  min-height: var(---lg2);
 }
 
+.selected span {
+  overflow: visible;
+}
 .searchWrapper {
   display: flex;
   flex-direction: row;

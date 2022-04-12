@@ -1,10 +1,21 @@
 .selected {
   font-size: var(---p2);
+  min-height: var(---lg2);
 }
+
+.selected span {
+  overflow: visible;
+}
+
 .selectWrapper {
   width: 25%;
   min-width: 350px;
 }
-.label {
+.inputElem {
+  font-size: var(---p2);
+  min-height: var(---lg3);
+  display: flex;
+}
+.inputElem input {
   font-size: var(---p2);
 }

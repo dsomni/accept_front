@@ -14,11 +14,11 @@ import {
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import Table from '@components/ui/Table/Table';
-import Sticky from '@components/ui/Sticky/Sticky';
-import router from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import { hasSubarray } from '@utils/hasSubarray';
+import styles from '@styles/edu/student.list.module.css';
+import { ActionIcon } from '@mantine/core';
 
 function StudentList() {
   const [list, setList] = useState<IStudentList[]>([]);
@@ -165,20 +165,34 @@ function StudentList() {
 
   const groupSearch = useCallback(
     (setter, beforeSelect) => (
-      <MultiSearch
-        setterFunc={setter}
-        beforeSelect={beforeSelect}
-        items={groups}
-        setCurrentItems={setCurrentGroups}
-        rowList={list}
-        placeholder={capitalize(locale.placeholders.selectGroups)}
-        displayData={(groups) =>
-          Array.from(groups.values()).map((group: any) => group.title)
-        }
-        rowField={'groups'}
-      />
+      <div className={styles.groupSearch}>
+        <MultiSearch
+          setterFunc={setter}
+          beforeSelect={beforeSelect}
+          items={groups}
+          setCurrentItems={setCurrentGroups}
+          rowList={list}
+          placeholder={capitalize(locale.placeholders.selectGroups)}
+          displayData={(groups) =>
+            Array.from(groups.values()).map(
+              (group: any) => group.title
+            )
+          }
+          rowField={'groups'}
+        />
+        <ActionIcon
+          component="a"
+          href={`/edu/group/add`}
+          target="_blank"
+          size={40}
+          variant="outline"
+          color="var(---primary)"
+        >
+          <PlusIcon width={20} height={20} />
+        </ActionIcon>
+      </div>
     ),
-    [groups, list, locale.placeholders.selectGroups]
+    [groups, list, locale]
   );
 
   return (

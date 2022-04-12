@@ -202,6 +202,7 @@ const placeholders = {
   showColumns: 'выберете поля',
   selectTags: 'выберете теги',
   selectGroups: 'выберете группы',
+  title: 'введите название',
 };
 
 const errors = {
@@ -282,6 +283,23 @@ const users = {
   },
 };
 
+const groups = {
+  add: 'добавить группу',
+  title: 'название',
+  students: 'ученики',
+  selectedStudents: 'выбранные ученики',
+  errors: {
+    create: {
+      error: 'ошибка при создании группы',
+      success: 'группа успешно создана',
+    },
+    edit: {
+      error: 'ошибка при обновлении группы',
+      success: 'группа успешно обновлена',
+    },
+  },
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
@@ -296,6 +314,9 @@ const ru = {
   success: 'успешно',
   language: 'язык',
   all: 'все',
+  create: 'создать',
+  edit: 'изменить',
+  groups,
   table,
   errors,
   placeholders,

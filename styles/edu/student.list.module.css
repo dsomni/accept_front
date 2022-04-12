@@ -1,0 +1,5 @@
+.groupSearch {
+  display: flex;
+  gap: var(---md1);
+  flex-wrap: nowrap;
+}
