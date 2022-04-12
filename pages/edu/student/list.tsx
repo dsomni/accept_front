@@ -178,7 +178,7 @@ function StudentList() {
         rowField={'groups'}
       />
     ),
-    [list, groups]
+    [groups, list, locale.placeholders.selectGroups]
   );
 
   return (
