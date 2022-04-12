@@ -17,9 +17,8 @@ import { ITag } from '@custom-types/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
 import router from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
-import Sticky from '@ui/Sticky/Sticky';
-import TagSearch from '@components/ui/MultiSearch/MultiSearch';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
+import SingularSticky from '@components/ui/Sticky/SingularSticky';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);
@@ -210,17 +209,10 @@ function TaskList() {
           additionalSearch={tagSearch}
         />
       )}
-      <Sticky
-        color={'--primary'}
-        actions={[
-          {
-            color: 'green',
-            onClick: () => {
-              router.push(`/edu/task/add/`);
-            },
-            icon: <PlusIcon height={20} width={20} />,
-          },
-        ]}
+      <SingularSticky
+        color="green"
+        onClick={() => router.push(`/edu/task/add/`)}
+        icon={<PlusIcon height={20} width={20} />}
       />
     </div>
   );

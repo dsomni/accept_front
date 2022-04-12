@@ -211,6 +211,7 @@ const errors = {
 
 const table = {
   perPage: 'на странице',
+  overall: 'всего',
 };
 
 const assignmentSchema = {

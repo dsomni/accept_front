@@ -37,7 +37,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 30%;
+  width: 100%;
   justify-content: space-between;
 }
 .pageNavigation {
@@ -53,4 +53,14 @@
 }
 .selectPerPage {
   width: var(---xl1);
+}
+
+.pageNavigationWrapper {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.overall {
+  font-size: var(---p1);
 }

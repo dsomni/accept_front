@@ -232,52 +232,57 @@ const Table: FC<{
       </div>
       <div className={styles.footer}>
         <div className={styles.pagesWrapper}>
-          <div className={styles.perPageWrapper}>
-            <div className={styles.perPage}>
-              {capitalize(locale.table.perPage) + ':'}{' '}
-            </div>
-            <Select
-              data={onPage
-                .map((value) => ({
-                  label: value.toString(),
-                  value: value.toString(),
-                }))
-                .concat({
-                  label: capitalize(locale.all),
-                  value: '0',
-                })}
-              classNames={{
-                input: styles.selectPerPage,
-              }}
-              defaultValue={defaultOnPage.toString()}
-              onChange={(value) => setPerPage(Number(value))}
-            />
+          <div className={styles.overall}>
+            {capitalize(locale.table.overall)} {localRows.length}
           </div>
-          <div className={styles.pageNavigation}>
-            <ActionIcon onClick={() => setPage(0)}>
-              <DoubleArrowLeftIcon />
-            </ActionIcon>
-            <ActionIcon
-              onClick={() => setPage((page) => max(page - 1, 0))}
-            >
-              <ChevronLeftIcon />
-            </ActionIcon>
-            <div>
-              {page * perPage + 1} -{' '}
-              {perPage
-                ? min((page + 1) * perPage, localRows.length)
-                : localRows.length}
+          <div className={styles.pageNavigationWrapper}>
+            <div className={styles.perPageWrapper}>
+              <div className={styles.perPage}>
+                {capitalize(locale.table.perPage) + ':'}{' '}
+              </div>
+              <Select
+                data={onPage
+                  .map((value) => ({
+                    label: value.toString(),
+                    value: value.toString(),
+                  }))
+                  .concat({
+                    label: capitalize(locale.all),
+                    value: '0',
+                  })}
+                classNames={{
+                  input: styles.selectPerPage,
+                }}
+                defaultValue={defaultOnPage.toString()}
+                onChange={(value) => setPerPage(Number(value))}
+              />
             </div>
-            <ActionIcon
-              onClick={() =>
-                setPage((page) => min(page + 1, lastPage))
-              }
-            >
-              <ChevronRightIcon />
-            </ActionIcon>
-            <ActionIcon onClick={() => setPage(lastPage)}>
-              <DoubleArrowRightIcon />
-            </ActionIcon>
+            <div className={styles.pageNavigation}>
+              <ActionIcon onClick={() => setPage(0)}>
+                <DoubleArrowLeftIcon />
+              </ActionIcon>
+              <ActionIcon
+                onClick={() => setPage((page) => max(page - 1, 0))}
+              >
+                <ChevronLeftIcon />
+              </ActionIcon>
+              <div>
+                {page * perPage + 1} -{' '}
+                {perPage
+                  ? min((page + 1) * perPage, localRows.length)
+                  : localRows.length}
+              </div>
+              <ActionIcon
+                onClick={() =>
+                  setPage((page) => min(page + 1, lastPage))
+                }
+              >
+                <ChevronRightIcon />
+              </ActionIcon>
+              <ActionIcon onClick={() => setPage(lastPage)}>
+                <DoubleArrowRightIcon />
+              </ActionIcon>
+            </div>
           </div>
         </div>
       </div>

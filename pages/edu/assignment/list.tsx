@@ -14,11 +14,11 @@ import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
-import Sticky from '@ui/Sticky/Sticky';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import { ITag } from '@custom-types/ITag';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
+import SingularSticky from '@components/ui/Sticky/SingularSticky';
 
 const DESCR_SLICE = 35;
 
@@ -228,17 +228,10 @@ function AssignmentList() {
           additionalSearch={tagSearch}
         />
       )}
-      <Sticky
-        color={'--primary'}
-        actions={[
-          {
-            color: 'green',
-            onClick: () => {
-              router.push(`/edu/assignment/add/`);
-            },
-            icon: <PlusIcon height={20} width={20} />,
-          },
-        ]}
+      <SingularSticky
+        color="green"
+        onClick={() => router.push(`/edu/assignment/add/`)}
+        icon={<PlusIcon height={20} width={20} />}
       />
     </div>
   );
