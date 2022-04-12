@@ -1,27 +1,30 @@
-import { setter } from '@custom-types/atomic';
-import { ITag } from '@custom-types/ITag';
-import { useLocale } from '@hooks/useLocale';
+import { callback, setter } from '@custom-types/atomic';
 import { MultiSelect } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
 import { hasSubarray } from '@utils/hasSubarray';
 import { FC, memo } from 'react';
-import styles from './tagSearch.module.css';
+import styles from './multiSearch.module.css';
 
-const TagSearch: FC<{
+const MultiSearch: FC<{
   setterFunc: setter;
   beforeSelect: any;
-  tags: Map<string, ITag>;
-  setCurrentTags: setter<any>;
+  items: Map<string, any>;
+  setCurrentItems: setter<any>;
   rowList: any[];
+
+  placeholder: string;
+  displayData: callback;
+  rowField: string;
 }> = ({
   setterFunc,
   beforeSelect,
-  tags,
-  setCurrentTags,
+  items,
+  setCurrentItems,
   rowList,
-}) => {
-  const { locale } = useLocale();
 
+  placeholder,
+  displayData,
+  rowField,
+}) => {
   return (
     <div className={styles.selectWrapper}>
       <MultiSelect
@@ -29,22 +32,24 @@ const TagSearch: FC<{
           value: styles.selected,
           searchInput: styles.label,
         }}
-        data={Array.from(tags.values()).map((tag) => tag.title)}
+        data={displayData(items)}
         onChange={(value: string[]) => {
           beforeSelect();
-          setCurrentTags(value);
+          setCurrentItems(value);
           if (value.length > 0) {
             setterFunc(() =>
-              rowList.filter((row) => hasSubarray(row.tags, value))
+              rowList.filter((row) =>
+                hasSubarray(row[rowField], value)
+              )
             );
           } else {
             setterFunc(() => rowList);
           }
         }}
-        placeholder={capitalize(locale.placeholders.selectTags)}
+        placeholder={placeholder}
       />
     </div>
   );
 };
 
-export default memo(TagSearch);
+export default memo(MultiSearch);

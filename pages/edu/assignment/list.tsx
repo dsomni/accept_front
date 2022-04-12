@@ -18,8 +18,7 @@ import Sticky from '@ui/Sticky/Sticky';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import { ITag } from '@custom-types/ITag';
-import { MultiSelect } from '@mantine/core';
-import TagSearch from '@ui/TagSearch/TagSearch';
+import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 
 const DESCR_SLICE = 35;
 
@@ -189,15 +188,20 @@ function AssignmentList() {
 
   const tagSearch = useCallback(
     (setter, beforeSelect) => (
-      <TagSearch
+      <MultiSearch
         setterFunc={setter}
         beforeSelect={beforeSelect}
-        tags={tags}
-        setCurrentTags={setCurrentTags}
+        items={tags}
+        setCurrentItems={setCurrentTags}
         rowList={list}
+        placeholder={capitalize(locale.placeholders.selectTags)}
+        displayData={(tags) =>
+          Array.from(tags.values()).map((tag: any) => tag.title)
+        }
+        rowField={'tags'}
       />
     ),
-    [list, tags]
+    [list, locale.placeholders.selectTags, tags]
   );
 
   return (

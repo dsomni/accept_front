@@ -202,6 +202,7 @@ const placeholders = {
   search: 'search',
   showColumns: 'pick columns to show',
   selectTags: 'select tags',
+  selectGroups: 'select groups',
 };
 
 const errors = {
@@ -273,6 +274,14 @@ const assignmentSchema = {
   },
 };
 
+const users = {
+  list: {
+    name: 'name',
+    login: 'login',
+    grade: 'grade',
+  },
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -299,6 +308,7 @@ const en = {
   tasks,
   form,
   assignmentSchema,
+  users,
 };
 
 export default en;

@@ -201,6 +201,7 @@ const placeholders = {
   search: 'поиск',
   showColumns: 'выберете поля',
   selectTags: 'выберете теги',
+  selectGroups: 'выберете группы',
 };
 
 const errors = {
@@ -272,6 +273,14 @@ const assignmentSchema = {
   },
 };
 
+const users = {
+  list: {
+    name: 'имя',
+    login: 'логин',
+    grade: 'класс',
+  },
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
@@ -298,6 +307,7 @@ const ru = {
   tasks,
   form,
   assignmentSchema,
+  users,
 };
 
 export default ru;

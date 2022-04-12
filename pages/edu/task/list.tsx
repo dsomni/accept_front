@@ -14,12 +14,12 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/ITag';
-import { MultiSelect } from '@mantine/core';
 import { hasSubarray } from '@utils/hasSubarray';
-import router, { useRouter } from 'next/router';
+import router from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import Sticky from '@ui/Sticky/Sticky';
-import TagSearch from '@ui/TagSearch/TagSearch';
+import TagSearch from '@components/ui/MultiSearch/MultiSearch';
+import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);
@@ -170,15 +170,20 @@ function TaskList() {
 
   const tagSearch = useCallback(
     (setter, beforeSelect) => (
-      <TagSearch
+      <MultiSearch
         setterFunc={setter}
         beforeSelect={beforeSelect}
-        tags={tags}
-        setCurrentTags={setCurrentTags}
+        items={tags}
+        setCurrentItems={setCurrentTags}
         rowList={list}
+        placeholder={capitalize(locale.placeholders.selectTags)}
+        displayData={(tags: any[]) =>
+          Array.from(tags.values()).map((tag: any) => tag.title)
+        }
+        rowField={'tags'}
       />
     ),
-    [list, tags]
+    [list, locale.placeholders.selectTags, tags]
   );
 
   return (
