@@ -52,10 +52,10 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <NotificationsProvider
-      position="bottom-center"
+      position="bottom-left"
       zIndex={9999}
       limit={5}
-      autoClose={60000}
+      autoClose={40000}
     >
       <UserProvider>
         <LocaleProvider>

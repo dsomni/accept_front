@@ -49,8 +49,8 @@ const EditTag: FC<{
         isSuccessful(updateURL, 'POST', {
           spec: item.value,
           title: title,
-        }).then((success) => {
-          if (success) {
+        }).then((res) => {
+          if (!res.error) {
             refetch();
             setOpened(false);
           }

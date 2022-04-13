@@ -4,14 +4,21 @@ import {
 } from '@mantine/notifications';
 import { defaultClassNames } from '@constants/NotificationClassNames';
 import { Cross1Icon, CheckIcon } from '@modulz/radix-icons';
+import { v4 as uuidv4 } from 'uuid';
 
-export const newNotification = (params: any): void => {
+const radius = '10px';
+
+export const newNotification = (params: any): string => {
+  const id = uuidv4();
   showNotification({
+    id,
     loading: true,
     classNames: defaultClassNames,
     disallowClose: true,
+    radius,
     ...params,
   });
+  return id;
 };
 export const successNotification = (params: any): void => {
   updateNotification({
@@ -20,6 +27,7 @@ export const successNotification = (params: any): void => {
     classNames: defaultClassNames,
     loading: false,
     disallowClose: false,
+    radius,
     ...params,
   });
 };
@@ -30,6 +38,7 @@ export const errorNotification = (params: any): void => {
     classNames: defaultClassNames,
     loading: false,
     disallowClose: false,
+    radius,
     ...params,
   });
 };

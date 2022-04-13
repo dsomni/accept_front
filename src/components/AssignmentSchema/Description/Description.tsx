@@ -28,10 +28,11 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
         'POST',
         assignment.tasks
       ).then((res) => {
-        if (!cleanUp && res) {
+        if (!cleanUp && !res.error) {
+          const response = res.response;
           const tasks = new Map<string, ITaskDisplay>();
-          for (let i = 0; i < res.length; i++) {
-            tasks.set(res[i].spec, res[i]);
+          for (let i = 0; i < response.length; i++) {
+            tasks.set(response[i].spec, response[i]);
           }
           setTasks(
             assignment.tasks.map((spec) => tasks.get(spec) || null!)

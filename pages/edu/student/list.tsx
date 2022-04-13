@@ -83,10 +83,11 @@ function StudentList() {
     setLoadingGroups(true);
     sendRequest<{}, IGroupDisplay[]>('groups/list', 'GET').then(
       (res) => {
-        if (res && !cleanUp) {
+        if (!res.error && !cleanUp) {
+          let response = res.response;
           let newGroups = new Map<string, IGroupDisplay>();
-          for (let i = 0; i < res.length; i++)
-            newGroups.set(res[i].spec, res[i]);
+          for (let i = 0; i < response.length; i++)
+            newGroups.set(response[i].spec, response[i]);
           setGroups(newGroups);
           setLoadingGroups(false);
         }
@@ -104,9 +105,9 @@ function StudentList() {
     sendRequest<{}, IStudentList[]>('students/list', 'GET').then(
       (res) => {
         if (!cleanUp) {
-          if (res) {
+          if (!res.error) {
             setList(
-              res.map((item) => {
+              res.response.map((item) => {
                 return {
                   ...item,
                   groups: item.groups.map(

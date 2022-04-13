@@ -41,8 +41,7 @@ function AddAssignmentSchema() {
       author: user?.login || '',
       duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
-    newNotification({
-      id: 'creating-assignment',
+    const id = newNotification({
       title: capitalize(
         locale.notify.assignmentSchema.create.loading
       ),
@@ -53,21 +52,21 @@ function AddAssignmentSchema() {
       'POST',
       body
     ).then((res) => {
-      if (res) {
+      if (!res.error) {
         successNotification({
-          id: 'creating-assignment',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.create.success
           ),
-          message: res.spec,
+          message: res.response.spec,
         });
       } else {
         errorNotification({
-          id: 'creating-assignment',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.create.error
           ),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

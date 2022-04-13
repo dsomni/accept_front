@@ -86,24 +86,23 @@ function AddTask() {
         alarm: form.values['hintAlarm'],
       };
     }
-    newNotification({
-      id: 'creating-task',
+    const id = newNotification({
       title: capitalize(locale.notify.task.create.loading),
       message: capitalize(locale.loading) + '...',
     });
     sendRequest<ITask, ITaskDisplay>('tasks/add', 'POST', body).then(
       (res) => {
-        if (res) {
+        if (!res.error) {
           successNotification({
-            id: 'creating-task',
+            id,
             title: capitalize(locale.notify.task.create.success),
-            message: res.spec,
+            message: res.response.spec,
           });
         } else {
           errorNotification({
-            id: 'creating-task',
+            id,
             title: capitalize(locale.notify.task.create.error),
-            message: capitalize(locale.error),
+            message: capitalize(res.detail.description),
           });
         }
       }

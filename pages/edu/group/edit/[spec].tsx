@@ -39,8 +39,8 @@ function EditGroup(props: { group: IGroup }) {
     setReadyStudents(false);
     sendRequest<{}, IStudentList[]>(`students/list`, 'GET').then(
       (res) => {
-        if (res && !cleanUp) {
-          setStudents(res);
+        if (!res.error && !cleanUp) {
+          setStudents(res.response);
           setReadyStudents(true);
         }
       }
@@ -75,8 +75,7 @@ function EditGroup(props: { group: IGroup }) {
   }, [formValues]); // eslint-disable-line
 
   const handleSubmit = useCallback(() => {
-    newNotification({
-      id: 'editing-group',
+    const id = newNotification({
       title: capitalize(locale.notify.group.edit.loading),
       message: capitalize(locale.loading) + '...',
     });
@@ -86,17 +85,17 @@ function EditGroup(props: { group: IGroup }) {
         (member: any) => member.login
       ),
     }).then((res) => {
-      if (res) {
+      if (!res.error) {
         successNotification({
-          id: 'editing-group',
+          id,
           title: capitalize(locale.notify.group.edit.success),
-          message: res.spec,
+          message: res.response.spec,
         });
       } else {
         errorNotification({
-          id: 'editing-group',
+          id,
           title: capitalize(locale.notify.group.edit.error),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

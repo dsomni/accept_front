@@ -39,8 +39,8 @@ function EditTask(props: { task: ITask }) {
     let cleanUp = false;
     setReadyTags(false);
     sendRequest<{}, ITag[]>(`tags/list`, 'GET').then((res) => {
-      if (res && !cleanUp) {
-        setTags(res);
+      if (!res.error && !cleanUp) {
+        setTags(res.response);
         setReadyTags(true);
       }
     });
@@ -103,8 +103,7 @@ function EditTask(props: { task: ITask }) {
         alarm: form.values['hintAlarm'],
       };
     }
-    newNotification({
-      id: 'editing-task',
+    const id = newNotification({
       title: capitalize(locale.notify.task.edit.loading),
       message: capitalize(locale.loading) + '...',
     });
@@ -113,17 +112,17 @@ function EditTask(props: { task: ITask }) {
       'POST',
       body
     ).then((res) => {
-      if (res) {
+      if (!res.error) {
         successNotification({
-          id: 'editing-task',
+          id,
           title: capitalize(locale.notify.task.edit.success),
-          message: res.spec,
+          message: res.response.spec,
         });
       } else {
         errorNotification({
-          id: 'editing-task',
+          id,
           title: capitalize(locale.notify.task.edit.error),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

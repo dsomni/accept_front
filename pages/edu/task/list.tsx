@@ -91,10 +91,11 @@ function TaskList() {
 
     setLoadingTags(true);
     sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
-      if (res && !cleanUp) {
+      if (!res.error && !cleanUp) {
+        let response = res.response;
         let newTags = new Map<string, ITag>();
-        for (let i = 0; i < res.length; i++)
-          newTags.set(res[i].spec, res[i]);
+        for (let i = 0; i < response.length; i++)
+          newTags.set(response[i].spec, response[i]);
         setTags(newTags);
         setLoadingTags(false);
       }
@@ -110,9 +111,9 @@ function TaskList() {
     setLoading(true);
     sendRequest<{}, ITaskList[]>('tasks/list', 'GET').then((res) => {
       if (!cleanUp) {
-        if (res) {
+        if (!res.error) {
           setList(
-            res.map((item) => {
+            res.response.map((item) => {
               return {
                 ...item,
                 tags: item.tags.map(

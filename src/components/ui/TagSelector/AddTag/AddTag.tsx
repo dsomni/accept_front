@@ -46,8 +46,8 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
       if (validate(title)) {
         isSuccessful(addURL, 'POST', {
           title: title,
-        }).then((success) => {
-          if (success) {
+        }).then((res) => {
+          if (!res.error) {
             refetch();
             setOpened(false);
           }

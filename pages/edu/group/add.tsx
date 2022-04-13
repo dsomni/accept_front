@@ -29,8 +29,7 @@ function AddGroup() {
   });
 
   const handleSubmit = useCallback(() => {
-    newNotification({
-      id: 'creating-group',
+    const id = newNotification({
       title: capitalize(locale.notify.group.create.loading),
       message: capitalize(locale.loading) + '...',
     });
@@ -41,17 +40,17 @@ function AddGroup() {
         (member: Item) => member.value
       ),
     }).then((res) => {
-      if (res) {
+      if (!res.error) {
         successNotification({
-          id: 'creating-group',
+          id,
           title: capitalize(locale.notify.group.create.success),
-          message: res.spec,
+          message: res.response.spec,
         });
       } else {
         errorNotification({
-          id: 'creating-group',
+          id,
           title: capitalize(locale.notify.group.create.error),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

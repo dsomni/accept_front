@@ -38,8 +38,9 @@ const TagSelector: FC<{
 
   const refetch = useCallback(async () => {
     setLoading(true);
-    sendRequest<{}, ITag[]>(fetchURL, 'GET').then((tags) => {
-      if (!tags) return;
+    sendRequest<{}, ITag[]>(fetchURL, 'GET').then((res) => {
+      if (!res.error) return;
+      let tags = res.response;
       let newAvailableTags: Item[] = [];
       let newSelectedTags: Item[] = [];
       let tag;

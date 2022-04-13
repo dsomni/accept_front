@@ -37,8 +37,8 @@ const DeleteModal: FC<{
       `/tasks/connected_assignments/${task.spec}`,
       'POST'
     ).then((res) => {
-      if (res && !cleanUp) {
-        setAssignments(res);
+      if (!res.error && !cleanUp) {
+        setAssignments(res.response);
       }
     });
 
@@ -50,25 +50,24 @@ const DeleteModal: FC<{
   const handleDelete = useCallback(() => {
     let cleanUp = false;
 
-    newNotification({
-      id: 'deleting-task',
+    const id = newNotification({
       title: capitalize(locale.notify.task.delete.loading),
       message: capitalize(locale.loading) + '...',
     });
     isSuccessful<{}>('/tasks/delete', 'POST', {
       spec: task.spec,
     }).then((res) => {
-      if (res && !cleanUp) {
+      if (!res.error && !cleanUp) {
         successNotification({
-          id: 'deleting-task',
+          id,
           title: capitalize(locale.notify.task.delete.success),
         });
         router.push('/edu/task/list');
       } else {
         errorNotification({
-          id: 'deleting-task',
+          id,
           title: capitalize(locale.notify.task.delete.error),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

@@ -27,8 +27,7 @@ const DeleteModal: FC<{
   const handleDelete = useCallback(() => {
     let cleanUp = false;
 
-    newNotification({
-      id: 'delete-assignment',
+    const id = newNotification({
       title: capitalize(
         locale.notify.assignmentSchema.delete.loading
       ),
@@ -37,9 +36,9 @@ const DeleteModal: FC<{
     isSuccessful<{}>('/assignments/schema/delete', 'POST', {
       spec: assignment.spec,
     }).then((res) => {
-      if (res && !cleanUp) {
+      if (!res.error && !cleanUp) {
         successNotification({
-          id: 'delete-assignment',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.delete.success
           ),
@@ -47,11 +46,11 @@ const DeleteModal: FC<{
         router.push('/edu/assignment/list');
       } else {
         errorNotification({
-          id: 'delete-assignment',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.delete.error
           ),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

@@ -28,9 +28,9 @@ const Form: FC<{
     sendRequest<{}, IStudentList[]>('students/list', 'GET').then(
       (res) => {
         if (!cleanUp) {
-          if (res) {
+          if (!res.error) {
             setStudents(
-              res.filter(
+              res.response.filter(
                 (item) =>
                   !form.values['members'].find(
                     (member: Item) => member.login === item.login

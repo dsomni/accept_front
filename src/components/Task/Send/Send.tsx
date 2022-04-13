@@ -20,8 +20,7 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
   const [code, setCode] = useState('');
 
   const handleSubmit = useCallback(() => {
-    newNotification({
-      id: 'sending-task',
+    const id = newNotification({
       title: capitalize(locale.notify.task.send.loading),
       message: capitalize(locale.loading) + '...',
     });
@@ -30,21 +29,21 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
       task: spec,
       language: lang,
       programText: code,
-    }).then((success) => {
-      if (success) {
+    }).then((res) => {
+      if (!res.error) {
         successNotification({
-          id: 'sending-task',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.create.success
           ),
         });
       } else {
         errorNotification({
-          id: 'sending-task',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.create.error
           ),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });

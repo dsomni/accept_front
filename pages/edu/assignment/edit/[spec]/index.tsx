@@ -46,17 +46,17 @@ function EditAssignmentSchema() {
         `assignments/schema/${router.query.spec}`,
         'GET'
       ).then((res) => {
-        if (res) {
-          setAssignmentSchema(res);
+        if (!res.error) {
+          setAssignmentSchema(res.response);
         }
       });
     }
     sendRequest<{}, ITaskDisplay[]>(`tasks/list`, 'GET').then(
       (res) => {
-        if (res) {
+        if (!res.error) {
           const tasks = new Map<string, ITaskDisplay>();
-          for (let i = 0; i < res.length; i++) {
-            tasks.set(res[i].spec, res[i]);
+          for (let i = 0; i < res.response.length; i++) {
+            tasks.set(res.response[i].spec, res.response[i]);
           }
           setTasks(tasks);
         }
@@ -65,8 +65,8 @@ function EditAssignmentSchema() {
     setReadyTags(false);
     sendRequest<{}, ITag[]>(`assignment_tags/list`, 'GET').then(
       (res) => {
-        if (res && !cleanUp) {
-          setTags(res);
+        if (!res.error && !cleanUp) {
+          setTags(res.response);
           setReadyTags(true);
         }
       }
@@ -111,8 +111,7 @@ function EditAssignmentSchema() {
       tasks: form.values['tasks'].map((task: Item) => task.value),
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
-    newNotification({
-      id: 'editing-assignment',
+    const id = newNotification({
       title: capitalize(locale.notify.assignmentSchema.edit.loading),
       message: capitalize(locale.loading) + '...',
     });
@@ -121,21 +120,21 @@ function EditAssignmentSchema() {
       'POST',
       body
     ).then((res) => {
-      if (res) {
+      if (!res.error) {
         successNotification({
-          id: 'editing-assignment',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.edit.success
           ),
-          message: res.spec,
+          message: res.response.spec,
         });
       } else {
         errorNotification({
-          id: 'editing-assignment',
+          id,
           title: capitalize(
             locale.notify.assignmentSchema.edit.error
           ),
-          message: capitalize(locale.error),
+          message: capitalize(res.detail.description),
         });
       }
     });
