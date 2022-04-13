@@ -1,4 +1,3 @@
-import Notify from '@ui/Notify/Notify';
 import Form from '@components/Task/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -20,20 +19,17 @@ import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 function EditTask(props: { task: ITask }) {
   const { locale } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
   const task = props.task;
-
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.tasks.errors.edit.error,
-      ok: locale.tasks.errors.edit.success,
-    }),
-    [locale]
-  );
 
   const [tags, setTags] = useState<ITag[]>([]);
   const [readyTags, setReadyTags] = useState(false);
@@ -107,42 +103,33 @@ function EditTask(props: { task: ITask }) {
         alarm: form.values['hintAlarm'],
       };
     }
+    newNotification({
+      id: 'editing-task',
+      title: capitalize(locale.notify.task.edit.loading),
+      message: capitalize(locale.loading) + '...',
+    });
     sendRequest<ITask, ITaskDisplay>(
       `tasks/edit/${task.spec}`,
       'POST',
       body
     ).then((res) => {
-      setAnswer(true);
       if (res) {
-        setNotificationStatus(defaultStatuses.ok);
-        setNotificationDescription(res.spec);
-        setError(false);
+        successNotification({
+          id: 'editing-task',
+          title: capitalize(locale.notify.task.edit.success),
+          message: res.spec,
+        });
       } else {
-        setNotificationStatus(defaultStatuses.error);
-        setNotificationDescription('');
-        setError(true);
+        errorNotification({
+          id: 'editing-task',
+          title: capitalize(locale.notify.task.edit.error),
+          message: capitalize(locale.error),
+        });
       }
     });
-  }, [form.values, user?.login, defaultStatuses, task?.spec]);
-
-  const [error, setError] = useState(false);
-  const [answer, setAnswer] = useState(false);
-  const [notificationStatus, setNotificationStatus] = useState(
-    defaultStatuses.ok
-  );
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
+  }, [form.values, user?.login, locale, task?.spec]);
   return (
     <div>
-      <div className={notificationStyles.notification}>
-        <Notify
-          answer={answer}
-          error={error}
-          setAnswer={setAnswer}
-          status={notificationStatus}
-          description={notificationDescription}
-        />
-      </div>
       {ready && readyTags && (
         <Form
           form={form}

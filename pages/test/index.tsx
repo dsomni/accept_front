@@ -1,33 +1,26 @@
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { FC, ReactElement, useEffect, useState } from 'react';
-import AuthProvider from 'src/providers/AuthProvider';
+import { showNotification } from '@mantine/notifications';
+import { defaultClassNames } from '@constants/NotificationClassNames';
 
 function TestPage() {
-  const [data, setData] = useState();
-  const [isLoaded, setIsLoaded] = useState(false);
-
   useEffect(() => {
-    setIsLoaded(true);
+    setTimeout(() => {
+      showNotification({
+        title: '123',
+        message:
+          '123 1 1234 1 12345 123456789 12 123456 12345 123 12345 123456789',
+        autoClose: false,
+        classNames: defaultClassNames,
+      });
+    }, 1000);
   }, []);
 
-  return (
-    <>
-      <CustomEditor
-        name="test"
-        label="test"
-        value=""
-        onChange={(data) => setData(data)}
-      ></CustomEditor>
-    </>
-  );
+  return <></>;
 }
 
 TestPage.getLayout = (page: ReactElement) => {
-  return (
-    <AuthProvider>
-      <DefaultLayout>{page}</DefaultLayout>
-    </AuthProvider>
-  );
+  return <DefaultLayout>{page}</DefaultLayout>;
 };
 export default TestPage;

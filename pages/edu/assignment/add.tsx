@@ -1,15 +1,18 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/hooks';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import { sendRequest } from '@requests/request';
-import Notify from '@ui/Notify/Notify';
 import Form from '@components/AssignmentSchema/Form/Form';
-import notificationStyles from '@styles/ui/notification.module.css';
 import { capitalize } from '@utils/capitalize';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 const initialValues = {
   spec: '',
@@ -25,22 +28,6 @@ function AddAssignmentSchema() {
   const { locale } = useLocale();
   const { user } = useUser();
 
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.assignmentSchema.errors.create.error,
-      ok: locale.assignmentSchema.errors.create.success,
-    }),
-    [locale]
-  );
-
-  const [error, setError] = useState(false);
-  const [answer, setAnswer] = useState(false);
-  const [notificationStatus, setNotificationStatus] = useState(
-    defaultStatuses.ok
-  );
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
-
   const form = useForm({
     initialValues,
     validationRules: {},
@@ -54,35 +41,40 @@ function AddAssignmentSchema() {
       author: user?.login || '',
       duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
+    newNotification({
+      id: 'creating-assignment',
+      title: capitalize(
+        locale.notify.assignmentSchema.create.loading
+      ),
+      message: capitalize(locale.loading) + '...',
+    });
     sendRequest<IAssignmentSchema, IAssignmentSchema>(
       'assignments/schema/add',
       'POST',
       body
     ).then((res) => {
-      setAnswer(true);
       if (res) {
-        setNotificationStatus(defaultStatuses.ok);
-        setNotificationDescription(res.spec);
-        setError(false);
+        successNotification({
+          id: 'creating-assignment',
+          title: capitalize(
+            locale.notify.assignmentSchema.create.success
+          ),
+          message: res.spec,
+        });
       } else {
-        setNotificationStatus(defaultStatuses.error);
-        setNotificationDescription('');
-        setError(true);
+        errorNotification({
+          id: 'creating-assignment',
+          title: capitalize(
+            locale.notify.assignmentSchema.create.error
+          ),
+          message: capitalize(locale.error),
+        });
       }
     });
-  }, [form.values, user?.login, defaultStatuses]);
+  }, [form.values, user?.login, locale]);
 
   return (
     <>
-      <div className={notificationStyles.notification}>
-        <Notify
-          answer={answer}
-          error={error}
-          setAnswer={setAnswer}
-          status={notificationStatus}
-          description={notificationDescription}
-        />
-      </div>
       <Form
         form={form}
         handleSubmit={handleSubmit}

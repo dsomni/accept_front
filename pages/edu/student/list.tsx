@@ -184,7 +184,7 @@ function StudentList() {
           component="a"
           href={`/edu/group/add`}
           target="_blank"
-          size={40}
+          size={48}
           variant="outline"
           color="var(---primary)"
         >

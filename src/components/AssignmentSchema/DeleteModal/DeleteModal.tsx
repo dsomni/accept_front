@@ -1,4 +1,3 @@
-import Notify from '@ui/Notify/Notify';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { ITask } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
@@ -10,6 +9,11 @@ import { useRouter } from 'next/router';
 import { FC, memo, useCallback, useState, useMemo } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { setter } from '@custom-types/atomic';
+import {
+  newNotification,
+  successNotification,
+  errorNotification,
+} from '@utils/notificationFunctions';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -19,56 +23,46 @@ const DeleteModal: FC<{
   const [assignments, setAssignments] = useState<ITask[]>([]);
   const { locale } = useLocale();
   const router = useRouter();
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.assignmentSchema.delete.error,
-      ok: locale.assignmentSchema.delete.success,
-    }),
-    [locale]
-  );
-  const [error, setError] = useState(false);
-  const [notify, setNotify] = useState(false);
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
 
   const handleDelete = useCallback(() => {
     let cleanUp = false;
+
+    newNotification({
+      id: 'delete-assignment',
+      title: capitalize(
+        locale.notify.assignmentSchema.delete.loading
+      ),
+      message: capitalize(locale.loading) + '...',
+    });
     isSuccessful<{}>('/assignments/schema/delete', 'POST', {
       spec: assignment.spec,
     }).then((res) => {
-      setActive(false);
       if (res && !cleanUp) {
-        setNotify(true);
-        setNotificationDescription(capitalize(defaultStatuses.ok));
+        successNotification({
+          id: 'delete-assignment',
+          title: capitalize(
+            locale.notify.assignmentSchema.delete.success
+          ),
+        });
         router.push('/edu/assignment/list');
       } else {
-        setNotify(true);
-        setError(true);
-        setNotificationDescription(capitalize(defaultStatuses.error));
+        errorNotification({
+          id: 'delete-assignment',
+          title: capitalize(
+            locale.notify.assignmentSchema.delete.error
+          ),
+          message: capitalize(locale.error),
+        });
       }
     });
 
     return () => {
       cleanUp = true;
     };
-  }, [
-    assignment,
-    defaultStatuses.ok,
-    defaultStatuses.error,
-    setActive,
-    router,
-  ]);
+  }, [assignment, locale, router]);
 
   return (
     <>
-      <div className={deleteModalStyles.notification}>
-        <Notify
-          answer={notify}
-          error={error}
-          setAnswer={setNotify}
-          description={notificationDescription}
-        />
-      </div>
       <Modal
         opened={active}
         centered

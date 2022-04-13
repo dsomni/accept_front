@@ -1,4 +1,3 @@
-import Notify from '@ui/Notify/Notify';
 import Form from '@components/Group/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -19,20 +18,17 @@ import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { IStudentList } from '@custom-types/IStudent';
 import { IGroup } from '@custom-types/IGroup';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 function EditGroup(props: { group: IGroup }) {
   const { locale } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
   const group = props.group;
-
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.groups.errors.edit.error,
-      ok: locale.groups.errors.edit.success,
-    }),
-    [locale]
-  );
 
   const [students, setStudents] = useState<IStudentList[]>([]);
   const [readyStudents, setReadyStudents] = useState(false);
@@ -79,43 +75,35 @@ function EditGroup(props: { group: IGroup }) {
   }, [formValues]); // eslint-disable-line
 
   const handleSubmit = useCallback(() => {
+    newNotification({
+      id: 'editing-group',
+      title: capitalize(locale.notify.group.edit.loading),
+      message: capitalize(locale.loading) + '...',
+    });
     sendRequest<IGroup, IGroup>(`groups/edit/${group.spec}`, 'POST', {
       ...form.values,
       members: form.values['members'].map(
         (member: any) => member.login
       ),
     }).then((res) => {
-      setAnswer(true);
       if (res) {
-        setNotificationStatus(defaultStatuses.ok);
-        setNotificationDescription(res.spec);
-        setError(false);
+        successNotification({
+          id: 'editing-group',
+          title: capitalize(locale.notify.group.edit.success),
+          message: res.spec,
+        });
       } else {
-        setNotificationStatus(defaultStatuses.error);
-        setNotificationDescription('');
-        setError(true);
+        errorNotification({
+          id: 'editing-group',
+          title: capitalize(locale.notify.group.edit.error),
+          message: capitalize(locale.error),
+        });
       }
     });
-  }, [form.values, defaultStatuses, group?.spec]);
+  }, [form.values, group?.spec, locale]);
 
-  const [error, setError] = useState(false);
-  const [answer, setAnswer] = useState(false);
-  const [notificationStatus, setNotificationStatus] = useState(
-    defaultStatuses.ok
-  );
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
   return (
     <div>
-      <div className={notificationStyles.notification}>
-        <Notify
-          answer={answer}
-          error={error}
-          setAnswer={setAnswer}
-          status={notificationStatus}
-          description={notificationDescription}
-        />
-      </div>
       {ready && readyStudents && (
         <Form
           form={form}

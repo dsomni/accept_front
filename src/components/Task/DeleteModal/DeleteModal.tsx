@@ -1,4 +1,3 @@
-import Notify from '@ui/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
@@ -16,6 +15,11 @@ import {
 } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/atomic';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -25,17 +29,6 @@ const DeleteModal: FC<{
   const [assignments, setAssignments] = useState<ITask[]>([]);
   const { locale } = useLocale();
   const router = useRouter();
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.tasks.delete.error,
-      ok: locale.tasks.delete.success,
-    }),
-    [locale]
-  );
-  const [error, setError] = useState(false);
-  const [notify, setNotify] = useState(false);
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
 
   useEffect(() => {
     let cleanUp = false;
@@ -56,42 +49,37 @@ const DeleteModal: FC<{
 
   const handleDelete = useCallback(() => {
     let cleanUp = false;
+
+    newNotification({
+      id: 'deleting-task',
+      title: capitalize(locale.notify.task.delete.loading),
+      message: capitalize(locale.loading) + '...',
+    });
     isSuccessful<{}>('/tasks/delete', 'POST', {
       spec: task.spec,
     }).then((res) => {
-      setActive(false);
       if (res && !cleanUp) {
-        setNotify(true);
-        setNotificationDescription(capitalize(defaultStatuses.ok));
+        successNotification({
+          id: 'deleting-task',
+          title: capitalize(locale.notify.task.delete.success),
+        });
         router.push('/edu/task/list');
       } else {
-        setNotify(true);
-        setError(true);
-        setNotificationDescription(capitalize(defaultStatuses.error));
+        errorNotification({
+          id: 'deleting-task',
+          title: capitalize(locale.notify.task.delete.error),
+          message: capitalize(locale.error),
+        });
       }
     });
 
     return () => {
       cleanUp = true;
     };
-  }, [
-    task.spec,
-    defaultStatuses.ok,
-    defaultStatuses.error,
-    setActive,
-    router,
-  ]);
+  }, [task.spec, locale, router]);
 
   return (
     <>
-      <div className={deleteModalStyles.notification}>
-        <Notify
-          answer={notify}
-          error={error}
-          setAnswer={setNotify}
-          description={notificationDescription}
-        />
-      </div>
       <Modal
         opened={active}
         centered

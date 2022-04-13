@@ -1,15 +1,18 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/hooks';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import { sendRequest } from '@requests/request';
-import Notify from '@ui/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import Form from '@components/Task/Form/Form';
-import notificationStyles from '@styles/ui/notification.module.css';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 const initialValues = {
   spec: '',
@@ -55,22 +58,6 @@ function AddTask() {
   const { locale } = useLocale();
   const { user } = useUser();
 
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.tasks.errors.create.error,
-      ok: locale.tasks.errors.create.success,
-    }),
-    [locale]
-  );
-
-  const [error, setError] = useState(false);
-  const [answer, setAnswer] = useState(false);
-  const [notificationStatus, setNotificationStatus] = useState(
-    defaultStatuses.ok
-  );
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
-
   const form = useForm({
     initialValues,
     validationRules: {},
@@ -99,33 +86,32 @@ function AddTask() {
         alarm: form.values['hintAlarm'],
       };
     }
+    newNotification({
+      id: 'creating-task',
+      title: capitalize(locale.notify.task.create.loading),
+      message: capitalize(locale.loading) + '...',
+    });
     sendRequest<ITask, ITaskDisplay>('tasks/add', 'POST', body).then(
       (res) => {
-        setAnswer(true);
         if (res) {
-          setNotificationStatus(defaultStatuses.ok);
-          setNotificationDescription(res.spec);
-          setError(false);
+          successNotification({
+            id: 'creating-task',
+            title: capitalize(locale.notify.task.create.success),
+            message: res.spec,
+          });
         } else {
-          setNotificationStatus(defaultStatuses.error);
-          setNotificationDescription('');
-          setError(true);
+          errorNotification({
+            id: 'creating-task',
+            title: capitalize(locale.notify.task.create.error),
+            message: capitalize(locale.error),
+          });
         }
       }
     );
-  }, [form.values, user?.login, defaultStatuses]);
+  }, [form.values, locale, user?.login]);
 
   return (
     <>
-      <div className={notificationStyles.notification}>
-        <Notify
-          answer={answer}
-          error={error}
-          setAnswer={setAnswer}
-          status={notificationStatus}
-          description={notificationDescription}
-        />
-      </div>
       <Form
         form={form}
         handleSubmit={handleSubmit}

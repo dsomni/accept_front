@@ -97,16 +97,6 @@ const tasks = {
   },
   send: 'send',
   results: 'results',
-  errors: {
-    create: {
-      error: 'can not create the task',
-      success: 'task was successfully created',
-    },
-    edit: {
-      error: 'can not edit the task',
-      success: 'task was successfully updated',
-    },
-  },
   list: {
     title: 'title',
     author: 'author',
@@ -178,10 +168,6 @@ const tasks = {
     ok: 'Attempt successfully submitted',
   },
   submit: 'submit',
-  delete: {
-    success: 'the task was successfully deleted',
-    error: 'error when deleting the task',
-  },
 };
 
 const form = {
@@ -224,16 +210,6 @@ const assignmentSchema = {
     deleteConfidence:
       'are you sure you want to permanently delete the assignment schema?',
   },
-  errors: {
-    create: {
-      error: 'can not create the assignment schema',
-      success: 'assignment schema was successfully created',
-    },
-    edit: {
-      error: 'can not edit the assignment schema',
-      success: 'assignment schema was successfully updated',
-    },
-  },
   form: {
     steps: {
       first: {
@@ -270,10 +246,6 @@ const assignmentSchema = {
     description: 'description',
     taskCount: 'task count',
   },
-  delete: {
-    success: 'the assignment schema was successfully deleted',
-    error: 'error when deleting the assignment schema',
-  },
 };
 
 const users = {
@@ -289,14 +261,63 @@ const groups = {
   title: 'title',
   students: 'students',
   selectedStudents: 'selected students',
-  errors: {
+};
+
+const notify = {
+  assignmentSchema: {
     create: {
-      error: 'error when creating the group',
-      success: 'group was created successfully',
+      loading: 'creating the assignment schema',
+      success: 'the assignment schema was created successfully',
+      error: 'error when creating the assignment schema',
     },
     edit: {
+      loading: 'updating the assignment schema',
+      success: 'the assignment schema was updated successfully',
+      error: 'error when updating the assignment schema',
+    },
+    delete: {
+      loading: 'deleting the assignment schema',
+      success: 'the assignment schema was deleted successfully',
+      error: 'error when deleting the assignment schema',
+    },
+  },
+  task: {
+    create: {
+      loading: 'creating the task',
+      success: 'the task was created successfully',
+      error: 'error when creating the task',
+    },
+    edit: {
+      loading: 'updating the task',
+      success: 'the task was updated successfully',
+      error: 'error when updating the task',
+    },
+    delete: {
+      loading: 'deleting the task',
+      success: 'the task was deleted successfully',
+      error: 'error when deleting the task',
+    },
+    send: {
+      loading: 'sending the task',
+      success: 'the task was send successfully',
+      error: 'error when sending the task',
+    },
+  },
+  group: {
+    create: {
+      loading: 'creating the group',
+      success: 'the group was created successfully',
+      error: 'error when creating the group',
+    },
+    edit: {
+      loading: 'updating the group',
+      success: 'the task was updated successfully',
       error: 'error when updating the group',
-      success: 'group was updated successfully',
+    },
+    delete: {
+      loading: 'deleting the group',
+      success: 'the group was deleted successfully',
+      error: 'error when deleting the group',
     },
   },
 };
@@ -331,6 +352,7 @@ const en = {
   form,
   assignmentSchema,
   users,
+  notify,
 };
 
 export default en;

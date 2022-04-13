@@ -1,14 +1,11 @@
-import Notify from '@ui/Notify/Notify';
 import { useLocale } from '@hooks/useLocale';
 import {
-  FC,
   ReactNode,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import notificationStyles from '@styles/ui/notification.module.css';
 import { useForm } from '@mantine/hooks';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
@@ -20,6 +17,11 @@ import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
 import { ITag } from '@custom-types/ITag';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 function EditAssignmentSchema() {
   const { locale } = useLocale();
@@ -30,14 +32,6 @@ function EditAssignmentSchema() {
   const router = useRouter();
 
   const [readyTags, setReadyTags] = useState(false);
-
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.assignmentSchema.errors.edit.error,
-      ok: locale.assignmentSchema.errors.edit.success,
-    }),
-    [locale]
-  );
 
   const [assignmentSchema, setAssignmentSchema] =
     useState<IAssignmentSchema>(null!);
@@ -117,42 +111,38 @@ function EditAssignmentSchema() {
       tasks: form.values['tasks'].map((task: Item) => task.value),
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
+    newNotification({
+      id: 'editing-assignment',
+      title: capitalize(locale.notify.assignmentSchema.edit.loading),
+      message: capitalize(locale.loading) + '...',
+    });
     sendRequest<IAssignmentSchema, IAssignmentSchema>(
       `assignments/schema/edit/${assignmentSchema.spec}`,
       'POST',
       body
     ).then((res) => {
-      setAnswer(true);
       if (res) {
-        setNotificationStatus(defaultStatuses.ok);
-        setNotificationDescription(res.spec);
-        setError(false);
+        successNotification({
+          id: 'editing-assignment',
+          title: capitalize(
+            locale.notify.assignmentSchema.edit.success
+          ),
+          message: res.spec,
+        });
       } else {
-        setNotificationStatus(defaultStatuses.error);
-        setNotificationDescription('');
-        setError(true);
+        errorNotification({
+          id: 'editing-assignment',
+          title: capitalize(
+            locale.notify.assignmentSchema.edit.error
+          ),
+          message: capitalize(locale.error),
+        });
       }
     });
-  }, [form.values, defaultStatuses, assignmentSchema?.spec]);
+  }, [form.values, locale, assignmentSchema?.spec]);
 
-  const [error, setError] = useState(false);
-  const [answer, setAnswer] = useState(false);
-  const [notificationStatus, setNotificationStatus] = useState(
-    defaultStatuses.ok
-  );
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
   return (
-    <div>
-      <div className={notificationStyles.notification}>
-        <Notify
-          answer={answer}
-          error={error}
-          setAnswer={setAnswer}
-          status={notificationStatus}
-          description={notificationDescription}
-        />
-      </div>
+    <>
       {ready && readyTags && (
         <Form
           form={form}
@@ -160,7 +150,7 @@ function EditAssignmentSchema() {
           buttonLabel={capitalize(locale.form.update)}
         />
       )}
-    </div>
+    </>
   );
 }
 
