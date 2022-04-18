@@ -187,9 +187,9 @@ function StudentList() {
           target="_blank"
           size={48}
           variant="outline"
-          color="var(---primary)"
+          color="var(--primary)"
         >
-          <PlusIcon width={20} height={20} />
+          <PlusIcon width={25} height={25} />
         </ActionIcon>
       </div>
     ),

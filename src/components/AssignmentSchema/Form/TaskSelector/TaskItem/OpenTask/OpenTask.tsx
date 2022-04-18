@@ -9,7 +9,7 @@ const OpenTask: FC<{ spec: string }> = ({ spec }) => {
       href={`/edu/task/${spec}`}
       target="_blank"
       tabIndex={5}
-      color="blue"
+      color="var(--primary)"
       variant="hover"
       size="lg"
     >

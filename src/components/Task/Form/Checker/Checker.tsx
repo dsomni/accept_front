@@ -75,7 +75,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         <Button
           size="lg"
           className={styles.addButton}
-          color="blue"
+          color="var(--primary)"
           variant="light"
           onClick={() =>
             form.setFieldValue(

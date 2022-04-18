@@ -7,7 +7,7 @@ const CopyButton: FC<{ toCopy: string }> = ({ toCopy }) => {
   const clipboard = useClipboard({ timeout: 300 });
   return (
     <ActionIcon
-      color={clipboard.copied ? 'teal' : 'blue'}
+      color={clipboard.copied ? 'teal' : 'var(--primary)'}
       onClick={() => {
         clipboard.copy(toCopy);
       }}

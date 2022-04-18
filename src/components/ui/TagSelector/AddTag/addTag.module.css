@@ -1,9 +1,9 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(---md3);
+  gap: var(--md1);
 }
 
 .modalTitle {
-  font-size: var(---h4);
+  font-size: var(--h4);
 }

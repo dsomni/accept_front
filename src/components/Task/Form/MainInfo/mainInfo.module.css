@@ -3,18 +3,18 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: var(---lg3) 15vw;
+  margin: var(--lg2) 15vw;
 }
 
 .radioGroups {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  row-gap: var(---lg1);
-  column-gap: var(---xl1);
+  row-gap: var(--lg4);
+  column-gap: var(--xl1);
   align-items: center;
 }
 
 .label {
-  font-size: var(---h4);
+  font-size: var(--h4);
 }

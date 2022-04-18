@@ -65,7 +65,7 @@ const EditTag: FC<{
       <ActionIcon
         onClick={() => setOpened(true)}
         tabIndex={5}
-        color="blue"
+        color="var(--primary)"
         variant="hover"
         size="lg"
       >

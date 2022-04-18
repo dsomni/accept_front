@@ -62,11 +62,11 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
       <ActionIcon
         onClick={() => setOpened(true)}
         tabIndex={5}
-        color="blue"
+        color="var(--primary)"
         variant="hover"
         size="lg"
       >
-        <PlusIcon width={20} height={20} color="green" />
+        <PlusIcon width={25} height={25} color="green" />
       </ActionIcon>
       <Modal
         opened={opened}

@@ -5,10 +5,10 @@
   width: 60vw;
   min-height: 65vh;
   margin: 5vh 5vw;
-  padding: 0 0 var(---md2) 0;
-  box-shadow: 0 -var(---sm) var(---sm) -3px rgb(0 0 0 / 20%),
-    0 -var(---md1) var(---md2) 1px rgb(0 0 0 / 14%),
-    0 -var(---sm) var(---md3) 3px rgb(0 0 0 / 12%);
+  padding: 0 0 var(--md2) 0;
+  box-shadow: 0 -var(--sm) var(--sm) -3px rgb(0 0 0 / 20%),
+    0 -var(--md3) var(--md2) 1px rgb(0 0 0 / 14%),
+    0 -var(--sm) var(--md1) 3px rgb(0 0 0 / 12%);
   border-radius: 2%;
 }
 .left {
@@ -31,11 +31,11 @@
   color: white;
   width: 100%;
   background-color: #000000c7;
-  padding: var(---sm) var(---md3);
+  padding: var(--sm) var(--md1);
 }
 .description {
-  font-size: var(---h3);
-  padding: var(---md2) var(---md3);
+  font-size: var(--h3);
+  padding: var(--md2) var(--md1);
 }
 .image {
   border-radius: 2% 2% 0 0;
@@ -52,8 +52,8 @@
 }
 
 .button {
-  font-size: var(---h2);
-  margin: var(---sm) var(---md3);
+  font-size: var(--h2);
+  margin: var(--sm) var(--md1);
   font-weight: 600;
   padding: 0.8em;
   border: 2px solid #1c7ed6bf;

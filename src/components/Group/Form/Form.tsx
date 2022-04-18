@@ -103,7 +103,7 @@ const Form: FC<{
         className={stepperStyles.buttons + ' ' + styles.buttonWrapper}
       >
         <Button
-          color="var(---primary)"
+          color="var(--primary)"
           variant="outline"
           onClick={handleSubmit}
         >

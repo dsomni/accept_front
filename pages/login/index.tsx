@@ -49,11 +49,11 @@ const Login: FC = () => {
           width: '100%',
           height: '100vh',
           flexDirection: 'column',
-          gap: 'var(---lg2)',
+          gap: 'var(--lg3)',
         }}
       >
         <Center
-          style={{ flexDirection: 'column', gap: 'var(---md1)' }}
+          style={{ flexDirection: 'column', gap: 'var(--md3)' }}
         >
           <Image
             src={logo}
@@ -62,7 +62,7 @@ const Login: FC = () => {
             alt="Logo image"
           />
           <div
-            style={{ fontSize: '1.5em', lineHeight: 'var(---md3)' }}
+            style={{ fontSize: '1.5em', lineHeight: 'var(--md1)' }}
           >
             {capitalize(locale.accept)}
           </div>
@@ -74,7 +74,7 @@ const Login: FC = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: 'var(---md3)',
+            gap: 'var(--md1)',
           }}
         >
           <TextInput

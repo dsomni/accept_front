@@ -3,18 +3,18 @@
   position: absolute;
 }
 .logoWrapper {
-  padding: var(---md3);
+  padding: var(--md1);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 .linkWrapper {
-  font-size: var(---h4);
+  font-size: var(--h4);
   line-height: 2em;
   letter-spacing: 3px;
-  padding-left: var(---xl1);
-  padding-top: var(---xl1);
+  padding-left: var(--xl1);
+  padding-top: var(--xl1);
 }
 
 .linkDiv {
@@ -22,7 +22,7 @@
   cursor: pointer;
   text-decoration: none;
   color: inherit !important;
-  font-size: var(---h4);
+  font-size: var(--h4);
   user-select: none;
 }
 

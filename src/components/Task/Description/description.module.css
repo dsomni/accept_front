@@ -1,32 +1,32 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(---md1);
-  padding: var(---md3) var(---lg2);
-  font-size: var(---p3);
+  gap: var(--md3);
+  padding: var(--md1) var(--lg3);
+  font-size: var(--p2);
 }
 
 .title {
-  font-size: var(---h2);
+  font-size: var(--h2);
 }
 .formatWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(---md1);
+  gap: var(--md3);
 }
 
 .formatLabel {
-  font-size: var(---h4);
-  padding: var(---md3) 0;
+  font-size: var(--h4);
+  padding: var(--md1) 0;
 }
 
 .table {
-  margin-bottom: var(---md2);
+  margin-bottom: var(--md2);
 }
 
 .table td {
-  font-size: var(---p3) !important;
-  padding: var(---md1) var(---md3) !important;
+  font-size: var(--p2) !important;
+  padding: var(--md3) var(--md1) !important;
 }
 
 .table tr {
@@ -35,11 +35,11 @@
 }
 
 .tableHeader {
-  font-size: var(---p1);
+  font-size: var(--p1);
 }
 
 .exampleHeader {
-  font-size: var(---p2);
+  font-size: var(--p2);
   height: 2.5rem;
   display: flex;
   flex-direction: row;
@@ -48,6 +48,6 @@
 }
 
 .examplesLabel {
-  font-size: var(---h4);
-  padding: var(---md2) 0 0 0;
+  font-size: var(--h4);
+  padding: var(--md2) 0 0 0;
 }

@@ -213,7 +213,7 @@ function TaskList() {
       <SingularSticky
         color="green"
         onClick={() => router.push(`/edu/task/add/`)}
-        icon={<PlusIcon height={20} width={20} />}
+        icon={<PlusIcon height={25} width={25} />}
       />
     </div>
   );
