@@ -45,6 +45,14 @@ const auth = {
     login: 'логин короче 5 символов',
     password: 'Пароль короче 5 символов',
   },
+  footer: {
+    noAccount: 'ещё нет аккаунта?',
+    hasAccount: 'уже есть аккаунт?',
+    login: 'войти',
+    register: 'зарегистрироваться',
+    returnTo: 'вернуться на',
+    mainPage: 'главную страницу',
+  },
 };
 
 const date = {

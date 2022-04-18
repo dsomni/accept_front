@@ -33,7 +33,7 @@ testing of practical skills',
 };
 
 const auth = {
-  submit: 'signIn',
+  submit: 'sign In',
   placeholders: {
     login: 'login',
     password: 'password',
@@ -45,6 +45,14 @@ const auth = {
   errors: {
     login: 'Login too short(min length 5)',
     password: 'Password too short(min length 5)',
+  },
+  footer: {
+    noAccount: 'still has no account?',
+    hasAccount: 'already has account?',
+    login: 'log in',
+    register: 'sign up',
+    returnTo: 'back to',
+    mainPage: 'main page',
   },
 };
 

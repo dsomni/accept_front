@@ -17,7 +17,7 @@ const SignIn: FC = () => {
           className={styles.button}
           onClick={() =>
             router.push({
-              pathname: '/login',
+              pathname: '/signin',
               query: {
                 referrer: router.asPath,
               },
