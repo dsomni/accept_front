@@ -322,6 +322,11 @@ const notify = {
   },
 };
 
+const errorPage = {
+  description: 'oops... Page is not found!',
+  returnToMain: 'to main page',
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -353,6 +358,7 @@ const en = {
   assignmentSchema,
   users,
   notify,
+  errorPage,
 };
 
 export default en;

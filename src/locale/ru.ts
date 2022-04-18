@@ -321,6 +321,11 @@ const notify = {
   },
 };
 
+const errorPage = {
+  description: 'Упс... Страница где-то потерялась!',
+  returnToMain: 'на главную',
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
@@ -352,6 +357,7 @@ const ru = {
   assignmentSchema,
   users,
   notify,
+  errorPage,
 };
 
 export default ru;
