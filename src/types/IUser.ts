@@ -24,3 +24,10 @@ export interface IUserContext {
   signOut: pureCallback<Promise<Boolean>>;
   refresh: pureCallback<Promise<void>>;
 }
+
+export interface IRegUser {
+  login: string;
+  name: string;
+  password: string;
+  email: string | null;
+}

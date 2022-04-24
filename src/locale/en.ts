@@ -37,14 +37,25 @@ const auth = {
   placeholders: {
     login: 'login',
     password: 'password',
+    name: 'John Doe',
+    email: 'example@example.com',
   },
   labels: {
     login: 'login',
     password: 'password',
+    name: 'Full name',
+    email: 'email',
   },
   errors: {
-    login: 'Login too short(min length 5)',
-    password: 'Password too short(min length 5)',
+    login: 'login too short (min length 5)',
+    password: 'password too short (min length 5)',
+    name: 'name is too long',
+    email: 'value should be valid e-mail',
+  },
+  stepper: {
+    login: 'login',
+    password: 'password',
+    final: 'other information',
   },
   footer: {
     noAccount: 'still has no account?',
@@ -333,6 +344,11 @@ const notify = {
       loading: 'checking your data',
       success: 'the sign in was done successfully',
       error: 'error when trying to sign in',
+    },
+    signUp: {
+      loading: 'adding you to our team',
+      success: 'you have successfully signed up',
+      error: 'error when trying to sign up',
     },
     signOut: {
       loading: 'trying to sign out',

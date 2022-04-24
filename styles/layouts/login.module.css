@@ -20,8 +20,8 @@
 }
 .contentWrapper {
   background-color: #fffffff3;
-  width: 30%;
-  min-width: 500px;
+  /* min-width: 30%; */
+  min-width: max(500px, 30%);
   min-height: 450px;
   display: flex;
   flex-direction: column;

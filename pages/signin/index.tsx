@@ -68,7 +68,7 @@ function SignIn() {
         }
       });
     },
-    [locale, signIn, user, router]
+    [locale, signIn, router]
   );
 
   return (
@@ -112,7 +112,7 @@ function SignIn() {
           <span className={styles.footerText}>
             {capitalize(locale.auth.footer.noAccount)}
           </span>
-          <Link href="/sign_up">
+          <Link href={`/signup?referrer=${router.query.referrer}`}>
             <a className={styles.footerLink}>
               {capitalize(locale.auth.footer.register)}
             </a>
