@@ -1,6 +1,12 @@
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { LoginLayout } from '@layouts/LoginLayout';
-import { FC, ReactElement, useEffect, useState } from 'react';
+import {
+  FC,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { showNotification } from '@mantine/notifications';
 import { defaultClassNames } from '@constants/NotificationClassNames';
 import Head from 'next/head';
@@ -12,6 +18,11 @@ import { capitalize } from '@utils/capitalize';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
+import {
+  newNotification,
+  successNotification,
+  errorNotification,
+} from '@utils/notificationFunctions';
 
 function SignIn() {
   const { locale } = useLocale();
@@ -32,11 +43,33 @@ function SignIn() {
     },
   });
 
-  useEffect(() => {
-    if (user) {
-      router.push((router.query.referrer as string) || '/');
-    }
-  }, [user, router]);
+  const handleSignIn = useCallback(
+    (values) => {
+      const id = newNotification({
+        title: capitalize(locale.notify.auth.signIn.loading),
+        message: capitalize(locale.loading) + '...',
+      });
+      signIn(values.login, values.password).then((res) => {
+        if (res) {
+          successNotification({
+            id,
+            title: capitalize(locale.notify.auth.signIn.success),
+            description: '',
+            autoClose: 5000,
+          });
+          router.push((router.query.referrer as string) || '/');
+        } else {
+          errorNotification({
+            id,
+            title: capitalize(locale.notify.auth.signIn.error),
+            description: '',
+            autoClose: 5000,
+          });
+        }
+      });
+    },
+    [locale, signIn, user, router]
+  );
 
   return (
     <>
@@ -68,9 +101,7 @@ function SignIn() {
         />
         <Button
           type="button"
-          onClick={form.onSubmit((values) =>
-            signIn(values.login, values.password)
-          )}
+          onClick={form.onSubmit((values) => handleSignIn(values))}
           className={styles.enterButton}
         >
           {capitalize(locale.auth.submit)}

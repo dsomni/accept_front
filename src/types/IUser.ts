@@ -20,7 +20,7 @@ export interface IUser {
 
 export interface IUserContext {
   user: IUser | undefined | null;
-  signIn: (login: string, password: string) => Promise<void>;
-  signOut: pureCallback<Promise<void>>;
+  signIn: (login: string, password: string) => Promise<Boolean>;
+  signOut: pureCallback<Promise<Boolean>>;
   refresh: pureCallback<Promise<void>>;
 }

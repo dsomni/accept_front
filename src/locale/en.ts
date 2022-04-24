@@ -328,6 +328,18 @@ const notify = {
       error: 'error when deleting the group',
     },
   },
+  auth: {
+    signIn: {
+      loading: 'checking your data',
+      success: 'the sign in was done successfully',
+      error: 'error when trying to sign in',
+    },
+    signOut: {
+      loading: 'trying to sign out',
+      success: 'the sign out was done successfully',
+      error: 'error when trying to sign out',
+    },
+  },
 };
 
 const errorPage = {

@@ -1,7 +1,5 @@
-import { ILocaleContext } from '@custom-types/ILocale';
 import { IUser, IUserContext } from '@custom-types/IUser';
 import { sendRequest, isSuccessful } from '@requests/request';
-import { userInfo } from 'os';
 import {
   createContext,
   FC,
@@ -44,7 +42,9 @@ export const UserProvider: FC = ({ children }) => {
       });
       if (!res.error) {
         await whoAmI();
+        return true;
       }
+      return false;
     },
     [whoAmI]
   );
@@ -56,7 +56,9 @@ export const UserProvider: FC = ({ children }) => {
         ...prev,
         user: undefined,
       }));
+      return true;
     }
+    return false;
   }, []);
 
   useEffect(() => {
