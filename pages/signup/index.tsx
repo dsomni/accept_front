@@ -14,7 +14,7 @@ import Head from 'next/head';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { capitalize } from '@utils/capitalize';
 import {
   Button,
@@ -57,6 +57,7 @@ function SignUp() {
     setActive((current) => {
       for (let i = 0; i < stepFields[current].length; i++) {
         const field = stepFields[current][i] as formFields;
+        form.validate();
         form.validateField(field);
         console.log(form.errors);
         if (form.errors[field] !== null) {
@@ -78,18 +79,9 @@ function SignUp() {
       name: '',
       confirmPassword: '',
     },
-    validationRules: {
-      login: (value) => value.trim().length > 4,
-      password: (value) => value.trim().length > 4,
-      confirmPassword: (value) => value.trim().length > 4,
-      email: (value) => value.trim().length > 4,
-      name: (value) => value.trim().length > 4,
-    },
-    errorMessages: {
-      login: capitalize(locale.auth.errors.login),
-      password: capitalize(locale.auth.errors.password),
-      email: capitalize(locale.auth.errors.email),
-      name: capitalize(locale.auth.errors.name),
+    validate: {
+      confirmPassword: (value, values) =>
+        value !== values.password ? 'Passwords did not match' : null,
     },
   });
 
