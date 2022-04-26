@@ -26,7 +26,7 @@ import {
 } from '@utils/notificationFunctions';
 
 function EditTask(props: { task: ITask }) {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
   const task = props.task;
@@ -122,11 +122,11 @@ function EditTask(props: { task: ITask }) {
         errorNotification({
           id,
           title: capitalize(locale.notify.task.edit.error),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
-  }, [form.values, user?.login, locale, task?.spec]);
+  }, [form.values, user?.login, locale, task?.spec, lang]);
   return (
     <div>
       {ready && readyTags && (

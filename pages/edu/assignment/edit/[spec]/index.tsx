@@ -24,7 +24,7 @@ import {
 } from '@utils/notificationFunctions';
 
 function EditAssignmentSchema() {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
 
@@ -134,11 +134,11 @@ function EditAssignmentSchema() {
           title: capitalize(
             locale.notify.assignmentSchema.edit.error
           ),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
-  }, [form.values, locale, assignmentSchema?.spec]);
+  }, [form.values, locale, assignmentSchema?.spec, lang]);
 
   return (
     <>

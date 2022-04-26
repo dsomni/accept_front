@@ -27,7 +27,7 @@ const DeleteModal: FC<{
   task: ITaskDisplay;
 }> = ({ active, setActive, task }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const router = useRouter();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const DeleteModal: FC<{
         errorNotification({
           id,
           title: capitalize(locale.notify.task.delete.error),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
@@ -75,7 +75,7 @@ const DeleteModal: FC<{
     return () => {
       cleanUp = true;
     };
-  }, [task.spec, locale, router]);
+  }, [task.spec, locale, router, lang]);
 
   return (
     <>

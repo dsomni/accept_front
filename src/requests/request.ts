@@ -45,8 +45,10 @@ export const sendRequest = <ISend, IReceive>(
           error: true,
           response: {},
           detail: {
-            descriptionRU: 'Ошибка на стороне клиента',
-            description: 'Client side error',
+            description: {
+              ru: 'Ошибка на стороне клиента',
+              en: 'Client side error',
+            },
           },
         } as IResponse<IReceive>)
     );
@@ -75,8 +77,10 @@ export const isSuccessful = <ISend>(
     .catch((_) => ({
       error: true,
       detail: {
-        descriptionRU: 'Ошибка на стороне клиента',
-        description: 'Client side error',
+        description: {
+          ru: 'Ошибка на стороне клиента',
+          en: 'Client side error',
+        },
       },
     }));
 };

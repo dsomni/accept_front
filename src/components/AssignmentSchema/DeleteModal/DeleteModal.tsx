@@ -21,7 +21,7 @@ const DeleteModal: FC<{
   assignment: IAssignmentSchema;
 }> = ({ active, setActive, assignment }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const router = useRouter();
 
   const handleDelete = useCallback(() => {
@@ -50,7 +50,7 @@ const DeleteModal: FC<{
           title: capitalize(
             locale.notify.assignmentSchema.delete.error
           ),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
@@ -58,7 +58,7 @@ const DeleteModal: FC<{
     return () => {
       cleanUp = true;
     };
-  }, [assignment, locale, router]);
+  }, [assignment, locale, router, lang]);
 
   return (
     <>

@@ -25,7 +25,7 @@ const initialValues = {
 };
 
 function AddAssignmentSchema() {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const { user } = useUser();
 
   const form = useForm({
@@ -66,11 +66,11 @@ function AddAssignmentSchema() {
           title: capitalize(
             locale.notify.assignmentSchema.create.error
           ),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
-  }, [form.values, user?.login, locale]);
+  }, [form.values, user?.login, locale, lang]);
 
   return (
     <>

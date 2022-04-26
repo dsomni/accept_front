@@ -25,7 +25,7 @@ import {
 } from '@utils/notificationFunctions';
 
 function EditGroup(props: { group: IGroup }) {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const { user } = useUser();
   const [ready, setReady] = useState(false);
   const group = props.group;
@@ -95,11 +95,11 @@ function EditGroup(props: { group: IGroup }) {
         errorNotification({
           id,
           title: capitalize(locale.notify.group.edit.error),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
-  }, [form.values, group?.spec, locale]);
+  }, [form.values, group?.spec, locale, lang]);
 
   return (
     <div>

@@ -13,10 +13,10 @@ import {
 import { capitalize } from '@utils/capitalize';
 
 const Send: FC<{ spec: string }> = ({ spec }) => {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const { user } = useUser();
 
-  const [lang, setLang] = useState('cpp');
+  const [language, setLanguage] = useState('cpp');
   const [code, setCode] = useState('');
 
   const handleSubmit = useCallback(() => {
@@ -27,7 +27,7 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
     isSuccessful('attempts/submit', 'POST', {
       author: user?.login,
       task: spec,
-      language: lang,
+      language: language,
       programText: code,
     }).then((res) => {
       if (!res.error) {
@@ -43,15 +43,19 @@ const Send: FC<{ spec: string }> = ({ spec }) => {
           title: capitalize(
             locale.notify.assignmentSchema.create.error
           ),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
-  }, [lang, code, user, spec, locale]);
+  }, [language, code, user, spec, locale, lang]);
 
   return (
     <div>
-      <CodeArea label={''} setLanguage={setLang} setCode={setCode} />
+      <CodeArea
+        label={''}
+        setLanguage={setLanguage}
+        setCode={setCode}
+      />
       <Button onClick={handleSubmit}>{locale.tasks.submit}</Button>
     </div>
   );

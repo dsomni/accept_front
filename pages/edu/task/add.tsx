@@ -55,7 +55,7 @@ const initialValues = {
 };
 
 function AddTask() {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const { user } = useUser();
 
   const form = useForm({
@@ -102,12 +102,12 @@ function AddTask() {
           errorNotification({
             id,
             title: capitalize(locale.notify.task.create.error),
-            message: capitalize(res.detail.description),
+            message: capitalize(res.detail.description[lang]),
           });
         }
       }
     );
-  }, [form.values, locale, user?.login]);
+  }, [form.values, locale, user?.login, lang]);
 
   return (
     <>

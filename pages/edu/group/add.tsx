@@ -21,7 +21,7 @@ const initialValues = {
 };
 
 function AddGroup() {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
 
   const form = useForm({
     initialValues,
@@ -50,11 +50,11 @@ function AddGroup() {
         errorNotification({
           id,
           title: capitalize(locale.notify.group.create.error),
-          message: capitalize(res.detail.description),
+          message: capitalize(res.detail.description[lang]),
         });
       }
     });
-  }, [form.values, locale]);
+  }, [form.values, locale, lang]);
 
   return (
     <>
