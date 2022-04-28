@@ -55,17 +55,17 @@ function SignUp() {
   const [active, setActive] = useState(0);
   const nextStep = () =>
     setActive((current) => {
-      for (let i = 0; i < stepFields[current].length; i++) {
-        const field = stepFields[current][i] as formFields;
-        form.validate();
-        form.validateField(field);
-        console.log(form.errors);
-        if (form.errors[field] !== null) {
-          setHasErrors(true);
-          return current;
-        }
-      }
-      setHasErrors(false);
+      // for (let i = 0; i < stepFields[current].length; i++) {
+      //   const field = stepFields[current][i] as formFields;
+      //   form.validate();
+      //   form.validateField(field);
+      //   // console.log(form.errors);
+      //   if (form.errors[field] !== null) {
+      //     setHasErrors(true);
+      //     return current;
+      //   }
+      // }
+      // setHasErrors(false);
       return current < 3 ? current + 1 : current;
     });
   const prevStep = () =>
