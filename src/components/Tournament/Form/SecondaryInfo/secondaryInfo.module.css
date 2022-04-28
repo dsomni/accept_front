@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  width: 70vw;
+  margin: var(--lg2) 15vw;
+}
+
+.radioGroups {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  row-gap: var(--lg4);
+  column-gap: var(--xl1);
+  align-items: center;
+}
+
+.label {
+  font-size: var(--p1);
+}
+.dateWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: max(15%, 30px);
+}
+.pickerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.pickerWrapper > .label {
+  margin-left: var(--md3);
+}
+
+.freezeTableWrapper {
+  margin-top: var(--lg3);
+}
+
+.displayedName {
+  font-size: var(--p2);
+  color: var(--primary);
+}
+
+.displayedLogin {
+  color: #707070;
+  font-size: var(--p2);
+}
+
+.itemWrapper {
+  padding: var(--md3) 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-right: var(--md3);
+}

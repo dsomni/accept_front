@@ -16,6 +16,18 @@
   margin-top: var(--md3);
   /* border: solid #000 1px; */
 }
+
+.content::-webkit-scrollbar {
+  width: 1px;
+}
+
+.content::-webkit-scrollbar-track {
+  background-color: #eeeeee;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #aaaaaa;
+}
 .title {
   padding: var(--md3) 0;
 }

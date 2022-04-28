@@ -363,6 +363,40 @@ const errorPage = {
   returnToMain: 'на главную',
 };
 
+const tournament = {
+  form: {
+    steps: {
+      first: {
+        label: 'шаг первый',
+        description: 'основная информация',
+      },
+      second: {
+        label: 'шаг второй',
+        description: 'дополнительная информация',
+      },
+      third: {
+        label: 'шаг третий',
+        description: 'тип турнира',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
+        description: 'предпросмотр',
+      },
+    },
+    title: 'название',
+    description: 'описание',
+    allowRegistrationAfterStart: {
+      title: 'разрешить регистрацию после начала',
+    },
+    startDate: 'дата начала',
+    endDate: 'дата завершения',
+    freezeTableDate: 'дата заморозки таблицы',
+    shouldFreezeTable: 'замораживать таблицу',
+    admins: 'модераторы',
+    selectedAdmins: 'выбранные модераторы',
+  },
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
@@ -395,6 +429,7 @@ const ru = {
   users,
   notify,
   errorPage,
+  tournament,
 };
 
 export default ru;

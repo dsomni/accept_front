@@ -41,7 +41,6 @@ const DeleteTag: FC<{
       <Modal
         opened={opened}
         centered
-        hideCloseButton
         onClose={() => setOpened(false)}
         size="md"
         title={

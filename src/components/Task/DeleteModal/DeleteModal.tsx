@@ -82,7 +82,6 @@ const DeleteModal: FC<{
       <Modal
         opened={active}
         centered
-        hideCloseButton
         onClose={() => setActive(false)}
         size="lg"
         title={

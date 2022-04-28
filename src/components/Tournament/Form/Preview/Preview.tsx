@@ -9,7 +9,7 @@ import {
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useMemo } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
-import styles from './mainInfo.module.css';
+import styles from './preview.module.css';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();

@@ -363,6 +363,40 @@ const errorPage = {
   returnToMain: 'to main page',
 };
 
+const tournament = {
+  form: {
+    steps: {
+      first: {
+        label: 'first step',
+        description: 'main info',
+      },
+      second: {
+        label: 'second step',
+        description: 'secondary info',
+      },
+      third: {
+        label: 'third step',
+        description: 'type info',
+      },
+      fourth: {
+        label: 'fourth step',
+        description: 'preview',
+      },
+    },
+    title: 'title',
+    description: 'description',
+    allowRegistrationAfterStart: {
+      title: 'allow registration after start',
+    },
+    startDate: 'start date',
+    endDate: 'finish date',
+    freezeTableDate: 'freeze table date',
+    shouldFreezeTable: 'freeze table',
+    admins: 'admins',
+    selectedAdmins: 'selected admins',
+  },
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -395,6 +429,7 @@ const en = {
   users,
   notify,
   errorPage,
+  tournament,
 };
 
 export default en;

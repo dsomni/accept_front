@@ -31,7 +31,6 @@ export const Sidebar: FC<{
           opened={open}
           onClose={() => setOpen(false)}
           size={'0px'}
-          hideCloseButton
         >
           <div className={styles.drawerContent}>
             <Links

@@ -71,7 +71,6 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
       <Modal
         opened={opened}
         centered
-        hideCloseButton
         onClose={() => setOpened(false)}
         size="md"
         title={capitalize(locale.tasks.form.tagSelector.add)}
