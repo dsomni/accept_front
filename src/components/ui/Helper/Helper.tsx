@@ -7,10 +7,24 @@ export const Helper: FC<{ text: string }> = ({ text }) => {
     <Tooltip
       label={text}
       withArrow
+      wrapLines
       arrowSize={3}
-      styles={{ root: { width: 'fit-content' } }}
+      placement="start"
+      styles={{
+        root: { width: 'fit-content' },
+        body: {
+          maxWidth: '250px',
+          backgroundColor: '#64a6e8',
+          color: 'white',
+        },
+        arrow: { backgroundColor: '#64a6e8' },
+      }}
     >
-      <InfoCircledIcon width={24} height={24} color="blue" />
+      <InfoCircledIcon
+        width={24}
+        height={24}
+        color={'var(--primary)'}
+      />
     </Tooltip>
   );
 };

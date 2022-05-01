@@ -1,14 +1,30 @@
 import { Button, Tooltip } from '@mantine/core';
-import { FC } from 'react';
 
-export const InfoButton: FC<{ text: string; color?: string }> = ({
-  text,
-  color,
-  ...rest
-}) => {
+export interface CustomProps {
+  text: string;
+  [x: string]: any;
+}
+
+export function InfoButton({ text, ...rest }: CustomProps) {
   return (
-    <Tooltip label={text} openDelay={300} color={color}>
-      <Button color={color} {...rest} />
+    <Tooltip
+      label={text}
+      openDelay={300}
+      withArrow
+      wrapLines
+      arrowSize={3}
+      placement="start"
+      styles={{
+        root: { width: 'fit-content' },
+        body: {
+          maxWidth: '250px',
+          backgroundColor: '#64a6e8',
+          color: 'white',
+        },
+        arrow: { backgroundColor: '#64a6e8' },
+      }}
+    >
+      <Button {...rest} />
     </Tooltip>
   );
-};
+}
