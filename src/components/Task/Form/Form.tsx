@@ -6,7 +6,7 @@ import stepperStyles from '@styles/ui/stepper.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
 import Checker from '@components/Task/Form/Checker/Checker';
 import Preview from '@components/Task/Form/Preview/Preview';
-import MainInfo from '@components/Tournament/Form/MainInfo/MainInfo';
+import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
 import { pureCallback } from '@custom-types/atomic';
@@ -68,7 +68,7 @@ const Form: FC<{
           )}
         />
       </Stepper>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={() => {}}>
         {currentStep === 0 && <MainInfo form={form} />}
         {currentStep === 1 && <DescriptionInfo form={form} />}
         {currentStep === 2 && <Examples form={form} />}
@@ -90,8 +90,12 @@ const Form: FC<{
             </Button>
           )}
           <Button
-            onClick={currentStep !== 4 ? nextStep : () => {}}
-            type={currentStep !== 4 ? 'button' : 'submit'}
+            onClick={
+              currentStep !== 4
+                ? nextStep
+                : form.onSubmit(handleSubmit)
+            }
+            type="button"
           >
             {currentStep === 4
               ? buttonLabel

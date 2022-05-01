@@ -46,7 +46,7 @@ const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
         {...form.getInputProps('remark')}
       />
 
-      {form.values['hasHint'] && (
+      {!form.values.isTournament && form.values['hasHint'] && (
         <div className={styles.hintWrapper}>
           <div className={styles.label}>
             {capitalize(locale.tasks.form.hint.title)}
@@ -62,12 +62,16 @@ const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
               form.setFieldValue('hintAlarmType', value)
             }
           >
-            <Radio value="attempts" size="sm">
-              {capitalize(locale.tasks.form.hint.attempts)}
-            </Radio>
-            <Radio value="timestamp" size="sm">
-              {capitalize(locale.tasks.form.hint.timestamp)}
-            </Radio>
+            <Radio
+              value="attempts"
+              size="sm"
+              label={capitalize(locale.tasks.form.hint.attempts)}
+            />
+            <Radio
+              value="timestamp"
+              size="sm"
+              label={capitalize(locale.tasks.form.hint.timestamp)}
+            />
           </RadioGroup>
           <NumberInput
             label={capitalize(locale.tasks.form.hint.showAfter)}

@@ -62,6 +62,7 @@ export interface ITask {
 
   tests: ITest[];
   checker: IChecker | undefined;
+  isTournament: boolean;
 }
 
 export interface ITaskList {

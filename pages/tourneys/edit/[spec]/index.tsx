@@ -1,7 +1,7 @@
 import Form from '@components/Tournament/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import { ReactNode, useCallback } from 'react';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ITournament } from '@custom-types/ITournament';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
@@ -18,7 +18,6 @@ function EditTournament(props: { tournament: ITournament }) {
 
   const form = useForm({
     initialValues: tournament,
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {
@@ -27,7 +26,7 @@ function EditTournament(props: { tournament: ITournament }) {
       assessmentType: parseInt(form.values.assessmentType),
     };
     requestWithNotify(
-      `tournament/edit/${tournament.spec}`,
+      `tournaments/edit/${tournament.spec}`,
       'POST',
       locale.notify.tournament.edit,
       lang,

@@ -47,7 +47,7 @@ const DeleteModal: FC<{
       lang,
       (_: any) => '',
       body,
-      () => router.push('/edu/task/list')
+      () => router.push('/task/list')
     );
   }, [task.spec, locale, router, lang]);
 

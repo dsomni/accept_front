@@ -65,7 +65,7 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
               <>
                 <td className={styles.cell}>
                   <a
-                    href={`/edu/task/${row.spec}`}
+                    href={`/task/${row.spec}`}
                     target="_blank"
                     rel="noreferrer"
                     className={styles.tableTitle}

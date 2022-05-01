@@ -21,7 +21,7 @@ const SERVER_URL = getServerUrl();
 function getTaskSpec(url: string): string {
   const list = url.split('/');
   if (
-    url.startsWith('/edu/task') &&
+    url.startsWith('/task') &&
     list.length == 4 &&
     list[3].length > 6
   ) {

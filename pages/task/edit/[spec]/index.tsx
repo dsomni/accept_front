@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import notificationStyles from '@styles/ui/notification.module.css';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
 import { useUser } from '@hooks/useUser';
@@ -62,7 +62,6 @@ function EditTask(props: { task: ITask }) {
   );
   const form = useForm({
     initialValues: formValues,
-    validationRules: {},
   });
 
   useEffect(() => {

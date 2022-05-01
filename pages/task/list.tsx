@@ -125,7 +125,7 @@ function TaskList() {
                     <div className={tableStyles.titleWrapper}>
                       <a
                         className={tableStyles.title}
-                        href={`/edu/task/${item.spec}`}
+                        href={`/task/${item.spec}`}
                       >
                         {item.title}
                       </a>
@@ -212,7 +212,7 @@ function TaskList() {
       )}
       <SingularSticky
         color="green"
-        onClick={() => router.push(`/edu/task/add/`)}
+        onClick={() => router.push(`/task/add/`)}
         icon={<PlusIcon height={25} width={25} />}
       />
     </div>

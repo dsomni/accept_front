@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
@@ -18,7 +18,6 @@ function AddGroup() {
 
   const form = useForm({
     initialValues,
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {

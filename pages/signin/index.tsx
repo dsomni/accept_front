@@ -13,7 +13,7 @@ import Head from 'next/head';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { capitalize } from '@utils/capitalize';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import styles from '@styles/auth/login.module.css';
@@ -32,14 +32,6 @@ function SignIn() {
     initialValues: {
       login: '',
       password: '',
-    },
-    validationRules: {
-      login: (value) => value.trim().length > 4,
-      password: (value) => value.trim().length > 4,
-    },
-    errorMessages: {
-      login: capitalize(locale.auth.errors.login),
-      password: capitalize(locale.auth.errors.password),
     },
   });
 

@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { sendRequest } from '@requests/request';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -57,7 +57,6 @@ function EditGroup(props: { group: IGroup }) {
   );
   const form = useForm({
     initialValues: formValues,
-    validationRules: {},
   });
 
   useEffect(() => {

@@ -6,7 +6,7 @@ const OpenTask: FC<{ spec: string }> = ({ spec }) => {
   return (
     <ActionIcon<'a'>
       component="a"
-      href={`/edu/task/${spec}`}
+      href={`/task/${spec}`}
       target="_blank"
       tabIndex={5}
       color="var(--primary)"

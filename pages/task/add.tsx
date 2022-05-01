@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import { ITaskDisplay } from '@custom-types/ITask';
@@ -47,6 +47,7 @@ const initialValues = {
   checkerLang: 'py',
   checkType: 'tests', //"tests" or "checker"
   type: 'code', //"code" or "text"
+  isTournament: false,
 };
 
 function AddTask() {
@@ -55,7 +56,6 @@ function AddTask() {
 
   const form = useForm({
     initialValues,
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {

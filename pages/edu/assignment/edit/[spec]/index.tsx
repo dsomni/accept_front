@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
 import { useRouter } from 'next/router';
@@ -89,7 +89,6 @@ function EditAssignmentSchema() {
   );
   const form = useForm({
     initialValues: formValues,
-    validationRules: {},
   });
 
   useEffect(() => {

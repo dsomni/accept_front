@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (response.status === 200 && (await response.json())) {
     try {
       await fetch(`${url}/${spec}`);
-      await res.unstable_revalidate(`/edu/task/${spec}`);
+      await res.unstable_revalidate(`/task/${spec}`);
       revalidate = true;
     } catch (e) {
       console.log(e);

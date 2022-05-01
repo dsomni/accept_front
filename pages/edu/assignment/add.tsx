@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import Form from '@components/AssignmentSchema/Form/Form';
@@ -25,7 +25,6 @@ function AddAssignmentSchema() {
 
   const form = useForm({
     initialValues,
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {

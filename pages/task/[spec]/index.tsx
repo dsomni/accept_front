@@ -21,7 +21,7 @@ function Task(props: { task: ITaskDisplay }) {
     {
       color: 'green',
       icon: <Pencil1Icon height={20} width={20} />,
-      onClick: () => router.push(`/edu/task/edit/${task.spec}`),
+      onClick: () => router.push(`/task/edit/${task.spec}`),
     },
     {
       color: 'red',
