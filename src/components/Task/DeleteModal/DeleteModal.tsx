@@ -1,25 +1,14 @@
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
-import { isSuccessful, sendRequest } from '@requests/request';
+import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-} from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/atomic';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -48,33 +37,18 @@ const DeleteModal: FC<{
   }, [task]);
 
   const handleDelete = useCallback(() => {
-    let cleanUp = false;
-
-    const id = newNotification({
-      title: capitalize(locale.notify.task.delete.loading),
-      message: capitalize(locale.loading) + '...',
-    });
-    isSuccessful<{}>('/tasks/delete', 'POST', {
+    const body = {
       spec: task.spec,
-    }).then((res) => {
-      if (!res.error && !cleanUp) {
-        successNotification({
-          id,
-          title: capitalize(locale.notify.task.delete.success),
-        });
-        router.push('/edu/task/list');
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(locale.notify.task.delete.error),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
-
-    return () => {
-      cleanUp = true;
     };
+    requestWithNotify(
+      'tasks/delete',
+      'POST',
+      locale.notify.task.delete,
+      lang,
+      (_: any) => '',
+      body,
+      () => router.push('/edu/task/list')
+    );
   }, [task.spec, locale, router, lang]);
 
   return (

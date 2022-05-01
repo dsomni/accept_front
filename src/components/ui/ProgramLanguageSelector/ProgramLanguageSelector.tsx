@@ -1,8 +1,7 @@
-import { callback, setter } from '@custom-types/atomic';
+import { callback } from '@custom-types/atomic';
 import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 import { memo, FC, ReactNode, useEffect, useState } from 'react';
-import styles from './programLanguageSelector.module.css';
 
 const ProgramLanguageSelector: FC<{
   selector: callback<any, ReactNode>;

@@ -1,63 +1,34 @@
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
-import { ITask } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
-import { isSuccessful } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, memo, useCallback, useState, useMemo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { setter } from '@custom-types/atomic';
-import {
-  newNotification,
-  successNotification,
-  errorNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const DeleteModal: FC<{
   active: boolean;
   setActive: setter<boolean>;
   assignment: IAssignmentSchema;
 }> = ({ active, setActive, assignment }) => {
-  const [assignments, setAssignments] = useState<ITask[]>([]);
   const { locale, lang } = useLocale();
   const router = useRouter();
 
   const handleDelete = useCallback(() => {
-    let cleanUp = false;
-
-    const id = newNotification({
-      title: capitalize(
-        locale.notify.assignmentSchema.delete.loading
-      ),
-      message: capitalize(locale.loading) + '...',
-    });
-    isSuccessful<{}>('/assignments/schema/delete', 'POST', {
+    const body = {
       spec: assignment.spec,
-    }).then((res) => {
-      if (!res.error && !cleanUp) {
-        successNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.delete.success
-          ),
-        });
-        router.push('/edu/assignment/list');
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.delete.error
-          ),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
-
-    return () => {
-      cleanUp = true;
     };
+    requestWithNotify(
+      '/assignments/schema/delete',
+      'POST',
+      locale.notify.assignmentSchema.delete,
+      lang,
+      (_: any) => '',
+      body,
+      () => router.push('/edu/assignment/list')
+    );
   }, [assignment, locale, router, lang]);
 
   return (
@@ -79,29 +50,6 @@ const DeleteModal: FC<{
           <div className={deleteModalStyles.question}>
             {capitalize(locale.tasks.modals.deleteConfidence)}
           </div>
-          {assignments.length > 0 && (
-            <div>
-              <div>
-                {capitalize(locale.tasks.modals.usedInAssignments) +
-                  ` (${assignments.length}):`}
-              </div>
-              <br />
-              <div className={deleteModalStyles.assignmentList}>
-                {assignments.map((assignment, index) => (
-                  <div key={index}>
-                    <Link href={`/edu/assignment/${assignment.spec}`}>
-                      <a
-                        className={deleteModalStyles.assignmentLink}
-                        target="_blank"
-                      >
-                        {assignment.title}
-                      </a>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
           <Group
             position="right"
             spacing="lg"
