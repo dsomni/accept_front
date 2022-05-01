@@ -28,10 +28,11 @@ const TaskSelector: FC<{
     setLoading(true);
     sendRequest<{}, ITaskDisplay[]>('tasks/list', 'GET').then(
       (res) => {
-        if (!res) return;
+        if (res.error) return;
         const tasks = new Map<string, ITaskDisplay>();
-        for (let i = 0; i < res.length; i++) {
-          tasks.set(res[i].spec, res[i]);
+        const response = res.response;
+        for (let i = 0; i < response.length; i++) {
+          tasks.set(response[i].spec, response[i]);
         }
         // setTasks(
         //   assignment.tasks.map(
@@ -53,10 +54,10 @@ const TaskSelector: FC<{
           }
         });
 
-        for (let i = 0; i < res.length; i++) {
+        for (let i = 0; i < response.length; i++) {
           task = {
-            value: res[i].spec,
-            label: res[i].title,
+            value: response[i].spec,
+            label: response[i].title,
           };
           if (!selectedSpecs.includes(task.value)) {
             newAvailableTasks.push(task);

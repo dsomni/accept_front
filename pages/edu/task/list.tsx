@@ -14,12 +14,11 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/ITag';
-import { MultiSelect } from '@mantine/core';
 import { hasSubarray } from '@utils/hasSubarray';
-import router, { useRouter } from 'next/router';
+import router from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
-import Sticky from '@ui/Sticky/Sticky';
-import TagSearch from '@ui/TagSearch/TagSearch';
+import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
+import SingularSticky from '@components/ui/Sticky/SingularSticky';
 
 function TaskList() {
   const [list, setList] = useState<ITaskList[]>([]);
@@ -92,10 +91,11 @@ function TaskList() {
 
     setLoadingTags(true);
     sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
-      if (res && !cleanUp) {
+      if (!res.error && !cleanUp) {
+        let response = res.response;
         let newTags = new Map<string, ITag>();
-        for (let i = 0; i < res.length; i++)
-          newTags.set(res[i].spec, res[i]);
+        for (let i = 0; i < response.length; i++)
+          newTags.set(response[i].spec, response[i]);
         setTags(newTags);
         setLoadingTags(false);
       }
@@ -111,9 +111,9 @@ function TaskList() {
     setLoading(true);
     sendRequest<{}, ITaskList[]>('tasks/list', 'GET').then((res) => {
       if (!cleanUp) {
-        if (res) {
+        if (!res.error) {
           setList(
-            res.map((item) => {
+            res.response.map((item) => {
               return {
                 ...item,
                 tags: item.tags.map(
@@ -170,15 +170,20 @@ function TaskList() {
 
   const tagSearch = useCallback(
     (setter, beforeSelect) => (
-      <TagSearch
+      <MultiSearch
         setterFunc={setter}
         beforeSelect={beforeSelect}
-        tags={tags}
-        setCurrentTags={setCurrentTags}
+        items={tags}
+        setCurrentItems={setCurrentTags}
         rowList={list}
+        placeholder={capitalize(locale.placeholders.selectTags)}
+        displayData={(tags: any[]) =>
+          Array.from(tags.values()).map((tag: any) => tag.title)
+        }
+        rowField={'tags'}
       />
     ),
-    [list, tags]
+    [list, locale.placeholders.selectTags, tags]
   );
 
   return (
@@ -205,17 +210,10 @@ function TaskList() {
           additionalSearch={tagSearch}
         />
       )}
-      <Sticky
-        color={'--primary'}
-        actions={[
-          {
-            color: 'green',
-            onClick: () => {
-              router.push(`/edu/task/add/`);
-            },
-            icon: <PlusIcon height={20} width={20} />,
-          },
-        ]}
+      <SingularSticky
+        color="green"
+        onClick={() => router.push(`/edu/task/add/`)}
+        icon={<PlusIcon height={25} width={25} />}
       />
     </div>
   );

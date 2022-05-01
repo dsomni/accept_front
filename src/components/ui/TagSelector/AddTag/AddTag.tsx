@@ -46,8 +46,8 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
       if (validate(title)) {
         isSuccessful(addURL, 'POST', {
           title: title,
-        }).then((success) => {
-          if (success) {
+        }).then((res) => {
+          if (!res.error) {
             refetch();
             setOpened(false);
           }
@@ -62,16 +62,15 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
       <ActionIcon
         onClick={() => setOpened(true)}
         tabIndex={5}
-        color="blue"
+        color="var(--primary)"
         variant="hover"
         size="lg"
       >
-        <PlusIcon width={20} height={20} color="green" />
+        <PlusIcon width={25} height={25} color="green" />
       </ActionIcon>
       <Modal
         opened={opened}
         centered
-        hideCloseButton
         onClose={() => setOpened(false)}
         size="md"
         title={capitalize(locale.tasks.form.tagSelector.add)}

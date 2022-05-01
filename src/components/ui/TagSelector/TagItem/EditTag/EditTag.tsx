@@ -49,8 +49,8 @@ const EditTag: FC<{
         isSuccessful(updateURL, 'POST', {
           spec: item.value,
           title: title,
-        }).then((success) => {
-          if (success) {
+        }).then((res) => {
+          if (!res.error) {
             refetch();
             setOpened(false);
           }
@@ -65,7 +65,7 @@ const EditTag: FC<{
       <ActionIcon
         onClick={() => setOpened(true)}
         tabIndex={5}
-        color="blue"
+        color="var(--primary)"
         variant="hover"
         size="lg"
       >
@@ -74,7 +74,6 @@ const EditTag: FC<{
       <Modal
         opened={opened}
         centered
-        hideCloseButton
         onClose={() => setOpened(false)}
         size="md"
         title={

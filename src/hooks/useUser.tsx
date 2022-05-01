@@ -1,7 +1,5 @@
-import { ILocaleContext } from '@custom-types/ILocale';
 import { IUser, IUserContext } from '@custom-types/IUser';
 import { sendRequest, isSuccessful } from '@requests/request';
-import { userInfo } from 'os';
 import {
   createContext,
   FC,
@@ -15,14 +13,11 @@ const UserContext = createContext<IUserContext>(null!);
 
 export const UserProvider: FC = ({ children }) => {
   const whoAmI = useCallback(async () => {
-    const response = await sendRequest<{}, IUser>(
-      'auth/whoami',
-      'GET'
-    );
-    if (response) {
+    const res = await sendRequest<{}, IUser>('auth/whoami', 'GET');
+    if (!res.error) {
       setValue((prev) => ({
         ...prev,
-        user: response,
+        user: res.response,
       }));
     } else {
       setValue((prev) => ({
@@ -33,8 +28,8 @@ export const UserProvider: FC = ({ children }) => {
   }, []);
 
   const refresh = useCallback(async () => {
-    const success = await isSuccessful('auth/refresh', 'GET');
-    if (success) {
+    const res = await isSuccessful('auth/refresh', 'GET');
+    if (!res.error) {
       await whoAmI();
     }
   }, [whoAmI]);
@@ -45,21 +40,25 @@ export const UserProvider: FC = ({ children }) => {
         login: login,
         password: password,
       });
-      if (res) {
+      if (!res.error) {
         await whoAmI();
+        return true;
       }
+      return false;
     },
     [whoAmI]
   );
 
   const signOut = useCallback(async () => {
-    const success = await isSuccessful('auth/signout', 'GET');
-    if (success) {
+    const res = await isSuccessful('auth/signout', 'GET');
+    if (!res.error) {
       setValue((prev) => ({
         ...prev,
         user: undefined,
       }));
+      return true;
     }
+    return false;
   }, []);
 
   useEffect(() => {

@@ -36,14 +36,33 @@ const auth = {
   placeholders: {
     login: 'логин',
     password: 'пароль',
+    name: 'Иванов Иван Иванович',
+    email: 'example@example.com',
   },
   labels: {
     login: 'логин',
     password: 'пароль',
+    name: 'ФИО',
+    email: 'электронная почта',
   },
   errors: {
     login: 'логин короче 5 символов',
     password: 'Пароль короче 5 символов',
+    name: 'имя слишком длинное',
+    email: 'введите корректный e-mail',
+  },
+  stepper: {
+    login: 'логин',
+    password: 'пароль',
+    final: 'дополнительно',
+  },
+  footer: {
+    noAccount: 'ещё нет аккаунта?',
+    hasAccount: 'уже есть аккаунт?',
+    login: 'войти',
+    register: 'зарегистрироваться',
+    returnTo: 'вернуться на',
+    mainPage: 'главную страницу',
   },
 };
 
@@ -96,16 +115,6 @@ const tasks = {
   },
   send: 'отправка',
   results: 'результаты',
-  errors: {
-    create: {
-      error: 'ошибка при создании задачи',
-      success: 'задача успешно создана',
-    },
-    edit: {
-      error: 'ошибка при изменении задачи',
-      success: 'задача успешно изменена',
-    },
-  },
   list: {
     title: 'название задачи',
     author: 'автор',
@@ -177,10 +186,6 @@ const tasks = {
     ok: 'Попытка успешно отправлена',
   },
   submit: 'Отправить',
-  delete: {
-    success: 'задача успешно удалена',
-    error: 'ошибка при удалении задачи',
-  },
 };
 
 const credentials = {
@@ -201,6 +206,8 @@ const placeholders = {
   search: 'поиск',
   showColumns: 'выберете поля',
   selectTags: 'выберете теги',
+  selectGroups: 'выберете группы',
+  title: 'введите название',
 };
 
 const errors = {
@@ -210,6 +217,7 @@ const errors = {
 
 const table = {
   perPage: 'на странице',
+  overall: 'всего',
 };
 
 const assignmentSchema = {
@@ -219,16 +227,6 @@ const assignmentSchema = {
     delete: 'удалить шаблон задания',
     deleteConfidence:
       'вы уверены что хотите безвозвратно удалить шаблон этого задания?',
-  },
-  errors: {
-    create: {
-      error: 'ошибка при создании шаблона задания',
-      success: 'шаблон задания успешно создан',
-    },
-    edit: {
-      error: 'ошибка при изменении шаблона задания',
-      success: 'шаблон задания успешно изменён',
-    },
   },
   form: {
     steps: {
@@ -266,9 +264,161 @@ const assignmentSchema = {
     description: 'описание',
     taskCount: 'кол-во задач',
   },
-  delete: {
-    success: 'шаблон задания успешно удалён',
-    error: 'ошибка при удалении шаблона задания',
+};
+
+const users = {
+  list: {
+    name: 'имя',
+    login: 'логин',
+    grade: 'класс',
+  },
+};
+
+const groups = {
+  add: 'добавить группу',
+  title: 'название',
+  students: 'ученики',
+  selectedStudents: 'выбранные ученики',
+};
+
+const notify = {
+  assignmentSchema: {
+    create: {
+      loading: 'создаём шаблон задания',
+      success: 'шаблон задания успешно создан',
+      error: 'ошибка при создании шаблона задания',
+    },
+    edit: {
+      loading: 'обновляем шаблон задания',
+      success: 'шаблон задания успешно обновлён',
+      error: 'ошибка при обновлении шаблона задания',
+    },
+    delete: {
+      loading: 'удаляем шаблон задания',
+      success: 'шаблон задания успешно удалён',
+      error: 'ошибка при удалении шаблона задания',
+    },
+  },
+  task: {
+    create: {
+      loading: 'создаём задачу',
+      success: 'задача успешно создана',
+      error: 'ошибка при создании задачи',
+    },
+    edit: {
+      loading: 'обновляем задачу',
+      success: 'задача успешно обновлена',
+      error: 'ошибка при обновлении задачи',
+    },
+    delete: {
+      loading: 'удаляем задачу',
+      success: 'задача успешно удалён',
+      error: 'ошибка при удалении задачи',
+    },
+    send: {
+      loading: 'отправляем задачу',
+      success: 'задача успешно отправлена',
+      error: 'ошибка при отправке задачи',
+    },
+  },
+  group: {
+    create: {
+      loading: 'создаём группу',
+      success: 'группа успешно создана',
+      error: 'ошибка при создании группы',
+    },
+    edit: {
+      loading: 'обновляем группу',
+      success: 'группа успешно обновлена',
+      error: 'ошибка при обновлении группы',
+    },
+    delete: {
+      loading: 'удаляем группу',
+      success: 'группа успешно удалён',
+      error: 'ошибка при удалении группы',
+    },
+  },
+  auth: {
+    signIn: {
+      loading: 'проверяем ваши данные',
+      success: 'вход успешно выполнен',
+      error: 'ошибка при попытке входа',
+    },
+    signUp: {
+      loading: 'резервируем для вас местечко',
+      success: 'вы успешно зарегистрированы',
+      error: 'ошибка при попытке регистрации',
+    },
+    signOut: {
+      loading:
+        'производится всё необходимое для успешного выхода из учётной записи',
+      success: 'выход успешно выполнен',
+      error: 'ошибка при попытке выхода',
+    },
+  },
+  tournament: {
+    create: {
+      loading: 'создаём турнир',
+      success: 'турнир успешно создан',
+      error: 'ошибка при создании турнира',
+    },
+    edit: {
+      loading: 'обновляем турнир',
+      success: 'турнир успешно обновлён',
+      error: 'ошибка при обновлении турнира',
+    },
+    delete: {
+      loading: 'удаляем турнир',
+      success: 'турнир успешно удалён',
+      error: 'ошибка при удалении турнир',
+    },
+  },
+};
+
+const errorPage = {
+  description: 'Упс... Страница где-то потерялась!',
+  returnToMain: 'на главную',
+};
+
+const tournament = {
+  form: {
+    steps: {
+      first: {
+        label: 'шаг первый',
+        description: 'основная информация',
+      },
+      second: {
+        label: 'шаг второй',
+        description: 'дополнительная информация',
+      },
+      third: {
+        label: 'шаг третий',
+        description: 'тип турнира',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
+        description: 'предпросмотр',
+      },
+    },
+    title: 'название',
+    description: 'описание',
+    allowRegistrationAfterStart: {
+      title: 'разрешить регистрацию после начала',
+    },
+    startDate: 'дата начала',
+    endDate: 'дата завершения',
+    freezeTableDate: 'дата заморозки таблицы',
+    shouldFreezeTable: 'замораживать таблицу',
+    admins: 'модераторы',
+    selectedAdmins: 'выбранные модераторы',
+    allowedLanguages: 'разрешённые языки',
+    deniedLanguages: 'запрещённые языки',
+    penalty: 'штраф',
+    assessmentType: {
+      title: 'тип оценивания',
+      forTest: 'по тестовая оценка',
+      forWhole: 'оценка по полностью сданной задаче',
+    },
   },
 };
 
@@ -286,6 +436,9 @@ const ru = {
   success: 'успешно',
   language: 'язык',
   all: 'все',
+  create: 'создать',
+  edit: 'изменить',
+  groups,
   table,
   errors,
   placeholders,
@@ -298,6 +451,10 @@ const ru = {
   tasks,
   form,
   assignmentSchema,
+  users,
+  notify,
+  errorPage,
+  tournament,
 };
 
 export default ru;

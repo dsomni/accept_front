@@ -1,0 +1,29 @@
+.wrapper {
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusCode {
+  font-size: 15rem;
+  text-align: center;
+}
+.description {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.return {
+  text-decoration: unset;
+  font-size: var(--h1);
+  color: var(--primary);
+  background-color: white;
+  margin-top: var(--lg2);
+  padding: var(--md1) var(--lg4);
+  border-radius: 5px;
+}

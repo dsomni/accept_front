@@ -1,4 +1,3 @@
-import Notify from '@ui/Notify/Notify';
 import { ITask, ITaskDisplay } from '@custom-types/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
@@ -16,6 +15,11 @@ import {
 } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/atomic';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+} from '@utils/notificationFunctions';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -23,19 +27,8 @@ const DeleteModal: FC<{
   task: ITaskDisplay;
 }> = ({ active, setActive, task }) => {
   const [assignments, setAssignments] = useState<ITask[]>([]);
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const router = useRouter();
-  const defaultStatuses = useMemo(
-    () => ({
-      error: locale.tasks.delete.error,
-      ok: locale.tasks.delete.success,
-    }),
-    [locale]
-  );
-  const [error, setError] = useState(false);
-  const [notify, setNotify] = useState(false);
-  const [notificationDescription, setNotificationDescription] =
-    useState('');
 
   useEffect(() => {
     let cleanUp = false;
@@ -44,8 +37,8 @@ const DeleteModal: FC<{
       `/tasks/connected_assignments/${task.spec}`,
       'POST'
     ).then((res) => {
-      if (res && !cleanUp) {
-        setAssignments(res);
+      if (!res.error && !cleanUp) {
+        setAssignments(res.response);
       }
     });
 
@@ -56,46 +49,39 @@ const DeleteModal: FC<{
 
   const handleDelete = useCallback(() => {
     let cleanUp = false;
+
+    const id = newNotification({
+      title: capitalize(locale.notify.task.delete.loading),
+      message: capitalize(locale.loading) + '...',
+    });
     isSuccessful<{}>('/tasks/delete', 'POST', {
       spec: task.spec,
     }).then((res) => {
-      setActive(false);
-      if (res && !cleanUp) {
-        setNotify(true);
-        setNotificationDescription(capitalize(defaultStatuses.ok));
+      if (!res.error && !cleanUp) {
+        successNotification({
+          id,
+          title: capitalize(locale.notify.task.delete.success),
+        });
         router.push('/edu/task/list');
       } else {
-        setNotify(true);
-        setError(true);
-        setNotificationDescription(capitalize(defaultStatuses.error));
+        errorNotification({
+          id,
+          title: capitalize(locale.notify.task.delete.error),
+          message: capitalize(res.detail.description[lang]),
+        });
       }
     });
 
     return () => {
       cleanUp = true;
     };
-  }, [
-    task.spec,
-    defaultStatuses.ok,
-    defaultStatuses.error,
-    setActive,
-    router,
-  ]);
+  }, [task.spec, locale, router, lang]);
 
   return (
     <>
-      <div className={deleteModalStyles.notification}>
-        <Notify
-          answer={notify}
-          error={error}
-          setAnswer={setNotify}
-          description={notificationDescription}
-        />
-      </div>
       <Modal
         opened={active}
         centered
-        hideCloseButton
         onClose={() => setActive(false)}
         size="lg"
         title={

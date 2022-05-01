@@ -1,26 +1,32 @@
 .wrapper {
   width: 80vw;
-  margin: var(---md3) 10vw 10vh 10vw;
+  margin: var(--md1) 10vw 10vh 10vw;
   height: 100%;
-  font-size: var(---h4);
+  font-size: var(--h4);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.label {
-  font-size: var(---p2);
+.inputElem {
+  font-size: var(--p2);
+  min-height: var(--lg2);
+  display: flex;
 }
 .selected {
-  font-size: var(---p2);
+  font-size: var(--p2);
+  min-height: var(--lg3);
 }
 
+.selected span {
+  overflow: visible;
+}
 .searchWrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: var(---md3);
-  column-gap: var(---lg2);
-  row-gap: var(---md1);
+  margin-bottom: var(--md1);
+  column-gap: var(--lg3);
+  row-gap: var(--md3);
 }
 .columnSelect,
 .search {
@@ -31,13 +37,13 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: var(---md2);
+  margin-top: var(--md2);
 }
 .pagesWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 30%;
+  width: 100%;
   justify-content: space-between;
 }
 .pageNavigation {
@@ -49,8 +55,18 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(---md1);
+  gap: var(--md3);
 }
 .selectPerPage {
-  width: var(---xl1);
+  width: var(--xl1);
+}
+
+.pageNavigationWrapper {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.overall {
+  font-size: var(--p1);
 }

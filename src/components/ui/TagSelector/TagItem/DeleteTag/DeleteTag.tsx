@@ -19,8 +19,8 @@ const DeleteTag: FC<{
   const handleSubmit = useCallback(() => {
     isSuccessful(deleteURL, 'POST', {
       spec: item.value,
-    }).then((success) => {
-      if (success) {
+    }).then((res) => {
+      if (!res.error) {
         refetch();
         setOpened(false);
       }
@@ -41,7 +41,6 @@ const DeleteTag: FC<{
       <Modal
         opened={opened}
         centered
-        hideCloseButton
         onClose={() => setOpened(false)}
         size="md"
         title={

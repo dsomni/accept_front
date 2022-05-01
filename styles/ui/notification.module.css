@@ -1,9 +1,15 @@
-.notification {
-  width: 100%;
-  position: fixed;
-  bottom: var(---md3);
-  z-index: 15;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.title {
+  font-size: var(--h4);
+}
+.icon {
+  width: var(--lg3);
+  height: var(--lg3);
+}
+
+.description {
+  font-size: var(--p2);
+}
+
+.root {
+  box-shadow: 0px 0px 5px 1px #223c5073;
 }

@@ -11,6 +11,8 @@ export default async function signOut(
   try {
     const response = await fetch(url, {
       method: 'DELETE',
+      credentials: 'include',
+      headers: req.headers as { [key: string]: string },
     });
     Object.entries(response.headers).forEach((keyArr) =>
       res.setHeader(keyArr[0], keyArr[1] as string)

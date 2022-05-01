@@ -6,7 +6,7 @@ import stepperStyles from '@styles/ui/stepper.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
 import Checker from '@components/Task/Form/Checker/Checker';
 import Preview from '@components/Task/Form/Preview/Preview';
-import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
+import MainInfo from '@components/Tournament/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
 import { pureCallback } from '@custom-types/atomic';

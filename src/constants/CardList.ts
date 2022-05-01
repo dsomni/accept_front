@@ -5,7 +5,7 @@ export const cardList: IProjectCard[] = [
     title: (locale) => locale.projects.education.title,
     description: (locale) => locale.projects.education.description,
     image: 'media/code0.jpg',
-    href: '/edu',
+    href: '/edu/task/list',
   },
   {
     title: (locale) => locale.projects.courses.title,
@@ -17,6 +17,6 @@ export const cardList: IProjectCard[] = [
     title: (locale) => locale.projects.tournaments.title,
     description: (locale) => locale.projects.tournaments.description,
     image: 'media/code2.jpg',
-    href: '/tournaments',
+    href: '/tourneys',
   },
 ];

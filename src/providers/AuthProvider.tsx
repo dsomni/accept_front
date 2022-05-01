@@ -20,7 +20,7 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     refresh().then(() => {
       if (user === undefined) {
         router.push({
-          pathname: '/login',
+          pathname: '/signin',
           query: {
             referrer: router.asPath,
           },

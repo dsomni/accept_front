@@ -33,18 +33,37 @@ testing of practical skills',
 };
 
 const auth = {
-  submit: 'signIn',
+  submit: 'sign In',
   placeholders: {
     login: 'login',
     password: 'password',
+    name: 'John Doe',
+    email: 'example@example.com',
   },
   labels: {
     login: 'login',
     password: 'password',
+    name: 'Full name',
+    email: 'email',
   },
   errors: {
-    login: 'Login too short(min length 5)',
-    password: 'Password too short(min length 5)',
+    login: 'login too short (min length 5)',
+    password: 'password too short (min length 5)',
+    name: 'name is too long',
+    email: 'value should be valid e-mail',
+  },
+  stepper: {
+    login: 'login',
+    password: 'password',
+    final: 'other information',
+  },
+  footer: {
+    noAccount: 'still has no account?',
+    hasAccount: 'already has account?',
+    login: 'log in',
+    register: 'sign up',
+    returnTo: 'back to',
+    mainPage: 'main page',
   },
 };
 
@@ -97,16 +116,6 @@ const tasks = {
   },
   send: 'send',
   results: 'results',
-  errors: {
-    create: {
-      error: 'can not create the task',
-      success: 'task was successfully created',
-    },
-    edit: {
-      error: 'can not edit the task',
-      success: 'task was successfully updated',
-    },
-  },
   list: {
     title: 'title',
     author: 'author',
@@ -178,10 +187,6 @@ const tasks = {
     ok: 'Attempt successfully submitted',
   },
   submit: 'submit',
-  delete: {
-    success: 'the task was successfully deleted',
-    error: 'error when deleting the task',
-  },
 };
 
 const form = {
@@ -202,6 +207,8 @@ const placeholders = {
   search: 'search',
   showColumns: 'pick columns to show',
   selectTags: 'select tags',
+  selectGroups: 'select groups',
+  title: 'enter title',
 };
 
 const errors = {
@@ -211,6 +218,7 @@ const errors = {
 
 const table = {
   perPage: 'per page',
+  overall: 'overall',
 };
 
 const assignmentSchema = {
@@ -220,16 +228,6 @@ const assignmentSchema = {
     delete: 'delete assignment schema',
     deleteConfidence:
       'are you sure you want to permanently delete the assignment schema?',
-  },
-  errors: {
-    create: {
-      error: 'can not create the assignment schema',
-      success: 'assignment schema was successfully created',
-    },
-    edit: {
-      error: 'can not edit the assignment schema',
-      success: 'assignment schema was successfully updated',
-    },
   },
   form: {
     steps: {
@@ -267,9 +265,160 @@ const assignmentSchema = {
     description: 'description',
     taskCount: 'task count',
   },
-  delete: {
-    success: 'the assignment schema was successfully deleted',
-    error: 'error when deleting the assignment schema',
+};
+
+const users = {
+  list: {
+    name: 'name',
+    login: 'login',
+    grade: 'grade',
+  },
+};
+
+const groups = {
+  add: 'add group',
+  title: 'title',
+  students: 'students',
+  selectedStudents: 'selected students',
+};
+
+const notify = {
+  assignmentSchema: {
+    create: {
+      loading: 'creating the assignment schema',
+      success: 'the assignment schema was created successfully',
+      error: 'error when creating the assignment schema',
+    },
+    edit: {
+      loading: 'updating the assignment schema',
+      success: 'the assignment schema was updated successfully',
+      error: 'error when updating the assignment schema',
+    },
+    delete: {
+      loading: 'deleting the assignment schema',
+      success: 'the assignment schema was deleted successfully',
+      error: 'error when deleting the assignment schema',
+    },
+  },
+  task: {
+    create: {
+      loading: 'creating the task',
+      success: 'the task was created successfully',
+      error: 'error when creating the task',
+    },
+    edit: {
+      loading: 'updating the task',
+      success: 'the task was updated successfully',
+      error: 'error when updating the task',
+    },
+    delete: {
+      loading: 'deleting the task',
+      success: 'the task was deleted successfully',
+      error: 'error when deleting the task',
+    },
+    send: {
+      loading: 'sending the task',
+      success: 'the task was send successfully',
+      error: 'error when sending the task',
+    },
+  },
+  group: {
+    create: {
+      loading: 'creating the group',
+      success: 'the group was created successfully',
+      error: 'error when creating the group',
+    },
+    edit: {
+      loading: 'updating the group',
+      success: 'the task was updated successfully',
+      error: 'error when updating the group',
+    },
+    delete: {
+      loading: 'deleting the group',
+      success: 'the group was deleted successfully',
+      error: 'error when deleting the group',
+    },
+  },
+  auth: {
+    signIn: {
+      loading: 'checking your data',
+      success: 'the sign in was done successfully',
+      error: 'error when trying to sign in',
+    },
+    signUp: {
+      loading: 'adding you to our team',
+      success: 'you have successfully signed up',
+      error: 'error when trying to sign up',
+    },
+    signOut: {
+      loading: 'trying to sign out',
+      success: 'the sign out was done successfully',
+      error: 'error when trying to sign out',
+    },
+  },
+  tournament: {
+    create: {
+      loading: 'creating the tournament',
+      success: 'the tournament was created successfully',
+      error: 'error when creating the tournament',
+    },
+    edit: {
+      loading: 'updating the tournament',
+      success: 'the tournament was updated successfully',
+      error: 'error when updating the tournament',
+    },
+    delete: {
+      loading: 'deleting the tournament',
+      success: 'the tournament was deleted successfully',
+      error: 'error when deleting the tournament',
+    },
+  },
+};
+
+const errorPage = {
+  description: 'oops... Page is not found!',
+  returnToMain: 'to main page',
+};
+
+const tournament = {
+  form: {
+    steps: {
+      first: {
+        label: 'first step',
+        description: 'main info',
+      },
+      second: {
+        label: 'second step',
+        description: 'secondary info',
+      },
+      third: {
+        label: 'third step',
+        description: 'type info',
+      },
+      fourth: {
+        label: 'fourth step',
+        description: 'preview',
+      },
+    },
+    title: 'title',
+    description: 'description',
+    allowRegistrationAfterStart: {
+      title: 'allow registration after start',
+    },
+    startDate: 'start date',
+    endDate: 'finish date',
+    freezeTableDate: 'freeze table date',
+    shouldFreezeTable: 'freeze table',
+    admins: 'admins',
+    selectedAdmins: 'selected admins',
+    allowedLanguages: 'allowed languages',
+    deniedLanguages: 'denied languages',
+    penalty: 'penalty',
+    assessmentType: {
+      title: 'assessment type',
+      forTest: 'by test evaluation',
+      forWhole: 'by whole task evaluation',
+    },
   },
 };
 
@@ -287,6 +436,9 @@ const en = {
   success: 'successes',
   language: 'language',
   all: 'all',
+  create: 'create',
+  edit: 'edit',
+  groups,
   table,
   errors,
   placeholders,
@@ -299,6 +451,10 @@ const en = {
   tasks,
   form,
   assignmentSchema,
+  users,
+  notify,
+  errorPage,
+  tournament,
 };
 
 export default en;

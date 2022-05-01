@@ -12,20 +12,20 @@
   color: white;
 }
 .info {
-  padding: 0 var(---md1);
+  padding: 0 var(--md3);
   background-color: #00000060;
   border-radius: 10%;
 }
 .title {
   font-size: 6em;
-  padding: 0 0 var(---md1) 0;
+  padding: 0 0 var(--md3) 0;
 }
 .version {
-  font-size: var(---h3);
-  margin-bottom: var(---md2);
+  font-size: var(--h3);
+  margin-bottom: var(--md2);
   display: flex;
   justify-content: flex-end;
 }
 .logoWrapper {
-  margin: var(---lg2) 0 var(---md1) 0 !important;
+  margin: var(--lg3) 0 var(--md3) 0 !important;
 }

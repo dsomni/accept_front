@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  width: 70vw;
+  margin: var(--lg2) 15vw;
+}
+.label {
+  font-size: var(--p1);
+}
+
+.languages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: max(15%, 30px);
+}
+
+.selectorWrapper {
+  width: 20vw;
+}
+
+.value span {
+  font-size: var(--p2);
+}
+
+.items {
+  font-size: var(--p2);
+}

@@ -3,11 +3,11 @@
   text-decoration: none;
   display: flex;
   flex-direction: row;
-  gap: var(---md2);
+  gap: var(--md2);
   align-items: center;
   font-weight: 400;
 }
 .name {
-  font-size: var(---h1);
-  line-height: var(---md3);
+  font-size: var(--h1);
+  line-height: var(--md1);
 }

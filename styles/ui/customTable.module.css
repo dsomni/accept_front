@@ -22,21 +22,21 @@
 }
 
 .cell {
-  font-size: var(---h4);
+  font-size: var(--h4);
 }
 .headerCell,
 .cell {
-  padding: var(---md2);
+  padding: var(--md2);
   border-bottom: solid 1px #3a3a3a;
 }
 
 .headerCell {
-  font-size: var(---h3);
+  font-size: var(--h3);
   user-select: none;
   border-bottom: solid 2px black;
   display: flex;
   align-items: center;
-  gap: var(---sm);
+  gap: var(--sm);
   flex-direction: row;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
   justify-content: space-between;
   align-items: flex-end;
   column-gap: 2em;
-  row-gap: var(---md1);
+  row-gap: var(--md3);
   padding-right: 5%;
   flex-wrap: wrap;
 }
@@ -60,17 +60,17 @@
   text-decoration: none;
   text-align: left;
   font-size: 1.15em;
-  color: var(---primary);
+  color: var(--primary);
 }
 
 .title:hover {
-  color: var(---secondary);
+  color: var(--secondary);
 }
 
 .tags {
   font-size: 0.7em;
   display: flex;
-  gap: var(---sm);
+  gap: var(--sm);
   flex-direction: row;
   flex-wrap: wrap;
   text-align: right;

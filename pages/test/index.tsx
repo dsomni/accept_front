@@ -1,33 +1,11 @@
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
-import { DefaultLayout } from '@layouts/DefaultLayout';
-import { FC, ReactElement, useEffect, useState } from 'react';
-import AuthProvider from 'src/providers/AuthProvider';
+import { LoginLayout } from '@layouts/LoginLayout';
+import { ReactElement } from 'react';
 
 function TestPage() {
-  const [data, setData] = useState();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  return (
-    <>
-      <CustomEditor
-        name="test"
-        label="test"
-        value=""
-        onChange={(data) => setData(data)}
-      ></CustomEditor>
-    </>
-  );
+  return <p>Test</p>;
 }
 
 TestPage.getLayout = (page: ReactElement) => {
-  return (
-    <AuthProvider>
-      <DefaultLayout>{page}</DefaultLayout>
-    </AuthProvider>
-  );
+  return <LoginLayout title={'Вход'}>{page}</LoginLayout>;
 };
 export default TestPage;

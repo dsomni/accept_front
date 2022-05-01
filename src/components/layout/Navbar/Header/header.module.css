@@ -1,6 +1,6 @@
 .link {
   text-decoration: none;
-  font-size: var(---h4);
+  font-size: var(--h4);
   color: inherit !important;
 }
 
@@ -12,8 +12,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: var(---lg1) 70px var(---lg1) var(---lg2);
+  padding: var(--lg4) 70px var(--lg4) var(--lg3);
 }
 .paddingLinks {
-  padding: var(---sm) var(---md2);
+  padding: var(--sm) var(--md2);
 }
