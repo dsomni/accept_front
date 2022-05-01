@@ -1,11 +1,12 @@
-import { LoginLayout } from '@layouts/LoginLayout';
+import { Helper } from '@components/ui/Helper/Helper';
+import { DefaultLayout } from '@layouts/DefaultLayout';
 import { ReactElement } from 'react';
 
 function TestPage() {
-  return <p>Test</p>;
+  return <Helper text={'some thing'} />;
 }
 
 TestPage.getLayout = (page: ReactElement) => {
-  return <LoginLayout title={'Вход'}>{page}</LoginLayout>;
+  return <DefaultLayout>{page}</DefaultLayout>;
 };
 export default TestPage;
