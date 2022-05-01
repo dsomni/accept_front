@@ -7,22 +7,20 @@ import { sendRequest } from '@requests/request';
 import Form from '@components/Tournament/Form/Form';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 import {
   ITournamentCreate,
   IAssessmentType,
+  ITournament,
 } from '@custom-types/ITournament';
+import { IUser } from '@custom-types/IUser';
 
-const initialValues: ITournamentCreate = {
+const initialValues = (author: string): ITournamentCreate => ({
   title: 'Турнир по простым числам',
-  author: '',
+  author: author,
   description: 'Хороший турнир, мне нравится',
-  start: 0,
-  end: 0,
+  start: Date.now(),
+  end: Date.now(),
 
   penalty: 0,
 
@@ -35,20 +33,31 @@ const initialValues: ITournamentCreate = {
   allowRegistrationAfterStart: true,
 
   freezeTable: undefined,
-};
+});
 
 function AddTask() {
   const { locale, lang } = useLocale();
   const { user } = useUser();
 
   const form = useForm({
-    initialValues,
+    initialValues: initialValues(user?.login || ''),
     validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {
-    console.log(form.values);
-  }, [form.values]);
+    let body: any = {
+      ...form.values,
+      assessmentType: parseInt(form.values.assessmentType),
+    };
+    requestWithNotify(
+      'tournament/add',
+      'POST',
+      locale.notify.tournament.create,
+      lang,
+      (response: ITournament) => response.spec,
+      body
+    );
+  }, [form.values, locale, lang]);
 
   return (
     <>

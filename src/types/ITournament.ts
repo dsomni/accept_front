@@ -1,12 +1,12 @@
 export enum IAssessmentType {
-  FOR_TEST = 0,
-  FOR_WHOLE = 1,
+  FOR_TEST = '0',
+  FOR_WHOLE = '1',
 }
 
 export enum ITournamentStatus {
-  PENDING = 0,
-  RUNNING = 1,
-  FINISHED = 2,
+  PENDING = '0',
+  RUNNING = '1',
+  FINISHED = '2',
 }
 
 export interface ITournamentCreate {

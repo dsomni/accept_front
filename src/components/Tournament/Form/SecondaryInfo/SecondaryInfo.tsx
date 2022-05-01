@@ -13,6 +13,7 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
   const [disableFreeze, setDisableFreeze] = useState(false);
+  const [defaultAdmins, setDefaultAdmins] = useState([]);
   const setField = useCallback((field: string) => {
     return (value: number) => form.setFieldValue(field, value);
   }, []); //eslint-disable-line
@@ -34,7 +35,26 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
     sendRequest<{}, IUser[]>('users/list', 'GET').then((res) => {
       if (!cleanUp) {
         if (!res.error) {
-          setUsers(res.response);
+          setDefaultAdmins(
+            form.values.admins.map((login: string) => {
+              const user = res.response.find(
+                (usr) => usr.login === login
+              );
+              if (user) {
+                return {
+                  ...user,
+                  label: user.name + ' ' + user.login,
+                  value: user.login,
+                };
+              }
+              return {};
+            })
+          );
+          setUsers(
+            res.response.filter(
+              (item) => !form.values['admins'].includes(item.login)
+            )
+          );
         } else {
           setError(true);
         }
@@ -112,9 +132,12 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
             label: user.name + ' ' + user.login,
             value: user.login,
           }))}
-          defaultChosen={[]}
+          defaultChosen={defaultAdmins}
           setUsed={(value) => {
-            form.setFieldValue('admins', value);
+            form.setFieldValue(
+              'admins',
+              value.map((user) => user.login)
+            );
           }}
           classNames={{ label: styles.label }}
           titles={[

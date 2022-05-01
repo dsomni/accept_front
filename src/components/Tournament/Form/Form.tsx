@@ -7,6 +7,8 @@ import { FC, memo, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import SecondaryInfo from '@components/Tournament/Form/SecondaryInfo/SecondaryInfo';
 import MainInfo from '@components/Tournament/Form/MainInfo/MainInfo';
+import TypeInfo from './TypeInfo/TypeInfo';
+import Preview from './Preview/Preview';
 
 const Form: FC<{
   form: any;
@@ -14,7 +16,7 @@ const Form: FC<{
   buttonLabel: string;
 }> = ({ form, handleSubmit, buttonLabel }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () =>
     setCurrentStep((current) =>
@@ -66,8 +68,8 @@ const Form: FC<{
       <div>
         {currentStep === 0 && <MainInfo form={form} />}
         {currentStep === 1 && <SecondaryInfo form={form} />}
-        {/* {currentStep === 2 && <TypeInfo form={form} />}
-        {currentStep === 3 && <Preview form={form} />} */}
+        {currentStep === 2 && <TypeInfo form={form} />}
+        {currentStep === 3 && <Preview form={form} />}
         <Group
           position="center"
           mt="xl"

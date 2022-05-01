@@ -5,16 +5,25 @@
   width: 70vw;
   margin: var(--lg2) 15vw;
 }
-
-.radioGroups {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  row-gap: var(--lg4);
-  column-gap: var(--xl1);
-  align-items: center;
+.label {
+  font-size: var(--p1);
 }
 
-.label {
-  font-size: var(--h4);
+.languages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: max(15%, 30px);
+}
+
+.selectorWrapper {
+  width: 20vw;
+}
+
+.value span {
+  font-size: var(--p2);
+}
+
+.items {
+  font-size: var(--p2);
 }

@@ -356,6 +356,23 @@ const notify = {
       error: 'ошибка при попытке выхода',
     },
   },
+  tournament: {
+    create: {
+      loading: 'создаём турнир',
+      success: 'турнир успешно создан',
+      error: 'ошибка при создании турнира',
+    },
+    edit: {
+      loading: 'обновляем турнир',
+      success: 'турнир успешно обновлён',
+      error: 'ошибка при обновлении турнира',
+    },
+    delete: {
+      loading: 'удаляем турнир',
+      success: 'турнир успешно удалён',
+      error: 'ошибка при удалении турнир',
+    },
+  },
 };
 
 const errorPage = {
@@ -394,6 +411,14 @@ const tournament = {
     shouldFreezeTable: 'замораживать таблицу',
     admins: 'модераторы',
     selectedAdmins: 'выбранные модераторы',
+    allowedLanguages: 'разрешённые языки',
+    deniedLanguages: 'запрещённые языки',
+    penalty: 'штраф',
+    assessmentType: {
+      title: 'тип оценивания',
+      forTest: 'по тестовая оценка',
+      forWhole: 'оценка по полностью сданной задаче',
+    },
   },
 };
 

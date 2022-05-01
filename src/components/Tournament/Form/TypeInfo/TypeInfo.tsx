@@ -1,107 +1,92 @@
 import { useLocale } from '@hooks/useLocale';
-import {
-  NumberInput,
-  Radio,
-  RadioGroup,
-  Switch,
-  TextInput,
-} from '@mantine/core';
+import { MultiSelect, Select } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useState, useEffect } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './typeInfo.module.css';
+import ProgramLanguageSelector from '@components/ui/ProgramLanguageSelector/ProgramLanguageSelector';
+import { IAssessmentType } from '@custom-types/ITournament';
 
-const MainInfo: FC<{ form: any }> = ({ form }) => {
+const TypeInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
-  const initialTags = useMemo(
-    () => {
-      return form.values.tags;
-    },
-    [form.values.spec] // eslint-disable-line
-  );
+
+  // useEffect(() => {
+  //   console.log(form.values.assessmentType);
+  // }, [form.values.assessmentType]);
 
   return (
     <div className={styles.wrapper}>
-      <TextInput
-        classNames={{
-          label: styles.label,
-        }}
-        size="lg"
-        label={capitalize(locale.tasks.form.title)}
-        required
-        {...form.getInputProps('title')}
-      />
-      <TagSelector
-        classNames={{
-          label: styles.label,
-        }}
-        initialTags={initialTags}
-        setUsed={(value: any) => form.setFieldValue('tags', value)}
-        fetchURL={'tags/list'}
-        addURL={'tags/add'}
-        updateURL={'tags/edit'}
-        deleteURL={'tags/delete'}
-      />
-      <NumberInput
-        classNames={{
-          label: styles.label,
-        }}
-        size="lg"
-        label={capitalize(locale.tasks.form.grade)}
-        required
-        {...form.getInputProps('grade')}
-      />
-      <div className={styles.radioGroups}>
-        <RadioGroup
-          classNames={{
-            label: styles.label,
-          }}
-          size="md"
-          label={capitalize(locale.tasks.form.isCode)}
-          {...form.getInputProps('type')}
-          onChange={(value) => {
-            form.setFieldValue('type', value);
-            value === 'text'
-              ? form.setFieldValue('checkType', 'tests')
-              : () => {};
-          }}
-        >
-          <Radio value="code">
-            {capitalize(locale.tasks.form.codeType)}
-          </Radio>
-          <Radio value="text">
-            {capitalize(locale.tasks.form.textType)}
-          </Radio>
-        </RadioGroup>
-
-        {form.values.type === 'code' && (
-          <RadioGroup
-            classNames={{
-              label: styles.label,
-            }}
-            size="md"
-            label={capitalize(locale.tasks.form.checkType)}
-            {...form.getInputProps('checkType')}
-          >
-            <Radio value="tests">
-              {capitalize(locale.tasks.form.tests)}
-            </Radio>
-            <Radio value="checker">
-              {capitalize(locale.tasks.form.checker)}
-            </Radio>
-          </RadioGroup>
-        )}
-        <Switch
-          classNames={{
-            label: styles.label,
-          }}
-          label={capitalize(locale.tasks.form.hint.title)}
-          size="lg"
-          {...form.getInputProps('hasHint', { type: 'checkbox' })}
+      <div className={styles.languages}>
+        <ProgramLanguageSelector
+          selector={(props: any) => (
+            <MultiSelect
+              disabled={form.values.deniedLanguages.length > 0}
+              classNames={{
+                label: styles.label,
+                wrapper: styles.selectorWrapper,
+                value: styles.value,
+                item: styles.items,
+              }}
+              label={capitalize(
+                locale.tournament.form.allowedLanguages
+              )}
+              {...form.getInputProps('allowedLanguages', {
+                type: 'select',
+              })}
+              {...props}
+            />
+          )}
+        />
+        <ProgramLanguageSelector
+          selector={(props: any) => (
+            <MultiSelect
+              disabled={form.values.allowedLanguages.length > 0}
+              classNames={{
+                label: styles.label,
+                wrapper: styles.selectorWrapper,
+                value: styles.value,
+                item: styles.items,
+              }}
+              label={capitalize(
+                locale.tournament.form.deniedLanguages
+              )}
+              {...form.getInputProps('deniedLanguages', {
+                type: 'select',
+              })}
+              {...props}
+            />
+          )}
         />
       </div>
+      <Select
+        classNames={{
+          label: styles.label,
+          input: styles.items,
+          item: styles.items,
+        }}
+        label={capitalize(
+          locale.tournament.form.assessmentType.title
+        )}
+        data={[
+          {
+            label: capitalize(
+              locale.tournament.form.assessmentType.forTest
+            ),
+            value: IAssessmentType.FOR_TEST,
+          },
+          {
+            label: capitalize(
+              locale.tournament.form.assessmentType.forWhole
+            ),
+            value: IAssessmentType.FOR_WHOLE,
+          },
+        ]}
+        {...form.getInputProps('assessmentType', {
+          type: 'select',
+        })}
+      />
     </div>
   );
 };
 
-export default memo(MainInfo);
+export default memo(TypeInfo);
