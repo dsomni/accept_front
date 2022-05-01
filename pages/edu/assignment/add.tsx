@@ -3,16 +3,11 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/hooks';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
-import { sendRequest } from '@requests/request';
 import Form from '@components/AssignmentSchema/Form/Form';
 import { capitalize } from '@utils/capitalize';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const initialValues = {
   spec: '',
@@ -41,35 +36,14 @@ function AddAssignmentSchema() {
       author: user?.login || '',
       duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
-    const id = newNotification({
-      title: capitalize(
-        locale.notify.assignmentSchema.create.loading
-      ),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<IAssignmentSchema, IAssignmentSchema>(
+    requestWithNotify(
       'assignments/schema/add',
       'POST',
+      locale.notify.assignmentSchema.create,
+      lang,
+      (response: IAssignmentSchema) => response.spec,
       body
-    ).then((res) => {
-      if (!res.error) {
-        successNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.create.success
-          ),
-          message: res.response.spec,
-        });
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.create.error
-          ),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
+    );
   }, [form.values, user?.login, locale, lang]);
 
   return (

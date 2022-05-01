@@ -3,16 +3,11 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/hooks';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
-import { sendRequest } from '@requests/request';
-import { ITask, ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/ITask';
 import Form from '@components/Task/Form/Form';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const initialValues = {
   spec: '',
@@ -86,26 +81,13 @@ function AddTask() {
         alarm: form.values['hintAlarm'],
       };
     }
-    const id = newNotification({
-      title: capitalize(locale.notify.task.create.loading),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<ITask, ITaskDisplay>('tasks/add', 'POST', body).then(
-      (res) => {
-        if (!res.error) {
-          successNotification({
-            id,
-            title: capitalize(locale.notify.task.create.success),
-            message: res.response.spec,
-          });
-        } else {
-          errorNotification({
-            id,
-            title: capitalize(locale.notify.task.create.error),
-            message: capitalize(res.detail.description[lang]),
-          });
-        }
-      }
+    requestWithNotify(
+      'tasks/add',
+      'POST',
+      locale.notify.task.create,
+      lang,
+      (response: ITaskDisplay) => response.spec,
+      body
     );
   }, [form.values, locale, user?.login, lang]);
 

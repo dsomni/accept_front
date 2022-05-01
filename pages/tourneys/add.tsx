@@ -3,17 +3,14 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/hooks';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
-import { sendRequest } from '@requests/request';
 import Form from '@components/Tournament/Form/Form';
 import { capitalize } from '@utils/capitalize';
-import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import {
   ITournamentCreate,
   IAssessmentType,
   ITournament,
 } from '@custom-types/ITournament';
-import { IUser } from '@custom-types/IUser';
 
 const initialValues = (author: string): ITournamentCreate => ({
   title: 'Турнир по простым числам',

@@ -7,10 +7,8 @@ import {
   useMemo,
   useState,
 } from 'react';
-import notificationStyles from '@styles/ui/notification.module.css';
 import { useForm } from '@mantine/hooks';
 import { sendRequest } from '@requests/request';
-import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
@@ -18,15 +16,10 @@ import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { IStudentList } from '@custom-types/IStudent';
 import { IGroup } from '@custom-types/IGroup';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 function EditGroup(props: { group: IGroup }) {
   const { locale, lang } = useLocale();
-  const { user } = useUser();
   const [ready, setReady] = useState(false);
   const group = props.group;
 
@@ -75,30 +68,20 @@ function EditGroup(props: { group: IGroup }) {
   }, [formValues]); // eslint-disable-line
 
   const handleSubmit = useCallback(() => {
-    const id = newNotification({
-      title: capitalize(locale.notify.group.edit.loading),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<IGroup, IGroup>(`groups/edit/${group.spec}`, 'POST', {
+    const body = {
       ...form.values,
       members: form.values['members'].map(
         (member: any) => member.login
       ),
-    }).then((res) => {
-      if (!res.error) {
-        successNotification({
-          id,
-          title: capitalize(locale.notify.group.edit.success),
-          message: res.response.spec,
-        });
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(locale.notify.group.edit.error),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
+    };
+    requestWithNotify(
+      `groups/edit/${group.spec}`,
+      'POST',
+      locale.notify.group.edit,
+      lang,
+      (response: IGroup) => response.spec,
+      body
+    );
   }, [form.values, group?.spec, locale, lang]);
 
   return (

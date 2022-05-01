@@ -9,7 +9,6 @@ import {
 import { useForm } from '@mantine/hooks';
 import { ITaskDisplay } from '@custom-types/ITask';
 import { sendRequest } from '@requests/request';
-import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
@@ -17,15 +16,10 @@ import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
 import { ITag } from '@custom-types/ITag';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 function EditAssignmentSchema() {
   const { locale, lang } = useLocale();
-  const { user } = useUser();
   const [ready, setReady] = useState(false);
 
   const [tags, setTags] = useState<ITag[]>([]);
@@ -111,33 +105,14 @@ function EditAssignmentSchema() {
       tasks: form.values['tasks'].map((task: Item) => task.value),
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
-    const id = newNotification({
-      title: capitalize(locale.notify.assignmentSchema.edit.loading),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<IAssignmentSchema, IAssignmentSchema>(
+    requestWithNotify(
       `assignments/schema/edit/${assignmentSchema.spec}`,
       'POST',
+      locale.notify.assignmentSchema.edit,
+      lang,
+      (response: IAssignmentSchema) => response.spec,
       body
-    ).then((res) => {
-      if (!res.error) {
-        successNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.edit.success
-          ),
-          message: res.response.spec,
-        });
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.edit.error
-          ),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
+    );
   }, [form.values, locale, assignmentSchema?.spec, lang]);
 
   return (

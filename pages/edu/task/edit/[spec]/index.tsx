@@ -19,11 +19,7 @@ import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 function EditTask(props: { task: ITask }) {
   const { locale, lang } = useLocale();
@@ -103,29 +99,14 @@ function EditTask(props: { task: ITask }) {
         alarm: form.values['hintAlarm'],
       };
     }
-    const id = newNotification({
-      title: capitalize(locale.notify.task.edit.loading),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<ITask, ITaskDisplay>(
+    requestWithNotify(
       `tasks/edit/${task.spec}`,
       'POST',
+      locale.notify.task.create,
+      lang,
+      (response: ITaskDisplay) => response.spec,
       body
-    ).then((res) => {
-      if (!res.error) {
-        successNotification({
-          id,
-          title: capitalize(locale.notify.task.edit.success),
-          message: res.response.spec,
-        });
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(locale.notify.task.edit.error),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
+    );
   }, [form.values, user?.login, locale, task?.spec, lang]);
   return (
     <div>
