@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/task-display-mode';
+const url = 'http://' + env.API_ENDPOINT + '/api/list_tournaments';
 
-export default async function ListTasks(
+export default async function ListTournaments(
   _: NextApiRequest,
   res: NextApiResponse
 ) {

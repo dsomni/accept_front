@@ -437,6 +437,13 @@ const tournament = {
       forWhole: 'оценка по полностью сданной задаче',
     },
   },
+  list: {
+    title: 'название',
+    author: 'автор',
+    start: 'начало',
+    end: 'оканчание',
+    status: 'статус',
+  },
 };
 
 const ru = {

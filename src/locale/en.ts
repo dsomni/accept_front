@@ -437,6 +437,13 @@ const tournament = {
       forWhole: 'by whole task evaluation',
     },
   },
+  list: {
+    title: 'title',
+    author: 'author',
+    start: 'start',
+    end: 'end',
+    status: 'status',
+  },
 };
 
 const en = {
