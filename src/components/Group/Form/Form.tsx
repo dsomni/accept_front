@@ -1,4 +1,4 @@
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Button, TextInput } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
@@ -9,7 +9,7 @@ import {
 } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './form.module.css';
 import { sendRequest } from '@requests/request';
-import { IStudentList } from '@custom-types/IStudent';
+import { IStudentList } from '@custom-types/data/IStudent';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Form: FC<{

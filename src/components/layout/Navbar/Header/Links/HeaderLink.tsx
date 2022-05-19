@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
-import IHeaderLink from '@custom-types/IHeaderLink';
+import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import styles from '../header.module.css';
 import { useLocale } from '@hooks/useLocale';
 

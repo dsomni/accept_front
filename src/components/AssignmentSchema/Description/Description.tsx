@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { useLocale } from '@hooks/useLocale';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 

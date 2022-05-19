@@ -14,8 +14,8 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { IStudentList } from '@custom-types/IStudent';
-import { IGroup } from '@custom-types/IGroup';
+import { IStudentList } from '@custom-types/data/IStudent';
+import { IGroup } from '@custom-types/data/IGroup';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
 function EditGroup(props: { group: IGroup }) {

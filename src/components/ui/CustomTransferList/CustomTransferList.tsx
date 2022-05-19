@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
-import { setter, pureCallback } from '@custom-types/atomic';
+import { setter, pureCallback } from '@custom-types/ui/atomic';
 
 export interface Item {
   value: string;

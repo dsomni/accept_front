@@ -1,5 +1,5 @@
-import { setter } from '@custom-types/atomic';
-import { ITableColumn } from '@custom-types/ITable';
+import { setter } from '@custom-types/ui/atomic';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import {
   ActionIcon,

@@ -1,5 +1,5 @@
-import { callback } from '@custom-types/atomic';
-import { IFormField } from '@custom-types/IFormField';
+import { callback } from '@custom-types/ui/atomic';
+import { IFormField } from '@custom-types/ui/IFormField';
 import { TextInput, Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { FC, memo, useMemo, useCallback, useEffect } from 'react';

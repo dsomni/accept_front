@@ -1,5 +1,5 @@
 import Table from '@ui/Table/Table';
-import { ITableColumn } from '@custom-types/ITable';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -15,7 +15,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
-import { ITournamentList } from '@custom-types/ITournament';
+import { ITournamentList } from '@custom-types/data/ITournament';
 
 function AssignmentList() {
   const [list, setList] = useState<any[]>([]);

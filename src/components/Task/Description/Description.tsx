@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useRef } from 'react';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';

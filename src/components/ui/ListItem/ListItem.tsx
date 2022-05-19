@@ -1,4 +1,4 @@
-import { callback } from '@custom-types/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import { ActionIcon, Textarea } from '@mantine/core';
 import { TrashIcon } from '@modulz/radix-icons';
 import { FC, memo } from 'react';

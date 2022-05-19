@@ -7,15 +7,15 @@ import {
   useState,
 } from 'react';
 import { useForm } from '@mantine/form';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { sendRequest } from '@requests/request';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
-import { ITag } from '@custom-types/ITag';
+import { ITag } from '@custom-types/data/ITag';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
 function EditAssignmentSchema() {

@@ -1,5 +1,5 @@
 import Table from '@ui/Table/Table';
-import { ITableColumn } from '@custom-types/ITable';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -13,10 +13,10 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
-import { ITag } from '@custom-types/ITag';
+import { ITag } from '@custom-types/data/ITag';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
 

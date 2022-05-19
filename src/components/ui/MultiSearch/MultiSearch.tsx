@@ -1,4 +1,4 @@
-import { callback, setter } from '@custom-types/atomic';
+import { callback, setter } from '@custom-types/ui/atomic';
 import { MultiSelect } from '@mantine/core';
 import { hasSubarray } from '@utils/hasSubarray';
 import { FC, memo, useMemo } from 'react';

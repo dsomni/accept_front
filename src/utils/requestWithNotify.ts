@@ -5,8 +5,8 @@ import {
 } from '@utils/notificationFunctions';
 import { capitalize } from '@utils/capitalize';
 import { sendRequest, availableMethods } from '@requests/request';
-import { IAvailableLang } from '@custom-types/ILocale';
-import { callback, setter } from '@custom-types/atomic';
+import { IAvailableLang } from '@custom-types/ui/ILocale';
+import { callback, setter } from '@custom-types/ui/atomic';
 
 export const requestWithNotify = <T, V>(
   endpoint: string,

@@ -3,7 +3,7 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import Form from '@components/Task/Form/Form';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';

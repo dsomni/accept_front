@@ -1,10 +1,16 @@
-import { FC, createContext, useState, useContext, useCallback } from 'react';
+import {
+  FC,
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+} from 'react';
 import {
   IAvailableLang,
   locales,
   ILocaleContext,
   ILocale,
-} from '@custom-types/ILocale';
+} from '@custom-types/ui/ILocale';
 import { useRouter } from 'next/router';
 
 const langList = Object.keys(locales) as IAvailableLang[];
@@ -63,7 +69,9 @@ export const LocaleProvider: FC = ({ children }) => {
   }));
 
   return (
-    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
+    <LocaleContext.Provider value={value}>
+      {children}
+    </LocaleContext.Provider>
   );
 };
 

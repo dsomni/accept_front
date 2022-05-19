@@ -32,7 +32,7 @@ import {
   errorNotification,
 } from '@utils/notificationFunctions';
 import { sendRequest } from '@requests/request';
-import { IRegUser, IUser } from '@custom-types/IUser';
+import { IRegUser, IUser } from '@custom-types/data/IUser';
 
 const stepFields = [
   ['login'],

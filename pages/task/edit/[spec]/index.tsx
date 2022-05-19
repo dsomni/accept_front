@@ -9,10 +9,10 @@ import {
 } from 'react';
 import notificationStyles from '@styles/ui/notification.module.css';
 import { useForm } from '@mantine/form';
-import { ITask, ITaskDisplay } from '@custom-types/ITask';
+import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
 import { sendRequest } from '@requests/request';
 import { useUser } from '@hooks/useUser';
-import { ITag } from '@custom-types/ITag';
+import { ITag } from '@custom-types/data/ITag';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';

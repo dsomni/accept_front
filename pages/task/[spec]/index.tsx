@@ -1,7 +1,7 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
 import { ReactNode, useState } from 'react';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';

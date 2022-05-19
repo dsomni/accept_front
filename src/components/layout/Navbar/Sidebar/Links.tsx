@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
-import IHeaderLink from '@custom-types/IHeaderLink';
+import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { HeaderLink } from '../Header/Links/HeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import styles from './sideBar.module.css';
 import { Burger, Group } from '@mantine/core';
 import SignIn from '../SignIn/SignIn';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 export const Links: FC<{
   links: IHeaderLink[];

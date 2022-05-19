@@ -10,7 +10,7 @@ import {
   ITournamentCreate,
   IAssessmentType,
   ITournament,
-} from '@custom-types/ITournament';
+} from '@custom-types/data/ITournament';
 
 const initialValues = (author: string): ITournamentCreate => ({
   title: 'Турнир по простым числам',

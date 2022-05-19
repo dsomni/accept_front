@@ -1,4 +1,4 @@
-import { IProjectCard } from '@custom-types/IProjectCard';
+import { IProjectCard } from '@custom-types/ui/IProjectCard';
 
 export const cardList: IProjectCard[] = [
   {

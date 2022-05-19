@@ -1,4 +1,4 @@
-import { ITask, ITaskDisplay } from '@custom-types/ITask';
+import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
 import { sendRequest } from '@requests/request';
@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
-import { callback } from '@custom-types/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
 const DeleteModal: FC<{

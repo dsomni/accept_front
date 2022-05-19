@@ -7,7 +7,7 @@ import MainInfo from './MainInfo/MainInfo';
 import TaskAdding from './TaskAdding/TaskAdding';
 import Preview from './Preview/Preview';
 import { TaskOrdering } from './TaskOrdering/TaskOrdering';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 const Form: FC<{
   form: any;

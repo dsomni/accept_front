@@ -1,4 +1,4 @@
-import { ITableColumn } from '@custom-types/ITable';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { FC, memo, useEffect, useMemo } from 'react';
 import Column from '../Column/Column';
 import Row from '../Row/Row';

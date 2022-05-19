@@ -2,7 +2,7 @@ import Form from '@components/Tournament/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import { ReactNode, useCallback } from 'react';
 import { useForm } from '@mantine/form';
-import { ITournament } from '@custom-types/ITournament';
+import { ITournament } from '@custom-types/data/ITournament';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { requestWithNotify } from '@utils/requestWithNotify';

@@ -6,7 +6,7 @@ import styles from './secondaryInfo.module.css';
 import 'dayjs/locale/ru';
 import DateTimePicker from '@components/ui/DateTimePicker/DateTimePicker';
 import { sendRequest } from '@requests/request';
-import { IUser } from '@custom-types/IUser';
+import { IUser } from '@custom-types/data/IUser';
 import { CustomTransferList } from '@components/ui/CustomTransferList/CustomTransferList';
 
 const SecondaryInfo: FC<{ form: any }> = ({ form }) => {

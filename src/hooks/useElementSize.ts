@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
 
 import useEventListener from '@hooks/useEventListener';
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 
 interface Size {
   width: number;

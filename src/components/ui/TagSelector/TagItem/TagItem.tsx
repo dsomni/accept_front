@@ -1,4 +1,4 @@
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
 import DeleteTag from './DeleteTag/DeleteTag';

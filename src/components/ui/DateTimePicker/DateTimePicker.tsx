@@ -1,4 +1,4 @@
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Calendar, TimeInput } from '@mantine/dates';
 import { FC, memo, useEffect, useState } from 'react';

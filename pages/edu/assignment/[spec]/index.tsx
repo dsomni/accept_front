@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Description from '@components/AssignmentSchema/Description/Description';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import Sticky from '@ui/Sticky/Sticky';

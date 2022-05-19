@@ -1,6 +1,6 @@
-import { IGroupDisplay } from '@custom-types/IGroup';
-import { IStudentList } from '@custom-types/IStudent';
-import { ITableColumn } from '@custom-types/ITable';
+import { IGroupDisplay } from '@custom-types/data/IGroup';
+import { IStudentList } from '@custom-types/data/IStudent';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';

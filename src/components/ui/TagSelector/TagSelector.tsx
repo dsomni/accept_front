@@ -3,14 +3,14 @@ import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import styles from './tagSelector.module.css';
 import { sendRequest } from '@requests/request';
-import { ITag } from '@custom-types/ITag';
+import { ITag } from '@custom-types/data/ITag';
 import {
   CustomTransferList,
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import { TagItem } from './TagItem/TagItem';
 import AddTag from './AddTag/AddTag';
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 
 const TagSelector: FC<{
   initialTags: Item[];

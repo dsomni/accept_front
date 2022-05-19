@@ -4,13 +4,13 @@ import { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import styles from './taskSelector.module.css';
 import { sendRequest } from '@requests/request';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import {
   CustomTransferList,
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import { TaskItem } from './TaskItem/TaskItem';
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 
 const TaskSelector: FC<{
   initialTasks: Item[];

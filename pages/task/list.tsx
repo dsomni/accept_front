@@ -1,6 +1,6 @@
 import Table from '@ui/Table/Table';
-import { ITableColumn } from '@custom-types/ITable';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITableColumn } from '@custom-types/ui/ITable';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -13,13 +13,13 @@ import {
 import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
-import { ITag } from '@custom-types/ITag';
+import { ITag } from '@custom-types/data/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
 import router from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
-import { ITaskListBundle } from '@custom-types/bundle';
+import { ITaskListBundle } from '@custom-types/data/bundle';
 
 interface Item {
   value: any;

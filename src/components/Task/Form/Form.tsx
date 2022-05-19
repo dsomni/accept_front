@@ -9,7 +9,7 @@ import Preview from '@components/Task/Form/Preview/Preview';
 import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 const Form: FC<{
   form: any;

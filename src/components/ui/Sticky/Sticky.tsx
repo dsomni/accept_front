@@ -4,7 +4,7 @@ import { FC, memo, ReactNode, useState } from 'react';
 import ActionButton from './ActionButton/ActionButton';
 import styles from './sticky.module.css';
 import { DotsVerticalIcon, Cross1Icon } from '@modulz/radix-icons';
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 
 export interface IStickyAction {
   icon: ReactNode;

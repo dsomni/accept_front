@@ -1,11 +1,11 @@
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { useRouter } from 'next/router';
 import { FC, memo, useCallback } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
 const DeleteModal: FC<{

@@ -1,6 +1,6 @@
 import { ActionIcon, Affix } from '@mantine/core';
 import { FC, memo, ReactNode } from 'react';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 type positions = {
   bottom: number;

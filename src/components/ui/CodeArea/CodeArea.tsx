@@ -18,7 +18,7 @@ import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
 import { capitalize } from '@utils/capitalize';
 import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
-import { callback } from '@custom-types/atomic';
+import { callback } from '@custom-types/ui/atomic';
 
 const languages = [
   {

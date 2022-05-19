@@ -1,4 +1,4 @@
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Stepper, Group, Button } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';

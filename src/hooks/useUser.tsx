@@ -1,4 +1,4 @@
-import { IUser, IUserContext } from '@custom-types/IUser';
+import { IUser, IUserContext } from '@custom-types/data/IUser';
 import { sendRequest, isSuccessful } from '@requests/request';
 import {
   createContext,

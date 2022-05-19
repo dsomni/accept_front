@@ -1,4 +1,4 @@
-import { callback } from '@custom-types/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 import { memo, FC, ReactNode, useEffect, useState } from 'react';

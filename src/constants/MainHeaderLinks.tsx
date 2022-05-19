@@ -1,4 +1,4 @@
-import IHeaderLink from '@custom-types/IHeaderLink';
+import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { capitalize } from '@utils/capitalize';
 
 const mainLinks: IHeaderLink[] = [

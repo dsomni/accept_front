@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { IGroup } from '@custom-types/IGroup';
+import { IGroup } from '@custom-types/data/IGroup';
 import Form from '@components/Group/Form/Form';
 import { requestWithNotify } from '@utils/requestWithNotify';
 

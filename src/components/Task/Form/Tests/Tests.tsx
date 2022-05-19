@@ -1,5 +1,5 @@
 import ListItem from '@ui/ListItem/ListItem';
-import { ITest } from '@custom-types/ITest';
+import { ITest } from '@custom-types/data/ITest';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Text } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';

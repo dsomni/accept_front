@@ -7,7 +7,7 @@ import {
   Draggable,
 } from 'react-beautiful-dnd';
 import { DragHandleDots2Icon } from '@modulz/radix-icons';
-import { callback } from '@custom-types/atomic';
+import { callback } from '@custom-types/ui/atomic';
 
 export const CustomDraggableList: FC<{
   values: Item[];

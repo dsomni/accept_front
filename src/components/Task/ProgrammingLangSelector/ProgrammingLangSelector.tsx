@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
-import { callback } from '@custom-types/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import { Select } from '@mantine/core';
 import ProgramLanguageSelector from '@components/ui/ProgramLanguageSelector/ProgramLanguageSelector';
 
