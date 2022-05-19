@@ -1,12 +1,12 @@
 import { FC, memo, useEffect, useRef } from 'react';
-import { ITaskDisplay } from '@custom-types/data/ITask';
+import { ITask } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import CopyButton from '@ui/CopyButton/CopyButton';
 
-const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
+const Description: FC<{ task: ITask }> = ({ task }) => {
   const description = useRef<HTMLDivElement>(null);
   const inputFormat = useRef<HTMLDivElement>(null);
   const outputFormat = useRef<HTMLDivElement>(null);
