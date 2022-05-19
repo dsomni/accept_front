@@ -1,6 +1,6 @@
 import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ITable';
-import { ITaskList } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -19,10 +19,22 @@ import router from 'next/router';
 import { PlusIcon } from '@modulz/radix-icons';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import { ITaskListBundle } from '@custom-types/bundle';
+
+interface Item {
+  value: any;
+  display: string | ReactNode;
+}
+
+interface ITaskDisplayList
+  extends Omit<ITaskDisplay, 'title' | 'author'> {
+  title: Item;
+  author: Item;
+}
 
 function TaskList() {
-  const [list, setList] = useState<ITaskList[]>([]);
-  const [tags, setTags] = useState(new Map<string, ITag>());
+  const [list, setList] = useState<ITaskDisplayList[]>([]);
+  const [tags, setTags] = useState<ITag[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
@@ -59,18 +71,6 @@ function TaskList() {
         size: 3,
       },
       {
-        label: capitalize(locale.tasks.list.grade),
-        key: 'grade',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.grade > b.grade ? 1 : a.grade == b.grade ? 0 : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: true,
-        hidden: false,
-        size: 2,
-      },
-      {
         label: capitalize(locale.tasks.list.verdict),
         key: 'verdict',
         sortable: false,
@@ -84,86 +84,76 @@ function TaskList() {
     ],
     [locale]
   );
-  const [loadingTags, setLoadingTags] = useState(true);
 
   useEffect(() => {
     let cleanUp = false;
-
-    setLoadingTags(true);
-    sendRequest<{}, ITag[]>('tags/list', 'GET').then((res) => {
-      if (!res.error && !cleanUp) {
-        let response = res.response;
-        let newTags = new Map<string, ITag>();
-        for (let i = 0; i < response.length; i++)
-          newTags.set(response[i].spec, response[i]);
-        setTags(newTags);
-        setLoadingTags(false);
+    setLoading(true);
+    sendRequest<{}, ITaskListBundle>('bundles/task_list', 'GET').then(
+      (res) => {
+        if (!cleanUp) {
+          if (!res.error) {
+            let tasks = res.response.tasks.map((task) => ({
+              ...task,
+              author: {
+                value: task.author,
+                display: task.author.shortName,
+              },
+              title: {
+                value: task.title,
+                display: (
+                  <div className={tableStyles.titleWrapper}>
+                    <a
+                      className={tableStyles.title}
+                      href={`/task/${task.spec}`}
+                    >
+                      {task.title}
+                    </a>
+                    {task.tags.length > 0 && (
+                      <span className={tableStyles.tags}>
+                        {task.tags.map((tag, idx) => (
+                          <div className={tableStyles.tag} key={idx}>
+                            {tag.title +
+                              (idx == task.tags.length - 1
+                                ? ''
+                                : ', ')}
+                          </div>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                ),
+              },
+            }));
+            let tags = res.response.tags;
+            setTags(tags);
+            setList(tasks);
+          } else {
+            setError(true);
+          }
+          setLoading(false);
+        }
       }
-    });
-
+    );
     return () => {
       cleanUp = true;
     };
   }, []);
 
   useEffect(() => {
-    let cleanUp = false;
-    setLoading(true);
-    sendRequest<{}, ITaskList[]>('tasks/list', 'GET').then((res) => {
-      if (!cleanUp) {
-        if (!res.error) {
-          setList(
-            res.response.map((item) => {
-              return {
-                ...item,
-                tags: item.tags.map(
-                  (tag) => tags.get(tag)?.title || ''
-                ),
-                title: {
-                  value: item.title,
-                  display: (
-                    <div className={tableStyles.titleWrapper}>
-                      <a
-                        className={tableStyles.title}
-                        href={`/task/${item.spec}`}
-                      >
-                        {item.title}
-                      </a>
-                      {!!tags && (
-                        <span className={tableStyles.tags}>
-                          {item.tags.map((tag, idx) => (
-                            <div
-                              className={tableStyles.tag}
-                              key={idx}
-                            >
-                              {tags.get(tag)?.title +
-                                (idx == item.tags.length - 1
-                                  ? ''
-                                  : ', ')}
-                            </div>
-                          ))}
-                        </span>
-                      )}
-                    </div>
-                  ),
-                },
-              };
-            })
-          );
-        } else {
-          setError(true);
-        }
-        setLoading(false);
-      }
-    });
-    return () => {
-      cleanUp = true;
-    };
-  }, [tags, loadingTags]);
+    console.log('currentTags', currentTags);
+  }, [currentTags]);
 
   const rowFilter = useCallback(
     (row) => {
-      return hasSubarray(row.tags, currentTags);
+      console.log(
+        row.tags.map((tag: ITag) => tag.title),
+        currentTags
+      );
+
+      return hasSubarray(
+        row.tags.map((tag: ITag) => tag.title),
+        currentTags
+      );
     },
     [currentTags]
   );
@@ -177,10 +167,12 @@ function TaskList() {
         setCurrentItems={setCurrentTags}
         rowList={list}
         placeholder={capitalize(locale.placeholders.selectTags)}
-        displayData={(tags: any[]) =>
-          Array.from(tags.values()).map((tag: any) => tag.title)
+        displayData={(tags: ITag[]) =>
+          tags.map((tag: ITag) => tag.title)
         }
-        rowField={'tags'}
+        getCmpValues={(task: any) =>
+          task['tags'].map((tag: any) => tag.title)
+        }
       />
     ),
     [list, locale.placeholders.selectTags, tags]
@@ -188,7 +180,7 @@ function TaskList() {
 
   return (
     <div>
-      {!loading && tags.size > 0 && (
+      {!loading && tags.length > 0 && (
         <Table
           columns={columns}
           rows={list}
@@ -205,7 +197,7 @@ function TaskList() {
           }}
           defaultOnPage={10}
           onPage={[5, 10]}
-          searchKeys={['title.value', 'author', 'grade']}
+          searchKeys={['title.value', 'author.shortName']}
           rowFilter={rowFilter}
           additionalSearch={tagSearch}
         />

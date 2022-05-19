@@ -1,21 +1,21 @@
 import { pureCallback } from './atomic';
+import { IGroup } from './IGroup';
 
-enum Roles {
-  USER = 'user',
-  STUDENT = 'student',
-  TEACHER = 'teacher',
-  ADMIN = 'admin',
-}
-export interface IUser {
+export interface Role {
+  spec: number;
   name: string;
+  accessLevel: number;
+}
+
+export interface IUser {
   login: string;
+  name: string;
+  surname: string;
+  patronymic: string;
   email: string | undefined;
   shortName: string | undefined;
-  role: Roles;
-  groups: string[];
-  gradeNumber: number | undefined;
-  gradeLetter: number | undefined;
-  groupNumber: number | undefined;
+  groups: IGroup[];
+  role: Role;
 }
 
 export interface IUserContext {

@@ -1,5 +1,7 @@
 import { IHint } from './IHint';
+import { ITag } from './ITag';
 import { ITest } from './ITest';
+import { IUser } from './IUser';
 
 interface IChecker {
   sourceCode: string;
@@ -12,7 +14,7 @@ interface IConstraints {
   memory: number | undefined;
 }
 
-export interface ITaskDisplay {
+export interface ITask {
   spec: string;
   title: string;
   description: string;
@@ -35,7 +37,7 @@ export interface ITaskDisplay {
   verdict: string | undefined;
 }
 
-export interface ITask {
+export interface ITaskEdit {
   spec: string;
   title: string;
   description: string;
@@ -65,10 +67,11 @@ export interface ITask {
   isTournament: boolean;
 }
 
-export interface ITaskList {
+export interface ITaskDisplay {
   spec: string;
-  title: any;
-  tags: string[];
-  author: string;
-  verdict: string | undefined;
+  title: string;
+  tags: ITag[];
+  author: IUser;
+  verdict: undefined;
+  insertedDate: Date;
 }

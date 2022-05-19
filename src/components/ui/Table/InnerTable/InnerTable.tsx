@@ -1,5 +1,5 @@
 import { ITableColumn } from '@custom-types/ITable';
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useEffect, useMemo } from 'react';
 import Column from '../Column/Column';
 import Row from '../Row/Row';
 
