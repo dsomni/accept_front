@@ -3,7 +3,7 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/assignment_tag';
 
-export default async function ListTasks(
+export default async function ListAssignmentTags(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

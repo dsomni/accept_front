@@ -7,7 +7,7 @@ export default async function EditGroup(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(`${url}/${req.query.spec}`, {
+  const response = await fetch(url, {
     method: 'PUT',
     credentials: 'include',
     body: req.body,

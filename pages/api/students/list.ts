@@ -3,7 +3,7 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/user-by-role';
 
-export default async function ListTasks(
+export default async function ListStudents(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

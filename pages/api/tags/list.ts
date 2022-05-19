@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/tag';
+const url = 'http://' + env.API_ENDPOINT + '/api/task_tag';
 
-export default async function ListTasks(
+export default async function ListTags(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

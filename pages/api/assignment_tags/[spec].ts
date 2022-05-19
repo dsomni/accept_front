@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/task';
+const url = 'http://' + env.API_ENDPOINT + '/api/assignment_tag';
 
-export default async function FullTask(
+export default async function AssignmentTag(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

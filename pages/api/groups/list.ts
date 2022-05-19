@@ -3,7 +3,7 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/group';
 
-export default async function ListTasks(
+export default async function ListGroups(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

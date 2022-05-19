@@ -3,7 +3,7 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/task';
 
-export default async function DeleteAssignmentSchema(
+export default async function DeleteTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/assignment_schema';
+const url = 'http://' + env.API_ENDPOINT + '/api/task';
 
 export default async function EditTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(`${url}/${req.query.spec}`, {
+  const response = await fetch(url, {
     method: 'PUT',
     credentials: 'include',
     body: req.body,

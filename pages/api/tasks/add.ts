@@ -7,7 +7,7 @@ export default async function AddTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(`${url}`, {
+  const response = await fetch(url, {
     method: 'POST',
     credentials: 'include',
     body: req.body,
