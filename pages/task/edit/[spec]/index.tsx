@@ -137,7 +137,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     };
   }
-  const task = await fetch(`${SERVER_URL}/api/tasks/task`, {
+  const task = await fetch(`${SERVER_URL}/api/task/task`, {
     method: 'POST',
     body: JSON.stringify({ spec: params.spec }),
   });

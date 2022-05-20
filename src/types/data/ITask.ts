@@ -1,10 +1,16 @@
-import { ICheckType, ILanguage, ITaskType, ITest } from './atomic';
+import {
+  ITaskCheckType,
+  ILanguage,
+  ITaskType,
+  ITest,
+  IHintAlarmType,
+} from './atomic';
 import { ITag } from './ITag';
 import { IUser } from './IUser';
 
 export interface IHint {
   content: string;
-  alarmType: number; //  spec
+  alarmType: IHintAlarmType; //  spec
   alarm: number;
   // depends on alarmType
   // "attempts" -> number of attempts required for hint to appear
@@ -57,6 +63,6 @@ export interface ITask extends ITaskDisplay {
 export interface ITaskEdit extends ITask {
   tests: ITest[];
   checker: IChecker | undefined;
-  checkType: ICheckType | undefined;
+  checkType: ITaskCheckType | undefined;
   type: ITaskType;
 }

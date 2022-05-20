@@ -33,10 +33,10 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         }}
         initialTags={initialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
-        fetchURL={'assignment_tags/list'}
-        addURL={'assignment_tags/add'}
-        updateURL={'assignment_tags/edit'}
-        deleteURL={'assignment_tags/delete'}
+        fetchURL={'assignment_tag/list'}
+        addURL={'assignment_tag/add'}
+        updateURL={'assignment_tag/edit'}
+        deleteURL={'assignment_tag/delete'}
       />
       <NumberInput
         classNames={{

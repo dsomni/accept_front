@@ -1,7 +1,7 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
 import { ReactNode, useState } from 'react';
-import { ITaskDisplay } from '@custom-types/data/ITask';
+import { ITask } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
@@ -12,7 +12,7 @@ import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
 import { useRouter } from 'next/router';
 
-function Task(props: { task: ITaskDisplay }) {
+function Task(props: { task: ITask }) {
   const task = props.task;
   const [activeModal, setActiveModal] = useState(false);
   const router = useRouter();
@@ -63,9 +63,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     };
   }
-  const task = await fetch(`${SERVER_URL}/api/tasks/task`, {
+  console.log(`${SERVER_URL}/api/task/${params.spec}`);
+  const task = await fetch(`${SERVER_URL}/api/task/${params.spec}`, {
     method: 'POST',
-    body: JSON.stringify({ spec: params.spec }),
+    // body: JSON.stringify({ spec:  }),
   });
   if (task.status === 200) {
     return {

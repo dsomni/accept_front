@@ -29,7 +29,7 @@ export const sendRequest = <ISend, IReceive>(
       res.status === 200
         ? res.json().then((res) => ({
             error: false,
-            detail: {},
+            detail: res.detail,
             response: res as IReceive,
           }))
         : res.json().then((res) => ({

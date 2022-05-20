@@ -4,8 +4,12 @@ import { RadioGroup, Radio, NumberInput } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
 import styles from './descriptionInfo.module.css';
+import { IHintAlarmType } from '@custom-types/data/atomic';
 
-const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
+const DescriptionInfo: FC<{
+  form: any;
+  hintAlarmTypes: IHintAlarmType[];
+}> = ({ form, hintAlarmTypes }) => {
   const { locale } = useLocale();
 
   return (
@@ -62,16 +66,20 @@ const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
               form.setFieldValue('hintAlarmType', value)
             }
           >
-            <Radio
-              value="attempts"
-              size="sm"
-              label={capitalize(locale.tasks.form.hint.attempts)}
-            />
-            <Radio
-              value="timestamp"
-              size="sm"
-              label={capitalize(locale.tasks.form.hint.timestamp)}
-            />
+            {hintAlarmTypes.map(
+              (hintAlarmType: IHintAlarmType, index: number) => (
+                <Radio
+                  value={hintAlarmType.spec.toString()}
+                  key={index}
+                  size="sm"
+                  label={capitalize(
+                    locale.tasks.form.hint.hintAlarmTypes[
+                      hintAlarmType.spec
+                    ]
+                  )}
+                />
+              )
+            )}
           </RadioGroup>
           <NumberInput
             label={capitalize(locale.tasks.form.hint.showAfter)}

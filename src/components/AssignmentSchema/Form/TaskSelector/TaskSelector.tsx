@@ -26,7 +26,7 @@ const TaskSelector: FC<{
 
   const refetch = useCallback(async () => {
     setLoading(true);
-    sendRequest<{}, ITaskDisplay[]>('tasks/list', 'GET').then(
+    sendRequest<{}, ITaskDisplay[]>('task/list', 'GET').then(
       (res) => {
         if (res.error) return;
         const tasks = new Map<string, ITaskDisplay>();

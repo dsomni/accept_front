@@ -20,6 +20,7 @@ import { PlusIcon } from '@modulz/radix-icons';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
 import { ITaskListBundle } from '@custom-types/data/bundle';
+import { useRequest } from '@hooks/useRequest';
 
 interface Item {
   value: any;
@@ -35,8 +36,6 @@ interface ITaskDisplayList
 function TaskList() {
   const [list, setList] = useState<ITaskDisplayList[]>([]);
   const [tags, setTags] = useState<ITag[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
   const { locale } = useLocale();
 
@@ -85,71 +84,63 @@ function TaskList() {
     [locale]
   );
 
-  useEffect(() => {
-    let cleanUp = false;
-    setLoading(true);
-    sendRequest<{}, ITaskListBundle>('bundles/task_list', 'GET').then(
-      (res) => {
-        if (!cleanUp) {
-          if (!res.error) {
-            let tasks = res.response.tasks.map((task) => ({
-              ...task,
-              author: {
-                value: task.author,
-                display: task.author.shortName,
-              },
-              title: {
-                value: task.title,
-                display: (
-                  <div className={tableStyles.titleWrapper}>
-                    <a
-                      className={tableStyles.title}
-                      href={`/task/${task.spec}`}
-                    >
-                      {task.title}
-                    </a>
-                    {task.tags.length > 0 && (
-                      <span className={tableStyles.tags}>
-                        {task.tags.map((tag, idx) => (
-                          <div className={tableStyles.tag} key={idx}>
-                            {tag.title +
-                              (idx == task.tags.length - 1
-                                ? ''
-                                : ', ')}
-                          </div>
-                        ))}
-                      </span>
-                    )}
-                  </div>
-                ),
-              },
-            }));
-            let tags = res.response.tags;
-            setTags(tags);
-            setList(tasks);
-          } else {
-            setError(true);
-          }
-          setLoading(false);
-        }
-      }
-    );
-    return () => {
-      cleanUp = true;
-    };
-  }, []);
+  const processData = useCallback(
+    (
+      data: ITaskListBundle
+    ): { tasks: ITaskDisplayList[]; tags: ITag[] } => {
+      const tasks = data.tasks.map(
+        (task: ITaskDisplay): ITaskDisplayList => ({
+          ...task,
+          author: {
+            value: task.author,
+            display: task.author.shortName,
+          },
+          title: {
+            value: task.title,
+            display: (
+              <div className={tableStyles.titleWrapper}>
+                <a
+                  className={tableStyles.title}
+                  href={`/task/${task.spec}`}
+                >
+                  {task.title}
+                </a>
+                {task.tags.length > 0 && (
+                  <span className={tableStyles.tags}>
+                    {task.tags.map((tag, idx) => (
+                      <div className={tableStyles.tag} key={idx}>
+                        {tag.title +
+                          (idx == task.tags.length - 1 ? '' : ', ')}
+                      </div>
+                    ))}
+                  </span>
+                )}
+              </div>
+            ),
+          },
+        })
+      );
+      const tags = data.tags;
+      return { tasks, tags };
+    },
+    []
+  );
+
+  const [data, loading, error, description] = useRequest<
+    {},
+    ITaskListBundle,
+    { tasks: ITaskDisplayList[]; tags: ITag[] }
+  >('bundle/task_list', 'GET', undefined, processData);
 
   useEffect(() => {
-    console.log('currentTags', currentTags);
-  }, [currentTags]);
+    if (data) {
+      setList(data.tasks);
+      setTags(data.tags);
+    }
+  }, [data]);
 
   const rowFilter = useCallback(
     (row) => {
-      console.log(
-        row.tags.map((tag: ITag) => tag.title),
-        currentTags
-      );
-
       return hasSubarray(
         row.tags.map((tag: ITag) => tag.title),
         currentTags

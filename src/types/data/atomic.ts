@@ -23,7 +23,7 @@ export interface ILanguage {
   shortName: string;
   extensions: string[];
 }
-export interface ICheckType {
+export interface ITaskCheckType {
   // "tests" or "checker"
   spec: number;
   name: string;
@@ -46,4 +46,9 @@ export interface IRole {
   spec: number;
   name: string;
   accessLevel: number;
+}
+
+export interface IHintAlarmType {
+  spec: number;
+  name: string;
 }

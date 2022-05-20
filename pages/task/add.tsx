@@ -1,31 +1,36 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/form';
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { useUser } from '@hooks/useUser';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import Form from '@components/Task/Form/Form';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import { useRequest } from '@hooks/useRequest';
+import { ITaskAddBundle } from '@custom-types/data/bundle';
+
+import {
+  ITaskCheckType,
+  ITaskType,
+  IHintAlarmType,
+} from '@custom-types/data/atomic';
 
 const initialValues = {
   spec: '',
   title: 'Простые числа',
   author: '',
   tags: [],
-  verdict: undefined,
-  lastUpdate: 0,
-  lastRender: 0,
   description:
     'Написать программу выводящую все простые числа меньше n.',
   inputFormat: 'Вводится натуральное число n<10000. ',
   outputFormat:
     'Выведите все простые числа меньшие n в одну строку через пробел. Если простых нет выведите "NO".',
   grade: 11,
-  hasHint: true,
+  hasHint: false,
   hintContent: '',
-  hintAlarmType: 'attempts',
+  hintAlarmType: '0',
   hintAlarm: 0,
   remark: '',
   examples: [
@@ -44,31 +49,61 @@ const initialValues = {
     { inputData: '1', outputData: '1' },
   ],
   checkerCode: '',
+  allowedLanguages: [],
+  forbiddenLanguages: [],
   checkerLang: 'py',
-  checkType: 'tests', //"tests" or "checker"
-  type: 'code', //"code" or "text"
-  isTournament: false,
+  checkType: '0', //"tests" or "checker"
+  type: '0', //"code" or "text"
 };
 
 function AddTask() {
   const { locale, lang } = useLocale();
   const { user } = useUser();
+  const [taskTypes, setTaskTypes] = useState<ITaskType[]>([]);
+  const [taskCheckTypes, setTaskCheckTypes] = useState<
+    ITaskCheckType[]
+  >([]);
+  const [hintAlarmTypes, setHintAlarmTypes] = useState<
+    IHintAlarmType[]
+  >([]);
 
   const form = useForm({
     initialValues,
   });
 
+  const [data, loading, error, detail] = useRequest<
+    {},
+    ITaskAddBundle
+  >('bundle/task_add');
+
+  useEffect(() => {
+    if (data) {
+      setTaskTypes(data.task_types);
+      setTaskCheckTypes(data.task_check_types);
+      setHintAlarmTypes(data.hint_alarm_types);
+    }
+  }, [data]);
+
   const handleSubmit = useCallback(() => {
+    const {
+      checkerCode,
+      checkerLang,
+      hintContent,
+      hintAlarmType,
+      hintAlarm,
+      ...values
+    } = form.values;
     let body: any = {
-      ...form.values,
+      ...values,
       tags: form.values['tags'].map((tag: Item) => tag.value),
-      author: user?.login || '',
+      author: user?.login || 'popa',
+      checkType: Number(form.values['checkType']),
+      taskType: Number(form.values['type']),
     };
-    if (form.values['checkType'] === 'checker') {
+    if (form.values['checkType'] === '1') {
       body.checker = {
         sourceCode: form.values['checkerCode'],
         language: form.values['checkerLang'],
-        version: 0,
       };
     }
     if (form.values['remark'].trim() === '') {
@@ -77,12 +112,12 @@ function AddTask() {
     if (form.values['hasHint']) {
       body.hint = {
         content: form.values['hintContent'],
-        alarmType: form.values['hintAlarmType'],
+        alarmType: Number(form.values['hintAlarmType']),
         alarm: form.values['hintAlarm'],
       };
     }
     requestWithNotify(
-      'tasks/add',
+      'task/add',
       'POST',
       locale.notify.task.create,
       lang,
@@ -93,11 +128,16 @@ function AddTask() {
 
   return (
     <>
-      <Form
-        form={form}
-        handleSubmit={handleSubmit}
-        buttonLabel={capitalize(locale.form.create)}
-      />
+      {!loading && (
+        <Form
+          form={form}
+          taskTypes={taskTypes}
+          taskCheckTypes={taskCheckTypes}
+          hintAlarmTypes={hintAlarmTypes}
+          handleSubmit={handleSubmit}
+          buttonLabel={capitalize(locale.form.create)}
+        />
+      )}
     </>
   );
 }

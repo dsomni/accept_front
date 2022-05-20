@@ -24,7 +24,7 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
     let cleanUp = false;
     if (assignment.tasks.length)
       sendRequest<string[], ITaskDisplay[]>(
-        'tasks/task-spec-list',
+        'task/task-spec-list',
         'POST',
         assignment.tasks
       ).then((res) => {

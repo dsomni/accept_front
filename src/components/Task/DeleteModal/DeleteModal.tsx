@@ -41,7 +41,7 @@ const DeleteModal: FC<{
       spec: task.spec,
     };
     requestWithNotify(
-      'tasks/delete',
+      'task/delete',
       'POST',
       locale.notify.task.delete,
       lang,

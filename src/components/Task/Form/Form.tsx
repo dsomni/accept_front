@@ -10,12 +10,28 @@ import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
 import { pureCallback } from '@custom-types/ui/atomic';
+import { ITag } from '@custom-types/data/ITag';
+import {
+  ITaskCheckType,
+  ITaskType,
+  IHintAlarmType,
+} from '@custom-types/data/atomic';
 
 const Form: FC<{
   form: any;
   handleSubmit: pureCallback<void>;
   buttonLabel: string;
-}> = ({ form, handleSubmit, buttonLabel }) => {
+  taskTypes: ITaskType[];
+  taskCheckTypes: ITaskCheckType[];
+  hintAlarmTypes: IHintAlarmType[];
+}> = ({
+  form,
+  handleSubmit,
+  buttonLabel,
+  taskTypes,
+  taskCheckTypes,
+  hintAlarmTypes,
+}) => {
   const { locale } = useLocale();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -69,13 +85,24 @@ const Form: FC<{
         />
       </Stepper>
       <form onSubmit={() => {}}>
-        {currentStep === 0 && <MainInfo form={form} />}
-        {currentStep === 1 && <DescriptionInfo form={form} />}
+        {currentStep === 0 && (
+          <MainInfo
+            form={form}
+            taskTypes={taskTypes}
+            taskCheckTypes={taskCheckTypes}
+          />
+        )}
+        {currentStep === 1 && (
+          <DescriptionInfo
+            form={form}
+            hintAlarmTypes={hintAlarmTypes}
+          />
+        )}
         {currentStep === 2 && <Examples form={form} />}
-        {currentStep === 3 && form.values.checkType === 'tests' && (
+        {currentStep === 3 && form.values.checkType === '0' && (
           <Tests form={form} />
         )}
-        {currentStep === 3 && form.values.checkType === 'checker' && (
+        {currentStep === 3 && form.values.checkType === '1' && (
           <Checker form={form} />
         )}
         {currentStep === 4 && <Preview form={form} />}

@@ -98,7 +98,7 @@ function AssignmentList() {
     let cleanUp = false;
 
     setLoadingTags(true);
-    sendRequest<{}, ITag[]>('assignment_tags/list', 'GET').then(
+    sendRequest<{}, ITag[]>('assignment_tag/list', 'GET').then(
       (res) => {
         if (!res.error && !cleanUp) {
           let newTags = new Map<string, ITag>();
@@ -119,7 +119,7 @@ function AssignmentList() {
     let cleanUp = false;
     setLoading(true);
     sendRequest<{}, IAssignmentSchema[]>(
-      'assignments/schema/list',
+      'assignment/schema/list',
       'GET'
     ).then((res) => {
       if (!cleanUp) {
