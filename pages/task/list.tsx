@@ -28,9 +28,10 @@ interface Item {
 }
 
 interface ITaskDisplayList
-  extends Omit<ITaskDisplay, 'title' | 'author'> {
+  extends Omit<ITaskDisplay, 'title' | 'author' | 'verdict'> {
   title: Item;
   author: Item;
+  verdict: Item;
 }
 
 function TaskList() {
@@ -94,6 +95,10 @@ function TaskList() {
           author: {
             value: task.author,
             display: task.author.shortName,
+          },
+          verdict: {
+            value: task.verdict,
+            display: task.verdict?.shortText || '-',
           },
           title: {
             value: task.title,

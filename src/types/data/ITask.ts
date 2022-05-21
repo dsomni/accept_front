@@ -4,6 +4,7 @@ import {
   ITaskType,
   ITest,
   IHintAlarmType,
+  IVerdict,
 } from './atomic';
 import { ITag } from './ITag';
 import { IUser } from './IUser';
@@ -37,7 +38,7 @@ export interface ITaskDisplay {
   title: string;
   tags: ITag[];
   author: IUser;
-  verdict: undefined;
+  verdict: IVerdict;
   insertedDate: Date;
 }
 
