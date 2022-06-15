@@ -3,20 +3,20 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: var(--lg2) 15vw;
+  margin: var(--spacer-xxl) 15vw;
 }
 
 .radioGroups {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  row-gap: var(--lg4);
-  column-gap: var(--xl1);
+  row-gap: var(--spacer-l);
+  column-gap: var(--spacer-xxxl);
   align-items: center;
 }
 
 .label {
-  font-size: var(--p1);
+  font-size: var(--font-size-l);
 }
 .dateWrapper {
   display: flex;
@@ -30,28 +30,28 @@
   gap: 15px;
 }
 .pickerWrapper > .label {
-  margin-left: var(--md3);
+  margin-left: var(--spacer-s);
 }
 
 .freezeTableWrapper {
-  margin-top: var(--lg3);
+  margin-top: var(--spacer-xl);
 }
 
 .displayedName {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
   color: var(--primary);
 }
 
 .displayedLogin {
   color: #707070;
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }
 
 .itemWrapper {
-  padding: var(--md3) 0;
+  padding: var(--spacer-s) 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   cursor: pointer;
-  padding-right: var(--md3);
+  padding-right: var(--spacer-s);
 }

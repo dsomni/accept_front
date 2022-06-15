@@ -1,30 +1,30 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--md1);
+  gap: var(--spacer-m);
 }
 
 .inputLabel {
-  font-size: var(--p1);
+  font-size: var(--font-size-l);
 }
 .enterButton {
   background-color: var(--primary);
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
   height: unset;
-  padding: var(--md1);
+  padding: var(--spacer-m);
   font-weight: 100;
   line-height: normal;
 }
 .footer {
   display: flex;
   flex-direction: column;
-  gap: var(--md1);
+  gap: var(--spacer-m);
 }
 .footerLine {
   display: flex;
   flex-direction: row;
-  gap: var(--sm);
-  font-size: var(--p1);
+  gap: var(--spacer-xs);
+  font-size: var(--font-size-l);
 }
 /* .footerText {} */
 .footerLink {

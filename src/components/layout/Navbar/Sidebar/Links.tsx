@@ -43,7 +43,9 @@ export const Links: FC<{
                   {dropdownLinks &&
                     dropdownLinks.map((link, index) => (
                       <div key={index}>
-                        <div style={{ margin: 'var(--lg3) 10%' }}>
+                        <div
+                          style={{ margin: 'var(--spacer-xl) 10%' }}
+                        >
                           <HeaderLink
                             link={link}
                             propClass={styles.noHoverLink}

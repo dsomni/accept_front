@@ -1,8 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column-reverse;
-  gap: var(--md3);
-  margin-bottom: var(--md3);
+  gap: var(--spacer-s);
+  margin-bottom: var(--spacer-s);
   justify-content: center;
   align-items: center;
 }

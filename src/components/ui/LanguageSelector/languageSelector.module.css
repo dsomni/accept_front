@@ -1,5 +1,9 @@
-.lang {
+.wrapper {
   color: white;
-  font-size: var(--h4);
-  text-decoration: none;
+  font-size: var(--font-size-l);
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-xs);
+  justify-content: center;
+  padding: var(--spacer-xs);
 }

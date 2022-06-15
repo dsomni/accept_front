@@ -8,6 +8,6 @@
   font-weight: 400;
 }
 .name {
-  font-size: var(--h1);
-  line-height: var(--md1);
+  font-size: var(--font-size-xxxl);
+  line-height: var(--spacer-m);
 }

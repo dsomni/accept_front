@@ -1,6 +1,6 @@
 .selected {
-  font-size: var(--p2);
-  min-height: var(--lg3);
+  font-size: var(--font-size-m);
+  min-height: var(--spacer-xl);
 }
 
 .selected span {
@@ -12,10 +12,10 @@
   min-width: 350px;
 }
 .inputElem {
-  font-size: var(--p2);
-  min-height: var(--lg2);
+  font-size: var(--font-size-m);
+  min-height: var(--spacer-xxl);
   display: flex;
 }
 .inputElem input {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }

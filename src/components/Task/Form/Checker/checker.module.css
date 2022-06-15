@@ -2,7 +2,7 @@
   width: 70vw;
   display: flex;
   flex-direction: column;
-  margin: var(--lg2) 15vw;
+  margin: var(--spacer-xxl) 15vw;
 }
 
 .codeArea {
@@ -10,7 +10,7 @@
 }
 
 .listWrapper {
-  margin: var(--lg2) 0;
+  margin: var(--spacer-xxl) 0;
   width: 70vw;
   gap: 5vh;
   display: flex;
@@ -23,5 +23,5 @@
 }
 
 .label {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
 }

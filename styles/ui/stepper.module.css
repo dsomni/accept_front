@@ -1,7 +1,7 @@
 .stepper {
   width: 70vw;
-  margin: var(--xl1) 15vw;
+  margin: var(--spacer-xxxl) 15vw;
 }
 .buttons {
-  padding: var(--lg4) 0 var(--xl1) 0;
+  padding: var(--spacer-l) 0 var(--spacer-xxxl) 0;
 }

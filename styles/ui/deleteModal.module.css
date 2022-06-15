@@ -1,12 +1,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--md1);
-  font-size: var(--p2);
+  gap: var(--spacer-m);
+  font-size: var(--font-size-m);
 }
 
 .modalTitle {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
   margin-right: 0;
 }
 
@@ -21,7 +21,7 @@
 .assignmentList {
   display: flex;
   flex-direction: column;
-  gap: var(--md3);
+  gap: var(--spacer-s);
 }
 .notification {
   position: fixed;

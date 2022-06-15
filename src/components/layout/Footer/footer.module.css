@@ -1,22 +1,26 @@
 .wrapper {
-  width: 100%;
-  height: 200px;
-  background-color: #37474f;
+  background-color: var(--dark2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--lg4);
-  font-size: var(--p1);
+  gap: var(--spacer-m);
+  padding: var(--spacer-xl) 0;
 }
 
 .githubs {
   display: flex;
   flex-direction: row;
-  gap: var(--lg4);
+  gap: var(--spacer-m);
   align-items: center;
+  margin-top: var(--spacer-xl);
+}
+
+.github {
+  cursor: pointer;
 }
 
 .copyright {
   color: white;
+  font-size: var(--font-size-s);
 }
