@@ -17,7 +17,7 @@
 
 .tableWrapper {
   width: 100%;
-  margin-top: var(--md2);
+  margin-top: var(--spacer-l);
 }
 
 .tableWrapper tr {
@@ -31,7 +31,7 @@
 
 .row {
   font-size: var(--font-size-l);
-  padding: var(--md2);
+  padding: var(--spacer-l);
   border-bottom: 1px solid black;
 }
 

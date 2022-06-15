@@ -26,7 +26,7 @@
 }
 .headerCell,
 .cell {
-  padding: var(--md2);
+  padding: var(--spacer-l);
   border-bottom: solid 1px #3a3a3a;
 }
 

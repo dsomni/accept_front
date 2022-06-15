@@ -15,5 +15,5 @@
   padding: var(--spacer-l) 70px var(--spacer-l) var(--spacer-xl);
 }
 .paddingLinks {
-  padding: var(--spacer-xs) var(--md2);
+  padding: var(--spacer-xs) var(--spacer-l);
 }

@@ -22,7 +22,7 @@
 }
 .version {
   font-size: var(--font-size-xxl);
-  margin-bottom: var(--md2);
+  margin-bottom: var(--spacer-l);
   display: flex;
   justify-content: flex-end;
 }

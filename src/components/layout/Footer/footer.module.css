@@ -16,8 +16,8 @@
   margin-top: var(--spacer-xl);
 }
 
-.github {
-  cursor: pointer;
+.github a:hover {
+  background-color: inherit;
 }
 
 .copyright {

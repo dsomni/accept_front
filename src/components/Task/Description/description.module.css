@@ -21,7 +21,7 @@
 }
 
 .table {
-  margin-bottom: var(--md2);
+  margin-bottom: var(--spacer-l);
 }
 
 .table td {
@@ -49,5 +49,5 @@
 
 .examplesLabel {
   font-size: var(--font-size-xl);
-  padding: var(--md2) 0 0 0;
+  padding: var(--spacer-l) 0 0 0;
 }

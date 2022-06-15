@@ -5,10 +5,10 @@
   width: 60vw;
   min-height: 65vh;
   margin: 5vh 5vw;
-  padding: 0 0 var(--md2) 0;
+  padding: 0 0 var(--spacer-l) 0;
   box-shadow: 0 -var(--spacer-xs) var(--spacer-xs) -3px
       rgb(0 0 0 / 20%),
-    0 -var(--spacer-s) var(--md2) 1px rgb(0 0 0 / 14%),
+    0 -var(--spacer-s) var(--spacer-l) 1px rgb(0 0 0 / 14%),
     0 -var(--spacer-xs) var(--spacer-m) 3px rgb(0 0 0 / 12%);
   border-radius: 2%;
 }
@@ -36,7 +36,7 @@
 }
 .description {
   font-size: var(--font-size-xxl);
-  padding: var(--md2) var(--spacer-m);
+  padding: var(--spacer-l) var(--spacer-m);
 }
 .image {
   border-radius: 2% 2% 0 0;
