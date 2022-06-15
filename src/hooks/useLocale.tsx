@@ -4,6 +4,7 @@ import {
   useState,
   useContext,
   useCallback,
+  useEffect,
 } from 'react';
 import {
   IAvailableLang,
@@ -12,10 +13,13 @@ import {
   ILocale,
 } from '@custom-types/ui/ILocale';
 import { useRouter } from 'next/router';
+import { getCookie, setCookie } from '@utils/cookies';
 
 const langList = Object.keys(locales) as IAvailableLang[];
 
 const LocaleContext = createContext<ILocaleContext>(null!);
+
+const defaultLocale = 'ru';
 
 function getWeekDays(locale: ILocale) {
   return [
@@ -48,6 +52,8 @@ function getMonths(locale: ILocale) {
 
 export const LocaleProvider: FC = ({ children }) => {
   const set = useCallback((lang: IAvailableLang) => {
+    setCookie('locale', lang);
+    setLocale(lang);
     setValue((prev) => {
       return {
         ...prev,
@@ -58,7 +64,13 @@ export const LocaleProvider: FC = ({ children }) => {
       };
     });
   }, []);
-  const { locale } = useRouter();
+  const [locale, setLocale] = useState<IAvailableLang>(defaultLocale);
+  useEffect(() => {
+    const lang = getCookie('locale');
+    if (lang) {
+      set(lang as IAvailableLang);
+    }
+  }, []);
   const [value, setValue] = useState<ILocaleContext>(() => ({
     locale: locales[locale as IAvailableLang],
     set,

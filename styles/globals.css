@@ -3,7 +3,7 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   --removed-scroll-width: 0 !important;
-  font-size: var(--md2);
+  font-size: 16px !important;
 }
 
 :root {
@@ -18,28 +18,49 @@ body {
   --h4: 1.4rem;
   --p1: 1.2rem;
   --p2: 1rem;
-  --xl1: 100px;
-  --lg1: 80px;
-  --lg2: 48px;
-  --lg3: 36px;
-  --lg4: 24px;
-  --md1: 20px;
-  --md2: 16px;
-  --md3: 10px;
-  --sm: 5px;
+  --xl1: 6rem;
+  --lg1: 5rem;
+  --lg2: 3rem;
+  --lg3: 2rem;
+  --lg4: 1.5rem;
+  --md1: 1.25rem;
+  --md2: 1rem;
+  --md3: 0.6rem;
+  --sm: 0.3rem;
 }
 
-@media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 1440px) {
   html,
   body {
-    font-size: var(--md2);
+    font-size: 14px !important;
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1024px) {
   html,
   body {
-    font-size: var(--md1);
+    font-size: 14px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  html,
+  body {
+    font-size: 16px !important;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  html,
+  body {
+    font-size: 16px !important;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  html,
+  body {
+    font-size: 12px !important;
   }
 }
 
