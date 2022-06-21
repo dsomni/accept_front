@@ -46,7 +46,6 @@ function SignIn() {
           successNotification({
             id,
             title: capitalize(locale.notify.auth.signIn.success),
-            description: '',
             autoClose: 5000,
           });
           router.push((router.query.referrer as string) || '/');
@@ -54,7 +53,6 @@ function SignIn() {
           errorNotification({
             id,
             title: capitalize(locale.notify.auth.signIn.error),
-            description: '',
             autoClose: 5000,
           });
         }

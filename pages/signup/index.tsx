@@ -107,7 +107,6 @@ function SignUp() {
             successNotification({
               id,
               title: capitalize(locale.notify.auth.signUp.success),
-              description: '',
               autoClose: 5000,
             });
             router.push(`/signin?referrer=${router.query.referrer}`);
@@ -115,7 +114,6 @@ function SignUp() {
             errorNotification({
               id,
               title: capitalize(locale.notify.auth.signUp.error),
-              description: '',
               autoClose: 5000,
             });
           }

@@ -27,14 +27,12 @@ const SignIn: FC = () => {
         successNotification({
           id,
           title: capitalize(locale.notify.auth.signOut.success),
-          description: '',
           autoClose: 5000,
         });
       } else {
         errorNotification({
           id,
           title: capitalize(locale.notify.auth.signOut.error),
-          description: '',
           autoClose: 5000,
         });
       }

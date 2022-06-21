@@ -300,6 +300,13 @@ const notify = {
     },
   },
   task: {
+    attempts: {
+      list: {
+        loading: '',
+        success: '',
+        error: 'error when fetching the attempts',
+      },
+    },
     create: {
       loading: 'creating the task',
       success: 'the task was created successfully',

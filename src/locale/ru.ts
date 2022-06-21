@@ -299,6 +299,13 @@ const notify = {
     },
   },
   task: {
+    attempts: {
+      list: {
+        loading: '',
+        success: '',
+        error: 'ошибка при получении попыток',
+      },
+    },
     create: {
       loading: 'создаём задачу',
       success: 'задача успешно создана',

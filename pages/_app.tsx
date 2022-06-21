@@ -51,18 +51,18 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
   }, [router]);
 
   return (
-    <NotificationsProvider
-      position="bottom-left"
-      zIndex={9999}
-      limit={5}
-      autoClose={40000}
-    >
-      <UserProvider>
+    <UserProvider>
+      <NotificationsProvider
+        position="bottom-left"
+        zIndex={9999}
+        limit={5}
+        autoClose={40000}
+      >
         <LocaleProvider>
           {getLayout(<Component {...pageProps} />)}
         </LocaleProvider>
-      </UserProvider>
-    </NotificationsProvider>
+      </NotificationsProvider>
+    </UserProvider>
   );
 }
 

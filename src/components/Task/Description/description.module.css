@@ -4,20 +4,34 @@
   gap: var(--spacer-s);
   padding: var(--spacer-m) var(--spacer-xl);
   font-size: var(--font-size-m);
+  margin-bottom: var(--spacer-xxl);
+}
+.title {
+  font-size: var(--font-size-huge);
 }
 
-.title {
-  font-size: var(--font-size-xxl);
+.title,
+.description,
+.remark,
+.formatWrapper {
+  max-width: 1000px;
+  padding-right: var(--spacer-m);
 }
+
 .formatWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-s);
 }
 
-.formatLabel {
+.formatLabel,
+.examplesLabel,
+.remarkLabel {
+  color: var(--secondary);
   font-size: var(--font-size-xl);
   padding: var(--spacer-m) 0;
+}
+.examplesLabel {
+  padding: var(--spacer-l) 0 0 0;
 }
 
 .table {
@@ -27,6 +41,7 @@
 .table td {
   font-size: var(--font-size-m) !important;
   padding: var(--spacer-s) var(--spacer-m) !important;
+  overflow-wrap: anywhere;
 }
 
 .table tr {
@@ -45,9 +60,4 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-
-.examplesLabel {
-  font-size: var(--font-size-xl);
-  padding: var(--spacer-l) 0 0 0;
 }

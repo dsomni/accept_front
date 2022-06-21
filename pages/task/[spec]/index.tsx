@@ -1,6 +1,6 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { ITask } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
@@ -11,11 +11,42 @@ import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
 import { useRouter } from 'next/router';
+import { ILanguage } from '@custom-types/data/atomic';
+import { sendRequest } from '@requests/request';
+import { IAttemptDisplay } from '@custom-types/data/IAttempt';
+import {
+  newNotification,
+  errorNotification,
+} from '@utils/notificationFunctions';
+import { capitalize } from '@utils/capitalize';
+import { useLocale } from '@hooks/useLocale';
 
-function Task(props: { task: ITask }) {
+function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
   const [activeModal, setActiveModal] = useState(false);
+  const [attempts, setAttempts] = useState<IAttemptDisplay[]>([]);
+  const { locale, lang } = useLocale();
+
   const router = useRouter();
+
+  useEffect(() => {
+    sendRequest<{}, IAttemptDisplay[]>(
+      `task/attempts/${task.spec}`,
+      'GET'
+    ).then((res) => {
+      if (!res.error) {
+        setAttempts(res.response);
+      } else {
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: capitalize(locale.notify.task.attempts.list.error),
+          message: res.detail.description[lang],
+          autoClose: 5000,
+        });
+      }
+    });
+  }, [task.spec, locale, lang]);
 
   const actions = [
     {
@@ -63,15 +94,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     };
   }
-  const task = await fetch(`${SERVER_URL}/api/task/${params.spec}`, {
-    method: 'POST',
-    // body: JSON.stringify({ spec:  }),
-  });
+  const task = await fetch(`${SERVER_URL}/api/task/${params.spec}`);
   if (task.status === 200) {
     return {
       props: {
         task: await task.json(),
       },
+      revalidate: 10 * 60,
     };
   }
   return {

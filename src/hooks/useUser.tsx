@@ -74,6 +74,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     if (getCookie('access_token_cookie')) {
+      console.log(value.user);
       if (!value.user) {
         whoAmI();
       }
@@ -85,7 +86,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
         user: undefined,
       }));
     }
-  }, [refresh, value.user, whoAmI]);
+  }, []);
 
   return (
     <UserContext.Provider value={value}>

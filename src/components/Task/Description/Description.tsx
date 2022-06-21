@@ -85,6 +85,14 @@ const Description: FC<{ task: ITask }> = ({ task }) => {
           </tbody>
         </Table>
       ))}
+      {task.remark && (
+        <div className={styles.remarkWrapper}>
+          <div className={styles.remarkLabel}>
+            {capitalize(locale.tasks.form.remark)}
+          </div>
+          <div className={styles.remark}>{task.remark}</div>
+        </div>
+      )}
     </div>
   );
 };
