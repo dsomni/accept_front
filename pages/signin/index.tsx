@@ -36,7 +36,7 @@ function SignIn() {
   });
 
   const handleSignIn = useCallback(
-    (values) => {
+    (values: { login: string; password: string }) => {
       const id = newNotification({
         title: capitalize(locale.notify.auth.signIn.loading),
         message: capitalize(locale.loading) + '...',

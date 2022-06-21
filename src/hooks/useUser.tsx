@@ -1,8 +1,10 @@
 import { IUser, IUserContext } from '@custom-types/data/IUser';
 import { sendRequest, isSuccessful } from '@requests/request';
+import { getCookie } from '@utils/cookies';
 import {
   createContext,
   FC,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -11,7 +13,9 @@ import {
 
 const UserContext = createContext<IUserContext>(null!);
 
-export const UserProvider: FC = ({ children }) => {
+export const UserProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const whoAmI = useCallback(async () => {
     const res = await sendRequest<{}, IUser>('auth/whoami', 'GET');
     if (!res.error) {
@@ -61,16 +65,27 @@ export const UserProvider: FC = ({ children }) => {
     return false;
   }, []);
 
-  useEffect(() => {
-    whoAmI();
-  }, [whoAmI]);
-
   const [value, setValue] = useState<IUserContext>(() => ({
     user: null,
     signIn,
     signOut,
     refresh,
   }));
+
+  useEffect(() => {
+    if (getCookie('access_token_cookie')) {
+      if (!value.user) {
+        whoAmI();
+      }
+    } else if (getCookie('refresh_token_cookie')) {
+      refresh();
+    } else {
+      setValue((prev) => ({
+        ...prev,
+        user: undefined,
+      }));
+    }
+  }, [refresh, value.user, whoAmI]);
 
   return (
     <UserContext.Provider value={value}>

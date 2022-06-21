@@ -21,16 +21,14 @@ export default async function signIn(
       const data = await response.json();
       res.setHeader('Set-Cookie', [
         serialize('access_token_cookie', data['access_token'], {
-          httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
-          expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
+          maxAge: 30 * 60 * 1000,
           sameSite: 'strict',
           path: '/',
         }),
         serialize('refresh_token_cookie', data['refresh_token'], {
-          httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+          maxAge: (30 * 24 - 6) * 60 * 60 * 1000,
           sameSite: 'strict',
           path: '/',
         }),
