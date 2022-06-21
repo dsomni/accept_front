@@ -1,10 +1,11 @@
 import {
-  FC,
   createContext,
   useState,
   useContext,
   useCallback,
   useEffect,
+  FC,
+  ReactNode,
 } from 'react';
 import {
   IAvailableLang,
@@ -12,7 +13,6 @@ import {
   ILocaleContext,
   ILocale,
 } from '@custom-types/ui/ILocale';
-import { useRouter } from 'next/router';
 import { getCookie, setCookie } from '@utils/cookies';
 
 const langList = Object.keys(locales) as IAvailableLang[];
@@ -50,9 +50,11 @@ function getMonths(locale: ILocale) {
   ];
 }
 
-export const LocaleProvider: FC = ({ children }) => {
+export const LocaleProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const set = useCallback((lang: IAvailableLang) => {
-    setCookie('locale', lang);
+    setCookie('NEXT_LOCALE', lang);
     setLocale(lang);
     setValue((prev) => {
       return {
@@ -66,11 +68,11 @@ export const LocaleProvider: FC = ({ children }) => {
   }, []);
   const [locale, setLocale] = useState<IAvailableLang>(defaultLocale);
   useEffect(() => {
-    const lang = getCookie('locale');
+    const lang = getCookie('NEXT_LOCALE');
     if (lang) {
       set(lang as IAvailableLang);
     }
-  }, []);
+  }, []); // eslint-disable-line
   const [value, setValue] = useState<ILocaleContext>(() => ({
     locale: locales[locale as IAvailableLang],
     set,
