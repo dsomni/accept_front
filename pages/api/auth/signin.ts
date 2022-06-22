@@ -22,13 +22,13 @@ export default async function signIn(
       res.setHeader('Set-Cookie', [
         serialize('access_token_cookie', data['access_token'], {
           secure: process.env.NODE_ENV !== 'development',
-          maxAge: 30 * 60 * 1000,
+          maxAge: 30 * 60,
           sameSite: 'strict',
           path: '/',
         }),
         serialize('refresh_token_cookie', data['refresh_token'], {
           secure: process.env.NODE_ENV !== 'development',
-          maxAge: (30 * 24 - 6) * 60 * 60 * 1000,
+          maxAge: (30 * 24 - 6) * 60 * 60,
           sameSite: 'strict',
           path: '/',
         }),
