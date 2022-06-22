@@ -8,7 +8,16 @@ const SimpleModal: FC<{
   opened: boolean;
   close: pureCallback<void>;
   children: ReactNode;
-}> = ({ title, opened, close, children }) => {
+  centered?: boolean;
+  hideCloseButton?: boolean;
+}> = ({
+  title,
+  opened,
+  close,
+  children,
+  centered,
+  hideCloseButton,
+}) => {
   return (
     <div>
       <Modal
@@ -16,6 +25,8 @@ const SimpleModal: FC<{
         transitionDuration={450}
         transitionTimingFunction="ease"
         size="xl"
+        centered={centered}
+        withCloseButton={!!!hideCloseButton}
         opened={opened}
         title={title}
         classNames={{

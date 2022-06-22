@@ -2,13 +2,7 @@ import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
-import {
-  ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';

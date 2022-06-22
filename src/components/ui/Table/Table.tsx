@@ -192,31 +192,35 @@ const Table: FC<{
     <div className={styles.wrapper + ' ' + classNames.wrapper}>
       <div className={styles.main}>
         <div className={styles.searchWrapper}>
-          <div className={styles.search}>
-            <Input
-              icon={<Search />}
-              classNames={{
-                input: styles.inputElem,
-              }}
-              onChange={(e: any) => handleSearch(e.target.value)}
-              placeholder={capitalize(locale.placeholders.search)}
-              value={search}
-            />
-          </div>
-          <div className={styles.columnSelect}>
-            <MultiSelect
-              classNames={{
-                value: styles.selected,
-                input: styles.inputElem,
-              }}
-              data={availableColumns}
-              value={selectedColumns}
-              onChange={handleChange}
-              placeholder={capitalize(
-                locale.placeholders.showColumns
-              )}
-            />
-          </div>
+          {searchKeys.length > 0 && (
+            <div className={styles.search}>
+              <Input
+                icon={<Search />}
+                classNames={{
+                  input: styles.inputElem,
+                }}
+                onChange={(e: any) => handleSearch(e.target.value)}
+                placeholder={capitalize(locale.placeholders.search)}
+                value={search}
+              />
+            </div>
+          )}
+          {availableColumns.length > 0 && (
+            <div className={styles.columnSelect}>
+              <MultiSelect
+                classNames={{
+                  value: styles.selected,
+                  input: styles.inputElem,
+                }}
+                data={availableColumns}
+                value={selectedColumns}
+                onChange={handleChange}
+                placeholder={capitalize(
+                  locale.placeholders.showColumns
+                )}
+              />
+            </div>
+          )}
           {additionalSearch &&
             additionalSearch(setLocalRows, beforeSelection)}
         </div>

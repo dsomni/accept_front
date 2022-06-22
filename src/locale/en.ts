@@ -452,6 +452,15 @@ const tournament = {
   },
 };
 
+const attempts = {
+  date: 'date',
+  language: 'language',
+  result: 'result',
+  verdict: 'verdict',
+  status: 'status',
+  statuses: ['pending', 'testing', 'finished'],
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -468,6 +477,7 @@ const en = {
   all: 'all',
   create: 'create',
   edit: 'edit',
+  attempts,
   groups,
   table,
   errors,

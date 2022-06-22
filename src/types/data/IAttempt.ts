@@ -1,9 +1,13 @@
-import { IAttemptStatus, ILanguage, ITestResult } from './atomic';
+import {
+  IAttemptStatus,
+  ILanguage,
+  ITestResultDisplay,
+} from './atomic';
 
 export interface IAttemptDisplay {
   spec: string;
   language: ILanguage;
   status: IAttemptStatus;
   date: Date;
-  verdict: ITestResult;
+  verdict: ITestResultDisplay;
 }

@@ -29,7 +29,7 @@ import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
   const [activeModal, setActiveModal] = useState(false);
-  const [attempts, setAttempts] = useState<IAttemptDisplay[]>([]);
+  const [attempts, setAttempts] = useState<any[]>([]);
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);
 
@@ -42,26 +42,60 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   const onHintClose = useCallback(() => setOpenedHint(false), []);
 
   useEffect(() => {
-    sendRequest<{}, IAttemptDisplay[]>(
-      `task/attempts/${task.spec}`,
-      'GET'
-    ).then((res) => {
-      if (!res.error) {
-        setAttempts(
-          res.response.sort(
-            (a, b) => a.date.getTime() - b.date.getTime()
-          )
-        );
-      } else {
-        const id = newNotification({});
-        errorNotification({
-          id,
-          title: capitalize(locale.notify.task.attempts.list.error),
-          message: res.detail.description[lang],
-          autoClose: 5000,
-        });
-      }
-    });
+    const id = setInterval(() => {
+      sendRequest<{}, IAttemptDisplay[]>(
+        `task/attempts/${task.spec}`,
+        'GET'
+      ).then((res) => {
+        if (!res.error) {
+          setAttempts(
+            res.response
+              .map((item) => ({
+                ...item,
+                result: {
+                  display: (
+                    <>
+                      {item.status.spec == 2
+                        ? item.verdict.verdict.shortText +
+                          ' #' +
+                          (item.verdict.test + 1).toString()
+                        : item.status.name}
+                    </>
+                  ),
+                  value:
+                    item.status.spec == 2
+                      ? item.verdict.verdict.spec
+                      : item.status.spec - 10,
+                },
+                date: {
+                  display: <>{item.date.toLocaleString()}</>,
+                  value: item.date,
+                },
+                language: {
+                  display: <>{item.language.name}</>,
+                  value: item.language,
+                },
+              }))
+              .sort(
+                (a, b) =>
+                  new Date(a.date.value).getTime() -
+                  new Date(a.date.value).getTime()
+              )
+          );
+        } else {
+          const id = newNotification({});
+          errorNotification({
+            id,
+            title: capitalize(locale.notify.task.attempts.list.error),
+            message: res.detail.description[lang],
+            autoClose: 5000,
+          });
+        }
+      });
+    }, 2000);
+    return () => {
+      clearInterval(id);
+    };
   }, [task.spec, locale, lang]);
 
   useEffect(() => {
@@ -146,7 +180,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       <TaskLayout
         description={<Description task={task} />}
         send={<Send spec={task.spec} />}
-        results={<Results />}
+        results={<Results attempts={attempts} />}
       />
     </>
   );

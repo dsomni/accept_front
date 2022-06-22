@@ -1,6 +1,7 @@
 import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
+import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group, Modal } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 import Link from 'next/link';
@@ -9,21 +10,24 @@ import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
 
 const DeleteModal: FC<{
   active: boolean;
   setActive: callback<boolean, void>;
   task: ITaskDisplay;
 }> = ({ active, setActive, task }) => {
-  const [assignments, setAssignments] = useState<ITask[]>([]);
+  const [assignments, setAssignments] = useState<
+    IAssignmentSchemaDisplay[]
+  >([]);
   const { locale, lang } = useLocale();
   const router = useRouter();
 
   useEffect(() => {
     let cleanUp = false;
 
-    sendRequest<{}, ITask[]>(
-      `/tasks/connected_assignments/${task.spec}`,
+    sendRequest<{}, IAssignmentSchemaDisplay[]>(
+      `/task/connected_assignments/${task.spec}`,
       'POST'
     ).then((res) => {
       if (!res.error && !cleanUp) {
@@ -53,18 +57,14 @@ const DeleteModal: FC<{
 
   return (
     <>
-      <Modal
+      <SimpleModal
         opened={active}
-        centered
-        onClose={() => setActive(false)}
-        size="lg"
+        close={() => setActive(false)}
+        hideCloseButton={true}
         title={
           capitalize(locale.tasks.modals.delete) +
           ` '${task.title}' ?`
         }
-        classNames={{
-          title: deleteModalStyles.modalTitle,
-        }}
       >
         <div className={deleteModalStyles.form}>
           <div className={deleteModalStyles.question}>
@@ -102,6 +102,12 @@ const DeleteModal: FC<{
               variant="outline"
               color="green"
               autoFocus
+              styles={{
+                label: {
+                  fontWeight: 'normal',
+                  fontSize: 'var(--font-size-m)',
+                },
+              }}
               onClick={() => setActive(false)}
             >
               {capitalize(locale.cancel)}
@@ -109,13 +115,19 @@ const DeleteModal: FC<{
             <Button
               variant="outline"
               color="red"
+              styles={{
+                label: {
+                  fontWeight: 'normal',
+                  fontSize: 'var(--font-size-m)',
+                },
+              }}
               onClick={() => handleDelete()}
             >
               {capitalize(locale.delete)}
             </Button>
           </Group>
         </div>
-      </Modal>
+      </SimpleModal>
     </>
   );
 };

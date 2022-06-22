@@ -452,6 +452,15 @@ const tournament = {
   },
 };
 
+const attempts = {
+  date: 'дата',
+  language: 'язык',
+  result: 'результат',
+  verdict: 'вердикт',
+  status: 'статус',
+  statuses: ['в очереди', 'тестируется', 'протестирована'],
+};
+
 const ru = {
   accept: 'accept',
   loading: 'загрузка',
@@ -468,6 +477,7 @@ const ru = {
   all: 'все',
   create: 'создать',
   edit: 'изменить',
+  attempts,
   groups,
   table,
   errors,

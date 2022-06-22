@@ -17,6 +17,11 @@ export interface ITestResult {
   verdict: IVerdict;
 }
 
+export interface ITestResultDisplay {
+  test: number; //test spec
+  verdict: IVerdict;
+}
+
 export interface ILanguage {
   spec: number;
   name: string;
