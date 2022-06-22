@@ -1,6 +1,6 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState, useCallback } from 'react';
 import { ITask } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getServerUrl } from '@utils/getServerUrl';
@@ -9,7 +9,6 @@ import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
 import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
-import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
 import { useRouter } from 'next/router';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
@@ -20,14 +19,27 @@ import {
 } from '@utils/notificationFunctions';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
+import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import { Eye, Pencil, Trash } from 'tabler-icons-react';
+import { useUser } from '@hooks/useUser';
+import { STICKY_SIZES } from '@constants/Sizes';
+import { useWidth } from '@hooks/useWidth';
+import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
   const [activeModal, setActiveModal] = useState(false);
   const [attempts, setAttempts] = useState<IAttemptDisplay[]>([]);
+  const [showHint, setShowHint] = useState(false);
+  const [openedHint, setOpenedHint] = useState(false);
+
   const { locale, lang } = useLocale();
+  const { isTeacher, isUser } = useUser();
+  const { width } = useWidth();
 
   const router = useRouter();
+
+  const onHintClose = useCallback(() => setOpenedHint(false), []);
 
   useEffect(() => {
     sendRequest<{}, IAttemptDisplay[]>(
@@ -35,7 +47,11 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       'GET'
     ).then((res) => {
       if (!res.error) {
-        setAttempts(res.response);
+        setAttempts(
+          res.response.sort(
+            (a, b) => a.date.getTime() - b.date.getTime()
+          )
+        );
       } else {
         const id = newNotification({});
         errorNotification({
@@ -48,15 +64,53 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
     });
   }, [task.spec, locale, lang]);
 
+  useEffect(() => {
+    const by_attempts = !!(
+      task.hint &&
+      task.hint.alarmType.spec == 0 &&
+      attempts.length >= task.hint.alarm
+    );
+    const first_attempt_date =
+      attempts.length > 0
+        ? Date.now() - new Date(attempts[0].date).getTime()
+        : 0;
+    const by_timestamp = !!(
+      task.hint &&
+      task.hint.alarmType.spec == 1 &&
+      first_attempt_date >= task.hint.alarm
+    );
+    setShowHint(by_attempts || by_timestamp);
+  }, [attempts, task.hint]);
+
   const actions = [
     {
+      color: 'grape',
+      icon: (
+        <Eye
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+      onClick: () => setOpenedHint(true),
+    },
+    {
       color: 'green',
-      icon: <Pencil1Icon height={20} width={20} />,
+      icon: (
+        <Pencil
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
       onClick: () => router.push(`/task/edit/${task.spec}`),
     },
     {
       color: 'red',
-      icon: <TrashIcon height={20} width={20} />,
+      icon: (
+        <Trash
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
       onClick: () => setActiveModal(true),
     },
   ];
@@ -67,7 +121,28 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         setActive={setActiveModal}
         task={task}
       />
-      <Sticky actions={actions} color={'--prime'} />
+      {task.hint && (
+        <SimpleModal
+          title={capitalize(locale.tasks.form.hint.title)}
+          opened={openedHint}
+          close={onHintClose}
+        >
+          {task.hint.content}
+        </SimpleModal>
+      )}
+      {isUser && !isTeacher && showHint && (
+        <SingularSticky
+          icon={
+            <Eye
+              width={STICKY_SIZES[width] / 3}
+              height={STICKY_SIZES[width] / 3}
+            />
+          }
+          color={'grape'}
+          onClick={() => setOpenedHint(true)}
+        />
+      )}
+      {isTeacher && <Sticky actions={actions} color={'--prime'} />}
       <TaskLayout
         description={<Description task={task} />}
         send={<Send spec={task.spec} />}

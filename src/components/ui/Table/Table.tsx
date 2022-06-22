@@ -8,12 +8,12 @@ import {
   Select,
 } from '@mantine/core';
 import {
-  MagnifyingGlassIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@modulz/radix-icons';
+  ArrowNarrowLeft,
+  ArrowNarrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+} from 'tabler-icons-react';
 import { capitalize } from '@utils/capitalize';
 import Fuse from 'fuse.js';
 import {
@@ -194,7 +194,7 @@ const Table: FC<{
         <div className={styles.searchWrapper}>
           <div className={styles.search}>
             <Input
-              icon={<MagnifyingGlassIcon />}
+              icon={<Search />}
               classNames={{
                 input: styles.inputElem,
               }}
@@ -260,12 +260,12 @@ const Table: FC<{
             </div>
             <div className={styles.pageNavigation}>
               <ActionIcon onClick={() => setPage(0)}>
-                <DoubleArrowLeftIcon />
+                <ArrowNarrowLeft />
               </ActionIcon>
               <ActionIcon
                 onClick={() => setPage((page) => max(page - 1, 0))}
               >
-                <ChevronLeftIcon />
+                <ChevronLeft />
               </ActionIcon>
               <div>
                 {page * perPage + 1} -{' '}
@@ -278,10 +278,10 @@ const Table: FC<{
                   setPage((page) => min(page + 1, lastPage))
                 }
               >
-                <ChevronRightIcon />
+                <ChevronRight />
               </ActionIcon>
               <ActionIcon onClick={() => setPage(lastPage)}>
-                <DoubleArrowRightIcon />
+                <ArrowNarrowRight />
               </ActionIcon>
             </div>
           </div>

@@ -25,6 +25,11 @@ export interface IStudent extends IUser {
 
 export interface IUserContext {
   user: IUser | undefined | null;
+  accessLevel: number;
+  isUser: boolean;
+  isStudent: boolean;
+  isTeacher: boolean;
+  isAdmin: boolean;
   signIn: (login: string, password: string) => Promise<Boolean>;
   signOut: pureCallback<Promise<Boolean>>;
   refresh: pureCallback<Promise<void>>;

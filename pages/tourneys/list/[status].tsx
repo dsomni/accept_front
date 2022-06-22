@@ -13,7 +13,7 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
 import { ITournamentList } from '@custom-types/data/ITournament';
 
@@ -172,7 +172,7 @@ function AssignmentList() {
       <SingularSticky
         color="green"
         onClick={() => router.push(`/tourneys/add`)}
-        icon={<PlusIcon height={25} width={25} />}
+        icon={<Plus height={25} width={25} />}
       />
     </div>
   );

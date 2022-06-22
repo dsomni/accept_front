@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { CopyIcon, CheckIcon } from '@modulz/radix-icons';
+import { Copy, Checks } from 'tabler-icons-react';
 
 const CopyButton: FC<{ toCopy: string }> = ({ toCopy }) => {
   const clipboard = useClipboard({ timeout: 300 });
@@ -13,9 +13,9 @@ const CopyButton: FC<{ toCopy: string }> = ({ toCopy }) => {
       }}
     >
       {clipboard.copied ? (
-        <CheckIcon width={20} height={20}></CheckIcon>
+        <Checks width={20} height={20}></Checks>
       ) : (
-        <CopyIcon width={20} height={20} />
+        <Copy width={20} height={20} />
       )}
     </ActionIcon>
   );

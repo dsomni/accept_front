@@ -1,5 +1,5 @@
 import { ActionIcon } from '@mantine/core';
-import { EyeOpenIcon } from '@modulz/radix-icons';
+import { Eye } from 'tabler-icons-react';
 import { FC, memo } from 'react';
 
 const OpenTask: FC<{ spec: string }> = ({ spec }) => {
@@ -13,7 +13,7 @@ const OpenTask: FC<{ spec: string }> = ({ spec }) => {
       variant="hover"
       size="lg"
     >
-      <EyeOpenIcon width={20} height={20} />
+      <Eye width={20} height={20} />
     </ActionIcon>
   );
 };

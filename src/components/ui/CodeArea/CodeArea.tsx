@@ -1,9 +1,5 @@
 import { Group, Text } from '@mantine/core';
-import {
-  ImageIcon,
-  UploadIcon,
-  CrossCircledIcon,
-} from '@modulz/radix-icons';
+import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 import {
   FC,
   memo,
@@ -147,12 +143,12 @@ export default memo(CodeArea);
 function ImageUploadIcon({ ...props }) {
   const status = props.status;
   if (status.accepted) {
-    return <UploadIcon {...props} />;
+    return <FileUpload {...props} />;
   }
 
   if (status.rejected) {
-    return <CrossCircledIcon {...props} />;
+    return <CircleX {...props} />;
   }
 
-  return <ImageIcon {...props} />;
+  return <Photo {...props} />;
 }

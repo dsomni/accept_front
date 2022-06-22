@@ -3,7 +3,7 @@ import {
   updateNotification,
 } from '@mantine/notifications';
 import { defaultClassNames } from '@constants/NotificationClassNames';
-import { Cross1Icon, CheckIcon } from '@modulz/radix-icons';
+import { X, Check } from 'tabler-icons-react';
 import { v4 as uuidv4 } from 'uuid';
 
 const radius = '10px';
@@ -23,7 +23,7 @@ export const newNotification = (params: any): string => {
 export const successNotification = (params: any): void => {
   updateNotification({
     color: 'green',
-    icon: <CheckIcon width={24} height={24} />,
+    icon: <Check width={24} height={24} />,
     classNames: defaultClassNames,
     loading: false,
     disallowClose: false,
@@ -34,7 +34,7 @@ export const successNotification = (params: any): void => {
 export const errorNotification = (params: any): void => {
   updateNotification({
     color: 'red',
-    icon: <Cross1Icon width={24} height={24} />,
+    icon: <X width={24} height={24} />,
     classNames: defaultClassNames,
     loading: false,
     disallowClose: false,

@@ -5,7 +5,7 @@ import { capitalize } from '@utils/capitalize';
 import { FC } from 'react';
 import styles from './projectCard.module.css';
 import Link from 'next/link';
-import { ChevronRightIcon } from '@modulz/radix-icons';
+import { ChevronRight } from 'tabler-icons-react';
 
 export const ProjectCard: FC<{
   left: boolean;
@@ -44,7 +44,7 @@ export const ProjectCard: FC<{
               variant="outline"
               radius="md"
               component="a"
-              rightIcon={<ChevronRightIcon width={32} height={32} />}
+              rightIcon={<ChevronRight width={32} height={32} />}
             >
               {capitalize(locale.projects.view)}
             </Button>

@@ -19,14 +19,25 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
   const whoAmI = useCallback(async () => {
     const res = await sendRequest<{}, IUser>('auth/whoami', 'GET');
     if (!res.error) {
+      const accessLevel = res.response.role.accessLevel;
       setValue((prev) => ({
         ...prev,
         user: res.response,
+        accessLevel,
+        isUser: accessLevel > 0,
+        isStudent: accessLevel > 1,
+        isTeacher: accessLevel > 2,
+        isAdmin: accessLevel > 50,
       }));
     } else {
       setValue((prev) => ({
         ...prev,
         user: undefined,
+        accessLevel: 0,
+        isUser: false,
+        isStudent: false,
+        isTeacher: false,
+        isAdmin: false,
       }));
     }
   }, []);
@@ -59,6 +70,11 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
       setValue((prev) => ({
         ...prev,
         user: undefined,
+        accessLevel: 0,
+        isUser: false,
+        isStudent: false,
+        isTeacher: false,
+        isAdmin: false,
       }));
       return true;
     }
@@ -66,7 +82,12 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
   }, []);
 
   const [value, setValue] = useState<IUserContext>(() => ({
-    user: null,
+    user: undefined,
+    accessLevel: 0,
+    isUser: false,
+    isStudent: false,
+    isTeacher: false,
+    isAdmin: false,
     signIn,
     signOut,
     refresh,
@@ -74,7 +95,6 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     if (getCookie('access_token_cookie')) {
-      console.log(value.user);
       if (!value.user) {
         whoAmI();
       }
@@ -84,6 +104,11 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
       setValue((prev) => ({
         ...prev,
         user: undefined,
+        accessLevel: 0,
+        isUser: false,
+        isStudent: false,
+        isTeacher: false,
+        isAdmin: false,
       }));
     }
   }, []);

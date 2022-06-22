@@ -1,10 +1,12 @@
-import { ActionIcon, Affix, Button, Transition } from '@mantine/core';
+import { ActionIcon, Affix, Transition } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 import { FC, memo, ReactNode, useState } from 'react';
 import ActionButton from './ActionButton/ActionButton';
 import styles from './sticky.module.css';
-import { DotsVerticalIcon, Cross1Icon } from '@modulz/radix-icons';
+import { DotsVertical, X } from 'tabler-icons-react';
 import { setter } from '@custom-types/ui/atomic';
+import { STICKY_SIZES } from '@constants/Sizes';
+import { useWidth } from '@hooks/useWidth';
 
 export interface IStickyAction {
   icon: ReactNode;
@@ -19,9 +21,13 @@ const Sticky: FC<{
 }> = ({ actions, classNames, color }) => {
   const [visible, setVisible] = useState(false);
   const ref = useClickOutside(() => setVisible(false));
-
+  const { width } = useWidth();
   return (
-    <Affix ref={ref} position={{ bottom: 20, right: 20 }}>
+    <Affix
+      ref={ref}
+      zIndex={199}
+      position={{ bottom: 20, right: 20 }}
+    >
       <Transition transition="slide-up" mounted={visible}>
         {(transitionStyles) => (
           <div className={styles.wrapper} style={transitionStyles}>
@@ -34,13 +40,23 @@ const Sticky: FC<{
       <ActionIcon
         variant="filled"
         radius={60}
-        size={60}
+        size={STICKY_SIZES[width]}
         className={classNames?.button}
         onClick={() => setVisible((visible) => !visible)}
         color={color}
       >
-        {!visible && <DotsVerticalIcon width={20} height={20} />}
-        {visible && <Cross1Icon width={20} height={20} />}
+        {!visible && (
+          <DotsVertical
+            width={STICKY_SIZES[width] / 3}
+            height={STICKY_SIZES[width] / 3}
+          />
+        )}
+        {visible && (
+          <X
+            width={STICKY_SIZES[width] / 3}
+            height={STICKY_SIZES[width] / 3}
+          />
+        )}
       </ActionIcon>
     </Affix>
   );

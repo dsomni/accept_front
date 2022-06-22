@@ -1,5 +1,6 @@
 import { LocaleProvider } from '@hooks/useLocale';
 import { UserProvider } from '@hooks/useUser';
+import { WidthProvider } from '@hooks/useWidth';
 import { NotificationsProvider } from '@mantine/notifications';
 import '@styles/globals.css';
 import { getServerUrl } from '@utils/getServerUrl';
@@ -51,18 +52,20 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
   }, [router]);
 
   return (
-    <UserProvider>
-      <NotificationsProvider
-        position="bottom-left"
-        zIndex={9999}
-        limit={5}
-        autoClose={40000}
-      >
-        <LocaleProvider>
-          {getLayout(<Component {...pageProps} />)}
-        </LocaleProvider>
-      </NotificationsProvider>
-    </UserProvider>
+    <WidthProvider>
+      <UserProvider>
+        <NotificationsProvider
+          position="bottom-left"
+          zIndex={9999}
+          limit={5}
+          autoClose={40000}
+        >
+          <LocaleProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </LocaleProvider>
+        </NotificationsProvider>
+      </UserProvider>
+    </WidthProvider>
   );
 }
 

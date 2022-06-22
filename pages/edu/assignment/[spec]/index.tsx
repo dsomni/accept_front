@@ -5,7 +5,7 @@ import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Description from '@components/AssignmentSchema/Description/Description';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import Sticky from '@ui/Sticky/Sticky';
-import { Pencil1Icon, TrashIcon } from '@modulz/radix-icons';
+import { Pencil, Trash } from 'tabler-icons-react';
 import { useRouter } from 'next/router';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';
 
@@ -30,14 +30,14 @@ function Assignment(props: { assignment: IAssignmentSchema }) {
             onClick: () => {
               router.push(`/edu/assignment/edit/${assignment.spec}`);
             },
-            icon: <Pencil1Icon height={20} width={20} />,
+            icon: <Pencil height={20} width={20} />,
           },
           {
             color: 'red',
             onClick: () => {
               setOpenModal(true);
             },
-            icon: <TrashIcon height={20} width={20} />,
+            icon: <Trash height={20} width={20} />,
           },
         ]}
       />

@@ -3,12 +3,7 @@ import { ITest } from '@custom-types/data/ITest';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Text } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
-import { useEventListener } from '@mantine/hooks';
-import {
-  ImageIcon,
-  UploadIcon,
-  CrossCircledIcon,
-} from '@modulz/radix-icons';
+import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 
 import { capitalize } from '@utils/capitalize';
 import {
@@ -189,12 +184,12 @@ export default memo(Tests);
 function ImageUploadIcon({ ...props }) {
   const status = props.status;
   if (status.accepted) {
-    return <UploadIcon {...props} />;
+    return <FileUpload {...props} />;
   }
 
   if (status.rejected) {
-    return <CrossCircledIcon {...props} />;
+    return <CircleX {...props} />;
   }
 
-  return <ImageIcon {...props} />;
+  return <Photo {...props} />;
 }

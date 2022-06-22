@@ -1,5 +1,5 @@
 import { Tooltip } from '@mantine/core';
-import { InfoCircledIcon } from '@modulz/radix-icons';
+import { InfoCircle } from 'tabler-icons-react';
 import { FC } from 'react';
 
 export const Helper: FC<{ text: string }> = ({ text }) => {
@@ -20,11 +20,7 @@ export const Helper: FC<{ text: string }> = ({ text }) => {
         arrow: { backgroundColor: '#64a6e8' },
       }}
     >
-      <InfoCircledIcon
-        width={24}
-        height={24}
-        color={'var(--primary)'}
-      />
+      <InfoCircle width={24} height={24} color={'var(--primary)'} />
     </Tooltip>
   );
 };

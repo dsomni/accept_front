@@ -14,7 +14,7 @@ import {
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import Table from '@components/ui/Table/Table';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import { hasSubarray } from '@utils/hasSubarray';
 import styles from '@styles/edu/student.list.module.css';
@@ -189,7 +189,7 @@ function StudentList() {
           variant="outline"
           color="var(--primary)"
         >
-          <PlusIcon width={25} height={25} />
+          <Plus width={25} height={25} />
         </ActionIcon>
       </div>
     ),

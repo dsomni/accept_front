@@ -1,9 +1,6 @@
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import {
-  TriangleDownIcon,
-  TriangleUpIcon,
-} from '@modulz/radix-icons';
+import { Triangle, TriangleInverted } from 'tabler-icons-react';
 import styles from './column.module.css';
 
 const getCurrentOrder = (
@@ -61,9 +58,9 @@ const Column: FC<{
       {column.sortable && (
         <div className={styles.sortIcon}>
           {currentOrder === 1 ? (
-            <TriangleDownIcon width={22} height={22} />
+            <TriangleInverted width={22} height={22} />
           ) : currentOrder === -1 ? (
-            <TriangleUpIcon width={22} height={22} />
+            <Triangle width={22} height={22} />
           ) : (
             <></>
           )}

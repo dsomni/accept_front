@@ -15,7 +15,7 @@ import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
@@ -231,7 +231,7 @@ function AssignmentList() {
       <SingularSticky
         color="green"
         onClick={() => router.push(`/edu/assignment/add/`)}
-        icon={<PlusIcon height={25} width={25} />}
+        icon={<Plus height={25} width={25} />}
       />
     </div>
   );

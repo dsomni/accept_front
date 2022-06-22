@@ -6,7 +6,7 @@ import {
   Modal,
   TextInput,
 } from '@mantine/core';
-import { Pencil1Icon } from '@modulz/radix-icons';
+import { Pencil } from 'tabler-icons-react';
 import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
@@ -69,7 +69,7 @@ const EditTag: FC<{
         variant="hover"
         size="lg"
       >
-        <Pencil1Icon width={20} height={20} />
+        <Pencil width={20} height={20} />
       </ActionIcon>
       <Modal
         opened={opened}

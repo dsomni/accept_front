@@ -16,7 +16,7 @@ import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/data/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
 import router from 'next/router';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
 import { ITaskListBundle } from '@custom-types/data/bundle';
@@ -201,7 +201,7 @@ function TaskList() {
       <SingularSticky
         color="green"
         onClick={() => router.push(`/task/add/`)}
-        icon={<PlusIcon height={25} width={25} />}
+        icon={<Plus height={25} width={25} />}
       />
     </div>
   );
