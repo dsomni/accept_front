@@ -20,6 +20,7 @@ export const sendRequest = <ISend, IReceive>(
   let options: any = {
     credentials: 'include',
     method,
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
   };
   if (body) {
     options.body = JSON.stringify(body as object);
@@ -62,6 +63,7 @@ export const isSuccessful = <ISend>(
   let options: any = {
     credentials: 'include',
     method,
+    headers: { 'content-type': 'application/json' },
   };
   if (body) {
     options.body = JSON.stringify(body as object);

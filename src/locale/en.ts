@@ -299,6 +299,20 @@ const notify = {
       error: 'error when deleting the assignment schema',
     },
   },
+
+  attempt: {
+    delete: {
+      loading: 'deleting the attempt',
+      success: 'the attempt was deleted successfully',
+      error: 'error when deleting the attempt',
+    },
+    send: {
+      loading: 'sending the attempt',
+      success: 'the attempt was send successfully',
+      error: 'error when sending the attempt',
+    },
+  },
+
   task: {
     attempts: {
       list: {

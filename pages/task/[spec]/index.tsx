@@ -25,6 +25,7 @@ import { useUser } from '@hooks/useUser';
 import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
+import { ITableColumn } from '@custom-types/ui/ITable';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -54,13 +55,24 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
                 ...item,
                 result: {
                   display: (
-                    <>
+                    <div
+                      style={{
+                        color:
+                          item.status.spec == 2
+                            ? item.verdict.verdict.spec == 0
+                              ? 'var(--positive)'
+                              : 'var(--negative)'
+                            : 'black',
+                      }}
+                    >
                       {item.status.spec == 2
                         ? item.verdict.verdict.shortText +
                           ' #' +
                           (item.verdict.test + 1).toString()
-                        : item.status.name}
-                    </>
+                        : capitalize(
+                            locale.attempts.statuses[item.status.spec]
+                          )}
+                    </div>
                   ),
                   value:
                     item.status.spec == 2
@@ -150,6 +162,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       onClick: () => setActiveModal(true),
     },
   ];
+
   return (
     <>
       <DeleteModal
@@ -182,7 +195,11 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       <TaskLayout
         description={<Description task={task} />}
         send={<Send spec={task.spec} />}
-        results={<Results attempts={attempts} />}
+        results={
+          attempts.length > 0 ? (
+            <Results key={attempts.length} attempts={attempts} />
+          ) : undefined
+        }
       />
     </>
   );

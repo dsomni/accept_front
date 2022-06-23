@@ -1,33 +1,33 @@
 import { Button } from '@mantine/core';
 import { FC, memo, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
-import { useUser } from '@hooks/useUser';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
 const Send: FC<{ spec: string }> = ({ spec }) => {
   const { locale, lang } = useLocale();
-  const { user } = useUser();
 
-  const [language, setLanguage] = useState('cpp');
+  const [language, setLanguage] = useState<string>('');
   const [code, setCode] = useState('');
 
   const handleSubmit = useCallback(() => {
     const body = {
-      author: user?.login,
       task: spec,
-      language: language,
+      language: Number(language),
       programText: code,
+      textAnswers: [],
     };
     requestWithNotify(
-      'attempts/submit',
+      'attempt/submit',
       'POST',
-      locale.notify.assignmentSchema.create,
+      locale.notify.attempt.send,
       lang,
       (_: {}) => '',
-      body
+      body,
+      () => {},
+      { autoClose: 5000 }
     );
-  }, [language, code, user, spec, locale, lang]);
+  }, [language, code, spec, locale, lang]);
 
   return (
     <div>

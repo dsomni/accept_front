@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Group, Select, Text } from '@mantine/core';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 import {
   FC,
@@ -13,26 +13,23 @@ import { Dropzone, FullScreenDropzone } from '@mantine/dropzone';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
 import { capitalize } from '@utils/capitalize';
-import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
 import { callback } from '@custom-types/ui/atomic';
+import ProgramLanguageSelector from '@ui/ProgramLanguageSelector/ProgramLanguageSelector';
 
 const languages = [
   {
-    value: 'cpp',
+    value: '3',
     label: 'C++',
     type: 'text/x-c++src',
   },
   {
-    value: 'py',
+    value: '0',
     label: 'Python',
     type: 'text/x-python',
   },
-  {
-    value: 'rs',
-    label: 'Rust',
-    type: 'text/rust',
-  },
 ];
+
+type SelectVariant = { label: string; value: string };
 
 const CodeArea: FC<{
   label: string;
@@ -44,6 +41,8 @@ const CodeArea: FC<{
   const { locale } = useLocale();
 
   const [drag, setDrag] = useState(false);
+  const [lang, setLang] = useState<undefined | string>(undefined);
+
   const draggable = useRef<HTMLDivElement>(null);
 
   const dragStart = useCallback(() => {
@@ -83,10 +82,31 @@ const CodeArea: FC<{
     [setCode, setLanguage]
   );
 
+  const selector = useCallback(
+    (props: any) => {
+      return (
+        <Select
+          label={capitalize(locale.language)}
+          classNames={classNames}
+          onChange={setLang}
+          value={lang ? lang : props.defaultValue.value}
+          {...props}
+        />
+      );
+    },
+    [classNames, lang, locale]
+  );
+
+  useEffect(() => {
+    if (lang) {
+      setLanguage(lang);
+    }
+  }, [lang, setLanguage]);
+
   return (
     <div ref={draggable}>
       <div className={styles.langSelector}>
-        <ProgrammingLangSelector setValue={setLanguage} />
+        <ProgramLanguageSelector selector={selector} />
       </div>
       {!drag && (
         <Textarea
