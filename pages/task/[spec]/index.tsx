@@ -68,8 +68,10 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
                       : item.status.spec - 10,
                 },
                 date: {
-                  display: <>{item.date.toLocaleString()}</>,
-                  value: item.date,
+                  display: (
+                    <>{new Date(item.date).toLocaleString()}</>
+                  ),
+                  value: new Date(item.date).getTime(),
                 },
                 language: {
                   display: <>{item.language.name}</>,

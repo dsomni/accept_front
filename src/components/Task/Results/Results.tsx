@@ -7,9 +7,7 @@ import Table from '@components/ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import tableStyles from '@styles/ui/customTable.module.css';
 
-const Results: FC<{ attempts: IAttemptDisplay[] }> = ({
-  attempts,
-}) => {
+const Results: FC<{ attempts: any[] }> = ({ attempts }) => {
   const { locale } = useLocale();
   const columns: ITableColumn[] = [
     {
@@ -17,7 +15,11 @@ const Results: FC<{ attempts: IAttemptDisplay[] }> = ({
       key: 'date',
       sortable: true,
       sortFunction: (a: any, b: any) =>
-        a.value > b.value ? 1 : a.value == b.value ? 0 : -1,
+        a.date.value > b.date.value
+          ? 1
+          : a.date.value == b.date.value
+          ? 0
+          : -1,
       sorted: 0,
       allowMiddleState: true,
       hidable: false,
@@ -29,7 +31,11 @@ const Results: FC<{ attempts: IAttemptDisplay[] }> = ({
       key: 'language',
       sortable: true,
       sortFunction: (a: any, b: any) =>
-        a.value > b.value ? 1 : a.value == b.value ? 0 : -1,
+        a.language.value > b.language.value
+          ? 1
+          : a.language.value == b.language.value
+          ? 0
+          : -1,
       sorted: 0,
       allowMiddleState: true,
       hidable: false,
@@ -41,7 +47,11 @@ const Results: FC<{ attempts: IAttemptDisplay[] }> = ({
       key: 'result',
       sortable: true,
       sortFunction: (a: any, b: any) =>
-        a.value > b.value ? 1 : a.value == b.value ? 0 : -1,
+        a.result.value > b.result.value
+          ? 1
+          : a.result.value == b.result.value
+          ? 0
+          : -1,
       sorted: 0,
       allowMiddleState: true,
       hidable: false,

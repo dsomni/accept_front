@@ -53,6 +53,7 @@ const Table: FC<{
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(defaultOnPage);
+  const [sorted, setSorted] = useState(false);
 
   const { locale } = useLocale();
 
@@ -98,11 +99,13 @@ const Table: FC<{
   }, [columns]);
 
   const sort = useCallback(
-    (key: any, order: -1 | 0 | 1) => {
+    (key: any, order: -1 | 0 | 1, ignoreZero?: boolean) => {
       setLocalColumns((localColumns) =>
         localColumns.map((column) => {
           if (column.key !== key) {
-            column.sorted = column.allowMiddleState ? 0 : 1;
+            if (column.sorted == 0) {
+              column.sorted = column.allowMiddleState ? 0 : 1;
+            }
             return column;
           }
           column.sorted = order;
@@ -116,22 +119,36 @@ const Table: FC<{
         if (order !== 0) {
           setLocalRows((localRows) => {
             let rowsToSort = [...localRows];
+            console.log('b', order, rowsToSort);
             rowsToSort.sort(
               (a: any, b: any) => order * column.sortFunction(a, b)
             );
+            console.log('a', rowsToSort);
             return rowsToSort.filter(
-              (row) => !!rowFilter && rowFilter(row)
+              (row) =>
+                typeof rowFilter !== 'function' || rowFilter(row)
             );
           });
-        } else {
+        } else if (!ignoreZero) {
           setLocalRows(
-            rows.filter((row) => !!rowFilter && rowFilter(row))
+            rows.filter(
+              (row) =>
+                typeof rowFilter !== 'function' || rowFilter(row)
+            )
           );
         }
       }
     },
     [localColumns, rows, rowFilter]
   );
+
+  useEffect(() => {
+    for (let idx = 0; idx < columns.length; idx++) {
+      const column = columns[idx];
+      sort(column.key, column.sorted, true);
+    }
+    setSorted(true);
+  }, []);
 
   const fuse = useMemo(
     () => {
@@ -224,16 +241,21 @@ const Table: FC<{
           {additionalSearch &&
             additionalSearch(setLocalRows, beforeSelection)}
         </div>
-        <InnerTable
-          columns={localColumns}
-          classNames={classNames}
-          rows={
-            perPage
-              ? localRows.slice(page * perPage, (page + 1) * perPage)
-              : localRows
-          }
-          sort={sort}
-        />
+        {sorted && (
+          <InnerTable
+            columns={localColumns}
+            classNames={classNames}
+            rows={
+              perPage
+                ? localRows.slice(
+                    page * perPage,
+                    (page + 1) * perPage
+                  )
+                : localRows
+            }
+            sort={sort}
+          />
+        )}
       </div>
       <div className={styles.footer}>
         <div className={styles.pagesWrapper}>
