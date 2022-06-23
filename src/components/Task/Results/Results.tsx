@@ -16,12 +16,12 @@ const Results: FC<{ attempts: any[] }> = ({ attempts }) => {
       sortable: true,
       sortFunction: (a: any, b: any) =>
         a.date.value > b.date.value
-          ? 1
+          ? -1
           : a.date.value == b.date.value
           ? 0
-          : -1,
+          : 1,
       sorted: 0,
-      allowMiddleState: true,
+      allowMiddleState: false,
       hidable: false,
       hidden: false,
       size: 5,

@@ -1,5 +1,5 @@
 import { ITableColumn } from '@custom-types/ui/ITable';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { Triangle, TriangleInverted } from 'tabler-icons-react';
 import styles from './column.module.css';
 
@@ -40,14 +40,6 @@ const Column: FC<{
     setCurrentOrder(newOrder);
     onSort(column.key, newOrder);
   }, [column.allowMiddleState, onSort, column.key, currentOrder]);
-
-  useEffect(() => {
-    setCurrentOrder(
-      !column.allowMiddleState && column.sorted == 0
-        ? 1
-        : column.sorted
-    );
-  }, [column.allowMiddleState, column.sorted]);
 
   return (
     <th

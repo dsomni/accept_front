@@ -80,7 +80,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
               }))
               .sort(
                 (a, b) =>
-                  new Date(a.date.value).getTime() -
+                  new Date(b.date.value).getTime() -
                   new Date(a.date.value).getTime()
               )
           );

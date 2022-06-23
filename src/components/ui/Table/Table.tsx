@@ -103,9 +103,6 @@ const Table: FC<{
       setLocalColumns((localColumns) =>
         localColumns.map((column) => {
           if (column.key !== key) {
-            if (column.sorted == 0) {
-              column.sorted = column.allowMiddleState ? 0 : 1;
-            }
             return column;
           }
           column.sorted = order;
@@ -119,11 +116,9 @@ const Table: FC<{
         if (order !== 0) {
           setLocalRows((localRows) => {
             let rowsToSort = [...localRows];
-            console.log('b', order, rowsToSort);
             rowsToSort.sort(
               (a: any, b: any) => order * column.sortFunction(a, b)
             );
-            console.log('a', rowsToSort);
             return rowsToSort.filter(
               (row) =>
                 typeof rowFilter !== 'function' || rowFilter(row)
