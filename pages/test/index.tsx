@@ -1,12 +1,11 @@
 import { Helper } from '@components/ui/Helper/Helper';
 import { InfoButton } from '@components/ui/InfoButton/InfoButton';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { ReactElement } from 'react';
+import { Button } from '@mantine/core';
+import { ReactElement, useCallback } from 'react';
 
 function TestPage() {
-  return (
-    <InfoButton text={'some thing'} onClick={() => console.log(10)} />
-  );
+  return <></>;
 }
 
 TestPage.getLayout = (page: ReactElement) => {

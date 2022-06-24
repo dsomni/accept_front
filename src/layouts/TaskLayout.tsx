@@ -20,6 +20,7 @@ const TaskLayout: FC<{
             height: '100%',
           }}
           styles={{ tabLabel: { fontSize: 'var(--font-size-m)' } }}
+          initialTab={2}
         >
           <Tabs.Tab label={capitalize(locale.tasks.description.self)}>
             {description}

@@ -1,4 +1,4 @@
-import { setter } from '@custom-types/ui/atomic';
+import { pureCallback, setter } from '@custom-types/ui/atomic';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -37,7 +37,9 @@ const Table: FC<{
   searchKeys: string[];
   additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
   rowFilter?: (_: any) => boolean;
-  searchWeight?: number;
+  fetchFunction?: () => Promise<any[]>;
+  needRefetch?: (data: any[]) => boolean;
+  refetchInterval?: number;
 }> = ({
   columns,
   rows,
@@ -47,13 +49,14 @@ const Table: FC<{
   searchKeys,
   additionalSearch,
   rowFilter,
-  searchWeight,
+  fetchFunction,
+  needRefetch,
+  refetchInterval,
 }) => {
   const [localRows, setLocalRows] = useState(rows);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(defaultOnPage);
-  const [sorted, setSorted] = useState(false);
 
   const { locale } = useLocale();
 
@@ -137,12 +140,36 @@ const Table: FC<{
     [localColumns, rows, rowFilter]
   );
 
-  useEffect(() => {
+  const [initialSorting, setInitialSorting] = useState(true);
+
+  const initialSort = useCallback(() => {
+    setInitialSorting(true);
     for (let idx = 0; idx < columns.length; idx++) {
       const column = columns[idx];
       sort(column.key, column.sorted, true);
     }
-    setSorted(true);
+    setInitialSorting(false);
+  }, []);
+
+  useEffect(() => {
+    initialSort();
+  }, []);
+
+  useEffect(() => {
+    let id: any = undefined;
+    if (refetchInterval && needRefetch && fetchFunction) {
+      fetchFunction().then((res) => setLocalRows(res));
+      id = setInterval(() => {
+        if (needRefetch(localRows)) {
+          fetchFunction().then((res) => setLocalRows(res));
+        }
+        initialSort();
+        // handleSearch(search);
+      }, refetchInterval);
+    }
+    return () => {
+      id && clearInterval(id);
+    };
   }, []);
 
   const fuse = useMemo(
@@ -236,7 +263,7 @@ const Table: FC<{
           {additionalSearch &&
             additionalSearch(setLocalRows, beforeSelection)}
         </div>
-        {sorted && (
+        {!initialSorting && (
           <InnerTable
             columns={localColumns}
             classNames={classNames}
