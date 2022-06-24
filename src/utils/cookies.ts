@@ -1,11 +1,15 @@
 export const setCookie = (
   name: string,
   content: string,
-  expires?: string
+  cookieParams?: object
 ) => {
-  document.cookie = `${name}=${content}; expires=${
-    expires || 'Fri, 31 Dec 9999 23:59:59 GMT'
-  }`;
+  let cookie = `${name}=${content};`;
+  if (cookieParams) {
+    for (const [key, value] of Object.entries(cookieParams)) {
+      cookie += `${key}=${value};`;
+    }
+  }
+  document.cookie = cookie;
 };
 
 export const getCookie = (name: string): string | void => {
