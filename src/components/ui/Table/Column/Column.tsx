@@ -49,9 +49,9 @@ const Column: FC<{
       <div className={styles.label}>{column.label}</div>
       {column.sortable && (
         <div className={styles.sortIcon}>
-          {currentOrder === 1 ? (
+          {currentOrder === -1 ? (
             <TriangleInverted width={22} height={22} />
-          ) : currentOrder === -1 ? (
+          ) : currentOrder === 1 ? (
             <Triangle width={22} height={22} />
           ) : (
             <></>

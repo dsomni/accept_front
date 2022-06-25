@@ -1,4 +1,11 @@
-import { FC, memo, useCallback, useEffect, useMemo } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import Table from '@components/ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import tableStyles from '@styles/ui/customTable.module.css';
@@ -63,7 +70,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
         : a.date.value == b.date.value
         ? 0
         : 1,
-    sorted: 0,
+    sorted: -1,
     allowMiddleState: false,
     hidable: false,
     hidden: false,
@@ -98,13 +105,22 @@ const defaultOnPage = 10;
 const Results: FC<{ spec: string }> = ({ spec }) => {
   const { locale, lang } = useLocale();
 
-  const { data, setData, searchParams, setSearchParams, setLoading } =
-    useTableStore();
+  const {
+    data,
+    setData,
+    searchParams,
+    setSearchParams,
+    setLoading,
+    loading,
+  } = useTableStore();
 
   const columns: ITableColumn[] = useMemo(
     () => initialColumns(locale),
     [locale]
   );
+
+  const [needRefetch, setNeedRefetch] = useState(true);
+  const [initialization, setInitialization] = useState(false);
 
   useEffect(() => {
     console.log(searchParams);
@@ -116,43 +132,58 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
         skip: 0,
         limit: defaultOnPage,
       },
-      sort_by: [{ field: 'date', order: 1 }],
+      sort_by: [{ field: 'date', order: -1 }],
       search_params: {
         search: '',
         keys: [],
       },
     }));
+    setInitialization(true);
   }, [setSearchParams]);
 
-  const fetchAttempts = useCallback(() => {
-    setLoading(true);
-    sendRequest<{}, [IAttemptDisplay[], number]>(
-      `task/attempts/${spec}`,
-      'POST',
-      searchParams
-    ).then((res) => {
-      if (!res.error) {
-        setData([
-          res.response[0].map((item) =>
-            refactorAttempt(item, locale)
-          ),
-          res.response[1],
-        ]);
-      } else {
-        const id = newNotification({});
-        errorNotification({
-          id,
-          title: capitalize(locale.notify.task.attempts.list.error),
-          message: res.detail.description[lang],
-          autoClose: 5000,
-        });
-        setData([[], 0]);
-      }
-      setLoading(false);
-    });
-  }, [setLoading, spec, searchParams, setData, locale, lang]);
+  const fetchAttempts = useCallback(
+    (refetch?: boolean) => {
+      if (!refetch) setLoading(true);
+      sendRequest<{}, [IAttemptDisplay[], number]>(
+        `task/attempts/${spec}`,
+        'POST',
+        searchParams
+      ).then((res) => {
+        let needsRefetch = true;
+        if (!res.error) {
+          setData([
+            res.response[0].map((item) => {
+              needsRefetch = needsRefetch && item.status.spec == 2;
+              return refactorAttempt(item, locale);
+            }),
+            res.response[1],
+          ]);
+        } else {
+          const id = newNotification({});
+          errorNotification({
+            id,
+            title: capitalize(locale.notify.task.attempts.list.error),
+            message: res.detail.description[lang],
+            autoClose: 5000,
+          });
+          setData([[], 0]);
+        }
+        setNeedRefetch(true);
+        if (!refetch) setLoading(false);
+      });
+    },
+    [setLoading, spec, searchParams, setData, locale, lang]
+  );
 
-  useEffect(() => fetchAttempts(), [fetchAttempts]);
+  useEffect(() => {
+    if (initialization) fetchAttempts();
+    const id = setInterval(() => {
+      if (needRefetch) fetchAttempts(true);
+    }, 2000);
+    return () => {
+      clearInterval(id);
+    };
+  }, [fetchAttempts, needRefetch, initialization]);
 
   return (
     <div>
