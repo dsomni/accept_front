@@ -26,6 +26,7 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
 import { ITableColumn } from '@custom-types/ui/ITable';
+import { TableStoreProvider } from '@hooks/useTableStore';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -104,7 +105,11 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       <TaskLayout
         description={<Description task={task} />}
         send={<Send spec={task.spec} />}
-        results={<Results spec={task.spec} />}
+        results={
+          <TableStoreProvider>
+            <Results spec={task.spec} />
+          </TableStoreProvider>
+        }
       />
     </>
   );
@@ -127,7 +132,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     };
   }
+  console.time();
   const task = await fetch(`${SERVER_URL}/api/task/${params.spec}`);
+  console.timeEnd();
   if (task.status === 200) {
     return {
       props: {

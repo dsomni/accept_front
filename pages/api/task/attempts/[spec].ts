@@ -10,6 +10,8 @@ export default async function Attempt(
   const headers = req.headers;
   const response = await fetch(`${url}/${req.query.spec}`, {
     credentials: 'include',
+    method: 'POST',
+    body: JSON.stringify(req.body),
     headers: headers as { [key: string]: string },
   });
   const status = response.status;

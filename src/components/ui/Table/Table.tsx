@@ -4,22 +4,17 @@ import { useLocale } from '@hooks/useLocale';
 import {
   ActionIcon,
   Input,
+  Loader,
   MultiSelect,
   Select,
 } from '@mantine/core';
-import {
-  ArrowNarrowLeft,
-  ArrowNarrowRight,
-  ChevronLeft,
-  ChevronRight,
-  Search,
-} from 'tabler-icons-react';
+import { Search } from 'tabler-icons-react';
 import { capitalize } from '@utils/capitalize';
-import Fuse from 'fuse.js';
 import {
   FC,
   memo,
   ReactNode,
+  startTransition,
   useCallback,
   useEffect,
   useMemo,
@@ -27,38 +22,108 @@ import {
 } from 'react';
 import InnerTable from './InnerTable/InnerTable';
 import styles from './table.module.css';
+import { BaseSearch } from '@custom-types/data/request';
+import PageNavigation from './PageNavigation';
+import { useTableStore } from '@hooks/useTableStore';
+import { LoadingOverlay } from '@mantine/core';
 
 const Table: FC<{
   columns: ITableColumn[];
-  rows: any[];
   classNames: any;
   defaultOnPage: number;
   onPage: number[];
-  searchKeys: string[];
+  withSearch?: boolean;
   additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
   rowFilter?: (_: any) => boolean;
-  fetchFunction?: () => Promise<any[]>;
-  needRefetch?: (data: any[]) => boolean;
-  refetchInterval?: number;
 }> = ({
   columns,
-  rows,
   classNames,
   defaultOnPage,
   onPage,
-  searchKeys,
+  withSearch,
   additionalSearch,
   rowFilter,
-  fetchFunction,
-  needRefetch,
-  refetchInterval,
 }) => {
-  const [localRows, setLocalRows] = useState(rows);
-  const [search, setSearch] = useState('');
+  const { locale } = useLocale();
+
+  const { data, loading, setSearchParams, searchParams } =
+    useTableStore();
+
+  const totalLength = useMemo(() => data[1], [data]);
+  const rows = useMemo(() => data[0], [data]);
+
+  const [localRows, setLocalRows] = useState<any[]>(rows);
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(defaultOnPage);
+  const [search, setSearch] = useState('');
+  const [localColumns, setLocalColumns] = useState(
+    columns.filter((column) => !column.hidden)
+  );
 
-  const { locale } = useLocale();
+  const handlePageChange = useCallback(
+    (value: number) => {
+      setPage(value);
+      setSearchParams((searchParams: BaseSearch) => ({
+        ...searchParams,
+        pager: {
+          ...searchParams.pager,
+          skip: perPage * value,
+        },
+      }));
+    },
+    [perPage, setSearchParams, setPage]
+  );
+
+  const handlePerPageChange = useCallback(
+    (value: number) => {
+      setPerPage(value);
+      setSearchParams((searchParams: BaseSearch) => ({
+        ...searchParams,
+        pager: {
+          skip: 0,
+          limit: value,
+        },
+      }));
+    },
+    [setSearchParams, setPerPage]
+  );
+
+  useEffect(() => {
+    setLocalRows(rows);
+    console.log(searchParams);
+    if (searchParams) {
+      setSearch(searchParams.search_params.search);
+      setLocalColumns((localColumns) => {
+        const columns_indexes: { [key: string]: number } = {};
+        for (let idx = 0; idx < localColumns.length; idx++) {
+          columns_indexes[localColumns[idx].key] = idx;
+        }
+        searchParams.sort_by.map(
+          (item) =>
+            (localColumns[columns_indexes[item.field]].sorted =
+              item.order)
+        );
+
+        return localColumns;
+      });
+      setPerPage(searchParams.pager.limit);
+      console.log(
+        searchParams.pager.skip / (searchParams.pager.limit || 1)
+      );
+      setPage(
+        Math.floor(
+          searchParams.pager.skip / (searchParams.pager.limit || 1)
+        )
+      );
+    }
+  }, [searchParams, rows]);
+
+  useEffect(() => {
+    setLocalColumns((localColumns) => {
+      const keys = localColumns.map((column) => column.key);
+      return columns.filter((column) => keys.includes(column.key));
+    });
+  }, [columns]);
 
   const [selectedColumns, setSelectedColumns] = useState<
     string[] | undefined
@@ -66,9 +131,6 @@ const Table: FC<{
     columns
       .filter((column) => !column.hidable || !column.hidden)
       .map((column) => column.key)
-  );
-  const [localColumns, setLocalColumns] = useState(
-    columns.filter((column) => !column.hidden)
   );
 
   const availableColumns = useMemo(
@@ -94,127 +156,46 @@ const Table: FC<{
     [columns]
   );
 
-  useEffect(() => {
-    setLocalColumns((localColumns) => {
-      const keys = localColumns.map((column) => column.key);
-      return columns.filter((column) => keys.includes(column.key));
-    });
-  }, [columns]);
-
   const sort = useCallback(
-    (key: any, order: -1 | 0 | 1, ignoreZero?: boolean) => {
-      setLocalColumns((localColumns) =>
-        localColumns.map((column) => {
-          if (column.key !== key) {
-            return column;
-          }
-          column.sorted = order;
-          return column;
-        })
-      );
-      const column = localColumns.find(
-        (column) => column.key === key
-      );
-      if (column) {
-        if (order !== 0) {
-          setLocalRows((localRows) => {
-            let rowsToSort = [...localRows];
-            rowsToSort.sort(
-              (a: any, b: any) => order * column.sortFunction(a, b)
-            );
-            return rowsToSort.filter(
-              (row) =>
-                typeof rowFilter !== 'function' || rowFilter(row)
-            );
-          });
-        } else if (!ignoreZero) {
-          setLocalRows(
-            rows.filter(
-              (row) =>
-                typeof rowFilter !== 'function' || rowFilter(row)
-            )
+    (key: string, order: -1 | 0 | 1, ignoreZero?: boolean) => {
+      // sort
+      if (order == 0) {
+        setSearchParams((searchParams: BaseSearch) => {
+          const idx = searchParams.sort_by.findIndex(
+            (item) => item.field == key
           );
-        }
+          if (idx >= 0) {
+            searchParams.sort_by.splice(idx, 1);
+          }
+          return searchParams;
+        });
+      } else {
+        setSearchParams(
+          (searchParams: BaseSearch) =>
+            ({
+              ...searchParams,
+              sort_by: [{ field: key, order: order }],
+            } as BaseSearch)
+        );
       }
     },
-    [localColumns, rows, rowFilter]
-  );
-
-  const [initialSorting, setInitialSorting] = useState(true);
-
-  const initialSort = useCallback(() => {
-    setInitialSorting(true);
-    for (let idx = 0; idx < columns.length; idx++) {
-      const column = columns[idx];
-      sort(column.key, column.sorted, true);
-    }
-    setInitialSorting(false);
-  }, []);
-
-  useEffect(() => {
-    initialSort();
-  }, []);
-
-  useEffect(() => {
-    let id: any = undefined;
-    if (refetchInterval && needRefetch && fetchFunction) {
-      fetchFunction().then((res) => setLocalRows(res));
-      id = setInterval(() => {
-        if (needRefetch(localRows)) {
-          fetchFunction().then((res) => setLocalRows(res));
-        }
-        initialSort();
-        // handleSearch(search);
-      }, refetchInterval);
-    }
-    return () => {
-      id && clearInterval(id);
-    };
-  }, []);
-
-  const fuse = useMemo(
-    () => {
-      return new Fuse(rows, {
-        keys: searchKeys,
-      });
-    },
-    [rows] // eslint-disable-line
+    [setSearchParams]
   );
 
   const handleSearch = useCallback(
     (value: string, shouldCancelFilter?: boolean) => {
       setSearch(value);
-      if (value !== '') {
-        setLocalRows(
-          fuse
-            .search(value)
-            .map((result) => result.item)
-            .filter(
-              (row) =>
-                shouldCancelFilter || (!!rowFilter && rowFilter(row))
-            )
-        );
-      } else {
-        setLocalRows(
-          rows.filter(
-            (row) =>
-              shouldCancelFilter || (!!rowFilter && rowFilter(row))
-          )
-        );
-      }
-      setLocalColumns((localColumns) =>
-        localColumns.map((column) => {
-          column.sorted = column.allowMiddleState ? 0 : 1;
-          return column;
-        })
-      );
+      // startTransition(() => {
+      setSearchParams((searchParams: BaseSearch) => ({
+        ...searchParams,
+        search_params: {
+          ...searchParams.search_params,
+          search: value,
+        },
+      }));
+      // });
     },
-    [fuse, rows, rowFilter]
-  );
-
-  const lastPage = useMemo(
-    () => Math.floor(localRows.length / perPage),
-    [localRows, perPage]
+    [setSearchParams]
   );
 
   const beforeSelection = useCallback(() => {
@@ -231,7 +212,7 @@ const Table: FC<{
     <div className={styles.wrapper + ' ' + classNames.wrapper}>
       <div className={styles.main}>
         <div className={styles.searchWrapper}>
-          {searchKeys.length > 0 && (
+          {withSearch && (
             <div className={styles.search}>
               <Input
                 icon={<Search />}
@@ -263,83 +244,30 @@ const Table: FC<{
           {additionalSearch &&
             additionalSearch(setLocalRows, beforeSelection)}
         </div>
-        {!initialSorting && (
+        <div style={{ position: 'relative' }}>
+          <LoadingOverlay
+            visible={loading}
+            loader={<Loader size="xl" />}
+          />
           <InnerTable
             columns={localColumns}
             classNames={classNames}
-            rows={
-              perPage
-                ? localRows.slice(
-                    page * perPage,
-                    (page + 1) * perPage
-                  )
-                : localRows
-            }
+            rows={localRows}
             sort={sort}
           />
-        )}
-      </div>
-      <div className={styles.footer}>
-        <div className={styles.pagesWrapper}>
-          <div className={styles.overall}>
-            {capitalize(locale.table.overall)} {localRows.length}
-          </div>
-          <div className={styles.pageNavigationWrapper}>
-            <div className={styles.perPageWrapper}>
-              <div className={styles.perPage}>
-                {capitalize(locale.table.perPage) + ':'}{' '}
-              </div>
-              <Select
-                data={onPage
-                  .map((value) => ({
-                    label: value.toString(),
-                    value: value.toString(),
-                  }))
-                  .concat({
-                    label: capitalize(locale.all),
-                    value: '0',
-                  })}
-                classNames={{
-                  input: styles.selectPerPage,
-                }}
-                defaultValue={defaultOnPage.toString()}
-                onChange={(value) => setPerPage(Number(value))}
-              />
-            </div>
-            <div className={styles.pageNavigation}>
-              <ActionIcon onClick={() => setPage(0)}>
-                <ArrowNarrowLeft />
-              </ActionIcon>
-              <ActionIcon
-                onClick={() => setPage((page) => max(page - 1, 0))}
-              >
-                <ChevronLeft />
-              </ActionIcon>
-              <div>
-                {page * perPage + 1} -{' '}
-                {perPage
-                  ? min((page + 1) * perPage, localRows.length)
-                  : localRows.length}
-              </div>
-              <ActionIcon
-                onClick={() =>
-                  setPage((page) => min(page + 1, lastPage))
-                }
-              >
-                <ChevronRight />
-              </ActionIcon>
-              <ActionIcon onClick={() => setPage(lastPage)}>
-                <ArrowNarrowRight />
-              </ActionIcon>
-            </div>
-          </div>
         </div>
+        <PageNavigation
+          onPage={onPage}
+          defaultOnPage={defaultOnPage}
+          perPage={perPage}
+          page={page}
+          totalLength={totalLength}
+          handlePerPageChange={handlePerPageChange}
+          handlePageChange={handlePageChange}
+        />
       </div>
     </div>
   );
 };
-
-const min = (a: number, b: number) => (a < b ? a : b);
-const max = (a: number, b: number) => (a > b ? a : b);
 
 export default memo(Table);
