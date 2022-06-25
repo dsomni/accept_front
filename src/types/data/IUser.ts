@@ -33,6 +33,7 @@ export interface IUserContext {
   signIn: (login: string, password: string) => Promise<Boolean>;
   signOut: pureCallback<Promise<Boolean>>;
   refresh: pureCallback<Promise<void>>;
+  refreshAccess: pureCallback<number>;
 }
 
 export interface IRegUser {

@@ -39,67 +39,86 @@ const PageNavigation: FC<{
         <div className={styles.overall}>
           {capitalize(locale.table.overall)} {totalLength}
         </div>
-        <div className={styles.pageNavigationWrapper}>
-          <div className={styles.perPageWrapper}>
-            <div className={styles.perPage}>
-              {capitalize(locale.table.perPage) + ':'}{' '}
+        {totalLength > 0 && (
+          <div className={styles.pageNavigationWrapper}>
+            <div className={styles.perPageWrapper}>
+              <div className={styles.perPage}>
+                {capitalize(locale.table.perPage) + ':'}{' '}
+              </div>
+              <Select
+                data={onPage
+                  .map((value) => ({
+                    label: value.toString(),
+                    value: value.toString(),
+                  }))
+                  .concat({
+                    label: capitalize(locale.all),
+                    value: '0',
+                  })}
+                classNames={{
+                  input: styles.selectPerPage,
+                }}
+                defaultValue={defaultOnPage.toString()}
+                onChange={(value) =>
+                  handlePerPageChange(Number(value))
+                }
+              />
             </div>
-            <Select
-              data={onPage
-                .map((value) => ({
-                  label: value.toString(),
-                  value: value.toString(),
-                }))
-                .concat({
-                  label: capitalize(locale.all),
-                  value: '0',
-                })}
-              classNames={{
-                input: styles.selectPerPage,
-              }}
-              defaultValue={defaultOnPage.toString()}
-              onChange={(value) => handlePerPageChange(Number(value))}
-            />
-          </div>
-          <div className={styles.pageNavigation}>
-            <ActionIcon
-              style={{ backgroundColor: '#ffffff00', border: 'none' }}
-              disabled={page == 0}
-              onClick={() => handlePageChange(0)}
-            >
-              <ArrowNarrowLeft />
-            </ActionIcon>
-            <ActionIcon
-              style={{ backgroundColor: '#ffffff00', border: 'none' }}
-              disabled={page == 0}
-              onClick={() => handlePageChange(Math.max(page - 1, 0))}
-            >
-              <ChevronLeft />
-            </ActionIcon>
-            <div>
-              {page * perPage + 1} -{' '}
-              {perPage
-                ? Math.min((page + 1) * perPage, totalLength)
-                : totalLength}
+
+            <div className={styles.pageNavigation}>
+              <ActionIcon
+                style={{
+                  backgroundColor: '#ffffff00',
+                  border: 'none',
+                }}
+                disabled={page == 0}
+                onClick={() => handlePageChange(0)}
+              >
+                <ArrowNarrowLeft />
+              </ActionIcon>
+              <ActionIcon
+                style={{
+                  backgroundColor: '#ffffff00',
+                  border: 'none',
+                }}
+                disabled={page == 0}
+                onClick={() =>
+                  handlePageChange(Math.max(page - 1, 0))
+                }
+              >
+                <ChevronLeft />
+              </ActionIcon>
+              <div>
+                {page * perPage + 1} -{' '}
+                {perPage
+                  ? Math.min((page + 1) * perPage, totalLength)
+                  : totalLength}
+              </div>
+              <ActionIcon
+                style={{
+                  backgroundColor: '#ffffff00',
+                  border: 'none',
+                }}
+                disabled={page == lastPage}
+                onClick={() =>
+                  handlePageChange(Math.min(page + 1, lastPage))
+                }
+              >
+                <ChevronRight />
+              </ActionIcon>
+              <ActionIcon
+                style={{
+                  backgroundColor: '#ffffff00',
+                  border: 'none',
+                }}
+                disabled={page == lastPage}
+                onClick={() => handlePageChange(lastPage)}
+              >
+                <ArrowNarrowRight />
+              </ActionIcon>
             </div>
-            <ActionIcon
-              style={{ backgroundColor: '#ffffff00', border: 'none' }}
-              disabled={page == lastPage}
-              onClick={() =>
-                handlePageChange(Math.min(page + 1, lastPage))
-              }
-            >
-              <ChevronRight />
-            </ActionIcon>
-            <ActionIcon
-              style={{ backgroundColor: '#ffffff00', border: 'none' }}
-              disabled={page == lastPage}
-              onClick={() => handlePageChange(lastPage)}
-            >
-              <ArrowNarrowRight />
-            </ActionIcon>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

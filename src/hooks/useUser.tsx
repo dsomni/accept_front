@@ -109,6 +109,27 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
     return false;
   }, []);
 
+  const refreshAccess = useCallback(() => {
+    if (getCookie('access_token_cookie')) {
+      whoAmI();
+      return 0;
+    }
+    if (getCookie('refresh_token_cookie')) {
+      refresh();
+      return 1;
+    }
+    setValue((prev) => ({
+      ...prev,
+      user: undefined,
+      accessLevel: 0,
+      isUser: false,
+      isStudent: false,
+      isTeacher: false,
+      isAdmin: false,
+    }));
+    return 2;
+  }, [refresh, whoAmI]);
+
   const [value, setValue] = useState<IUserContext>(() => ({
     user: undefined,
     accessLevel: 0,
@@ -119,25 +140,12 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
     signIn,
     signOut,
     refresh,
+    refreshAccess,
   }));
 
   useEffect(() => {
-    if (getCookie('access_token_cookie')) {
-      whoAmI();
-    } else if (getCookie('refresh_token_cookie')) {
-      refresh();
-    } else {
-      setValue((prev) => ({
-        ...prev,
-        user: undefined,
-        accessLevel: 0,
-        isUser: false,
-        isStudent: false,
-        isTeacher: false,
-        isAdmin: false,
-      }));
-    }
-  }, []);
+    refreshAccess();
+  }, [refreshAccess]);
 
   return (
     <UserContext.Provider value={value}>

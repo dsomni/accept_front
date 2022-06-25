@@ -104,7 +104,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       {isTeacher && <Sticky actions={actions} color={'--prime'} />}
       <TaskLayout
         description={<Description task={task} />}
-        send={<Send spec={task.spec} />}
+        send={(set) => <Send spec={task.spec} setActiveTab={set} />}
         results={
           <TableStoreProvider>
             <Results spec={task.spec} />
@@ -132,9 +132,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     };
   }
-  console.time();
   const task = await fetch(`${SERVER_URL}/api/task/${params.spec}`);
-  console.timeEnd();
   if (task.status === 200) {
     return {
       props: {

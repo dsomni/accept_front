@@ -6,8 +6,13 @@ import { memo, FC, ReactNode, useEffect, useState } from 'react';
 
 const ProgramLanguageSelector: FC<{
   selector: callback<any, ReactNode>;
-}> = ({ selector }) => {
+  defaultLangSpec: string;
+}> = ({ selector, defaultLangSpec }) => {
   const [langs, setLangs] = useState<ILanguage[]>([]);
+  const [defaultLang, setDefaultLang] = useState({
+    name: '',
+    spec: 0,
+  });
 
   useEffect(() => {
     sendRequest<{}, ILanguage[]>('language', 'GET').then((res) => {
@@ -17,6 +22,17 @@ const ProgramLanguageSelector: FC<{
     });
   }, []);
 
+  useEffect(() => {
+    const lang = langs.find(
+      (item) => item.spec.toString() === defaultLangSpec
+    );
+    console.log(lang);
+    if (lang) {
+      console.log(1);
+      setDefaultLang(lang);
+    }
+  }, [defaultLangSpec, langs]);
+
   return (
     <div>
       {selector({
@@ -24,10 +40,13 @@ const ProgramLanguageSelector: FC<{
           label: capitalize(lang.name),
           value: lang.spec.toString(),
         })),
-        defaultValue:
-          langs.length > 1
-            ? { label: capitalize(langs[1].name), value: '1' }
-            : { label: '', value: '' },
+        defaultValue: { label: '123', value: '3' },
+        // langs.length > 0
+        //   ? {
+        //       label: capitalize(defaultLang.name),
+        //       value: defaultLang.spec.toString(),
+        //     }
+        //   : { label: '', value: '' },
       })}
     </div>
   );

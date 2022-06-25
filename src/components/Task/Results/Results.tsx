@@ -19,6 +19,8 @@ import {
 } from '@utils/notificationFunctions';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { useTableStore } from '@hooks/useTableStore';
+import { getLocalDate } from '@utils/datetime';
+import { useUser } from '@hooks/useUser';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
@@ -50,7 +52,7 @@ const refactorAttempt = (
         : attempt.status.spec - 10,
   },
   date: {
-    display: <>{new Date(attempt.date).toLocaleString()}</>,
+    display: <>{getLocalDate(attempt.date)}</>,
     value: new Date(attempt.date).getTime(),
   },
   language: {
@@ -114,6 +116,8 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
     loading,
   } = useTableStore();
 
+  const { refreshAccess } = useUser();
+
   const columns: ITableColumn[] = useMemo(
     () => initialColumns(locale),
     [locale]
@@ -121,10 +125,6 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
 
   const [needRefetch, setNeedRefetch] = useState(true);
   const [initialization, setInitialization] = useState(false);
-
-  useEffect(() => {
-    console.log(searchParams);
-  }, [searchParams]);
 
   useEffect(() => {
     setSearchParams(() => ({
@@ -158,6 +158,7 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
             }),
             res.response[1],
           ]);
+          setNeedRefetch(true);
         } else {
           const id = newNotification({});
           errorNotification({
@@ -167,12 +168,26 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
             autoClose: 5000,
           });
           setData([[], 0]);
+          setTimeout(() => {
+            if (refreshAccess() == 2) {
+              setNeedRefetch(false);
+            } else {
+              setNeedRefetch(true);
+            }
+          }, 100);
         }
-        setNeedRefetch(true);
         if (!refetch) setLoading(false);
       });
     },
-    [setLoading, spec, searchParams, setData, locale, lang]
+    [
+      setLoading,
+      spec,
+      searchParams,
+      setData,
+      locale,
+      lang,
+      refreshAccess,
+    ]
   );
 
   useEffect(() => {

@@ -41,7 +41,6 @@ const CodeArea: FC<{
   const { locale } = useLocale();
 
   const [drag, setDrag] = useState(false);
-  const [lang, setLang] = useState<undefined | string>(undefined);
 
   const draggable = useRef<HTMLDivElement>(null);
 
@@ -82,32 +81,9 @@ const CodeArea: FC<{
     [setCode, setLanguage]
   );
 
-  const selector = useCallback(
-    (props: any) => {
-      return (
-        <Select
-          label={capitalize(locale.language)}
-          classNames={classNames}
-          onChange={setLang}
-          value={lang ? lang : props.defaultValue.value}
-          {...props}
-        />
-      );
-    },
-    [classNames, lang, locale]
-  );
-
-  useEffect(() => {
-    if (lang) {
-      setLanguage(lang);
-    }
-  }, [lang, setLanguage]);
-
   return (
     <div ref={draggable}>
-      <div className={styles.langSelector}>
-        <ProgramLanguageSelector selector={selector} />
-      </div>
+      <div className={styles.langSelector}></div>
       {!drag && (
         <Textarea
           classNames={classNames}

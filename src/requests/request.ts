@@ -23,7 +23,7 @@ export const sendRequest = <ISend, IReceive>(
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
   };
   if (body) {
-    options.body = JSON.stringify(body as object);
+    options.body = JSON.stringify(body);
   }
   return fetch(withPrefix(path), options)
     .then((res) =>
@@ -66,7 +66,7 @@ export const isSuccessful = <ISend>(
     headers: { 'content-type': 'application/json' },
   };
   if (body) {
-    options.body = JSON.stringify(body as object);
+    options.body = JSON.stringify(body);
   }
   return fetch(withPrefix(path), options)
     .then((res) =>

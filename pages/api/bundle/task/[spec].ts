@@ -14,6 +14,5 @@ export default async function Task(
   });
   const status = response.status;
   const data = await response.json();
-  console.log('api', data);
   res.status(status).json(data);
 }

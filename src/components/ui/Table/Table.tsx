@@ -90,7 +90,6 @@ const Table: FC<{
 
   useEffect(() => {
     setLocalRows(rows);
-    console.log(searchParams);
     if (searchParams) {
       setSearch(searchParams.search_params.search);
       setLocalColumns((localColumns) => {
@@ -107,9 +106,6 @@ const Table: FC<{
         return localColumns;
       });
       setPerPage(searchParams.pager.limit);
-      console.log(
-        searchParams.pager.skip / (searchParams.pager.limit || 1)
-      );
       setPage(
         Math.floor(
           searchParams.pager.skip / (searchParams.pager.limit || 1)

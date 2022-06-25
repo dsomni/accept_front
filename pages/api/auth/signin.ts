@@ -14,7 +14,7 @@ export default async function signIn(
     const response = await fetch(url, {
       method: 'POST',
       headers: headers as { [key: string]: string },
-      body: req.body,
+      body: JSON.stringify(req.body),
       credentials: 'include',
     });
     if (response.status === 200) {
