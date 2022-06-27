@@ -26,7 +26,6 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
 import { ITableColumn } from '@custom-types/ui/ITable';
-import { TableStoreProvider } from '@hooks/useTableStore';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -105,11 +104,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       <TaskLayout
         description={<Description task={task} />}
         send={(set) => <Send spec={task.spec} setActiveTab={set} />}
-        results={
-          <TableStoreProvider>
-            <Results spec={task.spec} />
-          </TableStoreProvider>
-        }
+        results={<Results spec={task.spec} />}
       />
     </>
   );

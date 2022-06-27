@@ -1,20 +1,13 @@
-import { pureCallback, setter } from '@custom-types/ui/atomic';
+import { setter } from '@custom-types/ui/atomic';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
-import {
-  ActionIcon,
-  Input,
-  Loader,
-  MultiSelect,
-  Select,
-} from '@mantine/core';
+import { Input, Loader, MultiSelect } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
 import { capitalize } from '@utils/capitalize';
 import {
   FC,
   memo,
   ReactNode,
-  startTransition,
   useCallback,
   useEffect,
   useMemo,
@@ -24,7 +17,6 @@ import InnerTable from './InnerTable/InnerTable';
 import styles from './table.module.css';
 import { BaseSearch } from '@custom-types/data/request';
 import PageNavigation from './PageNavigation';
-import { useTableStore } from '@hooks/useTableStore';
 import { LoadingOverlay } from '@mantine/core';
 
 const Table: FC<{
@@ -35,6 +27,11 @@ const Table: FC<{
   withSearch?: boolean;
   additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
   rowFilter?: (_: any) => boolean;
+  rows: any;
+  total: number;
+  loading: boolean;
+  setSearchParams: setter;
+  searchParams: BaseSearch;
 }> = ({
   columns,
   classNames,
@@ -43,14 +40,15 @@ const Table: FC<{
   withSearch,
   additionalSearch,
   rowFilter,
+  rows,
+  total,
+  loading,
+  setSearchParams,
+  searchParams,
 }) => {
   const { locale } = useLocale();
 
-  const { data, loading, setSearchParams, searchParams } =
-    useTableStore();
-
-  const totalLength = useMemo(() => data[1], [data]);
-  const rows = useMemo(() => data[0], [data]);
+  const totalLength = total;
 
   const [localRows, setLocalRows] = useState<any[]>(rows);
   const [page, setPage] = useState(0);
@@ -153,7 +151,7 @@ const Table: FC<{
   );
 
   const sort = useCallback(
-    (key: string, order: -1 | 0 | 1, ignoreZero?: boolean) => {
+    (key: string, order: -1 | 0 | 1) => {
       // sort
       if (order == 0) {
         setSearchParams((searchParams: BaseSearch) => {
@@ -181,7 +179,6 @@ const Table: FC<{
   const handleSearch = useCallback(
     (value: string, shouldCancelFilter?: boolean) => {
       setSearch(value);
-      // startTransition(() => {
       setSearchParams((searchParams: BaseSearch) => ({
         ...searchParams,
         search_params: {
@@ -189,7 +186,6 @@ const Table: FC<{
           search: value,
         },
       }));
-      // });
     },
     [setSearchParams]
   );

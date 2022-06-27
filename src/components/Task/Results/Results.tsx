@@ -12,15 +12,15 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
-import { sendRequest } from '@requests/request';
+import { ILocale } from '@custom-types/ui/ILocale';
+import { getLocalDate } from '@utils/datetime';
+import { useUser } from '@hooks/useUser';
+import { useRequest } from '@hooks/useRequest';
+import { BaseSearch } from '@custom-types/data/request';
 import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
-import { ILocale } from '@custom-types/ui/ILocale';
-import { useTableStore } from '@hooks/useTableStore';
-import { getLocalDate } from '@utils/datetime';
-import { useUser } from '@hooks/useUser';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
@@ -104,18 +104,18 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 
 const defaultOnPage = 10;
 
+interface PagerResponse {
+  data: IAttemptDisplay[];
+  total: number;
+}
+
+interface TableData {
+  data: any[];
+  total: number;
+}
+
 const Results: FC<{ spec: string }> = ({ spec }) => {
   const { locale, lang } = useLocale();
-
-  const {
-    data,
-    setData,
-    searchParams,
-    setSearchParams,
-    setLoading,
-    loading,
-  } = useTableStore();
-
   const { refreshAccess } = useUser();
 
   const columns: ITableColumn[] = useMemo(
@@ -124,86 +124,89 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
   );
 
   const [needRefetch, setNeedRefetch] = useState(true);
-  const [initialization, setInitialization] = useState(false);
+  const [tableData, setTableData] = useState<TableData>({
+    data: [],
+    total: 0,
+  });
 
-  useEffect(() => {
-    setSearchParams(() => ({
-      pager: {
-        skip: 0,
-        limit: defaultOnPage,
-      },
-      sort_by: [{ field: 'date', order: -1 }],
-      search_params: {
-        search: '',
-        keys: [],
-      },
-    }));
-    setInitialization(true);
-  }, [setSearchParams]);
-
-  const fetchAttempts = useCallback(
-    (refetch?: boolean) => {
-      if (!refetch) setLoading(true);
-      sendRequest<{}, [IAttemptDisplay[], number]>(
-        `task/attempts/${spec}`,
-        'POST',
-        searchParams
-      ).then((res) => {
-        let needsRefetch = true;
-        if (!res.error) {
-          setData([
-            res.response[0].map((item) => {
-              needsRefetch = needsRefetch && item.status.spec == 2;
-              return refactorAttempt(item, locale);
-            }),
-            res.response[1],
-          ]);
-          setNeedRefetch(true);
-        } else {
-          const id = newNotification({});
-          errorNotification({
-            id,
-            title: capitalize(locale.notify.task.attempts.list.error),
-            message: res.detail.description[lang],
-            autoClose: 5000,
-          });
-          setData([[], 0]);
-          setTimeout(() => {
-            if (refreshAccess() == 2) {
-              setNeedRefetch(false);
-            } else {
-              setNeedRefetch(true);
-            }
-          }, 100);
-        }
-        if (!refetch) setLoading(false);
-      });
+  const [searchParams, setSearchParams] = useState<BaseSearch>({
+    pager: {
+      skip: 0,
+      limit: defaultOnPage,
     },
-    [
-      setLoading,
-      spec,
-      searchParams,
-      setData,
-      locale,
-      lang,
-      refreshAccess,
-    ]
+    sort_by: [{ field: 'date', order: -1 }],
+    search_params: {
+      search: '',
+      keys: [],
+    },
+  });
+
+  const processData = useCallback(
+    (response: PagerResponse): TableData => ({
+      data: response.data.map((item) =>
+        refactorAttempt(item, locale)
+      ),
+      total: response.total,
+    }),
+    [locale]
+  );
+
+  const onError = useCallback(
+    (res: any) => {
+      if (refreshAccess() == 2) {
+        setTableData({ data: [], total: 0 });
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: capitalize(locale.notify.errors.unauthorized),
+          autoClose: 10000,
+        });
+        setNeedRefetch(false);
+      } else {
+        setNeedRefetch(true);
+      }
+    },
+    [locale.notify.errors.unauthorized, refreshAccess]
+  );
+
+  const { data, loading, refetch } = useRequest<
+    BaseSearch,
+    PagerResponse,
+    TableData
+  >(
+    `task/attempts/${spec}`,
+    'POST',
+    searchParams,
+    processData,
+    undefined,
+    onError
   );
 
   useEffect(() => {
-    if (initialization) fetchAttempts();
+    if (data) {
+      setTableData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    refetch();
     const id = setInterval(() => {
-      if (needRefetch) fetchAttempts(true);
+      if (needRefetch) refetch(false);
     }, 2000);
     return () => {
       clearInterval(id);
     };
-  }, [fetchAttempts, needRefetch, initialization]);
+  }, [needRefetch, refetch]);
 
   return (
     <div>
       <Table
         columns={columns}
+        rows={tableData.data}
+        total={tableData.total}
+        loading={loading}
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
         classNames={{
           wrapper: tableStyles.wrapper,
           table: tableStyles.table,

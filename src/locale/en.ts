@@ -282,6 +282,9 @@ const groups = {
 };
 
 const notify = {
+  errors: {
+    unauthorized: 'unauthorized',
+  },
   assignmentSchema: {
     create: {
       loading: 'creating the assignment schema',

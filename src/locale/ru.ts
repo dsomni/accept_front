@@ -281,6 +281,9 @@ const groups = {
 };
 
 const notify = {
+  errors: {
+    unauthorized: 'вы не авторизованы',
+  },
   assignmentSchema: {
     create: {
       loading: 'создаём шаблон задания',
