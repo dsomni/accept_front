@@ -25,8 +25,7 @@ const Table: FC<{
   defaultOnPage: number;
   onPage: number[];
   withSearch?: boolean;
-  additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
-  rowFilter?: (_: any) => boolean;
+  additionalSearch?: ReactNode;
   rows: any;
   total: number;
   loading: boolean;
@@ -39,7 +38,6 @@ const Table: FC<{
   onPage,
   withSearch,
   additionalSearch,
-  rowFilter,
   rows,
   total,
   loading,
@@ -233,8 +231,7 @@ const Table: FC<{
               />
             </div>
           )}
-          {additionalSearch &&
-            additionalSearch(setLocalRows, beforeSelection)}
+          {additionalSearch || <></>}
         </div>
         <div style={{ position: 'relative' }}>
           <LoadingOverlay

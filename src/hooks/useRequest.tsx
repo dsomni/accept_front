@@ -57,7 +57,7 @@ export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(
         cleanUp = true;
       };
     },
-    [body, method, onError, onSuccess, process, url]
+    [body, method, onError, onSuccess, process, revalidate, url]
   );
 
   useEffect(() => refetch(true), [refetch]);

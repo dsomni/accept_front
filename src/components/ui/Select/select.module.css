@@ -1,21 +1,17 @@
-.selected {
+.selectedMulti {
   font-size: var(--font-size-m);
   min-height: var(--spacer-xl);
 }
 
-.selected span {
+.selectedMulti span {
   overflow: visible;
 }
 
-.selectWrapper {
-  width: 25%;
-  min-width: 350px;
-}
-.inputElem {
+.inputElemMulti {
   font-size: var(--font-size-m);
   min-height: var(--spacer-xxl);
   display: flex;
 }
-.inputElem input {
+.inputElemMulti input {
   font-size: var(--font-size-m);
 }
