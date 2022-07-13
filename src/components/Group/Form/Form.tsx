@@ -25,25 +25,28 @@ const Form: FC<{
   useEffect(() => {
     let cleanUp = false;
     setLoadingStudents(true);
-    sendRequest<{}, IStudentList[]>('students/list', 'GET').then(
-      (res) => {
-        if (!cleanUp) {
-          if (!res.error) {
-            setStudents(
-              res.response.filter(
-                (item) =>
-                  !form.values['members'].find(
-                    (member: Item) => member.login === item.login
-                  )
-              )
-            );
-          } else {
-            setError(true);
-          }
-          setLoadingStudents(false);
+    sendRequest<{}, IStudentList[]>(
+      'students/list',
+      'GET',
+      undefined,
+      60000
+    ).then((res) => {
+      if (!cleanUp) {
+        if (!res.error) {
+          setStudents(
+            res.response.filter(
+              (item) =>
+                !form.values['members'].find(
+                  (member: Item) => member.login === item.login
+                )
+            )
+          );
+        } else {
+          setError(true);
         }
+        setLoadingStudents(false);
       }
-    );
+    });
     return () => {
       cleanUp = true;
     };

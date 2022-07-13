@@ -38,33 +38,41 @@ function EditAssignmentSchema() {
     if (typeof router.query.spec === 'string') {
       sendRequest<{ spec: string }, IAssignmentSchema>(
         `assignments/schema/${router.query.spec}`,
-        'GET'
+        'GET',
+        undefined,
+        10000
       ).then((res) => {
         if (!res.error) {
           setAssignmentSchema(res.response);
         }
       });
     }
-    sendRequest<{}, ITaskDisplay[]>(`tasks/list`, 'GET').then(
-      (res) => {
-        if (!res.error) {
-          const tasks = new Map<string, ITaskDisplay>();
-          for (let i = 0; i < res.response.length; i++) {
-            tasks.set(res.response[i].spec, res.response[i]);
-          }
-          setTasks(tasks);
+    sendRequest<{}, ITaskDisplay[]>(
+      `tasks/list`,
+      'GET',
+      undefined,
+      10000
+    ).then((res) => {
+      if (!res.error) {
+        const tasks = new Map<string, ITaskDisplay>();
+        for (let i = 0; i < res.response.length; i++) {
+          tasks.set(res.response[i].spec, res.response[i]);
         }
+        setTasks(tasks);
       }
-    );
+    });
     setReadyTags(false);
-    sendRequest<{}, ITag[]>(`assignment_tags/list`, 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          setTags(res.response);
-          setReadyTags(true);
-        }
+    sendRequest<{}, ITag[]>(
+      `assignment_tags/list`,
+      'GET',
+      undefined,
+      20000
+    ).then((res) => {
+      if (!res.error && !cleanUp) {
+        setTags(res.response);
+        setReadyTags(true);
       }
-    );
+    });
     return () => {
       cleanUp = true;
     };

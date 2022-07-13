@@ -79,16 +79,16 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         setActive={setActiveModal}
         task={task}
       />
-      {/* {task.hint && (
+      {task.hint && (
         <SimpleModal
           title={capitalize(locale.tasks.form.hint.title)}
           opened={openedHint}
-          close={onHintClose}
+          close={() => setOpenedHint(false)}
         >
           {task.hint.content}
         </SimpleModal>
-      )} */}
-      {isUser && !isTeacher && showHint && (
+      )}
+      {isUser && !isTeacher && showHint && task.hint && (
         <SingularSticky
           icon={
             <Eye
@@ -102,7 +102,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       )}
       {isTeacher && <Sticky actions={actions} color={'--prime'} />}
       <TaskLayout
-        description={<Description task={task} />}
+        description={
+          <Description task={task} setShowHint={setShowHint} />
+        }
         send={(set) => <Send spec={task.spec} setActiveTab={set} />}
         results={<Results spec={task.spec} />}
       />

@@ -15,7 +15,8 @@ import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
 import { capitalize } from '@utils/capitalize';
-import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { PasswordInput, TextInput } from '@mantine/core';
+import Button from '@ui/Button/Button';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {

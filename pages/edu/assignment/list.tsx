@@ -98,17 +98,20 @@ function AssignmentList() {
     let cleanUp = false;
 
     setLoadingTags(true);
-    sendRequest<{}, ITag[]>('assignment_tag/list', 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          let newTags = new Map<string, ITag>();
-          for (let i = 0; i < res.response.length; i++)
-            newTags.set(res.response[i].spec, res.response[i]);
-          setTags(newTags);
-          setLoadingTags(false);
-        }
+    sendRequest<{}, ITag[]>(
+      'assignment_tag/list',
+      'GET',
+      undefined,
+      30000
+    ).then((res) => {
+      if (!res.error && !cleanUp) {
+        let newTags = new Map<string, ITag>();
+        for (let i = 0; i < res.response.length; i++)
+          newTags.set(res.response[i].spec, res.response[i]);
+        setTags(newTags);
+        setLoadingTags(false);
       }
-    );
+    });
 
     return () => {
       cleanUp = true;
@@ -120,7 +123,9 @@ function AssignmentList() {
     setLoading(true);
     sendRequest<{}, IAssignmentSchema[]>(
       'assignment/schema/list',
-      'GET'
+      'GET',
+      undefined,
+      10000
     ).then((res) => {
       if (!cleanUp) {
         if (!res.error) {

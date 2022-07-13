@@ -1,4 +1,4 @@
-import { Button, Group, Text } from '@mantine/core';
+import { Group, Text } from '@mantine/core';
 import { FileUpload } from 'tabler-icons-react';
 import {
   FC,
@@ -21,6 +21,7 @@ import {
 } from '@utils/notificationFunctions';
 import { ILanguage } from '@custom-types/data/atomic';
 import { extensionValidator } from '@utils/extensionValidator';
+import Button from '@components/ui/Button/Button';
 
 const CodeArea: FC<{
   label: string;

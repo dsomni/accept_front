@@ -106,7 +106,9 @@ function AssignmentList() {
     setLoading(true);
     sendRequest<{}, ITournamentList[]>(
       `tournaments/list/${status || 'current'}`,
-      'GET'
+      'GET',
+      undefined,
+      10000
     ).then((res) => {
       if (!cleanUp) {
         if (!res.error) {

@@ -11,6 +11,7 @@ export default async function DeleteTask(
   const response = await fetch(`${url}/${spec}`, {
     method: 'DELETE',
     credentials: 'include',
+    headers: req.headers as { [key: string]: string },
   });
   const status = response.status;
   const data = await response.json();

@@ -32,7 +32,12 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
   useEffect(() => {
     let cleanUp = false;
     setLoading(true);
-    sendRequest<{}, IUser[]>('user/list', 'GET').then((res) => {
+    sendRequest<{}, IUser[]>(
+      'user/list',
+      'GET',
+      undefined,
+      600000
+    ).then((res) => {
       if (!cleanUp) {
         if (!res.error) {
           setDefaultAdmins(

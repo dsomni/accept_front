@@ -30,14 +30,17 @@ function EditGroup(props: { group: IGroup }) {
   useEffect(() => {
     let cleanUp = false;
     setReadyStudents(false);
-    sendRequest<{}, IStudentList[]>(`students/list`, 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          setStudents(res.response);
-          setReadyStudents(true);
-        }
+    sendRequest<{}, IStudentList[]>(
+      `students/list`,
+      'GET',
+      undefined,
+      600000
+    ).then((res) => {
+      if (!res.error && !cleanUp) {
+        setStudents(res.response);
+        setReadyStudents(true);
       }
-    );
+    });
     return () => {
       cleanUp = true;
     };

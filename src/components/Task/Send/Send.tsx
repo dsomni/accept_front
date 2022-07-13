@@ -1,10 +1,11 @@
-import { Button, Select } from '@mantine/core';
+// import { Button, Select } from '@mantine/core';
+import Button from '@ui/Button/Button';
+import Select from '@ui/Select/Select';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { capitalize } from '@utils/capitalize';
-import ProgramLanguageSelector from '@components/ui/ProgramLanguageSelector/ProgramLanguageSelector';
 import { setter } from '@custom-types/ui/atomic';
 import { getCookie, setCookie } from '@utils/cookies';
 import styles from './send.module.css';
@@ -29,7 +30,12 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
       setDefaultLangSpec(prev_lang);
       setLanguage(prev_lang);
     }
-    sendRequest<{}, ILanguage[]>('language', 'GET').then((res) => {
+    sendRequest<{}, ILanguage[]>(
+      'language',
+      'GET',
+      undefined,
+      60000
+    ).then((res) => {
       if (!res.error) {
         setLangs(res.response);
       }
@@ -57,27 +63,21 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
     setActiveTab(2);
   }, [language, code, spec, locale, lang, setActiveTab]);
 
-  const selector: any = useCallback(
-    (props: any) => {
-      return (
-        <Select
-          label={capitalize(locale.language)}
-          onChange={setLanguage}
-          value={language ? language : props.defaultValue.value}
-          {...props}
-        />
-      );
-    },
-    [language, locale]
-  );
+  const onLangSelect = useCallback((value: string | null) => {
+    if (value) setLanguage(value);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.top}>
-        <ProgramLanguageSelector
-          defaultLangSpec={defaultLangSpec}
-          selector={selector}
-          languages={langs}
+        <Select
+          label={capitalize(locale.language)}
+          onChange={onLangSelect}
+          value={language ? language : defaultLangSpec}
+          data={langs.map((lang) => ({
+            label: capitalize(lang.name),
+            value: lang.spec.toString(),
+          }))}
         />
 
         <Button

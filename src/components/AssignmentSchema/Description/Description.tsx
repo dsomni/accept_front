@@ -26,7 +26,8 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
       sendRequest<string[], ITaskDisplay[]>(
         'task/task-spec-list',
         'POST',
-        assignment.tasks
+        assignment.tasks,
+        5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
           const response = res.response;

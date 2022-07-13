@@ -6,16 +6,28 @@ import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import CopyButton from '@ui/CopyButton/CopyButton';
 import Head from 'next/head';
+import { sendRequest } from '@requests/request';
+import { setter } from '@custom-types/ui/atomic';
 
-const Description: FC<{ task: ITask }> = ({ task }) => {
+const Description: FC<{
+  task: ITask;
+  setShowHint: setter<boolean>;
+}> = ({ task, setShowHint }) => {
   const description = useRef<HTMLDivElement>(null);
   const inputFormat = useRef<HTMLDivElement>(null);
   const outputFormat = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
 
   useEffect(() => {
-    console.log(task);
-  }, [task]);
+    sendRequest<{}, boolean>(
+      `task/should_show_hint/${task.spec}`,
+      'GET',
+      undefined,
+      5000
+    ).then((res) => {
+      setShowHint(res.response);
+    });
+  }, [task.spec, setShowHint]);
 
   useEffect(() => {
     if (description.current)

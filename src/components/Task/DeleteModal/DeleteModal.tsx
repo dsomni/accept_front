@@ -28,7 +28,9 @@ const DeleteModal: FC<{
 
     sendRequest<{}, IAssignmentSchemaDisplay[]>(
       `/task/connected_assignments/${task.spec}`,
-      'POST'
+      'POST',
+      undefined,
+      60000
     ).then((res) => {
       if (!res.error && !cleanUp) {
         setAssignments(res.response);

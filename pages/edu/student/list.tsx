@@ -81,18 +81,21 @@ function StudentList() {
     let cleanUp = false;
 
     setLoadingGroups(true);
-    sendRequest<{}, IGroupDisplay[]>('groups/list', 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          let response = res.response;
-          let newGroups = new Map<string, IGroupDisplay>();
-          for (let i = 0; i < response.length; i++)
-            newGroups.set(response[i].spec, response[i]);
-          setGroups(newGroups);
-          setLoadingGroups(false);
-        }
+    sendRequest<{}, IGroupDisplay[]>(
+      'groups/list',
+      'GET',
+      undefined,
+      5000
+    ).then((res) => {
+      if (!res.error && !cleanUp) {
+        let response = res.response;
+        let newGroups = new Map<string, IGroupDisplay>();
+        for (let i = 0; i < response.length; i++)
+          newGroups.set(response[i].spec, response[i]);
+        setGroups(newGroups);
+        setLoadingGroups(false);
       }
-    );
+    });
 
     return () => {
       cleanUp = true;
@@ -102,56 +105,59 @@ function StudentList() {
   useEffect(() => {
     let cleanUp = false;
     setLoading(true);
-    sendRequest<{}, IStudentList[]>('students/list', 'GET').then(
-      (res) => {
-        if (!cleanUp) {
-          if (!res.error) {
-            setList(
-              res.response.map((item) => {
-                return {
-                  ...item,
-                  groups: item.groups.map(
-                    (group) => groups.get(group)?.title || ''
+    sendRequest<{}, IStudentList[]>(
+      'students/list',
+      'GET',
+      undefined,
+      600000
+    ).then((res) => {
+      if (!cleanUp) {
+        if (!res.error) {
+          setList(
+            res.response.map((item) => {
+              return {
+                ...item,
+                groups: item.groups.map(
+                  (group) => groups.get(group)?.title || ''
+                ),
+                grade: item.gradeNumber + ' ' + item.gradeLetter,
+                name: {
+                  value: item.name,
+                  display: (
+                    <div className={tableStyles.titleWrapper}>
+                      <a
+                        className={tableStyles.title}
+                        href={`/edu/student/${item.login}`}
+                      >
+                        {item.name}
+                      </a>
+                      {!!groups && (
+                        <span className={tableStyles.tags}>
+                          {item.groups.map((group, idx) => (
+                            <div
+                              className={tableStyles.tag}
+                              key={idx}
+                            >
+                              {groups.get(group)?.title +
+                                (idx == item.groups.length - 1
+                                  ? ''
+                                  : ', ')}
+                            </div>
+                          ))}
+                        </span>
+                      )}
+                    </div>
                   ),
-                  grade: item.gradeNumber + ' ' + item.gradeLetter,
-                  name: {
-                    value: item.name,
-                    display: (
-                      <div className={tableStyles.titleWrapper}>
-                        <a
-                          className={tableStyles.title}
-                          href={`/edu/student/${item.login}`}
-                        >
-                          {item.name}
-                        </a>
-                        {!!groups && (
-                          <span className={tableStyles.tags}>
-                            {item.groups.map((group, idx) => (
-                              <div
-                                className={tableStyles.tag}
-                                key={idx}
-                              >
-                                {groups.get(group)?.title +
-                                  (idx == item.groups.length - 1
-                                    ? ''
-                                    : ', ')}
-                              </div>
-                            ))}
-                          </span>
-                        )}
-                      </div>
-                    ),
-                  },
-                };
-              })
-            );
-          } else {
-            setError(true);
-          }
-          setLoading(false);
+                },
+              };
+            })
+          );
+        } else {
+          setError(true);
         }
+        setLoading(false);
       }
-    );
+    });
     return () => {
       cleanUp = true;
     };

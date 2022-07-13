@@ -1,13 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/task-display-mode';
+const url =
+  'http://' + env.API_ENDPOINT + '/api/task/should-show-hint';
 
-export default async function ListTasks(
+export default async function ShowHint(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${url}/${req.query.spec}`, {
     credentials: 'include',
     headers: req.headers as { [key: string]: string },
   });

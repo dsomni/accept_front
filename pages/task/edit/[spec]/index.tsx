@@ -34,7 +34,12 @@ function EditTask(props: { task: ITask }) {
   useEffect(() => {
     let cleanUp = false;
     setReadyTags(false);
-    sendRequest<{}, ITag[]>(`tags/list`, 'GET').then((res) => {
+    sendRequest<{}, ITag[]>(
+      `tags/list`,
+      'GET',
+      undefined,
+      600000
+    ).then((res) => {
       if (!res.error && !cleanUp) {
         setTags(res.response);
         setReadyTags(true);
