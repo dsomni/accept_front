@@ -10,7 +10,7 @@ const TaskLayout: FC<{
   results?: ReactNode;
 }> = ({ description, send, results }) => {
   const { locale } = useLocale();
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <>

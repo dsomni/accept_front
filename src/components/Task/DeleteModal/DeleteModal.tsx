@@ -53,7 +53,8 @@ const DeleteModal: FC<{
       lang,
       (_: any) => '',
       body,
-      () => router.push('/task/list')
+      () => router.push('/task/list'),
+      { autoClose: 8000 }
     );
   }, [task.spec, locale, router, lang]);
 
