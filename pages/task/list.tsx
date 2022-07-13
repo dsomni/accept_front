@@ -89,7 +89,9 @@ const processData = (
       },
       verdict: {
         value: task.verdict,
-        display: task.verdict?.shortText || '-',
+          display: (
+            <span style={{color: !task.verdict ? "black" : task.verdict.spec == 0 ? "var(--positive)" : "var(--negative)"}}>{task.verdict?.shortText || '-'}</span>
+        ),
       },
       title: {
         value: task.title,
