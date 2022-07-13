@@ -7,6 +7,10 @@ import { capitalize } from '@utils/capitalize';
 import ProgramLanguageSelector from '@components/ui/ProgramLanguageSelector/ProgramLanguageSelector';
 import { setter } from '@custom-types/ui/atomic';
 import { getCookie, setCookie } from '@utils/cookies';
+import styles from './send.module.css';
+import { Send as SendPlane } from 'tabler-icons-react';
+import { ILanguage } from '@custom-types/data/atomic';
+import { sendRequest } from '@requests/request';
 
 const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
   spec,
@@ -17,6 +21,7 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
   const [defaultLangSpec, setDefaultLangSpec] = useState<string>('1');
   const [language, setLanguage] = useState<string>(defaultLangSpec);
   const [code, setCode] = useState('');
+  const [langs, setLangs] = useState<ILanguage[]>([]);
 
   useEffect(() => {
     const prev_lang = getCookie('previous_program_lang');
@@ -24,6 +29,11 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
       setDefaultLangSpec(prev_lang);
       setLanguage(prev_lang);
     }
+    sendRequest<{}, ILanguage[]>('language', 'GET').then((res) => {
+      if (!res.error) {
+        setLangs(res.response);
+      }
+    });
   }, []);
 
   const handleSubmit = useCallback(() => {
@@ -62,25 +72,34 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
   );
 
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
+    <div className={styles.wrapper}>
+      <div className={styles.top}>
         <ProgramLanguageSelector
           defaultLangSpec={defaultLangSpec}
           selector={selector}
+          languages={langs}
         />
 
-        <Button onClick={handleSubmit}>{locale.tasks.submit}</Button>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={handleSubmit}
+          leftIcon={<SendPlane />}
+        >
+          {locale.tasks.submit}
+        </Button>
       </div>
       <CodeArea
         label={''}
+        languages={langs}
         setLanguage={setLanguage}
         setCode={setCode}
+        formProps={{ value: code }}
+        classNames={{
+          root: styles.codeArea,
+          wrapper: styles.codeArea,
+          input: styles.codeArea,
+        }}
       />
     </div>
   );

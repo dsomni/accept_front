@@ -1,5 +1,5 @@
-import { Group, Select, Text } from '@mantine/core';
-import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
+import { Button, Group, Text } from '@mantine/core';
+import { FileUpload } from 'tabler-icons-react';
 import {
   FC,
   memo,
@@ -9,36 +9,36 @@ import {
   useState,
 } from 'react';
 import { Textarea } from '@mantine/core';
-import { Dropzone, FullScreenDropzone } from '@mantine/dropzone';
+import { Dropzone } from '@mantine/dropzone';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
 import { capitalize } from '@utils/capitalize';
 import { callback } from '@custom-types/ui/atomic';
-import ProgramLanguageSelector from '@ui/ProgramLanguageSelector/ProgramLanguageSelector';
-
-const languages = [
-  {
-    value: '3',
-    label: 'C++',
-    type: 'text/x-c++src',
-  },
-  {
-    value: '0',
-    label: 'Python',
-    type: 'text/x-python',
-  },
-];
-
-type SelectVariant = { label: string; value: string };
+import {
+  newNotification,
+  successNotification,
+  errorNotification,
+} from '@utils/notificationFunctions';
+import { ILanguage } from '@custom-types/data/atomic';
+import { extensionValidator } from '@utils/extensionValidator';
 
 const CodeArea: FC<{
   label: string;
   setLanguage: callback<string, void>;
+  languages: ILanguage[];
   setCode: callback<string, void>;
   formProps?: any;
   classNames?: object;
-}> = ({ label, setLanguage, setCode, formProps, classNames }) => {
+}> = ({
+  label,
+  setLanguage,
+  languages,
+  setCode,
+  formProps,
+  classNames,
+}) => {
   const { locale } = useLocale();
+  const openRef = useRef<() => void>(() => {});
 
   const [drag, setDrag] = useState(false);
 
@@ -67,40 +67,78 @@ const CodeArea: FC<{
 
   const onDrop = useCallback(
     (files: File[]) => {
-      if (files[0]) {
-        const language = languages.find(
-          (item) => item.type === files[0].type
-        );
-        if (language) {
-          setLanguage(language.value);
-        }
-        files[0].text().then((res) => setCode(res));
+      const id = newNotification({
+        autoClose: 2000,
+        title: capitalize(
+          locale.codeArea.notification.uploading.title
+        ),
+        message: capitalize(
+          locale.codeArea.notification.uploading.description
+        ),
+      });
+      if (!files[0]) {
+        errorNotification({
+          id,
+          title: capitalize(locale.codeArea.notification.error.title),
+          message: capitalize(
+            locale.codeArea.notification.error.description
+          ),
+          autoClose: 5000,
+        });
+        setDrag(false);
+        return;
       }
+      const language: string | undefined = extensionValidator(
+        files[0].name,
+        languages
+      );
+      if (!language) {
+        errorNotification({
+          id,
+          title: capitalize(
+            locale.codeArea.notification.reject.title
+          ),
+          message: capitalize(
+            locale.codeArea.notification.reject.description
+          ),
+          autoClose: 5000,
+        });
+        setDrag(false);
+        return;
+      }
+      setLanguage(language);
+      files[0].text().then((res) => setCode(res));
+      successNotification({
+        id,
+        title: capitalize(locale.codeArea.notification.success.title),
+        message: capitalize(
+          locale.codeArea.notification.success.description
+        ),
+        autoClose: 2000,
+      });
       setDrag(false);
     },
-    [setCode, setLanguage]
+    [languages, locale, setCode, setLanguage]
   );
 
   return (
     <div ref={draggable}>
       <div className={styles.langSelector}></div>
-      {!drag && (
-        <Textarea
-          classNames={classNames}
-          placeholder={capitalize(locale.placeholders.code)}
-          onChange={(e) => setCode(e.target.value)}
-          minRows={40}
-          label={label}
-          {...formProps}
-          // value={code}
-        />
-      )}
-      {drag && (
+      <div className={styles.codeWrapper}>
+        {!drag && (
+          <Textarea
+            classNames={classNames}
+            placeholder={capitalize(locale.placeholders.code)}
+            onChange={(e) => setCode(e.target.value)}
+            minRows={40}
+            label={label}
+            {...formProps}
+          />
+        )}
         <Dropzone
-          disabled={false}
-          accept={['', 'text/x-python', 'text/x-c++src', 'text/rust']}
+          openRef={openRef}
+          style={{ display: drag ? 'block' : 'none', height: '100%' }}
           onDrop={onDrop}
-          onReject={() => setDrag(false)}
         >
           {(status) => (
             <Group
@@ -108,8 +146,7 @@ const CodeArea: FC<{
               spacing="xl"
               style={{ minHeight: 220, pointerEvents: 'none' }}
             >
-              <ImageUploadIcon
-                status={status}
+              <FileUpload
                 style={{
                   width: 80,
                   height: 80,
@@ -119,32 +156,25 @@ const CodeArea: FC<{
 
               <div>
                 <Text size="xl" inline>
-                  Drag images here or click to select files
-                </Text>
-                <Text size="sm" color="dimmed" inline mt={7}>
-                  Attach as many files as you like, each file should
-                  not exceed 5mb
+                  {capitalize(locale.codeArea.drag)}
                 </Text>
               </div>
             </Group>
           )}
         </Dropzone>
-      )}
+      </div>
+      <Button
+        variant="outline"
+        onClick={() => openRef.current()}
+        style={{
+          display: drag ? 'none' : 'block',
+          marginTop: 'var(--spacer-xl)',
+        }}
+      >
+        {capitalize(locale.codeArea.selectFiles)}
+      </Button>
     </div>
   );
 };
 
 export default memo(CodeArea);
-
-function ImageUploadIcon({ ...props }) {
-  const status = props.status;
-  if (status.accepted) {
-    return <FileUpload {...props} />;
-  }
-
-  if (status.rejected) {
-    return <CircleX {...props} />;
-  }
-
-  return <Photo {...props} />;
-}

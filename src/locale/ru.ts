@@ -144,6 +144,23 @@ const tasks = {
         description: 'предпросмотр',
       },
     },
+    validation: {
+      title: 'Задача должна иметь название хотя бы из 5 символов',
+      tags: 'Задача должна иметь хотя бы 1 тег ',
+      description:
+        'Задача должна иметь описание хотя бы из 20 символов',
+      inputFormat: 'Задача должна иметь описание входных данных',
+      outputFormat: 'Задача должна иметь описание выходных данных',
+      grade: {
+        least: 'Класс должен быть не меньше 1',
+        most: 'Класс должен быть не больше 11',
+      },
+      examples: 'Задача должна содержать хотя бы 2 примера',
+      tests: 'Задача должна иметь хотя бы 5 тестов',
+      hintContent:
+        'Вы добавили подсказку, но забыли добавить её содержание',
+      checkerCode: 'Вы добавили чекер, но забыли ввести его код',
+    },
     title: 'название',
     description: 'описание',
     inputFormat: 'входные данные',
@@ -464,7 +481,7 @@ const tournament = {
     title: 'название',
     author: 'автор',
     start: 'начало',
-    end: 'оканчание',
+    end: 'окончание',
     status: 'статус',
   },
 };
@@ -476,6 +493,20 @@ const attempts = {
   verdict: 'вердикт',
   status: 'статус',
   statuses: ['в очереди', 'тестируется', 'протестирована'],
+};
+
+const codeArea = {
+  selectFiles: 'выберете файлы',
+  drag: 'перетащите файлы сюда',
+  notification: {
+    uploading: { title: 'загружаем файл...', description: '' },
+    reject: {
+      title: 'файл отклонён',
+      description: 'недопустимое расширение файла',
+    },
+    error: { title: 'ошибка при загрузке файла', description: '' },
+    success: { title: 'файл загружен успешно', description: '' },
+  },
 };
 
 const ru = {
@@ -512,6 +543,7 @@ const ru = {
   notify,
   errorPage,
   tournament,
+  codeArea,
 };
 
 export default ru;

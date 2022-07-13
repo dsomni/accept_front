@@ -5,12 +5,17 @@ import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import CopyButton from '@ui/CopyButton/CopyButton';
+import Head from 'next/head';
 
 const Description: FC<{ task: ITask }> = ({ task }) => {
   const description = useRef<HTMLDivElement>(null);
   const inputFormat = useRef<HTMLDivElement>(null);
   const outputFormat = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
+
+  useEffect(() => {
+    console.log(task);
+  }, [task]);
 
   useEffect(() => {
     if (description.current)
@@ -23,6 +28,9 @@ const Description: FC<{ task: ITask }> = ({ task }) => {
 
   return (
     <div className={styles.wrapper}>
+      <Head>
+        <title>{task.title}</title>
+      </Head>
       <div className={styles.title}>{task.title}</div>
       <div className={styles.description} ref={description}>
         {task.description}

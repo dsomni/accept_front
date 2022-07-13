@@ -1,9 +1,20 @@
-.notification {
-  width: 100%;
-  position: fixed;
-  bottom: var(--spacer-m);
-  z-index: 15;
+.wrapper {
+  padding: var(--spacer-xl);
+}
+.top {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--spacer-m);
+  align-items: flex-start;
+}
+.codeArea {
+  height: 100%;
+}
+@media screen and (min-width: 480px) {
+  .top {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0;
+    justify-content: space-between;
+  }
 }

@@ -145,6 +145,23 @@ const tasks = {
         description: 'preview',
       },
     },
+    validation: {
+      title: 'Task must have title at least 5 characters',
+      tags: 'Task must have at least 1 tag',
+      description:
+        'Task must have description at least 20 characters',
+      inputFormat: 'Task must have input description',
+      outputFormat: 'Task must have output description',
+      grade: {
+        least: 'Grade must be at least 1',
+        most: 'Grade must be at most 11',
+      },
+      examples: 'Task must include at least 2 examples',
+      tests: 'Task must include at least 5 tests',
+      hintContent: 'You add hint, but hint content is empty',
+      checkerCode:
+        'You used checker, but forget to add checker`s code',
+    },
     title: 'title',
     description: 'description',
     inputFormat: 'input description',
@@ -478,6 +495,23 @@ const attempts = {
   statuses: ['pending', 'testing', 'finished'],
 };
 
+const codeArea = {
+  selectFiles: 'select files',
+  drag: 'drag files here',
+  notification: {
+    uploading: { title: 'uploading file...', description: '' },
+    reject: {
+      title: 'file rejected',
+      description: 'file extension is not allowed',
+    },
+    error: { title: 'error during file uploading', description: '' },
+    success: {
+      title: 'file has been uploaded successfully',
+      description: '',
+    },
+  },
+};
+
 const en = {
   accept: 'accept',
   name: 'title',
@@ -512,6 +546,7 @@ const en = {
   notify,
   errorPage,
   tournament,
+  codeArea,
 };
 
 export default en;

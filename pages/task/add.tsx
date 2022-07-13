@@ -69,9 +69,49 @@ function AddTask() {
 
   const form = useForm({
     initialValues,
+    validate: {
+      title: (value) =>
+        value.length < 5 ? locale.tasks.form.validation.title : null,
+      tags: (value) =>
+        value.length == 1 ? locale.tasks.form.validation.tags : null,
+      description: (value) =>
+        value.length < 20
+          ? locale.tasks.form.validation.description
+          : null,
+      inputFormat: (value) =>
+        value.length == 0
+          ? locale.tasks.form.validation.inputFormat
+          : null,
+      outputFormat: (value) =>
+        value.length == 0
+          ? locale.tasks.form.validation.outputFormat
+          : null,
+      grade: (value) =>
+        value < 0
+          ? locale.tasks.form.validation.grade.least
+          : value > 11
+          ? locale.tasks.form.validation.grade.most
+          : null, //value < 1 && value > 11 ? 'Grade must be between at least one and at most eleven' : null,
+      examples: (value) =>
+        value.length < 2
+          ? locale.tasks.form.validation.examples
+          : null,
+      tests: (value, values) =>
+        values.type == '1' || value.length < 5
+          ? locale.tasks.form.validation.tests
+          : null,
+      hintContent: (value, values) =>
+        !values.hasHint || value.length == 0
+          ? locale.tasks.form.validation.hintContent
+          : null,
+      checkerCode: (value, values) =>
+        values.type == '0' || value.length == 0
+          ? locale.tasks.form.validation.checkerCode
+          : null,
+    },
   });
 
-  const [data, loading, error, detail] = useRequest<
+  const { data, loading, error, detail } = useRequest<
     {},
     ITaskAddBundle
   >('bundle/task_add');

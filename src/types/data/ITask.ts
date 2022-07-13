@@ -40,10 +40,7 @@ export interface ITaskDisplay {
   author: IUser;
   verdict: IVerdict;
   insertedDate: Date;
-}
-
-export interface ISchoolTask extends ITask {
-  grade: number;
+  complexity: number;
 }
 
 export interface ITask extends ITaskDisplay {
