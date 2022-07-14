@@ -49,9 +49,13 @@ const Description: FC<{
           locale.task.form.complexity
         )} ${task.complexity}%`}</div>
       </div>
-      <div className={styles.constrains}>
-        <div className={styles.memory}>{task.constraints.memory}</div>
-        <div className={styles.time}>{task.constraints.time}</div>
+      <div className={styles.constraints}>
+        <div className={styles.memory}>{`${capitalize(
+          locale.task.form.constraints.memory
+        )}: ${task.constraints.memory}Mb`}</div>
+        <div className={styles.time}>{`${capitalize(
+          locale.task.form.constraints.memory
+        )}: ${task.constraints.time}s`}</div>
       </div>
       <div className={styles.description} ref={description}>
         {task.description}

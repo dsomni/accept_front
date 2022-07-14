@@ -18,12 +18,14 @@
   color: var(--dark3);
 }
 
-.constrains {
+.constraints {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: var(--spacer-l);
   font-size: var(--font-size-s);
-  color: var(--dark-3);
+  color: var(--dark3);
+  margin-bottom: var(--spacer-l);
 }
 
 .title,

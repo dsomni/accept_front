@@ -169,6 +169,11 @@ const task = {
     inputExample: 'пример входных данных',
     outputExample: 'пример выходных данных',
     grade: 'класс',
+    constraints: {
+      title: 'ограничения',
+      time: 'время',
+      memory: 'память',
+    },
     checkTypes: ['тесты', 'чекер'],
     taskTypes: ['задача со сдачей кода', 'текстовая задача'],
     checkType: 'тип тестирования',

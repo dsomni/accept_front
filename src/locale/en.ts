@@ -170,6 +170,11 @@ const task = {
     inputExample: 'input example',
     outputExample: 'output example',
     grade: 'grade',
+    constraints: {
+      title: 'constraints',
+      time: 'time',
+      memory: 'memory',
+    },
     checkTypes: ['tests', 'checker'],
     taskTypes: ['code task', 'text task'],
     checkType: 'check type',
