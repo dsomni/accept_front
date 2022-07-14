@@ -3,10 +3,10 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: var(--lg2) 15vw;
+  margin: var(--spacer-xxl) 15vw;
 }
 .label {
-  font-size: var(--p1);
+  font-size: var(--font-size-l);
 }
 
 .languages {
@@ -21,9 +21,9 @@
 }
 
 .value span {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }
 
 .items {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }

@@ -2,7 +2,7 @@ import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
 import OpenTask from './OpenTask/OpenTask';
 import styles from './taskItem.module.css';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 export const TaskItem: FC<{
   item: Item;

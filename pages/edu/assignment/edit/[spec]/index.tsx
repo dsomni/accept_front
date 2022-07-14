@@ -6,26 +6,20 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useForm } from '@mantine/hooks';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { useForm } from '@mantine/form';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { sendRequest } from '@requests/request';
-import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
-import { ITag } from '@custom-types/ITag';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { ITag } from '@custom-types/data/ITag';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 function EditAssignmentSchema() {
   const { locale, lang } = useLocale();
-  const { user } = useUser();
   const [ready, setReady] = useState(false);
 
   const [tags, setTags] = useState<ITag[]>([]);
@@ -44,33 +38,41 @@ function EditAssignmentSchema() {
     if (typeof router.query.spec === 'string') {
       sendRequest<{ spec: string }, IAssignmentSchema>(
         `assignments/schema/${router.query.spec}`,
-        'GET'
+        'GET',
+        undefined,
+        10000
       ).then((res) => {
         if (!res.error) {
           setAssignmentSchema(res.response);
         }
       });
     }
-    sendRequest<{}, ITaskDisplay[]>(`tasks/list`, 'GET').then(
-      (res) => {
-        if (!res.error) {
-          const tasks = new Map<string, ITaskDisplay>();
-          for (let i = 0; i < res.response.length; i++) {
-            tasks.set(res.response[i].spec, res.response[i]);
-          }
-          setTasks(tasks);
+    sendRequest<{}, ITaskDisplay[]>(
+      `tasks/list`,
+      'GET',
+      undefined,
+      10000
+    ).then((res) => {
+      if (!res.error) {
+        const tasks = new Map<string, ITaskDisplay>();
+        for (let i = 0; i < res.response.length; i++) {
+          tasks.set(res.response[i].spec, res.response[i]);
         }
+        setTasks(tasks);
       }
-    );
+    });
     setReadyTags(false);
-    sendRequest<{}, ITag[]>(`assignment_tags/list`, 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          setTags(res.response);
-          setReadyTags(true);
-        }
+    sendRequest<{}, ITag[]>(
+      `assignment_tags/list`,
+      'GET',
+      undefined,
+      20000
+    ).then((res) => {
+      if (!res.error && !cleanUp) {
+        setTags(res.response);
+        setReadyTags(true);
       }
-    );
+    });
     return () => {
       cleanUp = true;
     };
@@ -95,7 +97,6 @@ function EditAssignmentSchema() {
   );
   const form = useForm({
     initialValues: formValues,
-    validationRules: {},
   });
 
   useEffect(() => {
@@ -111,33 +112,14 @@ function EditAssignmentSchema() {
       tasks: form.values['tasks'].map((task: Item) => task.value),
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
-    const id = newNotification({
-      title: capitalize(locale.notify.assignmentSchema.edit.loading),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<IAssignmentSchema, IAssignmentSchema>(
+    requestWithNotify(
       `assignments/schema/edit/${assignmentSchema.spec}`,
       'POST',
+      locale.notify.assignmentSchema.edit,
+      lang,
+      (response: IAssignmentSchema) => response.spec,
       body
-    ).then((res) => {
-      if (!res.error) {
-        successNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.edit.success
-          ),
-          message: res.response.spec,
-        });
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.edit.error
-          ),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
+    );
   }, [form.values, locale, assignmentSchema?.spec, lang]);
 
   return (

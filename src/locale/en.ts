@@ -145,6 +145,23 @@ const tasks = {
         description: 'preview',
       },
     },
+    validation: {
+      title: 'Task must have title at least 5 characters',
+      tags: 'Task must have at least 1 tag',
+      description:
+        'Task must have description at least 20 characters',
+      inputFormat: 'Task must have input description',
+      outputFormat: 'Task must have output description',
+      grade: {
+        least: 'Grade must be at least 1',
+        most: 'Grade must be at most 11',
+      },
+      examples: 'Task must include at least 2 examples',
+      tests: 'Task must include at least 5 tests',
+      hintContent: 'You add hint, but hint content is empty',
+      checkerCode:
+        'You used checker, but forget to add checker`s code',
+    },
     title: 'title',
     description: 'description',
     inputFormat: 'input description',
@@ -152,16 +169,15 @@ const tasks = {
     inputExample: 'input example',
     outputExample: 'output example',
     grade: 'grade',
-    checkType: 'checker',
-    textType: 'text task',
-    codeType: 'code task',
-    isCode: 'task type',
+    checkTypes: ['tests', 'checker'],
+    taskTypes: ['code task', 'text task'],
+    checkType: 'check type',
+    taskType: 'task type',
     checker: 'checker',
     hint: {
       title: 'hint',
       alarmType: 'alarm type',
-      attempts: 'attempts',
-      timestamp: 'timestamp',
+      hintAlarmTypes: ['attempts', 'timestamp'],
       text: 'hint text',
       showAfter: 'show after',
     },
@@ -283,6 +299,9 @@ const groups = {
 };
 
 const notify = {
+  errors: {
+    unauthorized: 'unauthorized',
+  },
   assignmentSchema: {
     create: {
       loading: 'creating the assignment schema',
@@ -300,7 +319,28 @@ const notify = {
       error: 'error when deleting the assignment schema',
     },
   },
+
+  attempt: {
+    delete: {
+      loading: 'deleting the attempt',
+      success: 'the attempt was deleted successfully',
+      error: 'error when deleting the attempt',
+    },
+    send: {
+      loading: 'sending the attempt',
+      success: 'the attempt was send successfully',
+      error: 'error when sending the attempt',
+    },
+  },
+
   task: {
+    attempts: {
+      list: {
+        loading: '',
+        success: '',
+        error: 'error when fetching the attempts',
+      },
+    },
     create: {
       loading: 'creating the task',
       success: 'the task was created successfully',
@@ -373,6 +413,23 @@ const notify = {
       error: 'error when deleting the tournament',
     },
   },
+  tournament_task: {
+    create: {
+      loading: 'creating the tournament task',
+      success: 'the tournament task was created successfully',
+      error: 'error when creating the tournament task',
+    },
+    edit: {
+      loading: 'updating the tournament task',
+      success: 'the tournament task was updated successfully',
+      error: 'error when updating the tournament task',
+    },
+    delete: {
+      loading: 'deleting the tournament task',
+      success: 'the tournament task was deleted successfully',
+      error: 'error when deleting the tournament task',
+    },
+  },
 };
 
 const errorPage = {
@@ -420,6 +477,39 @@ const tournament = {
       forWhole: 'by whole task evaluation',
     },
   },
+  list: {
+    title: 'title',
+    author: 'author',
+    start: 'start',
+    end: 'end',
+    status: 'status',
+  },
+};
+
+const attempts = {
+  date: 'date',
+  language: 'language',
+  result: 'result',
+  verdict: 'verdict',
+  status: 'status',
+  statuses: ['pending', 'testing', 'finished'],
+};
+
+const codeArea = {
+  selectFiles: 'select files',
+  drag: 'drag files here',
+  notification: {
+    uploading: { title: 'uploading file...', description: '' },
+    reject: {
+      title: 'file rejected',
+      description: 'file extension is not allowed',
+    },
+    error: { title: 'error during file uploading', description: '' },
+    success: {
+      title: 'file has been uploaded successfully',
+      description: '',
+    },
+  },
 };
 
 const en = {
@@ -438,6 +528,7 @@ const en = {
   all: 'all',
   create: 'create',
   edit: 'edit',
+  attempts,
   groups,
   table,
   errors,
@@ -455,6 +546,7 @@ const en = {
   notify,
   errorPage,
   tournament,
+  codeArea,
 };
 
 export default en;

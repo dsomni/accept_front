@@ -1,12 +1,8 @@
 import Form from '@components/Tournament/Form/Form';
 import { useLocale } from '@hooks/useLocale';
-import { ReactNode, useCallback, useEffect } from 'react';
-import notificationStyles from '@styles/ui/notification.module.css';
-import { useForm } from '@mantine/hooks';
-import { sendRequest } from '@requests/request';
-import { useUser } from '@hooks/useUser';
-import { ITournament } from '@custom-types/ITournament';
-import { useRouter } from 'next/router';
+import { ReactNode, useCallback } from 'react';
+import { useForm } from '@mantine/form';
+import { ITournament } from '@custom-types/data/ITournament';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { capitalize } from '@utils/capitalize';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -15,17 +11,13 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 
 function EditTournament(props: { tournament: ITournament }) {
   const { locale, lang } = useLocale();
-  const { user } = useUser();
   const tournament = {
     ...props.tournament,
     assessmentType: props.tournament.assessmentType.toString(),
   };
 
-  const router = useRouter();
-
   const form = useForm({
     initialValues: tournament,
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {
@@ -34,7 +26,7 @@ function EditTournament(props: { tournament: ITournament }) {
       assessmentType: parseInt(form.values.assessmentType),
     };
     requestWithNotify(
-      `tournament/edit/${tournament.spec}`,
+      `tournaments/edit/${tournament.spec}`,
       'POST',
       locale.notify.tournament.edit,
       lang,

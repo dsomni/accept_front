@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import IHeaderLink from '@custom-types/IHeaderLink';
+import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { HeaderLink } from './HeaderLink';
 import { Group } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';

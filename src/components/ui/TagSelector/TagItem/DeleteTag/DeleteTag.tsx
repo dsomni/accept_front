@@ -1,12 +1,12 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { ActionIcon, Button, Group, Modal } from '@mantine/core';
-import { TrashIcon } from '@modulz/radix-icons';
+import { Trash } from 'tabler-icons-react';
 import styles from './deleteTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 const DeleteTag: FC<{
   item: Item;
@@ -36,7 +36,7 @@ const DeleteTag: FC<{
         variant="hover"
         size="lg"
       >
-        <TrashIcon width={20} height={20} />
+        <Trash width={20} height={20} />
       </ActionIcon>
       <Modal
         opened={opened}

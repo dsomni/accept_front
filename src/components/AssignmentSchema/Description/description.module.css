@@ -1,23 +1,23 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--md3);
-  padding: var(--md1) var(--lg3);
-  font-size: var(--p2);
+  gap: var(--spacer-s);
+  padding: var(--spacer-m) var(--spacer-xl);
+  font-size: var(--font-size-m);
 }
 
 .title {
-  font-size: var(--h2);
+  font-size: var(--font-size-xxl);
 }
 
 .description {
-  padding: var(--md3) 0px;
-  font-size: var(--p1);
+  padding: var(--spacer-s) 0px;
+  font-size: var(--font-size-l);
 }
 
 .tableWrapper {
   width: 100%;
-  margin-top: var(--md2);
+  margin-top: var(--spacer-l);
 }
 
 .tableWrapper tr {
@@ -30,8 +30,8 @@
 }
 
 .row {
-  font-size: var(--p1);
-  padding: var(--md2);
+  font-size: var(--font-size-l);
+  padding: var(--spacer-l);
   border-bottom: 1px solid black;
 }
 
@@ -46,7 +46,7 @@
 .tableTitle {
   text-decoration: none;
   text-align: left;
-  font-size: var(--p1);
+  font-size: var(--font-size-l);
   color: var(--primary);
 }
 

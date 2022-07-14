@@ -6,13 +6,13 @@ import {
   Modal,
   TextInput,
 } from '@mantine/core';
-import { Pencil1Icon } from '@modulz/radix-icons';
+import { Pencil } from 'tabler-icons-react';
 import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 const EditTag: FC<{
   item: Item;
@@ -69,7 +69,7 @@ const EditTag: FC<{
         variant="hover"
         size="lg"
       >
-        <Pencil1Icon width={20} height={20} />
+        <Pencil width={20} height={20} />
       </ActionIcon>
       <Modal
         opened={opened}

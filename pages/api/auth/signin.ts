@@ -14,23 +14,21 @@ export default async function signIn(
     const response = await fetch(url, {
       method: 'POST',
       headers: headers as { [key: string]: string },
-      body: req.body,
+      body: JSON.stringify(req.body),
       credentials: 'include',
     });
     if (response.status === 200) {
       const data = await response.json();
       res.setHeader('Set-Cookie', [
         serialize('access_token_cookie', data['access_token'], {
-          httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
-          expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
+          maxAge: 30 * 60,
           sameSite: 'strict',
           path: '/',
         }),
         serialize('refresh_token_cookie', data['refresh_token'], {
-          httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+          maxAge: (30 * 24 - 6) * 60 * 60,
           sameSite: 'strict',
           path: '/',
         }),

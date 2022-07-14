@@ -1,15 +1,25 @@
-import { FC, createContext, useState, useContext, useCallback } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+  FC,
+  ReactNode,
+} from 'react';
 import {
   IAvailableLang,
   locales,
   ILocaleContext,
   ILocale,
-} from '@custom-types/ILocale';
-import { useRouter } from 'next/router';
+} from '@custom-types/ui/ILocale';
+import { getCookie, setCookie } from '@utils/cookies';
 
 const langList = Object.keys(locales) as IAvailableLang[];
 
 const LocaleContext = createContext<ILocaleContext>(null!);
+
+const defaultLocale = 'ru';
 
 function getWeekDays(locale: ILocale) {
   return [
@@ -40,8 +50,12 @@ function getMonths(locale: ILocale) {
   ];
 }
 
-export const LocaleProvider: FC = ({ children }) => {
+export const LocaleProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const set = useCallback((lang: IAvailableLang) => {
+    setCookie('NEXT_LOCALE', lang);
+    setLocale(lang);
     setValue((prev) => {
       return {
         ...prev,
@@ -52,7 +66,13 @@ export const LocaleProvider: FC = ({ children }) => {
       };
     });
   }, []);
-  const { locale } = useRouter();
+  const [locale, setLocale] = useState<IAvailableLang>(defaultLocale);
+  useEffect(() => {
+    const lang = getCookie('NEXT_LOCALE');
+    if (lang) {
+      set(lang as IAvailableLang);
+    }
+  }, []); // eslint-disable-line
   const [value, setValue] = useState<ILocaleContext>(() => ({
     locale: locales[locale as IAvailableLang],
     set,
@@ -63,7 +83,9 @@ export const LocaleProvider: FC = ({ children }) => {
   }));
 
   return (
-    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
+    <LocaleContext.Provider value={value}>
+      {children}
+    </LocaleContext.Provider>
   );
 };
 

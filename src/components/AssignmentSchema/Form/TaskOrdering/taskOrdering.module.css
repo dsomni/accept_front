@@ -4,23 +4,23 @@
 }
 
 .label {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
 }
 
 .itemWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--sm);
-  padding: var(--lg4);
+  gap: var(--spacer-xs);
+  padding: var(--spacer-l);
 }
 
 .dragButton {
-  width: var(--md1);
-  height: var(--md1);
+  width: var(--spacer-m);
+  height: var(--spacer-m);
 }
 .head {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
 }
 
 .wrapper {
@@ -28,5 +28,5 @@
   flex-direction: column;
   gap: 5vh;
   width: 70vw;
-  margin: var(--lg2) 15vw var(--lg2) 15vw;
+  margin: var(--spacer-xxl) 15vw var(--spacer-xxl) 15vw;
 }

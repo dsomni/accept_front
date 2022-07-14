@@ -6,8 +6,8 @@ import {
   Droppable,
   Draggable,
 } from 'react-beautiful-dnd';
-import { DragHandleDots2Icon } from '@modulz/radix-icons';
-import { callback } from '@custom-types/atomic';
+import { GridDots } from 'tabler-icons-react';
+import { callback } from '@custom-types/ui/atomic';
 
 export const CustomDraggableList: FC<{
   values: Item[];
@@ -51,10 +51,7 @@ export const CustomDraggableList: FC<{
                         {...provider.dragHandleProps}
                       >
                         <div className={classNames?.dragButton}>
-                          <DragHandleDots2Icon
-                            width={20}
-                            height={20}
-                          />
+                          <GridDots width={20} height={20} />
                         </div>
                         <div className={classNames?.label}>
                           {task.label}

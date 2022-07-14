@@ -1,29 +1,72 @@
-import { IUser, IUserContext } from '@custom-types/IUser';
+import { IUser, IUserContext } from '@custom-types/data/IUser';
 import { sendRequest, isSuccessful } from '@requests/request';
+import { getCookie, setCookie } from '@utils/cookies';
 import {
   createContext,
   FC,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react';
+import Cryptr from 'cryptr';
 
 const UserContext = createContext<IUserContext>(null!);
+const key = 'bug_in_maxim';
 
-export const UserProvider: FC = ({ children }) => {
+const cryptr = new Cryptr(key);
+
+export const UserProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const whoAmI = useCallback(async () => {
-    const res = await sendRequest<{}, IUser>('auth/whoami', 'GET');
-    if (!res.error) {
-      setValue((prev) => ({
-        ...prev,
-        user: res.response,
-      }));
+    const cookie_user = getCookie('user');
+    if (!cookie_user) {
+      const res = await sendRequest<{}, IUser>('auth/whoami', 'GET');
+      if (!res.error) {
+        const accessLevel = res.response.role.accessLevel;
+        const user = res.response;
+        setCookie('user', cryptr.encrypt(JSON.stringify(user)), {
+          'max-age': 10 * 60,
+          path: '/',
+        });
+        setValue((prev) => ({
+          ...prev,
+          user: res.response,
+          accessLevel,
+          isUser: accessLevel > 0,
+          isStudent: accessLevel > 1,
+          isTeacher: accessLevel > 2,
+          isAdmin: accessLevel > 50,
+        }));
+      } else {
+        setValue((prev) => ({
+          ...prev,
+          user: undefined,
+          accessLevel: 0,
+          isUser: false,
+          isStudent: false,
+          isTeacher: false,
+          isAdmin: false,
+        }));
+      }
     } else {
-      setValue((prev) => ({
-        ...prev,
-        user: undefined,
-      }));
+      try {
+        const user = JSON.parse(cryptr.decrypt(cookie_user)) as IUser;
+        setValue((prev) => ({
+          ...prev,
+          user: user,
+          accessLevel: user.role.accessLevel,
+          isUser: user.role.accessLevel > 0,
+          isStudent: user.role.accessLevel > 1,
+          isTeacher: user.role.accessLevel > 2,
+          isAdmin: user.role.accessLevel > 50,
+        }));
+      } catch (error) {
+        setCookie('user', '', { 'max-age': 0 });
+        whoAmI();
+      }
     }
   }, []);
 
@@ -55,22 +98,54 @@ export const UserProvider: FC = ({ children }) => {
       setValue((prev) => ({
         ...prev,
         user: undefined,
+        accessLevel: 0,
+        isUser: false,
+        isStudent: false,
+        isTeacher: false,
+        isAdmin: false,
       }));
       return true;
     }
     return false;
   }, []);
 
-  useEffect(() => {
-    whoAmI();
-  }, [whoAmI]);
+  const refreshAccess = useCallback(() => {
+    if (getCookie('access_token_cookie')) {
+      whoAmI();
+      return 0;
+    }
+    if (getCookie('refresh_token_cookie')) {
+      refresh();
+      return 1;
+    }
+    setValue((prev) => ({
+      ...prev,
+      user: undefined,
+      accessLevel: 0,
+      isUser: false,
+      isStudent: false,
+      isTeacher: false,
+      isAdmin: false,
+    }));
+    return 2;
+  }, [refresh, whoAmI]);
 
   const [value, setValue] = useState<IUserContext>(() => ({
-    user: null,
+    user: undefined,
+    accessLevel: 0,
+    isUser: false,
+    isStudent: false,
+    isTeacher: false,
+    isAdmin: false,
     signIn,
     signOut,
     refresh,
+    refreshAccess,
   }));
+
+  useEffect(() => {
+    refreshAccess();
+  }, [refreshAccess]);
 
   return (
     <UserContext.Provider value={value}>

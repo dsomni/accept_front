@@ -1,32 +1,47 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--md3);
-  padding: var(--md1) var(--lg3);
-  font-size: var(--p2);
+  gap: var(--spacer-s);
+  padding: var(--spacer-m) var(--spacer-xl);
+  font-size: var(--font-size-m);
+  margin-bottom: var(--spacer-xxl);
+}
+.title {
+  font-size: var(--font-size-huge);
 }
 
-.title {
-  font-size: var(--h2);
+.title,
+.description,
+.remark,
+.formatWrapper {
+  max-width: 1000px;
+  padding-right: var(--spacer-m);
 }
+
 .formatWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--md3);
 }
 
-.formatLabel {
-  font-size: var(--h4);
-  padding: var(--md1) 0;
+.formatLabel,
+.examplesLabel,
+.remarkLabel {
+  color: var(--secondary);
+  font-size: var(--font-size-xl);
+  padding: var(--spacer-m) 0;
+}
+.examplesLabel {
+  padding: var(--spacer-l) 0 0 0;
 }
 
 .table {
-  margin-bottom: var(--md2);
+  margin-bottom: var(--spacer-l);
 }
 
 .table td {
-  font-size: var(--p2) !important;
-  padding: var(--md3) var(--md1) !important;
+  font-size: var(--font-size-m) !important;
+  padding: var(--spacer-s) var(--spacer-m) !important;
+  overflow-wrap: anywhere;
 }
 
 .table tr {
@@ -35,11 +50,11 @@
 }
 
 .tableHeader {
-  font-size: var(--p1);
+  font-size: var(--font-size-l);
 }
 
 .exampleHeader {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
   height: 2.5rem;
   display: flex;
   flex-direction: row;
@@ -47,7 +62,8 @@
   align-items: center;
 }
 
-.examplesLabel {
-  font-size: var(--h4);
-  padding: var(--md2) 0 0 0;
+@media screen and (max-width: 480px) {
+  .wrapper {
+    padding: var(--spacer-s) var(--spacer-m);
+  }
 }

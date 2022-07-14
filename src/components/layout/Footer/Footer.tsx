@@ -1,9 +1,9 @@
 import { FC, memo } from 'react';
 import styles from './footer.module.css';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
 import { LanguageSelector } from '@ui/LanguageSelector/LanguageSelector';
+import { BrandGithub } from 'tabler-icons-react';
+import { ActionIcon } from '@mantine/core';
 
 const Footer: FC = () => {
   const { locale } = useLocale();
@@ -14,29 +14,21 @@ const Footer: FC = () => {
         <LanguageSelector />
       </div>
       <div className={styles.githubs}>
-        <div className={styles.github1}>
-          <Link href="https://github.com/dsomni">
-            <a>
-              <Image
-                src="/media/github.svg"
-                alt="github icon"
-                width={32}
-                height={32}
-              />
-            </a>
-          </Link>
+        <div className={styles.github}>
+          <ActionIcon
+            component={'a'}
+            href={'https://github.com/dsomni'}
+          >
+            <BrandGithub size={24} color={'white'} />
+          </ActionIcon>
         </div>
-        <div className={styles.github2}>
-          <Link href="https://github.com/RetroMeras">
-            <a>
-              <Image
-                src="/media/github.svg"
-                alt="github icon"
-                width={32}
-                height={32}
-              />
-            </a>
-          </Link>
+        <div className={styles.github}>
+          <ActionIcon
+            component={'a'}
+            href={'https://github.com/RetroMeras'}
+          >
+            <BrandGithub size={24} color={'white'} />
+          </ActionIcon>
         </div>
       </div>
       <div className={styles.copyright}>

@@ -19,17 +19,20 @@ export default async function signOut(
     );
     res.setHeader('Set-Cookie', [
       serialize('access_token_cookie', '', {
-        httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
         sameSite: 'strict',
-        expires: new Date(),
+        maxAge: 0,
         path: '/',
       }),
       serialize('refresh_token_cookie', '', {
-        httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
         sameSite: 'strict',
-        expires: new Date(),
+        maxAge: 0,
+        path: '/',
+      }),
+      serialize('hero', 'Evgenich_bug_in_Maxim', {
+        sameSite: 'strict',
+        maxAge: 5,
         path: '/',
       }),
     ]);

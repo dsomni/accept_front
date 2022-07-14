@@ -1,16 +1,33 @@
 import { FC, memo, useEffect, useRef } from 'react';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITask } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import CopyButton from '@ui/CopyButton/CopyButton';
+import Head from 'next/head';
+import { sendRequest } from '@requests/request';
+import { setter } from '@custom-types/ui/atomic';
 
-const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
+const Description: FC<{
+  task: ITask;
+  setShowHint: setter<boolean>;
+}> = ({ task, setShowHint }) => {
   const description = useRef<HTMLDivElement>(null);
   const inputFormat = useRef<HTMLDivElement>(null);
   const outputFormat = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
+
+  useEffect(() => {
+    sendRequest<{}, boolean>(
+      `task/should_show_hint/${task.spec}`,
+      'GET',
+      undefined,
+      5000
+    ).then((res) => {
+      setShowHint(res.response);
+    });
+  }, [task.spec, setShowHint]);
 
   useEffect(() => {
     if (description.current)
@@ -23,6 +40,9 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
 
   return (
     <div className={styles.wrapper}>
+      <Head>
+        <title>{task.title}</title>
+      </Head>
       <div className={styles.title}>{task.title}</div>
       <div className={styles.description} ref={description}>
         {task.description}
@@ -85,6 +105,14 @@ const Description: FC<{ task: ITaskDisplay }> = ({ task }) => {
           </tbody>
         </Table>
       ))}
+      {task.remark && (
+        <div className={styles.remarkWrapper}>
+          <div className={styles.remarkLabel}>
+            {capitalize(locale.tasks.form.remark)}
+          </div>
+          <div className={styles.remark}>{task.remark}</div>
+        </div>
+      )}
     </div>
   );
 };

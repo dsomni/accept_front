@@ -144,6 +144,23 @@ const tasks = {
         description: 'предпросмотр',
       },
     },
+    validation: {
+      title: 'Задача должна иметь название хотя бы из 5 символов',
+      tags: 'Задача должна иметь хотя бы 1 тег ',
+      description:
+        'Задача должна иметь описание хотя бы из 20 символов',
+      inputFormat: 'Задача должна иметь описание входных данных',
+      outputFormat: 'Задача должна иметь описание выходных данных',
+      grade: {
+        least: 'Класс должен быть не меньше 1',
+        most: 'Класс должен быть не больше 11',
+      },
+      examples: 'Задача должна содержать хотя бы 2 примера',
+      tests: 'Задача должна иметь хотя бы 5 тестов',
+      hintContent:
+        'Вы добавили подсказку, но забыли добавить её содержание',
+      checkerCode: 'Вы добавили чекер, но забыли ввести его код',
+    },
     title: 'название',
     description: 'описание',
     inputFormat: 'входные данные',
@@ -151,16 +168,15 @@ const tasks = {
     inputExample: 'пример входных данных',
     outputExample: 'пример выходных данных',
     grade: 'класс',
-    checkType: 'чекер',
-    textType: 'текстовая задача',
-    codeType: 'задача со сдачей кода',
-    isCode: 'тип задачи',
+    checkTypes: ['тесты', 'чекер'],
+    taskTypes: ['задача со сдачей кода', 'текстовая задача'],
+    checkType: 'тип тестирования',
+    taskType: 'тип задачи',
     checker: 'чекер',
     hint: {
       title: 'подсказка',
       alarmType: 'вид триггера',
-      attempts: 'попытки',
-      timestamp: 'время',
+      hintAlarmTypes: ['попытки', 'время'],
       text: 'текст подсказки',
       showAfter: 'показать после',
     },
@@ -282,6 +298,9 @@ const groups = {
 };
 
 const notify = {
+  errors: {
+    unauthorized: 'вы не авторизованы',
+  },
   assignmentSchema: {
     create: {
       loading: 'создаём шаблон задания',
@@ -299,7 +318,28 @@ const notify = {
       error: 'ошибка при удалении шаблона задания',
     },
   },
+
+  attempt: {
+    delete: {
+      loading: 'удаляем попытку',
+      success: 'попытка успешно удалён',
+      error: 'ошибка при удалении попытки',
+    },
+    send: {
+      loading: 'отправляем попытку',
+      success: 'попытка успешно отправлена',
+      error: 'ошибка при отправке попытки',
+    },
+  },
+
   task: {
+    attempts: {
+      list: {
+        loading: '',
+        success: '',
+        error: 'ошибка при получении попыток',
+      },
+    },
     create: {
       loading: 'создаём задачу',
       success: 'задача успешно создана',
@@ -370,7 +410,24 @@ const notify = {
     delete: {
       loading: 'удаляем турнир',
       success: 'турнир успешно удалён',
-      error: 'ошибка при удалении турнир',
+      error: 'ошибка при удалении турнира',
+    },
+  },
+  tournament_task: {
+    create: {
+      loading: 'создаём турнирную задачу',
+      success: 'турнирная задача успешно создана',
+      error: 'ошибка при создании турнирной задачи',
+    },
+    edit: {
+      loading: 'обновляем турнирную задачу',
+      success: 'турнирная задача успешно обновлена',
+      error: 'ошибка при обновлении турнирной задачи',
+    },
+    delete: {
+      loading: 'удаляем турнирную задачу',
+      success: 'турнирная задача успешно удалена',
+      error: 'ошибка при удалении турнирной задачи',
     },
   },
 };
@@ -420,6 +477,36 @@ const tournament = {
       forWhole: 'оценка по полностью сданной задаче',
     },
   },
+  list: {
+    title: 'название',
+    author: 'автор',
+    start: 'начало',
+    end: 'окончание',
+    status: 'статус',
+  },
+};
+
+const attempts = {
+  date: 'дата',
+  language: 'язык',
+  result: 'результат',
+  verdict: 'вердикт',
+  status: 'статус',
+  statuses: ['в очереди', 'тестируется', 'протестирована'],
+};
+
+const codeArea = {
+  selectFiles: 'выберете файлы',
+  drag: 'перетащите файлы сюда',
+  notification: {
+    uploading: { title: 'загружаем файл...', description: '' },
+    reject: {
+      title: 'файл отклонён',
+      description: 'недопустимое расширение файла',
+    },
+    error: { title: 'ошибка при загрузке файла', description: '' },
+    success: { title: 'файл загружен успешно', description: '' },
+  },
 };
 
 const ru = {
@@ -438,6 +525,7 @@ const ru = {
   all: 'все',
   create: 'создать',
   edit: 'изменить',
+  attempts,
   groups,
   table,
   errors,
@@ -455,6 +543,7 @@ const ru = {
   notify,
   errorPage,
   tournament,
+  codeArea,
 };
 
 export default ru;

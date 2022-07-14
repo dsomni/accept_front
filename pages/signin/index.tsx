@@ -13,9 +13,10 @@ import Head from 'next/head';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { capitalize } from '@utils/capitalize';
-import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { PasswordInput, TextInput } from '@mantine/core';
+import Button from '@ui/Button/Button';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {
@@ -33,18 +34,10 @@ function SignIn() {
       login: '',
       password: '',
     },
-    validationRules: {
-      login: (value) => value.trim().length > 4,
-      password: (value) => value.trim().length > 4,
-    },
-    errorMessages: {
-      login: capitalize(locale.auth.errors.login),
-      password: capitalize(locale.auth.errors.password),
-    },
   });
 
   const handleSignIn = useCallback(
-    (values) => {
+    (values: { login: string; password: string }) => {
       const id = newNotification({
         title: capitalize(locale.notify.auth.signIn.loading),
         message: capitalize(locale.loading) + '...',
@@ -54,7 +47,6 @@ function SignIn() {
           successNotification({
             id,
             title: capitalize(locale.notify.auth.signIn.success),
-            description: '',
             autoClose: 5000,
           });
           router.push((router.query.referrer as string) || '/');
@@ -62,7 +54,6 @@ function SignIn() {
           errorNotification({
             id,
             title: capitalize(locale.notify.auth.signIn.error),
-            description: '',
             autoClose: 5000,
           });
         }

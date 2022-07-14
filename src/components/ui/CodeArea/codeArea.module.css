@@ -1,4 +1,9 @@
 .langSelector {
-  margin-bottom: var(--md2);
+  margin-bottom: var(--spacer-l);
   max-width: 50%;
+}
+
+.codeWrapper {
+  min-height: 400px;
+  height: 40vw;
 }

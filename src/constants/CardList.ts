@@ -1,11 +1,11 @@
-import { IProjectCard } from '@custom-types/IProjectCard';
+import { IProjectCard } from '@custom-types/ui/IProjectCard';
 
 export const cardList: IProjectCard[] = [
   {
     title: (locale) => locale.projects.education.title,
     description: (locale) => locale.projects.education.description,
     image: 'media/code0.jpg',
-    href: '/edu/task/list',
+    href: '/task/list',
   },
   {
     title: (locale) => locale.projects.courses.title,

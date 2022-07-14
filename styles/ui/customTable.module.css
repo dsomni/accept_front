@@ -22,21 +22,21 @@
 }
 
 .cell {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
 }
 .headerCell,
 .cell {
-  padding: var(--md2);
+  padding: var(--spacer-l);
   border-bottom: solid 1px #3a3a3a;
 }
 
 .headerCell {
-  font-size: var(--h3);
+  font-size: var(--font-size-xxl);
   user-select: none;
   border-bottom: solid 2px black;
   display: flex;
   align-items: center;
-  gap: var(--sm);
+  gap: var(--spacer-xs);
   flex-direction: row;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
   justify-content: space-between;
   align-items: flex-end;
   column-gap: 2em;
-  row-gap: var(--md3);
+  row-gap: var(--spacer-s);
   padding-right: 5%;
   flex-wrap: wrap;
 }
@@ -70,7 +70,7 @@
 .tags {
   font-size: 0.7em;
   display: flex;
-  gap: var(--sm);
+  gap: var(--spacer-xs);
   flex-direction: row;
   flex-wrap: wrap;
   text-align: right;

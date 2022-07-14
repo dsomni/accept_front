@@ -1,11 +1,14 @@
-import { LoginLayout } from '@layouts/LoginLayout';
-import { ReactElement } from 'react';
+import { Helper } from '@components/ui/Helper/Helper';
+import { InfoButton } from '@components/ui/InfoButton/InfoButton';
+import { DefaultLayout } from '@layouts/DefaultLayout';
+import { Button } from '@mantine/core';
+import { ReactElement, useCallback } from 'react';
 
 function TestPage() {
-  return <p>Test</p>;
+  return <></>;
 }
 
 TestPage.getLayout = (page: ReactElement) => {
-  return <LoginLayout title={'Вход'}>{page}</LoginLayout>;
+  return <DefaultLayout>{page}</DefaultLayout>;
 };
 export default TestPage;

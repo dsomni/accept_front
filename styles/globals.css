@@ -3,43 +3,68 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   --removed-scroll-width: 0 !important;
-  font-size: var(--md2);
+  font-size: 14px;
+  min-width: 400px;
 }
 
 :root {
   --primary: #2ea3f2;
   --secondary: #005cd4;
   --positive: #04b504;
-  --negative: red;
+  --negative: #ff0000;
   --accent: #ff3dff;
-  --h1: 2rem;
-  --h2: 1.8rem;
-  --h3: 1.6rem;
-  --h4: 1.4rem;
-  --p1: 1.2rem;
-  --p2: 1rem;
-  --xl1: 100px;
-  --lg1: 80px;
-  --lg2: 48px;
-  --lg3: 36px;
-  --lg4: 24px;
-  --md1: 20px;
-  --md2: 16px;
-  --md3: 10px;
-  --sm: 5px;
+  --dark1: #000;
+  --dark2: #333;
+  --dark3: #666;
+  --dark4: #999;
+  --font-size-huge: 2.5rem;
+  --font-size-xxxl: 2rem;
+  --font-size-xxl: 1.7rem;
+  --font-size-xl: 1.4rem;
+  --font-size-l: 1.2rem;
+  --font-size-m: 1rem;
+  --font-size-s: 0.8rem;
+  --font-size-xs: 0.6rem;
+  --spacer-xxxl: 6rem;
+  --spacer-xxl: 3rem;
+  --spacer-xl: 2rem;
+  --spacer-l: 1.5rem;
+  --spacer-m: 1rem;
+  --spacer-s: 0.6rem;
+  --spacer-xs: 0.3rem;
 }
 
-@media only screen and (max-width: 1080px) {
+@media only screen and (min-width: 320px) {
   html,
   body {
-    font-size: var(--md2);
+    font-size: 14px;
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (min-width: 480px) {
   html,
   body {
-    font-size: var(--md1);
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (min-width: 1440px) {
+  html,
+  body {
+    font-size: 17px;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  html,
+  body {
+    font-size: 20px;
   }
 }
 
@@ -54,9 +79,9 @@ body {
 }
 
 *::-webkit-scrollbar {
-  width: var(--sm);
+  width: var(--spacer-xs);
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #3e3e3e;
+  background-color: var(--dark3);
 }

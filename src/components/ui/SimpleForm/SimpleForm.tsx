@@ -1,7 +1,7 @@
-import { callback } from '@custom-types/atomic';
-import { IFormField } from '@custom-types/IFormField';
+import { callback } from '@custom-types/ui/atomic';
+import { IFormField } from '@custom-types/ui/IFormField';
 import { TextInput, Button } from '@mantine/core';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { FC, memo, useMemo, useCallback, useEffect } from 'react';
 import styles from './simpleForm.module.css';
 
@@ -20,7 +20,6 @@ const SimpleForm: FC<{
 
   const form = useForm({
     initialValues: formValues,
-    validationRules: {},
   });
 
   const submit = useCallback(() => {

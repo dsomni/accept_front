@@ -1,8 +1,8 @@
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Calendar, TimeInput } from '@mantine/dates';
 import { FC, memo, useEffect, useState } from 'react';
-import { ClockIcon } from '@modulz/radix-icons';
+import { Clock2 } from 'tabler-icons-react';
 
 const DateTimePicker: FC<{
   value: number;
@@ -38,7 +38,7 @@ const DateTimePicker: FC<{
         locale={lang}
       />
       <TimeInput
-        icon={<ClockIcon height={20} width={20} />}
+        icon={<Clock2 height={20} width={20} />}
         value={startTime}
         onChange={setStartTime}
         withSeconds

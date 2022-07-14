@@ -1,9 +1,6 @@
-import { ITableColumn } from '@custom-types/ITable';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
-import {
-  TriangleDownIcon,
-  TriangleUpIcon,
-} from '@modulz/radix-icons';
+import { ITableColumn } from '@custom-types/ui/ITable';
+import { FC, memo, useCallback, useState } from 'react';
+import { Triangle, TriangleInverted } from 'tabler-icons-react';
 import styles from './column.module.css';
 
 const getCurrentOrder = (
@@ -44,14 +41,6 @@ const Column: FC<{
     onSort(column.key, newOrder);
   }, [column.allowMiddleState, onSort, column.key, currentOrder]);
 
-  useEffect(() => {
-    setCurrentOrder(
-      !column.allowMiddleState && column.sorted == 0
-        ? 1
-        : column.sorted
-    );
-  }, [column.allowMiddleState, column.sorted]);
-
   return (
     <th
       className={classNames[column.key] + ' ' + classNames.headerCell}
@@ -60,10 +49,10 @@ const Column: FC<{
       <div className={styles.label}>{column.label}</div>
       {column.sortable && (
         <div className={styles.sortIcon}>
-          {currentOrder === 1 ? (
-            <TriangleDownIcon width={22} height={22} />
-          ) : currentOrder === -1 ? (
-            <TriangleUpIcon width={22} height={22} />
+          {currentOrder === -1 ? (
+            <TriangleInverted width={22} height={22} />
+          ) : currentOrder === 1 ? (
+            <Triangle width={22} height={22} />
           ) : (
             <></>
           )}

@@ -6,12 +6,12 @@ import {
   Modal,
   TextInput,
 } from '@mantine/core';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { capitalize } from '@utils/capitalize';
 import { isSuccessful } from '@requests/request';
-import { pureCallback } from '@custom-types/atomic';
+import { pureCallback } from '@custom-types/ui/atomic';
 
 const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   refetch,
@@ -66,7 +66,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         variant="hover"
         size="lg"
       >
-        <PlusIcon width={25} height={25} color="green" />
+        <Plus width={25} height={25} color="green" />
       </ActionIcon>
       <Modal
         opened={opened}

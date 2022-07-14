@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 
 const Row: FC<{
   keys: string[];
@@ -17,10 +17,10 @@ const Row: FC<{
           className={classNames[key] + ' ' + classNames.cell}
           key={index}
         >
-          {typeof row[key] === 'object'
-            ? row[key].display
-            : row[key]
-            ? row[key]
+          {row[key]
+            ? typeof row[key] === 'object'
+              ? row[key].display
+              : row[key]
             : row[key] === 0
             ? 0
             : '-'}

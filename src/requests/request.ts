@@ -15,21 +15,32 @@ export interface IPureResponse {
 export const sendRequest = <ISend, IReceive>(
   path: string,
   method: availableMethods,
-  body?: ISend extends object ? ISend : object
+  body?: ISend extends object ? ISend : object,
+  revalidate?: number // millis
 ): Promise<IResponse<IReceive>> => {
+  if (revalidate) {
+    const data = CheckStorage(path + JSON.stringify(body));
+    if (data) {
+      return Promise<IResponse<IReceive>>.resolve(
+        data as IResponse<IReceive>
+      );
+    }
+  }
+
   let options: any = {
     credentials: 'include',
     method,
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
   };
   if (body) {
-    options.body = JSON.stringify(body as object);
+    options.body = JSON.stringify(body);
   }
   return fetch(withPrefix(path), options)
     .then((res) =>
       res.status === 200
         ? res.json().then((res) => ({
             error: false,
-            detail: {},
+            detail: res.detail,
             response: res as IReceive,
           }))
         : res.json().then((res) => ({
@@ -38,7 +49,12 @@ export const sendRequest = <ISend, IReceive>(
             response: {},
           }))
     )
-    .then((res) => res as IResponse<IReceive>)
+    .then((res) => {
+      revalidate
+        ? SaveInStorage(path + JSON.stringify(body), res, revalidate)
+        : null;
+      return res as IResponse<IReceive>;
+    })
     .catch(
       (e) =>
         ({
@@ -62,9 +78,10 @@ export const isSuccessful = <ISend>(
   let options: any = {
     credentials: 'include',
     method,
+    headers: { 'content-type': 'application/json' },
   };
   if (body) {
-    options.body = JSON.stringify(body as object);
+    options.body = JSON.stringify(body);
   }
   return fetch(withPrefix(path), options)
     .then((res) =>
@@ -83,4 +100,29 @@ export const isSuccessful = <ISend>(
         },
       },
     }));
+};
+
+const CheckStorage = <IReceive>(
+  key: string
+): IReceive | undefined => {
+  const valueString = window.localStorage.getItem(key);
+  if (!valueString) {
+    return undefined;
+  }
+  const value = JSON.parse(valueString);
+  if (value.valid < Date.now()) {
+    window.localStorage.removeItem(key);
+    return undefined;
+  }
+
+  return value.data;
+};
+
+const SaveInStorage = (
+  key: string,
+  data: object | undefined,
+  revalidate: number
+) => {
+  const save_data = { data, valid: Date.now() + revalidate };
+  window.localStorage.setItem(key, JSON.stringify(save_data));
 };

@@ -1,5 +1,5 @@
 .itemWrapper {
-  padding: var(--md3) 0;
+  padding: var(--spacer-s) 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -16,25 +16,25 @@
 }
 
 .textInput {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }
 
 .inputWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--md1);
+  gap: var(--spacer-m);
 }
 
 .label {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
 }
 
 .displayedName {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
   color: var(--primary);
 }
 
 .displayedGrade {
   color: #707070;
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }

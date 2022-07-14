@@ -4,13 +4,13 @@
   flex-direction: column;
 }
 .globalLabel {
-  font-size: var(--h3);
+  font-size: var(--font-size-xxl);
 }
 .label {
   display: flex;
   align-items: center;
-  line-height: var(--lg3);
-  gap: var(--sm);
+  line-height: var(--spacer-xl);
+  gap: var(--spacer-xs);
 }
 .exampleInput {
   width: 34vw;

@@ -5,8 +5,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--lg3);
+  gap: var(--spacer-xl);
 }
 .label {
-  font-size: var(--p2);
+  font-size: var(--font-size-m);
 }

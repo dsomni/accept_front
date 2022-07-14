@@ -1,19 +1,19 @@
 import { ActionIcon } from '@mantine/core';
-import { EyeOpenIcon } from '@modulz/radix-icons';
+import { Eye } from 'tabler-icons-react';
 import { FC, memo } from 'react';
 
 const OpenTask: FC<{ spec: string }> = ({ spec }) => {
   return (
     <ActionIcon<'a'>
       component="a"
-      href={`/edu/task/${spec}`}
+      href={`/task/${spec}`}
       target="_blank"
       tabIndex={5}
       color="var(--primary)"
       variant="hover"
       size="lg"
     >
-      <EyeOpenIcon width={20} height={20} />
+      <Eye width={20} height={20} />
     </ActionIcon>
   );
 };

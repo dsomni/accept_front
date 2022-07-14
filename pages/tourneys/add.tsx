@@ -1,19 +1,16 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
-import { sendRequest } from '@requests/request';
 import Form from '@components/Tournament/Form/Form';
 import { capitalize } from '@utils/capitalize';
-import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import {
   ITournamentCreate,
   IAssessmentType,
   ITournament,
-} from '@custom-types/ITournament';
-import { IUser } from '@custom-types/IUser';
+} from '@custom-types/data/ITournament';
 
 const initialValues = (author: string): ITournamentCreate => ({
   title: 'Турнир по простым числам',
@@ -41,7 +38,6 @@ function AddTask() {
 
   const form = useForm({
     initialValues: initialValues(user?.login || ''),
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {
@@ -50,7 +46,7 @@ function AddTask() {
       assessmentType: parseInt(form.values.assessmentType),
     };
     requestWithNotify(
-      'tournament/add',
+      'tournaments/add',
       'POST',
       locale.notify.tournament.create,
       lang,

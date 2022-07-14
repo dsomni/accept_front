@@ -1,18 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
-import { sendRequest } from '@requests/request';
 import Form from '@components/AssignmentSchema/Form/Form';
 import { capitalize } from '@utils/capitalize';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const initialValues = {
   spec: '',
@@ -30,7 +25,6 @@ function AddAssignmentSchema() {
 
   const form = useForm({
     initialValues,
-    validationRules: {},
   });
 
   const handleSubmit = useCallback(() => {
@@ -41,35 +35,14 @@ function AddAssignmentSchema() {
       author: user?.login || '',
       duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
-    const id = newNotification({
-      title: capitalize(
-        locale.notify.assignmentSchema.create.loading
-      ),
-      message: capitalize(locale.loading) + '...',
-    });
-    sendRequest<IAssignmentSchema, IAssignmentSchema>(
-      'assignments/schema/add',
+    requestWithNotify(
+      'assignment/schema/add',
       'POST',
+      locale.notify.assignmentSchema.create,
+      lang,
+      (response: IAssignmentSchema) => response.spec,
       body
-    ).then((res) => {
-      if (!res.error) {
-        successNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.create.success
-          ),
-          message: res.response.spec,
-        });
-      } else {
-        errorNotification({
-          id,
-          title: capitalize(
-            locale.notify.assignmentSchema.create.error
-          ),
-          message: capitalize(res.detail.description[lang]),
-        });
-      }
-    });
+    );
   }, [form.values, user?.login, locale, lang]);
 
   return (

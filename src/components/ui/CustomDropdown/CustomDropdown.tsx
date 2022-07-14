@@ -1,5 +1,5 @@
 import { HeaderLink } from '@components/layout/Navbar/Header/Links/HeaderLink';
-import IHeaderLink from '@custom-types/IHeaderLink';
+import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Menu } from '@mantine/core';
 import { FC, memo } from 'react';

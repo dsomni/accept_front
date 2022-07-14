@@ -1,21 +1,9 @@
-import { setter } from '@custom-types/atomic';
-import { ITableColumn } from '@custom-types/ITable';
+import { setter } from '@custom-types/ui/atomic';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
-import {
-  ActionIcon,
-  Input,
-  MultiSelect,
-  Select,
-} from '@mantine/core';
-import {
-  MagnifyingGlassIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@modulz/radix-icons';
+import { Input, Loader, MultiSelect } from '@mantine/core';
+import { Search } from 'tabler-icons-react';
 import { capitalize } from '@utils/capitalize';
-import Fuse from 'fuse.js';
 import {
   FC,
   memo,
@@ -27,34 +15,107 @@ import {
 } from 'react';
 import InnerTable from './InnerTable/InnerTable';
 import styles from './table.module.css';
+import { BaseSearch } from '@custom-types/data/request';
+import PageNavigation from './PageNavigation';
+import { LoadingOverlay } from '@mantine/core';
 
 const Table: FC<{
   columns: ITableColumn[];
-  rows: any[];
   classNames: any;
   defaultOnPage: number;
   onPage: number[];
-  searchKeys: string[];
-  additionalSearch?: (_: setter, afterSelect: any) => ReactNode;
-  rowFilter?: (_: any) => boolean;
-  searchWeight?: number;
+  withSearch?: boolean;
+  additionalSearch?: ReactNode;
+  rows: any;
+  total: number;
+  loading: boolean;
+  setSearchParams: setter;
+  searchParams: BaseSearch;
 }> = ({
   columns,
-  rows,
   classNames,
   defaultOnPage,
   onPage,
-  searchKeys,
+  withSearch,
   additionalSearch,
-  rowFilter,
-  searchWeight,
+  rows,
+  total,
+  loading,
+  setSearchParams,
+  searchParams,
 }) => {
-  const [localRows, setLocalRows] = useState(rows);
-  const [search, setSearch] = useState('');
+  const { locale } = useLocale();
+
+  const totalLength = total;
+
+  const [localRows, setLocalRows] = useState<any[]>(rows);
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(defaultOnPage);
+  const [search, setSearch] = useState('');
+  const [localColumns, setLocalColumns] = useState(
+    columns.filter((column) => !column.hidden)
+  );
 
-  const { locale } = useLocale();
+  const handlePageChange = useCallback(
+    (value: number) => {
+      setPage(value);
+      setSearchParams((searchParams: BaseSearch) => ({
+        ...searchParams,
+        pager: {
+          ...searchParams.pager,
+          skip: perPage * value,
+        },
+      }));
+    },
+    [perPage, setSearchParams, setPage]
+  );
+
+  const handlePerPageChange = useCallback(
+    (value: number) => {
+      setPerPage(value);
+      setSearchParams((searchParams: BaseSearch) => ({
+        ...searchParams,
+        pager: {
+          skip: 0,
+          limit: value,
+        },
+      }));
+    },
+    [setSearchParams, setPerPage]
+  );
+
+  useEffect(() => {
+    setLocalRows(rows);
+    if (searchParams) {
+      setSearch(searchParams.search_params.search);
+      setLocalColumns((localColumns) => {
+        const columns_indexes: { [key: string]: number } = {};
+        for (let idx = 0; idx < localColumns.length; idx++) {
+          columns_indexes[localColumns[idx].key] = idx;
+        }
+        searchParams.sort_by.map(
+          (item) =>
+            (localColumns[columns_indexes[item.field]].sorted =
+              item.order)
+        );
+
+        return localColumns;
+      });
+      setPerPage(searchParams.pager.limit);
+      setPage(
+        Math.floor(
+          searchParams.pager.skip / (searchParams.pager.limit || 1)
+        )
+      );
+    }
+  }, [searchParams, rows]);
+
+  useEffect(() => {
+    setLocalColumns((localColumns) => {
+      const keys = localColumns.map((column) => column.key);
+      return columns.filter((column) => keys.includes(column.key));
+    });
+  }, [columns]);
 
   const [selectedColumns, setSelectedColumns] = useState<
     string[] | undefined
@@ -62,9 +123,6 @@ const Table: FC<{
     columns
       .filter((column) => !column.hidable || !column.hidden)
       .map((column) => column.key)
-  );
-  const [localColumns, setLocalColumns] = useState(
-    columns.filter((column) => !column.hidden)
   );
 
   const availableColumns = useMemo(
@@ -90,92 +148,44 @@ const Table: FC<{
     [columns]
   );
 
-  useEffect(() => {
-    setLocalColumns((localColumns) => {
-      const keys = localColumns.map((column) => column.key);
-      return columns.filter((column) => keys.includes(column.key));
-    });
-  }, [columns]);
-
   const sort = useCallback(
-    (key: any, order: -1 | 0 | 1) => {
-      setLocalColumns((localColumns) =>
-        localColumns.map((column) => {
-          if (column.key !== key) {
-            column.sorted = column.allowMiddleState ? 0 : 1;
-            return column;
-          }
-          column.sorted = order;
-          return column;
-        })
-      );
-      const column = localColumns.find(
-        (column) => column.key === key
-      );
-      if (column) {
-        if (order !== 0) {
-          setLocalRows((localRows) => {
-            let rowsToSort = [...localRows];
-            rowsToSort.sort(
-              (a: any, b: any) => order * column.sortFunction(a, b)
-            );
-            return rowsToSort.filter(
-              (row) => !!rowFilter && rowFilter(row)
-            );
-          });
-        } else {
-          setLocalRows(
-            rows.filter((row) => !!rowFilter && rowFilter(row))
+    (key: string, order: -1 | 0 | 1) => {
+      // sort
+      if (order == 0) {
+        setSearchParams((searchParams: BaseSearch) => {
+          const idx = searchParams.sort_by.findIndex(
+            (item) => item.field == key
           );
-        }
+          if (idx >= 0) {
+            searchParams.sort_by.splice(idx, 1);
+          }
+          return searchParams;
+        });
+      } else {
+        setSearchParams(
+          (searchParams: BaseSearch) =>
+            ({
+              ...searchParams,
+              sort_by: [{ field: key, order: order }],
+            } as BaseSearch)
+        );
       }
     },
-    [localColumns, rows, rowFilter]
-  );
-
-  const fuse = useMemo(
-    () => {
-      return new Fuse(rows, {
-        keys: searchKeys,
-      });
-    },
-    [rows] // eslint-disable-line
+    [setSearchParams]
   );
 
   const handleSearch = useCallback(
     (value: string, shouldCancelFilter?: boolean) => {
       setSearch(value);
-      if (value !== '') {
-        setLocalRows(
-          fuse
-            .search(value)
-            .map((result) => result.item)
-            .filter(
-              (row) =>
-                shouldCancelFilter || (!!rowFilter && rowFilter(row))
-            )
-        );
-      } else {
-        setLocalRows(
-          rows.filter(
-            (row) =>
-              shouldCancelFilter || (!!rowFilter && rowFilter(row))
-          )
-        );
-      }
-      setLocalColumns((localColumns) =>
-        localColumns.map((column) => {
-          column.sorted = column.allowMiddleState ? 0 : 1;
-          return column;
-        })
-      );
+      setSearchParams((searchParams: BaseSearch) => ({
+        ...searchParams,
+        search_params: {
+          ...searchParams.search_params,
+          search: value,
+        },
+      }));
     },
-    [fuse, rows, rowFilter]
-  );
-
-  const lastPage = useMemo(
-    () => Math.floor(localRows.length / perPage),
-    [localRows, perPage]
+    [setSearchParams]
   );
 
   const beforeSelection = useCallback(() => {
@@ -192,106 +202,61 @@ const Table: FC<{
     <div className={styles.wrapper + ' ' + classNames.wrapper}>
       <div className={styles.main}>
         <div className={styles.searchWrapper}>
-          <div className={styles.search}>
-            <Input
-              icon={<MagnifyingGlassIcon />}
-              classNames={{
-                input: styles.inputElem,
-              }}
-              onChange={(e: any) => handleSearch(e.target.value)}
-              placeholder={capitalize(locale.placeholders.search)}
-              value={search}
-            />
-          </div>
-          <div className={styles.columnSelect}>
-            <MultiSelect
-              classNames={{
-                value: styles.selected,
-                input: styles.inputElem,
-              }}
-              data={availableColumns}
-              value={selectedColumns}
-              onChange={handleChange}
-              placeholder={capitalize(
-                locale.placeholders.showColumns
-              )}
-            />
-          </div>
-          {additionalSearch &&
-            additionalSearch(setLocalRows, beforeSelection)}
-        </div>
-        <InnerTable
-          columns={localColumns}
-          classNames={classNames}
-          rows={
-            perPage
-              ? localRows.slice(page * perPage, (page + 1) * perPage)
-              : localRows
-          }
-          sort={sort}
-        />
-      </div>
-      <div className={styles.footer}>
-        <div className={styles.pagesWrapper}>
-          <div className={styles.overall}>
-            {capitalize(locale.table.overall)} {localRows.length}
-          </div>
-          <div className={styles.pageNavigationWrapper}>
-            <div className={styles.perPageWrapper}>
-              <div className={styles.perPage}>
-                {capitalize(locale.table.perPage) + ':'}{' '}
-              </div>
-              <Select
-                data={onPage
-                  .map((value) => ({
-                    label: value.toString(),
-                    value: value.toString(),
-                  }))
-                  .concat({
-                    label: capitalize(locale.all),
-                    value: '0',
-                  })}
+          {withSearch && (
+            <div className={styles.search}>
+              <Input
+                icon={<Search />}
                 classNames={{
-                  input: styles.selectPerPage,
+                  input: styles.inputElem,
                 }}
-                defaultValue={defaultOnPage.toString()}
-                onChange={(value) => setPerPage(Number(value))}
+                onChange={(e: any) => handleSearch(e.target.value)}
+                placeholder={capitalize(locale.placeholders.search)}
+                value={search}
               />
             </div>
-            <div className={styles.pageNavigation}>
-              <ActionIcon onClick={() => setPage(0)}>
-                <DoubleArrowLeftIcon />
-              </ActionIcon>
-              <ActionIcon
-                onClick={() => setPage((page) => max(page - 1, 0))}
-              >
-                <ChevronLeftIcon />
-              </ActionIcon>
-              <div>
-                {page * perPage + 1} -{' '}
-                {perPage
-                  ? min((page + 1) * perPage, localRows.length)
-                  : localRows.length}
-              </div>
-              <ActionIcon
-                onClick={() =>
-                  setPage((page) => min(page + 1, lastPage))
-                }
-              >
-                <ChevronRightIcon />
-              </ActionIcon>
-              <ActionIcon onClick={() => setPage(lastPage)}>
-                <DoubleArrowRightIcon />
-              </ActionIcon>
+          )}
+          {availableColumns.length > 0 && (
+            <div className={styles.columnSelect}>
+              <MultiSelect
+                classNames={{
+                  value: styles.selected,
+                  input: styles.inputElem,
+                }}
+                data={availableColumns}
+                value={selectedColumns}
+                onChange={handleChange}
+                placeholder={capitalize(
+                  locale.placeholders.showColumns
+                )}
+              />
             </div>
-          </div>
+          )}
+          {additionalSearch || <></>}
         </div>
+        <div style={{ position: 'relative' }}>
+          <LoadingOverlay
+            visible={loading}
+            loader={<Loader size="xl" />}
+          />
+          <InnerTable
+            columns={localColumns}
+            classNames={classNames}
+            rows={localRows}
+            sort={sort}
+          />
+        </div>
+        <PageNavigation
+          onPage={onPage}
+          defaultOnPage={defaultOnPage}
+          perPage={perPage}
+          page={page}
+          totalLength={totalLength}
+          handlePerPageChange={handlePerPageChange}
+          handlePageChange={handlePageChange}
+        />
       </div>
     </div>
   );
 };
-
-const min = (a: number, b: number) => (a < b ? a : b);
-const max = (a: number, b: number) => (a > b ? a : b);
 
 export default memo(Table);

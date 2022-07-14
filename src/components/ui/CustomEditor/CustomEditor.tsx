@@ -2,7 +2,7 @@ import { useLocale } from '@hooks/useLocale';
 import { InputWrapper } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useEffect, useRef, useState } from 'react';
-import { setter } from '@custom-types/atomic';
+import { setter } from '@custom-types/ui/atomic';
 
 const editorConfiguration = {
   simpleUpload: {

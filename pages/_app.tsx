@@ -1,5 +1,6 @@
 import { LocaleProvider } from '@hooks/useLocale';
 import { UserProvider } from '@hooks/useUser';
+import { WidthProvider } from '@hooks/useWidth';
 import { NotificationsProvider } from '@mantine/notifications';
 import '@styles/globals.css';
 import { getServerUrl } from '@utils/getServerUrl';
@@ -21,7 +22,7 @@ const SERVER_URL = getServerUrl();
 function getTaskSpec(url: string): string {
   const list = url.split('/');
   if (
-    url.startsWith('/edu/task') &&
+    url.startsWith('/task') &&
     list.length == 4 &&
     list[3].length > 6
   ) {
@@ -51,18 +52,20 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
   }, [router]);
 
   return (
-    <NotificationsProvider
-      position="bottom-left"
-      zIndex={9999}
-      limit={5}
-      autoClose={40000}
-    >
+    <WidthProvider>
       <UserProvider>
-        <LocaleProvider>
-          {getLayout(<Component {...pageProps} />)}
-        </LocaleProvider>
+        <NotificationsProvider
+          position="bottom-left"
+          zIndex={9999}
+          limit={5}
+          autoClose={40000}
+        >
+          <LocaleProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </LocaleProvider>
+        </NotificationsProvider>
       </UserProvider>
-    </NotificationsProvider>
+    </WidthProvider>
   );
 }
 

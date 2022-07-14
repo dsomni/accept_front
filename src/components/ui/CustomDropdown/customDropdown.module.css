@@ -1,7 +1,7 @@
 .dropdownBth {
   all: unset;
   font-size: 1em;
-  padding: var(--md3);
+  padding: var(--spacer-s);
 }
 
 .dropdownBth:hover {
@@ -9,7 +9,7 @@
 }
 
 .items {
-  font-size: var(--h4);
+  font-size: var(--font-size-xl);
 }
 .items:hover {
   background-color: #eee;

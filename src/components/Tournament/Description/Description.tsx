@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import styles from './description.module.css';
-import { ITournamentCreate } from '@custom-types/ITournament';
+import { ITournamentCreate } from '@custom-types/data/ITournament';
 
 const Description: FC<{ tournament: ITournamentCreate }> = ({
   tournament,

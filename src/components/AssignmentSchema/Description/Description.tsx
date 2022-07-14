@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { ITaskDisplay } from '@custom-types/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { useLocale } from '@hooks/useLocale';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { sendRequest } from '@requests/request';
 import { capitalize } from '@utils/capitalize';
 
@@ -24,9 +24,10 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
     let cleanUp = false;
     if (assignment.tasks.length)
       sendRequest<string[], ITaskDisplay[]>(
-        'tasks/task-spec-list',
+        'task/task-spec-list',
         'POST',
-        assignment.tasks
+        assignment.tasks,
+        5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
           const response = res.response;
@@ -65,7 +66,7 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
               <>
                 <td className={styles.cell}>
                   <a
-                    href={`/edu/task/${row.spec}`}
+                    href={`/task/${row.spec}`}
                     target="_blank"
                     rel="noreferrer"
                     className={styles.tableTitle}

@@ -1,5 +1,5 @@
 import Table from '@ui/Table/Table';
-import { ITableColumn } from '@custom-types/ITable';
+import { ITableColumn } from '@custom-types/ui/ITable';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import {
@@ -13,10 +13,10 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
-import { IAssignmentSchema } from '@custom-types/IAssignmentSchema';
+import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
-import { PlusIcon } from '@modulz/radix-icons';
-import { ITag } from '@custom-types/ITag';
+import { Plus } from 'tabler-icons-react';
+import { ITag } from '@custom-types/data/ITag';
 import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
 
@@ -98,17 +98,20 @@ function AssignmentList() {
     let cleanUp = false;
 
     setLoadingTags(true);
-    sendRequest<{}, ITag[]>('assignment_tags/list', 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          let newTags = new Map<string, ITag>();
-          for (let i = 0; i < res.response.length; i++)
-            newTags.set(res.response[i].spec, res.response[i]);
-          setTags(newTags);
-          setLoadingTags(false);
-        }
+    sendRequest<{}, ITag[]>(
+      'assignment_tag/list',
+      'GET',
+      undefined,
+      30000
+    ).then((res) => {
+      if (!res.error && !cleanUp) {
+        let newTags = new Map<string, ITag>();
+        for (let i = 0; i < res.response.length; i++)
+          newTags.set(res.response[i].spec, res.response[i]);
+        setTags(newTags);
+        setLoadingTags(false);
       }
-    );
+    });
 
     return () => {
       cleanUp = true;
@@ -119,8 +122,10 @@ function AssignmentList() {
     let cleanUp = false;
     setLoading(true);
     sendRequest<{}, IAssignmentSchema[]>(
-      'assignments/schema/list',
-      'GET'
+      'assignment/schema/list',
+      'GET',
+      undefined,
+      10000
     ).then((res) => {
       if (!cleanUp) {
         if (!res.error) {
@@ -231,7 +236,7 @@ function AssignmentList() {
       <SingularSticky
         color="green"
         onClick={() => router.push(`/edu/assignment/add/`)}
-        icon={<PlusIcon height={25} width={25} />}
+        icon={<Plus height={25} width={25} />}
       />
     </div>
   );
