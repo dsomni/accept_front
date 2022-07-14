@@ -45,7 +45,7 @@ export interface ITaskDisplay {
 
 export interface ITask extends ITaskDisplay {
   description: string;
-  constraints: IConstraints | undefined;
+  constraints: IConstraints;
 
   examples: Example[];
   inputFormat: string;

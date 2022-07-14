@@ -43,14 +43,23 @@ const Description: FC<{
       <Head>
         <title>{task.title}</title>
       </Head>
-      <div className={styles.title}>{task.title}</div>
+      <div className={styles.titleWrapper}>
+        <div className={styles.title}>{task.title}</div>
+        <div className={styles.complexity}>{`${capitalize(
+          locale.task.form.complexity
+        )} ${task.complexity}%`}</div>
+      </div>
+      <div className={styles.constrains}>
+        <div className={styles.memory}>{task.constraints.memory}</div>
+        <div className={styles.time}>{task.constraints.time}</div>
+      </div>
       <div className={styles.description} ref={description}>
         {task.description}
       </div>
       <div className={styles.formatWrapper}>
         <div className={styles.inputFormat}>
           <div className={styles.formatLabel}>
-            {capitalize(locale.tasks.description.format.input)}
+            {capitalize(locale.task.description.format.input)}
           </div>
           <div className={styles.format} ref={inputFormat}>
             {task.inputFormat}
@@ -58,7 +67,7 @@ const Description: FC<{
         </div>
         <div className={styles.outputFormat}>
           <div className={styles.formatLabel}>
-            {capitalize(locale.tasks.description.format.output)}
+            {capitalize(locale.task.description.format.output)}
           </div>
           <div className={styles.format} ref={outputFormat}>
             {task.outputFormat}
@@ -66,7 +75,7 @@ const Description: FC<{
         </div>
       </div>
       <div className={styles.examplesLabel}>
-        {capitalize(locale.tasks.description.examples.title)}
+        {capitalize(locale.task.description.examples.title)}
       </div>
       {task.examples.map((example, index) => (
         <Table
@@ -79,9 +88,7 @@ const Description: FC<{
             <tr>
               <td>
                 <div className={styles.exampleHeader}>
-                  {capitalize(
-                    locale.tasks.description.examples.input
-                  )}
+                  {capitalize(locale.task.description.examples.input)}
                   <CopyButton toCopy={example.inputData} />
                 </div>
               </td>
@@ -93,7 +100,7 @@ const Description: FC<{
               <td>
                 <div className={styles.exampleHeader}>
                   {capitalize(
-                    locale.tasks.description.examples.output
+                    locale.task.description.examples.output
                   )}
                   <CopyButton toCopy={example.outputData || ''} />
                 </div>
@@ -108,7 +115,7 @@ const Description: FC<{
       {task.remark && (
         <div className={styles.remarkWrapper}>
           <div className={styles.remarkLabel}>
-            {capitalize(locale.tasks.form.remark)}
+            {capitalize(locale.task.form.remark)}
           </div>
           <div className={styles.remark}>{task.remark}</div>
         </div>

@@ -16,7 +16,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         classNames={{
           label: styles.label,
         }}
-        label={capitalize(locale.tasks.form.checker)}
+        label={capitalize(locale.task.form.checker)}
         setLanguage={(value) =>
           form.setFieldValue('checkerLang', value)
         }
@@ -43,7 +43,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         minRows={20}
         maxRows={60}
         size="lg"
-        label={capitalize(locale.tasks.form.checker)}
+        label={capitalize(locale.task.form.checker)}
         {...form.getInputProps('checkerCode')}
       /> */}
       <div className={styles.listWrapper}>
@@ -53,7 +53,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
               <div key={index}>
                 <ListItem
                   label={
-                    capitalize(locale.tasks.form.test) +
+                    capitalize(locale.task.form.test) +
                     ' #' +
                     (index + 1)
                   }
@@ -61,8 +61,8 @@ const Checker: FC<{ form: any }> = ({ form }) => {
                     label: styles.label,
                   }}
                   field="tests"
-                  InLabel={capitalize(locale.tasks.form.inputTest)}
-                  OutLabel={capitalize(locale.tasks.form.outputTest)}
+                  InLabel={capitalize(locale.task.form.inputTest)}
+                  OutLabel={capitalize(locale.task.form.outputTest)}
                   form={form}
                   index={index}
                   onDelete={() => {}}

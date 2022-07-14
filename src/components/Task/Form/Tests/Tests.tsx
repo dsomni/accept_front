@@ -144,12 +144,12 @@ const Tests: FC<{ form: any }> = ({ form }) => {
               <ListItem
                 field="tests"
                 label={
-                  capitalize(locale.tasks.form.test) +
+                  capitalize(locale.task.form.test) +
                   ' #' +
                   (index + 1)
                 }
-                InLabel={capitalize(locale.tasks.form.inputTest)}
-                OutLabel={capitalize(locale.tasks.form.outputTest)}
+                InLabel={capitalize(locale.task.form.inputTest)}
+                OutLabel={capitalize(locale.task.form.outputTest)}
                 form={form}
                 index={index}
                 onDelete={onDeleteExample}

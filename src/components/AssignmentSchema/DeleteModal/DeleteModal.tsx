@@ -48,7 +48,7 @@ const DeleteModal: FC<{
       >
         <div className={deleteModalStyles.form}>
           <div className={deleteModalStyles.question}>
-            {capitalize(locale.tasks.modals.deleteConfidence)}
+            {capitalize(locale.task.modals.deleteConfidence)}
           </div>
           <Group
             position="right"

@@ -32,7 +32,7 @@ const MainInfo: FC<{
           label: styles.label,
         }}
         size="lg"
-        label={capitalize(locale.tasks.form.title)}
+        label={capitalize(locale.task.form.title)}
         required
         {...form.getInputProps('title')}
       />
@@ -54,7 +54,7 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           size="lg"
-          label={capitalize(locale.tasks.form.grade)}
+          label={capitalize(locale.task.form.grade)}
           required
           {...form.getInputProps('grade')}
         />
@@ -65,7 +65,7 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           size="md"
-          label={capitalize(locale.tasks.form.taskType)}
+          label={capitalize(locale.task.form.taskType)}
           {...form.getInputProps('type')}
           onChange={(value) => {
             form.setFieldValue('type', value);
@@ -79,7 +79,7 @@ const MainInfo: FC<{
               value={taskType.spec.toString()}
               key={index}
               label={capitalize(
-                locale.tasks.form.taskTypes[taskType.spec]
+                locale.task.form.taskTypes[taskType.spec]
               )}
             />
           ))}
@@ -91,7 +91,7 @@ const MainInfo: FC<{
               label: styles.label,
             }}
             size="md"
-            label={capitalize(locale.tasks.form.checkType)}
+            label={capitalize(locale.task.form.checkType)}
             {...form.getInputProps('checkType')}
           >
             {taskCheckTypes.map(
@@ -100,7 +100,7 @@ const MainInfo: FC<{
                   value={checkType.spec.toString()}
                   key={index}
                   label={capitalize(
-                    locale.tasks.form.checkTypes[checkType.spec]
+                    locale.task.form.checkTypes[checkType.spec]
                   )}
                 />
               )
@@ -112,7 +112,7 @@ const MainInfo: FC<{
             classNames={{
               label: styles.label,
             }}
-            label={capitalize(locale.tasks.form.hint.title)}
+            label={capitalize(locale.task.form.hint.title)}
             size="lg"
             {...form.getInputProps('hasHint', { type: 'checkbox' })}
           />

@@ -25,16 +25,16 @@ const TaskLayout: FC<{
           active={activeTab}
           onTabChange={setActiveTab}
         >
-          <Tabs.Tab label={capitalize(locale.tasks.description.self)}>
+          <Tabs.Tab label={capitalize(locale.task.description.self)}>
             {description}
           </Tabs.Tab>
           {send && (
-            <Tabs.Tab label={capitalize(locale.tasks.send)}>
+            <Tabs.Tab label={capitalize(locale.task.send)}>
               {send(setActiveTab)}
             </Tabs.Tab>
           )}
           {results && (
-            <Tabs.Tab label={capitalize(locale.tasks.results)}>
+            <Tabs.Tab label={capitalize(locale.task.results)}>
               {results}
             </Tabs.Tab>
           )}

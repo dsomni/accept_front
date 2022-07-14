@@ -65,18 +65,17 @@ const DeleteModal: FC<{
         close={() => setActive(false)}
         hideCloseButton={true}
         title={
-          capitalize(locale.tasks.modals.delete) +
-          ` '${task.title}' ?`
+          capitalize(locale.task.modals.delete) + ` '${task.title}' ?`
         }
       >
         <div className={deleteModalStyles.form}>
           <div className={deleteModalStyles.question}>
-            {capitalize(locale.tasks.modals.deleteConfidence)}
+            {capitalize(locale.task.modals.deleteConfidence)}
           </div>
           {assignments.length > 0 && (
             <div>
               <div>
-                {capitalize(locale.tasks.modals.usedInAssignments) +
+                {capitalize(locale.task.modals.usedInAssignments) +
                   ` (${assignments.length}):`}
               </div>
               <br />

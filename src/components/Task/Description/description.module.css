@@ -6,8 +6,24 @@
   font-size: var(--font-size-m);
   margin-bottom: var(--spacer-xxl);
 }
+
 .title {
+  display: inline-block;
   font-size: var(--font-size-huge);
+}
+
+.complexity {
+  display: inline-block;
+  font-size: var(--font-size-s);
+  color: var(--dark3);
+}
+
+.constrains {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: var(--font-size-s);
+  color: var(--dark-3);
 }
 
 .title,

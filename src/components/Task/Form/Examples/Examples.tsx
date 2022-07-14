@@ -31,12 +31,12 @@ const Examples: FC<{ form: any }> = ({ form }) => {
             <ListItem
               field="examples"
               label={
-                capitalize(locale.tasks.form.example) +
+                capitalize(locale.task.form.example) +
                 ' #' +
                 (index + 1)
               }
-              InLabel={capitalize(locale.tasks.form.inputExample)}
-              OutLabel={capitalize(locale.tasks.form.outputExample)}
+              InLabel={capitalize(locale.task.form.inputExample)}
+              OutLabel={capitalize(locale.task.form.outputExample)}
               form={form}
               index={index}
               onDelete={onDeleteExample}

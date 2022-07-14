@@ -55,10 +55,10 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
       <div>
         <PrimitiveTable
           columns={[
-            capitalize(locale.tasks.list.title),
-            capitalize(locale.tasks.list.author),
-            capitalize(locale.tasks.list.grade),
-            capitalize(locale.tasks.list.verdict),
+            capitalize(locale.task.list.title),
+            capitalize(locale.task.list.author),
+            capitalize(locale.task.list.grade),
+            capitalize(locale.task.list.verdict),
           ]}
           rows={tasks}
           rowComponent={(row: any) => {

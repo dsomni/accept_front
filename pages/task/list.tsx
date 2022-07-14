@@ -38,7 +38,7 @@ interface ITaskDisplayList
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
-    label: capitalize(locale.tasks.list.title),
+    label: capitalize(locale.task.list.title),
     key: 'title',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -54,7 +54,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 9,
   },
   {
-    label: capitalize(locale.tasks.list.author),
+    label: capitalize(locale.task.list.author),
     key: 'author',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -66,7 +66,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 3,
   },
   {
-    label: capitalize(locale.tasks.list.verdict),
+    label: capitalize(locale.task.list.verdict),
     key: 'verdict',
     sortable: false,
     sortFunction: () => 0,
@@ -89,8 +89,18 @@ const processData = (
       },
       verdict: {
         value: task.verdict,
-          display: (
-            <span style={{color: !task.verdict ? "black" : task.verdict.spec == 0 ? "var(--positive)" : "var(--negative)"}}>{task.verdict?.shortText || '-'}</span>
+        display: (
+          <span
+            style={{
+              color: !task.verdict
+                ? 'black'
+                : task.verdict.spec == 0
+                ? 'var(--positive)'
+                : 'var(--negative)',
+            }}
+          >
+            {task.verdict?.shortText || '-'}
+          </span>
         ),
       },
       title: {

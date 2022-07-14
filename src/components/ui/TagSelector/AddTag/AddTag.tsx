@@ -73,7 +73,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         centered
         onClose={() => setOpened(false)}
         size="md"
-        title={capitalize(locale.tasks.form.tagSelector.add)}
+        title={capitalize(locale.task.form.tagSelector.add)}
         classNames={{
           title: styles.modalTitle,
         }}
@@ -89,7 +89,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
             onBlur={() => onBlur(title)}
             error={error}
             placeholder={capitalize(
-              locale.tasks.form.tagSelector.addPlaceholder
+              locale.task.form.tagSelector.addPlaceholder
             )}
           />
           <Group

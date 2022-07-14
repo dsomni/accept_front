@@ -92,7 +92,7 @@ const months = {
   december: 'december',
 };
 
-const tasks = {
+const task = {
   modals: {
     add: 'add task',
     edit: 'edit task',
@@ -163,6 +163,7 @@ const tasks = {
         'You used checker, but forget to add checker`s code',
     },
     title: 'title',
+    complexity: 'complexity',
     description: 'description',
     inputFormat: 'input description',
     outputFormat: 'output description',
@@ -539,7 +540,7 @@ const en = {
   date,
   months,
   auth,
-  tasks,
+  task,
   form,
   assignmentSchema,
   users,

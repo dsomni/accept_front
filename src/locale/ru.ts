@@ -91,7 +91,7 @@ const months = {
   december: 'декабря',
 };
 
-const tasks = {
+const task = {
   modals: {
     edit: 'редактировать задачу',
     add: 'добавить задачу',
@@ -162,6 +162,7 @@ const tasks = {
       checkerCode: 'Вы добавили чекер, но забыли ввести его код',
     },
     title: 'название',
+    complexity: 'сложность',
     description: 'описание',
     inputFormat: 'входные данные',
     outputFormat: 'выходные данные',
@@ -536,7 +537,7 @@ const ru = {
   date,
   months,
   auth,
-  tasks,
+  task,
   form,
   assignmentSchema,
   users,

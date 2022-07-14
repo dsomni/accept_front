@@ -71,42 +71,42 @@ function AddTask() {
     initialValues,
     validate: {
       title: (value) =>
-        value.length < 5 ? locale.tasks.form.validation.title : null,
+        value.length < 5 ? locale.task.form.validation.title : null,
       tags: (value) =>
-        value.length == 1 ? locale.tasks.form.validation.tags : null,
+        value.length == 1 ? locale.task.form.validation.tags : null,
       description: (value) =>
         value.length < 20
-          ? locale.tasks.form.validation.description
+          ? locale.task.form.validation.description
           : null,
       inputFormat: (value) =>
         value.length == 0
-          ? locale.tasks.form.validation.inputFormat
+          ? locale.task.form.validation.inputFormat
           : null,
       outputFormat: (value) =>
         value.length == 0
-          ? locale.tasks.form.validation.outputFormat
+          ? locale.task.form.validation.outputFormat
           : null,
       grade: (value) =>
         value < 0
-          ? locale.tasks.form.validation.grade.least
+          ? locale.task.form.validation.grade.least
           : value > 11
-          ? locale.tasks.form.validation.grade.most
+          ? locale.task.form.validation.grade.most
           : null, //value < 1 && value > 11 ? 'Grade must be between at least one and at most eleven' : null,
       examples: (value) =>
         value.length < 2
-          ? locale.tasks.form.validation.examples
+          ? locale.task.form.validation.examples
           : null,
       tests: (value, values) =>
         values.type == '1' || value.length < 5
-          ? locale.tasks.form.validation.tests
+          ? locale.task.form.validation.tests
           : null,
       hintContent: (value, values) =>
         !values.hasHint || value.length == 0
-          ? locale.tasks.form.validation.hintContent
+          ? locale.task.form.validation.hintContent
           : null,
       checkerCode: (value, values) =>
         values.type == '0' || value.length == 0
-          ? locale.tasks.form.validation.checkerCode
+          ? locale.task.form.validation.checkerCode
           : null,
     },
   });

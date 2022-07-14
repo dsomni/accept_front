@@ -52,7 +52,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         classNames={{
           label: styles.label,
         }}
-        label={capitalize(locale.tasks.form.description)}
+        label={capitalize(locale.task.form.description)}
         onChange={(value) => form.setFieldValue('description', value)}
         {...form.getInputProps('description')}
       />

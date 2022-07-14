@@ -77,7 +77,7 @@ const EditTag: FC<{
         onClose={() => setOpened(false)}
         size="md"
         title={
-          capitalize(locale.tasks.form.tagSelector.edit) +
+          capitalize(locale.task.form.tagSelector.edit) +
           ` '${item.label}'`
         }
         classNames={{

@@ -54,33 +54,33 @@ const Form: FC<{
         breakpoint={1000}
       >
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.first.label)}
+          label={capitalize(locale.task.form.steps.first.label)}
           description={capitalize(
-            locale.tasks.form.steps.first.description
+            locale.task.form.steps.first.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.second.label)}
+          label={capitalize(locale.task.form.steps.second.label)}
           description={capitalize(
-            locale.tasks.form.steps.second.description
+            locale.task.form.steps.second.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.third.label)}
+          label={capitalize(locale.task.form.steps.third.label)}
           description={capitalize(
-            locale.tasks.form.steps.third.description
+            locale.task.form.steps.third.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.fourth.label)}
+          label={capitalize(locale.task.form.steps.fourth.label)}
           description={capitalize(
-            locale.tasks.form.steps.fourth.description
+            locale.task.form.steps.fourth.description
           )}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.fifth.label)}
+          label={capitalize(locale.task.form.steps.fifth.label)}
           description={capitalize(
-            locale.tasks.form.steps.fifth.description
+            locale.task.form.steps.fifth.description
           )}
         />
       </Stepper>

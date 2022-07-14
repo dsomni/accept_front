@@ -86,7 +86,7 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
           onClick={handleSubmit}
           leftIcon={<SendPlane />}
         >
-          {locale.tasks.submit}
+          {locale.task.submit}
         </Button>
       </div>
       <CodeArea

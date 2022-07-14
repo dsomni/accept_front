@@ -81,7 +81,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       />
       {task.hint && (
         <SimpleModal
-          title={capitalize(locale.tasks.form.hint.title)}
+          title={capitalize(locale.task.form.hint.title)}
           opened={openedHint}
           close={() => setOpenedHint(false)}
         >

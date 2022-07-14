@@ -92,8 +92,8 @@ const TagSelector: FC<{
           setUsed={setUsed}
           classNames={classNames ? classNames : {}}
           titles={[
-            capitalize(locale.tasks.form.tagSelector.available),
-            capitalize(locale.tasks.form.tagSelector.used),
+            capitalize(locale.task.form.tagSelector.available),
+            capitalize(locale.task.form.tagSelector.used),
           ]}
           itemComponent={itemComponent}
           rightComponent={() => (
