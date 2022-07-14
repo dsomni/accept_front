@@ -6,7 +6,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
   return (
     <>
       <div className={styles.wrapper}>
-        <Description task={form.values} />
+        <Description task={form.values} setShowHint={() => true} />
       </div>
     </>
   );

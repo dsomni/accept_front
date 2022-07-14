@@ -1,5 +1,5 @@
 import ListItem from '@ui/ListItem/ListItem';
-import { ITest } from '@custom-types/data/ITest';
+import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Button } from '@mantine/core';
 
@@ -48,15 +48,16 @@ const Examples: FC<{ form: any }> = ({ form }) => {
         className={styles.addButton}
         color="var(--primary)"
         variant="light"
-        onClick={() =>
+        onClick={() => {
           form.setFieldValue(
             'examples',
             (() => {
               form.values.examples.push(['', '']);
               return form.values.examples;
             })()
-          )
-        }
+          );
+          form.validateField('examples');
+        }}
       >
         +
       </Button>

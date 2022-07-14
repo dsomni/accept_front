@@ -34,6 +34,9 @@ const MainInfo: FC<{
         size="lg"
         label={capitalize(locale.task.form.title)}
         required
+        onBlur={() => {
+          form.validateField('title');
+        }}
         {...form.getInputProps('title')}
       />
 
@@ -43,7 +46,10 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           initialTags={initialTags}
-          setUsed={(value: any) => form.setFieldValue('tags', value)}
+          setUsed={(value: any) => {
+            form.setFieldValue('tags', value);
+            form.validateField('tags');
+          }}
           fetchURL={'tag/list'}
           addURL={'tag/add'}
           updateURL={'tag/edit'}
@@ -54,9 +60,12 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           size="lg"
-          label={capitalize(locale.task.form.grade)}
+          label={capitalize(locale.task.form.complexity)}
           required
-          {...form.getInputProps('grade')}
+          onBlur={() => {
+            form.validateField('complexity');
+          }}
+          {...form.getInputProps('complexity')}
         />
       </div>
       <div className={styles.radioGroups}>

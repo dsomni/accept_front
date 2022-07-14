@@ -2,7 +2,6 @@ import { useLocale } from '@hooks/useLocale';
 import { InputWrapper } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useEffect, useRef, useState } from 'react';
-import { setter } from '@custom-types/ui/atomic';
 
 const editorConfiguration = {
   simpleUpload: {
@@ -13,12 +12,12 @@ const editorConfiguration = {
 };
 
 const CustomEditor: FC<{
-  onChange: setter<any>;
   name: string;
   value: string;
   label: string;
+  form?: any;
   classNames?: object;
-}> = ({ onChange, name, value, label, classNames }) => {
+}> = ({ name, value, label, form, classNames }) => {
   const { locale } = useLocale();
 
   const editorRef = useRef<any>();
@@ -40,7 +39,12 @@ const CustomEditor: FC<{
   return (
     <div>
       {isLoaded ? (
-        <InputWrapper classNames={classNames} label={label} size="lg">
+        <InputWrapper
+          classNames={classNames}
+          label={label}
+          size="lg"
+          {...form.getInputProps(name)}
+        >
           <CKEditor
             name={name}
             editor={Editor}
@@ -48,8 +52,9 @@ const CustomEditor: FC<{
             config={editorConfiguration}
             onChange={(event: any, editor: any) => {
               const data = editor.getData();
-              onChange(data);
+              form.setFieldValue(name, data);
             }}
+            onBlur={() => form.validateField(name)}
           />
         </InputWrapper>
       ) : (

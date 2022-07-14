@@ -27,7 +27,11 @@ const initialValues = {
   inputFormat: 'Вводится натуральное число n<10000. ',
   outputFormat:
     'Выведите все простые числа меньшие n в одну строку через пробел. Если простых нет выведите "NO".',
-  grade: 11,
+  complexity: 50,
+  constraints: {
+    time: 1,
+    memory: 16,
+  },
   hasHint: false,
   hintContent: '',
   hintAlarmType: '0',
@@ -51,7 +55,7 @@ const initialValues = {
   checkerCode: '',
   allowedLanguages: [],
   forbiddenLanguages: [],
-  checkerLang: 'py',
+  checkerLang: '0',
   checkType: '0', //"tests" or "checker"
   type: '0', //"code" or "text"
 };
@@ -86,12 +90,12 @@ function AddTask() {
         value.length == 0
           ? locale.task.form.validation.outputFormat
           : null,
-      grade: (value) =>
+      complexity: (value) =>
         value < 0
-          ? locale.task.form.validation.grade.least
-          : value > 11
-          ? locale.task.form.validation.grade.most
-          : null, //value < 1 && value > 11 ? 'Grade must be between at least one and at most eleven' : null,
+          ? locale.task.form.validation.complexity.least
+          : value > 100
+          ? locale.task.form.validation.complexity.most
+          : null,
       examples: (value) =>
         value.length < 2
           ? locale.task.form.validation.examples

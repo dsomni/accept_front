@@ -10,7 +10,6 @@ import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
 import { pureCallback } from '@custom-types/ui/atomic';
-import { ITag } from '@custom-types/data/ITag';
 import {
   ITaskCheckType,
   ITaskType,
@@ -33,7 +32,7 @@ const Form: FC<{
   hintAlarmTypes,
 }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () =>
     setCurrentStep((current) =>

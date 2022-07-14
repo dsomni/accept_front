@@ -1,5 +1,5 @@
 import ListItem from '@ui/ListItem/ListItem';
-import { ITest } from '@custom-types/data/ITest';
+import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Text } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
@@ -68,6 +68,7 @@ const Tests: FC<{ form: any }> = ({ form }) => {
         let tests: ITest[] = new Array(length);
         for (let i = 0; i < length; i++) {
           tests[i] = {
+            spec: i.toString(),
             inputData: '',
             outputData: '',
           };
@@ -163,15 +164,16 @@ const Tests: FC<{ form: any }> = ({ form }) => {
         className={styles.addButton}
         color="var(--primary)"
         variant="light"
-        onClick={() =>
+        onClick={() => {
           form.setFieldValue(
             'tests',
             (() => {
               form.values.tests.push(['', '']);
               return form.values.tests;
             })()
-          )
-        }
+          );
+          form.validateField('tests');
+        }}
       >
         +
       </Button>

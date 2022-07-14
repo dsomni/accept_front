@@ -198,9 +198,9 @@
     prism-react-renderer "^1.2.1"
 
 "@mantine/rte@^4.2.9":
-  version "4.2.9"
-  resolved "https://registry.yarnpkg.com/@mantine/rte/-/rte-4.2.9.tgz#76326e57b3b7c667ae18a3f2bb0f05ca4c0e9d08"
-  integrity sha512-VNp/Vl215nqpjufj6LbMupTILSQPdK+SxneeDiT+SsW1gw3k6Z7DOcAsfWLGDF5/kLLdIqMpHSCcgfg3AVQf1Q==
+  version "4.2.12"
+  resolved "https://registry.yarnpkg.com/@mantine/rte/-/rte-4.2.12.tgz#f6c340dc5eb0c79a602474e51587403ac1c5a467"
+  integrity sha512-gG0Mm29eHbJcHszLCT/Dv0R3rJWLXM73Bh5ii5q2kr7nY5haRXqFz1Rqb37TnnCofADSolbFZPOkztCBVtgdRA==
   dependencies:
     "@modulz/radix-icons" "^4.0.0"
     quill-mention "^3.0.8"

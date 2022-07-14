@@ -19,15 +19,15 @@ const DescriptionInfo: FC<{
           label: styles.label,
         }}
         label={capitalize(locale.task.form.description)}
-        onChange={(value) => form.setFieldValue('description', value)}
-        {...form.getInputProps('description')}
+        form={form}
+        {...form.getInputProps('inputFormat')}
       />
       <CustomEditor
         classNames={{
           label: styles.label,
         }}
         label={capitalize(locale.task.form.inputFormat)}
-        onChange={(value) => form.setFieldValue('inputFormat', value)}
+        form={form}
         {...form.getInputProps('inputFormat')}
       />
       <CustomEditor
@@ -35,9 +35,7 @@ const DescriptionInfo: FC<{
           label: styles.label,
         }}
         label={capitalize(locale.task.form.outputFormat)}
-        onChange={(value) =>
-          form.setFieldValue('outputFormat', value)
-        }
+        form={form}
         {...form.getInputProps('outputFormat')}
       />
 
@@ -46,7 +44,7 @@ const DescriptionInfo: FC<{
           label: styles.label,
         }}
         label={capitalize(locale.task.form.remark)}
-        onChange={(value) => form.setFieldValue('remark', value)}
+        form={form}
         {...form.getInputProps('remark')}
       />
 
@@ -65,6 +63,7 @@ const DescriptionInfo: FC<{
             onChange={(value) =>
               form.setFieldValue('hintAlarmType', value)
             }
+            onBlur={() => form.validateField('hintAlarmType')}
           >
             {hintAlarmTypes.map(
               (hintAlarmType: IHintAlarmType, index: number) => (
@@ -89,6 +88,7 @@ const DescriptionInfo: FC<{
             size="md"
             hideControls
             min={0}
+            onBlur={() => form.validateField('hintAlarm')}
             {...form.getInputProps('hintAlarm')}
           />
           <CustomEditor
@@ -96,7 +96,7 @@ const DescriptionInfo: FC<{
               label: styles.subLabel,
             }}
             label={capitalize(locale.task.form.hint.text)}
-            onChange={(value) => form.setFieldValue('hintContent')}
+            form={form}
             {...form.getInputProps('hintContent')}
           />
         </div>

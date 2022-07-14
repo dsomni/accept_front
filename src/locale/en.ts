@@ -152,9 +152,9 @@ const task = {
         'Task must have description at least 20 characters',
       inputFormat: 'Task must have input description',
       outputFormat: 'Task must have output description',
-      grade: {
-        least: 'Grade must be at least 1',
-        most: 'Grade must be at most 11',
+      complexity: {
+        least: 'Complexity must be at least 0%',
+        most: 'Complexity must be at most 100%',
       },
       examples: 'Task must include at least 2 examples',
       tests: 'Task must include at least 5 tests',

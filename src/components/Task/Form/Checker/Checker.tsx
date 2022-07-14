@@ -1,18 +1,48 @@
+import { FC, memo, useState, useEffect } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import ListItem from '@ui/ListItem/ListItem';
-import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Textarea } from '@mantine/core';
 import { capitalize } from '@utils/capitalize';
-import { FC, memo } from 'react';
 import styles from './checker.module.css';
+import { ILanguage } from '@custom-types/data/atomic';
+import { sendRequest } from '@requests/request';
+import { Select } from '@mantine/core';
+
+const defaultLangSpec = '0';
 
 const Checker: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
+  const [languages, setLanguages] = useState<ILanguage[]>([]);
+  const [language, setLanguage] = useState(defaultLangSpec);
+
+  useEffect(() => {
+    sendRequest<{}, ILanguage[]>(
+      'language',
+      'GET',
+      undefined,
+      60000
+    ).then((res) => {
+      if (!res.error) {
+        setLanguages(res.response);
+      }
+    });
+  }, []);
 
   return (
     <div className={styles.wrapper}>
+      <Select
+        label={capitalize(locale.language)}
+        value={language}
+        data={languages.map((lang) => ({
+          label: capitalize(lang.name),
+          value: lang.spec.toString(),
+        }))}
+        onBlur={() => form.validateField('checkerLang')}
+        {...form.getInputProps('checkerLang')}
+      />
       <CodeArea
+        languages={languages}
         classNames={{
           label: styles.label,
         }}
@@ -21,31 +51,11 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           form.setFieldValue('checkerLang', value)
         }
         setCode={(value) => form.setFieldValue('checkerCode', value)}
-        formProps={form.getInputProps('checkerCode')}
-      />
-      {/* <div className={styles.langSelector}>
-        <ProgrammingLangSelector
-          classNames={{
-            label: styles.label,
-          }}
-          setValue={(value) =>
-            form.setFieldValue('checkerLang', value)
-          }
-        />
-      </div>
-
-      <Textarea
-        classNames={{
-          label: styles.label,
+        formProps={{
+          ...form.getInputProps('checkerCode'),
+          onBlur: () => form.validateField('checkerCode'),
         }}
-        className={styles.codeArea}
-        placeholder={capitalize(locale.placeholders.code)}
-        minRows={20}
-        maxRows={60}
-        size="lg"
-        label={capitalize(locale.task.form.checker)}
-        {...form.getInputProps('checkerCode')}
-      /> */}
+      />
       <div className={styles.listWrapper}>
         {form.values.tests &&
           form.values.tests.map(
@@ -77,15 +87,16 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           className={styles.addButton}
           color="var(--primary)"
           variant="light"
-          onClick={() =>
+          onClick={() => {
             form.setFieldValue(
               'tests',
               (() => {
                 form.values.tests.push(['', '']);
                 return form.values.tests;
               })()
-            )
-          }
+            );
+            form.validateField('tests');
+          }}
         >
           +
         </Button>
