@@ -11,10 +11,6 @@ import { IAssessmentType } from '@custom-types/data/ITournament';
 const TypeInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
-  // useEffect(() => {
-  //   console.log(form.values.assessmentType);
-  // }, [form.values.assessmentType]);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.languages}>

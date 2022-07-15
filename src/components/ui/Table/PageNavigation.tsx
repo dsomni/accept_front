@@ -38,13 +38,13 @@ const PageNavigation: FC<{
     <div className={styles.footer}>
       <div className={styles.pagesWrapper}>
         <div className={styles.overall}>
-          {capitalize(locale.table.overall)} {totalLength}
+          {capitalize(locale.ui.table.overall)} {totalLength}
         </div>
         {totalLength > 0 && (
           <div className={styles.pageNavigationWrapper}>
             <div className={styles.perPageWrapper}>
               <div className={styles.perPage}>
-                {capitalize(locale.table.perPage) + ':'}{' '}
+                {capitalize(locale.ui.table.perPage) + ':'}{' '}
               </div>
               <Select
                 data={onPage

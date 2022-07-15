@@ -71,18 +71,18 @@ const CodeArea: FC<{
       const id = newNotification({
         autoClose: 2000,
         title: capitalize(
-          locale.codeArea.notification.uploading.title
+          locale.ui.codeArea.notification.uploading.title
         ),
         message: capitalize(
-          locale.codeArea.notification.uploading.description
+          locale.ui.codeArea.notification.uploading.description
         ),
       });
       if (!files[0]) {
         errorNotification({
           id,
-          title: capitalize(locale.codeArea.notification.error.title),
+          title: capitalize(locale.ui.codeArea.notification.error.title),
           message: capitalize(
-            locale.codeArea.notification.error.description
+            locale.ui.codeArea.notification.error.description
           ),
           autoClose: 5000,
         });
@@ -97,10 +97,10 @@ const CodeArea: FC<{
         errorNotification({
           id,
           title: capitalize(
-            locale.codeArea.notification.reject.title
+            locale.ui.codeArea.notification.reject.title
           ),
           message: capitalize(
-            locale.codeArea.notification.reject.description
+            locale.ui.codeArea.notification.reject.description
           ),
           autoClose: 5000,
         });
@@ -111,9 +111,9 @@ const CodeArea: FC<{
       files[0].text().then((res) => setCode(res));
       successNotification({
         id,
-        title: capitalize(locale.codeArea.notification.success.title),
+        title: capitalize(locale.ui.codeArea.notification.success.title),
         message: capitalize(
-          locale.codeArea.notification.success.description
+          locale.ui.codeArea.notification.success.description
         ),
         autoClose: 2000,
       });
@@ -156,7 +156,7 @@ const CodeArea: FC<{
 
               <div>
                 <Text size="xl" inline>
-                  {capitalize(locale.codeArea.drag)}
+                  {capitalize(locale.ui.codeArea.drag)}
                 </Text>
               </div>
             </Group>
@@ -171,7 +171,7 @@ const CodeArea: FC<{
           marginTop: 'var(--spacer-xl)',
         }}
       >
-        {capitalize(locale.codeArea.selectFiles)}
+        {capitalize(locale.ui.codeArea.selectFiles)}
       </Button>
     </div>
   );

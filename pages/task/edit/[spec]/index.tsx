@@ -163,7 +163,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (taskBundleResponse.status === 200) {
     const taskBundle: ITaskEditBundle =
       await taskBundleResponse.json();
-    console.log(taskBundle.task);
     return {
       props: {
         task: taskBundle.task,

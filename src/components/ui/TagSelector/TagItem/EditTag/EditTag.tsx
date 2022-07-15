@@ -37,7 +37,7 @@ const EditTag: FC<{
         return setError('');
       }
       return setError(
-        capitalize(locale.errors.minLength(locale.name, 3))
+        capitalize(locale.ui.tagSelector.minLength(locale.name, 3))
       );
     },
     [locale, validate]
@@ -77,7 +77,7 @@ const EditTag: FC<{
         onClose={() => setOpened(false)}
         size="md"
         title={
-          capitalize(locale.task.form.tagSelector.edit) +
+          capitalize(locale.ui.tagSelector.edit) +
           ` '${item.label}'`
         }
         classNames={{

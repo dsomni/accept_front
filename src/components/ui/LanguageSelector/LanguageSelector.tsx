@@ -80,8 +80,8 @@ const LanguageSelector: FC<{
           setUsed={setUsed}
           classNames={classNames ? classNames : {}}
           titles={[
-            capitalize(locale.task.form.langSelector.available),
-            capitalize(locale.task.form.langSelector.used),
+            capitalize(locale.ui.langSelector.available),
+            capitalize(locale.ui.langSelector.used),
           ]}
           itemComponent={itemComponent}
           shouldSortChosen={true}

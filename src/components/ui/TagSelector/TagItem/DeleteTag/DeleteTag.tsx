@@ -44,7 +44,7 @@ const DeleteTag: FC<{
         onClose={() => setOpened(false)}
         size="md"
         title={
-          capitalize(locale.task.form.tagSelector.delete) +
+          capitalize(locale.ui.tagSelector.delete) +
           ` '${item.label}'`
         }
         classNames={{
@@ -54,7 +54,7 @@ const DeleteTag: FC<{
         <div className={styles.form}>
           <div className={styles.question}>
             {capitalize(
-              locale.task.form.tagSelector.deleteConfidence
+              locale.ui.tagSelector.deleteConfidence
             )}
           </div>
           <Group

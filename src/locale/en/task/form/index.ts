@@ -1,0 +1,40 @@
+import { steps } from "./steps"
+import { validation } from "./validation"
+
+export const form = {
+    steps,
+    validation,
+    title: 'title',
+    complexity: 'complexity',
+    description: 'description',
+    inputFormat: 'input description',
+    outputFormat: 'output description',
+    inputExample: 'input example',
+    outputExample: 'output example',
+    grade: 'grade',
+    constraints: {
+      title: 'constraints',
+      time: 'time (seconds)',
+      memory: 'memory (Mb)',
+    },
+    checkTypes: ['tests', 'checker'],
+    taskTypes: ['code task', 'text task'],
+    checkType: 'check type',
+    taskType: 'task type',
+    checker: 'checker',
+    hint: {
+      title: 'hint',
+      alarmType: 'alarm type',
+      hintAlarmTypes: ['attempts', 'timestamp (minutes)'],
+      text: 'hint text',
+      showAfter: 'show after',
+    },
+    remark: 'remark',
+    tests: 'tests',
+    inputTest: 'input',
+    outputTest: 'output',
+    test: 'test',
+    example: 'example',
+    allowed: 'Allowed',
+    forbidden: 'Forbidden',
+  }

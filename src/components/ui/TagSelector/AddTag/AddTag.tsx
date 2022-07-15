@@ -35,7 +35,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         return setError('');
       }
       return setError(
-        capitalize(locale.errors.minLength(locale.name, 3))
+        capitalize(locale.ui.tagSelector.minLength(locale.name, 3))
       );
     },
     [locale, validate]
@@ -73,7 +73,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         centered
         onClose={() => setOpened(false)}
         size="md"
-        title={capitalize(locale.task.form.tagSelector.add)}
+        title={capitalize(locale.ui.tagSelector.add)}
         classNames={{
           title: styles.modalTitle,
         }}
@@ -89,7 +89,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
             onBlur={() => onBlur(title)}
             error={error}
             placeholder={capitalize(
-              locale.task.form.tagSelector.addPlaceholder
+              locale.ui.tagSelector.addPlaceholder
             )}
           />
           <Group
