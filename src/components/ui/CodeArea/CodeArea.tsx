@@ -124,7 +124,6 @@ const CodeArea: FC<{
 
   return (
     <div ref={draggable}>
-      <div className={styles.langSelector}></div>
       <div className={styles.codeWrapper}>
         {!drag && (
           <Textarea

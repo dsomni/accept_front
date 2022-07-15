@@ -1,0 +1,20 @@
+.itemWrapper {
+  width: 100%;
+  display: flex;
+  padding: var(--spacer-s);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacer-xs);
+  user-select: none;
+}
+.item {
+  cursor: pointer;
+  font-size: var(--font-size-l);
+  width: 90%;
+}

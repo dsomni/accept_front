@@ -46,7 +46,7 @@ const initialValues = (login: string) => ({
   checkerCode: '',
   checkerLang: 'py',
   checkType: 'tests', //"tests" or "checker"
-  type: 'code', //"code" or "text"
+  taskType: 'code', //"code" or "text"
   isTournament: true,
 });
 

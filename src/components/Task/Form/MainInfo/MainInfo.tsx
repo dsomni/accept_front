@@ -11,6 +11,7 @@ import { FC, memo, useMemo } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
+import { Item } from '@components/ui/CustomTransferList/CustomTransferList';
 
 const MainInfo: FC<{
   form: any;
@@ -46,8 +47,8 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           initialTags={initialTags}
-          setUsed={(value: any) => {
-            form.setFieldValue('tags', value);
+          setUsed={(values: Item[]) => {
+            form.setFieldValue('tags', values);
             form.validateField('tags');
           }}
           fetchURL={'tag/list'}
@@ -62,6 +63,8 @@ const MainInfo: FC<{
           size="lg"
           label={capitalize(locale.task.form.complexity)}
           required
+          noClampOnBlur
+          hideControls
           onBlur={() => {
             form.validateField('complexity');
           }}
@@ -75,11 +78,11 @@ const MainInfo: FC<{
           }}
           size="md"
           label={capitalize(locale.task.form.taskType)}
-          {...form.getInputProps('type')}
+          {...form.getInputProps('taskType')}
           onChange={(value) => {
-            form.setFieldValue('type', value);
-            value === 'text'
-              ? form.setFieldValue('checkType', 'tests')
+            form.setFieldValue('taskType', value);
+            value === '1'
+              ? form.setFieldValue('checkType', '0')
               : () => {};
           }}
         >
@@ -94,7 +97,7 @@ const MainInfo: FC<{
           ))}
         </RadioGroup>
 
-        {form.values.type === '0' && (
+        {form.values.taskType === '0' && (
           <RadioGroup
             classNames={{
               label: styles.label,

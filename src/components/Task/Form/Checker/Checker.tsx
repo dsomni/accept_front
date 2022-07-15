@@ -8,6 +8,7 @@ import styles from './checker.module.css';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
 import { Select } from '@mantine/core';
+import Tests from '../Tests/Tests';
 
 const defaultLangSpec = '0';
 
@@ -38,6 +39,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           label: capitalize(lang.name),
           value: lang.spec.toString(),
         }))}
+        styles={{ label: { fontSize: 'var(--font-size-xl)' } }}
         onBlur={() => form.validateField('checkerLang')}
         {...form.getInputProps('checkerLang')}
       />
@@ -56,50 +58,9 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           onBlur: () => form.validateField('checkerCode'),
         }}
       />
-      <div className={styles.listWrapper}>
-        {form.values.tests &&
-          form.values.tests.map(
-            (value: [string, string], index: number) => (
-              <div key={index}>
-                <ListItem
-                  label={
-                    capitalize(locale.task.form.test) +
-                    ' #' +
-                    (index + 1)
-                  }
-                  classNames={{
-                    label: styles.label,
-                  }}
-                  field="tests"
-                  InLabel={capitalize(locale.task.form.inputTest)}
-                  OutLabel={capitalize(locale.task.form.outputTest)}
-                  form={form}
-                  index={index}
-                  onDelete={() => {}}
-                  maxRows={7}
-                  single
-                />
-              </div>
-            )
-          )}
-        <Button
-          size="lg"
-          className={styles.addButton}
-          color="var(--primary)"
-          variant="light"
-          onClick={() => {
-            form.setFieldValue(
-              'tests',
-              (() => {
-                form.values.tests.push(['', '']);
-                return form.values.tests;
-              })()
-            );
-            form.validateField('tests');
-          }}
-        >
-          +
-        </Button>
+      <div className={styles.tests}>
+        {' '}
+        <Tests form={form} hideOutput />
       </div>
     </div>
   );

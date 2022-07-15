@@ -38,30 +38,28 @@ const TagSelector: FC<{
 
   const refetch = useCallback(async () => {
     setLoading(true);
-    sendRequest<{}, ITag[]>(fetchURL, 'GET', undefined, 5000).then(
-      (res) => {
-        if (res.error) return;
-        let tags = res.response;
-        let newAvailableTags: Item[] = [];
-        let newSelectedTags: Item[] = [];
-        let tag;
-        let selectedSpecs = selectedTags.map((item) => item.value);
-        for (let i = 0; i < tags.length; i++) {
-          tag = {
-            value: tags[i].spec,
-            label: tags[i].title,
-          };
-          if (selectedSpecs.includes(tag.value)) {
-            newSelectedTags.push(tag);
-          } else {
-            newAvailableTags.push(tag);
-          }
+    sendRequest<{}, ITag[]>(fetchURL, 'GET').then((res) => {
+      if (res.error) return;
+      let tags = res.response;
+      let newAvailableTags: Item[] = [];
+      let newSelectedTags: Item[] = [];
+      let tag;
+      let selectedSpecs = selectedTags.map((item) => item.value);
+      for (let i = 0; i < tags.length; i++) {
+        tag = {
+          value: tags[i].spec,
+          label: tags[i].title,
+        };
+        if (selectedSpecs.includes(tag.value)) {
+          newSelectedTags.push(tag);
+        } else {
+          newAvailableTags.push(tag);
         }
-        setSelectedTags(newSelectedTags);
-        setAvailableTags(newAvailableTags);
-        setLoading(false);
       }
-    );
+      setSelectedTags(newSelectedTags);
+      setAvailableTags(newAvailableTags);
+      setLoading(false);
+    });
   }, [fetchURL, selectedTags]);
 
   useEffect(() => {
@@ -69,7 +67,7 @@ const TagSelector: FC<{
   }, []); // eslint-disable-line
 
   const itemComponent = useCallback(
-    (item, handleSelect) => {
+    (item: any, handleSelect: any) => {
       return (
         <TagItem
           item={item}

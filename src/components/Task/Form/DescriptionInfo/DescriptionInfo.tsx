@@ -20,7 +20,7 @@ const DescriptionInfo: FC<{
         }}
         label={capitalize(locale.task.form.description)}
         form={form}
-        {...form.getInputProps('inputFormat')}
+        name={'description'}
       />
       <CustomEditor
         classNames={{
@@ -28,7 +28,7 @@ const DescriptionInfo: FC<{
         }}
         label={capitalize(locale.task.form.inputFormat)}
         form={form}
-        {...form.getInputProps('inputFormat')}
+        name={'inputFormat'}
       />
       <CustomEditor
         classNames={{
@@ -36,7 +36,7 @@ const DescriptionInfo: FC<{
         }}
         label={capitalize(locale.task.form.outputFormat)}
         form={form}
-        {...form.getInputProps('outputFormat')}
+        name={'outputFormat'}
       />
 
       <CustomEditor
@@ -45,7 +45,7 @@ const DescriptionInfo: FC<{
         }}
         label={capitalize(locale.task.form.remark)}
         form={form}
-        {...form.getInputProps('remark')}
+        name={'remark'}
       />
 
       {!form.values.isTournament && form.values['hasHint'] && (
@@ -97,7 +97,7 @@ const DescriptionInfo: FC<{
             }}
             label={capitalize(locale.task.form.hint.text)}
             form={form}
-            {...form.getInputProps('hintContent')}
+            name={'hintContent'}
           />
         </div>
       )}

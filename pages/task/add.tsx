@@ -6,7 +6,6 @@ import { useUser } from '@hooks/useUser';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import Form from '@components/Task/Form/Form';
 import { capitalize } from '@utils/capitalize';
-import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { useRequest } from '@hooks/useRequest';
 import { ITaskAddBundle } from '@custom-types/data/bundle';
@@ -16,31 +15,35 @@ import {
   ITaskType,
   IHintAlarmType,
 } from '@custom-types/data/atomic';
+import { Item } from '@components/ui/CustomTransferList/CustomTransferList';
 
 const initialValues = {
   spec: '',
   title: 'Простые числа',
-  author: '',
   tags: [],
+  author: '',
+  complexity: 50,
   description:
     'Написать программу выводящую все простые числа меньше n.',
-  inputFormat: 'Вводится натуральное число n<10000. ',
-  outputFormat:
-    'Выведите все простые числа меньшие n в одну строку через пробел. Если простых нет выведите "NO".',
-  complexity: 50,
-  constraints: {
-    time: 1,
-    memory: 16,
-  },
-  hasHint: false,
-  hintContent: '',
-  hintAlarmType: '0',
-  hintAlarm: 0,
-  remark: '',
+  constraintsTime: 1,
+  constraintsMemory: 16,
   examples: [
     { inputData: '1', outputData: 'NO' },
     { inputData: '15', outputData: '2 3 5 7 11 13' },
   ],
+  inputFormat: 'Вводится натуральное число n<10000. ',
+  outputFormat:
+    'Выведите все простые числа меньшие n в одну строку через пробел. Если простых нет выведите "NO".',
+  remark: '123214432433435',
+
+  hasHint: true,
+  hintContent: 'Приветприветприветпривет',
+  hintAlarmType: '0',
+  hintAlarm: 0,
+
+  allowedLanguages: [],
+  forbiddenLanguages: [],
+
   tests: [
     { inputData: '1', outputData: '1' },
     { inputData: '1', outputData: '1' },
@@ -52,12 +55,13 @@ const initialValues = {
     { inputData: '1', outputData: '1' },
     { inputData: '1', outputData: '1' },
   ],
-  checkerCode: '',
-  allowedLanguages: [],
-  forbiddenLanguages: [],
+
   checkerLang: '0',
-  checkType: '0', //"tests" or "checker"
-  type: '0', //"code" or "text"
+  checkerCode: '',
+
+  checkType: '1', //"tests" or "checker"
+  taskType: '0', //"code" or "text"
+  shouldRestrictLanguages: false,
 };
 
 function AddTask() {
@@ -90,35 +94,55 @@ function AddTask() {
         value.length == 0
           ? locale.task.form.validation.outputFormat
           : null,
+      constraintsMemory: (value) =>
+        value < 0 || value > 1024
+          ? locale.task.form.validation.constraints.memory
+          : null,
+      constraintsTime: (value) =>
+        value < 0.5 || value > 30
+          ? locale.task.form.validation.constraints.time
+          : null,
       complexity: (value) =>
         value < 0
           ? locale.task.form.validation.complexity.least
           : value > 100
           ? locale.task.form.validation.complexity.most
           : null,
-      examples: (value) =>
-        value.length < 2
-          ? locale.task.form.validation.examples
+      examples: (value, values) =>
+        value.length < 1
+          ? locale.task.form.validation.examples.number
+          : value.filter(
+              (pair) =>
+                pair.inputData.trim() || pair.outputData.trim()
+            ).length != value.length
+          ? locale.task.form.validation.examples.empty
           : null,
       tests: (value, values) =>
-        values.type == '1' || value.length < 5
-          ? locale.task.form.validation.tests
+        value.length < 1
+          ? locale.task.form.validation.tests.number
+          : value.filter(
+              (pair) =>
+                (pair.inputData.trim() && values.taskType == '0') ||
+                (pair.outputData.trim() && values.taskType == '0')
+            ).length != value.length
+          ? locale.task.form.validation.tests.empty
+          : null,
+      checkerCode: (value, values) =>
+        values.checkType == '1' && value.length == 0
+          ? locale.task.form.validation.checkerCode
           : null,
       hintContent: (value, values) =>
         !values.hasHint || value.length == 0
           ? locale.task.form.validation.hintContent
           : null,
-      checkerCode: (value, values) =>
-        values.type == '0' || value.length == 0
-          ? locale.task.form.validation.checkerCode
-          : null,
+      hintAlarm: (value) =>
+        value < 0 ? locale.task.form.validation.hintAlarm : null,
     },
   });
 
-  const { data, loading, error, detail } = useRequest<
-    {},
-    ITaskAddBundle
-  >('bundle/task_add');
+  const { data, loading } = useRequest<{}, ITaskAddBundle>(
+    'bundle/task_add'
+  );
 
   useEffect(() => {
     if (data) {
@@ -135,19 +159,38 @@ function AddTask() {
       hintContent,
       hintAlarmType,
       hintAlarm,
+      constraintsMemory,
+      constraintsTime,
+      allowedLanguages,
+      forbiddenLanguages,
+      tags,
       ...values
     } = form.values;
     let body: any = {
       ...values,
-      tags: form.values['tags'].map((tag: Item) => tag.value),
-      author: user?.login || 'popa',
-      checkType: Number(form.values['checkType']),
-      taskType: Number(form.values['type']),
+      author: user?.login || 'unknown',
+      checkType: +form.values['checkType'],
+      taskType: +form.values['taskType'],
+      constraints: {
+        time: constraintsTime,
+        memory: constraintsMemory,
+      },
+      allowedLanguages: allowedLanguages.map(
+        (lang: Item) => lang.value
+      ),
+      forbiddenLanguages: forbiddenLanguages.map(
+        (lang: Item) => lang.value
+      ),
+      tags: tags.map((tag: Item) => tag.value),
     };
+    if (!form.values.shouldRestrictLanguages) {
+      body.allowedLanguages = [];
+      body.forbiddenLanguages = [];
+    }
     if (form.values['checkType'] === '1') {
       body.checker = {
-        sourceCode: form.values['checkerCode'],
-        language: form.values['checkerLang'],
+        sourceCode: checkerCode,
+        language: +checkerLang,
       };
     }
     if (form.values['remark'].trim() === '') {
@@ -155,9 +198,9 @@ function AddTask() {
     }
     if (form.values['hasHint']) {
       body.hint = {
-        content: form.values['hintContent'],
-        alarmType: Number(form.values['hintAlarmType']),
-        alarm: form.values['hintAlarm'],
+        content: hintContent,
+        alarmType: +hintAlarmType,
+        alarm: hintAlarm,
       };
     }
     requestWithNotify(

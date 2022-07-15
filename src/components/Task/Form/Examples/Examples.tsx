@@ -1,7 +1,7 @@
 import ListItem from '@ui/ListItem/ListItem';
 import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { Button } from '@mantine/core';
+import { Button, InputWrapper } from '@mantine/core';
 
 import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback } from 'react';
@@ -19,6 +19,7 @@ const Examples: FC<{ form: any }> = ({ form }) => {
           return form.values.examples;
         })()
       );
+      form.validateField('examples');
     },
     [form]
   );
@@ -43,6 +44,11 @@ const Examples: FC<{ form: any }> = ({ form }) => {
             />
           </div>
         ))}
+      <InputWrapper
+        {...form.getInputProps('examples')}
+        onChange={() => {}}
+        styles={{ error: { fontSize: 'var(--font-size-l)' } }}
+      />
       <Button
         size="lg"
         className={styles.addButton}
@@ -52,7 +58,10 @@ const Examples: FC<{ form: any }> = ({ form }) => {
           form.setFieldValue(
             'examples',
             (() => {
-              form.values.examples.push(['', '']);
+              form.values.examples.push({
+                inputData: '',
+                outputData: '',
+              });
               return form.values.examples;
             })()
           );

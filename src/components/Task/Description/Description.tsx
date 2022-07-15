@@ -12,13 +12,15 @@ import { setter } from '@custom-types/ui/atomic';
 const Description: FC<{
   task: ITask;
   setShowHint: setter<boolean>;
-}> = ({ task, setShowHint }) => {
-  const description = useRef<HTMLDivElement>(null);
-  const inputFormat = useRef<HTMLDivElement>(null);
-  const outputFormat = useRef<HTMLDivElement>(null);
+  preview?: boolean;
+}> = ({ task, preview, setShowHint }) => {
+  // const description = useRef<HTMLDivElement>(null);
+  // const inputFormat = useRef<HTMLDivElement>(null);
+  // const outputFormat = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
 
   useEffect(() => {
+    if (preview) return;
     sendRequest<{}, boolean>(
       `task/should_show_hint/${task.spec}`,
       'GET',
@@ -27,16 +29,16 @@ const Description: FC<{
     ).then((res) => {
       setShowHint(res.response);
     });
-  }, [task.spec, setShowHint]);
+  }, [task.spec, setShowHint, preview]);
 
-  useEffect(() => {
-    if (description.current)
-      description.current.innerHTML = task.description;
-    if (inputFormat.current)
-      inputFormat.current.innerHTML = task.inputFormat;
-    if (outputFormat.current)
-      outputFormat.current.innerHTML = task.outputFormat;
-  }, [task.description, task.inputFormat, task.outputFormat]);
+  // useEffect(() => {
+  //   if (description.current)
+  //     description.current.innerHTML = task.description;
+  //   if (inputFormat.current)
+  //     inputFormat.current.innerHTML = task.inputFormat;
+  //   if (outputFormat.current)
+  //     outputFormat.current.innerHTML = task.outputFormat;
+  // }, [task.description, task.inputFormat, task.outputFormat]);
 
   return (
     <div className={styles.wrapper}>
@@ -51,31 +53,34 @@ const Description: FC<{
       </div>
       <div className={styles.constraints}>
         <div className={styles.memory}>{`${capitalize(
-          locale.task.form.constraints.memory
+          locale.task.constraints.memory
         )}: ${task.constraints.memory}Mb`}</div>
         <div className={styles.time}>{`${capitalize(
-          locale.task.form.constraints.memory
+          locale.task.constraints.memory
         )}: ${task.constraints.time}s`}</div>
       </div>
-      <div className={styles.description} ref={description}>
-        {task.description}
-      </div>
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: task.description }}
+      />
       <div className={styles.formatWrapper}>
         <div className={styles.inputFormat}>
           <div className={styles.formatLabel}>
             {capitalize(locale.task.description.format.input)}
           </div>
-          <div className={styles.format} ref={inputFormat}>
-            {task.inputFormat}
-          </div>
+          <div
+            className={styles.inputFormat}
+            dangerouslySetInnerHTML={{ __html: task.inputFormat }}
+          />
         </div>
         <div className={styles.outputFormat}>
           <div className={styles.formatLabel}>
             {capitalize(locale.task.description.format.output)}
           </div>
-          <div className={styles.format} ref={outputFormat}>
-            {task.outputFormat}
-          </div>
+          <div
+            className={styles.outputFormat}
+            dangerouslySetInnerHTML={{ __html: task.outputFormat }}
+          />
         </div>
       </div>
       <div className={styles.examplesLabel}>
@@ -121,7 +126,10 @@ const Description: FC<{
           <div className={styles.remarkLabel}>
             {capitalize(locale.task.form.remark)}
           </div>
-          <div className={styles.remark}>{task.remark}</div>
+          <div
+            className={styles.remark}
+            dangerouslySetInnerHTML={{ __html: task.remark }}
+          />
         </div>
       )}
     </div>

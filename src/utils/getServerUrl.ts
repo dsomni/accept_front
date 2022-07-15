@@ -1,3 +1,9 @@
 import { env } from 'process';
 export const getServerUrl = () =>
-  env.NODE_ENV === 'production' ? 'http://localhost:3000' : 'http://localhost:8080';
+  env.NODE_ENV === 'production'
+    ? 'http://localhost:3000'
+    : 'http://localhost:8080';
+export const getApiUrl = () =>
+  env.NODE_ENV === 'production'
+    ? 'http://localhost:3000'
+    : 'http://localhost:8000';

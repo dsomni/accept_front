@@ -93,6 +93,10 @@ const months = {
 };
 
 const task = {
+  constraints: {
+    time: 'time',
+    memory: 'memory',
+  },
   modals: {
     add: 'add task',
     edit: 'edit task',
@@ -124,26 +128,18 @@ const task = {
   },
   form: {
     steps: {
-      first: {
-        label: 'first step',
-        description: 'main task info',
-      },
-      second: {
-        label: 'second step',
-        description: 'description',
-      },
-      third: {
-        label: 'third step',
-        description: 'task type and examples',
-      },
-      fourth: {
-        label: 'fourth step',
-        description: 'tests or checker',
-      },
-      fifth: {
-        label: 'fifth step',
-        description: 'preview',
-      },
+      first: 'first step',
+      second: 'second step',
+      third: 'third step',
+      fourth: 'forth step',
+      fifth: 'fifth step',
+      sixth: 'sixth step',
+      constraints: 'constraints',
+      mainInfo: 'main task info',
+      description: 'description',
+      examples: 'examples',
+      tests: 'tests or checker',
+      preview: 'preview',
     },
     validation: {
       title: 'Task must have title at least 5 characters',
@@ -152,15 +148,27 @@ const task = {
         'Task must have description at least 20 characters',
       inputFormat: 'Task must have input description',
       outputFormat: 'Task must have output description',
+      constraints: {
+        memory: 'Memory must be between 0Mb and 1024Mb',
+        time: 'Time must be between 0 and 60 seconds',
+      },
       complexity: {
         least: 'Complexity must be at least 0%',
         most: 'Complexity must be at most 100%',
       },
-      examples: 'Task must include at least 2 examples',
-      tests: 'Task must include at least 5 tests',
+      examples: {
+        number: 'Task must include at least 1 example',
+        empty: 'Task can not have empty examples',
+      },
+      tests: {
+        number: 'Task must include at least 1 test',
+        empty: 'Task can not have empty tests',
+        text: 'Text task can have only one test',
+      },
       hintContent: 'You add hint, but hint content is empty',
       checkerCode:
         'You used checker, but forget to add checker`s code',
+      hintAlarm: 'Value must not be less then 0',
     },
     title: 'title',
     complexity: 'complexity',
@@ -172,8 +180,8 @@ const task = {
     grade: 'grade',
     constraints: {
       title: 'constraints',
-      time: 'time',
-      memory: 'memory',
+      time: 'time (seconds)',
+      memory: 'memory (Mb)',
     },
     checkTypes: ['tests', 'checker'],
     taskTypes: ['code task', 'text task'],
@@ -183,7 +191,7 @@ const task = {
     hint: {
       title: 'hint',
       alarmType: 'alarm type',
-      hintAlarmTypes: ['attempts', 'timestamp'],
+      hintAlarmTypes: ['attempts', 'timestamp (minutes)'],
       text: 'hint text',
       showAfter: 'show after',
     },
@@ -193,6 +201,12 @@ const task = {
     outputTest: 'output',
     test: 'test',
     example: 'example',
+    langSelector: {
+      available: 'all languages',
+      used: 'selected languages',
+      allowed: 'allowed languages',
+      forbidden: 'forbidden languages',
+    },
     tagSelector: {
       available: 'available tags',
       used: 'used tags',
@@ -203,6 +217,8 @@ const task = {
       deleteConfidence:
         'are you sure you want to permanently delete the tag?',
     },
+    allowed: 'Allowed',
+    forbidden: 'Forbidden',
   },
   status: {
     error: 'Error on task submit',
@@ -502,7 +518,7 @@ const attempts = {
 };
 
 const codeArea = {
-  selectFiles: 'select files',
+  selectFiles: 'select file',
   drag: 'drag files here',
   notification: {
     uploading: { title: 'uploading file...', description: '' },

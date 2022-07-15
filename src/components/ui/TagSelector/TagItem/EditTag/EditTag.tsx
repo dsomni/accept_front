@@ -32,7 +32,7 @@ const EditTag: FC<{
   }, []);
 
   const onBlur = useCallback(
-    (title) => {
+    (title: string) => {
       if (validate(title)) {
         return setError('');
       }
@@ -44,7 +44,7 @@ const EditTag: FC<{
   );
 
   const handleSubmit = useCallback(
-    (title) => {
+    (title: string) => {
       if (validate(title)) {
         isSuccessful(updateURL, 'POST', {
           spec: item.value,

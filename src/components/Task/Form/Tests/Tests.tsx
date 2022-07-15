@@ -1,7 +1,7 @@
 import ListItem from '@ui/ListItem/ListItem';
 import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group, Text } from '@mantine/core';
+import { Button, Group, Text, InputWrapper } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 
@@ -16,7 +16,11 @@ import {
 } from 'react';
 import styles from './tests.module.css';
 
-const Tests: FC<{ form: any }> = ({ form }) => {
+const Tests: FC<{
+  form: any;
+  hideInput?: boolean;
+  hideOutput?: boolean;
+}> = ({ form, hideInput, hideOutput }) => {
   const { locale } = useLocale();
 
   const [drag, setDrag] = useState(false);
@@ -43,7 +47,7 @@ const Tests: FC<{ form: any }> = ({ form }) => {
     };
   }, [dragable, dragStart, dragEnd]);
 
-  const onDeleteExample = useCallback(
+  const onDeleteTest = useCallback(
     (index: number) => {
       form.setFieldValue(
         'tests',
@@ -52,6 +56,7 @@ const Tests: FC<{ form: any }> = ({ form }) => {
           return form.values.tests;
         })()
       );
+      form.validateField('tests');
     },
     [form]
   );
@@ -152,13 +157,20 @@ const Tests: FC<{ form: any }> = ({ form }) => {
                 InLabel={capitalize(locale.task.form.inputTest)}
                 OutLabel={capitalize(locale.task.form.outputTest)}
                 form={form}
+                hideInput={hideInput || form.values.taskType == '1'}
+                hideOutput={hideOutput}
                 index={index}
-                onDelete={onDeleteExample}
+                onDelete={onDeleteTest}
                 maxRows={7}
               />
             </div>
           )
         )}
+      <InputWrapper
+        {...form.getInputProps('tests')}
+        onChange={() => {}}
+        styles={{ error: { fontSize: 'var(--font-size-l)' } }}
+      />
       <Button
         size="lg"
         className={styles.addButton}
@@ -168,7 +180,10 @@ const Tests: FC<{ form: any }> = ({ form }) => {
           form.setFieldValue(
             'tests',
             (() => {
-              form.values.tests.push(['', '']);
+              form.values.tests.push({
+                inputData: '',
+                outputData: '',
+              });
               return form.values.tests;
             })()
           );

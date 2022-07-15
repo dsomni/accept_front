@@ -62,5 +62,5 @@ export interface ITaskEdit extends ITask {
   tests: ITest[];
   checker: IChecker | undefined;
   checkType: ITaskCheckType | undefined;
-  type: ITaskType;
+  taskType: ITaskType;
 }

@@ -7,7 +7,7 @@ export default async function DeleteTag(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const spec = JSON.parse(req.body)['spec'];
+  const spec = req.body.spec;
   const response = await fetch(`${url}/${spec}`, {
     method: 'DELETE',
   });

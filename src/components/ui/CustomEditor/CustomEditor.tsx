@@ -13,11 +13,10 @@ const editorConfiguration = {
 
 const CustomEditor: FC<{
   name: string;
-  value: string;
   label: string;
   form?: any;
   classNames?: object;
-}> = ({ name, value, label, form, classNames }) => {
+}> = ({ name, label, form, classNames }) => {
   const { locale } = useLocale();
 
   const editorRef = useRef<any>();
@@ -48,7 +47,7 @@ const CustomEditor: FC<{
           <CKEditor
             name={name}
             editor={Editor}
-            data={value}
+            data={form.values[name]}
             config={editorConfiguration}
             onChange={(event: any, editor: any) => {
               const data = editor.getData();
