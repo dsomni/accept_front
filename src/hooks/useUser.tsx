@@ -10,12 +10,8 @@ import {
   useEffect,
   useState,
 } from 'react';
-import Cryptr from 'cryptr';
 
 const UserContext = createContext<IUserContext>(null!);
-const key = 'bug_in_maxim';
-
-const cryptr = new Cryptr(key);
 
 export const UserProvider: FC<{ children: ReactNode }> = ({
   children,
@@ -27,7 +23,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
       if (!res.error) {
         const accessLevel = res.response.role.accessLevel;
         const user = res.response;
-        setCookie('user', cryptr.encrypt(JSON.stringify(user)), {
+        setCookie('user', JSON.stringify(user), {
           'max-age': 10 * 60,
           path: '/',
         });
@@ -53,7 +49,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
       }
     } else {
       try {
-        const user = JSON.parse(cryptr.decrypt(cookie_user)) as IUser;
+        const user = JSON.parse(cookie_user) as IUser;
         setValue((prev) => ({
           ...prev,
           user: user,
