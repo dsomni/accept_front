@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Stepper } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, useEffect, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
@@ -54,28 +54,28 @@ const Form: FC<{
         breakpoint={1000}
       >
         <Stepper.Step
-          label={capitalize(locale.task.form.steps.first)}
-          description={capitalize(locale.task.form.steps.mainInfo)}
+          label={locale.task.form.steps.first}
+          description={locale.task.form.steps.mainInfo}
         />
         <Stepper.Step
-          label={capitalize(locale.task.form.steps.second)}
-          description={capitalize(locale.task.form.steps.constraints)}
+          label={locale.task.form.steps.second}
+          description={locale.task.form.steps.constraints}
         />
         <Stepper.Step
-          label={capitalize(locale.task.form.steps.third)}
-          description={capitalize(locale.task.form.steps.description)}
+          label={locale.task.form.steps.third}
+          description={locale.task.form.steps.description}
         />
         <Stepper.Step
-          label={capitalize(locale.task.form.steps.fourth)}
-          description={capitalize(locale.task.form.steps.examples)}
+          label={locale.task.form.steps.fourth}
+          description={locale.task.form.steps.examples}
         />
         <Stepper.Step
-          label={capitalize(locale.task.form.steps.fifth)}
-          description={capitalize(locale.task.form.steps.tests)}
+          label={locale.task.form.steps.fifth}
+          description={locale.task.form.steps.tests}
         />
         <Stepper.Step
-          label={capitalize(locale.task.form.steps.sixth)}
-          description={capitalize(locale.task.form.steps.preview)}
+          label={locale.task.form.steps.sixth}
+          description={locale.task.form.steps.preview}
         />
       </Stepper>
       <form onSubmit={() => {}}>
@@ -109,16 +109,14 @@ const Form: FC<{
         >
           {currentStep !== 0 && (
             <Button variant="default" onClick={prevStep}>
-              {capitalize(locale.form.back)}
+              {locale.form.back}
             </Button>
           )}
           <Button
             onClick={currentStep !== 5 ? nextStep : handleSubmit}
             type="button"
           >
-            {currentStep === 5
-              ? buttonLabel
-              : capitalize(locale.form.next)}
+            {currentStep === 5 ? buttonLabel : locale.form.next}
           </Button>
         </Group>
       </form>

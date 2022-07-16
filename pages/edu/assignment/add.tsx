@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import Form from '@components/AssignmentSchema/Form/Form';
-import { capitalize } from '@utils/capitalize';
+
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -50,7 +50,7 @@ function AddAssignmentSchema() {
       <Form
         form={form}
         handleSubmit={handleSubmit}
-        buttonLabel={capitalize(locale.form.create)}
+        buttonLabel={locale.form.create}
       />
     </>
   );

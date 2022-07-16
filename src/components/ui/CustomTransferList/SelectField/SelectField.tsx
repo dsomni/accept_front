@@ -10,7 +10,7 @@ import styles from './selectField.module.css';
 import { Item } from '../CustomTransferList';
 import { TextInput, Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
+
 import Fuse from 'fuse.js';
 
 const fuse_options: Fuse.IFuseOptions<Item> = {
@@ -68,7 +68,7 @@ export const SelectField: FC<{
       <div className={styles.header}>
         <div className={styles.searchBar}>
           <TextInput
-            placeholder={capitalize(locale.form.search)}
+            placeholder={locale.form.search}
             onChange={(e: any) => setSearchText(e.target.value)}
           />
         </div>

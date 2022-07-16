@@ -1,12 +1,12 @@
 export const attempt = {
-    delete: {
-      loading: 'deleting the attempt',
-      success: 'the attempt was deleted successfully',
-      error: 'error when deleting the attempt',
-    },
-    send: {
-      loading: 'sending the attempt',
-      success: 'the attempt was send successfully',
-      error: 'error when sending the attempt',
-    },
-  }
+  delete: {
+    loading: 'Deleting the attempt',
+    success: 'The attempt was deleted successfully',
+    error: 'Error when deleting the attempt',
+  },
+  send: {
+    loading: 'Sending the attempt',
+    success: 'The attempt was send successfully',
+    error: 'Error when sending the attempt',
+  },
+};

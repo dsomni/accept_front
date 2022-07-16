@@ -1,17 +1,16 @@
-
 export const form = {
-  next: 'следующий шаг',
-  back: 'назад',
-  create: 'создать',
-  update: 'изменить',
-  search: 'найти',
+  next: 'Следующий шаг',
+  back: 'Назад',
+  create: 'Создать',
+  update: 'Изменить',
+  search: 'Найти',
 };
 
 export const placeholders = {
-  code: 'вставьте ваш код сюда',
-  search: 'поиск',
-  showColumns: 'выберете поля',
-  selectTags: 'выберете теги',
-  selectGroups: 'выберете группы',
-  title: 'введите название',
+  code: 'Вставьте ваш код сюда',
+  search: 'Поиск',
+  showColumns: 'Выберете поля',
+  selectTags: 'Выберете теги',
+  selectGroups: 'Выберете группы',
+  title: 'Введите название',
 };

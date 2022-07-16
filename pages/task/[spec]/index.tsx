@@ -17,7 +17,7 @@ import {
   newNotification,
   errorNotification,
 } from '@utils/notificationFunctions';
-import { capitalize } from '@utils/capitalize';
+
 import { useLocale } from '@hooks/useLocale';
 import SingularSticky from '@components/ui/Sticky/SingularSticky';
 import { Eye, Pencil, Trash } from 'tabler-icons-react';
@@ -81,7 +81,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       />
       {task.hint && (
         <SimpleModal
-          title={capitalize(locale.task.form.hint.title)}
+          title={locale.task.form.hint.title}
           opened={openedHint}
           close={() => setOpenedHint(false)}
         >

@@ -2,7 +2,7 @@ import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
-import { capitalize } from '@utils/capitalize';
+
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IGroup } from '@custom-types/data/IGroup';
 import Form from '@components/Group/Form/Form';
@@ -43,7 +43,7 @@ function AddGroup() {
       <Form
         form={form}
         handleSubmit={handleSubmit}
-        buttonText={capitalize(locale.create)}
+        buttonText={locale.create}
       />
     </>
   );

@@ -1,9 +1,8 @@
 import IHeaderLink from '@custom-types/ui/IHeaderLink';
-import { capitalize } from '@utils/capitalize';
 
 const mainLinks: IHeaderLink[] = [
   {
-    text: (locale) => capitalize(locale.mainHeaderLinks.main),
+    text: (locale) => locale.mainHeaderLinks.main,
     href: '/',
   },
   {
@@ -11,21 +10,21 @@ const mainLinks: IHeaderLink[] = [
     href: '',
   },
   {
-    text: (locale) => capitalize(locale.mainHeaderLinks.about),
+    text: (locale) => locale.mainHeaderLinks.about,
     href: '/about',
   },
 ];
 const projectLinks: IHeaderLink[] = [
   {
-    text: (locale) => capitalize(locale.projects.education.title),
+    text: (locale) => locale.projects.education.title,
     href: '/edu',
   },
   {
-    text: (locale) => capitalize(locale.projects.courses.title),
+    text: (locale) => locale.projects.courses.title,
     href: '/courses',
   },
   {
-    text: (locale) => capitalize(locale.projects.tournaments.title),
+    text: (locale) => locale.projects.tournaments.title,
     href: '/tournaments',
   },
 ];

@@ -11,7 +11,7 @@ import { ITaskDisplay } from '@custom-types/data/ITask';
 import { sendRequest } from '@requests/request';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { capitalize } from '@utils/capitalize';
+
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
@@ -128,7 +128,7 @@ function EditAssignmentSchema() {
         <Form
           form={form}
           handleSubmit={handleSubmit}
-          buttonLabel={capitalize(locale.form.update)}
+          buttonLabel={locale.form.update}
         />
       )}
     </>

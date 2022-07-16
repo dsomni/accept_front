@@ -5,7 +5,7 @@ import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { capitalize } from '@utils/capitalize';
+
 import { setter } from '@custom-types/ui/atomic';
 import { getCookie, setCookie } from '@utils/cookies';
 import styles from './send.module.css';
@@ -71,11 +71,11 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
     <div className={styles.wrapper}>
       <div className={styles.top}>
         <Select
-          label={capitalize(locale.language)}
+          label={locale.language}
           onChange={onLangSelect}
           value={language ? language : defaultLangSpec}
           data={langs.map((lang) => ({
-            label: capitalize(lang.name),
+            label: lang.name,
             value: lang.spec.toString(),
           }))}
         />

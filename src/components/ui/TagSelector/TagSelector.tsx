@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import styles from './tagSelector.module.css';
 import { sendRequest } from '@requests/request';
@@ -90,8 +90,8 @@ const TagSelector: FC<{
           setUsed={setUsed}
           classNames={classNames ? classNames : {}}
           titles={[
-            capitalize(locale.ui.tagSelector.available),
-            capitalize(locale.ui.tagSelector.used),
+            locale.ui.tagSelector.available,
+            locale.ui.tagSelector.used,
           ]}
           itemComponent={itemComponent}
           rightComponent={() => (

@@ -5,7 +5,6 @@ import { Button, Group, Text, InputWrapper } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 
-import { capitalize } from '@utils/capitalize';
 import {
   FC,
   memo,
@@ -149,13 +148,9 @@ const Tests: FC<{
             <div key={index} className={styles.example}>
               <ListItem
                 field="tests"
-                label={
-                  capitalize(locale.task.form.test) +
-                  ' #' +
-                  (index + 1)
-                }
-                InLabel={capitalize(locale.task.form.inputTest)}
-                OutLabel={capitalize(locale.task.form.outputTest)}
+                label={locale.task.form.test + ' #' + (index + 1)}
+                InLabel={locale.task.form.inputTest}
+                OutLabel={locale.task.form.outputTest}
                 form={form}
                 hideInput={hideInput || form.values.taskType == '1'}
                 hideOutput={hideOutput}

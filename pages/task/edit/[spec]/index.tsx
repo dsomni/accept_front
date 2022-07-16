@@ -7,7 +7,7 @@ import { ITaskDisplay, ITaskEdit } from '@custom-types/data/ITask';
 import { useUser } from '@hooks/useUser';
 
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { capitalize } from '@utils/capitalize';
+
 import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -132,7 +132,7 @@ function EditTask(props: {
     <Form
       form={form}
       handleSubmit={handleSubmit}
-      buttonLabel={capitalize(locale.form.update)}
+      buttonLabel={locale.form.update}
       taskTypes={taskTypes}
       taskCheckTypes={taskCheckTypes}
       hintAlarmTypes={hintAlarmTypes}

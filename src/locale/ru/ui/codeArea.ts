@@ -1,13 +1,13 @@
 export const codeArea = {
-  selectFiles: 'выберете файл',
-  drag: 'перетащите файлы сюда',
+  selectFiles: 'Выберете файл',
+  drag: 'Перетащите файлы сюда',
   notification: {
-    uploading: { title: 'загружаем файл...', description: '' },
+    uploading: { title: 'Загружаем файл...', description: '' },
     reject: {
-      title: 'файл отклонён',
-      description: 'недопустимое расширение файла',
+      title: 'Файл отклонён',
+      description: 'Недопустимое расширение файла',
     },
-    error: { title: 'ошибка при загрузке файла', description: '' },
-    success: { title: 'файл загружен успешно', description: '' },
+    error: { title: 'Ошибка при загрузке файла', description: '' },
+    success: { title: 'Файл загружен успешно', description: '' },
   },
 };
