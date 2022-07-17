@@ -1,9 +1,9 @@
 export const mainHeaderLinks = {
-  main: 'main',
-  about: 'about',
-  signin: 'signIn',
-  signout: 'signOut',
-  projects: 'projects',
+  main: 'Main',
+  about: 'About',
+  signin: 'SignIn',
+  signout: 'SignOut',
+  projects: 'Projects',
 };
 
 export const credentials = {

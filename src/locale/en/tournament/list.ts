@@ -1,7 +1,7 @@
 export const list = {
-    title: 'title',
-    author: 'author',
-    start: 'start',
-    end: 'end',
-    status: 'status',
-  }
+  title: 'Title',
+  author: 'Author',
+  start: 'Start',
+  end: 'End',
+  status: 'Status',
+};

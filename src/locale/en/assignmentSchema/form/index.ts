@@ -1,14 +1,14 @@
-import { steps } from "./steps"
+import { steps } from './steps';
 export const form = {
-    steps,
-    title: 'title',
-    description: 'description',
-    defaultDuration: 'default duration (minutes)',
-    taskOrdering: {
-      title: 'change the tasks order if necessary',
-    },
-    taskSelector: {
-      available: 'available tasks',
-      used: 'used tasks',
-    },
-  }
+  steps,
+  title: 'Title',
+  description: 'Description',
+  defaultDuration: 'Default duration (minutes)',
+  taskOrdering: {
+    title: 'Change the tasks order if necessary',
+  },
+  taskSelector: {
+    available: 'Available tasks',
+    used: 'Used tasks',
+  },
+};

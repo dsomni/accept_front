@@ -1,6 +1,6 @@
 export const list = {
-    title: 'название задания',
-    author: 'автор',
-    description: 'описание',
-    taskCount: 'кол-во задач',
-  }
+  title: 'Название задания',
+  author: 'Автор',
+  description: 'Описание',
+  taskCount: 'Кол-во задач',
+};

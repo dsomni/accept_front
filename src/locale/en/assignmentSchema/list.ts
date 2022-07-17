@@ -1,6 +1,6 @@
 export const list = {
-    title: 'title',
-    author: 'author',
-    description: 'description',
-    taskCount: 'task count',
-  }
+  title: 'Title',
+  author: 'Author',
+  description: 'Description',
+  taskCount: 'Task count',
+};

@@ -1,15 +1,15 @@
 export const codeArea = {
-  selectFiles: 'select file',
-  drag: 'drag files here',
+  selectFiles: 'Select file',
+  drag: 'Drag files here',
   notification: {
-    uploading: { title: 'uploading file...', description: '' },
+    uploading: { title: 'Uploading file...', description: '' },
     reject: {
-      title: 'file rejected',
-      description: 'file extension is not allowed',
+      title: 'File rejected',
+      description: 'File extension is not allowed',
     },
-    error: { title: 'error during file uploading', description: '' },
+    error: { title: 'Error during file uploading', description: '' },
     success: {
-      title: 'file has been uploaded successfully',
+      title: 'File has been uploaded successfully',
       description: '',
     },
   },

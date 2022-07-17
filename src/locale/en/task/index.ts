@@ -1,22 +1,22 @@
-import { modals } from "./modals";
-import { description } from "./description";
-import { list } from './list'
-import {form} from './form'
+import { modals } from './modals';
+import { description } from './description';
+import { list } from './list';
+import { form } from './form';
 
 export const task = {
   constraints: {
-    time: 'time',
-    memory: 'memory',
+    time: 'Time',
+    memory: 'Memory',
   },
   modals,
   description,
-  send: 'send',
-  results: 'results',
+  send: 'Send',
+  results: 'Results',
   list,
   form,
   status: {
     error: 'Error on task submit',
     ok: 'Attempt successfully submitted',
   },
-  submit: 'submit',
+  submit: 'Submit',
 };
