@@ -4,10 +4,10 @@ import { Switch } from '@mantine/core';
 import { FC, memo, useState, useCallback, useEffect } from 'react';
 import styles from './secondaryInfo.module.css';
 import 'dayjs/locale/ru';
-import DateTimePicker from '@components/ui/DateTimePicker/DateTimePicker';
+import DateTimePicker from '@ui/DateTimePicker/DateTimePicker';
 import { sendRequest } from '@requests/request';
 import { IUser } from '@custom-types/data/IUser';
-import { CustomTransferList } from '@components/ui/CustomTransferList/CustomTransferList';
+import { CustomTransferList } from '@ui/CustomTransferList/CustomTransferList';
 
 const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();

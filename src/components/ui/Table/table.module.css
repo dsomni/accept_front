@@ -1,20 +1,20 @@
 .wrapper {
   width: 80vw;
-  margin: var(--spacer-m) 10vw 10vh 10vw;
+  margin: var(--spacer-s) 10vw 10vh 10vw;
   height: 100%;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .inputElem {
-  font-size: var(--font-size-m);
-  min-height: var(--spacer-xxl);
+  font-size: var(--font-size-s);
+  min-height: var(--spacer-xl);
   display: flex;
 }
 .selected {
-  font-size: var(--font-size-m);
-  min-height: var(--spacer-xl);
+  font-size: var(--font-size-s);
+  min-height: var(--spacer-l);
 }
 
 .selected span {
@@ -24,9 +24,9 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: var(--spacer-m);
-  column-gap: var(--spacer-xl);
-  row-gap: var(--spacer-s);
+  margin-bottom: var(--spacer-s);
+  column-gap: var(--spacer-l);
+  row-gap: var(--spacer-xs);
 }
 .columnSelect,
 .search {
@@ -37,7 +37,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: var(--spacer-l);
+  margin-top: var(--spacer-m);
 }
 .pagesWrapper {
   display: flex;
@@ -55,10 +55,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--spacer-s);
+  gap: var(--spacer-xs);
 }
 .selectPerPage {
-  width: var(--spacer-xxxl);
+  width: var(--spacer-xxl);
 }
 
 .pageNavigationWrapper {
@@ -68,5 +68,5 @@
 }
 
 .overall {
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
 }

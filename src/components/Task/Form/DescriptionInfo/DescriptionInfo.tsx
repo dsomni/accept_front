@@ -1,8 +1,10 @@
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
-import { RadioGroup, Radio, NumberInput } from '@mantine/core';
+import NumberInput from '@ui/NumberInput/NumberInput';
 
-import { FC, memo } from 'react';
+import Radio from '@ui/Radio/Radio';
+
+import { FC, memo, useMemo } from 'react';
 import styles from './descriptionInfo.module.css';
 import { IHintAlarmType } from '@custom-types/data/atomic';
 
@@ -11,6 +13,15 @@ const DescriptionInfo: FC<{
   hintAlarmTypes: IHintAlarmType[];
 }> = ({ form, hintAlarmTypes }) => {
   const { locale } = useLocale();
+
+  const hintAlarmTypeItems = useMemo(
+    () =>
+      hintAlarmTypes.map((alarmType) => ({
+        value: alarmType.spec.toString(),
+        label: locale.task.form.hint.hintAlarmTypes[alarmType.spec],
+      })),
+    [locale, hintAlarmTypes]
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -53,39 +64,19 @@ const DescriptionInfo: FC<{
           <div className={styles.label}>
             {locale.task.form.hint.title}
           </div>
-          <RadioGroup
-            size="lg"
-            classNames={{
-              label: styles.subLabel,
-            }}
+          <Radio
             label={locale.task.form.hint.alarmType}
-            {...form.getInputProps('hintAlarmType')}
+            form={form}
+            field={'hintAlarmType'}
+            items={hintAlarmTypeItems}
             onChange={(value) =>
               form.setFieldValue('hintAlarmType', value)
             }
             onBlur={() => form.validateField('hintAlarmType')}
-          >
-            {hintAlarmTypes.map(
-              (hintAlarmType: IHintAlarmType, index: number) => (
-                <Radio
-                  value={hintAlarmType.spec.toString()}
-                  key={index}
-                  size="sm"
-                  label={
-                    locale.task.form.hint.hintAlarmTypes[
-                      hintAlarmType.spec
-                    ]
-                  }
-                />
-              )
-            )}
-          </RadioGroup>
+          />
           <NumberInput
-            label={locale.task.form.hint.showAfter}
-            classNames={{
-              label: styles.subLabel,
-            }}
             size="md"
+            label={locale.task.form.hint.showAfter}
             hideControls
             min={0}
             onBlur={() => form.validateField('hintAlarm')}

@@ -10,7 +10,7 @@ const TaskLayout: FC<{
   results?: ReactNode;
 }> = ({ description, send, results }) => {
   const { locale } = useLocale();
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(1);
 
   return (
     <>
@@ -21,7 +21,7 @@ const TaskLayout: FC<{
             width: '100%',
             height: '100%',
           }}
-          styles={{ tabLabel: { fontSize: 'var(--font-size-m)' } }}
+          styles={{ tabLabel: { fontSize: 'var(--font-size-s)' } }}
           active={activeTab}
           onTabChange={setActiveTab}
         >

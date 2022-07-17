@@ -1,0 +1,42 @@
+.label {
+  font-size: var(--font-size--btn);
+  line-height: var(--font-size-btn-l);
+  color: #fff;
+}
+.root {
+  background-color: var(--primary);
+  padding: var(--spacer-xs) var(--spacer-s);
+  height: fit-content;
+}
+
+.root:hover {
+  background-color: var(--secondary);
+}
+
+.labelOutline {
+  font-size: var(--font-size--btn);
+  line-height: var(--font-size-btn-l);
+  color: var(--primary);
+  font-weight: 400;
+}
+.rootOutline {
+  background-color: #fff;
+  border-color: var(--secondary);
+  padding: var(--spacer-xs) var(--spacer-s);
+  height: fit-content;
+}
+
+.labelLight {
+  font-size: var(--font-size--btn);
+  line-height: var(--font-size-btn-l);
+  color: var(--primary);
+}
+.rootLight {
+  background-color: var(--primary-light);
+  padding: var(--spacer-xs) var(--spacer-s);
+  height: fit-content;
+}
+
+.rootLight:hover {
+  background-color: var(--secondary-light);
+}

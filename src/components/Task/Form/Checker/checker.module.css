@@ -2,11 +2,11 @@
   width: 70vw;
   display: flex;
   flex-direction: column;
-  margin: var(--spacer-xxl) 15vw;
+  margin: var(--spacer-xl) 15vw;
 }
 
 .listWrapper {
-  margin: var(--spacer-xxl) 0;
+  margin: var(--spacer-xl) 0;
   width: 70vw;
   gap: 5vh;
   display: flex;
@@ -14,16 +14,16 @@
 }
 
 .langSelector {
-  margin-bottom: var(--spacer-l);
+  margin-bottom: var(--spacer-m);
   max-width: 50%;
 }
 
 .label {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
 }
 
 .tests {
-  margin-top: var(--spacer-xxl);
+  margin-top: var(--spacer-xl);
 }
 
 .tests > * {

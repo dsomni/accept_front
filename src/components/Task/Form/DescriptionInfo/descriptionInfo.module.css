@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var(--spacer-xxl) 0;
+  margin: var(--spacer-xl) 0;
   gap: 5vh;
 }
 .wrapper > * {
@@ -14,8 +14,8 @@
   gap: 2vh;
 }
 .label {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
 }
 .subLabel {
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
 }

@@ -17,8 +17,8 @@ import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
-import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import MultiSearch from '@ui/MultiSearch/MultiSearch';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 
 const DESCR_SLICE = 35;
 

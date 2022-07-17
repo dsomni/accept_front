@@ -3,18 +3,18 @@
   position: absolute;
 }
 .logoWrapper {
-  padding: var(--spacer-m);
+  padding: var(--spacer-s);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 .linkWrapper {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
   line-height: 2em;
   letter-spacing: 3px;
-  padding-left: var(--spacer-xxxl);
-  padding-top: var(--spacer-xxxl);
+  padding-left: var(--spacer-xxl);
+  padding-top: var(--spacer-xxl);
 }
 
 .linkDiv {
@@ -22,7 +22,7 @@
   cursor: pointer;
   text-decoration: none;
   color: inherit !important;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
   user-select: none;
 }
 

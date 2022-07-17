@@ -1,15 +1,11 @@
-import LanguageSelector from '@components/ui/LanguageSelector/LanguageSelector';
+import LanguageSelector from '@ui/LanguageSelector/LanguageSelector';
 import { FC, memo, useState, useMemo, useCallback } from 'react';
-import { Item } from '@components/ui/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './constraintsInfo.module.css';
-import {
-  Box,
-  NumberInput,
-  Overlay,
-  SegmentedControl,
-  Switch,
-} from '@mantine/core';
+import { Box, Overlay, SegmentedControl } from '@mantine/core';
+import Switch from '@ui/Switch/Switch';
 import { useLocale } from '@hooks/useLocale';
+import NumberInput from '@ui/NumberInput/NumberInput';
 
 const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const initialAllowedLanguages = useMemo(
@@ -67,7 +63,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
       <Switch
         label={'Restrict languages'}
         size="lg"
-        style={{ marginBottom: 'var(--spacer-l)' }}
+        style={{ marginBottom: 'var(--spacer-m)' }}
         {...form.getInputProps('shouldRestrictLanguages', {
           type: 'checkbox',
         })}
@@ -91,11 +87,11 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             value={option}
             onChange={onOptionChange}
             style={{
-              margin: 'var(--spacer-l) 0',
+              margin: 'var(--spacer-m) 0',
             }}
             styles={{
               label: {
-                fontSize: 'var(--font-size-l)',
+                fontSize: 'var(--font-size-m)',
               },
             }}
           />
@@ -108,10 +104,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
       </div>
       <div className={styles.constraints}>
         <NumberInput
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           label={locale.task.form.constraints.memory}
           required
           noClampOnBlur
@@ -121,15 +113,11 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             form.validateField('constraintsMemory');
           }}
           style={{
-            margin: 'var(--spacer-l) 0',
+            margin: 'var(--spacer-m) 0',
           }}
           {...form.getInputProps('constraintsMemory')}
         />
         <NumberInput
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           label={locale.task.form.constraints.time}
           required
           hideControls
@@ -138,7 +126,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             form.validateField('constraintsTime');
           }}
           style={{
-            margin: 'var(--spacer-l) 0',
+            margin: 'var(--spacer-m) 0',
           }}
           {...form.getInputProps('constraintsTime')}
         />

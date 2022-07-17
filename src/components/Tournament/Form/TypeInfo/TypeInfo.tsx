@@ -5,7 +5,7 @@ import Select from '@ui/Select/Select';
 import { FC, memo, useState, useEffect } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './typeInfo.module.css';
-import ProgramLanguageSelector from '@components/ui/ProgramLanguageSelector/ProgramLanguageSelector';
+import ProgramLanguageSelector from '@ui/ProgramLanguageSelector/ProgramLanguageSelector';
 import { IAssessmentType } from '@custom-types/data/ITournament';
 
 const TypeInfo: FC<{ form: any }> = ({ form }) => {

@@ -1,13 +1,13 @@
 .title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
 }
 .icon {
-  width: var(--spacer-xl);
-  height: var(--spacer-xl);
+  width: var(--spacer-l);
+  height: var(--spacer-l);
 }
 
 .description {
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
 }
 
 .root {

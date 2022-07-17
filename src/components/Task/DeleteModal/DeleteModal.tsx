@@ -10,7 +10,7 @@ import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -105,7 +105,7 @@ const DeleteModal: FC<{
               styles={{
                 label: {
                   fontWeight: 'normal',
-                  fontSize: 'var(--font-size-m)',
+                  fontSize: 'var(--font-size-s)',
                 },
               }}
               onClick={() => setActive(false)}
@@ -118,7 +118,7 @@ const DeleteModal: FC<{
               styles={{
                 label: {
                   fontWeight: 'normal',
-                  fontSize: 'var(--font-size-m)',
+                  fontSize: 'var(--font-size-s)',
                 },
               }}
               onClick={() => handleDelete()}

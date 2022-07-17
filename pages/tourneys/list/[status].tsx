@@ -8,7 +8,7 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 import { ITournamentList } from '@custom-types/data/ITournament';
 
 function AssignmentList() {

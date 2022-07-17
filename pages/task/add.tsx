@@ -15,7 +15,7 @@ import {
   ITaskType,
   IHintAlarmType,
 } from '@custom-types/data/atomic';
-import { Item } from '@components/ui/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
 const initialValues = {
   spec: '',
@@ -59,7 +59,7 @@ const initialValues = {
   checkerLang: '0',
   checkerCode: '',
 
-  checkType: '1', //"tests" or "checker"
+  checkType: '0', //"tests" or "checker"
   taskType: '0', //"code" or "text"
   shouldRestrictLanguages: false,
 };

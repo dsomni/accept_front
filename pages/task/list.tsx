@@ -16,7 +16,7 @@ import { ITag } from '@custom-types/data/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
 import router from 'next/router';
 import { Plus } from 'tabler-icons-react';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 import { ITaskListBundle } from '@custom-types/data/bundle';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';

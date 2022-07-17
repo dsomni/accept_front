@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import Table from '@components/ui/Table/Table';
+import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';

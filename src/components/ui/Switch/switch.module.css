@@ -1,0 +1,7 @@
+.label {
+  font-size: var(--font-size-l);
+}
+.input:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}

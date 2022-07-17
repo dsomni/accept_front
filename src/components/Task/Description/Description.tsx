@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useRef } from 'react';
+import { FC, memo, useEffect } from 'react';
 import { ITask } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { Table } from '@mantine/core';
@@ -14,9 +14,6 @@ const Description: FC<{
   setShowHint: setter<boolean>;
   preview?: boolean;
 }> = ({ task, preview, setShowHint }) => {
-  // const description = useRef<HTMLDivElement>(null);
-  // const inputFormat = useRef<HTMLDivElement>(null);
-  // const outputFormat = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
 
   useEffect(() => {
@@ -31,15 +28,6 @@ const Description: FC<{
     });
   }, [task.spec, setShowHint, preview]);
 
-  // useEffect(() => {
-  //   if (description.current)
-  //     description.current.innerHTML = task.description;
-  //   if (inputFormat.current)
-  //     inputFormat.current.innerHTML = task.inputFormat;
-  //   if (outputFormat.current)
-  //     outputFormat.current.innerHTML = task.outputFormat;
-  // }, [task.description, task.inputFormat, task.outputFormat]);
-
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -47,17 +35,17 @@ const Description: FC<{
       </Head>
       <div className={styles.titleWrapper}>
         <div className={styles.title}>{task.title}</div>
-        <div className={styles.complexity}>{`${capitalize(
-          locale.task.form.complexity
-        )} ${task.complexity}%`}</div>
+        <div
+          className={styles.complexity}
+        >{`${locale.task.form.complexity} ${task.complexity}%`}</div>
       </div>
       <div className={styles.constraints}>
-        <div className={styles.memory}>{`${capitalize(
-          locale.task.constraints.memory
-        )}: ${task.constraints.memory}Mb`}</div>
-        <div className={styles.time}>{`${capitalize(
-          locale.task.constraints.memory
-        )}: ${task.constraints.time}s`}</div>
+        <div
+          className={styles.memory}
+        >{`${locale.task.constraints.memory}: ${task.constraints.memory}Mb`}</div>
+        <div
+          className={styles.time}
+        >{`${locale.task.constraints.memory}: ${task.constraints.time}s`}</div>
       </div>
       <div
         className={styles.description}
@@ -66,7 +54,7 @@ const Description: FC<{
       <div className={styles.formatWrapper}>
         <div className={styles.inputFormat}>
           <div className={styles.formatLabel}>
-            {capitalize(locale.task.description.format.input)}
+            {locale.task.description.format.input}
           </div>
           <div
             className={styles.inputFormat}
@@ -75,7 +63,7 @@ const Description: FC<{
         </div>
         <div className={styles.outputFormat}>
           <div className={styles.formatLabel}>
-            {capitalize(locale.task.description.format.output)}
+            {locale.task.description.format.output}
           </div>
           <div
             className={styles.outputFormat}
@@ -84,7 +72,7 @@ const Description: FC<{
         </div>
       </div>
       <div className={styles.examplesLabel}>
-        {capitalize(locale.task.description.examples.title)}
+        {locale.task.description.examples.title}
       </div>
       {task.examples.map((example, index) => (
         <Table
@@ -97,7 +85,7 @@ const Description: FC<{
             <tr>
               <td>
                 <div className={styles.exampleHeader}>
-                  {capitalize(locale.task.description.examples.input)}
+                  {locale.task.description.examples.input}
                   <CopyButton toCopy={example.inputData} />
                 </div>
               </td>
@@ -108,9 +96,7 @@ const Description: FC<{
             <tr>
               <td>
                 <div className={styles.exampleHeader}>
-                  {capitalize(
-                    locale.task.description.examples.output
-                  )}
+                  {locale.task.description.examples.output}
                   <CopyButton toCopy={example.outputData || ''} />
                 </div>
               </td>
@@ -124,7 +110,7 @@ const Description: FC<{
       {task.remark && (
         <div className={styles.remarkWrapper}>
           <div className={styles.remarkLabel}>
-            {capitalize(locale.task.form.remark)}
+            {locale.task.form.remark}
           </div>
           <div
             className={styles.remark}

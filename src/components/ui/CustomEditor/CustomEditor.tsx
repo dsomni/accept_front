@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
-import { InputWrapper } from '@mantine/core';
 
 import { FC, memo, useEffect, useRef, useState } from 'react';
+import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
 const editorConfiguration = {
   simpleUpload: {
@@ -37,13 +37,13 @@ const CustomEditor: FC<{
 
   return (
     <div>
-      {isLoaded ? (
-        <InputWrapper
-          classNames={classNames}
-          label={label}
-          size="lg"
-          {...form.getInputProps(name)}
-        >
+      <InputWrapper
+        classNames={classNames}
+        label={label}
+        size="lg"
+        {...form.getInputProps(name)}
+      >
+        {isLoaded ? (
           <CKEditor
             name={name}
             editor={Editor}
@@ -55,10 +55,12 @@ const CustomEditor: FC<{
             }}
             onBlur={() => form.validateField(name)}
           />
-        </InputWrapper>
-      ) : (
-        <div>{locale.loading + '...'}</div>
-      )}
+        ) : (
+          <div style={{ fontSize: 'var(--font-size-m)' }}>
+            {locale.loading + '...'}
+          </div>
+        )}
+      </InputWrapper>
     </div>
   );
 };

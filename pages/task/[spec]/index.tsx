@@ -19,12 +19,12 @@ import {
 } from '@utils/notificationFunctions';
 
 import { useLocale } from '@hooks/useLocale';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 import { Eye, Pencil, Trash } from 'tabler-icons-react';
 import { useUser } from '@hooks/useUser';
 import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
-import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { ITableColumn } from '@custom-types/ui/ITable';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {

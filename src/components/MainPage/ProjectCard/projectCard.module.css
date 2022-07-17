@@ -5,11 +5,11 @@
   width: 60vw;
   min-height: 65vh;
   margin: 5vh 5vw;
-  padding: 0 0 var(--spacer-l) 0;
-  box-shadow: 0 -var(--spacer-xs) var(--spacer-xs) -3px
+  padding: 0 0 var(--spacer-m) 0;
+  box-shadow: 0 -var(--spacer-xxs) var(--spacer-xxs) -3px
       rgb(0 0 0 / 20%),
-    0 -var(--spacer-s) var(--spacer-l) 1px rgb(0 0 0 / 14%),
-    0 -var(--spacer-xs) var(--spacer-m) 3px rgb(0 0 0 / 12%);
+    0 -var(--spacer-xs) var(--spacer-m) 1px rgb(0 0 0 / 14%),
+    0 -var(--spacer-xxs) var(--spacer-s) 3px rgb(0 0 0 / 12%);
   border-radius: 2%;
 }
 .left {
@@ -32,11 +32,11 @@
   color: white;
   width: 100%;
   background-color: #000000c7;
-  padding: var(--spacer-xs) var(--spacer-m);
+  padding: var(--spacer-xxs) var(--spacer-s);
 }
 .description {
-  font-size: var(--font-size-xxl);
-  padding: var(--spacer-l) var(--spacer-m);
+  font-size: var(--font-size-xl);
+  padding: var(--spacer-m) var(--spacer-s);
 }
 .image {
   border-radius: 2% 2% 0 0;
@@ -53,8 +53,8 @@
 }
 
 .button {
-  font-size: var(--font-size-xxl);
-  margin: var(--spacer-xs) var(--spacer-m);
+  font-size: var(--font-size-xl);
+  margin: var(--spacer-xxs) var(--spacer-s);
   font-weight: 600;
   padding: 0.8em;
   border: 2px solid #1c7ed6bf;

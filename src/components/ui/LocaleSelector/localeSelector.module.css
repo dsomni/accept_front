@@ -1,9 +1,9 @@
 .wrapper {
   color: white;
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
   display: flex;
   align-items: center;
-  gap: var(--spacer-xs);
+  gap: var(--spacer-xxs);
   justify-content: center;
-  padding: var(--spacer-xs);
+  padding: var(--spacer-xxs);
 }

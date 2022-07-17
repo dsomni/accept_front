@@ -1,0 +1,6 @@
+.label {
+  font-size: var(--font-size-l);
+}
+.radio:checked {
+  background-color: var(--primary);
+}

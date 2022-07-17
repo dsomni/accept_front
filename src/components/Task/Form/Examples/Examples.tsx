@@ -1,10 +1,11 @@
 import ListItem from '@ui/ListItem/ListItem';
 import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { Button, InputWrapper } from '@mantine/core';
+import Button from '@ui/Button/Button';
 
 import { FC, memo, useCallback } from 'react';
 import styles from './examples.module.css';
+import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
 const Examples: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -42,12 +43,11 @@ const Examples: FC<{ form: any }> = ({ form }) => {
       <InputWrapper
         {...form.getInputProps('examples')}
         onChange={() => {}}
-        styles={{ error: { fontSize: 'var(--font-size-l)' } }}
+        styles={{ error: { fontSize: 'var(--font-size-m)' } }}
       />
       <Button
         size="lg"
         className={styles.addButton}
-        color="var(--primary)"
         variant="light"
         onClick={() => {
           form.setFieldValue(

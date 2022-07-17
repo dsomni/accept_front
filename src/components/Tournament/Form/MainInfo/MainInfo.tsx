@@ -3,7 +3,7 @@ import { TextInput } from '@mantine/core';
 
 import { FC, memo } from 'react';
 import styles from './mainInfo.module.css';
-import CustomEditor from '@components/ui/CustomEditor/CustomEditor';
+import CustomEditor from '@ui/CustomEditor/CustomEditor';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();

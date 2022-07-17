@@ -1,17 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
-import {
-  NumberInput,
-  Radio,
-  RadioGroup,
-  Switch,
-  TextInput,
-} from '@mantine/core';
-
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useMemo, useCallback } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
-import { Item } from '@components/ui/CustomTransferList/CustomTransferList';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import Radio from '@ui/Radio/Radio';
+import Switch from '@ui/Switch/Switch';
+import NumberInput from '@ui/NumberInput/NumberInput';
+import TextInput from '@ui/TextInput/TextInput';
 
 const MainInfo: FC<{
   form: any;
@@ -26,13 +22,35 @@ const MainInfo: FC<{
     [form.values.spec] // eslint-disable-line
   );
 
+  const taskCheckTypeItems = useMemo(
+    () =>
+      taskCheckTypes.map((checkType) => ({
+        value: checkType.spec.toString(),
+        label: locale.task.form.checkTypes[checkType.spec],
+      })),
+    [locale, taskCheckTypes]
+  );
+
+  const taskTypeItems = useMemo(
+    () =>
+      taskTypes.map((taskType) => ({
+        value: taskType.spec.toString(),
+        label: locale.task.form.taskTypes[taskType.spec],
+      })),
+    [locale, taskTypes]
+  );
+
+  const handlerTaskType = useCallback(
+    (value: string) => {
+      form.setFieldValue('taskType', value);
+      value === '1' ? form.setFieldValue('checkType', '0') : () => {};
+    },
+    [form]
+  );
+
   return (
     <div className={styles.wrapper}>
       <TextInput
-        classNames={{
-          label: styles.label,
-        }}
-        size="lg"
         label={locale.task.form.title}
         required
         onBlur={() => {
@@ -57,10 +75,6 @@ const MainInfo: FC<{
           deleteURL={'tag/delete'}
         />
         <NumberInput
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           label={locale.task.form.complexity}
           required
           noClampOnBlur
@@ -72,56 +86,27 @@ const MainInfo: FC<{
         />
       </div>
       <div className={styles.radioGroups}>
-        <RadioGroup
-          classNames={{
-            label: styles.label,
-          }}
-          size="md"
+        <Radio
           label={locale.task.form.taskType}
-          {...form.getInputProps('taskType')}
-          onChange={(value) => {
-            form.setFieldValue('taskType', value);
-            value === '1'
-              ? form.setFieldValue('checkType', '0')
-              : () => {};
-          }}
-        >
-          {taskTypes.map((taskType: ITaskType, index: number) => (
-            <Radio
-              value={taskType.spec.toString()}
-              key={index}
-              label={locale.task.form.taskTypes[taskType.spec]}
-            />
-          ))}
-        </RadioGroup>
-
+          field={'taskType'}
+          form={form}
+          items={taskTypeItems}
+          onChange={handlerTaskType}
+        />
         {form.values.taskType === '0' && (
-          <RadioGroup
-            classNames={{
-              label: styles.label,
-            }}
-            size="md"
+          <Radio
             label={locale.task.form.checkType}
-            {...form.getInputProps('checkType')}
-          >
-            {taskCheckTypes.map(
-              (checkType: ITaskCheckType, index: number) => (
-                <Radio
-                  value={checkType.spec.toString()}
-                  key={index}
-                  label={locale.task.form.checkTypes[checkType.spec]}
-                />
-              )
-            )}
-          </RadioGroup>
+            field={'checkType'}
+            form={form}
+            items={taskCheckTypeItems}
+            onChange={(value) =>
+              form.setFieldValue('checkType', value)
+            }
+          />
         )}
         {!form.values.isTournament && (
           <Switch
-            classNames={{
-              label: styles.label,
-            }}
             label={locale.task.form.hint.title}
-            size="lg"
             {...form.getInputProps('hasHint', { type: 'checkbox' })}
           />
         )}

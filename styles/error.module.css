@@ -20,10 +20,10 @@
 
 .return {
   text-decoration: unset;
-  font-size: var(--font-size-xxxl);
+  font-size: var(--font-size-xxl);
   color: var(--primary);
   background-color: white;
-  margin-top: var(--spacer-xxl);
-  padding: var(--spacer-m) var(--spacer-l);
+  margin-top: var(--spacer-xl);
+  padding: var(--spacer-s) var(--spacer-m);
   border-radius: 5px;
 }

@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group, Stepper } from '@mantine/core';
+import { Group, Stepper } from '@mantine/core';
 
 import { FC, memo, useEffect, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
@@ -16,6 +16,7 @@ import {
   ITaskType,
   IHintAlarmType,
 } from '@custom-types/data/atomic';
+import Button from '@ui/Button/Button';
 
 const Form: FC<{
   form: any;
@@ -33,7 +34,7 @@ const Form: FC<{
   hintAlarmTypes,
 }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const nextStep = () =>
     setCurrentStep((current) =>
@@ -108,7 +109,7 @@ const Form: FC<{
           className={stepperStyles.buttons}
         >
           {currentStep !== 0 && (
-            <Button variant="default" onClick={prevStep}>
+            <Button variant="outline" onClick={prevStep}>
               {locale.form.back}
             </Button>
           )}

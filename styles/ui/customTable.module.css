@@ -22,21 +22,21 @@
 }
 
 .cell {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
 }
 .headerCell,
 .cell {
-  padding: var(--spacer-l);
+  padding: var(--spacer-m);
   border-bottom: solid 1px #3a3a3a;
 }
 
 .headerCell {
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-xl);
   user-select: none;
   border-bottom: solid 2px black;
   display: flex;
   align-items: center;
-  gap: var(--spacer-xs);
+  gap: var(--spacer-xxs);
   flex-direction: row;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
   justify-content: space-between;
   align-items: flex-end;
   column-gap: 2em;
-  row-gap: var(--spacer-s);
+  row-gap: var(--spacer-xs);
   padding-right: 5%;
   flex-wrap: wrap;
 }
@@ -70,7 +70,7 @@
 .tags {
   font-size: 0.7em;
   display: flex;
-  gap: var(--spacer-xs);
+  gap: var(--spacer-xxs);
   flex-direction: row;
   flex-wrap: wrap;
   text-align: right;

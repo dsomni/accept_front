@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import styles from './footer.module.css';
 import { useLocale } from '@hooks/useLocale';
-import LocaleSelector from '@components/ui/LocaleSelector/LocaleSelector';
+import LocaleSelector from '@ui/LocaleSelector/LocaleSelector';
 import { BrandGithub } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
 

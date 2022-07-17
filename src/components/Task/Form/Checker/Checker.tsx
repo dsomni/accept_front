@@ -1,13 +1,13 @@
 import { FC, memo, useState, useEffect } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import ListItem from '@ui/ListItem/ListItem';
+import Select from '@ui/Select/Select';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Textarea } from '@mantine/core';
 
 import styles from './checker.module.css';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
-import { Select } from '@mantine/core';
 import Tests from '../Tests/Tests';
 
 const defaultLangSpec = '0';
@@ -39,7 +39,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           label: lang.name,
           value: lang.spec.toString(),
         }))}
-        styles={{ label: { fontSize: 'var(--font-size-xl)' } }}
+        // styles={{ label: { fontSize: 'var(--font-size-l)' } }}
         onBlur={() => form.validateField('checkerLang')}
         {...form.getInputProps('checkerLang')}
       />
