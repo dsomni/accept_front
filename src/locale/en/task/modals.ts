@@ -1,9 +1,9 @@
 export const modals = {
-  add: 'Add task',
-  edit: 'Edit task',
-  delete: 'Delete task',
-  deleteConfidence:
-    'Are you sure you want to permanently delete the task?',
-  usedInAssignments:
-    'This task is currently used in the following assignments',
-};
+    add: 'add task',
+    edit: 'edit task',
+    delete: 'delete task',
+    deleteConfidence:
+      'are you sure you want to permanently delete the task?',
+    usedInAssignments:
+      'this task is currently used in the following assignments',
+  }

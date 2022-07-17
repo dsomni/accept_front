@@ -6,7 +6,7 @@ import {
   Switch,
   TextInput,
 } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import { FC, memo, useMemo } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
@@ -33,7 +33,7 @@ const MainInfo: FC<{
           label: styles.label,
         }}
         size="lg"
-        label={locale.task.form.title}
+        label={capitalize(locale.task.form.title)}
         required
         onBlur={() => {
           form.validateField('title');
@@ -61,7 +61,7 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           size="lg"
-          label={locale.task.form.complexity}
+          label={capitalize(locale.task.form.complexity)}
           required
           noClampOnBlur
           hideControls
@@ -77,7 +77,7 @@ const MainInfo: FC<{
             label: styles.label,
           }}
           size="md"
-          label={locale.task.form.taskType}
+          label={capitalize(locale.task.form.taskType)}
           {...form.getInputProps('taskType')}
           onChange={(value) => {
             form.setFieldValue('taskType', value);
@@ -90,7 +90,9 @@ const MainInfo: FC<{
             <Radio
               value={taskType.spec.toString()}
               key={index}
-              label={locale.task.form.taskTypes[taskType.spec]}
+              label={capitalize(
+                locale.task.form.taskTypes[taskType.spec]
+              )}
             />
           ))}
         </RadioGroup>
@@ -101,7 +103,7 @@ const MainInfo: FC<{
               label: styles.label,
             }}
             size="md"
-            label={locale.task.form.checkType}
+            label={capitalize(locale.task.form.checkType)}
             {...form.getInputProps('checkType')}
           >
             {taskCheckTypes.map(
@@ -109,7 +111,9 @@ const MainInfo: FC<{
                 <Radio
                   value={checkType.spec.toString()}
                   key={index}
-                  label={locale.task.form.checkTypes[checkType.spec]}
+                  label={capitalize(
+                    locale.task.form.checkTypes[checkType.spec]
+                  )}
                 />
               )
             )}
@@ -120,7 +124,7 @@ const MainInfo: FC<{
             classNames={{
               label: styles.label,
             }}
-            label={locale.task.form.hint.title}
+            label={capitalize(locale.task.form.hint.title)}
             size="lg"
             {...form.getInputProps('hasHint', { type: 'checkbox' })}
           />

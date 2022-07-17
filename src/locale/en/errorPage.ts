@@ -1,4 +1,4 @@
 export const errorPage = {
-  description: 'Oops... Page is not found!',
-  returnToMain: 'To main page',
+  description: 'oops... Page is not found!',
+  returnToMain: 'to main page',
 };

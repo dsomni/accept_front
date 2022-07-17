@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { Switch } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import { FC, memo, useState, useCallback, useEffect } from 'react';
 import styles from './secondaryInfo.module.css';
 import 'dayjs/locale/ru';
@@ -93,7 +93,7 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
             label: styles.label,
             wrapper: styles.pickerWrapper,
           }}
-          label={locale.tournament.form.startDate}
+          label={capitalize(locale.tournament.form.startDate)}
         />
         <DateTimePicker
           value={form.values['end'] || new Date().getTime()}
@@ -102,7 +102,7 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
             label: styles.label,
             wrapper: styles.pickerWrapper,
           }}
-          label={locale.tournament.form.endDate}
+          label={capitalize(locale.tournament.form.endDate)}
         />
       </div>
       <div className={styles.froze}>
@@ -110,7 +110,7 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
           classNames={{
             label: styles.label,
           }}
-          label={locale.tournament.form.shouldFreezeTable}
+          label={capitalize(locale.tournament.form.shouldFreezeTable)}
           size="lg"
           onChange={freezeHandler}
         />
@@ -125,7 +125,7 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
                 ' ' +
                 styles.freezeTableWrapper,
             }}
-            label={locale.tournament.form.freezeTableDate}
+            label={capitalize(locale.tournament.form.freezeTableDate)}
           />
         )}
       </div>
@@ -146,8 +146,8 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
           }}
           classNames={{ label: styles.label }}
           titles={[
-            locale.tournament.form.admins,
-            locale.tournament.form.selectedAdmins,
+            capitalize(locale.tournament.form.admins),
+            capitalize(locale.tournament.form.selectedAdmins),
           ]}
           itemComponent={itemComponent}
         />
@@ -156,9 +156,9 @@ const SecondaryInfo: FC<{ form: any }> = ({ form }) => {
         classNames={{
           label: styles.label,
         }}
-        label={
+        label={capitalize(
           locale.tournament.form.allowRegistrationAfterStart.title
-        }
+        )}
         size="lg"
         {...form.getInputProps('allowRegistrationAfterStart', {
           type: 'checkbox',

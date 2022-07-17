@@ -1,7 +1,7 @@
 import { pureCallback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Button, TextInput } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import { FC, useCallback, useEffect, useState } from 'react';
 import {
   CustomTransferList,
@@ -70,7 +70,7 @@ const Form: FC<{
     <div className={stepperStyles.stepper + ' ' + styles.wrapper}>
       <div className={styles.inputWrapper}>
         <TextInput
-          label={locale.groups.title}
+          label={capitalize(locale.groups.title)}
           classNames={{
             label: styles.label,
             input: styles.textInput,
@@ -95,8 +95,8 @@ const Form: FC<{
             }}
             classNames={{ label: styles.label }}
             titles={[
-              locale.groups.students,
-              locale.groups.selectedStudents,
+              capitalize(locale.groups.students),
+              capitalize(locale.groups.selectedStudents),
             ]}
             itemComponent={itemComponent}
           />

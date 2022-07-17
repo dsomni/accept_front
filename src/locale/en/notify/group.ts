@@ -1,17 +1,17 @@
 export const group = {
-  create: {
-    loading: 'Creating the group',
-    success: 'The group was created successfully',
-    error: 'Error when creating the group',
-  },
-  edit: {
-    loading: 'Updating the group',
-    success: 'The task was updated successfully',
-    error: 'Error when updating the group',
-  },
-  delete: {
-    loading: 'Deleting the group',
-    success: 'The group was deleted successfully',
-    error: 'Error when deleting the group',
-  },
-};
+    create: {
+      loading: 'creating the group',
+      success: 'the group was created successfully',
+      error: 'error when creating the group',
+    },
+    edit: {
+      loading: 'updating the group',
+      success: 'the task was updated successfully',
+      error: 'error when updating the group',
+    },
+    delete: {
+      loading: 'deleting the group',
+      success: 'the group was deleted successfully',
+      error: 'error when deleting the group',
+    },
+  }

@@ -3,7 +3,7 @@ import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group } from '@mantine/core';
 import { sendRequest } from '@requests/request';
-
+import { capitalize } from '@utils/capitalize';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
@@ -64,16 +64,18 @@ const DeleteModal: FC<{
         opened={active}
         close={() => setActive(false)}
         hideCloseButton={true}
-        title={locale.task.modals.delete + ` '${task.title}' ?`}
+        title={
+          capitalize(locale.task.modals.delete) + ` '${task.title}' ?`
+        }
       >
         <div className={deleteModalStyles.form}>
           <div className={deleteModalStyles.question}>
-            {locale.task.modals.deleteConfidence}
+            {capitalize(locale.task.modals.deleteConfidence)}
           </div>
           {assignments.length > 0 && (
             <div>
               <div>
-                {locale.task.modals.usedInAssignments +
+                {capitalize(locale.task.modals.usedInAssignments) +
                   ` (${assignments.length}):`}
               </div>
               <br />
@@ -110,7 +112,7 @@ const DeleteModal: FC<{
               }}
               onClick={() => setActive(false)}
             >
-              {locale.cancel}
+              {capitalize(locale.cancel)}
             </Button>
             <Button
               variant="outline"
@@ -123,7 +125,7 @@ const DeleteModal: FC<{
               }}
               onClick={() => handleDelete()}
             >
-              {locale.delete}
+              {capitalize(locale.delete)}
             </Button>
           </Group>
         </div>

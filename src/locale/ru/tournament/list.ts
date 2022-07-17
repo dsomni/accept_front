@@ -1,7 +1,7 @@
 export const list = {
-  title: 'Название',
-  author: 'Автор',
-  start: 'Начало',
-  end: 'Окончание',
-  status: 'Статус',
-};
+    title: 'название',
+    author: 'автор',
+    start: 'начало',
+    end: 'окончание',
+    status: 'статус',
+  }

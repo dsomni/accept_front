@@ -3,7 +3,7 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import { Input, Loader, MultiSelect } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
-
+import { capitalize } from '@utils/capitalize';
 import {
   FC,
   memo,
@@ -210,7 +210,7 @@ const Table: FC<{
                   input: styles.inputElem,
                 }}
                 onChange={(e: any) => handleSearch(e.target.value)}
-                placeholder={locale.placeholders.search}
+                placeholder={capitalize(locale.placeholders.search)}
                 value={search}
               />
             </div>
@@ -225,7 +225,9 @@ const Table: FC<{
                 data={availableColumns}
                 value={selectedColumns}
                 onChange={handleChange}
-                placeholder={locale.placeholders.showColumns}
+                placeholder={capitalize(
+                  locale.placeholders.showColumns
+                )}
               />
             </div>
           )}

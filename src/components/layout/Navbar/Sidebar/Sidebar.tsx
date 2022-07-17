@@ -4,7 +4,7 @@ import { Links } from './Links';
 import Logo from '../Logo/Logo';
 import styles from './sideBar.module.css';
 import { Burger, Drawer } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 
 export const Sidebar: FC<{
@@ -36,7 +36,9 @@ export const Sidebar: FC<{
             <Links
               links={links}
               dropdownLinks={dropdown}
-              dropdownLabel={locale.mainHeaderLinks.projects}
+              dropdownLabel={capitalize(
+                locale.mainHeaderLinks.projects
+              )}
               onClose={() => setOpen(false)}
             />
           </div>

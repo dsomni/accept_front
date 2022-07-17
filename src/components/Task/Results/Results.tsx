@@ -10,7 +10,7 @@ import Table from '@components/ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-
+import { capitalize } from '@utils/capitalize';
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { getLocalDate } from '@utils/datetime';
@@ -43,7 +43,7 @@ const refactorAttempt = (
           ? attempt.verdict.verdict.shortText +
             ' #' +
             (attempt.verdict.test + 1).toString()
-          : locale.attempts.statuses[attempt.status.spec]}
+          : capitalize(locale.attempts.statuses[attempt.status.spec])}
       </div>
     ),
     value:
@@ -63,7 +63,7 @@ const refactorAttempt = (
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
-    label: locale.attempts.date,
+    label: capitalize(locale.attempts.date),
     key: 'date',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -79,7 +79,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 5,
   },
   {
-    label: locale.attempts.language,
+    label: capitalize(locale.attempts.language),
     key: 'language',
     sortable: false,
     sortFunction: (a: any, b: any) => 0,
@@ -90,7 +90,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 5,
   },
   {
-    label: locale.attempts.result,
+    label: capitalize(locale.attempts.result),
     key: 'result',
     sortable: false,
     sortFunction: (a: any, b: any) => 0,
@@ -158,7 +158,7 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
         const id = newNotification({});
         errorNotification({
           id,
-          title: locale.notify.errors.unauthorized,
+          title: capitalize(locale.notify.errors.unauthorized),
           autoClose: 10000,
         });
         setNeedRefetch(false);

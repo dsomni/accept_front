@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import Form from '@components/Tournament/Form/Form';
-
+import { capitalize } from '@utils/capitalize';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import {
   ITournamentCreate,
@@ -60,7 +60,7 @@ function AddTask() {
       <Form
         form={form}
         handleSubmit={handleSubmit}
-        buttonLabel={locale.form.create}
+        buttonLabel={capitalize(locale.form.create)}
       />
     </>
   );

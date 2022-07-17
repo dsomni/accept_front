@@ -1,6 +1,6 @@
 import { CustomDraggableList } from '@ui/CustomDraggableList/CustomDraggableList';
 import { useLocale } from '@hooks/useLocale';
-
+import { capitalize } from '@utils/capitalize';
 import { FC } from 'react';
 import styles from './taskOrdering.module.css';
 
@@ -11,7 +11,7 @@ export const TaskOrdering: FC<{
   return (
     <div className={styles.wrapper}>
       <div className={styles.head}>
-        {locale.assignmentSchema.form.taskOrdering.title}
+        {capitalize(locale.assignmentSchema.form.taskOrdering.title)}
       </div>
       <CustomDraggableList
         values={form.values.tasks}

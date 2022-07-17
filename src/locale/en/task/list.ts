@@ -1,6 +1,6 @@
 export const list = {
-  title: 'Title',
-  author: 'Author',
-  grade: 'Grade',
-  verdict: 'Verdict',
-};
+    title: 'title',
+    author: 'author',
+    grade: 'grade',
+    verdict: 'verdict',
+  }

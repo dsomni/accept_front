@@ -12,7 +12,7 @@ import { Textarea } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
-
+import { capitalize } from '@utils/capitalize';
 import { callback } from '@custom-types/ui/atomic';
 import {
   newNotification,
@@ -70,13 +70,19 @@ const CodeArea: FC<{
     (files: File[]) => {
       const id = newNotification({
         autoClose: 2000,
-        title:           locale.ui.codeArea.notification.uploading.title,          locale.ui.codeArea.notification.uploading.title locale.ui.codeArea.notification.uploading.description
+        title: capitalize(
+          locale.ui.codeArea.notification.uploading.title
+        ),
+        message: capitalize(
+          locale.ui.codeArea.notification.uploading.description
         ),
       });
       if (!files[0]) {
         errorNotification({
           id,
-          title:             locale.ui.codeArea.notification.error.title,            locale.ui.codeArea.notification.error.title locale.ui.codeArea.notification.error.description
+          title: capitalize(locale.ui.codeArea.notification.error.title),
+          message: capitalize(
+            locale.ui.codeArea.notification.error.description
           ),
           autoClose: 5000,
         });
@@ -90,7 +96,11 @@ const CodeArea: FC<{
       if (!language) {
         errorNotification({
           id,
-          title:             locale.ui.codeArea.notification.reject.title,            locale.ui.codeArea.notification.reject.title locale.ui.codeArea.notification.reject.description
+          title: capitalize(
+            locale.ui.codeArea.notification.reject.title
+          ),
+          message: capitalize(
+            locale.ui.codeArea.notification.reject.description
           ),
           autoClose: 5000,
         });
@@ -101,7 +111,9 @@ const CodeArea: FC<{
       files[0].text().then((res) => setCode(res));
       successNotification({
         id,
-        title:           locale.ui.codeArea.notification.success.title,          locale.ui.codeArea.notification.success.title locale.ui.codeArea.notification.success.description
+        title: capitalize(locale.ui.codeArea.notification.success.title),
+        message: capitalize(
+          locale.ui.codeArea.notification.success.description
         ),
         autoClose: 2000,
       });
@@ -116,7 +128,7 @@ const CodeArea: FC<{
         {!drag && (
           <Textarea
             classNames={classNames}
-            placeholder={locale.placeholders.code}
+            placeholder={capitalize(locale.placeholders.code)}
             onChange={(e) => setCode(e.target.value)}
             minRows={40}
             label={label}
@@ -144,7 +156,7 @@ const CodeArea: FC<{
 
               <div>
                 <Text size="xl" inline>
-                  {locale.ui.codeArea.drag}
+                  {capitalize(locale.ui.codeArea.drag)}
                 </Text>
               </div>
             </Group>
@@ -159,7 +171,7 @@ const CodeArea: FC<{
           marginTop: 'var(--spacer-xl)',
         }}
       >
-        {locale.ui.codeArea.selectFiles}
+        {capitalize(locale.ui.codeArea.selectFiles)}
       </Button>
     </div>
   );

@@ -1,7 +1,7 @@
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
 import { RadioGroup, Radio, NumberInput } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import { FC, memo } from 'react';
 import styles from './descriptionInfo.module.css';
 import { IHintAlarmType } from '@custom-types/data/atomic';
@@ -18,7 +18,7 @@ const DescriptionInfo: FC<{
         classNames={{
           label: styles.label,
         }}
-        label={locale.task.form.description}
+        label={capitalize(locale.task.form.description)}
         form={form}
         name={'description'}
       />
@@ -26,7 +26,7 @@ const DescriptionInfo: FC<{
         classNames={{
           label: styles.label,
         }}
-        label={locale.task.form.inputFormat}
+        label={capitalize(locale.task.form.inputFormat)}
         form={form}
         name={'inputFormat'}
       />
@@ -34,7 +34,7 @@ const DescriptionInfo: FC<{
         classNames={{
           label: styles.label,
         }}
-        label={locale.task.form.outputFormat}
+        label={capitalize(locale.task.form.outputFormat)}
         form={form}
         name={'outputFormat'}
       />
@@ -43,7 +43,7 @@ const DescriptionInfo: FC<{
         classNames={{
           label: styles.label,
         }}
-        label={locale.task.form.remark}
+        label={capitalize(locale.task.form.remark)}
         form={form}
         name={'remark'}
       />
@@ -51,14 +51,14 @@ const DescriptionInfo: FC<{
       {!form.values.isTournament && form.values['hasHint'] && (
         <div className={styles.hintWrapper}>
           <div className={styles.label}>
-            {locale.task.form.hint.title}
+            {capitalize(locale.task.form.hint.title)}
           </div>
           <RadioGroup
             size="lg"
             classNames={{
               label: styles.subLabel,
             }}
-            label={locale.task.form.hint.alarmType}
+            label={capitalize(locale.task.form.hint.alarmType)}
             {...form.getInputProps('hintAlarmType')}
             onChange={(value) =>
               form.setFieldValue('hintAlarmType', value)
@@ -71,17 +71,17 @@ const DescriptionInfo: FC<{
                   value={hintAlarmType.spec.toString()}
                   key={index}
                   size="sm"
-                  label={
+                  label={capitalize(
                     locale.task.form.hint.hintAlarmTypes[
                       hintAlarmType.spec
                     ]
-                  }
+                  )}
                 />
               )
             )}
           </RadioGroup>
           <NumberInput
-            label={locale.task.form.hint.showAfter}
+            label={capitalize(locale.task.form.hint.showAfter)}
             classNames={{
               label: styles.subLabel,
             }}
@@ -95,7 +95,7 @@ const DescriptionInfo: FC<{
             classNames={{
               label: styles.subLabel,
             }}
-            label={locale.task.form.hint.text}
+            label={capitalize(locale.task.form.hint.text)}
             form={form}
             name={'hintContent'}
           />

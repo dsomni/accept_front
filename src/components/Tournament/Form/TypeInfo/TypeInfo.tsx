@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { MultiSelect } from '@mantine/core';
 import Select from '@ui/Select/Select';
-
+import { capitalize } from '@utils/capitalize';
 import { FC, memo, useState, useEffect } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './typeInfo.module.css';
@@ -24,7 +24,9 @@ const TypeInfo: FC<{ form: any }> = ({ form }) => {
                 value: styles.value,
                 item: styles.items,
               }}
-              label={locale.tournament.form.allowedLanguages}
+              label={capitalize(
+                locale.tournament.form.allowedLanguages
+              )}
               {...form.getInputProps('allowedLanguages', {
                 type: 'select',
               })}
@@ -42,7 +44,9 @@ const TypeInfo: FC<{ form: any }> = ({ form }) => {
                 value: styles.value,
                 item: styles.items,
               }}
-              label={locale.tournament.form.deniedLanguages}
+              label={capitalize(
+                locale.tournament.form.deniedLanguages
+              )}
               {...form.getInputProps('deniedLanguages', {
                 type: 'select',
               })}
@@ -57,14 +61,20 @@ const TypeInfo: FC<{ form: any }> = ({ form }) => {
           input: styles.items,
           item: styles.items,
         }}
-        label={locale.tournament.form.assessmentType.title}
+        label={capitalize(
+          locale.tournament.form.assessmentType.title
+        )}
         data={[
           {
-            label: locale.tournament.form.assessmentType.forTest,
+            label: capitalize(
+              locale.tournament.form.assessmentType.forTest
+            ),
             value: IAssessmentType.FOR_TEST,
           },
           {
-            label: locale.tournament.form.assessmentType.forWhole,
+            label: capitalize(
+              locale.tournament.form.assessmentType.forWhole
+            ),
             value: IAssessmentType.FOR_WHOLE,
           },
         ]}

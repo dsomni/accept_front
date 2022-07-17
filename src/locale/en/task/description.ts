@@ -1,12 +1,12 @@
 export const description = {
-  self: 'Description',
-  format: {
-    input: 'Input format',
-    output: 'Output format',
-  },
-  examples: {
-    title: 'Examples',
-    input: 'Input data',
-    output: 'Output data',
-  },
-};
+    self: 'description',
+    format: {
+      input: 'input format',
+      output: 'output format',
+    },
+    examples: {
+      title: 'examples',
+      input: 'input data',
+      output: 'output data',
+    },
+  }

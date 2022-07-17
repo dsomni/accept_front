@@ -1,4 +1,4 @@
 export const table = {
-  perPage: 'На странице',
-  overall: 'Всего',
+  perPage: 'на странице',
+  overall: 'всего',
 };

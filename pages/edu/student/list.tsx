@@ -4,7 +4,7 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
-
+import { capitalize } from '@utils/capitalize';
 import {
   ReactNode,
   useState,
@@ -33,7 +33,7 @@ function StudentList() {
   const columns: ITableColumn[] = useMemo(
     () => [
       {
-        label: locale.users.list.login,
+        label: capitalize(locale.users.list.login),
         key: 'login',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -45,7 +45,7 @@ function StudentList() {
         size: 3,
       },
       {
-        label: locale.users.list.name,
+        label: capitalize(locale.users.list.name),
         key: 'name',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -61,7 +61,7 @@ function StudentList() {
         size: 9,
       },
       {
-        label: locale.users.list.grade,
+        label: capitalize(locale.users.list.grade),
         key: 'grade',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -179,7 +179,7 @@ function StudentList() {
           items={groups}
           setCurrentItems={setCurrentGroups}
           rowList={list}
-          placeholder={locale.placeholders.selectGroups}
+          placeholder={capitalize(locale.placeholders.selectGroups)}
           displayData={(groups) =>
             Array.from(groups.values()).map(
               (group: any) => group.title

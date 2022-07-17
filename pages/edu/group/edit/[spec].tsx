@@ -11,7 +11,7 @@ import { useForm } from '@mantine/form';
 import { sendRequest } from '@requests/request';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-
+import { capitalize } from '@utils/capitalize';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { IStudentList } from '@custom-types/data/IStudent';
@@ -92,7 +92,7 @@ function EditGroup(props: { group: IGroup }) {
         <Form
           form={form}
           handleSubmit={handleSubmit}
-          buttonText={locale.edit}
+          buttonText={capitalize(locale.edit)}
         />
       )}
     </div>

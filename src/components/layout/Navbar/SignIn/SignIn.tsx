@@ -1,7 +1,7 @@
 import { FC, memo, useCallback } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { Button } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import styles from './signIn.module.css';
@@ -19,20 +19,20 @@ const SignIn: FC = () => {
 
   const handleSignOut = useCallback(() => {
     const id = newNotification({
-      title: locale.notify.auth.signOut.loading,
-      message: locale.loading + '...',
+      title: capitalize(locale.notify.auth.signOut.loading),
+      message: capitalize(locale.loading) + '...',
     });
     signOut().then((res) => {
       if (res) {
         successNotification({
           id,
-          title: locale.notify.auth.signOut.success,
+          title: capitalize(locale.notify.auth.signOut.success),
           autoClose: 5000,
         });
       } else {
         errorNotification({
           id,
-          title: locale.notify.auth.signOut.error,
+          title: capitalize(locale.notify.auth.signOut.error),
           autoClose: 5000,
         });
       }
@@ -53,14 +53,14 @@ const SignIn: FC = () => {
             })
           }
         >
-          {locale.mainHeaderLinks.signin}
+          {capitalize(locale.mainHeaderLinks.signin)}
         </Button>
       ) : (
         <Button
           className={styles.button}
           onClick={() => handleSignOut()}
         >
-          {locale.mainHeaderLinks.signout}
+          {capitalize(locale.mainHeaderLinks.signout)}
         </Button>
       )}
     </>

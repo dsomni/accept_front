@@ -10,7 +10,7 @@ import {
   useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-
+import { capitalize } from '@utils/capitalize';
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
@@ -33,7 +33,7 @@ function AssignmentList() {
   const columns: ITableColumn[] = useMemo(
     () => [
       {
-        label: locale.assignmentSchema.list.title,
+        label: capitalize(locale.assignmentSchema.list.title),
         key: 'title',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -49,7 +49,7 @@ function AssignmentList() {
         size: 6,
       },
       {
-        label: locale.assignmentSchema.list.author,
+        label: capitalize(locale.assignmentSchema.list.author),
         key: 'author',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -61,7 +61,7 @@ function AssignmentList() {
         size: 3,
       },
       {
-        label: locale.assignmentSchema.list.description,
+        label: capitalize(locale.assignmentSchema.list.description),
         key: 'description',
         sortable: false,
         sortFunction: () => 0,
@@ -72,7 +72,7 @@ function AssignmentList() {
         size: 8,
       },
       {
-        label: locale.assignmentSchema.list.taskCount,
+        label: capitalize(locale.assignmentSchema.list.taskCount),
         key: 'taskCount',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -199,7 +199,7 @@ function AssignmentList() {
         items={tags}
         setCurrentItems={setCurrentTags}
         rowList={list}
-        placeholder={locale.placeholders.selectTags}
+        placeholder={capitalize(locale.placeholders.selectTags)}
         displayData={(tags) =>
           Array.from(tags.values()).map((tag: any) => tag.title)
         }

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { FC, ReactNode } from 'react';
 import { Button, Center } from '@mantine/core';
 import logo from 'public/logo.svg';
-
+import { capitalize } from '@utils/capitalize';
 import styles from '@styles/layouts/login.module.css';
 
 import { useLocale } from '@hooks/useLocale';
@@ -24,7 +24,7 @@ export const LoginLayout: FC<{
               alt="Logo image"
             />
             <div className={styles.title}>
-              {locale.accept} | {title}
+              {capitalize(locale.accept)} | {title}
             </div>
           </div>
           {children}

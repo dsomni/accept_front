@@ -3,7 +3,7 @@ import CodeArea from '@ui/CodeArea/CodeArea';
 import ListItem from '@ui/ListItem/ListItem';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Textarea } from '@mantine/core';
-
+import { capitalize } from '@utils/capitalize';
 import styles from './checker.module.css';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
@@ -33,10 +33,10 @@ const Checker: FC<{ form: any }> = ({ form }) => {
   return (
     <div className={styles.wrapper}>
       <Select
-        label={locale.language}
+        label={capitalize(locale.language)}
         value={language}
         data={languages.map((lang) => ({
-          label: lang.name,
+          label: capitalize(lang.name),
           value: lang.spec.toString(),
         }))}
         styles={{ label: { fontSize: 'var(--font-size-xl)' } }}
@@ -48,7 +48,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         classNames={{
           label: styles.label,
         }}
-        label={locale.task.form.checker}
+        label={capitalize(locale.task.form.checker)}
         setLanguage={(value) =>
           form.setFieldValue('checkerLang', value)
         }

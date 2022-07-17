@@ -1,9 +1,9 @@
 export const mainHeaderLinks = {
-  main: 'Главная',
-  about: 'О нас',
-  signin: 'Вход',
-  signout: 'Выход',
-  projects: 'Проекты',
+  main: 'главная',
+  about: 'о нас',
+  signin: 'вход',
+  signout: 'выход',
+  projects: 'проекты',
 };
 export const credentials = {
   company: 'Blue Crane Inc.',

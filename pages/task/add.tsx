@@ -5,7 +5,7 @@ import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { useUser } from '@hooks/useUser';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import Form from '@components/Task/Form/Form';
-
+import { capitalize } from '@utils/capitalize';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { useRequest } from '@hooks/useRequest';
 import { ITaskAddBundle } from '@custom-types/data/bundle';
@@ -222,7 +222,7 @@ function AddTask() {
           taskCheckTypes={taskCheckTypes}
           hintAlarmTypes={hintAlarmTypes}
           handleSubmit={handleSubmit}
-          buttonLabel={locale.form.create}
+          buttonLabel={capitalize(locale.form.create)}
         />
       )}
     </>

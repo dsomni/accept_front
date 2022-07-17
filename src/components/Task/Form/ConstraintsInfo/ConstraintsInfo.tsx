@@ -10,6 +10,7 @@ import {
   Switch,
 } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
+import { capitalize } from '@utils/capitalize';
 
 const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const initialAllowedLanguages = useMemo(
@@ -80,11 +81,11 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
           <SegmentedControl
             data={[
               {
-                label: locale.task.form.allowed,
+                label: capitalize(locale.task.form.allowed),
                 value: 'allowed',
               },
               {
-                label: locale.task.form.forbidden,
+                label: capitalize(locale.task.form.forbidden),
                 value: 'forbidden',
               },
             ]}
@@ -112,7 +113,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             label: styles.label,
           }}
           size="lg"
-          label={locale.task.form.constraints.memory}
+          label={capitalize(locale.task.form.constraints.memory)}
           required
           noClampOnBlur
           hideControls
@@ -130,7 +131,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             label: styles.label,
           }}
           size="lg"
-          label={locale.task.form.constraints.time}
+          label={capitalize(locale.task.form.constraints.time)}
           required
           hideControls
           precision={1}

@@ -1,8 +1,8 @@
 export const attempts = {
-  date: 'Дата',
-  language: 'Язык',
-  result: 'Результат',
-  verdict: 'Вердикт',
-  status: 'Статус',
-  statuses: ['В очереди', 'тестируется', 'протестирована'],
+  date: 'дата',
+  language: 'язык',
+  result: 'результат',
+  verdict: 'вердикт',
+  status: 'статус',
+  statuses: ['в очереди', 'тестируется', 'протестирована'],
 };

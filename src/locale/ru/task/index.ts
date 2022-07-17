@@ -1,24 +1,24 @@
-import { modals } from './modals';
-import { description } from './description';
-import { list } from './list';
-import { form } from './form';
+import { modals } from "./modals";
+import { description } from "./description";
+import { list } from "./list";
+import { form } from "./form";
 
 export const task = {
-  send: 'Отправка',
-  results: 'Результаты',
-  description,
+    send: 'отправка',
+    results: 'результаты',
+    description,
 
-  submit: 'Отправить',
-  status: {
-    error: 'Ошибка при отправке',
-    ok: 'Попытка успешно отправлена',
-  },
-  constraints: {
-    time: 'Время',
-    memory: 'Память',
-  },
+    submit: 'Отправить',
+    status: {
+        error: 'Ошибка при отправке',
+        ok: 'Попытка успешно отправлена',
+    },
+    constraints: {
+        time: 'время',
+        memory: 'память',
+    },
 
-  modals,
-  list,
-  form,
+    modals,
+    list,
+    form,
 };

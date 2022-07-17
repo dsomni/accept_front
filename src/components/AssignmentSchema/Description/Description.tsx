@@ -5,6 +5,7 @@ import { useLocale } from '@hooks/useLocale';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { sendRequest } from '@requests/request';
+import { capitalize } from '@utils/capitalize';
 
 const Description: FC<{ assignment: IAssignmentSchema }> = ({
   assignment,
@@ -54,10 +55,10 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
       <div>
         <PrimitiveTable
           columns={[
-            locale.task.list.title,
-            locale.task.list.author,
-            locale.task.list.grade,
-            locale.task.list.verdict,
+            capitalize(locale.task.list.title),
+            capitalize(locale.task.list.author),
+            capitalize(locale.task.list.grade),
+            capitalize(locale.task.list.verdict),
           ]}
           rows={tasks}
           rowComponent={(row: any) => {

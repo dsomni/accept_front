@@ -1,6 +1,6 @@
 export const groups = {
-  add: 'Add group',
-  title: 'Title',
-  students: 'Students',
-  selectedStudents: 'Selected students',
+  add: 'add group',
+  title: 'title',
+  students: 'students',
+  selectedStudents: 'selected students',
 };

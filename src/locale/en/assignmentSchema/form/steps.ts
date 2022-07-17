@@ -1,18 +1,18 @@
 export const steps = {
-  first: {
-    label: 'First step',
-    description: 'Main assignment info',
-  },
-  second: {
-    label: 'Second step',
-    description: 'Add tasks',
-  },
-  third: {
-    label: 'Third step',
-    description: 'Order tasks',
-  },
-  fourth: {
-    label: 'Fourth step',
-    description: 'Preview',
-  },
-};
+      first: {
+        label: 'first step',
+        description: 'main assignment info',
+      },
+      second: {
+        label: 'second step',
+        description: 'add tasks',
+      },
+      third: {
+        label: 'third step',
+        description: 'order tasks',
+      },
+      fourth: {
+        label: 'fourth step',
+        description: 'preview',
+      },
+    }

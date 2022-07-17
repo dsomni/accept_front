@@ -1,16 +1,16 @@
 export const form = {
-  next: 'Next step',
-  back: 'Back',
-  create: 'Create',
-  search: 'Search',
-  update: 'Update',
+  next: 'next step',
+  back: 'back',
+  create: 'create',
+  search: 'search',
+  update: 'update',
 };
 
 export const placeholders = {
-  code: 'Place your code here',
-  search: 'Search',
-  showColumns: 'Pick columns to show',
-  selectTags: 'Select tags',
-  selectGroups: 'Select groups',
-  title: 'Enter title',
+  code: 'place your code here',
+  search: 'search',
+  showColumns: 'pick columns to show',
+  selectTags: 'select tags',
+  selectGroups: 'select groups',
+  title: 'enter title',
 };

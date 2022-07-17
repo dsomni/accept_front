@@ -1,18 +1,18 @@
 export const steps = {
-  first: {
-    label: 'Шаг первый',
-    description: 'Основная информация',
-  },
-  second: {
-    label: 'Шаг второй',
-    description: 'Дополнительная информация',
-  },
-  third: {
-    label: 'Шаг третий',
-    description: 'Тип турнира',
-  },
-  fourth: {
-    label: 'Шаг четвёртый',
-    description: 'Предпросмотр',
-  },
-};
+      first: {
+        label: 'шаг первый',
+        description: 'основная информация',
+      },
+      second: {
+        label: 'шаг второй',
+        description: 'дополнительная информация',
+      },
+      third: {
+        label: 'шаг третий',
+        description: 'тип турнира',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
+        description: 'предпросмотр',
+      },
+    }

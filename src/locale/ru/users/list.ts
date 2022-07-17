@@ -1,5 +1,5 @@
 export const list = {
-  name: 'Имя',
-  login: 'Логин',
-  grade: 'Класс',
-};
+    name: 'имя',
+    login: 'логин',
+    grade: 'класс',
+  }

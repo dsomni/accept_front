@@ -1,6 +1,7 @@
+
 export const groups = {
-  add: 'Добавить группу',
-  title: 'Название',
-  students: 'Ученики',
-  selectedStudents: 'Выбранные ученики',
+  add: 'добавить группу',
+  title: 'название',
+  students: 'ученики',
+  selectedStudents: 'выбранные ученики',
 };

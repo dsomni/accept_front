@@ -1,6 +1,6 @@
 export const langSelector = {
-  available: 'Все языки',
-  used: 'Выбранные языки',
-  allowed: 'Разрешённые языки',
-  forbidden: 'Запрещённые языки',
-};
+      available: 'все языки',
+      used: 'выбранные языки',
+      allowed: 'разрешённые языки',
+      forbidden: 'запрещённые языки',
+    }

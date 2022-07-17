@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-
+import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import styles from './taskSelector.module.css';
@@ -99,7 +99,11 @@ const TaskSelector: FC<{
           setUsed={setUsed}
           classNames={classNames ? classNames : {}}
           titles={[
-                          locale.assignmentSchema.form.taskSelector.available,              locale.assignmentSchema.form.taskSelector.available locale.assignmentSchema.form.taskSelector.used
+            capitalize(
+              locale.assignmentSchema.form.taskSelector.available
+            ),
+            capitalize(
+              locale.assignmentSchema.form.taskSelector.used
             ),
           ]}
           itemComponent={itemComponent}

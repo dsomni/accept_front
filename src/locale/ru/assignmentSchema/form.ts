@@ -1,30 +1,30 @@
 export const form = {
-  steps: {
-    first: {
-      label: 'Шаг первый',
-      description: 'Основная информация',
+    steps: {
+      first: {
+        label: 'шаг первый',
+        description: 'основная информация',
+      },
+      second: {
+        label: 'шаг второй',
+        description: 'добавление задач',
+      },
+      third: {
+        label: 'шаг третий',
+        description: 'порядок задач',
+      },
+      fourth: {
+        label: 'шаг четвёртый',
+        description: 'предпросмотр',
+      },
     },
-    second: {
-      label: 'Шаг второй',
-      description: 'Добавление задач',
+    title: 'название',
+    description: 'описание',
+    defaultDuration: 'длительность по умолчанию (мин.)',
+    taskOrdering: {
+      title: 'выберете порядок задач',
     },
-    third: {
-      label: 'Шаг третий',
-      description: 'Порядок задач',
+    taskSelector: {
+      available: 'все задачи',
+      used: 'выбранные задачи',
     },
-    fourth: {
-      label: 'Шаг четвёртый',
-      description: 'Предпросмотр',
-    },
-  },
-  title: 'Название',
-  description: 'Описание',
-  defaultDuration: 'Длительность по умолчанию (мин.)',
-  taskOrdering: {
-    title: 'Выберете порядок задач',
-  },
-  taskSelector: {
-    available: 'Все задачи',
-    used: 'Выбранные задачи',
-  },
-};
+  }
