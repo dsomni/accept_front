@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { InputWrapper } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, useEffect, useRef, useState } from 'react';
 
 const editorConfiguration = {
@@ -57,7 +57,7 @@ const CustomEditor: FC<{
           />
         </InputWrapper>
       ) : (
-        <div>{capitalize(locale.loading) + '...'}</div>
+        <div>{locale.loading + '...'}</div>
       )}
     </div>
   );

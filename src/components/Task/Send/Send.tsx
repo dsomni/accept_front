@@ -71,7 +71,7 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
     <div className={styles.wrapper}>
       <div className={styles.top}>
         <Select
-          label={capitalize(locale.language)}
+          label={locale.language}
           onChange={onLangSelect}
           value={language ? language : defaultLangSpec}
           data={langs.map((lang) => ({

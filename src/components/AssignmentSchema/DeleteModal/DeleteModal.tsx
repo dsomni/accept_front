@@ -1,7 +1,7 @@
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Modal } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import { useRouter } from 'next/router';
 import { FC, memo, useCallback } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
@@ -39,7 +39,7 @@ const DeleteModal: FC<{
         onClose={() => setActive(false)}
         size="lg"
         title={
-          capitalize(locale.assignmentSchema.modals.delete) +
+          locale.assignmentSchema.modals.delete +
           ` '${assignment.title}'`
         }
         classNames={{
@@ -48,7 +48,7 @@ const DeleteModal: FC<{
       >
         <div className={deleteModalStyles.form}>
           <div className={deleteModalStyles.question}>
-            {capitalize(locale.task.modals.deleteConfidence)}
+            {locale.task.modals.deleteConfidence}
           </div>
           <Group
             position="right"
@@ -61,14 +61,14 @@ const DeleteModal: FC<{
               autoFocus
               onClick={() => setActive(false)}
             >
-              {capitalize(locale.cancel)}
+              {locale.cancel}
             </Button>
             <Button
               variant="outline"
               color="red"
               onClick={() => handleDelete()}
             >
-              {capitalize(locale.delete)}
+              {locale.delete}
             </Button>
           </Group>
         </div>

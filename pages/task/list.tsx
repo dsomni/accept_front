@@ -10,7 +10,7 @@ import {
   useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-import { capitalize } from '@utils/capitalize';
+
 import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/data/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
@@ -38,7 +38,7 @@ interface ITaskDisplayList
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
-    label: capitalize(locale.task.list.title),
+    label: locale.task.list.title,
     key: 'title',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -54,7 +54,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 9,
   },
   {
-    label: capitalize(locale.task.list.author),
+    label: locale.task.list.author,
     key: 'author',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -66,7 +66,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 3,
   },
   {
-    label: capitalize(locale.task.list.verdict),
+    label: locale.task.list.verdict,
     key: 'verdict',
     sortable: false,
     sortFunction: () => 0,
@@ -257,9 +257,7 @@ function TaskList() {
                 searchable
                 data={searchTags}
                 onChange={setCurrentTags}
-                placeholder={capitalize(
-                  locale.placeholders.selectTags
-                )}
+                placeholder={locale.placeholders.selectTags}
               />
             </div>
           }

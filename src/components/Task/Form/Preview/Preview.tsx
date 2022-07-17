@@ -7,7 +7,6 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
 
 const Preview: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -17,7 +16,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
     <>
       {form.values.hasHint && (
         <SimpleModal
-          title={capitalize(locale.task.form.hint.title)}
+          title={locale.task.form.hint.title}
           opened={openedHint}
           close={() => setOpenedHint(false)}
         >

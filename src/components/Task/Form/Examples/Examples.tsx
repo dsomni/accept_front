@@ -3,7 +3,6 @@ import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Button, InputWrapper } from '@mantine/core';
 
-import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback } from 'react';
 import styles from './examples.module.css';
 
@@ -31,13 +30,9 @@ const Examples: FC<{ form: any }> = ({ form }) => {
           <div key={index} className={styles.example}>
             <ListItem
               field="examples"
-              label={
-                capitalize(locale.task.form.example) +
-                ' #' +
-                (index + 1)
-              }
-              InLabel={capitalize(locale.task.form.inputExample)}
-              OutLabel={capitalize(locale.task.form.outputExample)}
+              label={locale.task.form.example + ' #' + (index + 1)}
+              InLabel={locale.task.form.inputExample}
+              OutLabel={locale.task.form.outputExample}
               form={form}
               index={index}
               onDelete={onDeleteExample}

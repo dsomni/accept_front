@@ -9,7 +9,7 @@ import {
 import { Plus } from 'tabler-icons-react';
 import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
+
 import { isSuccessful } from '@requests/request';
 import { pureCallback } from '@custom-types/ui/atomic';
 
@@ -35,7 +35,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         return setError('');
       }
       return setError(
-        capitalize(locale.ui.tagSelector.minLength(locale.name, 3))
+        locale.ui.tagSelector.minLength(locale.name, 3)
       );
     },
     [locale, validate]
@@ -73,7 +73,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         centered
         onClose={() => setOpened(false)}
         size="md"
-        title={capitalize(locale.ui.tagSelector.add)}
+        title={locale.ui.tagSelector.add}
         classNames={{
           title: styles.modalTitle,
         }}
@@ -83,14 +83,12 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
             className={styles.input}
             autoFocus
             required
-            label={capitalize(locale.name)}
+            label={locale.name}
             size="md"
             onChange={(e: any) => setTitle(e.target.value)}
             onBlur={() => onBlur(title)}
             error={error}
-            placeholder={capitalize(
-              locale.ui.tagSelector.addPlaceholder
-            )}
+            placeholder={locale.ui.tagSelector.addPlaceholder}
           />
           <Group
             position="right"
@@ -102,14 +100,14 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
               color="red"
               onClick={() => setOpened(false)}
             >
-              {capitalize(locale.cancel)}
+              {locale.cancel}
             </Button>
             <Button
               variant="outline"
               color="green"
               onClick={() => handleSubmit(title)}
             >
-              {capitalize(locale.save)}
+              {locale.save}
             </Button>
           </Group>
         </div>

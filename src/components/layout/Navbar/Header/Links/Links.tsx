@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { HeaderLink } from './HeaderLink';
 import { Group } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import CustomDropdown from '@ui/CustomDropdown/CustomDropdown';
 import { useLocale } from '@hooks/useLocale';
 import styles from '../header.module.css';
@@ -22,7 +22,7 @@ const Links: FC<{
             {link.text(locale) == 'dropdown' ? (
               <CustomDropdown
                 links={dropdownLinks}
-                label={capitalize(locale.mainHeaderLinks.projects)}
+                label={locale.mainHeaderLinks.projects}
               />
             ) : (
               <HeaderLink

@@ -15,7 +15,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-import { capitalize } from '@utils/capitalize';
+
 import {
   Button,
   PasswordInput,
@@ -98,22 +98,22 @@ function SignUp() {
         name: form.values.name,
       };
       const id = newNotification({
-        title: capitalize(locale.notify.auth.signUp.loading),
-        message: capitalize(locale.loading) + '...',
+        title: locale.notify.auth.signUp.loading,
+        message: locale.loading + '...',
       });
       sendRequest<IRegUser, IUser>('auth/signup', 'POST', user).then(
         (res) => {
           if (!res.error) {
             successNotification({
               id,
-              title: capitalize(locale.notify.auth.signUp.success),
+              title: locale.notify.auth.signUp.success,
               autoClose: 5000,
             });
             router.push(`/signin?referrer=${router.query.referrer}`);
           } else {
             errorNotification({
               id,
-              title: capitalize(locale.notify.auth.signUp.error),
+              title: locale.notify.auth.signUp.error,
               autoClose: 5000,
             });
           }
@@ -131,12 +131,12 @@ function SignUp() {
         // className={stepperStyles.stepper}
         size="xl"
       >
-        <Stepper.Step label={capitalize(locale.auth.stepper.login)}>
+        <Stepper.Step label={locale.auth.stepper.login}>
           <TextInput
             required
             id="login"
-            label={capitalize(locale.auth.labels.login)}
-            placeholder={capitalize(locale.auth.placeholders.login)}
+            label={locale.auth.labels.login}
+            placeholder={locale.auth.placeholders.login}
             classNames={{
               label: styles.inputLabel,
             }}
@@ -144,16 +144,12 @@ function SignUp() {
             {...form.getInputProps('login')}
           />
         </Stepper.Step>
-        <Stepper.Step
-          label={capitalize(locale.auth.stepper.password)}
-        >
+        <Stepper.Step label={locale.auth.stepper.password}>
           <PasswordInput
             required
             id="password"
-            label={capitalize(locale.auth.labels.password)}
-            placeholder={capitalize(
-              locale.auth.placeholders.password
-            )}
+            label={locale.auth.labels.password}
+            placeholder={locale.auth.placeholders.password}
             classNames={{
               label: styles.inputLabel,
             }}
@@ -163,10 +159,8 @@ function SignUp() {
           <PasswordInput
             required
             id="confirmPassword"
-            label={capitalize(locale.auth.labels.password)}
-            placeholder={capitalize(
-              locale.auth.placeholders.password
-            )}
+            label={locale.auth.labels.password}
+            placeholder={locale.auth.placeholders.password}
             classNames={{
               label: styles.inputLabel,
             }}
@@ -174,7 +168,7 @@ function SignUp() {
             {...form.getInputProps('confirmPassword')}
           />
         </Stepper.Step>
-        <Stepper.Step label={capitalize(locale.auth.stepper.final)}>
+        <Stepper.Step label={locale.auth.stepper.final}>
           <TextInput
             required
             id="name"
@@ -189,8 +183,8 @@ function SignUp() {
           <TextInput
             required
             id="email"
-            label={capitalize(locale.auth.labels.email)}
-            placeholder={capitalize(locale.auth.placeholders.email)}
+            label={locale.auth.labels.email}
+            placeholder={locale.auth.placeholders.email}
             classNames={{
               label: styles.inputLabel,
             }}
@@ -202,29 +196,29 @@ function SignUp() {
       <Group position="center" mt="xl">
         {active !== 0 && (
           <Button variant="default" onClick={prevStep}>
-            {capitalize(locale.form.back)}
+            {locale.form.back}
           </Button>
         )}
         <Button onClick={active !== 2 ? nextStep : handleSignUp}>
           {active !== 2
-            ? capitalize(locale.form.next)
-            : capitalize(locale.auth.footer.register)}
+            ? locale.form.next
+            : locale.auth.footer.register}
         </Button>
       </Group>
       <div className={styles.footer}>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
-            {capitalize(locale.auth.footer.hasAccount)}
+            {locale.auth.footer.hasAccount}
           </span>
           <Link href={`/signin?referrer=${router.query.referrer}`}>
             <a className={styles.footerLink}>
-              {capitalize(locale.auth.footer.login)}
+              {locale.auth.footer.login}
             </a>
           </Link>
         </div>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
-            {capitalize(locale.auth.footer.returnTo)}
+            {locale.auth.footer.returnTo}
           </span>
           <Link href="/">
             <a className={styles.footerLink}>

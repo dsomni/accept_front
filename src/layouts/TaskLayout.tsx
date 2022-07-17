@@ -1,7 +1,7 @@
 import { callback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Tabs } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, ReactNode, useState } from 'react';
 
 const TaskLayout: FC<{
@@ -25,18 +25,16 @@ const TaskLayout: FC<{
           active={activeTab}
           onTabChange={setActiveTab}
         >
-          <Tabs.Tab label={capitalize(locale.task.description.self)}>
+          <Tabs.Tab label={locale.task.description.self}>
             {description}
           </Tabs.Tab>
           {send && (
-            <Tabs.Tab label={capitalize(locale.task.send)}>
+            <Tabs.Tab label={locale.task.send}>
               {send(setActiveTab)}
             </Tabs.Tab>
           )}
           {results && (
-            <Tabs.Tab label={capitalize(locale.task.results)}>
-              {results}
-            </Tabs.Tab>
+            <Tabs.Tab label={locale.task.results}>{results}</Tabs.Tab>
           )}
         </Tabs>
       ) : (

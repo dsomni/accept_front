@@ -3,7 +3,7 @@ import { ITask } from '@custom-types/data/ITask';
 import styles from './description.module.css';
 import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
+
 import CopyButton from '@ui/CopyButton/CopyButton';
 import Head from 'next/head';
 import { sendRequest } from '@requests/request';

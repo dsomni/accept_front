@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import styles from './languageSelector.module.css';
 import { sendRequest } from '@requests/request';
@@ -80,8 +80,8 @@ const LanguageSelector: FC<{
           setUsed={setUsed}
           classNames={classNames ? classNames : {}}
           titles={[
-            capitalize(locale.ui.langSelector.available),
-            capitalize(locale.ui.langSelector.used),
+            locale.ui.langSelector.available,
+            locale.ui.langSelector.used,
           ]}
           itemComponent={itemComponent}
           shouldSortChosen={true}
