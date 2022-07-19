@@ -13,16 +13,18 @@ import { Send as SendPlane } from 'tabler-icons-react';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
 
-const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
-  spec,
-  setActiveTab,
-}) => {
+const Send: FC<{
+  spec: string;
+  setActiveTab: setter<number>;
+  languages: ILanguage[];
+}> = ({ spec, setActiveTab, languages }) => {
   const { locale, lang } = useLocale();
 
-  const [defaultLangSpec, setDefaultLangSpec] = useState<string>('1');
+  const [defaultLangSpec, setDefaultLangSpec] = useState<string>(
+    languages.length > 0 ? languages[0].spec.toString() : '1'
+  );
   const [language, setLanguage] = useState<string>(defaultLangSpec);
   const [code, setCode] = useState('');
-  const [langs, setLangs] = useState<ILanguage[]>([]);
 
   useEffect(() => {
     const prev_lang = getCookie('previous_program_lang');
@@ -30,16 +32,6 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
       setDefaultLangSpec(prev_lang);
       setLanguage(prev_lang);
     }
-    sendRequest<{}, ILanguage[]>(
-      'language',
-      'GET',
-      undefined,
-      60000
-    ).then((res) => {
-      if (!res.error) {
-        setLangs(res.response);
-      }
-    });
   }, []);
 
   const handleSubmit = useCallback(() => {
@@ -74,7 +66,7 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
           label={locale.language}
           onChange={onLangSelect}
           value={language ? language : defaultLangSpec}
-          data={langs.map((lang) => ({
+          data={languages.map((lang) => ({
             label: capitalize(lang.name),
             value: lang.spec.toString(),
           }))}
@@ -91,7 +83,7 @@ const Send: FC<{ spec: string; setActiveTab: setter<number> }> = ({
       </div>
       <CodeArea
         label={''}
-        languages={langs}
+        languages={languages}
         setLanguage={setLanguage}
         setCode={setCode}
         formProps={{ value: code }}

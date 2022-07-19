@@ -5,15 +5,18 @@ import { Table } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 
 import CopyButton from '@ui/CopyButton/CopyButton';
-import Head from 'next/head';
+
 import { sendRequest } from '@requests/request';
 import { setter } from '@custom-types/ui/atomic';
+import { AlertCircle } from 'tabler-icons-react';
+import Icon from '@ui/Icon/Icon';
 
 const Description: FC<{
   task: ITask;
   setShowHint: setter<boolean>;
   preview?: boolean;
-}> = ({ task, preview, setShowHint }) => {
+  languagesRestrictions?: boolean;
+}> = ({ task, preview, setShowHint, languagesRestrictions }) => {
   const { locale } = useLocale();
 
   useEffect(() => {
@@ -30,9 +33,6 @@ const Description: FC<{
 
   return (
     <div className={styles.wrapper}>
-      <Head>
-        <title>{task.title}</title>
-      </Head>
       <div className={styles.titleWrapper}>
         <div className={styles.title}>{task.title}</div>
         <div
@@ -45,12 +45,23 @@ const Description: FC<{
         >{`${locale.task.constraints.memory}: ${task.constraints.memory}Mb`}</div>
         <div
           className={styles.time}
-        >{`${locale.task.constraints.memory}: ${task.constraints.time}s`}</div>
+        >{`${locale.task.constraints.time}: ${task.constraints.time}s`}</div>
       </div>
       <div
         className={styles.description}
         dangerouslySetInnerHTML={{ __html: task.description }}
       />
+      {languagesRestrictions && (
+        <div className={styles.languagesRestrictions}>
+          <Icon size="sm">
+            <AlertCircle color={'var(--negative)'} />
+          </Icon>
+
+          <div className={styles.alert}>
+            {locale.task.description.languagesRestrictions}
+          </div>
+        </div>
+      )}
       <div className={styles.formatWrapper}>
         <div className={styles.inputFormat}>
           <div className={styles.formatLabel}>

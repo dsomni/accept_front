@@ -1,9 +1,9 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode, useEffect, useState, useCallback } from 'react';
+import { ReactNode, useState } from 'react';
 import { ITask } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getServerUrl } from '@utils/getServerUrl';
+import { getApiUrl, getServerUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
@@ -11,12 +11,6 @@ import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useRouter } from 'next/router';
 import { ILanguage } from '@custom-types/data/atomic';
-import { sendRequest } from '@requests/request';
-import { IAttemptDisplay } from '@custom-types/data/IAttempt';
-import {
-  newNotification,
-  errorNotification,
-} from '@utils/notificationFunctions';
 
 import { useLocale } from '@hooks/useLocale';
 import SingularSticky from '@ui/Sticky/SingularSticky';
@@ -25,10 +19,10 @@ import { useUser } from '@hooks/useUser';
 import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
-import { ITableColumn } from '@custom-types/ui/ITable';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
+  const languages = props.languages;
   const [activeModal, setActiveModal] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);
@@ -102,10 +96,24 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       )}
       {isTeacher && <Sticky actions={actions} color={'--prime'} />}
       <TaskLayout
+        title={task.title}
         description={
-          <Description task={task} setShowHint={setShowHint} />
+          <Description
+            task={task}
+            setShowHint={setShowHint}
+            languagesRestrictions={
+              task.allowedLanguages.length > 0 ||
+              task.forbiddenLanguages.length > 0
+            }
+          />
         }
-        send={(set) => <Send spec={task.spec} setActiveTab={set} />}
+        send={(set) => (
+          <Send
+            spec={task.spec}
+            setActiveTab={set}
+            languages={languages}
+          />
+        )}
         results={<Results spec={task.spec} />}
       />
     </>
@@ -118,7 +126,7 @@ Task.getLayout = (page: ReactNode) => {
 
 export default Task;
 
-const SERVER_URL = getServerUrl();
+const API_URL = getApiUrl();
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params || typeof params?.spec !== 'string') {
@@ -129,11 +137,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     };
   }
-  const task = await fetch(`${SERVER_URL}/api/task/${params.spec}`);
-  if (task.status === 200) {
+  const response = await fetch(
+    `${API_URL}/api/bundle/task-page/${params.spec}`
+  );
+  if (response.status === 200) {
+    const response_json = await response.json();
     return {
       props: {
-        task: await task.json(),
+        task: response_json.task,
+        languages: response_json.languages,
       },
       revalidate: 10 * 60,
     };

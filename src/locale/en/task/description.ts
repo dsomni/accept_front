@@ -9,4 +9,7 @@ export const description = {
     input: 'Input data',
     output: 'Output data',
   },
+  languagesRestrictions:
+    'ATTENTION! There is a restriction on the programming languages that can be used in the solution for this task \
+     We recommend to check the list of available languages in the "Send" tab',
 };

@@ -36,6 +36,18 @@
   padding-right: var(--spacer-s);
 }
 
+.languagesRestrictions {
+  margin-top: var(--spacer-xs);
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xxs);
+  align-items: center;
+}
+
+.languagesRestrictions .alert {
+  font-size: var(--font-size-xs);
+}
+
 .formatWrapper {
   display: flex;
   flex-direction: column;
