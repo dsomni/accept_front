@@ -1,6 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
 
-import { FC, memo, useEffect, useRef, useState } from 'react';
+import {
+  FC,
+  memo,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
 const editorConfiguration = {
@@ -16,7 +23,8 @@ const CustomEditor: FC<{
   label: string;
   form?: any;
   classNames?: object;
-}> = ({ name, label, form, classNames }) => {
+  helperContent?: string | ReactNode;
+}> = ({ name, label, form, classNames, helperContent }) => {
   const { locale } = useLocale();
 
   const editorRef = useRef<any>();
@@ -41,6 +49,7 @@ const CustomEditor: FC<{
         classNames={classNames}
         label={label}
         size="lg"
+        helperContent={helperContent}
         {...form.getInputProps(name)}
       >
         {isLoaded ? (
