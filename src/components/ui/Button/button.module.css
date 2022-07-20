@@ -40,3 +40,7 @@
 .rootLight:hover {
   background-color: var(--secondary-light);
 }
+
+.popoverContentWrapper {
+  font-size: var(--font-size-s);
+}

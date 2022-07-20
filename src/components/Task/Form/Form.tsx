@@ -34,7 +34,7 @@ const Form: FC<{
   hintAlarmTypes,
 }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () =>
     setCurrentStep((current) =>
