@@ -6,9 +6,9 @@ import {
   RadioProps,
   RadioGroupProps,
 } from '@mantine/core';
-import { useLocale } from '@hooks/useLocale';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { setter } from '@custom-types/ui/atomic';
+import { Helper } from '@ui/Helper/Helper';
 
 const Radio: FC<{
   label: ReactNode;
@@ -19,6 +19,7 @@ const Radio: FC<{
   onBlur?: () => void;
   groupProps?: RadioGroupProps;
   radioProps?: RadioProps;
+  helperContent?: string | ReactNode;
 }> = ({
   label,
   field,
@@ -28,31 +29,36 @@ const Radio: FC<{
   onBlur,
   groupProps,
   radioProps,
+  helperContent,
 }) => {
-  const { locale } = useLocale();
-
   return (
-    <RadioGroup
-      classNames={{
-        label: styles.label,
-        radio: styles.radio,
-      }}
-      size="md"
-      label={label}
-      {...groupProps}
-      {...form.getInputProps(field)}
-      onChange={onChange}
-      onBlur={onBlur}
-    >
-      {items.map((item: Item, index: number) => (
-        <MantineRadio
-          {...radioProps}
-          value={item.value}
-          key={index}
-          label={item.label}
-        />
-      ))}
-    </RadioGroup>
+    <div className={styles.wrapper}>
+      <div className={styles.labelWrapper}>
+        <div className={styles.label}>{label}</div>
+        {helperContent && <Helper content={helperContent} />}
+      </div>
+
+      <RadioGroup
+        classNames={{
+          label: styles.radioLabel,
+          radio: styles.radio,
+        }}
+        size="md"
+        {...groupProps}
+        {...form.getInputProps(field)}
+        onChange={onChange}
+        onBlur={onBlur}
+      >
+        {items.map((item: Item, index: number) => (
+          <MantineRadio
+            {...radioProps}
+            value={item.value}
+            key={index}
+            label={item.label}
+          />
+        ))}
+      </RadioGroup>
+    </div>
   );
 };
 
