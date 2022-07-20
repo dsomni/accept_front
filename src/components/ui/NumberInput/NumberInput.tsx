@@ -1,5 +1,6 @@
 import { FC, memo, ReactNode } from 'react';
 import styles from './numberInput.module.css';
+import inputStyles from '@styles/ui/input.module.css';
 import {
   NumberInput as MantineNumberInput,
   NumberInputProps,
@@ -12,12 +13,12 @@ interface Props extends NumberInputProps {
 
 const NumberInput: FC<Props> = (props) => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.labelWrapper}>
-        <div className={styles.label}>
+    <div className={inputStyles.wrapper}>
+      <div className={inputStyles.labelWrapper}>
+        <div className={inputStyles.label}>
           {props.label}
           {props.required && (
-            <div className={styles.labelRequired}>*</div>
+            <div className={inputStyles.labelRequired}>*</div>
           )}
         </div>
         {props.helperContent && (

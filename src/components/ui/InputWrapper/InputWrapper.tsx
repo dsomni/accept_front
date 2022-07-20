@@ -4,6 +4,7 @@ import {
   InputWrapperProps,
 } from '@mantine/core';
 import styles from './inputWrapper.module.css';
+import inputStyles from '@styles/ui/input.module.css';
 import { Helper } from '@ui/Helper/Helper';
 
 interface Props extends InputWrapperProps {
@@ -12,12 +13,12 @@ interface Props extends InputWrapperProps {
 
 const InputWrapper: FC<Props> = (props) => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.labelWrapper}>
-        <div className={styles.label}>
+    <div className={inputStyles.wrapper}>
+      <div className={inputStyles.labelWrapper}>
+        <div className={inputStyles.label}>
           {props.label}
           {props.required && (
-            <div className={styles.labelRequired}>*</div>
+            <div className={inputStyles.labelRequired}>*</div>
           )}
         </div>
         {props.helperContent && (
