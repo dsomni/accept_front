@@ -104,11 +104,13 @@ const Tests: FC<{
               </div>
             )
           )}
-        <InputWrapper
-          {...form.getInputProps('tests')}
-          onChange={() => {}}
-          styles={{ error: { fontSize: 'var(--font-size-m)' } }}
-        />
+        {form.errors.tests && (
+          <InputWrapper
+            {...form.getInputProps('tests')}
+            onChange={() => {}}
+            styles={{ error: { fontSize: 'var(--font-size-m)' } }}
+          />
+        )}
         <Button
           size="lg"
           className={styles.addButton}

@@ -15,3 +15,7 @@
 .addButton span {
   font-size: var(--font-size-xxl);
 }
+
+.addButton {
+  width: 100%;
+}

@@ -3,7 +3,7 @@ import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import Button from '@ui/Button/Button';
 
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useEffect } from 'react';
 import styles from './examples.module.css';
 import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
@@ -40,11 +40,13 @@ const Examples: FC<{ form: any }> = ({ form }) => {
             />
           </div>
         ))}
-      <InputWrapper
-        {...form.getInputProps('examples')}
-        onChange={() => {}}
-        styles={{ error: { fontSize: 'var(--font-size-m)' } }}
-      />
+      {form.errors.examples && (
+        <InputWrapper
+          {...form.getInputProps('examples')}
+          onChange={() => {}}
+          styles={{ error: { fontSize: 'var(--font-size-m)' } }}
+        />
+      )}
       <Button
         size="lg"
         className={styles.addButton}
