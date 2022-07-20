@@ -12,7 +12,6 @@ const Switch: FC<Props> = (props) => {
     <div className={styles.wrapper}>
       <MantineSwitch
         classNames={{
-          label: styles.label,
           input: styles.input,
         }}
         size="lg"
