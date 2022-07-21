@@ -5,7 +5,7 @@ export const form = {
   steps,
   validation,
   title: 'Title',
-  complexity: 'Complexity',
+  complexity: 'Complexity (%)',
   description: 'Description',
   inputFormat: 'Input description',
   outputFormat: 'Output description',
@@ -37,4 +37,5 @@ export const form = {
   example: 'Example',
   allowed: 'Allowed',
   forbidden: 'Forbidden',
+  restrictLanguages: 'Restrict languages',
 };

@@ -8,6 +8,7 @@ export const task = {
     time: 'Time',
     memory: 'Memory',
   },
+  complexity: 'Complexity',
   modals,
   description,
   send: 'Send',

@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { Group, Stepper } from '@mantine/core';
 
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
 import Checker from '@components/Task/Form/Checker/Checker';
@@ -34,7 +34,7 @@ const Form: FC<{
   hintAlarmTypes,
 }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const nextStep = () =>
     setCurrentStep((current) =>

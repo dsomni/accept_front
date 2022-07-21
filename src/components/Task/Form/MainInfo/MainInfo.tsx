@@ -59,32 +59,31 @@ const MainInfo: FC<{
         {...form.getInputProps('title')}
       />
 
-      <div>
-        <TagSelector
-          classNames={{
-            label: styles.label,
-          }}
-          initialTags={initialTags}
-          setUsed={(values: Item[]) => {
-            form.setFieldValue('tags', values);
-            form.validateField('tags');
-          }}
-          fetchURL={'tag/list'}
-          addURL={'tag/add'}
-          updateURL={'tag/edit'}
-          deleteURL={'tag/delete'}
-        />
-        <NumberInput
-          label={locale.task.form.complexity}
-          required
-          noClampOnBlur
-          hideControls
-          onBlur={() => {
-            form.validateField('complexity');
-          }}
-          {...form.getInputProps('complexity')}
-        />
-      </div>
+      <TagSelector
+        classNames={{
+          label: styles.label,
+        }}
+        initialTags={initialTags}
+        setUsed={(values: Item[]) => {
+          form.setFieldValue('tags', values);
+          form.validateField('tags');
+        }}
+        fetchURL={'tag/list'}
+        addURL={'tag/add'}
+        updateURL={'tag/edit'}
+        deleteURL={'tag/delete'}
+      />
+
+      <NumberInput
+        label={locale.task.form.complexity}
+        required
+        noClampOnBlur
+        hideControls
+        onBlur={() => {
+          form.validateField('complexity');
+        }}
+        {...form.getInputProps('complexity')}
+      />
       <div className={styles.radioGroups}>
         <Radio
           label={locale.task.form.taskType}
@@ -92,6 +91,13 @@ const MainInfo: FC<{
           form={form}
           items={taskTypeItems}
           onChange={handlerTaskType}
+          helperContent={
+            <div>
+              {locale.helpers.task.taskType.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
+          }
         />
         {form.values.taskType === '0' && (
           <Radio

@@ -12,6 +12,7 @@ import { users } from './users';
 import { errorPage } from './errorPage';
 import { groups } from './groups';
 import { ui } from './ui';
+import { helpers } from './helpers';
 
 const ru = {
   accept: 'Accept',
@@ -46,6 +47,7 @@ const ru = {
   errorPage,
   tournament,
   ui,
+  helpers,
 };
 
 export default ru;

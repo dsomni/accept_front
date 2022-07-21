@@ -3,7 +3,7 @@ import TaskLayout from '@layouts/TaskLayout';
 import { ReactNode, useState } from 'react';
 import { ITask } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getApiUrl, getServerUrl } from '@utils/getServerUrl';
+import { getApiUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';

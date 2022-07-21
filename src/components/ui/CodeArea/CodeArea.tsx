@@ -1,14 +1,5 @@
-import { Group, Text } from '@mantine/core';
-import { FileUpload } from 'tabler-icons-react';
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { Textarea } from '@mantine/core';
+import { FC, memo, ReactNode, useCallback, useState } from 'react';
+
 import Dropzone from '@ui/Dropzone/Dropzone';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
@@ -21,7 +12,8 @@ import {
 } from '@utils/notificationFunctions';
 import { ILanguage } from '@custom-types/data/atomic';
 import { extensionValidator } from '@utils/extensionValidator';
-import Button from '@ui/Button/Button';
+
+import TextArea from '@ui/TextArea/TextArea';
 
 const CodeArea: FC<{
   label: string;
@@ -30,6 +22,7 @@ const CodeArea: FC<{
   setCode: callback<string, void>;
   formProps?: any;
   classNames?: object;
+  helperContent?: string | ReactNode;
 }> = ({
   label,
   setLanguage,
@@ -37,6 +30,7 @@ const CodeArea: FC<{
   setCode,
   formProps,
   classNames,
+  helperContent,
 }) => {
   const { locale } = useLocale();
   const [drag, setDrag] = useState(false);
@@ -96,7 +90,8 @@ const CodeArea: FC<{
       >
         <>
           {!drag && (
-            <Textarea
+            <TextArea
+              helperContent={helperContent}
               classNames={classNames}
               placeholder={locale.placeholders.code}
               onChange={(e) => setCode(e.target.value)}

@@ -38,7 +38,7 @@ const Description: FC<{
         <div className={styles.title}>{task.title}</div>
         <div
           className={styles.complexity}
-        >{`${locale.task.form.complexity} ${task.complexity}%`}</div>
+        >{`${locale.task.complexity} ${task.complexity}%`}</div>
       </div>
       <div className={styles.constraints}>
         <div

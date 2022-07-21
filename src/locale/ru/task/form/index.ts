@@ -6,7 +6,7 @@ export const form = {
   validation,
 
   title: 'Название',
-  complexity: 'Сложность',
+  complexity: 'Сложность (%)',
   description: 'Описание',
   inputFormat: 'Входные данные',
   outputFormat: 'Выходные данные',
@@ -38,4 +38,5 @@ export const form = {
   example: 'Пример',
   allowed: 'Разрешенные',
   forbidden: 'Запрещенные',
+  restrictLanguages: 'Ограничить используемые языки',
 };

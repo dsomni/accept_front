@@ -1,3 +1,6 @@
 .wrapper {
   padding: 0 var(--spacer-l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
 }

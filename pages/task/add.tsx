@@ -59,9 +59,9 @@ const initialValues = {
   checkerLang: '0',
   checkerCode: '',
 
-  checkType: '0', //"tests" or "checker"
+  checkType: '1', //"tests" or "checker"
   taskType: '0', //"code" or "text"
-  shouldRestrictLanguages: false,
+  shouldRestrictLanguages: true,
 };
 
 function AddTask() {

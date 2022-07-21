@@ -45,6 +45,13 @@ const Checker: FC<{ form: any }> = ({ form }) => {
       />
       <CodeArea
         languages={languages}
+        helperContent={
+          <div>
+            {locale.helpers.task.checker.map((p, idx) => (
+              <p key={idx}>{p}</p>
+            ))}
+          </div>
+        }
         classNames={{
           label: styles.label,
         }}

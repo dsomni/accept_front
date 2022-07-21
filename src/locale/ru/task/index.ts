@@ -17,6 +17,7 @@ export const task = {
     time: 'Время',
     memory: 'Память',
   },
+  complexity: 'Сложность',
 
   modals,
   list,

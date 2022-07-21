@@ -60,14 +60,21 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Switch
-        label={'Restrict languages'}
-        size="lg"
-        style={{ marginBottom: 'var(--spacer-m)' }}
-        {...form.getInputProps('shouldRestrictLanguages', {
-          type: 'checkbox',
-        })}
-      />
+      <div style={{ width: 'fit-content' }}>
+        <Switch
+          label={locale.task.form.restrictLanguages}
+          helperContent={
+            <div>
+              {locale.helpers.task.restrictLanguages.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
+          }
+          {...form.getInputProps('shouldRestrictLanguages', {
+            type: 'checkbox',
+          })}
+        />
+      </div>
       <div className={styles.languages}>
         <Box style={{ position: 'relative' }}>
           {!form.values.shouldRestrictLanguages && (
@@ -86,12 +93,18 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             ]}
             value={option}
             onChange={onOptionChange}
-            style={{
-              margin: 'var(--spacer-m) 0',
-            }}
             styles={{
+              root: {
+                backgroundColor: '#00000000',
+              },
               label: {
                 fontSize: 'var(--font-size-m)',
+              },
+              active: {
+                backgroundColor: 'var(--primary)',
+              },
+              labelActive: {
+                color: 'white !important',
               },
             }}
           />
@@ -112,9 +125,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
           onBlur={() => {
             form.validateField('constraintsMemory');
           }}
-          style={{
-            margin: 'var(--spacer-m) 0',
-          }}
           {...form.getInputProps('constraintsMemory')}
         />
         <NumberInput
@@ -124,9 +134,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
           precision={1}
           onBlur={() => {
             form.validateField('constraintsTime');
-          }}
-          style={{
-            margin: 'var(--spacer-m) 0',
           }}
           {...form.getInputProps('constraintsTime')}
         />
