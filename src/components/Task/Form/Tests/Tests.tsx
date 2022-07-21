@@ -80,7 +80,12 @@ const Tests: FC<{
       description={''}
     >
       <div className={styles.wrapper}>
-        {form.values.tests &&
+        {form.values.tests.length == 0 && (
+          <div className={styles.empty}>
+            {locale.task.form.emptyTests}
+          </div>
+        )}
+        {form.values.tests.length > 0 &&
           form.values.tests.map(
             (_: [string, string], index: number) => (
               <div key={index} className={styles.example}>
@@ -107,6 +112,7 @@ const Tests: FC<{
           />
         )}
         <Button
+          popoverProps={{style: {width: "100%"}}}
           size="lg"
           className={styles.addButton}
           color="var(--primary)"

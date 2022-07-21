@@ -49,7 +49,6 @@ const Button: FC<Props> = (props) => {
       position="bottom"
       placement="center"
       arrowSize={5}
-      width={400}
       transition={'scale'}
       transitionDuration={300}
       {...props.popoverProps}
