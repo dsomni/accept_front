@@ -38,41 +38,36 @@ const Tests: FC<{
     [form]
   );
 
-  const onDrop = useCallback(
+    const onDrop = useCallback(
     async (files: File[]) => {
-      try {
-        if (files === []) return;
+      if (files === []) return;
+      let length = files.length;
+      let tests: ITest[] = new Array(length);
 
-        let length = files.length;
-        if (length % 2 !== 0) length++;
-        length = length / 2;
-
-        let tests: ITest[] = new Array(length);
-        for (let i = 0; i < length; i++) {
-          tests[i] = {
-            spec: i.toString(),
-            inputData: '',
-            outputData: '',
-          };
+      for (let i = 0; i < length; i++) {
+        tests[i] = {
+          spec: i.toString(),
+          inputData: '',
+          outputData: '',
+        };
+      }
+      for (let i = 0; i < length; i++) {
+        if (files[i].name.startsWith('input')) {
+          const input = await files[i].text();
+          const index = +files[i].name.slice('input'.length, files[i].name.lastIndexOf('.'));
+          if (index >= length) continue;
+          tests[index].inputData = input;
+        } else if (files[i].name.startsWith('output')) {
+          const output = await files[i].text();
+          const index = +files[i].name.slice('output'.length, files[i].name.lastIndexOf('.'));
+          if (index >= length) continue;
+          tests[index].outputData = output;
         }
-        for (let i = 0; i < files.length; i++) {
-          if (files[i].name.startsWith('input')) {
-            const input = await files[i].text();
-            const index = +files[i].name.slice('input'.length);
-            if (index >= length) continue;
-            tests[index].inputData = input;
-          } else if (files[i].name.startsWith('output')) {
-            const output = await files[i].text();
-            const index = +files[i].name.slice('output'.length);
-            if (index >= length) continue;
-            tests[index].outputData = output;
-          }
-        }
-        tests = tests.filter(
-          (test) => test.inputData !== '' && test.outputData !== ''
-        );
-        if (tests !== []) form.setFieldValue('tests', tests);
-      } catch {}
+      }
+      tests = tests.filter(
+        (test) => test.inputData !== ''
+      );
+      if (tests !== []) form.setFieldValue('tests', tests);
     },
     [form]
   );
