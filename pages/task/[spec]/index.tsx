@@ -107,14 +107,16 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             }
           />
         }
-        send={(set) => (
-          <Send
-            spec={task.spec}
-            setActiveTab={set}
-            languages={languages}
-          />
-        )}
-        results={<Results spec={task.spec} />}
+        send={(set) =>
+          isUser && (
+            <Send
+              spec={task.spec}
+              setActiveTab={set}
+              languages={languages}
+            />
+          )
+        }
+        results={isUser && <Results spec={task.spec} />}
       />
     </>
   );

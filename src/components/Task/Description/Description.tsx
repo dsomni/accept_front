@@ -10,6 +10,7 @@ import { sendRequest } from '@requests/request';
 import { setter } from '@custom-types/ui/atomic';
 import { AlertCircle } from 'tabler-icons-react';
 import Icon from '@ui/Icon/Icon';
+import TagList from '@ui/TagList/TagList';
 
 const Description: FC<{
   task: ITask;
@@ -46,6 +47,9 @@ const Description: FC<{
         <div
           className={styles.time}
         >{`${locale.task.constraints.time}: ${task.constraints.time}s`}</div>
+      </div>
+      <div className={styles.tags}>
+        <TagList tags={task.tags} />
       </div>
       <div
         className={styles.description}

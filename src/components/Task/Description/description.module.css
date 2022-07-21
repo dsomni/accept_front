@@ -25,7 +25,12 @@
   gap: var(--spacer-m);
   font-size: var(--font-size-xs);
   color: var(--dark3);
-  margin-bottom: var(--spacer-m);
+  margin-bottom: var(--spacer-xs);
+}
+
+.tags {
+  margin-bottom: var(--spacer-s);
+  width: 70%;
 }
 
 .title,
