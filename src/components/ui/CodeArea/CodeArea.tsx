@@ -88,7 +88,7 @@ const CodeArea: FC<{
         description={''}
         showButton
       >
-        <>
+        <div className={styles.inner}>
           {!drag && (
             <TextArea
               helperContent={helperContent}
@@ -100,7 +100,7 @@ const CodeArea: FC<{
               {...formProps}
             />
           )}
-        </>
+        </div>
       </Dropzone>
     </div>
   );

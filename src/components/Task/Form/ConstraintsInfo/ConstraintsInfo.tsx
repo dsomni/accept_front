@@ -78,7 +78,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
       <div className={styles.languages}>
         <Box style={{ position: 'relative' }}>
           {!form.values.shouldRestrictLanguages && (
-            <Overlay opacity={0} color="#000" blur={2} />
+            <Overlay opacity={0.7} color="#fff" blur={2} />
           )}
           <SegmentedControl
             data={[

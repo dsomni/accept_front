@@ -33,8 +33,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   const router = useRouter();
 
-  const actions = [
-    {
+  const actions = (task.hint ? [{
       color: 'grape',
       icon: (
         <Eye
@@ -43,7 +42,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         />
       ),
       onClick: () => setOpenedHint(true),
-    },
+    }] : []).concat([
     {
       color: 'green',
       icon: (
@@ -64,7 +63,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       ),
       onClick: () => setActiveModal(true),
     },
-  ];
+  ]);
 
   return (
     <>

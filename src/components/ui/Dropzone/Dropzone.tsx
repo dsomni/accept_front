@@ -9,7 +9,7 @@ import {
   useMemo,
 } from 'react';
 import styles from './dropzone.module.css';
-import { Button, Group, Text } from '@mantine/core';
+import { Button, ButtonProps, Group, Text } from '@mantine/core';
 import { Dropzone as MantineDropzone } from '@mantine/dropzone';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 import { setter } from '@custom-types/ui/atomic';
@@ -24,6 +24,7 @@ const Dropzone: FC<{
   accept?: string[];
   style?: any;
   showButton?: boolean;
+  buttonProps?: ButtonProps<'button'>
 }> = ({
   children,
   onDrop,
@@ -33,6 +34,7 @@ const Dropzone: FC<{
   setDrag,
   style,
   showButton,
+  buttonProps
 }) => {
   const { locale } = useLocale();
 
@@ -117,6 +119,7 @@ const Dropzone: FC<{
             display: drag ? 'none' : 'block',
             marginTop: 'var(--spacer-l)',
           }}
+          {...buttonProps}
         >
           {locale.ui.codeArea.selectFiles}
         </Button>

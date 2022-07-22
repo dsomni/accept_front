@@ -19,49 +19,35 @@ import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
 const initialValues = {
   spec: '',
-  title: 'Простые числа',
+  title: '',
   tags: [],
   author: '',
-  complexity: 50,
+  complexity: 0,
   description:
-    'Написать программу выводящую все простые числа меньше n.',
+    '',
   constraintsTime: 1,
   constraintsMemory: 16,
-  examples: [
-    { inputData: '1', outputData: 'NO' },
-    { inputData: '15', outputData: '2 3 5 7 11 13' },
-  ],
-  inputFormat: 'Вводится натуральное число n<10000. ',
-  outputFormat:
-    'Выведите все простые числа меньшие n в одну строку через пробел. Если простых нет выведите "NO".',
-  remark: '123214432433435',
+  examples: [],
+  inputFormat: '',
+  outputFormat: '',
+  remark: '',
 
-  hasHint: true,
-  hintContent: 'Приветприветприветпривет',
+  hasHint: false,
+  hintContent: '',
   hintAlarmType: '0',
   hintAlarm: 0,
 
   allowedLanguages: [],
   forbiddenLanguages: [],
 
-  tests: [
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-    { inputData: '1', outputData: '1' },
-  ],
+  tests: [],
 
   checkerLang: '0',
   checkerCode: '',
 
-  checkType: '1', //"tests" or "checker"
+  checkType: '0', //"tests" or "checker"
   taskType: '0', //"code" or "text"
-  shouldRestrictLanguages: true,
+  shouldRestrictLanguages: false,
 };
 
 function AddTask() {

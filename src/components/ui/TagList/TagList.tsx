@@ -5,10 +5,6 @@ import styles from './tagList.module.css';
 
 const TagList: FC<{ tags: ITag[] }> = ({ tags }) => {
 
-  useEffect(() => {
-    console.log(tags)
-  }, [tags])
-
   return (
     <div className={styles.wrapper}>
       {tags.map((tag, idx) => (

@@ -78,6 +78,8 @@ const Tests: FC<{
       setDrag={setDrag}
       title={locale.ui.codeArea.dragFiles}
       description={''}
+      showButton
+      buttonProps={{style: {margin: "0 auto", width: '70vw', display: "block"}}}
     >
       <div className={styles.wrapper}>
         {form.values.tests.length == 0 && (

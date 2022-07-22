@@ -18,6 +18,8 @@ import {
 } from '@custom-types/data/atomic';
 import Button from '@ui/Button/Button';
 
+const LAST_PAGE = 5;
+
 const Form: FC<{
   form: any;
   handleSubmit: pureCallback<void>;
@@ -34,11 +36,11 @@ const Form: FC<{
   hintAlarmTypes,
 }) => {
   const { locale } = useLocale();
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () =>
     setCurrentStep((current) =>
-      current < 4 ? current + 1 : current
+      current < LAST_PAGE ? current + 1 : current
     );
   const prevStep = () =>
     setCurrentStep((current) =>
@@ -102,7 +104,7 @@ const Form: FC<{
         {currentStep === 4 && form.values.checkType === '1' && (
           <Checker form={form} />
         )}
-        {currentStep === 5 && <Preview form={form} />}
+        {currentStep === LAST_PAGE && <Preview form={form} />}
         <Group
           position="center"
           mt="xl"
@@ -114,10 +116,10 @@ const Form: FC<{
             </Button>
           )}
           <Button
-            onClick={currentStep !== 5 ? nextStep : handleSubmit}
+            onClick={currentStep !== LAST_PAGE ? nextStep : handleSubmit}
             type="button"
           >
-            {currentStep === 5 ? buttonLabel : locale.form.next}
+            {currentStep === LAST_PAGE ? buttonLabel : locale.form.next}
           </Button>
         </Group>
       </form>
