@@ -1,123 +1,114 @@
 import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
-import { ITaskDisplay } from '@custom-types/data/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
   ReactNode,
+  useCallback,
   useEffect,
   useMemo,
   useState,
-  useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { ITag } from '@custom-types/data/ITag';
-import { hasSubarray } from '@utils/hasSubarray';
-import router from 'next/router';
+import { IAssignmentSchemaDisplay, IAssignmentSchemaList } from '@custom-types/data/IAssignmentSchema';
+import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
+import { ITag } from '@custom-types/data/ITag';
 import SingularSticky from '@ui/Sticky/SingularSticky';
-import { ITaskListBundle } from '@custom-types/data/bundle';
+import { BaseSearch } from '@custom-types/data/request';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
-import { BaseSearch } from '@custom-types/data/request';
 import Fuse from 'fuse.js';
+import { hasSubarray } from '@utils/hasSubarray';
 import MultiSelect from '@ui/Select/MultiSelect';
 
-interface Item {
-  value: any;
-  display: string | ReactNode;
-}
+const defaultOnPage = 10;
 
-interface ITaskDisplayList
-  extends Omit<ITaskDisplay, 'title' | 'author' | 'verdict'> {
-  title: Item;
-  author: Item;
-  verdict: Item;
-}
-
-const initialColumns = (locale: ILocale): ITableColumn[] => [
-  {
-    label: locale.task.list.title,
-    key: 'title',
-    sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.title.value > b.title.value
-        ? 1
-        : a.title.value == b.title.value
-        ? 0
-        : -1,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: false,
-    hidden: false,
-    size: 9,
-  },
-  {
-    label: locale.task.list.author,
-    key: 'author',
-    sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.author > b.author ? 1 : a.author == b.author ? 0 : -1,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: true,
-    hidden: false,
-    size: 3,
-  },
-  {
-    label: locale.task.list.verdict,
-    key: 'verdict',
-    sortable: false,
-    sortFunction: () => 0,
-    sorted: 0,
-    allowMiddleState: false,
-    hidable: true,
-    hidden: false,
-    size: 2,
-  },
-];
-const processData = (
-  data: ITaskListBundle
-): { tasks: ITaskDisplayList[]; tags: ITag[] } => {
-  const tasks = data.tasks.map(
-    (task: ITaskDisplay): ITaskDisplayList => ({
-      ...task,
-      author: {
-        value: task.author,
-        display: task.author.shortName,
+const initialColumns =  (locale: ILocale): ITableColumn[] => [
+      {
+        label: locale.assignmentSchema.list.title,
+        key: 'title',
+        sortable: true,
+        sortFunction: (a: any, b: any) =>
+          a.title.value > b.title.value
+            ? 1
+            : a.title.value == b.title.value
+            ? 0
+            : -1,
+        sorted: 0,
+        allowMiddleState: true,
+        hidable: false,
+        hidden: false,
+        size: 6,
       },
-      verdict: {
-        value: task.verdict,
-        display: (
-          <span
-            style={{
-              color: !task.verdict
-                ? 'black'
-                : task.verdict.spec == 0
-                ? 'var(--positive)'
-                : 'var(--negative)',
-            }}
-          >
-            {task.verdict?.shortText || '-'}
-          </span>
-        ),
+      {
+        label: locale.assignmentSchema.list.author,
+        key: 'author',
+        sortable: true,
+        sortFunction: (a: any, b: any) =>
+          a.author > b.author ? 1 : a.author == b.author ? 0 : -1,
+        sorted: 0,
+        allowMiddleState: true,
+        hidable: true,
+        hidden: false,
+        size: 3,
+      },
+      {
+        label: locale.assignmentSchema.list.description,
+        key: 'description',
+        sortable: false,
+        sortFunction: () => 0,
+        sorted: 0,
+        allowMiddleState: false,
+        hidable: true,
+        hidden: true,
+        size: 8,
+      },
+      {
+        label: locale.assignmentSchema.list.taskCount,
+        key: 'taskCount',
+        sortable: true,
+        sortFunction: (a: any, b: any) =>
+          a.taskCount > b.taskCount
+            ? 1
+            : a.taskCount == b.taskCount
+            ? 0
+            : -1,
+        sorted: 0,
+        allowMiddleState: true,
+        hidable: true,
+        hidden: false,
+        size: 3,
+      },
+    ]
+
+
+const processData = (
+  data: IAssignmentSchemaList
+): { assignment_schemas: any; tags: ITag[] } => {
+  const assignment_schemas = data.assignment_schemas.map(
+    (assignment_schema: IAssignmentSchemaDisplay): any => ({
+      ...assignment_schema,
+      author: {
+        value: assignment_schema.author,
+        display: assignment_schema.author.shortName,
       },
       title: {
-        value: task.title,
+        value: assignment_schema.title,
         display: (
           <div className={tableStyles.titleWrapper}>
             <a
               className={tableStyles.title}
-              href={`/task/${task.spec}`}
+              href={`/assignment_schema/${assignment_schema.spec}`}
             >
-              {task.title}
+              {assignment_schema.title}
             </a>
-            {task.tags.length > 0 && (
+            {assignment_schema.tags.length > 0 && (
               <span className={tableStyles.tags}>
-                {task.tags.map((tag, idx) => (
+                {assignment_schema.tags.map((tag, idx) => (
                   <div className={tableStyles.tag} key={idx}>
                     {tag.title +
-                      (idx == task.tags.length - 1 ? '' : ', ')}
+                      (idx == assignment_schema.tags.length - 1 ? '' : ', ')}
                   </div>
                 ))}
               </span>
@@ -125,20 +116,24 @@ const processData = (
           </div>
         ),
       },
+      taskCount: {
+        value: assignment_schema.taskNumber,
+        display: assignment_schema.taskNumber
+      }
     })
   );
   const tags = data.tags;
-  return { tasks, tags };
+  return { assignment_schemas, tags };
 };
 
-const defaultOnPage = 10;
 
-function TaskList() {
+function AssignmentList() {
   const { locale } = useLocale();
-  const [list, setList] = useState<ITaskDisplayList[]>([]);
-  const [tasks, setTasks] = useState<ITaskDisplayList[]>([]);
+  const router = useRouter();
+  const [list, setList] = useState<any[]>([]);
   const [tags, setTags] = useState<ITag[]>([]);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
+
   const [searchParams, setSearchParams] = useState<BaseSearch>({
     pager: {
       skip: 0,
@@ -155,6 +150,7 @@ function TaskList() {
     () => initialColumns(locale),
     [locale]
   );
+
   const searchTags = useMemo(
     () =>
       tags.map((tag) => ({
@@ -166,24 +162,19 @@ function TaskList() {
 
   const { data, loading, error, detail } = useRequest<
     {},
-    ITaskListBundle,
-    { tasks: ITaskDisplayList[]; tags: ITag[] }
-  >('bundle/task_list', 'GET', undefined, processData);
+    IAssignmentSchemaList,
+    {assignment_schemas: any[], tags: ITag[]}
+  >('assignment/schema/list', 'GET', undefined, processData);
 
-  const fuse = useMemo(
-    () => {
-      return new Fuse(tasks, {
+  const applyFilters = useCallback((list: any[]) => {
+    const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
         findAllMatches: true,
       });
-    },
-    [tasks] // eslint-disable-line
-  );
 
-  const applyFilters = useCallback(() => {
     const searched =
       searchParams.search_params.search == ''
-        ? tasks
+        ? list
         : fuse
             .search(searchParams.search_params.search)
             .map((result) => result.item);
@@ -192,7 +183,7 @@ function TaskList() {
       currentTags.length > 0
         ? searched.filter((task) =>
             hasSubarray(
-              task.tags.map((tag) => tag.spec),
+              task.tags.map((tag: ITag) => tag.spec),
               currentTags
             )
           )
@@ -207,28 +198,25 @@ function TaskList() {
     setList(paged);
   }, [
     currentTags,
-    fuse,
-    searchParams.pager.limit,
-    searchParams.pager.skip,
-    searchParams.search_params.search,
-    tasks,
+    searchParams,
+    list,
   ]);
 
   useEffect(() => {
-    if (data) {
-      setTasks(data.tasks);
-      applyFilters();
+    if(data){
+      applyFilters(data.assignment_schemas)
       setTags(data.tags);
     }
-  }, [applyFilters, data]);
+  }, [data])
 
-  useEffect(applyFilters, [applyFilters]);
+  useEffect(() => {
+    console.log(list)
+  }, [list]);
+
 
   return (
     <div>
-      {tags.length > 0 && (
         <Table
-          withSearch
           columns={columns}
           rows={list}
           classNames={{
@@ -242,9 +230,9 @@ function TaskList() {
             even: tableStyles.even,
             odd: tableStyles.odd,
           }}
-          defaultOnPage={defaultOnPage}
+          defaultOnPage={10}
           onPage={[5, 10]}
-          total={tasks.length}
+          total={list.length}
           loading={loading}
           setSearchParams={setSearchParams}
           searchParams={searchParams}
@@ -259,18 +247,17 @@ function TaskList() {
             </div>
           }
         />
-      )}
       <SingularSticky
         color="green"
-        onClick={() => router.push(`/task/add/`)}
+        onClick={() => router.push(`/edu/assignment/add/`)}
         icon={<Plus height={25} width={25} />}
       />
     </div>
   );
 }
 
-TaskList.getLayout = (page: ReactNode) => {
+AssignmentList.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default TaskList;
+export default AssignmentList;
