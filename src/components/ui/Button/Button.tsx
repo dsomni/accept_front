@@ -1,4 +1,11 @@
-import { FC, memo, ReactNode, useMemo, useState } from 'react';
+import {
+  FC,
+  memo,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   Button as MantineButton,
   ButtonProps,
@@ -8,12 +15,14 @@ import {
 import styles from './button.module.css';
 
 interface Props extends ButtonProps<'button'> {
-  popoverProps?: PopoverProps;
+  popoverProps?: Omit<PopoverProps, 'opened' | 'children' | 'target'>;
   popoverContent?: string | ReactNode;
 }
 
 const Button: FC<Props> = (props) => {
   const [opened, setOpened] = useState(false);
+
+  const { popoverProps, popoverContent, ...buttonProps } = props;
 
   const button = useMemo(
     () => (
@@ -22,27 +31,27 @@ const Button: FC<Props> = (props) => {
         onMouseLeave={() => setOpened(false)}
         classNames={{
           label:
-            props.variant == 'outline'
+            buttonProps.variant == 'outline'
               ? styles.labelOutline
-              : props.variant == 'light'
+              : buttonProps.variant == 'light'
               ? styles.labelLight
               : styles.label,
           root:
-            props.variant == 'outline'
+            buttonProps.variant == 'outline'
               ? styles.rootOutline
-              : props.variant == 'light'
+              : buttonProps.variant == 'light'
               ? styles.rootLight
               : styles.root,
         }}
-        {...props}
+        {...buttonProps}
       />
     ),
-    [props]
+    [buttonProps]
   );
 
   return (
     <Popover
-      disabled={!!!props.popoverContent}
+      disabled={!!!popoverContent}
       target={button}
       withArrow
       opened={opened}
@@ -51,10 +60,11 @@ const Button: FC<Props> = (props) => {
       arrowSize={5}
       transition={'scale'}
       transitionDuration={300}
-      {...props.popoverProps}
+      {...popoverProps}
+      style={{ ...popoverProps?.style, ...buttonProps.style }}
     >
       <div className={styles.popoverContentWrapper}>
-        {props.popoverContent}
+        {popoverContent}
       </div>
     </Popover>
   );

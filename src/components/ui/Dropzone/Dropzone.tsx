@@ -8,11 +8,16 @@ import {
   ReactNode,
 } from 'react';
 import styles from './dropzone.module.css';
-import { Button, ButtonProps, Group, Text } from '@mantine/core';
+import {
+  ButtonProps,
+  Group,
+  PopoverProps,
+  Text,
+} from '@mantine/core';
 import { Dropzone as MantineDropzone } from '@mantine/dropzone';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
-import { setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
+import Button from '@ui/Button/Button';
 
 const Dropzone: FC<{
   children: ReactNode;
@@ -24,6 +29,12 @@ const Dropzone: FC<{
   style?: any;
   showButton?: boolean;
   buttonProps?: ButtonProps<'button'>;
+
+  buttonPopoverProps?: Omit<
+    PopoverProps,
+    'opened' | 'children' | 'target'
+  >;
+  buttonPopoverContent?: string | ReactNode;
 }> = ({
   children,
   onDrop,
@@ -34,6 +45,9 @@ const Dropzone: FC<{
   style,
   showButton,
   buttonProps,
+
+  buttonPopoverProps,
+  buttonPopoverContent,
 }) => {
   const { locale } = useLocale();
 
@@ -113,6 +127,8 @@ const Dropzone: FC<{
         <Button
           variant="outline"
           onClick={() => openRef.current()}
+          popoverContent={buttonPopoverContent}
+          popoverProps={buttonPopoverProps}
           style={{
             display: drag > 0 ? 'none' : 'block',
             marginTop: 'var(--spacer-l)',

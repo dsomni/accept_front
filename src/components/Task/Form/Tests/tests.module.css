@@ -6,8 +6,10 @@
   width: 70vw;
   margin: var(--spacer-xs) auto;
 }
-.empty{
+.empty {
   display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xxs);
   width: 100%;
   justify-content: center;
   align-items: center;

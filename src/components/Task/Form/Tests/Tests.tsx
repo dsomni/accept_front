@@ -10,9 +10,11 @@ import {
   useEffect,
   useRef,
   useState,
+  useMemo,
 } from 'react';
 import styles from './tests.module.css';
 import InputWrapper from '@ui/InputWrapper/InputWrapper';
+import { Helper } from '@ui/Helper/Helper';
 
 const Tests: FC<{
   form: any;
@@ -21,7 +23,6 @@ const Tests: FC<{
 }> = ({ form, hideInput, hideOutput }) => {
   const { locale } = useLocale();
 
-  const [drag, setDrag] = useState(false);
   const draggable = useRef<HTMLDivElement>(null);
 
   const onDeleteTest = useCallback(
@@ -38,53 +39,118 @@ const Tests: FC<{
     [form]
   );
 
-    const onDrop = useCallback(
+  const onDrop = useCallback(
     async (files: File[]) => {
       if (files === []) return;
-      let length = files.length;
-      let tests: ITest[] = new Array(length);
+      const length = files.length;
+      var inputs: { content: string; index: number }[] = [];
+      var outputs: {
+        content: string;
+        index: number;
+      }[] = [];
+      for (let i = 0; i < length; i++) {
+        const name = files[i].name.startsWith('input')
+          ? 'input'
+          : files[i].name.startsWith('output')
+          ? 'output'
+          : '';
+        switch (name) {
+          case 'input':
+            inputs.push({
+              index: +files[i].name.slice(
+                5,
+                files[i].name.lastIndexOf('.')
+              ),
+              content: await files[i].text(),
+            });
+            break;
 
-      for (let i = 0; i < length; i++) {
-        tests[i] = {
-          spec: i.toString(),
-          inputData: '',
-          outputData: '',
-        };
-      }
-      for (let i = 0; i < length; i++) {
-        if (files[i].name.startsWith('input')) {
-          const input = await files[i].text();
-          const index = +files[i].name.slice('input'.length, files[i].name.lastIndexOf('.'));
-          if (index >= length) continue;
-          tests[index].inputData = input;
-        } else if (files[i].name.startsWith('output')) {
-          const output = await files[i].text();
-          const index = +files[i].name.slice('output'.length, files[i].name.lastIndexOf('.'));
-          if (index >= length) continue;
-          tests[index].outputData = output;
+          case 'output':
+            outputs.push({
+              index: +files[i].name.slice(
+                6,
+                files[i].name.lastIndexOf('.')
+              ),
+              content: await files[i].text(),
+            });
+            break;
+          default:
+            continue;
         }
       }
-      tests = tests.filter(
-        (test) => test.inputData !== ''
-      );
+
+      inputs.sort((a, b) => a.index - b.index);
+      outputs.sort((a, b) => a.index - b.index);
+
+      var tests: ITest[] = [];
+      if (
+        form.values.checkType == '0' &&
+        form.values.taskType == '0'
+      ) {
+        // tests and code
+        for (
+          let i = 0;
+          i < Math.min(inputs.length, outputs.length);
+          i++
+        ) {
+          if (inputs[i].index != i || outputs[i].index != i) break;
+          tests.push({
+            inputData: inputs[i].content,
+            outputData: outputs[i].content,
+          });
+        }
+      } else if (form.values.taskType == '1') {
+        // text task
+        for (let i = 0; i < outputs.length; i++) {
+          if (outputs[i].index != i) break;
+          tests.push({
+            inputData: '',
+            outputData: outputs[i].content,
+          });
+        }
+      } else if (form.values.checkType == '1') {
+        // checker
+        for (let i = 0; i < inputs.length; i++) {
+          if (inputs[i].index != i) break;
+          tests.push({
+            inputData: inputs[i].content,
+            outputData: '',
+          });
+        }
+      }
+
       if (tests !== []) form.setFieldValue('tests', tests);
     },
     [form]
   );
 
+  const helperContent = useMemo(
+    () => (
+      <div>
+        {locale.helpers.dropzone.test.map((p, idx) => (
+          <p key={idx}>{p}</p>
+        ))}
+      </div>
+    ),
+    [locale]
+  );
+
   return (
     <Dropzone
       onDrop={onDrop}
-      setDrag={setDrag}
       title={locale.ui.codeArea.dragFiles}
       description={''}
       showButton
-      buttonProps={{style: {margin: "0 auto", width: '70vw', display: "block"}}}
+      buttonProps={{
+        style: { margin: '0 auto', width: '70vw', display: 'block' },
+      }}
+      buttonPopoverContent={helperContent}
     >
       <div className={styles.wrapper}>
         {form.values.tests.length == 0 && (
           <div className={styles.empty}>
             {locale.task.form.emptyTests}
+            <Helper content={helperContent} />
           </div>
         )}
         {form.values.tests.length > 0 &&
@@ -114,7 +180,7 @@ const Tests: FC<{
           />
         )}
         <Button
-          popoverProps={{style: {width: "100%"}}}
+          popoverProps={{ style: { width: '100%' } }}
           size="lg"
           className={styles.addButton}
           color="var(--primary)"

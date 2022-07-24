@@ -31,7 +31,7 @@ export const form = {
   },
   remark: 'Remark',
   tests: 'Tests',
-  emptyTests: 'Add test using button below or frug files here',
+  emptyTests: 'Add tests using button below or frug files here',
   inputTest: 'Input',
   outputTest: 'Output',
   test: 'Test',
