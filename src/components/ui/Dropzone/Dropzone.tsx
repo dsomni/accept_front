@@ -6,7 +6,6 @@ import {
   useCallback,
   useRef,
   ReactNode,
-  useMemo,
 } from 'react';
 import styles from './dropzone.module.css';
 import { Button, ButtonProps, Group, Text } from '@mantine/core';
@@ -20,21 +19,21 @@ const Dropzone: FC<{
   onDrop: (_: any) => void;
   title: string;
   description: string;
-  setDrag: setter<boolean>;
+
   accept?: string[];
   style?: any;
   showButton?: boolean;
-  buttonProps?: ButtonProps<'button'>
+  buttonProps?: ButtonProps<'button'>;
 }> = ({
   children,
   onDrop,
   accept,
   title,
   description,
-  setDrag,
+
   style,
   showButton,
-  buttonProps
+  buttonProps,
 }) => {
   const { locale } = useLocale();
 
@@ -43,12 +42,10 @@ const Dropzone: FC<{
   const [drag, setDragInner] = useState(0);
   const dragStart = useCallback(() => {
     setDragInner((drag) => drag + 1);
-    setDrag(true);
-  }, [setDrag]);
+  }, []);
   const dragEnd = useCallback(() => {
     setDragInner((drag) => drag - 1);
-    setDrag(false);
-  }, [setDrag]);
+  }, []);
 
   useEffect(() => {
     const current = draggable.current;
@@ -66,57 +63,58 @@ const Dropzone: FC<{
 
   return (
     <div ref={draggable} style={{ position: 'relative' }}>
-      {drag > 0 && (
-        <MantineDropzone
-          openRef={openRef}
-          disabled={false}
-          accept={accept}
-          onDrop={(files) => {
-            dragEnd();
-            onDrop(files);
-          }}
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 5,
-          }}
-          onReject={(files) => dragEnd()}
-        >
-          {(status) => (
-            <Group
-              position="center"
-              spacing="xl"
-              style={{ minHeight: 220, pointerEvents: 'none' }}
-            >
-              <ImageUploadIcon
-                status={status}
-                style={{
-                  width: 80,
-                  height: 80,
-                  color: 'white',
-                }}
-              />
-              <div>
-                <Text size="xl" inline>
-                  {title}
-                </Text>
-                <Text size="sm" color="dimmed" inline mt={7}>
-                  {description}
-                </Text>
-              </div>
-            </Group>
-          )}
-        </MantineDropzone>
-      )}
+      <MantineDropzone
+        openRef={openRef}
+        disabled={false}
+        accept={accept}
+        onDrop={(files) => {
+          dragEnd();
+          onDrop(files);
+        }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 5,
+          // display: drag > 1 ? 'block' : 'none',
+          visibility: drag > 0 ? 'visible' : 'hidden',
+        }}
+        onReject={(files) => dragEnd()}
+      >
+        {(status) => (
+          <Group
+            position="center"
+            spacing="xl"
+            style={{ minHeight: 220, pointerEvents: 'none' }}
+          >
+            <ImageUploadIcon
+              status={status}
+              style={{
+                width: 80,
+                height: 80,
+                color: 'white',
+              }}
+            />
+            <div>
+              <Text size="xl" inline>
+                {title}
+              </Text>
+              <Text size="sm" color="dimmed" inline mt={7}>
+                {description}
+              </Text>
+            </div>
+          </Group>
+        )}
+      </MantineDropzone>
+
       {showButton && (
         <Button
           variant="outline"
           onClick={() => openRef.current()}
           style={{
-            display: drag ? 'none' : 'block',
+            display: drag > 0 ? 'none' : 'block',
             marginTop: 'var(--spacer-l)',
           }}
           {...buttonProps}

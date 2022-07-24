@@ -33,7 +33,6 @@ const CodeArea: FC<{
   helperContent,
 }) => {
   const { locale } = useLocale();
-  const [drag, setDrag] = useState(false);
 
   const onDrop = useCallback(
     (files: File[]) => {
@@ -81,25 +80,22 @@ const CodeArea: FC<{
   return (
     <div className={styles.codeWrapper}>
       <Dropzone
-        style={{ display: drag ? 'block' : 'none', height: '100%' }}
+        style={{ height: '100%' }}
         onDrop={onDrop}
-        setDrag={setDrag}
         title={locale.ui.codeArea.dragFiles}
         description={''}
         showButton
       >
         <div className={styles.inner}>
-          {!drag && (
-            <TextArea
-              helperContent={helperContent}
-              classNames={classNames}
-              placeholder={locale.placeholders.code}
-              onChange={(e) => setCode(e.target.value)}
-              minRows={40}
-              label={label}
-              {...formProps}
-            />
-          )}
+          <TextArea
+            helperContent={helperContent}
+            classNames={classNames}
+            placeholder={locale.placeholders.code}
+            onChange={(e) => setCode(e.target.value)}
+            minRows={40}
+            label={label}
+            {...formProps}
+          />
         </div>
       </Dropzone>
     </div>
