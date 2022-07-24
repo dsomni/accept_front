@@ -46,14 +46,6 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         label={locale.assignmentSchema.form.defaultDuration}
         {...form.getInputProps('defaultDuration')}
       />
-      <CustomEditor
-        classNames={{
-          label: styles.label,
-        }}
-        label={locale.task.form.description}
-        onChange={(value) => form.setFieldValue('description', value)}
-        {...form.getInputProps('description')}
-      />
     </div>
   );
 };

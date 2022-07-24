@@ -7,9 +7,12 @@ export default async function ListTasks(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log(JSON.stringify(req.body))
   const response = await fetch(url, {
+    method: "POST",
     credentials: 'include',
     headers: req.headers as { [key: string]: string },
+    body: JSON.stringify(req.body)
   });
   const status = response.status;
   const data = await response.json();

@@ -83,17 +83,16 @@ function EditAssignmentSchema() {
       ...assignmentSchema,
       tags: tags
         .filter((tag: ITag) =>
-          assignmentSchema?.tags.includes(tag.spec)
+          assignmentSchema?.tags.includes(tag)
         )
         .map((tag: ITag) => ({ label: tag.title, value: tag.spec })),
       tasks: assignmentSchema?.tasks
-        .map((spec) => tasks.get(spec) || null!)
         .map((task: ITaskDisplay) => ({
           label: task?.title,
           value: task?.spec,
         })),
     }),
-    [tasks, tags, assignmentSchema, readyTags] // eslint-disable-line
+    [tasks, tags, assignmentSchema, readyTags]
   );
   const form = useForm({
     initialValues: formValues,

@@ -54,17 +54,6 @@ const initialColumns =  (locale: ILocale): ITableColumn[] => [
         size: 3,
       },
       {
-        label: locale.assignmentSchema.list.description,
-        key: 'description',
-        sortable: false,
-        sortFunction: () => 0,
-        sorted: 0,
-        allowMiddleState: false,
-        hidable: true,
-        hidden: true,
-        size: 8,
-      },
-      {
         label: locale.assignmentSchema.list.taskCount,
         key: 'taskCount',
         sortable: true,
@@ -249,7 +238,7 @@ function AssignmentList() {
         />
       <SingularSticky
         color="green"
-        onClick={() => router.push(`/edu/assignment/add/`)}
+        onClick={() => router.push(`/edu/assignment_schema/add/`)}
         icon={<Plus height={25} width={25} />}
       />
     </div>
