@@ -1,6 +1,5 @@
-.wrapper {
-  padding: 0 var(--spacer-l);
+.languages {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-l);
+  gap: var(--spacer-m);
 }

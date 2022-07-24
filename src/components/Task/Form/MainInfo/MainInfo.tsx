@@ -8,6 +8,7 @@ import Radio from '@ui/Radio/Radio';
 import Switch from '@ui/Switch/Switch';
 import NumberInput from '@ui/NumberInput/NumberInput';
 import TextInput from '@ui/TextInput/TextInput';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const MainInfo: FC<{
   form: any;
@@ -49,7 +50,7 @@ const MainInfo: FC<{
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <TextInput
         label={locale.task.form.title}
         required
@@ -61,7 +62,7 @@ const MainInfo: FC<{
 
       <TagSelector
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         initialTags={initialTags}
         setUsed={(values: Item[]) => {

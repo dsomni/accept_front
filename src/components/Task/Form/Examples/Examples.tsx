@@ -3,9 +3,10 @@ import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import Button from '@ui/Button/Button';
 
-import { FC, memo, useCallback, useEffect } from 'react';
+import { FC, memo, useCallback } from 'react';
 import styles from './examples.module.css';
 import InputWrapper from '@ui/InputWrapper/InputWrapper';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Examples: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -25,10 +26,10 @@ const Examples: FC<{ form: any }> = ({ form }) => {
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       {form.values.examples &&
         form.values.examples.map((_: ITest, index: number) => (
-          <div key={index} className={styles.example}>
+          <div key={index}>
             <ListItem
               field="examples"
               label={locale.task.form.example + ' #' + (index + 1)}
@@ -49,7 +50,7 @@ const Examples: FC<{ form: any }> = ({ form }) => {
       )}
       <Button
         size="lg"
-        className={styles.addButton}
+        className={stepperStyles.addButton}
         variant="light"
         onClick={() => {
           form.setFieldValue(

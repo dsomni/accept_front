@@ -7,6 +7,7 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { useLocale } from '@hooks/useLocale';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Preview: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -23,7 +24,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
           {form.values.hintContent}
         </SimpleModal>
       )}
-      <div className={styles.wrapper}>
+      <div className={stepperStyles.wrapper}>
         <Description
           task={{
             ...form.values,

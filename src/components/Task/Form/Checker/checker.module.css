@@ -1,31 +1,8 @@
-.wrapper {
-  width: 70vw;
-  display: flex;
-  flex-direction: column;
-  margin: var(--spacer-xl) 15vw;
-}
-
-.listWrapper {
-  margin: var(--spacer-xl) 0;
-  width: 70vw;
-  gap: 5vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.langSelector {
-  margin-bottom: var(--spacer-m);
-  max-width: 50%;
-}
-
-.label {
-  font-size: var(--font-size-l);
-}
-
 .tests {
-  margin-top: var(--spacer-xl);
+  margin-top: var(--spacer-l);
 }
 
 .tests > * {
   margin: 0;
+  width: 100%;
 }

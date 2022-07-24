@@ -6,6 +6,7 @@ import { Box, Overlay, SegmentedControl } from '@mantine/core';
 import Switch from '@ui/Switch/Switch';
 import { useLocale } from '@hooks/useLocale';
 import NumberInput from '@ui/NumberInput/NumberInput';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const initialAllowedLanguages = useMemo(
@@ -59,7 +60,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <div style={{ width: 'fit-content' }}>
         <Switch
           label={locale.task.form.restrictLanguages}
@@ -75,8 +76,9 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
           })}
         />
       </div>
-      <div className={styles.languages}>
-        <Box style={{ position: 'relative' }}>
+
+      <Box style={{ position: 'relative' }}>
+        <div className={styles.languages}>
           {!form.values.shouldRestrictLanguages && (
             <Overlay opacity={0.7} color="#fff" blur={2} />
           )}
@@ -96,6 +98,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             styles={{
               root: {
                 backgroundColor: '#00000000',
+                width: 'fit-content',
               },
               label: {
                 fontSize: 'var(--font-size-m)',
@@ -112,32 +115,35 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             initialLangs={initialLanguage}
             setUsed={setLanguages}
             fetchURL={'language'}
+            classNames={{
+              label: stepperStyles.label,
+            }}
           />
-        </Box>
-      </div>
-      <div className={styles.constraints}>
-        <NumberInput
-          label={locale.task.form.constraints.memory}
-          required
-          noClampOnBlur
-          hideControls
-          min={0}
-          onBlur={() => {
-            form.validateField('constraintsMemory');
-          }}
-          {...form.getInputProps('constraintsMemory')}
-        />
-        <NumberInput
-          label={locale.task.form.constraints.time}
-          required
-          hideControls
-          precision={1}
-          onBlur={() => {
-            form.validateField('constraintsTime');
-          }}
-          {...form.getInputProps('constraintsTime')}
-        />
-      </div>
+        </div>
+      </Box>
+
+      <div></div>
+      <NumberInput
+        label={locale.task.form.constraints.memory}
+        required
+        noClampOnBlur
+        hideControls
+        min={0}
+        onBlur={() => {
+          form.validateField('constraintsMemory');
+        }}
+        {...form.getInputProps('constraintsMemory')}
+      />
+      <NumberInput
+        label={locale.task.form.constraints.time}
+        required
+        hideControls
+        precision={1}
+        onBlur={() => {
+          form.validateField('constraintsTime');
+        }}
+        {...form.getInputProps('constraintsTime')}
+      />
     </div>
   );
 };

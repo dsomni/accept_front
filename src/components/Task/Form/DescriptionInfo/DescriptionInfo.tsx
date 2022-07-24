@@ -1,12 +1,11 @@
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
 import NumberInput from '@ui/NumberInput/NumberInput';
-
 import Radio from '@ui/Radio/Radio';
-
 import { FC, memo, useMemo } from 'react';
 import styles from './descriptionInfo.module.css';
 import { IHintAlarmType } from '@custom-types/data/atomic';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const DescriptionInfo: FC<{
   form: any;
@@ -24,10 +23,10 @@ const DescriptionInfo: FC<{
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         label={locale.task.form.description}
         form={form}
@@ -35,7 +34,7 @@ const DescriptionInfo: FC<{
       />
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         label={locale.task.form.inputFormat}
         form={form}
@@ -43,7 +42,7 @@ const DescriptionInfo: FC<{
       />
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         label={locale.task.form.outputFormat}
         form={form}
@@ -52,7 +51,7 @@ const DescriptionInfo: FC<{
 
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         label={locale.task.form.remark}
         form={form}
@@ -61,7 +60,7 @@ const DescriptionInfo: FC<{
 
       {!form.values.isTournament && form.values['hasHint'] && (
         <div className={styles.hintWrapper}>
-          <div className={styles.label}>
+          <div className={stepperStyles.label}>
             {locale.task.form.hint.title}
           </div>
           <Radio
@@ -84,7 +83,7 @@ const DescriptionInfo: FC<{
           />
           <CustomEditor
             classNames={{
-              label: styles.subLabel,
+              label: stepperStyles.subLabel,
             }}
             label={locale.task.form.hint.text}
             form={form}

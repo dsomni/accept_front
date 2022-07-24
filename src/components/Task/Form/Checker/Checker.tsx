@@ -1,14 +1,12 @@
 import { FC, memo, useState, useEffect } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
-import ListItem from '@ui/ListItem/ListItem';
 import Select from '@ui/Select/Select';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Textarea } from '@mantine/core';
-
 import styles from './checker.module.css';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
-import Tests from '../Tests/Tests';
+import Tests from '@components/Task/Form/Tests/Tests';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const defaultLangSpec = '0';
 
@@ -31,7 +29,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <Select
         label={locale.language}
         value={language}
@@ -39,7 +37,9 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           label: lang.name,
           value: lang.spec.toString(),
         }))}
-        // styles={{ label: { fontSize: 'var(--font-size-l)' } }}
+        classNames={{
+          label: stepperStyles.label,
+        }}
         onBlur={() => form.validateField('checkerLang')}
         {...form.getInputProps('checkerLang')}
       />
@@ -53,7 +53,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
           </div>
         }
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         label={locale.task.form.checker}
         setLanguage={(value) =>
@@ -63,6 +63,12 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         formProps={{
           ...form.getInputProps('checkerCode'),
           onBlur: () => form.validateField('checkerCode'),
+        }}
+        buttonProps={{
+          style: {
+            marginBottom: 'var(--spacer-xs)',
+            marginTop: 'var(--spacer-s)',
+          },
         }}
       />
       <div className={styles.tests}>

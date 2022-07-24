@@ -14,6 +14,7 @@ import {
   ITaskCheckType,
   ITaskType,
   IHintAlarmType,
+  ITest,
 } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
@@ -22,12 +23,11 @@ const initialValues = {
   title: '',
   tags: [],
   author: '',
-  complexity: 0,
-  description:
-    '',
+  complexity: 50,
+  description: '',
   constraintsTime: 1,
   constraintsMemory: 16,
-  examples: [],
+  examples: [{ inputData: '', outputData: '' }],
   inputFormat: '',
   outputFormat: '',
   remark: '',
@@ -98,7 +98,7 @@ function AddTask() {
         value.length < 1
           ? locale.task.form.validation.examples.number
           : value.filter(
-              (pair) =>
+              (pair: ITest) =>
                 pair.inputData.trim() || pair.outputData.trim()
             ).length != value.length
           ? locale.task.form.validation.examples.empty
@@ -107,7 +107,7 @@ function AddTask() {
         value.length < 1
           ? locale.task.form.validation.tests.number
           : value.filter(
-              (pair) =>
+              (pair: ITest) =>
                 (pair.inputData.trim() && values.taskType == '0') ||
                 (pair.outputData.trim() && values.taskType == '0')
             ).length != value.length

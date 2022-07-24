@@ -14,6 +14,7 @@ import { ILanguage } from '@custom-types/data/atomic';
 import { extensionValidator } from '@utils/extensionValidator';
 
 import TextArea from '@ui/TextArea/TextArea';
+import { ButtonProps, PopoverProps } from '@mantine/core';
 
 const CodeArea: FC<{
   label: string;
@@ -23,6 +24,13 @@ const CodeArea: FC<{
   formProps?: any;
   classNames?: object;
   helperContent?: string | ReactNode;
+
+  buttonProps?: ButtonProps<'button'>;
+  buttonPopoverProps?: Omit<
+    PopoverProps,
+    'opened' | 'children' | 'target'
+  >;
+  buttonPopoverContent?: string | ReactNode;
 }> = ({
   label,
   setLanguage,
@@ -31,6 +39,9 @@ const CodeArea: FC<{
   formProps,
   classNames,
   helperContent,
+  buttonProps,
+  buttonPopoverProps,
+  buttonPopoverContent,
 }) => {
   const { locale } = useLocale();
 
@@ -85,6 +96,9 @@ const CodeArea: FC<{
         title={locale.ui.codeArea.dragFiles}
         description={''}
         showButton
+        buttonProps={buttonProps}
+        buttonPopoverContent={buttonPopoverContent}
+        buttonPopoverProps={buttonPopoverProps}
       >
         <div className={styles.inner}>
           <TextArea
