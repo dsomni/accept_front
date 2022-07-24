@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import styles from './footer.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { LanguageSelector } from '@ui/LanguageSelector/LanguageSelector';
+import LocaleSelector from '@ui/LocaleSelector/LocaleSelector';
 import { BrandGithub } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
 
@@ -11,7 +11,7 @@ const Footer: FC = () => {
   return (
     <div className={styles.wrapper}>
       <div>
-        <LanguageSelector />
+        <LocaleSelector />
       </div>
       <div className={styles.githubs}>
         <div className={styles.github}>

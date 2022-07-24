@@ -10,7 +10,7 @@ export default async function EditTask(
   const response = await fetch(url, {
     method: 'PUT',
     credentials: 'include',
-    body: req.body,
+    body: JSON.stringify(req.body),
     headers: req.headers as { [key: string]: string },
   });
   const status = response.status;

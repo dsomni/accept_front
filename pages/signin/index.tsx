@@ -14,7 +14,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-import { capitalize } from '@utils/capitalize';
+
 import { PasswordInput, TextInput } from '@mantine/core';
 import Button from '@ui/Button/Button';
 import styles from '@styles/auth/login.module.css';
@@ -39,21 +39,21 @@ function SignIn() {
   const handleSignIn = useCallback(
     (values: { login: string; password: string }) => {
       const id = newNotification({
-        title: capitalize(locale.notify.auth.signIn.loading),
-        message: capitalize(locale.loading) + '...',
+        title: locale.notify.auth.signIn.loading,
+        message: locale.loading + '...',
       });
       signIn(values.login, values.password).then((res) => {
         if (res) {
           successNotification({
             id,
-            title: capitalize(locale.notify.auth.signIn.success),
+            title: locale.notify.auth.signIn.success,
             autoClose: 5000,
           });
           router.push((router.query.referrer as string) || '/');
         } else {
           errorNotification({
             id,
-            title: capitalize(locale.notify.auth.signIn.error),
+            title: locale.notify.auth.signIn.error,
             autoClose: 5000,
           });
         }
@@ -71,8 +71,8 @@ function SignIn() {
         <TextInput
           required
           id="login"
-          label={capitalize(locale.auth.labels.login)}
-          placeholder={capitalize(locale.auth.placeholders.login)}
+          label={locale.auth.labels.login}
+          placeholder={locale.auth.placeholders.login}
           classNames={{
             label: styles.inputLabel,
           }}
@@ -82,8 +82,8 @@ function SignIn() {
         <PasswordInput
           required
           id="password"
-          label={capitalize(locale.auth.labels.password)}
-          placeholder={capitalize(locale.auth.placeholders.password)}
+          label={locale.auth.labels.password}
+          placeholder={locale.auth.placeholders.password}
           classNames={{
             label: styles.inputLabel,
           }}
@@ -95,23 +95,23 @@ function SignIn() {
           onClick={form.onSubmit((values) => handleSignIn(values))}
           className={styles.enterButton}
         >
-          {capitalize(locale.auth.submit)}
+          {locale.auth.submit}
         </Button>
       </form>
       <div className={styles.footer}>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
-            {capitalize(locale.auth.footer.noAccount)}
+            {locale.auth.footer.noAccount}
           </span>
           <Link href={`/signup?referrer=${router.query.referrer}`}>
             <a className={styles.footerLink}>
-              {capitalize(locale.auth.footer.register)}
+              {locale.auth.footer.register}
             </a>
           </Link>
         </div>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
-            {capitalize(locale.auth.footer.returnTo)}
+            {locale.auth.footer.returnTo}
           </span>
           <Link href="/">
             <a className={styles.footerLink}>

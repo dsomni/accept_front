@@ -1,6 +1,6 @@
 .selectedMulti {
-  font-size: var(--font-size-m);
-  min-height: var(--spacer-xl);
+  font-size: var(--font-size-s);
+  min-height: var(--spacer-l);
 }
 
 .selectedMulti span {
@@ -8,10 +8,10 @@
 }
 
 .inputElemMulti {
-  font-size: var(--font-size-m);
-  min-height: var(--spacer-xxl);
+  font-size: var(--font-size-s);
+  min-height: var(--spacer-xl);
   display: flex;
 }
 .inputElemMulti input {
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
 }

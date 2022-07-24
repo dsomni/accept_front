@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group, Stepper } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+import { Group, Stepper } from '@mantine/core';
+
 import { FC, memo, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import Tests from '@components/Task/Form/Tests/Tests';
@@ -8,14 +8,17 @@ import Checker from '@components/Task/Form/Checker/Checker';
 import Preview from '@components/Task/Form/Preview/Preview';
 import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
+import ConstraintsInfo from '@components/Task/Form/ConstraintsInfo/ConstraintsInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
 import { pureCallback } from '@custom-types/ui/atomic';
-import { ITag } from '@custom-types/data/ITag';
 import {
   ITaskCheckType,
   ITaskType,
   IHintAlarmType,
 } from '@custom-types/data/atomic';
+import Button from '@ui/Button/Button';
+
+const LAST_PAGE = 5;
 
 const Form: FC<{
   form: any;
@@ -37,7 +40,7 @@ const Form: FC<{
 
   const nextStep = () =>
     setCurrentStep((current) =>
-      current < 4 ? current + 1 : current
+      current < LAST_PAGE ? current + 1 : current
     );
   const prevStep = () =>
     setCurrentStep((current) =>
@@ -54,34 +57,28 @@ const Form: FC<{
         breakpoint={1000}
       >
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.first.label)}
-          description={capitalize(
-            locale.tasks.form.steps.first.description
-          )}
+          label={locale.task.form.steps.first}
+          description={locale.task.form.steps.mainInfo}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.second.label)}
-          description={capitalize(
-            locale.tasks.form.steps.second.description
-          )}
+          label={locale.task.form.steps.second}
+          description={locale.task.form.steps.constraints}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.third.label)}
-          description={capitalize(
-            locale.tasks.form.steps.third.description
-          )}
+          label={locale.task.form.steps.third}
+          description={locale.task.form.steps.description}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.fourth.label)}
-          description={capitalize(
-            locale.tasks.form.steps.fourth.description
-          )}
+          label={locale.task.form.steps.fourth}
+          description={locale.task.form.steps.examples}
         />
         <Stepper.Step
-          label={capitalize(locale.tasks.form.steps.fifth.label)}
-          description={capitalize(
-            locale.tasks.form.steps.fifth.description
-          )}
+          label={locale.task.form.steps.fifth}
+          description={locale.task.form.steps.tests}
+        />
+        <Stepper.Step
+          label={locale.task.form.steps.sixth}
+          description={locale.task.form.steps.preview}
         />
       </Stepper>
       <form onSubmit={() => {}}>
@@ -92,41 +89,41 @@ const Form: FC<{
             taskCheckTypes={taskCheckTypes}
           />
         )}
-        {currentStep === 1 && (
+
+        {currentStep === 1 && <ConstraintsInfo form={form} />}
+        {currentStep === 2 && (
           <DescriptionInfo
             form={form}
             hintAlarmTypes={hintAlarmTypes}
           />
         )}
-        {currentStep === 2 && <Examples form={form} />}
-        {currentStep === 3 && form.values.checkType === '0' && (
+        {currentStep === 3 && <Examples form={form} />}
+        {currentStep === 4 && form.values.checkType === '0' && (
           <Tests form={form} />
         )}
-        {currentStep === 3 && form.values.checkType === '1' && (
+        {currentStep === 4 && form.values.checkType === '1' && (
           <Checker form={form} />
         )}
-        {currentStep === 4 && <Preview form={form} />}
+        {currentStep === LAST_PAGE && <Preview form={form} />}
         <Group
           position="center"
           mt="xl"
           className={stepperStyles.buttons}
         >
           {currentStep !== 0 && (
-            <Button variant="default" onClick={prevStep}>
-              {capitalize(locale.form.back)}
+            <Button variant="outline" onClick={prevStep}>
+              {locale.form.back}
             </Button>
           )}
           <Button
             onClick={
-              currentStep !== 4
-                ? nextStep
-                : form.onSubmit(handleSubmit)
+              currentStep !== LAST_PAGE ? nextStep : handleSubmit
             }
             type="button"
           >
-            {currentStep === 4
+            {currentStep === LAST_PAGE
               ? buttonLabel
-              : capitalize(locale.form.next)}
+              : locale.form.next}
           </Button>
         </Group>
       </form>

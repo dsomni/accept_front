@@ -1,13 +1,36 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-s);
-  padding: var(--spacer-m) var(--spacer-xl);
-  font-size: var(--font-size-m);
-  margin-bottom: var(--spacer-xxl);
+  gap: var(--spacer-xs);
+  padding: var(--spacer-s) var(--spacer-l);
+  font-size: var(--font-size-s);
+  margin-bottom: var(--spacer-xl);
 }
+
 .title {
+  display: inline-block;
   font-size: var(--font-size-huge);
+}
+
+.complexity {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  color: var(--dark3);
+}
+
+.constraints {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacer-m);
+  font-size: var(--font-size-xs);
+  color: var(--dark3);
+  margin-bottom: var(--spacer-xs);
+}
+
+.tags {
+  margin-bottom: var(--spacer-s);
+  width: 70%;
 }
 
 .title,
@@ -15,7 +38,19 @@
 .remark,
 .formatWrapper {
   max-width: 1000px;
-  padding-right: var(--spacer-m);
+  padding-right: var(--spacer-s);
+}
+
+.languagesRestrictions {
+  margin-top: var(--spacer-xs);
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xxs);
+  align-items: center;
+}
+
+.languagesRestrictions .alert {
+  font-size: var(--font-size-xs);
 }
 
 .formatWrapper {
@@ -27,20 +62,20 @@
 .examplesLabel,
 .remarkLabel {
   color: var(--secondary);
-  font-size: var(--font-size-xl);
-  padding: var(--spacer-m) 0;
+  font-size: var(--font-size-l);
+  padding: var(--spacer-s) 0;
 }
 .examplesLabel {
-  padding: var(--spacer-l) 0 0 0;
+  padding: var(--spacer-m) 0 0 0;
 }
 
 .table {
-  margin-bottom: var(--spacer-l);
+  margin-bottom: var(--spacer-m);
 }
 
 .table td {
-  font-size: var(--font-size-m) !important;
-  padding: var(--spacer-s) var(--spacer-m) !important;
+  font-size: var(--font-size-s) !important;
+  padding: var(--spacer-xs) var(--spacer-s) !important;
   overflow-wrap: anywhere;
 }
 
@@ -50,11 +85,11 @@
 }
 
 .tableHeader {
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
 }
 
 .exampleHeader {
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
   height: 2.5rem;
   display: flex;
   flex-direction: row;
@@ -64,6 +99,6 @@
 
 @media screen and (max-width: 480px) {
   .wrapper {
-    padding: var(--spacer-s) var(--spacer-m);
+    padding: var(--spacer-xs) var(--spacer-s);
   }
 }

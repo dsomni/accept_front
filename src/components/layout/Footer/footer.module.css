@@ -4,16 +4,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--spacer-m);
-  padding: var(--spacer-xl) 0;
+  gap: var(--spacer-s);
+  padding: var(--spacer-l) 0;
 }
 
 .githubs {
   display: flex;
   flex-direction: row;
-  gap: var(--spacer-m);
+  gap: var(--spacer-s);
   align-items: center;
-  margin-top: var(--spacer-xl);
+  margin-top: var(--spacer-l);
 }
 
 .github a:hover {
@@ -22,5 +22,5 @@
 
 .copyright {
   color: white;
-  font-size: var(--font-size-s);
+  font-size: var(--font-size-xs);
 }

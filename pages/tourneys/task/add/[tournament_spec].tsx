@@ -5,7 +5,7 @@ import { useForm } from '@mantine/form';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { capitalize } from '@utils/capitalize';
+
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
@@ -46,7 +46,7 @@ const initialValues = (login: string) => ({
   checkerCode: '',
   checkerLang: 'py',
   checkType: 'tests', //"tests" or "checker"
-  type: 'code', //"code" or "text"
+  taskType: 'code', //"code" or "text"
   isTournament: true,
 });
 
@@ -106,7 +106,7 @@ function AddTournamentTask(props: { tournament_spec: string }) {
       <Form
         form={form}
         handleSubmit={handleSubmit}
-        buttonLabel={capitalize(locale.form.create)}
+        buttonLabel={locale.form.create}
       />
       )
     </div>

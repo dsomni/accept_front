@@ -45,7 +45,7 @@ export interface ITaskDisplay {
 
 export interface ITask extends ITaskDisplay {
   description: string;
-  constraints: IConstraints | undefined;
+  constraints: IConstraints;
 
   examples: Example[];
   inputFormat: string;
@@ -62,5 +62,5 @@ export interface ITaskEdit extends ITask {
   tests: ITest[];
   checker: IChecker | undefined;
   checkType: ITaskCheckType | undefined;
-  type: ITaskType;
+  taskType: ITaskType;
 }

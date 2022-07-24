@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   justify-content: center;
-  margin: var(--spacer-xxl) 0;
+  margin: var(--spacer-xl) 0;
 }
 .wrapper > :first-child {
   width: 70vw;

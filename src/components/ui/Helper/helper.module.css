@@ -1,0 +1,10 @@
+.contentWrapper {
+  font-size: var(--font-size-xs);
+  display: flex;
+  justify-content: center;
+}
+
+.popover {
+  overflow-wrap: anywhere;
+  max-width: 350px;
+}

@@ -4,7 +4,7 @@ console.log('Config', { API_ENDPOINT });
 
 /** @type {import('next').NextConfig} */
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   async rewrites() {
     return [
       {

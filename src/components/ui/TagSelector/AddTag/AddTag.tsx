@@ -1,17 +1,14 @@
 import { FC, memo, useCallback, useState } from 'react';
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Modal,
-  TextInput,
-} from '@mantine/core';
+import { Group, Modal } from '@mantine/core';
 import { Plus } from 'tabler-icons-react';
 import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { capitalize } from '@utils/capitalize';
+
 import { isSuccessful } from '@requests/request';
 import { pureCallback } from '@custom-types/ui/atomic';
+import TextInput from '@ui/TextInput/TextInput';
+import Button from '@ui/Button/Button';
+import Icon from '@ui/Icon/Icon';
 
 const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   refetch,
@@ -22,27 +19,20 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   const [title, setTitle] = useState('');
   const [error, setError] = useState('');
 
-  const validate = useCallback((title: string) => {
-    if (title.length >= 3) {
-      return true;
-    }
-    return false;
-  }, []);
-
-  const onBlur = useCallback(
-    (title) => {
-      if (validate(title)) {
-        return setError('');
+  const validate = useCallback(
+    (title: string) => {
+      if (title.length >= 3) {
+        setError('');
+        return true;
       }
-      return setError(
-        capitalize(locale.errors.minLength(locale.name, 3))
-      );
+      setError(locale.ui.tagSelector.minLength(locale.name, 3));
+      return false;
     },
-    [locale, validate]
+    [locale.name, locale.ui.tagSelector]
   );
 
   const handleSubmit = useCallback(
-    (title) => {
+    (title: string) => {
       if (validate(title)) {
         isSuccessful(addURL, 'POST', {
           title: title,
@@ -59,21 +49,21 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
 
   return (
     <div className={styles.wrapper}>
-      <ActionIcon
+      <Icon
         onClick={() => setOpened(true)}
         tabIndex={5}
         color="var(--primary)"
         variant="hover"
-        size="lg"
+        size="sm"
       >
         <Plus width={25} height={25} color="green" />
-      </ActionIcon>
+      </Icon>
       <Modal
         opened={opened}
         centered
         onClose={() => setOpened(false)}
         size="md"
-        title={capitalize(locale.tasks.form.tagSelector.add)}
+        title={locale.ui.tagSelector.add}
         classNames={{
           title: styles.modalTitle,
         }}
@@ -83,14 +73,14 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
             className={styles.input}
             autoFocus
             required
-            label={capitalize(locale.name)}
+            label={locale.name}
             size="md"
-            onChange={(e: any) => setTitle(e.target.value)}
-            onBlur={() => onBlur(title)}
+            onChange={(e: any) => {
+              validate(title);
+              setTitle(e.target.value);
+            }}
             error={error}
-            placeholder={capitalize(
-              locale.tasks.form.tagSelector.addPlaceholder
-            )}
+            placeholder={locale.ui.tagSelector.addPlaceholder}
           />
           <Group
             position="right"
@@ -99,17 +89,18 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
           >
             <Button
               variant="outline"
-              color="red"
+              kind="negative"
               onClick={() => setOpened(false)}
             >
-              {capitalize(locale.cancel)}
+              {locale.cancel}
             </Button>
             <Button
               variant="outline"
-              color="green"
+              kind="positive"
+              disabled={!!error}
               onClick={() => handleSubmit(title)}
             >
-              {capitalize(locale.save)}
+              {locale.save}
             </Button>
           </Group>
         </div>

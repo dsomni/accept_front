@@ -10,15 +10,15 @@ import {
   useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-import { capitalize } from '@utils/capitalize';
+
 import { useLocale } from '@hooks/useLocale';
 import { hasSubarray } from '@utils/hasSubarray';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
-import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import MultiSearch from '@ui/MultiSearch/MultiSearch';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 
 const DESCR_SLICE = 35;
 
@@ -33,7 +33,7 @@ function AssignmentList() {
   const columns: ITableColumn[] = useMemo(
     () => [
       {
-        label: capitalize(locale.assignmentSchema.list.title),
+        label: locale.assignmentSchema.list.title,
         key: 'title',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -49,7 +49,7 @@ function AssignmentList() {
         size: 6,
       },
       {
-        label: capitalize(locale.assignmentSchema.list.author),
+        label: locale.assignmentSchema.list.author,
         key: 'author',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -61,7 +61,7 @@ function AssignmentList() {
         size: 3,
       },
       {
-        label: capitalize(locale.assignmentSchema.list.description),
+        label: locale.assignmentSchema.list.description,
         key: 'description',
         sortable: false,
         sortFunction: () => 0,
@@ -72,7 +72,7 @@ function AssignmentList() {
         size: 8,
       },
       {
-        label: capitalize(locale.assignmentSchema.list.taskCount),
+        label: locale.assignmentSchema.list.taskCount,
         key: 'taskCount',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -199,7 +199,7 @@ function AssignmentList() {
         items={tags}
         setCurrentItems={setCurrentTags}
         rowList={list}
-        placeholder={capitalize(locale.placeholders.selectTags)}
+        placeholder={locale.placeholders.selectTags}
         displayData={(tags) =>
           Array.from(tags.values()).map((tag: any) => tag.title)
         }

@@ -4,7 +4,7 @@ import { ReactNode, useCallback } from 'react';
 import { useForm } from '@mantine/form';
 import { ITournament } from '@custom-types/data/ITournament';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { capitalize } from '@utils/capitalize';
+
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { getServerUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -40,7 +40,7 @@ function EditTournament(props: { tournament: ITournament }) {
       <Form
         form={form}
         handleSubmit={handleSubmit}
-        buttonLabel={capitalize(locale.form.update)}
+        buttonLabel={locale.form.update}
       />
     </div>
   );

@@ -1,11 +1,12 @@
 import ListItem from '@ui/ListItem/ListItem';
-import { ITest } from '@custom-types/data/ITest';
+import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { Button } from '@mantine/core';
+import Button from '@ui/Button/Button';
 
-import { capitalize } from '@utils/capitalize';
 import { FC, memo, useCallback } from 'react';
 import styles from './examples.module.css';
+import InputWrapper from '@ui/InputWrapper/InputWrapper';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Examples: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -19,44 +20,51 @@ const Examples: FC<{ form: any }> = ({ form }) => {
           return form.values.examples;
         })()
       );
+      form.validateField('examples');
     },
     [form]
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       {form.values.examples &&
         form.values.examples.map((_: ITest, index: number) => (
-          <div key={index} className={styles.example}>
+          <div key={index}>
             <ListItem
               field="examples"
-              label={
-                capitalize(locale.tasks.form.example) +
-                ' #' +
-                (index + 1)
-              }
-              InLabel={capitalize(locale.tasks.form.inputExample)}
-              OutLabel={capitalize(locale.tasks.form.outputExample)}
+              label={locale.task.form.example + ' #' + (index + 1)}
+              InLabel={locale.task.form.inputExample}
+              OutLabel={locale.task.form.outputExample}
               form={form}
               index={index}
               onDelete={onDeleteExample}
             />
           </div>
         ))}
+      {form.errors.examples && (
+        <InputWrapper
+          {...form.getInputProps('examples')}
+          onChange={() => {}}
+          styles={{ error: { fontSize: 'var(--font-size-m)' } }}
+        />
+      )}
       <Button
         size="lg"
-        className={styles.addButton}
-        color="var(--primary)"
+        className={stepperStyles.addButton}
         variant="light"
-        onClick={() =>
+        onClick={() => {
           form.setFieldValue(
             'examples',
             (() => {
-              form.values.examples.push(['', '']);
+              form.values.examples.push({
+                inputData: '',
+                outputData: '',
+              });
               return form.values.examples;
             })()
-          )
-        }
+          );
+          form.validateField('examples');
+        }}
       >
         +
       </Button>

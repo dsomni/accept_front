@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { ActionIcon } from '@mantine/core';
 import Select from '@ui/Select/Select';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, useMemo } from 'react';
 import {
   ArrowNarrowLeft,
@@ -38,13 +38,13 @@ const PageNavigation: FC<{
     <div className={styles.footer}>
       <div className={styles.pagesWrapper}>
         <div className={styles.overall}>
-          {capitalize(locale.table.overall)} {totalLength}
+          {locale.ui.table.overall} {totalLength}
         </div>
         {totalLength > 0 && (
           <div className={styles.pageNavigationWrapper}>
             <div className={styles.perPageWrapper}>
               <div className={styles.perPage}>
-                {capitalize(locale.table.perPage) + ':'}{' '}
+                {locale.ui.table.perPage + ':'}{' '}
               </div>
               <Select
                 data={onPage
@@ -53,7 +53,7 @@ const PageNavigation: FC<{
                     value: value.toString(),
                   }))
                   .concat({
-                    label: capitalize(locale.all),
+                    label: locale.all,
                     value: '0',
                   })}
                 classNames={{

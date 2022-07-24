@@ -1,49 +1,22 @@
 import ListItem from '@ui/ListItem/ListItem';
-import { ITest } from '@custom-types/data/ITest';
+import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group, Text } from '@mantine/core';
-import { Dropzone } from '@mantine/dropzone';
-import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
-
-import { capitalize } from '@utils/capitalize';
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import Button from '@ui/Button/Button';
+import Dropzone from '@ui/Dropzone/Dropzone';
+import { FC, memo, useCallback, useMemo } from 'react';
 import styles from './tests.module.css';
+import InputWrapper from '@ui/InputWrapper/InputWrapper';
+import { Helper } from '@ui/Helper/Helper';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
-const Tests: FC<{ form: any }> = ({ form }) => {
+const Tests: FC<{
+  form: any;
+  hideInput?: boolean;
+  hideOutput?: boolean;
+}> = ({ form, hideInput, hideOutput }) => {
   const { locale } = useLocale();
 
-  const [drag, setDrag] = useState(false);
-  const dragable = useRef<HTMLDivElement>(null);
-
-  const dragStart = useCallback(() => {
-    setDrag(true);
-  }, []);
-  const dragEnd = useCallback(() => {
-    setDrag(false);
-  }, []);
-
-  useEffect(() => {
-    const current = dragable.current;
-    if (current) {
-      current.addEventListener('dragenter', dragStart);
-      current.addEventListener('dragleave', () => setDrag(false));
-    }
-    return () => {
-      if (current) {
-        current.removeEventListener('dragenter', dragStart);
-        current.removeEventListener('dragleave', dragEnd);
-      }
-    };
-  }, [dragable, dragStart, dragEnd]);
-
-  const onDeleteExample = useCallback(
+  const onDeleteTest = useCallback(
     (index: number) => {
       form.setFieldValue(
         'tests',
@@ -52,144 +25,183 @@ const Tests: FC<{ form: any }> = ({ form }) => {
           return form.values.tests;
         })()
       );
+      form.validateField('tests');
     },
     [form]
   );
 
   const onDrop = useCallback(
     async (files: File[]) => {
-      try {
-        if (files === []) return;
+      if (files === []) return;
+      const length = files.length;
+      var inputs: { content: string; index: number }[] = [];
+      var outputs: {
+        content: string;
+        index: number;
+      }[] = [];
+      for (let i = 0; i < length; i++) {
+        const name = files[i].name.startsWith('input')
+          ? 'input'
+          : files[i].name.startsWith('output')
+          ? 'output'
+          : '';
+        switch (name) {
+          case 'input':
+            inputs.push({
+              index: +files[i].name.slice(
+                5,
+                files[i].name.lastIndexOf('.')
+              ),
+              content: await files[i].text(),
+            });
+            break;
 
-        let length = files.length;
-        if (length % 2 !== 0) length++;
-        length = length / 2;
+          case 'output':
+            outputs.push({
+              index: +files[i].name.slice(
+                6,
+                files[i].name.lastIndexOf('.')
+              ),
+              content: await files[i].text(),
+            });
+            break;
+          default:
+            continue;
+        }
+      }
 
-        let tests: ITest[] = new Array(length);
-        for (let i = 0; i < length; i++) {
-          tests[i] = {
+      inputs.sort((a, b) => a.index - b.index);
+      outputs.sort((a, b) => a.index - b.index);
+
+      var tests: ITest[] = [];
+      if (
+        form.values.checkType == '0' &&
+        form.values.taskType == '0'
+      ) {
+        // tests and code
+        for (
+          let i = 0;
+          i < Math.min(inputs.length, outputs.length);
+          i++
+        ) {
+          if (inputs[i].index != i || outputs[i].index != i) break;
+          tests.push({
+            inputData: inputs[i].content,
+            outputData: outputs[i].content,
+          });
+        }
+      } else if (form.values.taskType == '1') {
+        // text task
+        for (let i = 0; i < outputs.length; i++) {
+          if (outputs[i].index != i) break;
+          tests.push({
             inputData: '',
+            outputData: outputs[i].content,
+          });
+        }
+      } else if (form.values.checkType == '1') {
+        // checker
+        for (let i = 0; i < inputs.length; i++) {
+          if (inputs[i].index != i) break;
+          tests.push({
+            inputData: inputs[i].content,
             outputData: '',
-          };
+          });
         }
-        for (let i = 0; i < files.length; i++) {
-          if (files[i].name.startsWith('input')) {
-            const input = await files[i].text();
-            const index = Number(files[i].name.slice('input'.length));
-            if (index >= length) continue;
-            tests[index].inputData = input;
-          } else if (files[i].name.startsWith('output')) {
-            const output = await files[i].text();
-            const index = Number(
-              files[i].name.slice('output'.length)
-            );
-            if (index >= length) continue;
-            tests[index].outputData = output;
-          }
-        }
-        tests = tests.filter(
-          (test) => test.inputData !== '' && test.outputData !== ''
-        );
-        if (tests !== []) form.setFieldValue('tests', tests);
-      } catch {}
-      setDrag(false);
+      }
+
+      if (tests !== []) form.setFieldValue('tests', tests);
     },
     [form]
   );
 
-  return (
-    <div ref={dragable} className={styles.wrapper}>
-      {drag && (
-        <Dropzone
-          disabled={false}
-          accept={['*', '']}
-          onDrop={onDrop}
-          onReject={(files) => {
-            setDrag(false);
-          }}
-        >
-          {(status) => (
-            <Group
-              position="center"
-              spacing="xl"
-              style={{ minHeight: 220, pointerEvents: 'none' }}
-            >
-              <ImageUploadIcon
-                status={status}
-                style={{
-                  width: 80,
-                  height: 80,
-                  color: 'white',
-                }}
-              />
+  const helperContent = useMemo(
+    () => (
+      <div>
+        {locale.helpers.dropzone.test.map((p, idx) => (
+          <p key={idx}>{p}</p>
+        ))}
+      </div>
+    ),
+    [locale]
+  );
 
-              <div>
-                <Text size="xl" inline>
-                  Drag images here or click to select files
-                </Text>
-                <Text size="sm" color="dimmed" inline mt={7}>
-                  Attach as many files as you like, each file should
-                  not exceed 5mb
-                </Text>
-              </div>
-            </Group>
-          )}
-        </Dropzone>
-      )}
-      {!drag &&
-        form.values.tests &&
-        form.values.tests.map(
-          (_: [string, string], index: number) => (
-            <div key={index} className={styles.example}>
-              <ListItem
-                field="tests"
-                label={
-                  capitalize(locale.tasks.form.test) +
-                  ' #' +
-                  (index + 1)
-                }
-                InLabel={capitalize(locale.tasks.form.inputTest)}
-                OutLabel={capitalize(locale.tasks.form.outputTest)}
-                form={form}
-                index={index}
-                onDelete={onDeleteExample}
-                maxRows={7}
-              />
-            </div>
-          )
-        )}
-      <Button
-        size="lg"
-        className={styles.addButton}
-        color="var(--primary)"
-        variant="light"
-        onClick={() =>
-          form.setFieldValue(
-            'tests',
-            (() => {
-              form.values.tests.push(['', '']);
-              return form.values.tests;
-            })()
-          )
-        }
+  return (
+    <div className={stepperStyles.wrapper}>
+      <Dropzone
+        onDrop={onDrop}
+        title={locale.ui.codeArea.dragFiles}
+        description={''}
+        showButton
+        buttonProps={{
+          style: {
+            margin: 'var(--spacer-s) 0',
+            width: '100%',
+          },
+        }}
+        buttonPopoverContent={helperContent}
       >
-        +
-      </Button>
+        <div className={styles.inner}>
+          {form.values.tests.length == 0 && (
+            <div className={styles.empty}>
+              {locale.task.form.emptyTests}
+              <Helper content={helperContent} />
+            </div>
+          )}
+          {form.values.tests.length > 0 &&
+            form.values.tests.map(
+              (_: [string, string], index: number) => (
+                <div key={index} className={stepperStyles.example}>
+                  <ListItem
+                    field="tests"
+                    label={locale.task.form.test + ' #' + (index + 1)}
+                    InLabel={locale.task.form.inputTest}
+                    OutLabel={locale.task.form.outputTest}
+                    form={form}
+                    hideInput={
+                      hideInput || form.values.taskType == '1'
+                    }
+                    hideOutput={hideOutput}
+                    index={index}
+                    onDelete={onDeleteTest}
+                    maxRows={7}
+                  />
+                </div>
+              )
+            )}
+          {form.errors.tests && (
+            <InputWrapper
+              {...form.getInputProps('tests')}
+              onChange={() => {}}
+              styles={{ error: { fontSize: 'var(--font-size-m)' } }}
+            />
+          )}
+          <Button
+            popoverProps={{ style: { width: '100%' } }}
+            size="lg"
+            className={stepperStyles.addButton}
+            color="var(--primary)"
+            variant="light"
+            onClick={() => {
+              form.setFieldValue(
+                'tests',
+                (() => {
+                  form.values.tests.push({
+                    inputData: '',
+                    outputData: '',
+                  });
+                  return form.values.tests;
+                })()
+              );
+              form.validateField('tests');
+            }}
+          >
+            +
+          </Button>
+        </div>
+      </Dropzone>
     </div>
   );
 };
 
 export default memo(Tests);
-
-function ImageUploadIcon({ ...props }) {
-  const status = props.status;
-  if (status.accepted) {
-    return <FileUpload {...props} />;
-  }
-
-  if (status.rejected) {
-    return <CircleX {...props} />;
-  }
-
-  return <Photo {...props} />;
-}

@@ -12,20 +12,20 @@
   color: white;
 }
 .info {
-  padding: 0 var(--spacer-s);
+  padding: 0 var(--spacer-xs);
   background-color: #00000060;
   border-radius: 10%;
 }
 .title {
   font-size: 6em;
-  padding: 0 0 var(--spacer-s) 0;
+  padding: 0 0 var(--spacer-xs) 0;
 }
 .version {
-  font-size: var(--font-size-xxl);
-  margin-bottom: var(--spacer-l);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacer-m);
   display: flex;
   justify-content: flex-end;
 }
 .logoWrapper {
-  margin: var(--spacer-xl) 0 var(--spacer-s) 0 !important;
+  margin: var(--spacer-l) 0 var(--spacer-xs) 0 !important;
 }

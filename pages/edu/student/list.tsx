@@ -4,7 +4,7 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
-import { capitalize } from '@utils/capitalize';
+
 import {
   ReactNode,
   useState,
@@ -13,9 +13,9 @@ import {
   useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-import Table from '@components/ui/Table/Table';
+import Table from '@ui/Table/Table';
 import { Plus } from 'tabler-icons-react';
-import MultiSearch from '@components/ui/MultiSearch/MultiSearch';
+import MultiSearch from '@ui/MultiSearch/MultiSearch';
 import { hasSubarray } from '@utils/hasSubarray';
 import styles from '@styles/edu/student.list.module.css';
 import { ActionIcon } from '@mantine/core';
@@ -33,7 +33,7 @@ function StudentList() {
   const columns: ITableColumn[] = useMemo(
     () => [
       {
-        label: capitalize(locale.users.list.login),
+        label: locale.users.list.login,
         key: 'login',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -45,7 +45,7 @@ function StudentList() {
         size: 3,
       },
       {
-        label: capitalize(locale.users.list.name),
+        label: locale.users.list.name,
         key: 'name',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -61,7 +61,7 @@ function StudentList() {
         size: 9,
       },
       {
-        label: capitalize(locale.users.list.grade),
+        label: locale.users.list.grade,
         key: 'grade',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -179,7 +179,7 @@ function StudentList() {
           items={groups}
           setCurrentItems={setCurrentGroups}
           rowList={list}
-          placeholder={capitalize(locale.placeholders.selectGroups)}
+          placeholder={locale.placeholders.selectGroups}
           displayData={(groups) =>
             Array.from(groups.values()).map(
               (group: any) => group.title

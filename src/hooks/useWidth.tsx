@@ -26,7 +26,7 @@ export const WidthProvider: FC<{ children: ReactNode }> = ({
   const is768 = useMediaQuery('(min-width: 768px)');
   const is1024 = useMediaQuery('(min-width: 1024px)');
   const is1280 = useMediaQuery('(min-width: 1280px)');
-  const is1440 = useMediaQuery('(min-width: 1440)');
+  const is1440 = useMediaQuery('(min-width: 1440px)');
   const is1920 = useMediaQuery('(min-width: 1920px)');
 
   useEffect(() => {

@@ -1,17 +1,16 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 5vh;
-  width: 70vw;
-  margin: var(--spacer-xxl) 15vw 0 15vw;
-}
-.example {
+.empty {
   display: flex;
   flex-direction: row;
-  gap: 2vw;
+  gap: var(--spacer-xxs);
   width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacer-xxl) var(--spacer-xxl);
+  border: 1px dashed var(--primary);
 }
 
-.addButton span {
-  font-size: var(--font-size-xxxl);
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
 }

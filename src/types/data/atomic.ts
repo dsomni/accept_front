@@ -8,7 +8,6 @@ export interface IVerdict {
   shortText: string;
 }
 export interface ITest {
-  spec: string;
   inputData: string;
   outputData: string;
 }

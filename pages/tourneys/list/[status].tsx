@@ -4,11 +4,11 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { sendRequest } from '@requests/request';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-import { capitalize } from '@utils/capitalize';
+
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 import { ITournamentList } from '@custom-types/data/ITournament';
 
 function AssignmentList() {
@@ -34,7 +34,7 @@ function AssignmentList() {
   const columns: ITableColumn[] = useMemo(
     () => [
       {
-        label: capitalize(locale.tournament.list.title),
+        label: locale.tournament.list.title,
         key: 'title',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -50,7 +50,7 @@ function AssignmentList() {
         size: 6,
       },
       {
-        label: capitalize(locale.tournament.list.author),
+        label: locale.tournament.list.author,
         key: 'author',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -62,7 +62,7 @@ function AssignmentList() {
         size: 3,
       },
       {
-        label: capitalize(locale.tournament.list.start),
+        label: locale.tournament.list.start,
         key: 'start',
         sortable: false,
         sortFunction: (a: any, b: any) =>
@@ -74,7 +74,7 @@ function AssignmentList() {
         size: 3,
       },
       {
-        label: capitalize(locale.tournament.list.end),
+        label: locale.tournament.list.end,
         key: 'end',
         sortable: true,
         sortFunction: (a: any, b: any) =>
@@ -86,7 +86,7 @@ function AssignmentList() {
         size: 3,
       },
       {
-        label: capitalize(locale.tournament.list.status),
+        label: locale.tournament.list.status,
         key: 'status',
         sortable: true,
         sortFunction: (a: any, b: any) =>

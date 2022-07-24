@@ -1,10 +1,11 @@
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { useLocale } from '@hooks/useLocale';
-import { RadioGroup, Radio, NumberInput } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
-import { FC, memo } from 'react';
+import NumberInput from '@ui/NumberInput/NumberInput';
+import Radio from '@ui/Radio/Radio';
+import { FC, memo, useMemo } from 'react';
 import styles from './descriptionInfo.module.css';
 import { IHintAlarmType } from '@custom-types/data/atomic';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const DescriptionInfo: FC<{
   form: any;
@@ -12,92 +13,81 @@ const DescriptionInfo: FC<{
 }> = ({ form, hintAlarmTypes }) => {
   const { locale } = useLocale();
 
+  const hintAlarmTypeItems = useMemo(
+    () =>
+      hintAlarmTypes.map((alarmType) => ({
+        value: alarmType.spec.toString(),
+        label: locale.task.form.hint.hintAlarmTypes[alarmType.spec],
+      })),
+    [locale, hintAlarmTypes]
+  );
+
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
-        label={capitalize(locale.tasks.form.description)}
-        onChange={(value) => form.setFieldValue('description', value)}
-        {...form.getInputProps('description')}
+        label={locale.task.form.description}
+        form={form}
+        name={'description'}
       />
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
-        label={capitalize(locale.tasks.form.inputFormat)}
-        onChange={(value) => form.setFieldValue('inputFormat', value)}
-        {...form.getInputProps('inputFormat')}
+        label={locale.task.form.inputFormat}
+        form={form}
+        name={'inputFormat'}
       />
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
-        label={capitalize(locale.tasks.form.outputFormat)}
-        onChange={(value) =>
-          form.setFieldValue('outputFormat', value)
-        }
-        {...form.getInputProps('outputFormat')}
+        label={locale.task.form.outputFormat}
+        form={form}
+        name={'outputFormat'}
       />
 
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
-        label={capitalize(locale.tasks.form.remark)}
-        onChange={(value) => form.setFieldValue('remark', value)}
-        {...form.getInputProps('remark')}
+        label={locale.task.form.remark}
+        form={form}
+        name={'remark'}
       />
 
       {!form.values.isTournament && form.values['hasHint'] && (
         <div className={styles.hintWrapper}>
-          <div className={styles.label}>
-            {capitalize(locale.tasks.form.hint.title)}
+          <div className={stepperStyles.label}>
+            {locale.task.form.hint.title}
           </div>
-          <RadioGroup
-            size="lg"
-            classNames={{
-              label: styles.subLabel,
-            }}
-            label={capitalize(locale.tasks.form.hint.alarmType)}
-            {...form.getInputProps('hintAlarmType')}
+          <Radio
+            label={locale.task.form.hint.alarmType}
+            form={form}
+            field={'hintAlarmType'}
+            items={hintAlarmTypeItems}
             onChange={(value) =>
               form.setFieldValue('hintAlarmType', value)
             }
-          >
-            {hintAlarmTypes.map(
-              (hintAlarmType: IHintAlarmType, index: number) => (
-                <Radio
-                  value={hintAlarmType.spec.toString()}
-                  key={index}
-                  size="sm"
-                  label={capitalize(
-                    locale.tasks.form.hint.hintAlarmTypes[
-                      hintAlarmType.spec
-                    ]
-                  )}
-                />
-              )
-            )}
-          </RadioGroup>
+            onBlur={() => form.validateField('hintAlarmType')}
+          />
           <NumberInput
-            label={capitalize(locale.tasks.form.hint.showAfter)}
-            classNames={{
-              label: styles.subLabel,
-            }}
             size="md"
+            label={locale.task.form.hint.showAfter}
             hideControls
             min={0}
+            onBlur={() => form.validateField('hintAlarm')}
             {...form.getInputProps('hintAlarm')}
           />
           <CustomEditor
             classNames={{
-              label: styles.subLabel,
+              label: stepperStyles.subLabel,
             }}
-            label={capitalize(locale.tasks.form.hint.text)}
-            onChange={(value) => form.setFieldValue('hintContent')}
-            {...form.getInputProps('hintContent')}
+            label={locale.task.form.hint.text}
+            form={form}
+            name={'hintContent'}
           />
         </div>
       )}

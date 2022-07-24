@@ -1,9 +1,9 @@
 import { useLocale } from '@hooks/useLocale';
 import { TextInput } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo } from 'react';
 import styles from './mainInfo.module.css';
-import CustomEditor from '@components/ui/CustomEditor/CustomEditor';
+import CustomEditor from '@ui/CustomEditor/CustomEditor';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -15,7 +15,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           label: styles.label,
         }}
         size="lg"
-        label={capitalize(locale.tournament.form.title)}
+        label={locale.tournament.form.title}
         required
         {...form.getInputProps('title')}
       />
@@ -23,7 +23,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         classNames={{
           label: styles.label,
         }}
-        label={capitalize(locale.tournament.form.description)}
+        label={locale.tournament.form.description}
         onChange={(value) => form.setFieldValue('description', value)}
         {...form.getInputProps('description')}
       />

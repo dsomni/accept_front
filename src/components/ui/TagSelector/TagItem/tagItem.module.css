@@ -1,7 +1,7 @@
 .itemWrapper {
   width: 100%;
   display: flex;
-  padding: var(--spacer-s);
+  padding: var(--spacer-xs);
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -11,12 +11,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--spacer-xs);
+  gap: var(--spacer-xxs);
   user-select: none;
 }
 .item {
   cursor: pointer;
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
   width: 90%;
 }
 .actions {

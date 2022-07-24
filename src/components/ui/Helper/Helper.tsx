@@ -1,26 +1,39 @@
-import { Tooltip } from '@mantine/core';
-import { InfoCircle } from 'tabler-icons-react';
-import { FC } from 'react';
+import { Popover, PopoverProps } from '@mantine/core';
+import { Help } from 'tabler-icons-react';
+import { FC, ReactNode, useState } from 'react';
+import styles from './helper.module.css';
+import Icon from '@ui/Icon/Icon';
 
-export const Helper: FC<{ text: string }> = ({ text }) => {
+interface Props
+  extends Omit<PopoverProps, 'opened' | 'children' | 'target'> {
+  content: string | ReactNode;
+}
+
+export const Helper: FC<Props> = (props) => {
+  const [opened, setOpened] = useState(false);
+
   return (
-    <Tooltip
-      label={text}
+    <Popover
       withArrow
-      wrapLines
-      arrowSize={3}
-      placement="start"
-      styles={{
-        root: { width: 'fit-content' },
-        body: {
-          maxWidth: '250px',
-          backgroundColor: '#64a6e8',
-          color: 'white',
-        },
-        arrow: { backgroundColor: '#64a6e8' },
-      }}
+      position="bottom"
+      placement="center"
+      arrowSize={5}
+      transition={'scale'}
+      transitionDuration={300}
+      classNames={{ popover: styles.popover }}
+      {...props}
+      target={
+        <Icon size="xs">
+          <Help
+            onMouseEnter={() => setOpened(true)}
+            onMouseLeave={() => setOpened(false)}
+            color={'var(--dark4)'}
+          />
+        </Icon>
+      }
+      opened={opened}
     >
-      <InfoCircle width={24} height={24} color={'var(--primary)'} />
-    </Tooltip>
+      <div className={styles.contentWrapper}>{props.content}</div>
+    </Popover>
   );
 };

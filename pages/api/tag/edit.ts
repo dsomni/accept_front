@@ -9,7 +9,7 @@ export default async function EditTag(
 ) {
   const response = await fetch(url, {
     method: 'PUT',
-    body: req.body,
+    body: JSON.stringify(req.body),
     headers: { 'content-type': 'application/json' },
   });
   const status = response.status;

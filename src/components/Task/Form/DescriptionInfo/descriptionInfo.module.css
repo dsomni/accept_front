@@ -1,21 +1,5 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: var(--spacer-xxl) 0;
-  gap: 5vh;
-}
-.wrapper > * {
-  width: 70vw;
-}
 .hintWrapper {
   display: flex;
   flex-direction: column;
   gap: 2vh;
-}
-.label {
-  font-size: var(--font-size-xl);
-}
-.subLabel {
-  font-size: var(--font-size-l);
 }

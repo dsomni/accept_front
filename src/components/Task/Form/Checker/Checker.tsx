@@ -1,94 +1,79 @@
+import { FC, memo, useState, useEffect } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
-import ListItem from '@ui/ListItem/ListItem';
-import ProgrammingLangSelector from '@components/Task/ProgrammingLangSelector/ProgrammingLangSelector';
+import Select from '@ui/Select/Select';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Textarea } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
-import { FC, memo } from 'react';
 import styles from './checker.module.css';
+import { ILanguage } from '@custom-types/data/atomic';
+import { sendRequest } from '@requests/request';
+import Tests from '@components/Task/Form/Tests/Tests';
+import stepperStyles from '@styles/ui/stepper.module.css';
+
+const defaultLangSpec = '0';
 
 const Checker: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
+  const [languages, setLanguages] = useState<ILanguage[]>([]);
+  const [language, setLanguage] = useState(defaultLangSpec);
+
+  useEffect(() => {
+    sendRequest<{}, ILanguage[]>(
+      'language',
+      'GET',
+      undefined,
+      60000
+    ).then((res) => {
+      if (!res.error) {
+        setLanguages(res.response);
+      }
+    });
+  }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <CodeArea
+    <div className={stepperStyles.wrapper}>
+      <Select
+        label={locale.language}
+        value={language}
+        data={languages.map((lang) => ({
+          label: lang.name,
+          value: lang.spec.toString(),
+        }))}
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
-        label={capitalize(locale.tasks.form.checker)}
+        onBlur={() => form.validateField('checkerLang')}
+        {...form.getInputProps('checkerLang')}
+      />
+      <CodeArea
+        languages={languages}
+        helperContent={
+          <div>
+            {locale.helpers.task.checker.map((p, idx) => (
+              <p key={idx}>{p}</p>
+            ))}
+          </div>
+        }
+        classNames={{
+          label: stepperStyles.label,
+        }}
+        label={locale.task.form.checker}
         setLanguage={(value) =>
           form.setFieldValue('checkerLang', value)
         }
         setCode={(value) => form.setFieldValue('checkerCode', value)}
-        formProps={form.getInputProps('checkerCode')}
-      />
-      {/* <div className={styles.langSelector}>
-        <ProgrammingLangSelector
-          classNames={{
-            label: styles.label,
-          }}
-          setValue={(value) =>
-            form.setFieldValue('checkerLang', value)
-          }
-        />
-      </div>
-
-      <Textarea
-        classNames={{
-          label: styles.label,
+        formProps={{
+          ...form.getInputProps('checkerCode'),
+          onBlur: () => form.validateField('checkerCode'),
         }}
-        className={styles.codeArea}
-        placeholder={capitalize(locale.placeholders.code)}
-        minRows={20}
-        maxRows={60}
-        size="lg"
-        label={capitalize(locale.tasks.form.checker)}
-        {...form.getInputProps('checkerCode')}
-      /> */}
-      <div className={styles.listWrapper}>
-        {form.values.tests &&
-          form.values.tests.map(
-            (value: [string, string], index: number) => (
-              <div key={index}>
-                <ListItem
-                  label={
-                    capitalize(locale.tasks.form.test) +
-                    ' #' +
-                    (index + 1)
-                  }
-                  classNames={{
-                    label: styles.label,
-                  }}
-                  field="tests"
-                  InLabel={capitalize(locale.tasks.form.inputTest)}
-                  OutLabel={capitalize(locale.tasks.form.outputTest)}
-                  form={form}
-                  index={index}
-                  onDelete={() => {}}
-                  maxRows={7}
-                  single
-                />
-              </div>
-            )
-          )}
-        <Button
-          size="lg"
-          className={styles.addButton}
-          color="var(--primary)"
-          variant="light"
-          onClick={() =>
-            form.setFieldValue(
-              'tests',
-              (() => {
-                form.values.tests.push(['', '']);
-                return form.values.tests;
-              })()
-            )
-          }
-        >
-          +
-        </Button>
+        buttonProps={{
+          style: {
+            marginBottom: 'var(--spacer-xs)',
+            marginTop: 'var(--spacer-s)',
+          },
+        }}
+      />
+      <div className={styles.tests}>
+        {' '}
+        <Tests form={form} hideOutput />
       </div>
     </div>
   );

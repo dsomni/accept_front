@@ -1,8 +1,14 @@
 import { useLocale } from '@hooks/useLocale';
-import { InputWrapper } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
-import { FC, memo, useEffect, useRef, useState } from 'react';
-import { setter } from '@custom-types/ui/atomic';
+
+import {
+  FC,
+  memo,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
 const editorConfiguration = {
   simpleUpload: {
@@ -13,12 +19,12 @@ const editorConfiguration = {
 };
 
 const CustomEditor: FC<{
-  onChange: setter<any>;
   name: string;
-  value: string;
   label: string;
+  form?: any;
   classNames?: object;
-}> = ({ onChange, name, value, label, classNames }) => {
+  helperContent?: string | ReactNode;
+}> = ({ name, label, form, classNames, helperContent }) => {
   const { locale } = useLocale();
 
   const editorRef = useRef<any>();
@@ -39,22 +45,31 @@ const CustomEditor: FC<{
 
   return (
     <div>
-      {isLoaded ? (
-        <InputWrapper classNames={classNames} label={label} size="lg">
+      <InputWrapper
+        classNames={classNames}
+        label={label}
+        size="lg"
+        helperContent={helperContent}
+        {...form.getInputProps(name)}
+      >
+        {isLoaded ? (
           <CKEditor
             name={name}
             editor={Editor}
-            data={value}
+            data={form.values[name]}
             config={editorConfiguration}
             onChange={(event: any, editor: any) => {
               const data = editor.getData();
-              onChange(data);
+              form.setFieldValue(name, data);
             }}
+            onBlur={() => form.validateField(name)}
           />
-        </InputWrapper>
-      ) : (
-        <div>{capitalize(locale.loading) + '...'}</div>
-      )}
+        ) : (
+          <div style={{ fontSize: 'var(--font-size-m)' }}>
+            {locale.loading + '...'}
+          </div>
+        )}
+      </InputWrapper>
     </div>
   );
 };

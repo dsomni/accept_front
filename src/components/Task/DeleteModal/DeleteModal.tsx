@@ -3,14 +3,14 @@ import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group } from '@mantine/core';
 import { sendRequest } from '@requests/request';
-import { capitalize } from '@utils/capitalize';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import SimpleModal from '@components/ui/SimpleModal/SimpleModal';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -64,19 +64,16 @@ const DeleteModal: FC<{
         opened={active}
         close={() => setActive(false)}
         hideCloseButton={true}
-        title={
-          capitalize(locale.tasks.modals.delete) +
-          ` '${task.title}' ?`
-        }
+        title={locale.task.modals.delete + ` '${task.title}' ?`}
       >
         <div className={deleteModalStyles.form}>
           <div className={deleteModalStyles.question}>
-            {capitalize(locale.tasks.modals.deleteConfidence)}
+            {locale.task.modals.deleteConfidence}
           </div>
           {assignments.length > 0 && (
             <div>
               <div>
-                {capitalize(locale.tasks.modals.usedInAssignments) +
+                {locale.task.modals.usedInAssignments +
                   ` (${assignments.length}):`}
               </div>
               <br />
@@ -108,12 +105,12 @@ const DeleteModal: FC<{
               styles={{
                 label: {
                   fontWeight: 'normal',
-                  fontSize: 'var(--font-size-m)',
+                  fontSize: 'var(--font-size-s)',
                 },
               }}
               onClick={() => setActive(false)}
             >
-              {capitalize(locale.cancel)}
+              {locale.cancel}
             </Button>
             <Button
               variant="outline"
@@ -121,12 +118,12 @@ const DeleteModal: FC<{
               styles={{
                 label: {
                   fontWeight: 'normal',
-                  fontSize: 'var(--font-size-m)',
+                  fontSize: 'var(--font-size-s)',
                 },
               }}
               onClick={() => handleDelete()}
             >
-              {capitalize(locale.delete)}
+              {locale.delete}
             </Button>
           </Group>
         </div>

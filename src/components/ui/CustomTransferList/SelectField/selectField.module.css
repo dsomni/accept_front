@@ -13,7 +13,7 @@
   min-height: 200px;
   overflow-x: hidden;
   overflow-y: scroll;
-  margin-top: var(--spacer-s);
+  margin-top: var(--spacer-xs);
   /* border: solid #000 1px; */
 }
 
@@ -29,5 +29,5 @@
   background-color: #aaaaaa;
 }
 .title {
-  padding: var(--spacer-s) 0;
+  padding: var(--spacer-xs) 0;
 }

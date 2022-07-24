@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { NumberInput, TextInput } from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
+
 import { FC, memo, useMemo } from 'react';
 import styles from './mainInfo.module.css';
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
@@ -23,7 +23,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           label: styles.label,
         }}
         size="lg"
-        label={capitalize(locale.assignmentSchema.form.title)}
+        label={locale.assignmentSchema.form.title}
         required
         {...form.getInputProps('title')}
       />
@@ -43,16 +43,14 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           label: styles.label,
         }}
         size="lg"
-        label={capitalize(
-          locale.assignmentSchema.form.defaultDuration
-        )}
+        label={locale.assignmentSchema.form.defaultDuration}
         {...form.getInputProps('defaultDuration')}
       />
       <CustomEditor
         classNames={{
           label: styles.label,
         }}
-        label={capitalize(locale.tasks.form.description)}
+        label={locale.task.form.description}
         onChange={(value) => form.setFieldValue('description', value)}
         {...form.getInputProps('description')}
       />

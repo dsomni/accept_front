@@ -10,13 +10,13 @@ import {
   useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-import { capitalize } from '@utils/capitalize';
+
 import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/data/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
 import router from 'next/router';
 import { Plus } from 'tabler-icons-react';
-import SingularSticky from '@components/ui/Sticky/SingularSticky';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 import { ITaskListBundle } from '@custom-types/data/bundle';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
@@ -38,7 +38,7 @@ interface ITaskDisplayList
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
-    label: capitalize(locale.tasks.list.title),
+    label: locale.task.list.title,
     key: 'title',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -54,7 +54,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 9,
   },
   {
-    label: capitalize(locale.tasks.list.author),
+    label: locale.task.list.author,
     key: 'author',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -66,7 +66,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 3,
   },
   {
-    label: capitalize(locale.tasks.list.verdict),
+    label: locale.task.list.verdict,
     key: 'verdict',
     sortable: false,
     sortFunction: () => 0,
@@ -89,8 +89,18 @@ const processData = (
       },
       verdict: {
         value: task.verdict,
-          display: (
-            <span style={{color: !task.verdict ? "black" : task.verdict.spec == 0 ? "var(--positive)" : "var(--negative)"}}>{task.verdict?.shortText || '-'}</span>
+        display: (
+          <span
+            style={{
+              color: !task.verdict
+                ? 'black'
+                : task.verdict.spec == 0
+                ? 'var(--positive)'
+                : 'var(--negative)',
+            }}
+          >
+            {task.verdict?.shortText || '-'}
+          </span>
         ),
       },
       title: {
@@ -247,9 +257,7 @@ function TaskList() {
                 searchable
                 data={searchTags}
                 onChange={setCurrentTags}
-                placeholder={capitalize(
-                  locale.placeholders.selectTags
-                )}
+                placeholder={locale.placeholders.selectTags}
               />
             </div>
           }

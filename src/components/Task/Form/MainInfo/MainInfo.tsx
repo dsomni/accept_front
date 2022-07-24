@@ -1,16 +1,14 @@
 import { useLocale } from '@hooks/useLocale';
-import {
-  NumberInput,
-  Radio,
-  RadioGroup,
-  Switch,
-  TextInput,
-} from '@mantine/core';
-import { capitalize } from '@utils/capitalize';
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useMemo, useCallback } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import Radio from '@ui/Radio/Radio';
+import Switch from '@ui/Switch/Switch';
+import NumberInput from '@ui/NumberInput/NumberInput';
+import TextInput from '@ui/TextInput/TextInput';
+import stepperStyles from '@styles/ui/stepper.module.css';
 
 const MainInfo: FC<{
   form: any;
@@ -25,95 +23,97 @@ const MainInfo: FC<{
     [form.values.spec] // eslint-disable-line
   );
 
+  const taskCheckTypeItems = useMemo(
+    () =>
+      taskCheckTypes.map((checkType) => ({
+        value: checkType.spec.toString(),
+        label: locale.task.form.checkTypes[checkType.spec],
+      })),
+    [locale, taskCheckTypes]
+  );
+
+  const taskTypeItems = useMemo(
+    () =>
+      taskTypes.map((taskType) => ({
+        value: taskType.spec.toString(),
+        label: locale.task.form.taskTypes[taskType.spec],
+      })),
+    [locale, taskTypes]
+  );
+
+  const handlerTaskType = useCallback(
+    (value: string) => {
+      form.setFieldValue('taskType', value);
+      value === '1' ? form.setFieldValue('checkType', '0') : () => {};
+    },
+    [form]
+  );
+
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <TextInput
-        classNames={{
-          label: styles.label,
-        }}
-        size="lg"
-        label={capitalize(locale.tasks.form.title)}
+        label={locale.task.form.title}
         required
+        onBlur={() => {
+          form.validateField('title');
+        }}
         {...form.getInputProps('title')}
       />
 
-      <div>
-        <TagSelector
-          classNames={{
-            label: styles.label,
-          }}
-          initialTags={initialTags}
-          setUsed={(value: any) => form.setFieldValue('tags', value)}
-          fetchURL={'tag/list'}
-          addURL={'tag/add'}
-          updateURL={'tag/edit'}
-          deleteURL={'tag/delete'}
-        />
-        <NumberInput
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
-          label={capitalize(locale.tasks.form.grade)}
-          required
-          {...form.getInputProps('grade')}
-        />
-      </div>
-      <div className={styles.radioGroups}>
-        <RadioGroup
-          classNames={{
-            label: styles.label,
-          }}
-          size="md"
-          label={capitalize(locale.tasks.form.taskType)}
-          {...form.getInputProps('type')}
-          onChange={(value) => {
-            form.setFieldValue('type', value);
-            value === 'text'
-              ? form.setFieldValue('checkType', 'tests')
-              : () => {};
-          }}
-        >
-          {taskTypes.map((taskType: ITaskType, index: number) => (
-            <Radio
-              value={taskType.spec.toString()}
-              key={index}
-              label={capitalize(
-                locale.tasks.form.taskTypes[taskType.spec]
-              )}
-            />
-          ))}
-        </RadioGroup>
+      <TagSelector
+        classNames={{
+          label: stepperStyles.label,
+        }}
+        initialTags={initialTags}
+        setUsed={(values: Item[]) => {
+          form.setFieldValue('tags', values);
+          form.validateField('tags');
+        }}
+        fetchURL={'tag/list'}
+        addURL={'tag/add'}
+        updateURL={'tag/edit'}
+        deleteURL={'tag/delete'}
+      />
 
-        {form.values.type === '0' && (
-          <RadioGroup
-            classNames={{
-              label: styles.label,
-            }}
-            size="md"
-            label={capitalize(locale.tasks.form.checkType)}
-            {...form.getInputProps('checkType')}
-          >
-            {taskCheckTypes.map(
-              (checkType: ITaskCheckType, index: number) => (
-                <Radio
-                  value={checkType.spec.toString()}
-                  key={index}
-                  label={capitalize(
-                    locale.tasks.form.checkTypes[checkType.spec]
-                  )}
-                />
-              )
-            )}
-          </RadioGroup>
+      <NumberInput
+        label={locale.task.form.complexity}
+        required
+        noClampOnBlur
+        hideControls
+        onBlur={() => {
+          form.validateField('complexity');
+        }}
+        {...form.getInputProps('complexity')}
+      />
+      <div className={styles.radioGroups}>
+        <Radio
+          label={locale.task.form.taskType}
+          field={'taskType'}
+          form={form}
+          items={taskTypeItems}
+          onChange={handlerTaskType}
+          helperContent={
+            <div>
+              {locale.helpers.task.taskType.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
+          }
+        />
+        {form.values.taskType === '0' && (
+          <Radio
+            label={locale.task.form.checkType}
+            field={'checkType'}
+            form={form}
+            items={taskCheckTypeItems}
+            onChange={(value) =>
+              form.setFieldValue('checkType', value)
+            }
+          />
         )}
         {!form.values.isTournament && (
           <Switch
-            classNames={{
-              label: styles.label,
-            }}
-            label={capitalize(locale.tasks.form.hint.title)}
-            size="lg"
+            label={locale.task.form.hint.title}
             {...form.getInputProps('hasHint', { type: 'checkbox' })}
           />
         )}
