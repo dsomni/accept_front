@@ -13,7 +13,11 @@ body {
   --secondary: #1c7ed6;
   --secondary-light: #d0ebffa6;
   --positive: #04b504;
+  --positive-light: #65ba6579;
+  --positive-light2: #d3f4d348;
   --negative: #ff0000;
+  --negative-light: #fe7d7d6a;
+  --negative-light2: #f6cfcf4a;
   --accent: #ff3dff;
 }
 :root {
@@ -21,6 +25,7 @@ body {
   --dark2: #333;
   --dark3: #666;
   --dark4: #999;
+  --dark5: #ccc;
 }
 :root {
   --font-size-huge: 2.5rem;

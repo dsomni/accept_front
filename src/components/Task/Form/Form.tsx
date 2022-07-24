@@ -116,10 +116,14 @@ const Form: FC<{
             </Button>
           )}
           <Button
-            onClick={currentStep !== LAST_PAGE ? nextStep : handleSubmit}
+            onClick={
+              currentStep !== LAST_PAGE ? nextStep : handleSubmit
+            }
             type="button"
           >
-            {currentStep === LAST_PAGE ? buttonLabel : locale.form.next}
+            {currentStep === LAST_PAGE
+              ? buttonLabel
+              : locale.form.next}
           </Button>
         </Group>
       </form>
