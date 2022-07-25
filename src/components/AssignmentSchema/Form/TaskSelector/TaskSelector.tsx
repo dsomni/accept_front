@@ -34,6 +34,7 @@ const TaskSelector: FC<{
     ).then((res) => {
       if (res.error) return;
       const tasks = res.response;
+      const selected = selectedTasks.map(task => task.value);
       let newAvailableTasks: Item[] = [];
       let newSelectedTasks: Item[] = [];
 
@@ -42,7 +43,7 @@ const TaskSelector: FC<{
           value: tasks[i].spec,
           label: tasks[i].title,
         };
-        if(!selectedTasks.includes(task)){
+        if(!selected.includes(task.value)){
           newAvailableTasks.push(task)
         }else{
           newSelectedTasks.push(task)

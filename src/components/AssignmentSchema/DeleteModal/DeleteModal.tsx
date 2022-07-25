@@ -21,13 +21,12 @@ const DeleteModal: FC<{
       spec: assignment.spec,
     };
     requestWithNotify(
-      '/assignments/schema/delete',
+      '/assignment_schema/delete',
       'POST',
       locale.notify.assignmentSchema.delete,
       lang,
       (_: any) => '',
       body,
-      () => router.push('/edu/assignment/list')
     );
   }, [assignment, locale, router, lang]);
 

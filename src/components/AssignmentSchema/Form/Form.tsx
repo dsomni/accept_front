@@ -1,6 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group, Stepper } from '@mantine/core';
-
 import { FC, memo, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import MainInfo from './MainInfo/MainInfo';
@@ -18,8 +17,9 @@ const Form: FC<{
   const [currentStep, setCurrentStep] = useState(0);
 
   const nextStep = () =>
-    setCurrentStep((current) =>
-      current < 4 ? current + 1 : current
+    setCurrentStep((current) =>{
+      console.log(current)
+      return current < 4 ? current + 1 : current}
     );
   const prevStep = () =>
     setCurrentStep((current) =>
@@ -81,7 +81,7 @@ const Form: FC<{
             onClick={
               currentStep !== 3
                 ? nextStep
-                : form.onSubmit(handleSubmit)
+                : handleSubmit
             }
             type={currentStep === 3 ? 'submit' : 'button'}
           >

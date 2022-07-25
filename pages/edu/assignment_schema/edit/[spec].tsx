@@ -4,11 +4,9 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useState,
 } from 'react';
 import { useForm } from '@mantine/form';
 import { ITaskDisplay } from '@custom-types/data/ITask';
-import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
@@ -16,6 +14,7 @@ import Form from '@components/AssignmentSchema/Form/Form';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { errorNotification, newNotification } from '@utils/notificationFunctions';
 
 function EditAssignmentSchema({
   assignment_schema,
@@ -23,8 +22,6 @@ function EditAssignmentSchema({
   assignment_schema: IAssignmentSchema;
 }) {
   const { locale, lang } = useLocale();
-
-  const router = useRouter();
 
   const formValues = useMemo(
     () => ({
@@ -38,11 +35,18 @@ function EditAssignmentSchema({
         label: task?.title,
         value: task?.spec,
       })),
+      defaultDuration: Math.floor(assignment_schema.defaultDuration / 60 / 1000)
     }),
     [assignment_schema]
   );
   const form = useForm({
     initialValues: formValues,
+    validate: {
+      title: (value) => value.length < 5 ? locale.assignmentSchema.form.validation.title : null,
+      description: (value) => value.length < 20 ? locale.assignmentSchema.form.validation.description : null,
+      tasks: (value) => value.length === 0 ? locale.assignmentSchema.form.validation.tasks: null,
+      defaultDuration: (value) => value <= 5 ? locale.assignmentSchema.form.validation.defaultDuration : null,
+    }
   });
 
   useEffect(() => {
@@ -50,13 +54,23 @@ function EditAssignmentSchema({
   }, [formValues]); // eslint-disable-line
 
   const handleSubmit = useCallback(() => {
+    if(form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.task.validation.error,
+        autoClose: 5000,
+      });
+      return
+    }
     let body: any = {
       ...form.values,
       tasks: form.values['tasks'].map((task: Item) => task.value),
       tags: form.values['tags'].map((tag: Item) => tag.value),
+      defaultDuration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
     requestWithNotify(
-      `assignments_schema/edit`,
+      `assignment_schema/edit`,
       'POST',
       locale.notify.assignmentSchema.edit,
       lang,
@@ -95,7 +109,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
   const assignmentSchemaResponse = await fetch(
     `${API_URL}/api/assignment_schema/${params.spec}`
-  );
+    );
   if (assignmentSchemaResponse.status === 200) {
     const assignmentSchema: IAssignmentSchema =
       await assignmentSchemaResponse.json();
