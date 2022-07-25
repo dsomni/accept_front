@@ -23,20 +23,13 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
     let cleanUp = false;
     if (assignment.tasks.length)
       sendRequest<string[], ITaskDisplay[]>(
-        'task/task-spec-list',
+        'task/list-specs',
         'POST',
-        assignment.tasks,
+        assignment.tasks.map((task) => task.value || task.spec),
         5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
-          const response = res.response;
-          const tasks = new Map<string, ITaskDisplay>();
-          for (let i = 0; i < response.length; i++) {
-            tasks.set(response[i].spec, response[i]);
-          }
-          setTasks(
-            assignment.tasks.map((spec) => tasks.get(spec) || null!)
-          );
+          setTasks(res.response);
         }
       });
 
@@ -48,15 +41,15 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>{assignment.title}</div>
-      <div className={styles.description} ref={description}>
-        {assignment.description}
-      </div>
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: assignment.description }}
+      ></div>
       <div>
         <PrimitiveTable
           columns={[
             locale.task.list.title,
             locale.task.list.author,
-            locale.task.list.grade,
             locale.task.list.verdict,
           ]}
           rows={tasks}
@@ -73,9 +66,12 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
                     {row.title}
                   </a>
                 </td>
-                <td className={styles.cell}>{row.author}</td>
-                <td className={styles.cell}>{row.grade}</td>
-                <td className={styles.cell}>{row.verdict || '-'}</td>
+                <td className={styles.cell}>
+                  {row.author.shortName}
+                </td>
+                <td className={styles.cell}>
+                  {row.verdict?.shortText || '-'}
+                </td>
               </>
             );
           }}

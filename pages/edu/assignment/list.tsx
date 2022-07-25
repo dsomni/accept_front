@@ -17,7 +17,6 @@ import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
-import MultiSearch from '@ui/MultiSearch/MultiSearch';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 
 const DESCR_SLICE = 35;
@@ -122,7 +121,7 @@ function AssignmentList() {
     let cleanUp = false;
     setLoading(true);
     sendRequest<{}, IAssignmentSchema[]>(
-      'assignment/schema/list',
+      'assignment_schema/list',
       'GET',
       undefined,
       10000

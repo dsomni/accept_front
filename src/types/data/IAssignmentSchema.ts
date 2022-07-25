@@ -20,3 +20,8 @@ export interface IAssignmentSchemaDisplay {
   tags: ITag[];
   defaultDuration: number;
 }
+
+export interface IAssignmentSchemaListBundle {
+  assignment_schemas: IAssignmentSchemaDisplay[];
+  tags: ITag[];
+}
