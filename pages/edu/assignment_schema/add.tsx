@@ -9,10 +9,10 @@ import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
-
 const initialValues = {
   spec: '',
   title: 'Уроки французского',
+  description: '',
   author: '',
   tasks: [],
   taskNumber: 0,

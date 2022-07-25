@@ -22,10 +22,10 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
   useEffect(() => {
     let cleanUp = false;
     if (assignment.tasks.length)
-      sendRequest<{specs: string[]}, ITaskDisplay[]>(
+      sendRequest<string[], ITaskDisplay[]>(
         'task/list-specs',
         'POST',
-        {specs: assignment.tasks.map(task => task.value || task.spec)},
+        assignment.tasks.map((task) => task.value || task.spec),
         5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
@@ -41,12 +41,15 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>{assignment.title}</div>
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: assignment.description }}
+      ></div>
       <div>
         <PrimitiveTable
           columns={[
             locale.task.list.title,
             locale.task.list.author,
-            locale.task.list.grade,
             locale.task.list.verdict,
           ]}
           rows={tasks}
@@ -63,9 +66,12 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
                     {row.title}
                   </a>
                 </td>
-                <td className={styles.cell}>{row.author}</td>
-                <td className={styles.cell}>{row.grade}</td>
-                <td className={styles.cell}>{row.verdict || '-'}</td>
+                <td className={styles.cell}>
+                  {row.author.shortName}
+                </td>
+                <td className={styles.cell}>
+                  {row.verdict?.shortText || '-'}
+                </td>
               </>
             );
           }}

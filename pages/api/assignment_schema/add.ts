@@ -10,7 +10,7 @@ export default async function AddAssignmentSchema(
   const response = await fetch(`${url}`, {
     method: 'POST',
     credentials: 'include',
-    body: req.body,
+    body: JSON.stringify(req.body),
     headers: { 'content-type': 'application/json' },
   });
   const status = response.status;

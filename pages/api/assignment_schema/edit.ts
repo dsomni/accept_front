@@ -11,8 +11,8 @@ export default async function EditAssignmentSchema(
   const response = await fetch(url, {
     method: 'PUT',
     credentials: 'include',
-    body: req.body,
-    headers: req.headers as {[key: string]: string},
+    body: JSON.stringify(req.body),
+    headers: req.headers as { [key: string]: string },
   });
   const status = response.status;
   const data = await response.json();

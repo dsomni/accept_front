@@ -27,6 +27,14 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         required
         {...form.getInputProps('title')}
       />
+      <CustomEditor
+        classNames={{
+          label: styles.label,
+        }}
+        label={locale.task.form.description}
+        form={form}
+        name={'description'}
+      />
       <TagSelector
         classNames={{
           label: styles.label,

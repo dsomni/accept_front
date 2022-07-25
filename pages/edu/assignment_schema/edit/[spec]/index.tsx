@@ -17,25 +17,27 @@ import { requestWithNotify } from '@utils/requestWithNotify';
 import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
-function EditAssignmentSchema({assignment_schema}:{assignment_schema: IAssignmentSchema}) {
+function EditAssignmentSchema({
+  assignment_schema,
+}: {
+  assignment_schema: IAssignmentSchema;
+}) {
   const { locale, lang } = useLocale();
 
   const router = useRouter();
-
 
   const formValues = useMemo(
     () => ({
       ...assignment_schema,
       author: assignment_schema.author.login,
-      tags: assignment_schema.tags.map(tag => ({
+      tags: assignment_schema.tags.map((tag) => ({
         label: tag.title,
-        value: tag.spec
+        value: tag.spec,
       })),
-      tasks: assignment_schema.tasks
-        .map((task: ITaskDisplay) => ({
-          label: task?.title,
-          value: task?.spec,
-        })),
+      tasks: assignment_schema.tasks.map((task: ITaskDisplay) => ({
+        label: task?.title,
+        value: task?.spec,
+      })),
     }),
     [assignment_schema]
   );
@@ -61,7 +63,7 @@ function EditAssignmentSchema({assignment_schema}:{assignment_schema: IAssignmen
       (response: IAssignmentSchema) => response.spec,
       body
     );
-  }, [form.values, locale, assignment_schema.spec, lang]);
+  }, [form.values, locale, lang]);
 
   return (
     <>
@@ -79,7 +81,6 @@ EditAssignmentSchema.getLayout = (page: ReactNode) => {
 };
 
 export default EditAssignmentSchema;
-
 
 const API_URL = getApiUrl();
 
