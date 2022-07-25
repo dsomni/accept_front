@@ -12,11 +12,12 @@ import { requestWithNotify } from '@utils/requestWithNotify';
 const initialValues = {
   spec: '',
   title: 'Уроки французского',
+  description: '',
   author: '',
-  description: 'Хороший урок, мне нравится',
   tasks: [],
+  taskNumber: 0,
+  defaultDuration: 40, // minutes
   tags: [],
-  defaultDuration: 0, // minutes
 };
 
 function AddAssignmentSchema() {
@@ -30,13 +31,14 @@ function AddAssignmentSchema() {
   const handleSubmit = useCallback(() => {
     let body: any = {
       ...form.values,
-      tasks: form.values['tasks'].map((task: Item) => task.value),
-      tags: form.values['tags'].map((tag: Item) => tag.value),
       author: user?.login || '',
-      duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
+      tasks: form.values['tasks'].map((task: Item) => task.value),
+      taskNumber: form.values['tasks'].length,
+      defaultDuration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
+      tags: form.values['tags'].map((tag: Item) => tag.value),
     };
     requestWithNotify(
-      'assignment_schema',
+      'assignment_schema/add',
       'POST',
       locale.notify.assignmentSchema.create,
       lang,

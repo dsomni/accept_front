@@ -10,7 +10,6 @@ import {
   useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
-
 import { useLocale } from '@hooks/useLocale';
 import { ITag } from '@custom-types/data/ITag';
 import { hasSubarray } from '@utils/hasSubarray';
@@ -164,8 +163,6 @@ function TaskList() {
       })),
     [tags]
   );
-
-  const [selectedTags, setSelectedTags] = useState<ITag[]>([]);
 
   const { data, loading, error, detail } = useRequest<
     {},

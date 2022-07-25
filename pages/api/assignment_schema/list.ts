@@ -1,17 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/assignment_schema';
+const url = 'http://' + env.API_ENDPOINT + '/api/bundle/assignment-schema-list';
 
-export default async function AddAssignmentSchema(
+export default async function ListAssignmentSchemas(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(`${url}`, {
-    method: 'POST',
+  const response = await fetch(url, {
     credentials: 'include',
-    body: req.body,
-    headers: { 'content-type': 'application/json' },
+    headers: req.headers as { [key: string]: string },
   });
   const status = response.status;
   const data = await response.json();

@@ -47,7 +47,6 @@ const CodeArea: FC<{
 
   const onDrop = useCallback(
     (files: File[]) => {
-      console.log(1);
       const id = newNotification({
         autoClose: 2000,
         title: locale.ui.codeArea.notification.uploading.title,
