@@ -11,7 +11,7 @@ interface Props extends NumberInputProps {
   helperContent?: string | ReactNode;
 }
 
-const NumberInput: FC<Props> = (props) => {
+const NumberInput: FC<Props> = ({ helperContent, ...props }) => {
   return (
     <div className={inputStyles.wrapper}>
       <div className={inputStyles.labelWrapper}>
@@ -21,9 +21,7 @@ const NumberInput: FC<Props> = (props) => {
             <div className={inputStyles.labelRequired}>*</div>
           )}
         </div>
-        {props.helperContent && (
-          <Helper content={props.helperContent} />
-        )}
+        {helperContent && <Helper content={helperContent} />}
       </div>
       <MantineNumberInput size="lg" {...props} label={undefined} />
     </div>

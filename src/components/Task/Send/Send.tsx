@@ -76,7 +76,7 @@ const Send: FC<{
           variant="outline"
           size="lg"
           onClick={handleSubmit}
-          leftIcon={<SendPlane />}
+          leftIcon={<SendPlane color={'var(--primary)'} />}
         >
           {locale.task.submit}
         </Button>

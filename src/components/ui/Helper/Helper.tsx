@@ -9,7 +9,7 @@ interface Props
   content: string | ReactNode;
 }
 
-export const Helper: FC<Props> = (props) => {
+export const Helper: FC<Props> = ({ content, ...props }) => {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -33,7 +33,7 @@ export const Helper: FC<Props> = (props) => {
       }
       opened={opened}
     >
-      <div className={styles.contentWrapper}>{props.content}</div>
+      <div className={styles.contentWrapper}>{content}</div>
     </Popover>
   );
 };

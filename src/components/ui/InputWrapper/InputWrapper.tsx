@@ -11,7 +11,7 @@ interface Props extends InputWrapperProps {
   helperContent?: string | ReactNode;
 }
 
-const InputWrapper: FC<Props> = (props) => {
+const InputWrapper: FC<Props> = ({ helperContent, ...props }) => {
   return (
     <div className={inputStyles.wrapper}>
       <div className={inputStyles.labelWrapper}>
@@ -21,9 +21,7 @@ const InputWrapper: FC<Props> = (props) => {
             <div className={inputStyles.labelRequired}>*</div>
           )}
         </div>
-        {props.helperContent && (
-          <Helper content={props.helperContent} />
-        )}
+        {helperContent && <Helper content={helperContent} />}
       </div>
       <MantineInputWrapper
         classNames={{
