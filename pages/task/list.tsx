@@ -22,6 +22,7 @@ import { ILocale } from '@custom-types/ui/ILocale';
 import { BaseSearch } from '@custom-types/data/request';
 import Fuse from 'fuse.js';
 import MultiSelect from '@ui/Select/MultiSelect';
+import { customTableSort } from '@utils/customTableSort';
 
 interface Item {
   value: any;
@@ -57,7 +58,11 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     key: 'author',
     sortable: true,
     sortFunction: (a: any, b: any) =>
-      a.author > b.author ? 1 : a.author == b.author ? 0 : -1,
+      a.author.value > b.author.value
+        ? 1
+        : a.author.value == b.author.value
+        ? 0
+        : -1,
     sorted: 0,
     allowMiddleState: true,
     hidable: true,
@@ -67,10 +72,17 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
     label: locale.task.list.verdict,
     key: 'verdict',
-    sortable: false,
-    sortFunction: () => 0,
+    sortable: true,
+    sortFunction: (a: any, b: any) =>
+      (a.verdict.value ? a.verdict.value.spec : 100) >
+      (b.verdict.value ? b.verdict.value.spec : 100)
+        ? 1
+        : (a.verdict.value ? a.verdict.value.spec : 100) ==
+          (b.verdict.value ? b.verdict.value.spec : 100)
+        ? 0
+        : -1,
     sorted: 0,
-    allowMiddleState: false,
+    allowMiddleState: true,
     hidable: true,
     hidden: false,
     size: 2,
@@ -83,7 +95,7 @@ const processData = (
     (task: ITaskDisplay): ITaskDisplayList => ({
       ...task,
       author: {
-        value: task.author,
+        value: task.author.shortName,
         display: task.author.shortName,
       },
       verdict: {
@@ -136,9 +148,10 @@ const defaultOnPage = 10;
 function TaskList() {
   const { locale } = useLocale();
   const [list, setList] = useState<ITaskDisplayList[]>([]);
-  const [tasks, setTasks] = useState<ITaskDisplayList[]>([]);
+
   const [tags, setTags] = useState<ITag[]>([]);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
+
   const [searchParams, setSearchParams] = useState<BaseSearch>({
     pager: {
       skip: 0,
@@ -147,7 +160,11 @@ function TaskList() {
     sort_by: [],
     search_params: {
       search: '',
-      keys: ['title.value', 'author.shortName'],
+      keys: [
+        'title.value',
+        'author.value',
+        'verdict.value.shortText',
+      ],
     },
   });
 
@@ -170,59 +187,52 @@ function TaskList() {
     { tasks: ITaskDisplayList[]; tags: ITag[] }
   >('bundle/task_list', 'GET', undefined, processData);
 
-  const fuse = useMemo(
-    () => {
-      return new Fuse(tasks, {
+  const applyFilters = useCallback(
+    (data: ITaskDisplayList[]) => {
+      var list = [...data];
+      const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
         findAllMatches: true,
       });
-    },
-    [tasks] // eslint-disable-line
-  );
 
-  const applyFilters = useCallback(() => {
-    const searched =
-      searchParams.search_params.search == ''
-        ? tasks
-        : fuse
-            .search(searchParams.search_params.search)
-            .map((result) => result.item);
+      const searched =
+        searchParams.search_params.search == ''
+          ? list
+          : fuse
+              .search(searchParams.search_params.search)
+              .map((result) => result.item);
 
-    const tagged =
-      currentTags.length > 0
-        ? searched.filter((task) =>
-            hasSubarray(
-              task.tags.map((tag) => tag.spec),
-              currentTags
+      const tagged =
+        currentTags.length > 0
+          ? searched.filter((task) =>
+              hasSubarray(
+                task.tags.map((tag) => tag.spec),
+                currentTags
+              )
             )
-          )
-        : searched;
+          : searched;
 
-    const paged = tagged.slice(
-      searchParams.pager.skip,
-      searchParams.pager.limit > 0
-        ? searchParams.pager.skip + searchParams.pager.limit
-        : undefined
-    );
-    setList(paged);
-  }, [
-    currentTags,
-    fuse,
-    searchParams.pager.limit,
-    searchParams.pager.skip,
-    searchParams.search_params.search,
-    tasks,
-  ]);
+      const sorted = tagged.sort((a, b) =>
+        customTableSort(a, b, searchParams.sort_by, columns)
+      );
+
+      const paged = sorted.slice(
+        searchParams.pager.skip,
+        searchParams.pager.limit > 0
+          ? searchParams.pager.skip + searchParams.pager.limit
+          : undefined
+      );
+      setList(paged);
+    },
+    [columns, currentTags, searchParams]
+  );
 
   useEffect(() => {
     if (data) {
-      setTasks(data.tasks);
-      applyFilters();
+      applyFilters(data.tasks);
       setTags(data.tags);
     }
   }, [applyFilters, data]);
-
-  useEffect(applyFilters, [applyFilters]);
 
   return (
     <div>
@@ -244,7 +254,7 @@ function TaskList() {
           }}
           defaultOnPage={defaultOnPage}
           onPage={[5, 10]}
-          total={tasks.length}
+          total={data?.tasks.length || 0}
           loading={loading}
           setSearchParams={setSearchParams}
           searchParams={searchParams}

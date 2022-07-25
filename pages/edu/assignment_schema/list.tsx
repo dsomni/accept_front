@@ -18,12 +18,13 @@ import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 import SingularSticky from '@ui/Sticky/SingularSticky';
-import { BaseSearch, SortBy } from '@custom-types/data/request';
+import { BaseSearch } from '@custom-types/data/request';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
 import MultiSelect from '@ui/Select/MultiSelect';
+import { customTableSort } from '@utils/customTableSort';
 
 interface Item {
   value: any;
@@ -186,25 +187,8 @@ function AssignmentList() {
     }
   >('assignment_schema/list', 'GET', undefined, processData);
 
-  const custom_sort = (
-    a: any,
-    b: any,
-    sort_by: SortBy[],
-    columns: ITableColumn[]
-  ) => {
-    var res = 0;
-    for (let i = 0; i < sort_by.length; i++) {
-      res =
-        (columns
-          .find((item) => item.key == sort_by[i].field)
-          ?.sortFunction(a, b) || 0) * sort_by[i].order;
-      if (Math.abs(res) !== 0) break;
-    }
-    return res;
-  };
-
   const applyFilters = useCallback(
-    (data: any[]) => {
+    (data: IAssignmentSchemaDisplayList[]) => {
       var list = [...data];
       const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
@@ -229,7 +213,7 @@ function AssignmentList() {
           : searched;
 
       const sorted = tagged.sort((a, b) =>
-        custom_sort(a, b, searchParams.sort_by, columns)
+        customTableSort(a, b, searchParams.sort_by, columns)
       );
 
       const paged = sorted.slice(

@@ -7,7 +7,7 @@ interface Props extends SwitchProps {
   helperContent?: string | ReactNode;
 }
 
-const Switch: FC<Props> = (props) => {
+const Switch: FC<Props> = ({ helperContent, ...props }) => {
   return (
     <div className={styles.wrapper}>
       <MantineSwitch
@@ -20,9 +20,7 @@ const Switch: FC<Props> = (props) => {
       />
       <div className={styles.labelWrapper}>
         <div className={styles.label}>{props.label}</div>
-        {props.helperContent && (
-          <Helper content={props.helperContent} />
-        )}
+        {helperContent && <Helper content={helperContent} />}
       </div>
     </div>
   );
