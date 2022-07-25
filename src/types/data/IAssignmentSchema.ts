@@ -21,7 +21,7 @@ export interface IAssignmentSchemaDisplay {
   defaultDuration: number;
 }
 
-export interface IAssignmentSchemaList {
+export interface IAssignmentSchemaListBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];
-  tags: ITag[]
+  tags: ITag[];
 }

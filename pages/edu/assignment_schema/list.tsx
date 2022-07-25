@@ -10,76 +10,99 @@ import {
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { IAssignmentSchemaDisplay, IAssignmentSchemaList } from '@custom-types/data/IAssignmentSchema';
+import {
+  IAssignmentSchemaDisplay,
+  IAssignmentSchemaListBundle,
+} from '@custom-types/data/IAssignmentSchema';
 import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 import SingularSticky from '@ui/Sticky/SingularSticky';
-import { BaseSearch } from '@custom-types/data/request';
+import { BaseSearch, SortBy } from '@custom-types/data/request';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
 import MultiSelect from '@ui/Select/MultiSelect';
 
-const defaultOnPage = 10;
+interface Item {
+  value: any;
+  display: string | ReactNode;
+}
 
-const initialColumns =  (locale: ILocale): ITableColumn[] => [
-      {
-        label: locale.assignmentSchema.list.title,
-        key: 'title',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.title.value > b.title.value
-            ? 1
-            : a.title.value == b.title.value
-            ? 0
-            : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: false,
-        hidden: false,
-        size: 6,
-      },
-      {
-        label: locale.assignmentSchema.list.author,
-        key: 'author',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.author > b.author ? 1 : a.author == b.author ? 0 : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: true,
-        hidden: false,
-        size: 3,
-      },
-      {
-        label: locale.assignmentSchema.list.taskCount,
-        key: 'taskCount',
-        sortable: true,
-        sortFunction: (a: any, b: any) =>
-          a.taskCount > b.taskCount
-            ? 1
-            : a.taskCount == b.taskCount
-            ? 0
-            : -1,
-        sorted: 0,
-        allowMiddleState: true,
-        hidable: true,
-        hidden: false,
-        size: 3,
-      },
-    ]
+interface IAssignmentSchemaDisplayList
+  extends Omit<
+    IAssignmentSchemaDisplay,
+    'title' | 'author' | 'taskNumber'
+  > {
+  title: Item;
+  author: Item;
+  taskNumber: Item;
+}
 
+const initialColumns = (locale: ILocale): ITableColumn[] => [
+  {
+    label: locale.assignmentSchema.list.title,
+    key: 'title',
+    sortable: true,
+    sortFunction: (a: any, b: any) =>
+      a.title.value > b.title.value
+        ? 1
+        : a.title.value == b.title.value
+        ? 0
+        : -1,
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: false,
+    hidden: false,
+    size: 6,
+  },
+  {
+    label: locale.assignmentSchema.list.author,
+    key: 'author',
+    sortable: true,
+    sortFunction: (a: any, b: any) => {
+      return a.author.value > b.author.value
+        ? 1
+        : a.author.value == b.author.value
+        ? 0
+        : -1;
+    },
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: true,
+    hidden: false,
+    size: 3,
+  },
+  {
+    label: locale.assignmentSchema.list.taskNumber,
+    key: 'taskNumber',
+    sortable: true,
+    sortFunction: (a: any, b: any) =>
+      a.taskNumber.value > b.taskNumber.value
+        ? 1
+        : a.taskNumber.value == b.taskNumber.value
+        ? 0
+        : -1,
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: true,
+    hidden: false,
+    size: 3,
+  },
+];
 
 const processData = (
-  data: IAssignmentSchemaList
-): { assignment_schemas: any; tags: ITag[] } => {
+  data: IAssignmentSchemaListBundle
+): {
+  assignment_schemas: IAssignmentSchemaDisplayList[];
+  tags: ITag[];
+} => {
   const assignment_schemas = data.assignment_schemas.map(
     (assignment_schema: IAssignmentSchemaDisplay): any => ({
       ...assignment_schema,
       author: {
-        value: assignment_schema.author,
+        value: assignment_schema.author.shortName,
         display: assignment_schema.author.shortName,
       },
       title: {
@@ -97,7 +120,9 @@ const processData = (
                 {assignment_schema.tags.map((tag, idx) => (
                   <div className={tableStyles.tag} key={idx}>
                     {tag.title +
-                      (idx == assignment_schema.tags.length - 1 ? '' : ', ')}
+                      (idx == assignment_schema.tags.length - 1
+                        ? ''
+                        : ', ')}
                   </div>
                 ))}
               </span>
@@ -105,21 +130,24 @@ const processData = (
           </div>
         ),
       },
-      taskCount: {
+      taskNumber: {
         value: assignment_schema.taskNumber,
-        display: assignment_schema.taskNumber
-      }
+        display: assignment_schema.taskNumber,
+      },
     })
   );
   const tags = data.tags;
   return { assignment_schemas, tags };
 };
 
+const defaultOnPage = 10;
 
 function AssignmentList() {
   const { locale } = useLocale();
   const router = useRouter();
-  const [list, setList] = useState<any[]>([]);
+  const [list, setList] = useState<IAssignmentSchemaDisplayList[]>(
+    []
+  );
   const [tags, setTags] = useState<ITag[]>([]);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
 
@@ -131,7 +159,7 @@ function AssignmentList() {
     sort_by: [],
     search_params: {
       search: '',
-      keys: ['title.value', 'author.shortName'],
+      keys: ['title.value', 'author.value'],
     },
   });
 
@@ -149,93 +177,113 @@ function AssignmentList() {
     [tags]
   );
 
-  const { data, loading, error, detail } = useRequest<
+  const { data, loading, error, detail, refetch } = useRequest<
     {},
-    IAssignmentSchemaList,
-    {assignment_schemas: any[], tags: ITag[]}
+    IAssignmentSchemaListBundle,
+    {
+      assignment_schemas: IAssignmentSchemaDisplayList[];
+      tags: ITag[];
+    }
   >('assignment_schema/list', 'GET', undefined, processData);
 
-  const applyFilters = useCallback((list: any[]) => {
-    const fuse = new Fuse(list, {
+  const custom_sort = (
+    a: any,
+    b: any,
+    sort_by: SortBy[],
+    columns: ITableColumn[]
+  ) => {
+    var res = 0;
+    for (let i = 0; i < sort_by.length; i++) {
+      res =
+        (columns
+          .find((item) => item.key == sort_by[i].field)
+          ?.sortFunction(a, b) || 0) * sort_by[i].order;
+      if (Math.abs(res) !== 0) break;
+    }
+    return res;
+  };
+
+  const applyFilters = useCallback(
+    (data: any[]) => {
+      var list = [...data];
+      const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
         findAllMatches: true,
       });
 
-    const searched =
-      searchParams.search_params.search == ''
-        ? list
-        : fuse
-            .search(searchParams.search_params.search)
-            .map((result) => result.item);
+      const searched =
+        searchParams.search_params.search == ''
+          ? list
+          : fuse
+              .search(searchParams.search_params.search)
+              .map((result) => result.item);
 
-    const tagged =
-      currentTags.length > 0
-        ? searched.filter((task) =>
-            hasSubarray(
-              task.tags.map((tag: ITag) => tag.spec),
-              currentTags
+      const tagged =
+        currentTags.length > 0
+          ? searched.filter((task) =>
+              hasSubarray(
+                task.tags.map((tag: ITag) => tag.spec),
+                currentTags
+              )
             )
-          )
-        : searched;
+          : searched;
 
-    const paged = tagged.slice(
-      searchParams.pager.skip,
-      searchParams.pager.limit > 0
-        ? searchParams.pager.skip + searchParams.pager.limit
-        : undefined
-    );
-    setList(paged);
-  }, [
-    currentTags,
-    searchParams,
-    list,
-  ]);
+      const sorted = tagged.sort((a, b) =>
+        custom_sort(a, b, searchParams.sort_by, columns)
+      );
+
+      const paged = sorted.slice(
+        searchParams.pager.skip,
+        searchParams.pager.limit > 0
+          ? searchParams.pager.skip + searchParams.pager.limit
+          : undefined
+      );
+      setList(paged);
+    },
+    [columns, currentTags, searchParams]
+  );
 
   useEffect(() => {
-    if(data){
-      applyFilters(data.assignment_schemas)
+    if (data) {
+      applyFilters(data.assignment_schemas);
       setTags(data.tags);
     }
-  }, [data])
-
-  useEffect(() => {
-    console.log(list)
-  }, [list]);
-
+  }, [data, applyFilters]);
 
   return (
     <div>
-        <Table
-          columns={columns}
-          rows={list}
-          classNames={{
-            wrapper: tableStyles.wrapper,
-            table: tableStyles.table,
-            author: tableStyles.author,
-            grade: tableStyles.grade,
-            verdict: tableStyles.verdict,
-            headerCell: tableStyles.headerCell,
-            cell: tableStyles.cell,
-            even: tableStyles.even,
-            odd: tableStyles.odd,
-          }}
-          defaultOnPage={10}
-          onPage={[5, 10]}
-          total={list.length}
-          loading={loading}
-          setSearchParams={setSearchParams}
-          searchParams={searchParams}
-          additionalSearch={
-            <div>
-              <MultiSelect
-                searchable
-                data={searchTags}
-                onChange={setCurrentTags}
-                placeholder={locale.placeholders.selectTags}
-              />
-            </div>
-          }
-        />
+      <Table
+        columns={columns}
+        rows={list}
+        classNames={{
+          wrapper: tableStyles.wrapper,
+          table: tableStyles.table,
+          author: tableStyles.author,
+          grade: tableStyles.grade,
+          verdict: tableStyles.verdict,
+          headerCell: tableStyles.headerCell,
+          cell: tableStyles.cell,
+          even: tableStyles.even,
+          odd: tableStyles.odd,
+        }}
+        defaultOnPage={10}
+        onPage={[5, 10]}
+        total={data?.assignment_schemas.length || 0}
+        loading={loading}
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+        withSearch
+        additionalSearch={
+          <div>
+            <MultiSelect
+              searchable
+              data={searchTags}
+              onChange={setCurrentTags}
+              placeholder={locale.placeholders.selectTags}
+            />
+          </div>
+        }
+      />
       <SingularSticky
         color="green"
         onClick={() => router.push(`/edu/assignment_schema/add/`)}

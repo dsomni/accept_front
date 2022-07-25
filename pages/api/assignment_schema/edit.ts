@@ -7,7 +7,6 @@ export default async function EditAssignmentSchema(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(1);
   const response = await fetch(url, {
     method: 'PUT',
     credentials: 'include',

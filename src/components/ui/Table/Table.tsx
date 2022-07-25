@@ -159,23 +159,30 @@ const Table: FC<{
           if (idx >= 0) {
             searchParams.sort_by.splice(idx, 1);
           }
-          return searchParams;
+          return {
+            ...searchParams,
+          };
         });
       } else {
-        setSearchParams(
-          (searchParams: BaseSearch) =>
-            ({
-              ...searchParams,
-              sort_by: [{ field: key, order: order }],
-            } as BaseSearch)
-        );
+        setSearchParams((searchParams: BaseSearch) => {
+          const idx = searchParams.sort_by.findIndex(
+            (item) => item.field === key
+          );
+          if (idx >= 0) {
+            searchParams.sort_by[idx].order = order;
+          } else {
+            searchParams.sort_by.push({ field: key, order: order });
+          }
+
+          return { ...searchParams };
+        });
       }
     },
     [setSearchParams]
   );
 
   const handleSearch = useCallback(
-    (value: string, shouldCancelFilter?: boolean) => {
+    (value: string) => {
       setSearch(value);
       setSearchParams((searchParams: BaseSearch) => ({
         ...searchParams,
@@ -187,16 +194,6 @@ const Table: FC<{
     },
     [setSearchParams]
   );
-
-  const beforeSelection = useCallback(() => {
-    handleSearch('', true);
-    setLocalColumns((localColumns) =>
-      localColumns.map((column) => {
-        column.sorted = column.allowMiddleState ? 0 : 1;
-        return column;
-      })
-    );
-  }, [handleSearch, setLocalColumns]);
 
   return (
     <div className={styles.wrapper + ' ' + classNames.wrapper}>
