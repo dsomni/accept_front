@@ -26,4 +26,7 @@ export const task = {
     success: 'The task was send successfully',
     error: 'Error when sending the task',
   },
+  validation: {
+    error: 'Error on validation',
+  },
 };

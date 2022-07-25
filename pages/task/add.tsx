@@ -17,6 +17,10 @@ import {
   ITest,
 } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 const initialValues = {
   spec: '',
@@ -32,7 +36,7 @@ const initialValues = {
   outputFormat: '',
   remark: '',
 
-  hasHint: false,
+  hasHint: true,
   hintContent: '',
   hintAlarmType: '0',
   hintAlarm: 0,
@@ -118,11 +122,17 @@ function AddTask() {
           ? locale.task.form.validation.checkerCode
           : null,
       hintContent: (value, values) =>
-        !values.hasHint || value.length == 0
-          ? locale.task.form.validation.hintContent
+        values.hasHint
+          ? value.length == 0
+            ? locale.task.form.validation.hintContent
+            : null
           : null,
-      hintAlarm: (value) =>
-        value < 0 ? locale.task.form.validation.hintAlarm : null,
+      hintAlarm: (value, values) =>
+        values.hasHint
+          ? value < 0
+            ? locale.task.form.validation.hintAlarm
+            : null
+          : null,
     },
   });
 
@@ -139,6 +149,15 @@ function AddTask() {
   }, [data]);
 
   const handleSubmit = useCallback(() => {
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.task.validation.error,
+        autoClose: 5000,
+      });
+      return;
+    }
     const {
       checkerCode,
       checkerLang,
@@ -197,7 +216,7 @@ function AddTask() {
       (response: ITaskDisplay) => response.spec,
       body
     );
-  }, [form.values, locale, user?.login, lang]);
+  }, [form, locale, user?.login, lang]);
 
   return (
     <>
