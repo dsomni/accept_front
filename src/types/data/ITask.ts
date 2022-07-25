@@ -24,8 +24,8 @@ interface IChecker {
 }
 
 interface IConstraints {
-  time: number | undefined;
-  memory: number | undefined;
+  time: number;
+  memory: number;
 }
 
 export interface Example {
