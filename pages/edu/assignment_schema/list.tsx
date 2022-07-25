@@ -88,7 +88,7 @@ const processData = (
           <div className={tableStyles.titleWrapper}>
             <a
               className={tableStyles.title}
-              href={`/assignment_schema/${assignment_schema.spec}`}
+              href={`/edu/assignment_schema/${assignment_schema.spec}`}
             >
               {assignment_schema.title}
             </a>
@@ -153,7 +153,7 @@ function AssignmentList() {
     {},
     IAssignmentSchemaList,
     {assignment_schemas: any[], tags: ITag[]}
-  >('assignment/schema/list', 'GET', undefined, processData);
+  >('assignment_schema/list', 'GET', undefined, processData);
 
   const applyFilters = useCallback((list: any[]) => {
     const fuse = new Fuse(list, {

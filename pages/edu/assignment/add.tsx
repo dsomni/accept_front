@@ -36,7 +36,7 @@ function AddAssignmentSchema() {
       duration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
     };
     requestWithNotify(
-      'assignment/schema/add',
+      'assignment_schema',
       'POST',
       locale.notify.assignmentSchema.create,
       lang,

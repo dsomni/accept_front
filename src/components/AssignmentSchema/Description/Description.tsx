@@ -41,9 +41,6 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>{assignment.title}</div>
-      <div className={styles.description} ref={description}>
-        {assignment.description}
-      </div>
       <div>
         <PrimitiveTable
           columns={[

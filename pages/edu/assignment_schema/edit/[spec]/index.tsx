@@ -8,91 +8,36 @@ import {
 } from 'react';
 import { useForm } from '@mantine/form';
 import { ITaskDisplay } from '@custom-types/data/ITask';
-import { sendRequest } from '@requests/request';
 import { useRouter } from 'next/router';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Form from '@components/AssignmentSchema/Form/Form';
-import { ITag } from '@custom-types/data/ITag';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import { getApiUrl } from '@utils/getServerUrl';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
-function EditAssignmentSchema() {
+function EditAssignmentSchema({assignment_schema}:{assignment_schema: IAssignmentSchema}) {
   const { locale, lang } = useLocale();
-  const [ready, setReady] = useState(false);
 
-  const [tags, setTags] = useState<ITag[]>([]);
   const router = useRouter();
 
-  const [readyTags, setReadyTags] = useState(false);
-
-  const [assignmentSchema, setAssignmentSchema] =
-    useState<IAssignmentSchema>(null!);
-  const [tasks, setTasks] = useState<Map<string, ITaskDisplay>>(
-    new Map()
-  );
-
-  useEffect(() => {
-    let cleanUp = false;
-    if (typeof router.query.spec === 'string') {
-      sendRequest<{ spec: string }, IAssignmentSchema>(
-        `assignments/schema/${router.query.spec}`,
-        'GET',
-        undefined,
-        10000
-      ).then((res) => {
-        if (!res.error) {
-          setAssignmentSchema(res.response);
-        }
-      });
-    }
-    sendRequest<{}, ITaskDisplay[]>(
-      `tasks/list`,
-      'GET',
-      undefined,
-      10000
-    ).then((res) => {
-      if (!res.error) {
-        const tasks = new Map<string, ITaskDisplay>();
-        for (let i = 0; i < res.response.length; i++) {
-          tasks.set(res.response[i].spec, res.response[i]);
-        }
-        setTasks(tasks);
-      }
-    });
-    setReadyTags(false);
-    sendRequest<{}, ITag[]>(
-      `assignment_tags/list`,
-      'GET',
-      undefined,
-      20000
-    ).then((res) => {
-      if (!res.error && !cleanUp) {
-        setTags(res.response);
-        setReadyTags(true);
-      }
-    });
-    return () => {
-      cleanUp = true;
-    };
-  }, [router.query.spec]);
 
   const formValues = useMemo(
     () => ({
-      ...assignmentSchema,
-      tags: tags
-        .filter((tag: ITag) =>
-          assignmentSchema?.tags.includes(tag)
-        )
-        .map((tag: ITag) => ({ label: tag.title, value: tag.spec })),
-      tasks: assignmentSchema?.tasks
+      ...assignment_schema,
+      author: assignment_schema.author.login,
+      tags: assignment_schema.tags.map(tag => ({
+        label: tag.title,
+        value: tag.spec
+      })),
+      tasks: assignment_schema.tasks
         .map((task: ITaskDisplay) => ({
           label: task?.title,
           value: task?.spec,
         })),
     }),
-    [tasks, tags, assignmentSchema, readyTags]
+    [assignment_schema]
   );
   const form = useForm({
     initialValues: formValues,
@@ -100,9 +45,6 @@ function EditAssignmentSchema() {
 
   useEffect(() => {
     form.setValues(formValues);
-    if (assignmentSchema) {
-      setReady(true);
-    }
   }, [formValues]); // eslint-disable-line
 
   const handleSubmit = useCallback(() => {
@@ -112,24 +54,22 @@ function EditAssignmentSchema() {
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
     requestWithNotify(
-      `assignments/schema/edit/${assignmentSchema.spec}`,
+      `assignments_schema/edit`,
       'POST',
       locale.notify.assignmentSchema.edit,
       lang,
       (response: IAssignmentSchema) => response.spec,
       body
     );
-  }, [form.values, locale, assignmentSchema?.spec, lang]);
+  }, [form.values, locale, assignment_schema.spec, lang]);
 
   return (
     <>
-      {ready && readyTags && (
-        <Form
-          form={form}
-          handleSubmit={handleSubmit}
-          buttonLabel={locale.form.update}
-        />
-      )}
+      <Form
+        form={form}
+        handleSubmit={handleSubmit}
+        buttonLabel={locale.form.update}
+      />
     </>
   );
 }
@@ -139,3 +79,43 @@ EditAssignmentSchema.getLayout = (page: ReactNode) => {
 };
 
 export default EditAssignmentSchema;
+
+
+const API_URL = getApiUrl();
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params || typeof params?.spec !== 'string') {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+  const assignmentSchemaResponse = await fetch(
+    `${API_URL}/api/assignment_schema/${params.spec}`
+  );
+  if (assignmentSchemaResponse.status === 200) {
+    const assignmentSchema: IAssignmentSchema =
+      await assignmentSchemaResponse.json();
+    return {
+      props: {
+        assignment_schema: assignmentSchema,
+      },
+    };
+  }
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: '/Not-Found',
+    },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};

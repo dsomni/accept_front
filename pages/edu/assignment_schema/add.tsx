@@ -38,7 +38,7 @@ function AddAssignmentSchema() {
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
     requestWithNotify(
-      'assignment/schema/add',
+      'assignment_schema/add',
       'POST',
       locale.notify.assignmentSchema.create,
       lang,
