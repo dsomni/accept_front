@@ -1,5 +1,4 @@
-export const form = {
-  steps: {
+export const steps = {
     first: {
       label: 'Шаг первый',
       description: 'Основная информация',
@@ -16,15 +15,4 @@ export const form = {
       label: 'Шаг четвёртый',
       description: 'Предпросмотр',
     },
-  },
-  title: 'Название',
-  description: 'Описание',
-  defaultDuration: 'Длительность по умолчанию (мин.)',
-  taskOrdering: {
-    title: 'Выберете порядок задач',
-  },
-  taskSelector: {
-    available: 'Все задачи',
-    used: 'Выбранные задачи',
-  },
-};
+  }

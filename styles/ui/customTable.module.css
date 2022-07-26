@@ -1,5 +1,6 @@
 .wrapper {
   min-height: 70vh;
+  padding-bottom: var(--spacer-l);
 }
 .table {
   width: 100%;
@@ -10,10 +11,6 @@
   display: grid;
 }
 .author {
-  text-align: left;
-}
-
-.grade {
   text-align: left;
 }
 

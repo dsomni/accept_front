@@ -1,12 +1,12 @@
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group, Modal } from '@mantine/core';
+import { Group, Modal } from '@mantine/core';
 
-import { useRouter } from 'next/router';
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { setter } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import Button from '@ui/Button/Button';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -14,22 +14,23 @@ const DeleteModal: FC<{
   assignment: IAssignmentSchema;
 }> = ({ active, setActive, assignment }) => {
   const { locale, lang } = useLocale();
-  const router = useRouter();
+
+  const [toList, setToList] = useState(false);
 
   const handleDelete = useCallback(() => {
     const body = {
       spec: assignment.spec,
     };
     requestWithNotify(
-      '/assignments/schema/delete',
+      '/assignment_schema/delete',
       'POST',
       locale.notify.assignmentSchema.delete,
       lang,
       (_: any) => '',
       body,
-      () => router.push('/edu/assignment/list')
+      () => setToList(true)
     );
-  }, [assignment, locale, router, lang]);
+  }, [assignment, locale, lang]);
 
   return (
     <>
@@ -55,21 +56,32 @@ const DeleteModal: FC<{
             spacing="lg"
             className={deleteModalStyles.buttons}
           >
-            <Button
-              variant="outline"
-              color="green"
-              autoFocus
-              onClick={() => setActive(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              color="red"
-              onClick={() => handleDelete()}
-            >
-              {locale.delete}
-            </Button>
+            {!toList ? (
+              <>
+                <Button
+                  variant="outline"
+                  kind="positive"
+                  autoFocus
+                  onClick={() => setActive(false)}
+                >
+                  {locale.cancel}
+                </Button>
+                <Button
+                  variant="outline"
+                  kind="negative"
+                  onClick={() => handleDelete()}
+                >
+                  {locale.delete}
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="outline"
+                href="/edu/assignment_schema/list"
+              >
+                {locale.toList}
+              </Button>
+            )}
           </Group>
         </div>
       </Modal>

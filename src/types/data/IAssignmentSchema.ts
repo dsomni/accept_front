@@ -25,3 +25,8 @@ export interface IAssignmentSchemaListBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];
   tags: ITag[];
 }
+
+export interface IAssignmentSchemaEditBundle {
+  assignment_schema: IAssignmentSchema;
+  tags: ITag[];
+}

@@ -1,17 +1,10 @@
 import { removeOneElement } from '@utils/removeOneElement';
-import {
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { FC, ReactNode, useCallback, useState } from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 import { setter, pureCallback } from '@custom-types/ui/atomic';
 
-export interface Item {
-  value: string;
+export interface Item<T = any> {
   label: string;
   [key: string]: any;
 }

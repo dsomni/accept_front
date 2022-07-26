@@ -3,10 +3,6 @@
   justify-content: center;
 }
 
-.label {
-  font-size: var(--font-size-l);
-}
-
 .itemWrapper {
   display: flex;
   flex-direction: row;
@@ -18,15 +14,4 @@
 .dragButton {
   width: var(--spacer-s);
   height: var(--spacer-s);
-}
-.head {
-  font-size: var(--font-size-l);
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 5vh;
-  width: 70vw;
-  margin: var(--spacer-xl) 15vw var(--spacer-xl) 15vw;
 }

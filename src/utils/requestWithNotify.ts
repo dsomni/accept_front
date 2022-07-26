@@ -8,6 +8,8 @@ import { sendRequest, availableMethods } from '@requests/request';
 import { IAvailableLang } from '@custom-types/ui/ILocale';
 import { callback, setter } from '@custom-types/ui/atomic';
 
+const defaultAutoClose = 5000;
+
 export const requestWithNotify = <T, V>(
   endpoint: string,
   method: availableMethods,
@@ -25,6 +27,7 @@ export const requestWithNotify = <T, V>(
   const id = newNotification({
     title: locale.loading,
     message: locale.loading + '...',
+    autoClose: defaultAutoClose,
     ...params,
   });
   sendRequest<T, V>(endpoint, method, body).then((res) => {
@@ -33,6 +36,7 @@ export const requestWithNotify = <T, V>(
         id,
         title: locale.success,
         message: message(res.response),
+        autoClose: defaultAutoClose,
         ...params,
       });
       if (onSuccess) onSuccess(res.response);
@@ -41,6 +45,7 @@ export const requestWithNotify = <T, V>(
         id,
         title: locale.error,
         message: res.detail.description[lang],
+        autoClose: defaultAutoClose,
         ...params,
       });
     }
