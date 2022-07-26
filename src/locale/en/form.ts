@@ -12,5 +12,6 @@ export const placeholders = {
   showColumns: 'Pick columns to show',
   selectTags: 'Select tags',
   selectGroups: 'Select groups',
+  selectRoles: 'Select roles',
   title: 'Enter title',
 };

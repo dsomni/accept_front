@@ -1,4 +1,5 @@
 import { pureCallback } from '../ui/atomic';
+import { IRole } from './atomic';
 import { IGroup } from './IGroup';
 
 export interface Role {
@@ -13,14 +14,9 @@ export interface IUser {
   surname: string;
   patronymic: string;
   email: string | undefined;
-  shortName: string | undefined;
+  shortName: string;
   groups: IGroup[];
   role: Role;
-}
-
-export interface IStudent extends IUser {
-  gradeLetter: string;
-  gradeNumber: number;
 }
 
 export interface IUserContext {
@@ -41,4 +37,10 @@ export interface IRegUser {
   name: string;
   password: string;
   email: string | null;
+}
+
+export interface IUserListBundle {
+  users: IUser[];
+  groups: IGroup[];
+  roles: IRole[];
 }
