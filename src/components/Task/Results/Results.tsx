@@ -43,7 +43,7 @@ const refactorAttempt = (
           ? attempt.verdict.verdict.shortText +
             ' #' +
             (attempt.verdict.test + 1).toString()
-          : locale.attempts.statuses[attempt.status.spec]}
+          : locale.attempt.statuses[attempt.status.spec]}
       </div>
     ),
     value:
@@ -63,7 +63,7 @@ const refactorAttempt = (
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
-    label: locale.attempts.date,
+    label: locale.attempt.date,
     key: 'date',
     sortable: true,
     sortFunction: (a: any, b: any) =>
@@ -79,7 +79,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 5,
   },
   {
-    label: locale.attempts.language,
+    label: locale.attempt.language,
     key: 'language',
     sortable: false,
     sortFunction: (a: any, b: any) => 0,
@@ -90,7 +90,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     size: 5,
   },
   {
-    label: locale.attempts.result,
+    label: locale.attempt.result,
     key: 'result',
     sortable: false,
     sortFunction: (a: any, b: any) => 0,

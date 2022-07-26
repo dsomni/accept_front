@@ -2,11 +2,12 @@ import LanguageSelector from '@ui/LanguageSelector/LanguageSelector';
 import { FC, memo, useState, useMemo, useCallback } from 'react';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './constraintsInfo.module.css';
-import { Box, Overlay, SegmentedControl } from '@mantine/core';
+import { Box, Overlay } from '@mantine/core';
 import Switch from '@ui/Switch/Switch';
 import { useLocale } from '@hooks/useLocale';
 import NumberInput from '@ui/NumberInput/NumberInput';
 import stepperStyles from '@styles/ui/stepper.module.css';
+import SegmentedControl from '@ui/SegmentedControl/SegmentedControl';
 
 const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const initialAllowedLanguages = useMemo(
@@ -95,21 +96,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             ]}
             value={option}
             onChange={onOptionChange}
-            styles={{
-              root: {
-                backgroundColor: '#00000000',
-                width: 'fit-content',
-              },
-              label: {
-                fontSize: 'var(--font-size-m)',
-              },
-              active: {
-                backgroundColor: 'var(--primary)',
-              },
-              labelActive: {
-                color: 'white !important',
-              },
-            }}
           />
           <LanguageSelector
             initialLangs={initialLanguage}

@@ -1,4 +1,4 @@
-export const attempts = {
+export const attempt = {
   date: 'Date',
   language: 'Language',
   result: 'Result',
