@@ -14,4 +14,7 @@ export const group = {
     success: 'The group was deleted successfully',
     error: 'Error when deleting the group',
   },
+  validation: {
+    error: 'Validation error',
+  },
 };

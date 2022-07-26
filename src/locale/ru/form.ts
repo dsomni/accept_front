@@ -12,5 +12,6 @@ export const placeholders = {
   showColumns: 'Выберете поля',
   selectTags: 'Выберете теги',
   selectGroups: 'Выберете группы',
+  selectRoles: 'Выберете роли',
   title: 'Введите название',
 };

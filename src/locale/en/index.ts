@@ -4,13 +4,13 @@ import { task } from './task';
 import { assignmentSchema } from './assignmentSchema';
 import { notify } from './notify';
 import { tournament } from './tournament';
-import { attempts } from './attempts';
+import { attempt } from './attempt';
 import { form, placeholders } from './form';
 import { mainHeaderLinks, credentials } from './layout';
 import { date, months } from './date';
 import { users } from './users';
 import { errorPage } from './errorPage';
-import { groups } from './groups';
+import { group } from './group';
 import { ui } from './ui';
 import { helpers } from './helpers';
 import { tag } from './tag';
@@ -31,9 +31,8 @@ const en = {
   all: 'All',
   create: 'Create',
   edit: 'Edit',
-  toList: 'To list',
-  attempts,
-  groups,
+  attempt,
+  group,
   placeholders,
   credentials,
   mainHeaderLinks,
