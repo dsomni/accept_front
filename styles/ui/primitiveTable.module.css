@@ -1,0 +1,50 @@
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  column-gap: 2em;
+  row-gap: var(--spacer-xs);
+  padding-right: 5%;
+  flex-wrap: wrap;
+}
+
+.title {
+  text-decoration: none;
+  text-align: left;
+  font-size: 1.15em;
+  color: var(--primary);
+}
+
+.column {
+  text-align: left;
+}
+
+.row {
+  font-size: var(--font-size-m);
+  padding: var(--spacer-m);
+  border-bottom: 1px solid black;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0px !important;
+}
+
+.table tr {
+  display: grid;
+}
+
+.even {
+  background-color: #f8f8f8;
+}
+
+.tags {
+  font-size: 0.7em;
+  display: flex;
+  gap: var(--spacer-xxs);
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: right;
+  color: grey;
+}

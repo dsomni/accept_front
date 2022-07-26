@@ -7,6 +7,7 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import Sticky from '@ui/Sticky/Sticky';
 import { Pencil, Trash } from 'tabler-icons-react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';
 
 function Assignment(props: { assignment: IAssignmentSchema }) {
@@ -16,6 +17,9 @@ function Assignment(props: { assignment: IAssignmentSchema }) {
 
   return (
     <>
+      <Head>
+        <title>{assignment.title}</title>
+      </Head>
       <Description assignment={assignment} />
       <DeleteModal
         active={openModal}

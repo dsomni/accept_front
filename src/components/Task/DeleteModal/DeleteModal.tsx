@@ -1,4 +1,4 @@
-import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Group } from '@mantine/core';

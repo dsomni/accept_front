@@ -120,7 +120,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const assignmentSchemaResponse = await fetch(
-    `${API_URL}/api/bundle/assignment-schema/${params.spec}`
+    `${API_URL}/api/assignment_schema/${params.spec}`
   );
   if (assignmentSchemaResponse.status === 200) {
     const assignmentSchema: IAssignmentSchema =

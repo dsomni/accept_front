@@ -7,3 +7,6 @@
 .modalTitle {
   font-size: var(--font-size-l);
 }
+.wrapper {
+  margin: auto 0;
+}
