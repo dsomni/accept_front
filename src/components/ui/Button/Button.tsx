@@ -16,9 +16,13 @@ import {
 import styles from './button.module.css';
 
 interface Props extends ButtonProps<'button'> {
-  popoverProps?: Omit<PopoverProps, 'opened' | 'children' | 'target'>;
+  popoverProps?: Omit<
+    PopoverProps,
+    'opened' | 'children' | 'target' | 'component'
+  >;
   popoverContent?: string | ReactNode;
   kind?: 'positive' | 'negative';
+  href?: string;
 }
 
 const Button: FC<Props> = ({
@@ -108,32 +112,68 @@ const Button: FC<Props> = ({
 
   const button = useMemo(
     () => (
-      <MantineButton
-        onMouseEnter={() => setOpened(true)}
-        onMouseLeave={() => setOpened(false)}
-        styles={{
-          label: {
-            fontSize: 'var(--font-size--btn)',
-            lineHeight: 'var(--font-size-btn-l)',
-            color: buttonProps.disabled ? 'var(--dark2)' : mainColor,
-            fontWeight: fontWeight,
-          },
-          root: {
-            backgroundColor: buttonProps.disabled
-              ? 'var(--dark5) !important'
-              : bgColor,
-            padding: 'var(--spacer-xs) var(--spacer-s)',
-            height: 'fit-content',
-            borderColor: buttonProps.disabled
-              ? 'var(--dark2)'
-              : mainColor,
-            '&:hover': {
-              backgroundColor: hoverColor,
-            },
-          },
-        }}
-        {...buttonProps}
-      />
+      <>
+        {!buttonProps.href ? (
+          <MantineButton
+            onMouseEnter={() => setOpened(true)}
+            onMouseLeave={() => setOpened(false)}
+            styles={{
+              label: {
+                fontSize: 'var(--font-size--btn)',
+                lineHeight: 'var(--font-size-btn-l)',
+                color: buttonProps.disabled
+                  ? 'var(--dark2)'
+                  : mainColor,
+                fontWeight: fontWeight,
+              },
+              root: {
+                backgroundColor: buttonProps.disabled
+                  ? 'var(--dark5) !important'
+                  : bgColor,
+                padding: 'var(--spacer-xs) var(--spacer-s)',
+                height: 'fit-content',
+                borderColor: buttonProps.disabled
+                  ? 'var(--dark2)'
+                  : mainColor,
+                '&:hover': {
+                  backgroundColor: hoverColor,
+                },
+              },
+            }}
+            {...buttonProps}
+          />
+        ) : (
+          <MantineButton
+            onMouseEnter={() => setOpened(true)}
+            onMouseLeave={() => setOpened(false)}
+            component="a"
+            styles={{
+              label: {
+                fontSize: 'var(--font-size--btn)',
+                lineHeight: 'var(--font-size-btn-l)',
+                color: buttonProps.disabled
+                  ? 'var(--dark2)'
+                  : mainColor,
+                fontWeight: fontWeight,
+              },
+              root: {
+                backgroundColor: buttonProps.disabled
+                  ? 'var(--dark5) !important'
+                  : bgColor,
+                padding: 'var(--spacer-xs) var(--spacer-s)',
+                height: 'fit-content',
+                borderColor: buttonProps.disabled
+                  ? 'var(--dark2)'
+                  : mainColor,
+                '&:hover': {
+                  backgroundColor: hoverColor,
+                },
+              },
+            }}
+            {...(buttonProps as ButtonProps<'a'>)}
+          />
+        )}
+      </>
     ),
     [bgColor, buttonProps, fontWeight, hoverColor, mainColor]
   );

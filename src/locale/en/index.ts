@@ -12,7 +12,8 @@ import { users } from './users';
 import { errorPage } from './errorPage';
 import { groups } from './groups';
 import { ui } from './ui';
-import {helpers} from './helpers';
+import { helpers } from './helpers';
+import { tag } from './tag';
 
 const en = {
   accept: 'Accept',
@@ -23,13 +24,14 @@ const en = {
   cancel: 'Cancel',
   yes: 'Yes',
   no: 'No',
-  sure: "i'M sure",
+  sure: "I'M sure",
   error: 'error',
   success: 'successes',
   language: 'language',
   all: 'all',
   create: 'create',
   edit: 'edit',
+  toList: 'To list',
   attempts,
   groups,
   placeholders,
@@ -48,6 +50,7 @@ const en = {
   tournament,
   ui,
   helpers,
+  tag,
 };
 
 export default en;

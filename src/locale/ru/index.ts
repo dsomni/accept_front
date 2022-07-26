@@ -13,6 +13,7 @@ import { errorPage } from './errorPage';
 import { groups } from './groups';
 import { ui } from './ui';
 import { helpers } from './helpers';
+import { tag } from './tag';
 
 const ru = {
   accept: 'Accept',
@@ -30,6 +31,7 @@ const ru = {
   all: 'Все',
   create: 'Создать',
   edit: 'Изменить',
+  toList: 'К списку',
   attempts,
   groups,
   placeholders,
@@ -48,6 +50,7 @@ const ru = {
   tournament,
   ui,
   helpers,
+  tag,
 };
 
 export default ru;
