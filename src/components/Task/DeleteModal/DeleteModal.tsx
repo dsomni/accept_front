@@ -22,6 +22,8 @@ const DeleteModal: FC<{
   >([]);
   const { locale, lang } = useLocale();
 
+  const [toList, setToList] = useState(false);
+
   useEffect(() => {
     let cleanUp = false;
 
@@ -52,7 +54,7 @@ const DeleteModal: FC<{
       lang,
       (_: any) => '',
       body,
-      () => {},
+      () => setToList(true),
       { autoClose: 8000 }
     );
   }, [task.spec, locale, lang]);
@@ -97,33 +99,29 @@ const DeleteModal: FC<{
             spacing="lg"
             className={deleteModalStyles.buttons}
           >
-            <Button
-              variant="outline"
-              kind="positive"
-              autoFocus
-              styles={{
-                label: {
-                  fontWeight: 400,
-                  fontSize: 'var(--font-size-s)',
-                },
-              }}
-              onClick={() => setActive(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              kind="negative"
-              styles={{
-                label: {
-                  fontWeight: 400,
-                  fontSize: 'var(--font-size-s)',
-                },
-              }}
-              onClick={() => handleDelete()}
-            >
-              {locale.delete}
-            </Button>
+            {!toList ? (
+              <>
+                <Button
+                  variant="outline"
+                  kind="positive"
+                  autoFocus
+                  onClick={() => setActive(false)}
+                >
+                  {locale.cancel}
+                </Button>
+                <Button
+                  variant="outline"
+                  kind="negative"
+                  onClick={() => handleDelete()}
+                >
+                  {locale.delete}
+                </Button>
+              </>
+            ) : (
+              <Button variant="outline" href="/task/list">
+                {locale.toList}
+              </Button>
+            )}
           </Group>
         </div>
       </SimpleModal>

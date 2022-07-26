@@ -12,7 +12,7 @@ import { users } from './users';
 import { errorPage } from './errorPage';
 import { groups } from './groups';
 import { ui } from './ui';
-import {helpers} from './helpers';
+import { helpers } from './helpers';
 
 const en = {
   accept: 'Accept',
@@ -30,6 +30,7 @@ const en = {
   all: 'all',
   create: 'create',
   edit: 'edit',
+  toList: 'To list',
   attempts,
   groups,
   placeholders,
