@@ -1,16 +1,16 @@
-import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { sendRequest } from '@requests/request';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import Button from '@ui/Button/Button';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -21,7 +21,6 @@ const DeleteModal: FC<{
     IAssignmentSchemaDisplay[]
   >([]);
   const { locale, lang } = useLocale();
-  const router = useRouter();
 
   useEffect(() => {
     let cleanUp = false;
@@ -53,10 +52,10 @@ const DeleteModal: FC<{
       lang,
       (_: any) => '',
       body,
-      () => router.push('/task/list'),
+      () => {},
       { autoClose: 8000 }
     );
-  }, [task.spec, locale, router, lang]);
+  }, [task.spec, locale, lang]);
 
   return (
     <>
@@ -100,11 +99,11 @@ const DeleteModal: FC<{
           >
             <Button
               variant="outline"
-              color="green"
+              kind="positive"
               autoFocus
               styles={{
                 label: {
-                  fontWeight: 'normal',
+                  fontWeight: 400,
                   fontSize: 'var(--font-size-s)',
                 },
               }}
@@ -114,10 +113,10 @@ const DeleteModal: FC<{
             </Button>
             <Button
               variant="outline"
-              color="red"
+              kind="negative"
               styles={{
                 label: {
-                  fontWeight: 'normal',
+                  fontWeight: 400,
                   fontSize: 'var(--font-size-s)',
                 },
               }}

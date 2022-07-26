@@ -5,7 +5,6 @@ import {
   useEffect,
   useMemo,
   useState,
-  useCallback,
 } from 'react';
 import {
   Button as MantineButton,
@@ -13,7 +12,7 @@ import {
   Popover,
   PopoverProps,
 } from '@mantine/core';
-import styles from './button.module.css';
+import styleSheet from './button.module.css';
 
 interface Props extends ButtonProps<'button'> {
   popoverProps?: Omit<PopoverProps, 'opened' | 'children' | 'target'>;
@@ -26,6 +25,7 @@ const Button: FC<Props> = ({
   popoverContent,
   kind,
   variant,
+  styles,
   ...buttonProps
 }) => {
   const [opened, setOpened] = useState(false);
@@ -112,6 +112,7 @@ const Button: FC<Props> = ({
         onMouseEnter={() => setOpened(true)}
         onMouseLeave={() => setOpened(false)}
         styles={{
+          ...styles,
           label: {
             fontSize: 'var(--font-size--btn)',
             lineHeight: 'var(--font-size-btn-l)',
@@ -135,7 +136,7 @@ const Button: FC<Props> = ({
         {...buttonProps}
       />
     ),
-    [bgColor, buttonProps, fontWeight, hoverColor, mainColor]
+    [bgColor, buttonProps, fontWeight, hoverColor, mainColor, styles]
   );
 
   return (
@@ -152,7 +153,7 @@ const Button: FC<Props> = ({
       {...popoverProps}
       style={{ ...popoverProps?.style, ...buttonProps.style }}
     >
-      <div className={styles.popoverContentWrapper}>
+      <div className={styleSheet.popoverContentWrapper}>
         {popoverContent}
       </div>
     </Popover>
