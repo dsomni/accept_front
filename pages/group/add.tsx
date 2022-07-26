@@ -1,44 +1,66 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useForm } from '@mantine/form';
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { getApiUrl } from '@utils/getServerUrl';
-import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { IGroup } from '@custom-types/data/IGroup';
 import Form from '@components/Group/Form/Form';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import { IUser } from '@custom-types/data/IUser';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 const initialValues = {
   spec: '',
-  title: 'Title',
+  name: '',
   members: [],
 };
 
-function AddGroup({ props }: { props: { users: IUser[] } }) {
+function AddGroup(props: { users: IUser[] }) {
   const users = props.users;
 
   const { locale, lang } = useLocale();
 
   const form = useForm({
     initialValues,
+    validate: {
+      name: (value) =>
+        value.length < 5 ? locale.group.form.validation.name : null,
+      members: (value) =>
+        value.length < 2
+          ? locale.group.form.validation.members
+          : null,
+    },
   });
 
   const handleSubmit = useCallback(() => {
-    const body = {
-      spec: form.values.spec,
-      title: form.values['title'],
-    };
-    requestWithNotify(
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.group.validation.error,
+        autoClose: 5000,
+      });
+      return;
+    }
+    requestWithNotify<{ group: IGroup; members: string[] }, boolean>(
       'group/add',
       'POST',
       locale.notify.group.create,
       lang,
-      (response: IGroup) => response.spec,
-      body
+      (response: boolean) => '',
+      {
+        group: {
+          spec: form.values.spec,
+          name: form.values.name,
+        },
+        members: form.values.members,
+      }
     );
-  }, [form.values, locale, lang]);
+  }, [form, locale, lang]);
 
   return (
     <>
@@ -61,22 +83,16 @@ export default AddGroup;
 const API_URL = getApiUrl();
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
-  const users = await fetch(`${API_URL}/api/user`, {
+  const usersResponse = await fetch(`${API_URL}/api/user`, {
     method: 'GET',
   });
-  if (users.status === 200) {
+  if (usersResponse.status === 200) {
+    const users = await usersResponse.json();
     return {
       props: {
         users: users,
       },
+      revalidate: 120, //seconds
     };
   }
   return {
@@ -84,12 +100,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       permanent: false,
       destination: '/Not-Found',
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };

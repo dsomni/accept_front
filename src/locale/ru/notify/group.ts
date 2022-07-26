@@ -14,4 +14,7 @@ export const group = {
     success: 'Группа успешно удалён',
     error: 'Ошибка при удалении группы',
   },
+  validation: {
+    error: 'Ошибка валидации',
+  },
 };

@@ -8,6 +8,10 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { IGroup } from '@custom-types/data/IGroup';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { IUser } from '@custom-types/data/IUser';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 function EditGroup(props: { group: IGroup; users: IUser[] }) {
   const group = props.group;
@@ -19,16 +23,38 @@ function EditGroup(props: { group: IGroup; users: IUser[] }) {
     () => ({
       ...group,
       members: users
-        .filter((user) => user.groups.includes(group))
+        .filter(
+          (user) =>
+            user.groups.findIndex(
+              (item) => item.spec === group.spec
+            ) >= 0
+        )
         .map((user) => user.login),
     }),
     [group, users]
   );
   const form = useForm({
     initialValues: formValues,
+    validate: {
+      name: (value) =>
+        value.length < 5 ? locale.group.form.validation.name : null,
+      members: (value) =>
+        value.length < 2
+          ? locale.group.form.validation.members
+          : null,
+    },
   });
 
   const handleSubmit = useCallback(() => {
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.group.validation.error,
+        autoClose: 5000,
+      });
+      return;
+    }
     requestWithNotify(
       `group/edit`,
       'POST',
@@ -43,7 +69,7 @@ function EditGroup(props: { group: IGroup; users: IUser[] }) {
         members: form.values.members,
       }
     );
-  }, [form.values, locale, lang]);
+  }, [form, locale, lang]);
 
   return (
     <div>
