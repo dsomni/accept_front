@@ -1,27 +1,28 @@
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { FC, memo, useEffect, useMemo, useState } from 'react';
+import { FC, memo } from 'react';
 import TaskSelector from '../TaskSelector/TaskSelector';
 import styles from './taskAdding.module.css';
+import stepperStyles from '@styles/ui/stepper.module.css';
+import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
 const TaskAdding: FC<{ form: any; initialTasks: Item[] }> = ({
   form,
   initialTasks,
 }) => {
-  useEffect(() => {
-    console.log(initialTasks)
-  }, [initialTasks])
   return (
     <>
-      <div className={styles.wrapper}>
-        <TaskSelector
-          classNames={{
-            label: styles.label,
-          }}
-          initialTasks={initialTasks}
-          setUsed={(value) => {
-            form.setFieldValue('tasks', value);
-          }}
-        />
+      <div className={stepperStyles.wrapper}>
+        <InputWrapper {...form.getInputProps('tasks')}>
+          <TaskSelector
+            classNames={{
+              label: stepperStyles.label,
+            }}
+            initialTasks={initialTasks}
+            setUsed={(value) => {
+              form.setFieldValue('tasks', value);
+            }}
+          />
+        </InputWrapper>
       </div>
     </>
   );

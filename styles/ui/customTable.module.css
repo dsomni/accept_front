@@ -1,5 +1,6 @@
 .wrapper {
   min-height: 70vh;
+  padding-bottom: var(--spacer-l);
 }
 .table {
   width: 100%;

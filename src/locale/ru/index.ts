@@ -30,6 +30,7 @@ const ru = {
   all: 'Все',
   create: 'Создать',
   edit: 'Изменить',
+  toList: 'К списку',
   attempts,
   groups,
   placeholders,

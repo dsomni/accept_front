@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getServerUrl } from '@utils/getServerUrl';
+import { getApiUrl } from '@utils/getServerUrl';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import Description from '@components/AssignmentSchema/Description/Description';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -51,7 +51,7 @@ Assignment.getLayout = (page: ReactNode) => {
 
 export default Assignment;
 
-const SERVER_URL = getServerUrl();
+const SERVER_URL = getApiUrl();
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params || typeof params?.spec !== 'string') {
@@ -63,7 +63,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const assignment = await fetch(
-    `${SERVER_URL}/api/assignments/schema/${params.spec}`,
+    `${SERVER_URL}/api/assignment_schema/${params.spec}`,
     {
       method: 'GET',
     }

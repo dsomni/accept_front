@@ -8,11 +8,14 @@ import Form from '@components/AssignmentSchema/Form/Form';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { errorNotification, newNotification } from '@utils/notificationFunctions';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 const initialValues = {
   spec: '',
-  title: 'Уроки французского',
+  title: '',
   description: '',
   author: '',
   tasks: [],
@@ -27,22 +30,36 @@ function AddAssignmentSchema() {
   const form = useForm({
     initialValues,
     validate: {
-      title: (value) => value.length < 5 ? locale.assignmentSchema.form.validation.title : null,
-      description: (value) => value.length < 20 ? locale.assignmentSchema.form.validation.description : null,
-      tasks: (value) => value.length === 0 ? locale.assignmentSchema.form.validation.tasks: null,
-      defaultDuration: (value) => value <= 5 ? locale.assignmentSchema.form.validation.defaultDuration : null,
-    }
+      title: (value) =>
+        value.length < 5
+          ? locale.assignmentSchema.form.validation.title
+          : null,
+      description: (value) =>
+        value.length < 20
+          ? locale.assignmentSchema.form.validation.description
+          : null,
+      tasks: (value) =>
+        value
+          ? value.length === 0
+            ? locale.assignmentSchema.form.validation.tasks
+            : null
+          : locale.assignmentSchema.form.validation.tasks,
+      defaultDuration: (value) =>
+        value <= 5
+          ? locale.assignmentSchema.form.validation.defaultDuration
+          : null,
+    },
   });
 
   const handleSubmit = useCallback(() => {
-    if(form.validate().hasErrors) {
+    if (form.validate().hasErrors) {
       const id = newNotification({});
       errorNotification({
         id,
         title: locale.notify.task.validation.error,
         autoClose: 5000,
       });
-      return
+      return;
     }
     let body: any = {
       ...form.values,
@@ -59,7 +76,7 @@ function AddAssignmentSchema() {
       (response: IAssignmentSchema) => response.spec,
       body
     );
-  }, [form.values, user?.login, locale, lang]);
+  }, [form, user?.login, locale, lang]);
 
   return (
     <>

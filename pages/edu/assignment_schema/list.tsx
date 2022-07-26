@@ -56,7 +56,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 6,
+    size: 8,
   },
   {
     label: locale.assignmentSchema.list.author,
@@ -73,7 +73,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 3,
+    size: 2,
   },
   {
     label: locale.assignmentSchema.list.taskNumber,

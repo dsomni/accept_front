@@ -28,7 +28,9 @@ function Assignment(props: { assignment: IAssignmentSchema }) {
           {
             color: 'green',
             onClick: () => {
-              router.push(`/edu/assignment_schema/edit/${assignment.spec}`);
+              router.push(
+                `/edu/assignment_schema/edit/${assignment.spec}`
+              );
             },
             icon: <Pencil height={20} width={20} />,
           },

@@ -37,7 +37,7 @@ function EditAssignmentSchema() {
     let cleanUp = false;
     if (typeof router.query.spec === 'string') {
       sendRequest<{ spec: string }, IAssignmentSchema>(
-        `assignments/schema/${router.query.spec}`,
+        `assignments_schema/${router.query.spec}`,
         'GET',
         undefined,
         10000
@@ -113,7 +113,7 @@ function EditAssignmentSchema() {
       tags: form.values['tags'].map((tag: Item) => tag.value),
     };
     requestWithNotify(
-      `assignments/schema/edit/${assignmentSchema.spec}`,
+      `assignments_schema/edit/${assignmentSchema.spec}`,
       'POST',
       locale.notify.assignmentSchema.edit,
       lang,

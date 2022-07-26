@@ -1,10 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import { ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { useForm } from '@mantine/form';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -14,7 +9,10 @@ import Form from '@components/AssignmentSchema/Form/Form';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { errorNotification, newNotification } from '@utils/notificationFunctions';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 function EditAssignmentSchema({
   assignment_schema,
@@ -35,18 +33,32 @@ function EditAssignmentSchema({
         label: task?.title,
         value: task?.spec,
       })),
-      defaultDuration: Math.floor(assignment_schema.defaultDuration / 60 / 1000)
+      defaultDuration: Math.floor(
+        assignment_schema.defaultDuration / 60 / 1000
+      ),
     }),
     [assignment_schema]
   );
   const form = useForm({
     initialValues: formValues,
     validate: {
-      title: (value) => value.length < 5 ? locale.assignmentSchema.form.validation.title : null,
-      description: (value) => value.length < 20 ? locale.assignmentSchema.form.validation.description : null,
-      tasks: (value) => value.length === 0 ? locale.assignmentSchema.form.validation.tasks: null,
-      defaultDuration: (value) => value <= 5 ? locale.assignmentSchema.form.validation.defaultDuration : null,
-    }
+      title: (value) =>
+        value.length < 5
+          ? locale.assignmentSchema.form.validation.title
+          : null,
+      description: (value) =>
+        value.length < 20
+          ? locale.assignmentSchema.form.validation.description
+          : null,
+      tasks: (value) =>
+        value.length === 0
+          ? locale.assignmentSchema.form.validation.tasks
+          : null,
+      defaultDuration: (value) =>
+        value <= 5
+          ? locale.assignmentSchema.form.validation.defaultDuration
+          : null,
+    },
   });
 
   useEffect(() => {
@@ -54,14 +66,14 @@ function EditAssignmentSchema({
   }, [formValues]); // eslint-disable-line
 
   const handleSubmit = useCallback(() => {
-    if(form.validate().hasErrors) {
+    if (form.validate().hasErrors) {
       const id = newNotification({});
       errorNotification({
         id,
         title: locale.notify.task.validation.error,
         autoClose: 5000,
       });
-      return
+      return;
     }
     let body: any = {
       ...form.values,
@@ -77,7 +89,7 @@ function EditAssignmentSchema({
       (response: IAssignmentSchema) => response.spec,
       body
     );
-  }, [form.values, locale, lang]);
+  }, [form, locale, lang]);
 
   return (
     <>
@@ -108,8 +120,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const assignmentSchemaResponse = await fetch(
-    `${API_URL}/api/assignment_schema/${params.spec}`
-    );
+    `${API_URL}/api/bundle/assignment-schema/${params.spec}`
+  );
   if (assignmentSchemaResponse.status === 200) {
     const assignmentSchema: IAssignmentSchema =
       await assignmentSchemaResponse.json();

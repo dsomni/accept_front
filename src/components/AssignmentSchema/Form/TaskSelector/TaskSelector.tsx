@@ -11,6 +11,7 @@ import {
 } from '@ui/CustomTransferList/CustomTransferList';
 import { TaskItem } from './TaskItem/TaskItem';
 import { setter } from '@custom-types/ui/atomic';
+import { LoadingOverlay } from '@mantine/core';
 
 const TaskSelector: FC<{
   initialTasks: Item[];
@@ -30,11 +31,11 @@ const TaskSelector: FC<{
       'task/list',
       'GET',
       undefined,
-      1000
+      3000
     ).then((res) => {
       if (res.error) return;
       const tasks = res.response;
-      const selected = selectedTasks.map(task => task.value);
+      const selected = selectedTasks.map((task) => task.value);
       let newAvailableTasks: Item[] = [];
       let newSelectedTasks: Item[] = [];
 
@@ -43,10 +44,10 @@ const TaskSelector: FC<{
           value: tasks[i].spec,
           label: tasks[i].title,
         };
-        if(!selected.includes(task.value)){
-          newAvailableTasks.push(task)
-        }else{
-          newSelectedTasks.push(task)
+        if (!selected.includes(task.value)) {
+          newAvailableTasks.push(task);
+        } else {
+          newSelectedTasks.push(task);
         }
       }
       setSelectedTasks(newSelectedTasks);
@@ -74,6 +75,7 @@ const TaskSelector: FC<{
 
   return (
     <div className={styles.wrapper}>
+      <LoadingOverlay visible={loading} />
       {!loading && (
         <CustomTransferList
           defaultOptions={availableTasks}

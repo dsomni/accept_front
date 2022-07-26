@@ -12,7 +12,7 @@ import { users } from './users';
 import { errorPage } from './errorPage';
 import { groups } from './groups';
 import { ui } from './ui';
-import {helpers} from './helpers';
+import { helpers } from './helpers';
 
 const en = {
   accept: 'Accept',
@@ -23,13 +23,14 @@ const en = {
   cancel: 'Cancel',
   yes: 'Yes',
   no: 'No',
-  sure: "i'M sure",
-  error: 'error',
-  success: 'successes',
-  language: 'language',
-  all: 'all',
-  create: 'create',
-  edit: 'edit',
+  sure: "I'm sure",
+  error: 'Error',
+  success: 'Successes',
+  language: 'Language',
+  all: 'All',
+  create: 'Create',
+  edit: 'Edit',
+  toList: 'To list',
   attempts,
   groups,
   placeholders,

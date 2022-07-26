@@ -5,14 +5,18 @@ import { useLocale } from '@hooks/useLocale';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { sendRequest } from '@requests/request';
+import TagList from '@ui/TagList/TagList';
 
-const Description: FC<{ assignment: IAssignmentSchema }> = ({
-  assignment,
-}) => {
+const Description: FC<{
+  assignment: IAssignmentSchema;
+  preview?: boolean;
+}> = ({ assignment, preview }) => {
   const description = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
 
-  const [tasks, setTasks] = useState<ITaskDisplay[]>([]);
+  const [tasks, setTasks] = useState<ITaskDisplay[]>(
+    preview ? [] : assignment.tasks
+  );
 
   useEffect(() => {
     if (description.current)
@@ -21,7 +25,7 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
 
   useEffect(() => {
     let cleanUp = false;
-    if (assignment.tasks.length)
+    if (assignment.tasks.length && preview)
       sendRequest<string[], ITaskDisplay[]>(
         'task/list-specs',
         'POST',
@@ -36,11 +40,21 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
     return () => {
       cleanUp = true;
     };
-  }, [assignment.tasks]);
+  }, [assignment.tasks, preview]);
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>{assignment.title}</div>
+      <div className={styles.titleWrapper}>
+        <div className={styles.title}>{assignment.title}</div>
+        <div className={styles.defaultDuration}>{`${
+          locale.assignmentSchema.defaultDuration
+        } ${Math.floor(
+          assignment.defaultDuration / 1000 / 60
+        )}m`}</div>
+      </div>
+      <div className={styles.tags}>
+        <TagList tags={assignment.tags} />
+      </div>
       <div
         className={styles.description}
         dangerouslySetInnerHTML={{ __html: assignment.description }}
@@ -69,7 +83,16 @@ const Description: FC<{ assignment: IAssignmentSchema }> = ({
                 <td className={styles.cell}>
                   {row.author.shortName}
                 </td>
-                <td className={styles.cell}>
+                <td
+                  className={styles.cell}
+                  style={{
+                    color: row.verdict
+                      ? row.verdict.spec === 0
+                        ? 'var(--positive)'
+                        : 'var(--negative)'
+                      : 'black',
+                  }}
+                >
                   {row.verdict?.shortText || '-'}
                 </td>
               </>

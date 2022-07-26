@@ -1,10 +1,12 @@
 import { useLocale } from '@hooks/useLocale';
-import { NumberInput, TextInput } from '@mantine/core';
 
 import { FC, memo, useMemo } from 'react';
 import styles from './mainInfo.module.css';
 import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import TagSelector from '@ui/TagSelector/TagSelector';
+import stepperStyles from '@styles/ui/stepper.module.css';
+import NumberInput from '@ui/NumberInput/NumberInput';
+import TextInput from '@ui/TextInput/TextInput';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -17,19 +19,22 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={stepperStyles.wrapper}>
       <TextInput
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         size="lg"
         label={locale.assignmentSchema.form.title}
         required
+        onBlur={() => {
+          form.validateField('title');
+        }}
         {...form.getInputProps('title')}
       />
       <CustomEditor
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         label={locale.task.form.description}
         form={form}
@@ -37,7 +42,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
       />
       <TagSelector
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         initialTags={initialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
@@ -48,10 +53,14 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
       />
       <NumberInput
         classNames={{
-          label: styles.label,
+          label: stepperStyles.label,
         }}
         size="lg"
         label={locale.assignmentSchema.form.defaultDuration}
+        min={0}
+        onBlur={() => {
+          form.validateField('defaultDuration');
+        }}
         {...form.getInputProps('defaultDuration')}
       />
     </div>

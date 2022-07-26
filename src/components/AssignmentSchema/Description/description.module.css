@@ -2,12 +2,19 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacer-xs);
-  padding: var(--spacer-s) var(--spacer-l);
+  padding: var(--spacer-s) var(--spacer-l) var(--spacer-l)
+    var(--spacer-l);
   font-size: var(--font-size-s);
 }
 
 .title {
   font-size: var(--font-size-xl);
+}
+
+.defaultDuration {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  color: var(--dark3);
 }
 
 .description {

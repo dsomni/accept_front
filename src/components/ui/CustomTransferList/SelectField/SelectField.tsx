@@ -8,10 +8,11 @@ import {
 } from 'react';
 import styles from './selectField.module.css';
 import { Item } from '../CustomTransferList';
-import { TextInput, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 
 import Fuse from 'fuse.js';
+import TextInput from '@ui/TextInput/TextInput';
 
 const fuse_options: Fuse.IFuseOptions<Item> = {
   keys: ['label'],
