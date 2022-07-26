@@ -23,7 +23,7 @@ const en = {
   cancel: 'Cancel',
   yes: 'Yes',
   no: 'No',
-  sure: "i'M sure",
+  sure: "I'M sure",
   error: 'error',
   success: 'successes',
   language: 'language',
