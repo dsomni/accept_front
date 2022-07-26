@@ -3,10 +3,10 @@ import { ActionIcon, Button, Group, Modal } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import styles from './deleteTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-
 import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { pureCallback } from '@custom-types/ui/atomic';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const DeleteTag: FC<{
   item: Item;
@@ -14,18 +14,25 @@ const DeleteTag: FC<{
   refetch: pureCallback<void>;
 }> = ({ item, refetch, deleteURL }) => {
   const [opened, setOpened] = useState(false);
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
 
   const handleSubmit = useCallback(() => {
-    isSuccessful(deleteURL, 'POST', {
-      spec: item.value,
-    }).then((res) => {
-      if (!res.error) {
+    requestWithNotify<{ spec: string }, any>(
+      deleteURL,
+      'POST',
+      locale.tag.delete,
+      lang,
+      (response: any) => '',
+      {
+        spec: item.value,
+      },
+      () => {
         refetch();
         setOpened(false);
-      }
-    });
-  }, [item, refetch, deleteURL]);
+      },
+      { autoClose: 5000 }
+    );
+  }, [deleteURL, locale.tag.delete, lang, item.value, refetch]);
 
   return (
     <div className={styles.wrapper}>

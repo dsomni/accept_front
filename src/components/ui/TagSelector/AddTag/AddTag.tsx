@@ -9,13 +9,15 @@ import { pureCallback } from '@custom-types/ui/atomic';
 import TextInput from '@ui/TextInput/TextInput';
 import Button from '@ui/Button/Button';
 import Icon from '@ui/Icon/Icon';
+import { requestWithNotify } from '@utils/requestWithNotify';
+import { ITag } from '@custom-types/data/ITag';
 
 const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   refetch,
   addURL,
 }) => {
   const [opened, setOpened] = useState(false);
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const [title, setTitle] = useState('');
   const [error, setError] = useState('');
 
@@ -34,17 +36,24 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   const handleSubmit = useCallback(
     (title: string) => {
       if (validate(title)) {
-        isSuccessful(addURL, 'POST', {
-          title: title,
-        }).then((res) => {
-          if (!res.error) {
+        requestWithNotify<{ title: string }, ITag>(
+          addURL,
+          'POST',
+          locale.tag.add,
+          lang,
+          (response: ITag) => response.spec,
+          {
+            title: title,
+          },
+          () => {
             refetch();
             setOpened(false);
-          }
-        });
+          },
+          { autoClose: 5000 }
+        );
       }
     },
-    [addURL, refetch, validate]
+    [addURL, lang, locale.tag.add, refetch, validate]
   );
 
   return (

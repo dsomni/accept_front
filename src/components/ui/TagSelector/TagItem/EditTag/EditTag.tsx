@@ -13,6 +13,8 @@ import { useLocale } from '@hooks/useLocale';
 import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { pureCallback } from '@custom-types/ui/atomic';
+import { requestWithNotify } from '@utils/requestWithNotify';
+import { ITag } from '@custom-types/data/ITag';
 
 const EditTag: FC<{
   item: Item;
@@ -20,7 +22,7 @@ const EditTag: FC<{
   refetch: pureCallback<void>;
 }> = ({ item, refetch, updateURL }) => {
   const [opened, setOpened] = useState(false);
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const [title, setTitle] = useState(item.label);
   const [error, setError] = useState('');
 
@@ -46,18 +48,25 @@ const EditTag: FC<{
   const handleSubmit = useCallback(
     (title: string) => {
       if (validate(title)) {
-        isSuccessful(updateURL, 'POST', {
-          spec: item.value,
-          title: title,
-        }).then((res) => {
-          if (!res.error) {
+        requestWithNotify<ITag, boolean>(
+          updateURL,
+          'POST',
+          locale.tag.edit,
+          lang,
+          (response: boolean) => '',
+          {
+            spec: item.value,
+            title: title,
+          },
+          () => {
             refetch();
             setOpened(false);
-          }
-        });
+          },
+          { autoClose: 5000 }
+        );
       }
     },
-    [item, refetch, validate, updateURL]
+    [validate, updateURL, locale.tag.edit, lang, item.value, refetch]
   );
 
   return (
