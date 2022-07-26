@@ -27,7 +27,7 @@ const initialValues = {
   title: '',
   tags: [],
   author: '',
-  complexity: 50,
+  complexity: 15,
   description: '',
   constraintsTime: 1,
   constraintsMemory: 16,

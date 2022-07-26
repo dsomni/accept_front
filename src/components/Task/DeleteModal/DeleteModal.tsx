@@ -1,16 +1,16 @@
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Group } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { sendRequest } from '@requests/request';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import Button from '@ui/Button/Button';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -21,7 +21,8 @@ const DeleteModal: FC<{
     IAssignmentSchemaDisplay[]
   >([]);
   const { locale, lang } = useLocale();
-  const router = useRouter();
+
+  const [toList, setToList] = useState(false);
 
   useEffect(() => {
     let cleanUp = false;
@@ -53,10 +54,10 @@ const DeleteModal: FC<{
       lang,
       (_: any) => '',
       body,
-      () => router.push('/task/list'),
+      () => setToList(true),
       { autoClose: 8000 }
     );
-  }, [task.spec, locale, router, lang]);
+  }, [task.spec, locale, lang]);
 
   return (
     <>
@@ -98,33 +99,29 @@ const DeleteModal: FC<{
             spacing="lg"
             className={deleteModalStyles.buttons}
           >
-            <Button
-              variant="outline"
-              color="green"
-              autoFocus
-              styles={{
-                label: {
-                  fontWeight: 'normal',
-                  fontSize: 'var(--font-size-s)',
-                },
-              }}
-              onClick={() => setActive(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              color="red"
-              styles={{
-                label: {
-                  fontWeight: 'normal',
-                  fontSize: 'var(--font-size-s)',
-                },
-              }}
-              onClick={() => handleDelete()}
-            >
-              {locale.delete}
-            </Button>
+            {!toList ? (
+              <>
+                <Button
+                  variant="outline"
+                  kind="positive"
+                  autoFocus
+                  onClick={() => setActive(false)}
+                >
+                  {locale.cancel}
+                </Button>
+                <Button
+                  variant="outline"
+                  kind="negative"
+                  onClick={() => handleDelete()}
+                >
+                  {locale.delete}
+                </Button>
+              </>
+            ) : (
+              <Button variant="outline" href="/task/list">
+                {locale.toList}
+              </Button>
+            )}
           </Group>
         </div>
       </SimpleModal>

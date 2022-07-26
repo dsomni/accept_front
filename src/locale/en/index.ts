@@ -13,6 +13,7 @@ import { errorPage } from './errorPage';
 import { groups } from './groups';
 import { ui } from './ui';
 import { helpers } from './helpers';
+import { tag } from './tag';
 
 const en = {
   accept: 'Accept',
@@ -49,6 +50,7 @@ const en = {
   tournament,
   ui,
   helpers,
+  tag,
 };
 
 export default en;

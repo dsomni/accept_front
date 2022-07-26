@@ -30,10 +30,14 @@ interface Item {
 }
 
 interface ITaskDisplayList
-  extends Omit<ITaskDisplay, 'title' | 'author' | 'verdict'> {
+  extends Omit<
+    ITaskDisplay,
+    'title' | 'author' | 'verdict' | 'complexity'
+  > {
   title: Item;
   author: Item;
   verdict: Item;
+  complexity: Item;
 }
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
@@ -61,6 +65,22 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
       a.author.value > b.author.value
         ? 1
         : a.author.value == b.author.value
+        ? 0
+        : -1,
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: true,
+    hidden: true,
+    size: 3,
+  },
+  {
+    label: locale.task.list.complexity,
+    key: 'complexity',
+    sortable: true,
+    sortFunction: (a: any, b: any) =>
+      a.complexity.value > b.complexity.value
+        ? 1
+        : a.complexity.value == b.complexity.value
         ? 0
         : -1,
     sorted: 0,
@@ -111,6 +131,23 @@ const processData = (
             }}
           >
             {task.verdict?.shortText || '-'}
+          </span>
+        ),
+      },
+      complexity: {
+        value: task.complexity,
+        display: (
+          <span
+            style={{
+              color:
+                task.complexity < 20
+                  ? 'var(--positive)'
+                  : task.complexity > 80
+                  ? 'var(--negative)'
+                  : 'var(--neutral)',
+            }}
+          >
+            {task.complexity.toString() + '%'}
           </span>
         ),
       },
