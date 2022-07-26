@@ -1,6 +1,6 @@
 export const list = {
   title: 'Название задачи',
   author: 'Автор',
-  grade: 'Класс',
+  complexity: 'Сложность',
   verdict: 'Вердикт',
 };
