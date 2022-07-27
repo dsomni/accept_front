@@ -27,13 +27,17 @@ import {
 
 function SignIn() {
   const { locale } = useLocale();
-  const { user, signIn } = useUser();
+  const { signIn } = useUser();
   const router = useRouter();
   const form = useForm({
     initialValues: {
       login: '',
       password: '',
     },
+    validate: {
+      login: (value) => value.length < 5 ? locale.auth.errors.login : null,
+      password: (value) => value.length < 5 ? locale.auth.errors.password : null,
+    }
   });
 
   const handleSignIn = useCallback(

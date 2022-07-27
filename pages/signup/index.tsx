@@ -33,6 +33,7 @@ import {
 } from '@utils/notificationFunctions';
 import { sendRequest } from '@requests/request';
 import { IRegUser, IUser } from '@custom-types/data/IUser';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const stepFields = [
   ['login'],
@@ -47,11 +48,8 @@ type formFields =
   | 'name'
   | 'email';
 function SignUp() {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const router = useRouter();
-  const { user, signIn } = useUser();
-
-  const [hasErrors, setHasErrors] = useState(true);
   const [active, setActive] = useState(0);
   const nextStep = () =>
     setActive((current) => {
@@ -80,46 +78,42 @@ function SignUp() {
       confirmPassword: '',
     },
     validate: {
+      login: (value) => value.length < 5 ? locale.auth.errors.login: null,
+      password: (value) => value.length < 5 ? locale.auth.errors.password: null,
       confirmPassword: (value, values) =>
-        value !== values.password ? 'Passwords did not match' : null,
+        value !== values.password ? locale.auth.errors.confirm : null,
+      email: (value) => value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ? locale.auth.errors.email: null,
+      name: (value) => value.length > 50 ? locale.auth.errors.name: null,
     },
   });
 
-  useEffect(() => {
-    form.validate();
-  }, []); //eslint-disable-line
 
   const handleSignUp = useCallback(() => {
-    if (form.validate()) {
-      const user: IRegUser = {
-        login: form.values.login,
-        password: form.values.password,
-        email: form.values.email,
-        name: form.values.name,
-      };
-      const id = newNotification({
-        title: locale.notify.auth.signUp.loading,
-        message: locale.loading + '...',
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.auth.validation,
+        autoClose: 5000,
       });
-      sendRequest<IRegUser, IUser>('auth/signup', 'POST', user).then(
-        (res) => {
-          if (!res.error) {
-            successNotification({
-              id,
-              title: locale.notify.auth.signUp.success,
-              autoClose: 5000,
-            });
-            router.push(`/signin?referrer=${router.query.referrer}`);
-          } else {
-            errorNotification({
-              id,
-              title: locale.notify.auth.signUp.error,
-              autoClose: 5000,
-            });
-          }
-        }
-      );
+      return
     }
+    const user: IRegUser = {
+      login: form.values.login,
+      password: form.values.password,
+      email: form.values.email,
+      name: form.values.name,
+    };
+
+    requestWithNotify<IRegUser, IUser>(
+      'auth/signup',
+      'POST',
+      locale.notify.auth.signUp,
+      lang,
+      (user) => user.shortName,
+      user,
+      () => router.push(`/signin?referrer=${router.query.referrer}`)
+    )
   }, [locale, form, router]);
 
   return (
