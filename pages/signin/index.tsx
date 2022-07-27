@@ -68,9 +68,6 @@ function SignIn() {
 
   return (
     <>
-      <Head>
-        <title>Sign In | Accept</title>
-      </Head>
       <form className={styles.formWrapper}>
         <TextInput
           required
@@ -129,6 +126,6 @@ function SignIn() {
 }
 
 SignIn.getLayout = (page: ReactElement) => {
-  return <LoginLayout title={'Вход'}>{page}</LoginLayout>;
+  return <LoginLayout title={'login'}>{page}</LoginLayout>;
 };
 export default SignIn;

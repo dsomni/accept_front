@@ -1,11 +1,5 @@
 import { LoginLayout } from '@layouts/LoginLayout';
-import {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
@@ -25,7 +19,7 @@ import {
 import { IRegUser, IUser } from '@custom-types/data/IUser';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { sendRequest } from '@requests/request';
-import { Login } from 'tabler-icons-react';
+import { AlertCircle } from 'tabler-icons-react';
 
 const stepFields = [
   ['login'],
@@ -42,24 +36,8 @@ type formFields =
 function SignUp() {
   const { locale, lang } = useLocale();
   const router = useRouter();
+
   const [active, setActive] = useState(0);
-  const nextStep = () =>
-    setActive((current) => {
-      // for (let i = 0; i < stepFields[current].length; i++) {
-      //   const field = stepFields[current][i] as formFields;
-      //   form.validate();
-      //   form.validateField(field);
-      //   // console.log(form.errors);
-      //   if (form.errors[field] !== null) {
-      //     setHasErrors(true);
-      //     return current;
-      //   }
-      // }
-      // setHasErrors(false);
-      return current < 3 ? current + 1 : current;
-    });
-  const prevStep = () =>
-    setActive((current) => (current > 0 ? current - 1 : current));
 
   const form = useForm({
     initialValues: {
@@ -97,6 +75,42 @@ function SignUp() {
     },
   });
 
+  const nextStep = useCallback(
+    () =>
+      setActive((current) => {
+        for (let i = 0; i < stepFields[current].length; i++) {
+          const field = stepFields[current][i] as formFields;
+          form.validate();
+          form.validateField(field);
+          if (form.errors[field]) {
+            return current;
+          }
+        }
+        return current < 3 ? current + 1 : current;
+      }),
+    [form]
+  );
+  const prevStep = useCallback(
+    () =>
+      setActive((current) => (current > 0 ? current - 1 : current)),
+    []
+  );
+
+  const getErrorsStep = useCallback(
+    (step: number) => {
+      let error = false;
+      for (let i = 0; i < stepFields[step].length; i++) {
+        const field = stepFields[step][i];
+        if (form.errors[field]) {
+          error = true;
+          break;
+        }
+      }
+      return error;
+    },
+    [form.errors]
+  );
+
   const onLoginBlur = useCallback(() => {
     if (!form.validateField('login').hasError)
       sendRequest<undefined, boolean>(
@@ -115,7 +129,10 @@ function SignUp() {
   }, [form.values.login]);
 
   const handleSignUp = useCallback(() => {
-    if (form.validate().hasErrors) {
+    if (
+      Object.keys(form.errors).length > 0 ||
+      form.validate().hasErrors
+    ) {
       const id = newNotification({});
       errorNotification({
         id,
@@ -154,7 +171,20 @@ function SignUp() {
         // className={stepperStyles.stepper}
         size="xl"
       >
-        <Stepper.Step label={locale.auth.stepper.login}>
+        <Stepper.Step
+          label={locale.auth.stepper.login}
+          icon={
+            getErrorsStep(0) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(0) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(0) ? 'red' : undefined}
+        >
           <TextInput
             required
             id="login"
@@ -168,7 +198,20 @@ function SignUp() {
             {...form.getInputProps('login')}
           />
         </Stepper.Step>
-        <Stepper.Step label={locale.auth.stepper.password}>
+        <Stepper.Step
+          label={locale.auth.stepper.password}
+          icon={
+            getErrorsStep(1) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(1) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(1) ? 'red' : undefined}
+        >
           <PasswordInput
             required
             id="password"
@@ -194,7 +237,20 @@ function SignUp() {
             {...form.getInputProps('confirmPassword')}
           />
         </Stepper.Step>
-        <Stepper.Step label={locale.auth.stepper.final}>
+        <Stepper.Step
+          label={locale.auth.stepper.final}
+          icon={
+            getErrorsStep(2) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(2) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(2) ? 'red' : undefined}
+        >
           <TextInput
             required
             id="name"
@@ -227,7 +283,10 @@ function SignUp() {
             {locale.form.back}
           </Button>
         )}
-        <Button onClick={active !== 2 ? nextStep : handleSignUp}>
+        <Button
+          onClick={active !== 2 ? nextStep : handleSignUp}
+          disabled={getErrorsStep(active)}
+        >
           {active !== 2
             ? locale.form.next
             : locale.auth.footer.register}
@@ -260,6 +319,6 @@ function SignUp() {
 }
 
 SignUp.getLayout = (page: ReactElement) => {
-  return <LoginLayout title={'Регистрация'}>{page}</LoginLayout>;
+  return <LoginLayout title={'registration'}>{page}</LoginLayout>;
 };
 export default SignUp;

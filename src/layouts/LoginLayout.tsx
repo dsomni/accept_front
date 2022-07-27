@@ -8,7 +8,7 @@ import styles from '@styles/layouts/login.module.css';
 import { useLocale } from '@hooks/useLocale';
 import Head from 'next/head';
 export const LoginLayout: FC<{
-  title: string;
+  title: 'login' | 'registration';
   children: ReactNode;
 }> = ({ title, children }) => {
   const { locale } = useLocale();
@@ -16,7 +16,7 @@ export const LoginLayout: FC<{
   return (
     <div className={styles.pageWrapper}>
       <Head>
-        <title>{title}</title>
+        <title>{locale.auth[title]} | Accept</title>
       </Head>
       <Center className={styles.wrapper}>
         <div className={styles.contentWrapper}>
