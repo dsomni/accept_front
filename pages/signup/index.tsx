@@ -1,21 +1,8 @@
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { LoginLayout } from '@layouts/LoginLayout';
-import {
-  FC,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-import { showNotification } from '@mantine/notifications';
-import { defaultClassNames } from '@constants/NotificationClassNames';
-import Head from 'next/head';
+import { FC, ReactElement, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
-import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-
 import {
   Button,
   PasswordInput,
@@ -24,14 +11,11 @@ import {
   Group,
 } from '@mantine/core';
 import styles from '@styles/auth/login.module.css';
-import stepperStyles from '@styles/ui/stepper.module.css';
 import Link from 'next/link';
 import {
   newNotification,
-  successNotification,
   errorNotification,
 } from '@utils/notificationFunctions';
-import { sendRequest } from '@requests/request';
 import { IRegUser, IUser } from '@custom-types/data/IUser';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
@@ -78,15 +62,32 @@ function SignUp() {
       confirmPassword: '',
     },
     validate: {
-      login: (value) => value.length < 5 ? locale.auth.errors.login: null,
-      password: (value) => value.length < 5 ? locale.auth.errors.password: null,
+      login: (value) =>
+        value.length < 5
+          ? locale.auth.errors.login.len
+          : !value.match(/^[a-z]+$/)
+          ? locale.auth.errors.login.symbols
+          : null,
+      password: (value) =>
+        value.length < 5
+          ? locale.auth.errors.password.len
+          : !value.match(/^[a-zA-Z\d\.]+$/)
+          ? locale.auth.errors.password.symbols
+          : null,
       confirmPassword: (value, values) =>
         value !== values.password ? locale.auth.errors.confirm : null,
-      email: (value) => value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ? locale.auth.errors.email: null,
-      name: (value) => value.length > 50 ? locale.auth.errors.name: null,
+      email: (value) =>
+        !value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+          ? locale.auth.errors.email
+          : null,
+      name: (value) =>
+        value.length > 50
+          ? locale.auth.errors.name.len
+          : value.split(' ').length < 2
+          ? locale.auth.errors.name.surname
+          : null,
     },
   });
-
 
   const handleSignUp = useCallback(() => {
     if (form.validate().hasErrors) {
@@ -96,13 +97,16 @@ function SignUp() {
         title: locale.notify.auth.validation,
         autoClose: 5000,
       });
-      return
+      return;
     }
+    const name = form.values.name.split(' ');
     const user: IRegUser = {
       login: form.values.login,
       password: form.values.password,
       email: form.values.email,
-      name: form.values.name,
+      name: name[1],
+      surname: name[0],
+      patronymic: name.length > 2 ? name[2] : '',
     };
 
     requestWithNotify<IRegUser, IUser>(
@@ -113,7 +117,7 @@ function SignUp() {
       (user) => user.shortName,
       user,
       () => router.push(`/signin?referrer=${router.query.referrer}`)
-    )
+    );
   }, [locale, form, router]);
 
   return (
@@ -135,6 +139,7 @@ function SignUp() {
               label: styles.inputLabel,
             }}
             size="lg"
+            onBlur={() => form.validateField('login')}
             {...form.getInputProps('login')}
           />
         </Stepper.Step>
@@ -148,6 +153,7 @@ function SignUp() {
               label: styles.inputLabel,
             }}
             size="lg"
+            onBlur={() => form.validateField('password')}
             {...form.getInputProps('password')}
           />
           <PasswordInput
@@ -159,6 +165,7 @@ function SignUp() {
               label: styles.inputLabel,
             }}
             size="lg"
+            onBlur={() => form.validateField('confirmPassword')}
             {...form.getInputProps('confirmPassword')}
           />
         </Stepper.Step>
@@ -172,6 +179,7 @@ function SignUp() {
               label: styles.inputLabel,
             }}
             size="lg"
+            onBlur={() => form.validateField('name')}
             {...form.getInputProps('name')}
           />
           <TextInput
@@ -183,6 +191,7 @@ function SignUp() {
               label: styles.inputLabel,
             }}
             size="lg"
+            onBlur={() => form.validateField('email')}
             {...form.getInputProps('email')}
           />
         </Stepper.Step>

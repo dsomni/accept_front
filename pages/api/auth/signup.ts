@@ -9,7 +9,7 @@ export default async function ListTasks(
 ) {
   const response = await fetch(`${url}`, {
     method: 'POST',
-    body: req.body,
+    body: JSON.stringify(req.body),
     headers: { 'content-type': 'application/json' },
   });
   const status = response.status;
