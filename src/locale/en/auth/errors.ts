@@ -2,6 +2,7 @@ export const errors = {
   login: {
     len: 'Login shorter than 5 symbols.',
     symbols: 'Login can only include little latin letters(a..z).',
+    used: 'Login is already used.',
   },
   password: {
     len: 'Password shorter than 5 symbols.',

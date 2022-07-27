@@ -1,5 +1,11 @@
 import { LoginLayout } from '@layouts/LoginLayout';
-import { FC, ReactElement, useCallback, useState } from 'react';
+import {
+  FC,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
@@ -18,6 +24,8 @@ import {
 } from '@utils/notificationFunctions';
 import { IRegUser, IUser } from '@custom-types/data/IUser';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import { sendRequest } from '@requests/request';
+import { Login } from 'tabler-icons-react';
 
 const stepFields = [
   ['login'],
@@ -89,6 +97,23 @@ function SignUp() {
     },
   });
 
+  const onLoginBlur = useCallback(() => {
+    if (!form.validateField('login').hasError)
+      sendRequest<undefined, boolean>(
+        `auth/validateLogin/${form.values.login}`,
+        'GET',
+        undefined,
+        60000
+      ).then((res) => {
+        form.setFieldError(
+          'login',
+          !res.error && !res.response
+            ? locale.auth.errors.login.used
+            : null
+        );
+      });
+  }, [form.values.login]);
+
   const handleSignUp = useCallback(() => {
     if (form.validate().hasErrors) {
       const id = newNotification({});
@@ -139,7 +164,7 @@ function SignUp() {
               label: styles.inputLabel,
             }}
             size="lg"
-            onBlur={() => form.validateField('login')}
+            onBlur={onLoginBlur}
             {...form.getInputProps('login')}
           />
         </Stepper.Step>
