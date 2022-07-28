@@ -1,6 +1,7 @@
 export const labels = {
-    login: 'Login',
-    password: 'Password',
-    name: 'Name',
-    email: 'Email',
-  }
+  login: 'Login',
+  password: 'Password',
+  confirmPassword: 'Confirm password',
+  name: 'Name',
+  email: 'Email',
+};

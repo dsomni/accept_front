@@ -16,7 +16,9 @@ export const LoginLayout: FC<{
   return (
     <div className={styles.pageWrapper}>
       <Head>
-        <title>{locale.auth[title]} | Accept</title>
+        <title>
+          {locale.auth[title]} | {locale.accept}
+        </title>
       </Head>
       <Center className={styles.wrapper}>
         <div className={styles.contentWrapper}>
@@ -28,7 +30,7 @@ export const LoginLayout: FC<{
               alt="Logo image"
             />
             <div className={styles.title}>
-              {locale.accept} | {title}
+              {locale.accept} | {locale.auth[title]}
             </div>
           </div>
           {children}

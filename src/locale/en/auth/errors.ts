@@ -1,18 +1,19 @@
 export const errors = {
   login: {
-    len: 'Login shorter than 5 symbols.',
-    symbols: 'Login can only include little latin letters(a..z).',
-    used: 'Login is already used.',
+    len: 'Login shorter than 5 symbols',
+    symbols: 'Login includes invalid symbols',
+    used: 'Login is already used',
+    exists: 'Enter login',
   },
   password: {
-    len: 'Password shorter than 5 symbols.',
-    symbols:
-      'Password can include only latin letters, numbers, dots.',
+    len: 'Password shorter than 5 symbols',
+    symbols: 'Password can include only latin letters, numbers, dots',
+    exists: 'Enter password',
   },
   name: {
-    len: 'Name is too long.',
-    surname: 'You need to enter surname and name.',
+    len: 'Name is too long',
+    surname: 'You need to enter surname and name',
   },
-  email: 'Email is encorrect.',
-  confirm: 'Passwords did not match.',
+  email: 'Email is incorrect',
+  confirm: 'Passwords did not match',
 };

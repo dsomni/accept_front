@@ -3,14 +3,9 @@ import { ReactElement, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-import {
-  Button,
-  PasswordInput,
-  Stepper,
-  TextInput,
-  Group,
-} from '@mantine/core';
+import { Stepper, Group } from '@mantine/core';
 import styles from '@styles/auth/login.module.css';
+
 import Link from 'next/link';
 import {
   newNotification,
@@ -19,7 +14,15 @@ import {
 import { IRegUser, IUser } from '@custom-types/data/IUser';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { sendRequest } from '@requests/request';
-import { AlertCircle } from 'tabler-icons-react';
+import {
+  AlertCircle,
+  LetterCase,
+  ShieldLock,
+  AlignJustified,
+} from 'tabler-icons-react';
+import TextInput from '@ui/TextInput/TextInput';
+import Button from '@ui/Button/Button';
+import PasswordInput from '@ui/PasswordInput/PasswordInput';
 
 const stepFields = [
   ['login'],
@@ -38,6 +41,7 @@ function SignUp() {
   const router = useRouter();
 
   const [active, setActive] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm({
     initialValues: {
@@ -51,7 +55,7 @@ function SignUp() {
       login: (value) =>
         value.length < 5
           ? locale.auth.errors.login.len
-          : !value.match(/^[a-z]+$/)
+          : !value.match(/^[^_]+[a-zA-Z_]+$/)
           ? locale.auth.errors.login.symbols
           : null,
       password: (value) =>
@@ -63,6 +67,7 @@ function SignUp() {
       confirmPassword: (value, values) =>
         value !== values.password ? locale.auth.errors.confirm : null,
       email: (value) =>
+        value.length > 0 &&
         !value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
           ? locale.auth.errors.email
           : null,
@@ -75,20 +80,27 @@ function SignUp() {
     },
   });
 
+  const validateStep = useCallback(
+    (step: number) => {
+      var error = false;
+      stepFields[step].forEach((field: string) => {
+        const res = form.validateField(field);
+        error = error || res.hasError;
+      });
+      return error;
+    },
+    [form]
+  );
+
   const nextStep = useCallback(
     () =>
       setActive((current) => {
-        for (let i = 0; i < stepFields[current].length; i++) {
-          const field = stepFields[current][i] as formFields;
-          form.validate();
-          form.validateField(field);
-          if (form.errors[field]) {
-            return current;
-          }
+        if (!validateStep(current)) {
+          return current < 2 ? current + 1 : current;
         }
         return current < 3 ? current + 1 : current;
       }),
-    [form]
+    [validateStep]
   );
   const prevStep = useCallback(
     () =>
@@ -112,7 +124,8 @@ function SignUp() {
   );
 
   const onLoginBlur = useCallback(() => {
-    if (!form.validateField('login').hasError)
+    if (!form.validateField('login').hasError) {
+      setLoading(true);
       sendRequest<undefined, boolean>(
         `auth/validateLogin/${form.values.login}`,
         'GET',
@@ -125,8 +138,10 @@ function SignUp() {
             ? locale.auth.errors.login.used
             : null
         );
+        setLoading(false);
       });
-  }, [form.values.login]);
+    }
+  }, [form, locale]);
 
   const handleSignUp = useCallback(() => {
     if (
@@ -145,7 +160,7 @@ function SignUp() {
     const user: IRegUser = {
       login: form.values.login,
       password: form.values.password,
-      email: form.values.email,
+      email: form.values.email || '',
       name: name[1],
       surname: name[0],
       patronymic: name.length > 2 ? name[2] : '',
@@ -156,27 +171,39 @@ function SignUp() {
       'POST',
       locale.notify.auth.signUp,
       lang,
-      (user) => user.shortName,
+      (user) => '',
       user,
       () => router.push(`/signin?referrer=${router.query.referrer}`)
     );
-  }, [locale, form, router]);
+  }, [locale, lang, form, router]);
+
+  const onStepperChange = useCallback(
+    (newStep: number) => {
+      if (newStep !== 0) onLoginBlur();
+      if (newStep < active || !validateStep(active)) {
+        setActive(newStep);
+      }
+    },
+    [active, validateStep, onLoginBlur]
+  );
 
   return (
     <>
       <Stepper
         active={active}
-        onStepClick={setActive}
+        onStepClick={onStepperChange}
         breakpoint="sm"
-        // className={stepperStyles.stepper}
         size="xl"
+        classNames={{ content: styles.formWrapper }}
       >
         <Stepper.Step
           label={locale.auth.stepper.login}
           icon={
             getErrorsStep(0) ? (
               <AlertCircle color={'var(--negative)'} />
-            ) : undefined
+            ) : (
+              <LetterCase />
+            )
           }
           completedIcon={
             getErrorsStep(0) ? (
@@ -184,15 +211,23 @@ function SignUp() {
             ) : undefined
           }
           color={getErrorsStep(0) ? 'red' : undefined}
+          loading={loading}
         >
           <TextInput
-            required
             id="login"
+            required
             label={locale.auth.labels.login}
             placeholder={locale.auth.placeholders.login}
             classNames={{
-              label: styles.inputLabel,
+              label: styles.label,
             }}
+            helperContent={
+              <div>
+                {locale.helpers.auth.login.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+            }
             size="lg"
             onBlur={onLoginBlur}
             {...form.getInputProps('login')}
@@ -203,7 +238,9 @@ function SignUp() {
           icon={
             getErrorsStep(1) ? (
               <AlertCircle color={'var(--negative)'} />
-            ) : undefined
+            ) : (
+              <ShieldLock />
+            )
           }
           completedIcon={
             getErrorsStep(1) ? (
@@ -213,24 +250,31 @@ function SignUp() {
           color={getErrorsStep(1) ? 'red' : undefined}
         >
           <PasswordInput
-            required
             id="password"
+            required
             label={locale.auth.labels.password}
             placeholder={locale.auth.placeholders.password}
             classNames={{
-              label: styles.inputLabel,
+              label: styles.label,
             }}
             size="lg"
+            helperContent={
+              <div>
+                {locale.helpers.auth.password.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+            }
             onBlur={() => form.validateField('password')}
             {...form.getInputProps('password')}
           />
           <PasswordInput
-            required
             id="confirmPassword"
-            label={locale.auth.labels.password}
+            required
+            label={locale.auth.labels.confirmPassword}
             placeholder={locale.auth.placeholders.password}
             classNames={{
-              label: styles.inputLabel,
+              label: styles.label,
             }}
             size="lg"
             onBlur={() => form.validateField('confirmPassword')}
@@ -242,7 +286,9 @@ function SignUp() {
           icon={
             getErrorsStep(2) ? (
               <AlertCircle color={'var(--negative)'} />
-            ) : undefined
+            ) : (
+              <AlignJustified />
+            )
           }
           completedIcon={
             getErrorsStep(2) ? (
@@ -252,24 +298,23 @@ function SignUp() {
           color={getErrorsStep(2) ? 'red' : undefined}
         >
           <TextInput
-            required
             id="name"
+            required
             label={locale.auth.labels.name}
             placeholder={locale.auth.placeholders.name}
             classNames={{
-              label: styles.inputLabel,
+              label: styles.label,
             }}
             size="lg"
             onBlur={() => form.validateField('name')}
             {...form.getInputProps('name')}
           />
           <TextInput
-            required
             id="email"
             label={locale.auth.labels.email}
             placeholder={locale.auth.placeholders.email}
             classNames={{
-              label: styles.inputLabel,
+              label: styles.label,
             }}
             size="lg"
             onBlur={() => form.validateField('email')}
@@ -277,7 +322,7 @@ function SignUp() {
           />
         </Stepper.Step>
       </Stepper>
-      <Group position="center" mt="xl">
+      <Group position="center">
         {active !== 0 && (
           <Button variant="default" onClick={prevStep}>
             {locale.form.back}
