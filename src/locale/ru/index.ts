@@ -14,6 +14,7 @@ import { group } from './group';
 import { ui } from './ui';
 import { helpers } from './helpers';
 import { tag } from './tag';
+import { notification } from './notification';
 
 const ru = {
   accept: 'Accept',
@@ -51,6 +52,7 @@ const ru = {
   ui,
   helpers,
   tag,
+  notification,
 };
 
 export default ru;
