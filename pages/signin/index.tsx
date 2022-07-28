@@ -1,21 +1,9 @@
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import { LoginLayout } from '@layouts/LoginLayout';
-import {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-import { showNotification } from '@mantine/notifications';
-import { defaultClassNames } from '@constants/NotificationClassNames';
-import Head from 'next/head';
+import { ReactElement, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-
-import { PasswordInput, TextInput } from '@mantine/core';
 import Button from '@ui/Button/Button';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
@@ -24,24 +12,36 @@ import {
   successNotification,
   errorNotification,
 } from '@utils/notificationFunctions';
+import TextInput from '@ui/TextInput/TextInput';
+import PasswordInput from '@ui/PasswordInput/PasswordInput';
 
 function SignIn() {
   const { locale } = useLocale();
-  const { user, signIn } = useUser();
+  const { signIn } = useUser();
   const router = useRouter();
   const form = useForm({
     initialValues: {
       login: '',
       password: '',
     },
+    validate: {
+      login: (value) =>
+        value.length == 0 ? locale.auth.errors.login.exists : null,
+      password: (value) =>
+        value.length == 0 ? locale.auth.errors.password.exists : null,
+    },
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleSignIn = useCallback(
     (values: { login: string; password: string }) => {
+      if (form.validate().hasErrors) return;
       const id = newNotification({
         title: locale.notify.auth.signIn.loading,
         message: locale.loading + '...',
       });
+      setLoading(true);
       signIn(values.login, values.password).then((res) => {
         if (res) {
           successNotification({
@@ -57,16 +57,14 @@ function SignIn() {
             autoClose: 5000,
           });
         }
+        setLoading(false);
       });
     },
-    [locale, signIn, router]
+    [form, locale, signIn, router]
   );
 
   return (
     <>
-      <Head>
-        <title>Sign In | Accept</title>
-      </Head>
       <form className={styles.formWrapper}>
         <TextInput
           required
@@ -74,25 +72,28 @@ function SignIn() {
           label={locale.auth.labels.login}
           placeholder={locale.auth.placeholders.login}
           classNames={{
-            label: styles.inputLabel,
+            label: styles.label,
           }}
           size="lg"
+          onBlur={() => form.validateField('login')}
           {...form.getInputProps('login')}
         />
         <PasswordInput
           required
-          id="password"
           label={locale.auth.labels.password}
+          id="password"
           placeholder={locale.auth.placeholders.password}
           classNames={{
-            label: styles.inputLabel,
+            label: styles.label,
           }}
           size="lg"
+          onBlur={() => form.validateField('password')}
           {...form.getInputProps('password')}
         />
         <Button
           type="button"
           onClick={form.onSubmit((values) => handleSignIn(values))}
+          disabled={Object.keys(form.errors).length > 0 || loading}
           className={styles.enterButton}
         >
           {locale.auth.submit}
@@ -125,6 +126,6 @@ function SignIn() {
 }
 
 SignIn.getLayout = (page: ReactElement) => {
-  return <LoginLayout title={'Вход'}>{page}</LoginLayout>;
+  return <LoginLayout title={'login'}>{page}</LoginLayout>;
 };
 export default SignIn;

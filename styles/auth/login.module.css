@@ -1,11 +1,11 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-s);
+  gap: var(--spacer-m);
 }
 
-.inputLabel {
-  font-size: var(--font-size-m);
+.label {
+  font-size: var(--font-size-l);
 }
 .enterButton {
   background-color: var(--primary);
@@ -26,7 +26,7 @@
   gap: var(--spacer-xxs);
   font-size: var(--font-size-m);
 }
-/* .footerText {} */
+
 .footerLink {
   text-decoration: none;
   color: var(--secondary);

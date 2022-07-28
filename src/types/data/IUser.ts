@@ -35,6 +35,8 @@ export interface IUserContext {
 export interface IRegUser {
   login: string;
   name: string;
+  surname: string;
+  patronymic: string;
   password: string;
   email: string | null;
 }

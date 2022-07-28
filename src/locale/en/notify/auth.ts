@@ -14,4 +14,5 @@ export const auth = {
     success: 'The sign out was done successfully',
     error: 'Error when trying to sign out',
   },
+  validation: 'Validation error'
 };
