@@ -21,7 +21,7 @@ import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { BaseSearch } from '@custom-types/data/request';
 import Fuse from 'fuse.js';
-import MultiSelect from '@ui/Select/MultiSelect';
+import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
 
 interface Item {

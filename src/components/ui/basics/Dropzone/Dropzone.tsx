@@ -17,7 +17,7 @@ import {
 import { Dropzone as MantineDropzone } from '@mantine/dropzone';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
-import Button from '@ui/Button/Button';
+import { Button } from '@ui/basics';
 
 const Dropzone: FC<{
   children: ReactNode;

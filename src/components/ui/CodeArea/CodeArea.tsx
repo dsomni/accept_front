@@ -1,9 +1,6 @@
 import { FC, memo, ReactNode, useCallback, useState } from 'react';
-
-import Dropzone from '@ui/Dropzone/Dropzone';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
-
 import { callback } from '@custom-types/ui/atomic';
 import {
   newNotification,
@@ -12,8 +9,7 @@ import {
 } from '@utils/notificationFunctions';
 import { ILanguage } from '@custom-types/data/atomic';
 import { extensionValidator } from '@utils/extensionValidator';
-
-import TextArea from '@ui/TextArea/TextArea';
+import { TextArea, Dropzone } from '@ui/basics';
 import { ButtonProps, PopoverProps } from '@mantine/core';
 
 const CodeArea: FC<{

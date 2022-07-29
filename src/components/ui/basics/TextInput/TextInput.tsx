@@ -1,17 +1,17 @@
 import { FC, memo, ReactNode } from 'react';
-import styles from './textArea.module.css';
+import styles from './textInput.module.css';
 import inputStyles from '@styles/ui/input.module.css';
 import {
-  Textarea as MantineTextarea,
-  TextareaProps,
+  TextInput as MantineInput,
+  TextInputProps,
 } from '@mantine/core';
-import { Helper } from '@ui/Helper/Helper';
+import { Helper } from '@ui/basics';
 
-interface Props extends TextareaProps {
+interface Props extends TextInputProps {
   helperContent?: string | ReactNode;
 }
 
-const TextArea: FC<Props> = ({ helperContent, ...props }) => {
+const TextInput: FC<Props> = ({ helperContent, ...props }) => {
   return (
     <div className={inputStyles.wrapper}>
       <div className={inputStyles.labelWrapper}>
@@ -23,9 +23,9 @@ const TextArea: FC<Props> = ({ helperContent, ...props }) => {
         </div>
         {helperContent && <Helper content={helperContent} />}
       </div>
-      <MantineTextarea size="lg" {...props} label={undefined} />
+      <MantineInput size="lg" {...props} label={undefined} />
     </div>
   );
 };
 
-export default memo(TextArea);
+export default memo(TextInput);

@@ -3,12 +3,9 @@ import { Group, Modal } from '@mantine/core';
 import { Plus } from 'tabler-icons-react';
 import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-
 import { isSuccessful } from '@requests/request';
 import { pureCallback } from '@custom-types/ui/atomic';
-import TextInput from '@ui/TextInput/TextInput';
-import Button from '@ui/Button/Button';
-import Icon from '@ui/Icon/Icon';
+import { TextInput, Button, Icon } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { ITag } from '@custom-types/data/ITag';
 

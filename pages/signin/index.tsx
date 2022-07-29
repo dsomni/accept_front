@@ -4,7 +4,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-import Button from '@ui/Button/Button';
+import { Button, TextInput, PasswordInput } from '@ui/basics';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {
@@ -12,8 +12,6 @@ import {
   successNotification,
   errorNotification,
 } from '@utils/notificationFunctions';
-import TextInput from '@ui/TextInput/TextInput';
-import PasswordInput from '@ui/PasswordInput/PasswordInput';
 
 function SignIn() {
   const { locale } = useLocale();

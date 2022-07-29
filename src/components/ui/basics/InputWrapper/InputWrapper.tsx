@@ -5,7 +5,7 @@ import {
 } from '@mantine/core';
 import styles from './inputWrapper.module.css';
 import inputStyles from '@styles/ui/input.module.css';
-import { Helper } from '@ui/Helper/Helper';
+import { Helper } from '@ui/basics';
 
 interface Props extends InputWrapperProps {
   helperContent?: string | ReactNode;

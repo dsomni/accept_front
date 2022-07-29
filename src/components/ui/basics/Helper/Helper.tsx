@@ -1,15 +1,15 @@
 import { Popover, PopoverProps } from '@mantine/core';
 import { Help } from 'tabler-icons-react';
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useState, memo } from 'react';
 import styles from './helper.module.css';
-import Icon from '@ui/Icon/Icon';
+import { Icon } from '@ui/basics';
 
 interface Props
   extends Omit<PopoverProps, 'opened' | 'children' | 'target'> {
   content: string | ReactNode;
 }
 
-export const Helper: FC<Props> = ({ content, ...props }) => {
+const Helper: FC<Props> = ({ content, ...props }) => {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -37,3 +37,5 @@ export const Helper: FC<Props> = ({ content, ...props }) => {
     </Popover>
   );
 };
+
+export default memo(Helper);

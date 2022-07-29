@@ -16,8 +16,8 @@ import {
   ITaskType,
   IHintAlarmType,
 } from '@custom-types/data/atomic';
-import Button from '@ui/Button/Button';
 import { AlertCircle } from 'tabler-icons-react';
+import { Button } from '@ui/basics';
 
 const LAST_PAGE = 5;
 

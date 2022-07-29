@@ -9,7 +9,7 @@ import CopyButton from '@ui/CopyButton/CopyButton';
 import { sendRequest } from '@requests/request';
 import { setter } from '@custom-types/ui/atomic';
 import { AlertCircle } from 'tabler-icons-react';
-import Icon from '@ui/Icon/Icon';
+import { Icon } from '@ui/basics';
 import TagList from '@ui/TagList/TagList';
 
 const Description: FC<{

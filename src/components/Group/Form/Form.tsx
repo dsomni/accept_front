@@ -1,6 +1,5 @@
 import { pureCallback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
-
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   CustomTransferList,
@@ -10,13 +9,15 @@ import styles from './form.module.css';
 import { sendRequest } from '@requests/request';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import TextInput from '@ui/TextInput/TextInput';
-import Button from '@ui/Button/Button';
-import SegmentedControl from '@ui/SegmentedControl/SegmentedControl';
+import {
+  TextInput,
+  Button,
+  SegmentedControl,
+  InputWrapper,
+} from '@ui/basics';
 import { IGroup } from '@custom-types/data/IGroup';
 import { ActionIcon } from '@mantine/core';
 import { Eye } from 'tabler-icons-react';
-import InputWrapper from '@ui/InputWrapper/InputWrapper';
 
 const Form: FC<{
   form: any;

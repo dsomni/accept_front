@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { setter } from '@custom-types/ui/atomic';
-import { Helper } from '@ui/Helper/Helper';
+import { Helper } from '@ui/basics';
 
 const Radio: FC<{
   label: ReactNode;

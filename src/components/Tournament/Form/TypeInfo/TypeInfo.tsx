@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { MultiSelect } from '@mantine/core';
-import Select from '@ui/Select/Select';
+import { Select } from '@ui/basics';
 
 import { FC, memo, useState, useEffect } from 'react';
 import TagSelector from '@ui/TagSelector/TagSelector';

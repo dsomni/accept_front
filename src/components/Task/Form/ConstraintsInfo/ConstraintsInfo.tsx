@@ -3,11 +3,9 @@ import { FC, memo, useState, useMemo, useCallback } from 'react';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './constraintsInfo.module.css';
 import { Box, Overlay } from '@mantine/core';
-import Switch from '@ui/Switch/Switch';
+import { Switch, SegmentedControl, NumberInput } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
-import NumberInput from '@ui/NumberInput/NumberInput';
 import stepperStyles from '@styles/ui/stepper.module.css';
-import SegmentedControl from '@ui/SegmentedControl/SegmentedControl';
 
 const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const initialAllowedLanguages = useMemo(

@@ -1,11 +1,10 @@
 import ListItem from '@ui/ListItem/ListItem';
 import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import Button from '@ui/Button/Button';
+import { Button, InputWrapper } from '@ui/basics';
 
 import { FC, memo, useCallback } from 'react';
 import styles from './examples.module.css';
-import InputWrapper from '@ui/InputWrapper/InputWrapper';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Examples: FC<{ form: any }> = ({ form }) => {

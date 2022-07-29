@@ -1,12 +1,9 @@
 import { useLocale } from '@hooks/useLocale';
-
 import { FC, memo, useMemo } from 'react';
 import styles from './mainInfo.module.css';
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
+import { CustomEditor, TextInput, NumberInput } from '@ui/basics';
 import TagSelector from '@ui/TagSelector/TagSelector';
 import stepperStyles from '@styles/ui/stepper.module.css';
-import NumberInput from '@ui/NumberInput/NumberInput';
-import TextInput from '@ui/TextInput/TextInput';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();

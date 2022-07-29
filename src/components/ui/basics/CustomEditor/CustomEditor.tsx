@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import InputWrapper from '@ui/InputWrapper/InputWrapper';
+import { InputWrapper } from '@ui/basics';
 
 const editorConfiguration = {
   simpleUpload: {

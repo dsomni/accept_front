@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
+import { FC, memo } from 'react';
 import styles from './icon.module.css';
 import { ActionIcon, ActionIconProps } from '@mantine/core';
 import { useWidth } from '@hooks/useWidth';

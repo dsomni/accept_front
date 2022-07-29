@@ -10,9 +10,8 @@ import styles from './selectField.module.css';
 import { Item } from '../CustomTransferList';
 import { Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
-
 import Fuse from 'fuse.js';
-import TextInput from '@ui/TextInput/TextInput';
+import { TextInput } from '@ui/basics';
 
 const fuse_options: Fuse.IFuseOptions<Item> = {
   keys: ['label'],

@@ -1,17 +1,17 @@
 import { FC, memo, ReactNode } from 'react';
-import styles from './passwordInput.module.css';
+import styles from './textArea.module.css';
 import inputStyles from '@styles/ui/input.module.css';
 import {
-  PasswordInput as MantinePasswordInput,
-  PasswordInputProps,
+  Textarea as MantineTextarea,
+  TextareaProps,
 } from '@mantine/core';
-import { Helper } from '@ui/Helper/Helper';
+import { Helper } from '@ui/basics';
 
-interface Props extends PasswordInputProps {
+interface Props extends TextareaProps {
   helperContent?: string | ReactNode;
 }
 
-const PasswordInput: FC<Props> = ({ helperContent, ...props }) => {
+const TextArea: FC<Props> = ({ helperContent, ...props }) => {
   return (
     <div className={inputStyles.wrapper}>
       <div className={inputStyles.labelWrapper}>
@@ -23,9 +23,9 @@ const PasswordInput: FC<Props> = ({ helperContent, ...props }) => {
         </div>
         {helperContent && <Helper content={helperContent} />}
       </div>
-      <MantinePasswordInput size="lg" {...props} label={undefined} />
+      <MantineTextarea size="lg" {...props} label={undefined} />
     </div>
   );
 };
 
-export default memo(PasswordInput);
+export default memo(TextArea);

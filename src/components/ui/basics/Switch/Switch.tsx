@@ -1,8 +1,7 @@
 import { FC, memo, ReactNode } from 'react';
 import { Switch as MantineSwitch, SwitchProps } from '@mantine/core';
 import styles from './switch.module.css';
-import { Helper } from '@ui/Helper/Helper';
-
+import { Helper } from '@ui/basics';
 interface Props extends SwitchProps {
   helperContent?: string | ReactNode;
 }

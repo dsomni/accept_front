@@ -10,7 +10,7 @@ import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
-import Button from '@ui/Button/Button';
+import { Button } from '@ui/basics';
 
 const DeleteModal: FC<{
   active: boolean;

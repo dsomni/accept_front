@@ -17,13 +17,15 @@ import {
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { sendRequest } from '@requests/request';
-import TextInput from '@ui/TextInput/TextInput';
-import Button from '@ui/Button/Button';
-import PasswordInput from '@ui/PasswordInput/PasswordInput';
+
+import {
+  Button,
+  TextInput,
+  InputWrapper,
+  CustomEditor,
+} from '@ui/basics';
 import { INewNotification } from '@custom-types/data/atomic';
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
 import stepperStyles from '@styles/ui/stepper.module.css';
-import InputWrapper from '@ui/InputWrapper/InputWrapper';
 import {
   CustomTransferList,
   Item,

@@ -4,10 +4,7 @@ import TagSelector from '@ui/TagSelector/TagSelector';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import Radio from '@ui/Radio/Radio';
-import Switch from '@ui/Switch/Switch';
-import NumberInput from '@ui/NumberInput/NumberInput';
-import TextInput from '@ui/TextInput/TextInput';
+import { Radio, TextInput, NumberInput, Switch } from '@ui/basics';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const MainInfo: FC<{

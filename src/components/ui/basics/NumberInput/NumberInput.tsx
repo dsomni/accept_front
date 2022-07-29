@@ -1,17 +1,17 @@
 import { FC, memo, ReactNode } from 'react';
-import styles from './textInput.module.css';
+import styles from './numberInput.module.css';
 import inputStyles from '@styles/ui/input.module.css';
 import {
-  TextInput as MantineInput,
-  TextInputProps,
+  NumberInput as MantineNumberInput,
+  NumberInputProps,
 } from '@mantine/core';
-import { Helper } from '@ui/Helper/Helper';
+import { Helper } from '@ui/basics';
 
-interface Props extends TextInputProps {
+interface Props extends NumberInputProps {
   helperContent?: string | ReactNode;
 }
 
-const TextInput: FC<Props> = ({ helperContent, ...props }) => {
+const NumberInput: FC<Props> = ({ helperContent, ...props }) => {
   return (
     <div className={inputStyles.wrapper}>
       <div className={inputStyles.labelWrapper}>
@@ -23,9 +23,9 @@ const TextInput: FC<Props> = ({ helperContent, ...props }) => {
         </div>
         {helperContent && <Helper content={helperContent} />}
       </div>
-      <MantineInput size="lg" {...props} label={undefined} />
+      <MantineNumberInput size="lg" {...props} label={undefined} />
     </div>
   );
 };
 
-export default memo(TextInput);
+export default memo(NumberInput);

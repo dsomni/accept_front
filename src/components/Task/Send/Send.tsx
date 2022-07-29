@@ -1,6 +1,4 @@
-// import { Button, Select } from '@mantine/core';
-import Button from '@ui/Button/Button';
-import Select from '@ui/Select/Select';
+import { Button, Select } from '@ui/basics';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
