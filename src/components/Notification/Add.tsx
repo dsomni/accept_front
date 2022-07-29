@@ -17,36 +17,46 @@ import {
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { sendRequest } from '@requests/request';
-
 import {
   Button,
   TextInput,
   InputWrapper,
   CustomEditor,
 } from '@ui/basics';
-import { INewNotification } from '@custom-types/data/atomic';
+import { INewNotification, IRole } from '@custom-types/data/atomic';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import {
   CustomTransferList,
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
+import {
+  GroupSelector,
+  UserSelector,
+  RoleSelector,
+} from '@ui/selectors';
+import { IUser } from '@custom-types/data/IUser';
+import { IGroup } from '@custom-types/data/IGroup';
 
-const AddNotification: FC<{}> = ({}) => {
+const AddNotification: FC<{
+  users: IUser[];
+  groups: IGroup[];
+  roles: IRole[];
+}> = ({ users, groups, roles }) => {
   const { locale, lang } = useLocale();
   const router = useRouter();
 
-  const [active, setActive] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [active, setActive] = useState(2);
 
   const form = useForm({
     initialValues: {
       spec: '',
       author: '',
-      title: '',
-      shortDescription: '',
-      description: '',
+      title: 'new notification',
+      shortDescription: '1123',
+      description: '123123123123123213312312312',
       logins: [],
-      groups: ['aec2953e-293e-46f0-9fce-caf34a169dcb'],
+      groups: [],
+      roles: [],
     },
   });
 
@@ -126,12 +136,24 @@ const AddNotification: FC<{}> = ({}) => {
           label={locale.notification.form.steps.third}
           description={locale.notification.form.steps.users}
         >
-          SelectUsers and groups
+          <UserSelector form={form} users={users} field={'logins'} />
+          <GroupSelector
+            form={form}
+            groups={groups}
+            initialGroups={[]}
+            field={'groups'}
+          />
+          <RoleSelector
+            form={form}
+            roles={roles}
+            initialRoles={[]}
+            field={'roles'}
+          />
         </Stepper.Step>
       </Stepper>
       <Group position="center">
         {active !== 0 && (
-          <Button variant="default" onClick={prevStep}>
+          <Button variant="light" onClick={prevStep}>
             {locale.form.back}
           </Button>
         )}

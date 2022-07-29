@@ -38,10 +38,6 @@ export const SelectField: FC<{
     [searchKeys]
   );
 
-  useEffect(() => {
-    console.log(searchKeys);
-  }, [searchKeys]);
-
   const fuse = useMemo(
     () =>
       new Fuse(values, {

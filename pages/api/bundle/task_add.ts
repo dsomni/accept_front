@@ -3,7 +3,7 @@ import { env } from 'process';
 
 const url = 'http://' + env.API_ENDPOINT + '/api/bundle/task-add';
 
-export default async function ListTasks(
+export default async function TaskAddBundle(
   _: NextApiRequest,
   res: NextApiResponse
 ) {
