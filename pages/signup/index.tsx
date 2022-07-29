@@ -3,7 +3,6 @@ import { ReactElement, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-import { Stepper, Group } from '@mantine/core';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {
@@ -20,6 +19,7 @@ import {
   AlignJustified,
 } from 'tabler-icons-react';
 import { TextInput, Button, PasswordInput } from '@ui/basics';
+import Stepper from '@ui/Stepper/Stepper';
 
 const stepFields = [
   ['login'],
@@ -187,153 +187,98 @@ function SignUp() {
   return (
     <>
       <Stepper
-        active={active}
-        onStepClick={onStepperChange}
-        breakpoint="sm"
-        size="xl"
-        classNames={{ content: styles.formWrapper }}
-      >
-        <Stepper.Step
-          label={locale.auth.stepper.login}
-          icon={
-            getErrorsStep(0) ? (
-              <AlertCircle color={'var(--negative)'} />
-            ) : (
-              <LetterCase />
-            )
-          }
-          completedIcon={
-            getErrorsStep(0) ? (
-              <AlertCircle color={'white'} />
-            ) : undefined
-          }
-          color={getErrorsStep(0) ? 'red' : undefined}
-          loading={loading}
-        >
-          <TextInput
-            id="login"
-            required
-            label={locale.auth.labels.login}
-            placeholder={locale.auth.placeholders.login}
-            classNames={{
-              label: styles.label,
-            }}
-            helperContent={
-              <div>
-                {locale.helpers.auth.login.map((p, idx) => (
-                  <p key={idx}>{p}</p>
-                ))}
-              </div>
-            }
-            size="lg"
-            onBlur={onLoginBlur}
-            {...form.getInputProps('login')}
-          />
-        </Stepper.Step>
-        <Stepper.Step
-          label={locale.auth.stepper.password}
-          icon={
-            getErrorsStep(1) ? (
-              <AlertCircle color={'var(--negative)'} />
-            ) : (
-              <ShieldLock />
-            )
-          }
-          completedIcon={
-            getErrorsStep(1) ? (
-              <AlertCircle color={'white'} />
-            ) : undefined
-          }
-          color={getErrorsStep(1) ? 'red' : undefined}
-        >
-          <PasswordInput
-            id="password"
-            required
-            label={locale.auth.labels.password}
-            placeholder={locale.auth.placeholders.password}
-            classNames={{
-              label: styles.label,
-            }}
-            size="lg"
-            helperContent={
-              <div>
-                {locale.helpers.auth.password.map((p, idx) => (
-                  <p key={idx}>{p}</p>
-                ))}
-              </div>
-            }
-            onBlur={() => form.validateField('password')}
-            {...form.getInputProps('password')}
-          />
-          <PasswordInput
-            id="confirmPassword"
-            required
-            label={locale.auth.labels.confirmPassword}
-            placeholder={locale.auth.placeholders.password}
-            classNames={{
-              label: styles.label,
-            }}
-            size="lg"
-            onBlur={() => form.validateField('confirmPassword')}
-            {...form.getInputProps('confirmPassword')}
-          />
-        </Stepper.Step>
-        <Stepper.Step
-          label={locale.auth.stepper.final}
-          icon={
-            getErrorsStep(2) ? (
-              <AlertCircle color={'var(--negative)'} />
-            ) : (
-              <AlignJustified />
-            )
-          }
-          completedIcon={
-            getErrorsStep(2) ? (
-              <AlertCircle color={'white'} />
-            ) : undefined
-          }
-          color={getErrorsStep(2) ? 'red' : undefined}
-        >
-          <TextInput
-            id="name"
-            required
-            label={locale.auth.labels.name}
-            placeholder={locale.auth.placeholders.name}
-            classNames={{
-              label: styles.label,
-            }}
-            size="lg"
-            onBlur={() => form.validateField('name')}
-            {...form.getInputProps('name')}
-          />
-          <TextInput
-            id="email"
-            label={locale.auth.labels.email}
-            placeholder={locale.auth.placeholders.email}
-            classNames={{
-              label: styles.label,
-            }}
-            size="lg"
-            onBlur={() => form.validateField('email')}
-            {...form.getInputProps('email')}
-          />
-        </Stepper.Step>
-      </Stepper>
-      <Group position="center">
-        {active !== 0 && (
-          <Button variant="default" onClick={prevStep}>
-            {locale.form.back}
-          </Button>
-        )}
-        <Button
-          onClick={active !== 2 ? nextStep : handleSignUp}
-          disabled={getErrorsStep(active)}
-        >
-          {active !== 2
-            ? locale.form.next
-            : locale.auth.footer.register}
-        </Button>
-      </Group>
+        handleSubmit={handleSignUp}
+        buttonLabel={locale.auth.footer.register}
+        contentClass={styles.formWrapper}
+        customWrapper
+        iconPosition="left"
+        form={form}
+        stepFields={stepFields}
+        icons={[<LetterCase />, <ShieldLock />, <AlignJustified />]}
+        descriptions={['', '', '']}
+        labels={locale.auth.steps.labels}
+        pages={[
+          <>
+            <TextInput
+              id="login"
+              required
+              label={locale.auth.labels.login}
+              placeholder={locale.auth.placeholders.login}
+              classNames={{
+                label: styles.label,
+              }}
+              helperContent={
+                <div>
+                  {locale.helpers.auth.login.map((p, idx) => (
+                    <p key={idx}>{p}</p>
+                  ))}
+                </div>
+              }
+              size="lg"
+              onBlur={onLoginBlur}
+              {...form.getInputProps('login')}
+            />
+          </>,
+          <>
+            <PasswordInput
+              id="password"
+              required
+              label={locale.auth.labels.password}
+              placeholder={locale.auth.placeholders.password}
+              classNames={{
+                label: styles.label,
+              }}
+              size="lg"
+              helperContent={
+                <div>
+                  {locale.helpers.auth.password.map((p, idx) => (
+                    <p key={idx}>{p}</p>
+                  ))}
+                </div>
+              }
+              onBlur={() => form.validateField('password')}
+              {...form.getInputProps('password')}
+            />
+            <PasswordInput
+              id="confirmPassword"
+              required
+              label={locale.auth.labels.confirmPassword}
+              placeholder={locale.auth.placeholders.password}
+              classNames={{
+                label: styles.label,
+              }}
+              size="lg"
+              onBlur={() => form.validateField('confirmPassword')}
+              {...form.getInputProps('confirmPassword')}
+            />
+          </>,
+          <>
+            <TextInput
+              id="name"
+              required
+              label={locale.auth.labels.name}
+              placeholder={locale.auth.placeholders.name}
+              classNames={{
+                label: styles.label,
+              }}
+              size="lg"
+              onBlur={() => form.validateField('name')}
+              {...form.getInputProps('name')}
+            />
+            <TextInput
+              id="email"
+              label={locale.auth.labels.email}
+              placeholder={locale.auth.placeholders.email}
+              classNames={{
+                label: styles.label,
+              }}
+              size="lg"
+              onBlur={() => form.validateField('email')}
+              {...form.getInputProps('email')}
+            />
+          </>,
+        ]}
+      />
       <div className={styles.footer}>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
