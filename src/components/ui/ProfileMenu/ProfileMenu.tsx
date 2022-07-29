@@ -82,7 +82,6 @@ const ProfileMenu: FC<{}> = ({}) => {
       'notification/new',
       'GET'
     ).then((res) => {
-      console.log(res);
       if (!res.error) {
         setNotifications(res.response);
       }

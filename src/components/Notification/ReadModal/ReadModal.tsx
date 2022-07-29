@@ -38,7 +38,7 @@ const ReadModal: FC<{
         'notification/viewed',
         'POST',
         Array.from(new Set(viewed))
-      );
+      ).then(() => setViewed([]));
     }
   }, [viewed]);
 

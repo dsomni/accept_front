@@ -80,7 +80,6 @@ const Form: FC<{
   });
 
   const handleSubmit = useCallback(() => {
-    console.log(form.values);
     if (form.validate().hasErrors) {
       const id = newNotification({});
       errorNotification({
