@@ -12,14 +12,19 @@ import DescriptionInfo from './DescriptionInfo';
 import Users from './Users';
 import GroupsRoles from './GroupsRoles';
 import { IUser } from '@custom-types/data/IUser';
+import { AlertCircle } from 'tabler-icons-react';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 const LAST_STEP = 3;
 
 const stepFields = [
   ['title', 'author'],
   ['shortDescription', 'description'],
-  ['logins'],
-  ['groups', 'roles'],
+  [],
+  ['logins', 'groups', 'roles'],
 ];
 
 const Form: FC<{
@@ -34,13 +39,49 @@ const Form: FC<{
   const form = useForm({
     initialValues: {
       spec: '',
-      author: '',
-      title: 'new notification',
-      shortDescription: '1123',
-      description: '123123123123123213312312312',
+      title: 'Новый урок',
+      author: 'Я',
+
+      shortDescription: 'Урок по циклам',
+      description:
+        'Новый урок по циклам содержащий задачи 1, 2, 5, 19',
+
       logins: [],
+
       groups: [],
       roles: [],
+    },
+    validate: {
+      title: (value) =>
+        value.length < 5
+          ? locale.notification.form.validate.title
+          : null,
+      author: () => null,
+
+      shortDescription: () => null,
+      description: (value) =>
+        value.length < 20
+          ? locale.notification.form.validate.description
+          : null,
+
+      logins: (value, values) =>
+        !(values.logins.length > 0) &&
+        !(values.groups.length > 0) &&
+        !(values.roles.length > 0)
+          ? locale.notification.form.validate.users
+          : null,
+      groups: (value, values) =>
+        !(values.logins.length > 0) &&
+        !(values.groups.length > 0) &&
+        !(values.roles.length > 0)
+          ? locale.notification.form.validate.users
+          : null,
+      roles: (value, values) =>
+        !(values.logins.length > 0) &&
+        !(values.groups.length > 0) &&
+        !(values.roles.length > 0)
+          ? locale.notification.form.validate.users
+          : null,
     },
   });
 
@@ -59,6 +100,9 @@ const Form: FC<{
   const nextStep = useCallback(
     () =>
       setActive((current) => {
+        if (!validateStep(current)) {
+          return current < LAST_STEP ? current + 1 : current;
+        }
         return current < LAST_STEP + 1 ? current + 1 : current;
       }),
     []
@@ -67,6 +111,20 @@ const Form: FC<{
     () =>
       setActive((current) => (current > 0 ? current - 1 : current)),
     []
+  );
+
+  const getErrorsStep = useCallback(
+    (step: number) => {
+      let error = false;
+      stepFields[step].forEach((field: string) => {
+        if (form.errors[field] !== undefined) {
+          error = true;
+          return;
+        }
+      });
+      return error;
+    },
+    [form.errors]
   );
 
   const onStepperChange = useCallback(
@@ -79,6 +137,16 @@ const Form: FC<{
   );
 
   const handleSubmit = useCallback(() => {
+    console.log(form.values);
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: 'validation',
+        autoClose: 5000,
+      });
+      return;
+    }
     requestWithNotify<INewNotification, boolean>(
       'notification/add',
       'POST',
@@ -90,9 +158,8 @@ const Form: FC<{
   }, [form, locale, lang]);
 
   return (
-    <>
+    <div className={stepperStyles.stepper}>
       <Stepper
-        className={stepperStyles.stepper}
         active={active}
         iconPosition="right"
         onStepClick={onStepperChange}
@@ -103,24 +170,68 @@ const Form: FC<{
         <Stepper.Step
           label={locale.notification.form.steps.first}
           description={locale.notification.form.steps.mainInfo}
+          icon={
+            getErrorsStep(0) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(0) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(0) ? 'red' : undefined}
         >
           <MainInfo form={form} />
         </Stepper.Step>
         <Stepper.Step
           label={locale.notification.form.steps.second}
           description={locale.notification.form.steps.description}
+          icon={
+            getErrorsStep(1) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(1) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(1) ? 'red' : undefined}
         >
           <DescriptionInfo form={form} />
         </Stepper.Step>
         <Stepper.Step
           label={locale.notification.form.steps.third}
           description={locale.notification.form.steps.users}
+          icon={
+            getErrorsStep(2) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(2) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(2) ? 'red' : undefined}
         >
           <Users form={form} users={users} />
         </Stepper.Step>
         <Stepper.Step
           label={locale.notification.form.steps.forth}
           description={locale.notification.form.steps.groupsRoles}
+          icon={
+            getErrorsStep(3) ? (
+              <AlertCircle color={'var(--negative)'} />
+            ) : undefined
+          }
+          completedIcon={
+            getErrorsStep(3) ? (
+              <AlertCircle color={'white'} />
+            ) : undefined
+          }
+          color={getErrorsStep(3) ? 'red' : undefined}
         >
           <GroupsRoles form={form} groups={groups} roles={roles} />
         </Stepper.Step>
@@ -133,11 +244,13 @@ const Form: FC<{
         )}
         <Button
           onClick={active !== LAST_STEP ? nextStep : handleSubmit}
+          disabled={active !== LAST_STEP && getErrorsStep(active)}
+          type="button"
         >
           {active !== LAST_STEP ? locale.form.next : locale.create}
         </Button>
       </Group>
-    </>
+    </div>
   );
 };
 
