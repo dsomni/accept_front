@@ -13,10 +13,6 @@ import { useLocale } from '@hooks/useLocale';
 import Fuse from 'fuse.js';
 import { TextInput } from '@ui/basics';
 
-const fuse_options: Fuse.IFuseOptions<Item> = {
-  keys: ['label'],
-};
-
 export const SelectField: FC<{
   title: string;
   values: Item[];
@@ -24,6 +20,7 @@ export const SelectField: FC<{
   rightComponent?: () => ReactNode;
   itemComponent: (item: any, onSelect: any) => ReactNode;
   classNames: any;
+  searchKeys?: string[];
 }> = ({
   title,
   values,
@@ -31,13 +28,26 @@ export const SelectField: FC<{
   rightComponent,
   itemComponent,
   classNames,
+  searchKeys,
 }) => {
   const [displayed, setDisplayed] = useState(values);
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
+  const keys = useMemo(
+    () => (searchKeys ? searchKeys : ['label']),
+    [searchKeys]
+  );
+
+  useEffect(() => {
+    console.log(searchKeys);
+  }, [searchKeys]);
 
   const fuse = useMemo(
-    () => new Fuse(values, fuse_options),
+    () =>
+      new Fuse(values, {
+        keys,
+        findAllMatches: true,
+      }),
     [values, values.length] // eslint-disable-line
   );
 

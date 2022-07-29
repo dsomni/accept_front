@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useMemo, useCallback } from 'react';
-import TagSelector from '@ui/TagSelector/TagSelector';
+import {TagSelector} from '@ui/selectors';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
