@@ -1,7 +1,5 @@
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
+import { CustomEditor, Radio, NumberInput } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
-import NumberInput from '@ui/NumberInput/NumberInput';
-import Radio from '@ui/Radio/Radio';
 import { FC, memo, useMemo } from 'react';
 import styles from './descriptionInfo.module.css';
 import { IHintAlarmType } from '@custom-types/data/atomic';

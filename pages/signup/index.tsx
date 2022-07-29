@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
 import { Stepper, Group } from '@mantine/core';
 import styles from '@styles/auth/login.module.css';
-
 import Link from 'next/link';
 import {
   newNotification,
@@ -20,9 +19,7 @@ import {
   ShieldLock,
   AlignJustified,
 } from 'tabler-icons-react';
-import TextInput from '@ui/TextInput/TextInput';
-import Button from '@ui/Button/Button';
-import PasswordInput from '@ui/PasswordInput/PasswordInput';
+import { TextInput, Button, PasswordInput } from '@ui/basics';
 
 const stepFields = [
   ['login'],

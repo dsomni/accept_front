@@ -2,7 +2,11 @@ export const mainHeaderLinks = {
   main: 'Главная',
   about: 'О нас',
   signin: 'Вход',
-  signout: 'Выход',
+  signOut: {
+    signOut: 'Выход',
+    profile: 'Профиль',
+    notifications: 'Уведомления',
+  },
   projects: 'Проекты',
 };
 export const credentials = {

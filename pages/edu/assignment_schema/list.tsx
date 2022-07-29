@@ -23,7 +23,7 @@ import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
-import MultiSelect from '@ui/Select/MultiSelect';
+import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
 
 interface Item {

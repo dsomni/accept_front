@@ -1,6 +1,6 @@
 import { FC, memo, useState, useEffect } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
-import Select from '@ui/Select/Select';
+import { Select } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 import styles from './checker.module.css';
 import { ILanguage } from '@custom-types/data/atomic';

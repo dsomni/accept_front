@@ -56,3 +56,21 @@ export interface IHintAlarmType {
   spec: number;
   name: string;
 }
+
+export interface INotification {
+  spec: string;
+  title: string;
+  shortDescription: string;
+  description: string;
+  author: string;
+}
+
+export interface INewNotification {
+  spec: string;
+  title: string;
+  shortDescription: string;
+  description: string;
+  author: string;
+  logins: string[];
+  groups: string[];
+}

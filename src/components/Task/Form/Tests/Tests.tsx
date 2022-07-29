@@ -1,12 +1,9 @@
 import ListItem from '@ui/ListItem/ListItem';
 import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
-import Button from '@ui/Button/Button';
-import Dropzone from '@ui/Dropzone/Dropzone';
 import { FC, memo, useCallback, useMemo } from 'react';
 import styles from './tests.module.css';
-import InputWrapper from '@ui/InputWrapper/InputWrapper';
-import { Helper } from '@ui/Helper/Helper';
+import { Helper, InputWrapper, Dropzone, Button } from '@ui/basics';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Tests: FC<{

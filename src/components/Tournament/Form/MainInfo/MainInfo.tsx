@@ -3,7 +3,7 @@ import { TextInput } from '@mantine/core';
 
 import { FC, memo } from 'react';
 import styles from './mainInfo.module.css';
-import CustomEditor from '@ui/CustomEditor/CustomEditor';
+import { CustomEditor } from '@ui/basics';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -24,7 +24,9 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           label: styles.label,
         }}
         label={locale.tournament.form.description}
-        onChange={(value) => form.setFieldValue('description', value)}
+        onChange={(value: string) =>
+          form.setFieldValue('description', value)
+        }
         {...form.getInputProps('description')}
       />
     </div>

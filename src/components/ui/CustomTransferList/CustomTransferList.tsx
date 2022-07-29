@@ -29,6 +29,7 @@ export const CustomTransferList: FC<{
   rightComponent?: pureCallback<ReactNode>;
   itemComponent: (item: any, onSelect: any) => ReactNode;
   shouldSortChosen?: boolean;
+  searchKeys?: string[];
 }> = ({
   defaultOptions,
   defaultChosen,
@@ -38,6 +39,7 @@ export const CustomTransferList: FC<{
   rightComponent,
   itemComponent,
   shouldSortChosen,
+  searchKeys,
 }) => {
   const [chosen, setChosen] = useState(
     shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
@@ -85,6 +87,7 @@ export const CustomTransferList: FC<{
           handleSelect={handleSelectLeft}
           rightComponent={rightComponent}
           itemComponent={itemComponent}
+          searchKeys={searchKeys}
         />
       </div>
       <div className={styles.rightWrapper}>
@@ -94,6 +97,7 @@ export const CustomTransferList: FC<{
           values={chosen}
           handleSelect={handleSelectRight}
           itemComponent={itemComponent}
+          searchKeys={searchKeys}
         />
       </div>
     </div>

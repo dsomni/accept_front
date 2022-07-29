@@ -1,12 +1,11 @@
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
 import { Group, Modal } from '@mantine/core';
-
 import { FC, memo, useCallback, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { setter } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import Button from '@ui/Button/Button';
+import { Button } from '@ui/basics';
 
 const DeleteModal: FC<{
   active: boolean;

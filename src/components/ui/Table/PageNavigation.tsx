@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { ActionIcon } from '@mantine/core';
-import Select from '@ui/Select/Select';
+import { Select } from '@ui/basics';
 
 import { FC, memo, useMemo } from 'react';
 import {
