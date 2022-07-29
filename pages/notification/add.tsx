@@ -1,4 +1,4 @@
-import Form from '@components/Notification/Form';
+import Form from '@components/Notification/Form/Form';
 import { IRole } from '@custom-types/data/atomic';
 import { IGroup } from '@custom-types/data/IGroup';
 import { IUser } from '@custom-types/data/IUser';

@@ -1,0 +1,13 @@
+.body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
+}
+.title {
+  font-size: var(--font-size-xl);
+}
+.author {
+  font-size: var(--font-size-xs);
+  color: var(--dark-3);
+}

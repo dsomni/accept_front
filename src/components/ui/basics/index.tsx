@@ -3,6 +3,7 @@ import CustomEditor from './CustomEditor/CustomEditor';
 import Dropzone from './Dropzone/Dropzone';
 import Helper from './Helper/Helper';
 import Icon from './Icon/Icon';
+import Modal from './Modal/Modal';
 import InputWrapper from './InputWrapper/InputWrapper';
 import NumberInput from './NumberInput/NumberInput';
 import MultiSelect from './Select/MultiSelect';
@@ -21,6 +22,7 @@ export {
   Helper,
   Icon,
   InputWrapper,
+  Modal,
   MultiSelect,
   NumberInput,
   PasswordInput,

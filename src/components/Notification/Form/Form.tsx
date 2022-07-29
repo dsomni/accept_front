@@ -108,10 +108,15 @@ const Form: FC<{
         handleSubmit={handleSubmit}
         stepFields={stepFields}
         pages={[
-          <MainInfo form={form} />,
-          <DescriptionInfo form={form} />,
-          <Users form={form} users={users} />,
-          <GroupsRoles form={form} groups={groups} roles={roles} />,
+          <MainInfo key="1" form={form} />,
+          <DescriptionInfo key="2" form={form} />,
+          <Users key="3" form={form} users={users} />,
+          <GroupsRoles
+            key="4"
+            form={form}
+            groups={groups}
+            roles={roles}
+          />,
         ]}
         labels={locale.notification.form.steps.labels}
         descriptions={locale.notification.form.steps.descriptions}
