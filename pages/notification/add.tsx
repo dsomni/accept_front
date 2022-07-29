@@ -1,4 +1,4 @@
-import AddNotification from '@components/Notification/Add';
+import Form from '@components/Notification/Form';
 import { IRole } from '@custom-types/data/atomic';
 import { IGroup } from '@custom-types/data/IGroup';
 import { IUser } from '@custom-types/data/IUser';
@@ -13,7 +13,7 @@ function NewNotification(props: {
   roles: IRole[];
 }) {
   return (
-    <AddNotification
+    <Form
       users={props.users}
       groups={props.groups}
       roles={props.roles}

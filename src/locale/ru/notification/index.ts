@@ -1,16 +1,18 @@
 export const notification = {
   form: {
     steps: {
-      first: 'Main',
-      second: 'Description',
-      third: 'Users',
-      mainInfo: 'Main info',
-      description: 'Description',
-      users: 'Users and groups',
+      first: 'Главное',
+      second: 'Описание',
+      third: 'Пользователи',
+      forth: 'Другое',
+      mainInfo: 'Основная информация',
+      description: 'Полное и краткое описание',
+      users: 'Пользователи',
+      groupsRoles: 'Группы и роли',
     },
-    title: 'Title',
-    author: 'Author',
-    shortDescription: 'Short description',
-    description: 'Description',
+    title: 'Заголовок',
+    author: 'Автор',
+    shortDescription: 'Краткое описание',
+    description: 'Описание',
   },
 };

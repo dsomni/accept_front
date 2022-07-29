@@ -41,7 +41,7 @@ const ProfileMenu: FC<{}> = ({}) => {
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    const id = setInterval(fetchNotifications, 5000);
+    const id = setInterval(fetchNotifications, 30000);
     return () => {
       clearInterval(id);
     };
