@@ -1,7 +1,7 @@
 import { placeholders } from './placeholders';
 import { labels } from './labels';
 import { errors } from './errors';
-import { stepper } from './stepper';
+import { steps } from './steps';
 import { footer } from './footer';
 
 export const auth = {
@@ -11,6 +11,6 @@ export const auth = {
   placeholders,
   labels,
   errors,
-  stepper,
+  steps,
   footer,
 };
