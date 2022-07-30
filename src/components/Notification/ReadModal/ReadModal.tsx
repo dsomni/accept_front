@@ -1,4 +1,4 @@
-import { INotification } from '@custom-types/data/atomic';
+import { INotification } from '@custom-types/data/notification';
 import { Button, Modal } from '@ui/basics';
 import {
   FC,

@@ -2,7 +2,7 @@ import { FC, memo, useCallback } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useForm } from '@mantine/form';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { INewNotification, IRole } from '@custom-types/data/atomic';
+import { IRole } from '@custom-types/data/atomic';
 import { IGroup } from '@custom-types/data/IGroup';
 import MainInfo from './MainInfo';
 import DescriptionInfo from './DescriptionInfo';
@@ -14,6 +14,7 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 import Stepper from '@ui/Stepper/Stepper';
+import { INewNotification } from '@custom-types/data/notification';
 
 const stepFields = [
   ['title', 'author'],

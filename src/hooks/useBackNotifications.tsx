@@ -1,6 +1,8 @@
 import ReadModal from '@components/Notification/ReadModal/ReadModal';
-import { INotification } from '@custom-types/data/atomic';
+import { INotification } from '@custom-types/data/notification';
+import { useLocalStorage } from '@mantine/hooks';
 import { IResponse, sendRequest } from '@requests/request';
+import { getCookie, setCookie } from '@utils/cookies';
 import {
   infoNotification,
   newNotification,
@@ -37,7 +39,10 @@ export const BackNotificationsProvider: FC<{
   const { locale } = useLocale();
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [amount, setAmount] = useState(-1);
+  const [amount, setAmount] = useLocalStorage({
+    key: 'notifications_amount',
+    defaultValue: '-1',
+  });
   const [notifications, setNotifications] = useState<INotification[]>(
     []
   );
@@ -49,7 +54,10 @@ export const BackNotificationsProvider: FC<{
         'GET'
       ).then((res: IResponse<number>) => {
         if (!res.error) {
-          if ((amount >= 0 || first) && res.response > amount) {
+          if (
+            (Number(amount) >= 0 || first) &&
+            res.response > (amount || 0)
+          ) {
             const id = newNotification({});
             infoNotification({
               id,
@@ -59,15 +67,14 @@ export const BackNotificationsProvider: FC<{
               ),
             });
           }
-          setAmount(res.response);
+          setAmount(res.response.toString());
         }
       });
     },
-    [amount, locale]
+    [amount, locale.notify.notification, setAmount]
   );
 
   useEffect(() => {
-    console.log(1);
     fetchNotificationsAmount(true);
   }, []); // eslint-disable-line
 
@@ -111,7 +118,7 @@ export const BackNotificationsProvider: FC<{
 
   const value: INotificationContext = useMemo(
     () => ({
-      amount,
+      amount: Number(amount),
       notifications,
       sendViewed,
       loading,

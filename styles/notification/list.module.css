@@ -1,0 +1,55 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.utils {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacer-s);
+  margin: 0 auto;
+}
+.new {
+  background-color: aqua;
+}
+.notifications {
+  margin: 0 auto;
+  width: 80%;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+.notification {
+  width: 100%;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  padding: var(--spacer-xxs) var(--spacer-m);
+}
+.titleWrapper {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  width: 100%;
+  font-size: var(--font-size-m);
+}
+.shortDescription {
+  width: 100%;
+  font-size: var(--font-size-xs);
+}
+.author {
+  width: 10%;
+  font-size: var(--font-size-m);
+}
+
+.checkboxWrapper {
+  width: 10%;
+  margin: auto;
+}
