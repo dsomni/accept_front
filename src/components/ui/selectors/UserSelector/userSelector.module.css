@@ -5,6 +5,7 @@
   flex-direction: row;
   cursor: pointer;
   width: 100%;
+  user-select: none;
 }
 .nameWrapper {
   display: flex;

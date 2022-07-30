@@ -1,3 +1,4 @@
+import { BackNotificationsProvider } from '@hooks/useBackNotifications';
 import { LocaleProvider } from '@hooks/useLocale';
 import { UserProvider } from '@hooks/useUser';
 import { WidthProvider } from '@hooks/useWidth';
@@ -53,18 +54,20 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <WidthProvider>
-      <UserProvider>
-        <NotificationsProvider
-          position="bottom-left"
-          zIndex={9999}
-          limit={5}
-          autoClose={40000}
-        >
-          <LocaleProvider>
-            {getLayout(<Component {...pageProps} />)}
-          </LocaleProvider>
-        </NotificationsProvider>
-      </UserProvider>
+      <LocaleProvider>
+        <UserProvider>
+          <NotificationsProvider
+            position="bottom-left"
+            zIndex={9999}
+            limit={5}
+            autoClose={40000}
+          >
+            <BackNotificationsProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </BackNotificationsProvider>
+          </NotificationsProvider>
+        </UserProvider>
+      </LocaleProvider>
     </WidthProvider>
   );
 }

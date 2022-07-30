@@ -1,9 +1,16 @@
 import { INotification } from '@custom-types/data/atomic';
 import { Button, Modal } from '@ui/basics';
-import { FC, memo, useState, useMemo, useCallback } from 'react';
+import {
+  FC,
+  memo,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import styles from './readModal.module.css';
-import { sendRequest } from '@requests/request';
 import { Group, LoadingOverlay } from '@mantine/core';
+import { useBackNotifications } from '@hooks/useBackNotifications';
 
 const ReadModal: FC<{
   opened: boolean;
@@ -12,11 +19,19 @@ const ReadModal: FC<{
   loading: boolean;
 }> = ({ opened, close, notifications, loading }) => {
   const [current, setCurrent] = useState(0);
+  const [viewed, setViewed] = useState<string[]>([]);
+
+  const { sendViewed, fetchNotificationsAmount } =
+    useBackNotifications();
+
   const notification = useMemo(
     () => notifications[current],
     [notifications, current]
   );
-  const [viewed, setViewed] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (notifications[0]) setViewed([notifications[0].spec]);
+  }, [notifications]);
 
   const prevOne = useCallback(() => {
     setCurrent((current) => (current > 0 ? current - 1 : current));
@@ -32,21 +47,13 @@ const ReadModal: FC<{
     );
   }, [notifications, current]);
 
-  const sendViewed = useCallback(() => {
-    if (viewed.length > 0) {
-      sendRequest<string[], boolean>(
-        'notification/viewed',
-        'POST',
-        Array.from(new Set(viewed))
-      ).then(() => setViewed([]));
-    }
-  }, [viewed]);
-
   const handleClose = useCallback(() => {
-    sendViewed();
+    sendViewed(viewed);
+    setViewed([]);
+    fetchNotificationsAmount();
     setCurrent(0);
     close();
-  }, [close, sendViewed]);
+  }, [close, sendViewed, viewed, fetchNotificationsAmount]);
 
   return (
     <div>

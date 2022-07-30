@@ -8,6 +8,7 @@ import styles from './roleSelector.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { InputWrapper } from '@ui/basics';
 import { IRole } from '@custom-types/data/atomic';
+import { capitalize } from '@utils/capitalize';
 
 const RoleSelector: FC<{
   form: any;
@@ -48,7 +49,7 @@ const RoleSelector: FC<{
           onClick={() => handleSelect(role)}
           style={{ cursor: 'pointer' }}
         >
-          {role.name}
+          {capitalize(role.name)}
         </div>
       );
     },
