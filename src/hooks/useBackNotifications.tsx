@@ -23,6 +23,7 @@ interface INotificationContext {
   sendViewed: (viewed: string[]) => void;
   loading: boolean;
   openModal: () => void;
+  close: () => void;
   fetchNotificationsAmount: () => void;
 }
 
@@ -116,6 +117,7 @@ export const BackNotificationsProvider: FC<{
       loading,
       openModal: handleOpenModal,
       fetchNotificationsAmount: () => fetchNotificationsAmount(false),
+      close: () => setOpened(false),
     }),
     [
       amount,
@@ -129,12 +131,7 @@ export const BackNotificationsProvider: FC<{
 
   return (
     <BackNotificationsContext.Provider value={value}>
-      <ReadModal
-        opened={opened}
-        notifications={value.notifications}
-        loading={loading}
-        close={() => setOpened(false)}
-      />
+      <ReadModal opened={opened} />
       {children}
     </BackNotificationsContext.Provider>
   );

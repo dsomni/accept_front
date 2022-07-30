@@ -1,5 +1,5 @@
 export const form = {
-  next: 'Next step',
+  next: 'Next',
   back: 'Back',
   create: 'Create',
   search: 'Search',

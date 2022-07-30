@@ -8,6 +8,6 @@
   font-size: var(--font-size-xl);
 }
 .author {
-  font-size: var(--font-size-xs);
-  color: var(--dark-3);
+  font-size: var(--font-size-s);
+  color: var(--dark3);
 }

@@ -11,18 +11,23 @@ import {
 import styles from './readModal.module.css';
 import { Group, LoadingOverlay } from '@mantine/core';
 import { useBackNotifications } from '@hooks/useBackNotifications';
+import { useLocale } from '@hooks/useLocale';
 
 const ReadModal: FC<{
   opened: boolean;
-  close: () => void;
-  notifications: INotification[];
-  loading: boolean;
-}> = ({ opened, close, notifications, loading }) => {
+}> = ({ opened }) => {
   const [current, setCurrent] = useState(0);
   const [viewed, setViewed] = useState<string[]>([]);
 
-  const { sendViewed, fetchNotificationsAmount } =
-    useBackNotifications();
+  const { locale } = useLocale();
+
+  const {
+    sendViewed,
+    fetchNotificationsAmount,
+    notifications,
+    close,
+    loading,
+  } = useBackNotifications();
 
   const notification = useMemo(
     () => notifications[current],
@@ -68,22 +73,21 @@ const ReadModal: FC<{
           body: styles.body,
         }}
         title={
-          <div className={styles.TitleWrapper}>
+          <div className={styles.titleWrapper}>
             <div className={styles.title}>
               {notification ? notification.title : ''}
             </div>
             <div className={styles.author}>
+              {locale.notification.form.author}:{' '}
               {notification ? notification.author : ''}
             </div>
           </div>
         }
+        withCloseButton={false}
       >
         <LoadingOverlay visible={loading} />
         {notification && (
           <>
-            <div className={styles.shortDescription}>
-              {notification.shortDescription}
-            </div>
             <div
               className={styles.description}
               dangerouslySetInnerHTML={{
@@ -92,16 +96,17 @@ const ReadModal: FC<{
             />
           </>
         )}
-        <Group position="center" mt="xl">
-          <Button onClick={prevOne} disabled={current == 0}>
-            Prev
-          </Button>
-          <Button
-            onClick={nextOne}
-            disabled={current >= notifications.length - 1}
-          >
-            Next
-          </Button>
+        <Group position="center" mt="xl" pb="md">
+          {!(current == 0) && (
+            <Button variant="light" onClick={prevOne}>
+              {locale.form.back}
+            </Button>
+          )}
+          {!(current >= notifications.length - 1) && (
+            <Button onClick={nextOne} variant="light">
+              {locale.form.next}
+            </Button>
+          )}
         </Group>
       </Modal>
     </div>

@@ -32,13 +32,10 @@ const Form: FC<{
   const form = useForm({
     initialValues: {
       spec: '',
-      title: 'Вам задан новый урок',
-      author: 'Я',
-
-      shortDescription: 'Урок по циклам',
-      description:
-        'Новый урок по циклам содержащий задачи 1, 2, 5, 19',
-
+      title: '',
+      author: '',
+      shortDescription: '',
+      description: '',
       logins: [],
       broadcast: false,
       groups: [],
