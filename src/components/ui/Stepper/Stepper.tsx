@@ -90,7 +90,9 @@ const Stepper: FC<{
       <MantineStepper
         className={customWrapper ? undefined : stepperStyles.stepper}
         classNames={
-          contentClass ? { content: contentClass } : undefined
+          contentClass
+            ? { content: contentClass }
+            : { content: stepperStyles.wrapper }
         }
         iconPosition={iconPosition || 'right'}
         active={currentStep}

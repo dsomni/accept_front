@@ -16,7 +16,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
   );
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <TextInput
         classNames={{
           label: stepperStyles.label,
@@ -60,7 +60,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         }}
         {...form.getInputProps('defaultDuration')}
       />
-    </div>
+    </>
   );
 };
 

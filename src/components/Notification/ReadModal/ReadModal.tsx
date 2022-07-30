@@ -30,27 +30,27 @@ const ReadModal: FC<{
   );
 
   useEffect(() => {
-    if (notifications[0]) setViewed([notifications[0].spec]);
-  }, [notifications]);
+    if (notifications[current])
+      setViewed((viewed) => {
+        viewed.push(notifications[current].spec);
+        return viewed;
+      });
+  }, [notifications, current, setViewed]);
 
   const prevOne = useCallback(() => {
     setCurrent((current) => (current > 0 ? current - 1 : current));
   }, []);
 
   const nextOne = useCallback(() => {
-    setViewed((viewed) => {
-      viewed.push(notifications[current].spec);
-      return viewed;
-    });
     setCurrent((current) =>
       current < notifications.length - 1 ? current + 1 : current
     );
-  }, [notifications, current]);
+  }, [notifications]);
 
   const handleClose = useCallback(() => {
     sendViewed(viewed);
     setViewed([]);
-    fetchNotificationsAmount();
+    setTimeout(fetchNotificationsAmount, 500);
     setCurrent(0);
     close();
   }, [close, sendViewed, viewed, fetchNotificationsAmount]);
@@ -62,6 +62,7 @@ const ReadModal: FC<{
         opened={opened}
         onClose={handleClose}
         size="80%"
+        overlayBlur={3}
         classNames={{
           root: styles.wrapper,
           body: styles.body,

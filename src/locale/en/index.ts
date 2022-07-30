@@ -32,6 +32,7 @@ const en = {
   all: 'All',
   create: 'Create',
   edit: 'Edit',
+  validationError: 'Validation error',
   attempt,
   group,
   placeholders,

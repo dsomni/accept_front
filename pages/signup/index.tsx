@@ -148,7 +148,7 @@ function SignUp() {
       const id = newNotification({});
       errorNotification({
         id,
-        title: locale.notify.auth.validation,
+        title: locale.validationError,
         autoClose: 5000,
       });
       return;
@@ -194,7 +194,11 @@ function SignUp() {
         iconPosition="left"
         form={form}
         stepFields={stepFields}
-        icons={[<LetterCase />, <ShieldLock />, <AlignJustified />]}
+        icons={[
+          <LetterCase key="0" />,
+          <ShieldLock key="1" />,
+          <AlignJustified key="2" />,
+        ]}
         descriptions={['', '', '']}
         labels={locale.auth.steps.labels}
         pages={[

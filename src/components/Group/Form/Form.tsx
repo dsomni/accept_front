@@ -27,7 +27,7 @@ const Form: FC<{
   }, [form.errors]);
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <TextInput
         label={locale.group.name}
         classNames={{
@@ -48,7 +48,7 @@ const Form: FC<{
           {buttonText}
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 

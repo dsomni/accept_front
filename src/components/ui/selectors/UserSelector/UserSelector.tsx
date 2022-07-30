@@ -15,7 +15,8 @@ const UserSelector: FC<{
   form: any;
   users: IUser[];
   field: string;
-}> = ({ form, users, field }) => {
+  initialUsers?: string[];
+}> = ({ form, users, field, initialUsers }) => {
   const [availableUsers, setAvailableUsers] = useState<Item[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,9 +30,8 @@ const UserSelector: FC<{
 
     for (let i = 0; i < users.length; i++) {
       if (
-        users[i].groups.findIndex(
-          (item) => item.spec == form.values.spec
-        ) >= 0
+        initialUsers &&
+        initialUsers.find((login) => login === users[i].login)
       ) {
         newSelectedUsers.push({
           ...users[i],
@@ -47,7 +47,7 @@ const UserSelector: FC<{
     setAvailableUsers(newAvailableUsers);
     setSelectedUsers(newSelectedUsers);
     setLoading(false);
-  }, [form.values.spec, users]);
+  }, [initialUsers, users]);
 
   const [displayedField, setDisplayedField] = useState<
     'shortName' | 'login'

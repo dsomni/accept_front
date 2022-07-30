@@ -45,7 +45,7 @@ const ProfileMenu: FC<{}> = ({}) => {
           <Indicator
             size={24}
             label={amount > 99 ? '99+' : amount}
-            disabled={amount == 0}
+            disabled={amount <= 0}
             styles={{
               indicator: {
                 backgroundColor: 'var(--accent)',

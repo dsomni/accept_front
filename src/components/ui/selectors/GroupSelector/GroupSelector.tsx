@@ -12,7 +12,7 @@ import { InputWrapper } from '@ui/basics';
 const GroupSelector: FC<{
   form: any;
   groups: IGroup[];
-  initialGroups: IGroup[];
+  initialGroups: string[];
   field: string;
 }> = ({ form, groups, initialGroups, field }) => {
   const [availableGroups, setAvailableGroups] = useState<Item[]>([]);
@@ -25,11 +25,9 @@ const GroupSelector: FC<{
     let newAvailableGroups = [];
     let newSelectedGroups = [];
 
-    const initial = initialGroups.map((group) => group.spec);
-
     for (let i = 0; i < groups.length; i++) {
       const group = { ...groups[i], label: groups[i].name };
-      if (initial.includes(group.spec)) {
+      if (initialGroups.includes(group.spec)) {
         newSelectedGroups.push(group);
       } else {
         newAvailableGroups.push(group);

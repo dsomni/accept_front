@@ -11,19 +11,17 @@ const TaskAdding: FC<{ form: any; initialTasks: Item[] }> = ({
 }) => {
   return (
     <>
-      <div className={stepperStyles.wrapper}>
-        <InputWrapper {...form.getInputProps('tasks')}>
-          <TaskSelector
-            classNames={{
-              label: stepperStyles.label,
-            }}
-            initialTasks={initialTasks}
-            setUsed={(value) => {
-              form.setFieldValue('tasks', value);
-            }}
-          />
-        </InputWrapper>
-      </div>
+      <InputWrapper {...form.getInputProps('tasks')}>
+        <TaskSelector
+          classNames={{
+            label: stepperStyles.label,
+          }}
+          initialTasks={initialTasks}
+          setUsed={(value) => {
+            form.setFieldValue('tasks', value);
+          }}
+        />
+      </InputWrapper>
     </>
   );
 };

@@ -153,7 +153,7 @@ function AddTask() {
       const id = newNotification({});
       errorNotification({
         id,
-        title: locale.notify.task.validation.error,
+        title: locale.validationError,
         autoClose: 5000,
       });
       return;

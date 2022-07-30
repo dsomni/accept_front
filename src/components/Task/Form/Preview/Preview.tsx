@@ -24,19 +24,17 @@ const Preview: FC<{ form: any }> = ({ form }) => {
           {form.values.hintContent}
         </SimpleModal>
       )}
-      <div className={stepperStyles.wrapper}>
-        <Description
-          task={{
-            ...form.values,
-            constraints: {
-              time: form.values.constraintsTime,
-              memory: form.values.constraintsMemory,
-            },
-          }}
-          setShowHint={() => {}}
-          preview
-        />
-      </div>
+      <Description
+        task={{
+          ...form.values,
+          constraints: {
+            time: form.values.constraintsTime,
+            memory: form.values.constraintsMemory,
+          },
+        }}
+        setShowHint={() => {}}
+        preview
+      />
       {form.values.hasHint && (
         <SingularSticky
           icon={

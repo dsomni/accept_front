@@ -71,6 +71,8 @@ export interface INewNotification {
   shortDescription: string;
   description: string;
   author: string;
+  broadcast: boolean;
   logins: string[];
   groups: string[];
+  roles: number[];
 }

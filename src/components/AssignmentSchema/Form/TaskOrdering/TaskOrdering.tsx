@@ -10,7 +10,7 @@ export const TaskOrdering: FC<{
 }> = ({ form }) => {
   const { locale } = useLocale();
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <div className={stepperStyles.label}>
         {locale.assignmentSchema.form.taskOrdering.title}
       </div>
@@ -24,6 +24,6 @@ export const TaskOrdering: FC<{
           dragButton: styles.dragButton,
         }}
       />
-    </div>
+    </>
   );
 };

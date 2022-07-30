@@ -13,7 +13,7 @@ import { capitalize } from '@utils/capitalize';
 const RoleSelector: FC<{
   form: any;
   roles: IRole[];
-  initialRoles: IRole[];
+  initialRoles: number[];
   field: string;
 }> = ({ form, roles, initialRoles, field }) => {
   const [availableRole, setAvailableRole] = useState<Item[]>([]);
@@ -26,11 +26,9 @@ const RoleSelector: FC<{
     let newAvailableRole = [];
     let newSelectedRole = [];
 
-    const initial = initialRoles.map((role) => role.spec);
-
     for (let i = 0; i < roles.length; i++) {
       const role = { ...roles[i], label: roles[i].name };
-      if (initial.includes(role.spec)) {
+      if (initialRoles.includes(role.spec)) {
         newSelectedRole.push(role);
       } else {
         newAvailableRole.push(role);

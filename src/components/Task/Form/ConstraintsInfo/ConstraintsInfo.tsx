@@ -59,7 +59,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <div style={{ width: 'fit-content' }}>
         <Switch
           label={locale.task.form.restrictLanguages}
@@ -128,7 +128,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
         }}
         {...form.getInputProps('constraintsTime')}
       />
-    </div>
+    </>
   );
 };
 
