@@ -79,12 +79,12 @@ export const BackNotificationsProvider: FC<{
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    const id = setTimeout(
+    const id = setInterval(
       () => fetchNotificationsAmount(false),
       60000
     );
     return () => {
-      clearTimeout(id);
+      clearInterval(id);
     };
   }, [fetchNotificationsAmount]);
 
