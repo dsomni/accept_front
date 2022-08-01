@@ -8,4 +8,6 @@ export const form = {
   author: 'Author',
   shortDescription: 'Short description',
   description: 'Description',
+  asSystem: 'Send notification as system',
+  broadcast: 'Send notification to all users',
 };

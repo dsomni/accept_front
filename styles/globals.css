@@ -61,6 +61,22 @@ body {
   --spacer-xxs: 0.3rem;
 }
 
+.text-tiny {
+  font-size: var(--font-size-xxs);
+}
+
+.text-small {
+  font-size: var(--font-size-xs);
+}
+
+.text-big {
+  font-size: var(--font-size-l);
+}
+
+.text-huge {
+  font-size: var(--font-size-xl);
+}
+
 @media only screen and (min-width: 320px) {
   html,
   body {

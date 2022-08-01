@@ -29,7 +29,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
   }, []);
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <Select
         label={locale.language}
         value={language}
@@ -75,7 +75,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         {' '}
         <Tests form={form} hideOutput />
       </div>
-    </div>
+    </>
   );
 };
 

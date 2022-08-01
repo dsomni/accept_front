@@ -124,7 +124,7 @@ const Tests: FC<{
   );
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <Dropzone
         onDrop={onDrop}
         title={locale.ui.codeArea.dragFiles}
@@ -197,7 +197,7 @@ const Tests: FC<{
           </Button>
         </div>
       </Dropzone>
-    </div>
+    </>
   );
 };
 

@@ -1,9 +1,14 @@
 export const steps = {
-  labels: ['Main', 'Description', 'Users', 'Other'],
+  labels: [
+    'Main',
+    'Description',
+    'Groups and roles',
+    'Users and groups',
+  ],
   descriptions: [
     'Main info',
     'Description',
-    'Users and groups',
-    'Groups and roles',
+    'Respondents choose',
+    'Respondents choose',
   ],
 };

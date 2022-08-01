@@ -33,6 +33,7 @@ const ru = {
   create: 'Создать',
   edit: 'Изменить',
   toList: 'К списку',
+  validationError: 'Ошибка валидации',
   attempt,
   group,
   placeholders,

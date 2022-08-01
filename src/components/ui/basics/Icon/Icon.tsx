@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import styles from './icon.module.css';
-import { ActionIcon, ActionIconProps } from '@mantine/core';
+import { ActionIcon, ActionIconProps, Tooltip } from '@mantine/core';
 import { useWidth } from '@hooks/useWidth';
 import { IWidth } from '@custom-types/ui/atomic';
 
@@ -56,23 +56,31 @@ type IconSizes = keyof typeof ICON_SIZES;
 
 interface Props extends Omit<ActionIconProps<'button'>, 'size'> {
   size?: IconSizes;
+  tooltipLabel?: string;
 }
 
-const Icon: FC<Props> = ({ children, size, ...props }) => {
+const Icon: FC<Props> = ({
+  children,
+  size,
+  tooltipLabel,
+  ...props
+}) => {
   const { width } = useWidth();
 
   return (
     <div className={styles.wrapper}>
-      <ActionIcon
-        {...props}
-        size={
-          size
-            ? ICON_SIZES[size][width as IWidth]
-            : ICON_SIZES['md'][width as IWidth]
-        }
-      >
-        {children}
-      </ActionIcon>
+      <Tooltip label={tooltipLabel} openDelay={500} withArrow>
+        <ActionIcon
+          {...props}
+          size={
+            size
+              ? ICON_SIZES[size][width as IWidth]
+              : ICON_SIZES['md'][width as IWidth]
+          }
+        >
+          {children}
+        </ActionIcon>
+      </Tooltip>
     </div>
   );
 };

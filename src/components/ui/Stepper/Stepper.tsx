@@ -44,7 +44,7 @@ const Stepper: FC<{
       });
       return error;
     },
-    [form]
+    [form, stepFields]
   );
 
   const nextStep = useCallback(() => {
@@ -54,7 +54,7 @@ const Stepper: FC<{
       }
       return current;
     });
-  }, [validateStep]);
+  }, [validateStep, LAST_PAGE]);
 
   const prevStep = useCallback(() => {
     setCurrentStep((current) => {
@@ -73,7 +73,7 @@ const Stepper: FC<{
       });
       return error;
     },
-    [form.errors]
+    [form.errors, stepFields]
   );
 
   const onStepperChange = useCallback(
@@ -90,7 +90,9 @@ const Stepper: FC<{
       <MantineStepper
         className={customWrapper ? undefined : stepperStyles.stepper}
         classNames={
-          contentClass ? { content: contentClass } : undefined
+          contentClass
+            ? { content: contentClass }
+            : { content: stepperStyles.wrapper }
         }
         iconPosition={iconPosition || 'right'}
         active={currentStep}
@@ -99,6 +101,7 @@ const Stepper: FC<{
       >
         {pages.map((page, index) => (
           <MantineStepper.Step
+            key={index}
             label={labels[index]}
             description={descriptions[index]}
             icon={

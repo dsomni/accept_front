@@ -21,7 +21,7 @@ const DescriptionInfo: FC<{
   );
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <CustomEditor
         classNames={{
           label: stepperStyles.label,
@@ -89,7 +89,7 @@ const DescriptionInfo: FC<{
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

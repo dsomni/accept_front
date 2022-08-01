@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useMemo, useCallback } from 'react';
-import {TagSelector} from '@ui/selectors';
+import { TagSelector } from '@ui/selectors';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
@@ -47,7 +47,7 @@ const MainInfo: FC<{
   );
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       <TextInput
         label={locale.task.form.title}
         required
@@ -115,7 +115,7 @@ const MainInfo: FC<{
           />
         )}
       </div>
-    </div>
+    </>
   );
 };
 

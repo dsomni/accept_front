@@ -25,7 +25,7 @@ const Examples: FC<{ form: any }> = ({ form }) => {
   );
 
   return (
-    <div className={stepperStyles.wrapper}>
+    <>
       {form.values.examples &&
         form.values.examples.map((_: ITest, index: number) => (
           <div key={index}>
@@ -67,7 +67,7 @@ const Examples: FC<{ form: any }> = ({ form }) => {
       >
         +
       </Button>
-    </div>
+    </>
   );
 };
 
