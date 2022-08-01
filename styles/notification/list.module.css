@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-bottom: var(--spacer-xxl);
 }
 
 .utils {
@@ -11,26 +12,37 @@
   flex-wrap: wrap;
   gap: var(--spacer-s);
   margin: 0 auto;
+  padding: var(--spacer-s) var(--spacer-m);
 }
-.new {
-  background-color: aqua;
+.selectAll {
+  margin-right: var(--spacer-xs);
 }
 .notifications {
   margin: 0 auto;
   width: 80%;
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
+  border-top: 1px solid var(--dark5);
   display: flex;
   flex-direction: column;
 }
 .notification {
   width: 100%;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--dark5);
   display: flex;
   flex-direction: row;
   padding: var(--spacer-xxs) var(--spacer-m);
+  background-color: #0001;
+  user-select: none;
 }
+
+.new {
+  font-weight: bold;
+  background-color: unset;
+}
+
+.notification:hover {
+  background-color: var(--primary-light);
+}
+
 .titleWrapper {
   width: 80%;
   display: flex;
@@ -47,9 +59,12 @@
 .author {
   width: 10%;
   font-size: var(--font-size-m);
+  margin: auto 0;
+}
+.date {
+  width: 10%;
 }
 
 .checkboxWrapper {
-  width: 10%;
-  margin: auto;
+  margin: auto var(--spacer-l) auto 0;
 }

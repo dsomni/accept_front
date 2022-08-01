@@ -15,19 +15,26 @@ import { useLocale } from '@hooks/useLocale';
 
 const ReadModal: FC<{
   opened: boolean;
-}> = ({ opened }) => {
-  const [current, setCurrent] = useState(0);
+  notifications: INotification[];
+  defaultSelected?: number;
+  notLoading?: boolean;
+  close: () => void;
+}> = ({
+  opened,
+  notifications,
+  defaultSelected,
+  notLoading,
+  close,
+}) => {
+  const [current, setCurrent] = useState(
+    defaultSelected ? defaultSelected : 0
+  );
   const [viewed, setViewed] = useState<string[]>([]);
 
   const { locale } = useLocale();
 
-  const {
-    sendViewed,
-    fetchNotificationsAmount,
-    notifications,
-    close,
-    loading,
-  } = useBackNotifications();
+  const { sendViewed, fetchNotificationsAmount, loading } =
+    useBackNotifications();
 
   const notification = useMemo(
     () => notifications[current],
@@ -85,7 +92,7 @@ const ReadModal: FC<{
         }
         withCloseButton={false}
       >
-        <LoadingOverlay visible={loading} />
+        <LoadingOverlay visible={!notLoading && loading} />
         {notification && (
           <>
             <div

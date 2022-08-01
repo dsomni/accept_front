@@ -36,16 +36,17 @@ const BackNotificationsContext = createContext<INotificationContext>(
 export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const { locale } = useLocale();
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState<INotification[]>(
+    []
+  );
+
   const [amount, setAmount] = useLocalStorage({
     key: 'notifications_amount',
     defaultValue: '-1',
   });
-  const [notifications, setNotifications] = useState<INotification[]>(
-    []
-  );
+  const { locale } = useLocale();
 
   const fetchNotificationsAmount = useCallback(
     (first: boolean) => {
@@ -138,7 +139,11 @@ export const BackNotificationsProvider: FC<{
 
   return (
     <BackNotificationsContext.Provider value={value}>
-      <ReadModal opened={opened} />
+      <ReadModal
+        opened={opened}
+        notifications={notifications}
+        close={value.close}
+      />
       {children}
     </BackNotificationsContext.Provider>
   );

@@ -1,24 +1,18 @@
-import {
-  useState,
-  ReactNode,
-  useCallback,
-  useEffect,
-  ChangeEvent,
-} from 'react';
+import { useState, ReactNode, useCallback, ChangeEvent } from 'react';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import styles from '@styles/notification/list.module.css';
 import {
   INotification,
   INotificationRecord,
 } from '@custom-types/data/notification';
-
 import { Checkbox } from '@mantine/core';
-import { Button } from '@ui/basics';
-import { requestWithNotify } from '@utils/requestWithNotify';
+import { Icon } from '@ui/basics';
+import { requestWithError } from '@utils/requestWithError';
 import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
 import { getLocalDate } from '@utils/datetime';
-import { useBackNotifications } from '@hooks/useBackNotifications';
+import { MailOpened, Trash } from 'tabler-icons-react';
+import ReadModal from '@components/Notification/ReadModal/ReadModal';
 
 interface INotificationItem extends INotification {
   new: boolean;
@@ -28,6 +22,8 @@ function List() {
   const [notifications, setNotifications] = useState<
     INotificationItem[]
   >([]);
+  const [openedModal, setOpenedModal] = useState(false);
+  const [current, setCurrent] = useState(0);
 
   const { locale, lang } = useLocale();
 
@@ -88,61 +84,96 @@ function List() {
   );
 
   const handleDelete = useCallback(() => {
-    requestWithNotify<string[], boolean>(
+    requestWithError<string[], boolean>(
       'notification/delete',
       'POST',
-      { loading: 'loading', success: 'success', error: 'error' },
+      locale.notification.list.requestDelete,
       lang,
-      () => '',
       selected,
       () => {
         setSelected([]);
         refetchNotifications();
       }
     );
-  }, [lang, refetchNotifications, selected, setSelected]);
+  }, [locale, lang, refetchNotifications, selected, setSelected]);
 
   const handleView = useCallback(() => {
-    requestWithNotify<string[], boolean>(
+    requestWithError<string[], boolean>(
       'notification/viewed',
       'POST',
-      { loading: 'loading', success: 'success', error: 'error' },
+      locale.notification.list.requestViewed,
       lang,
-      () => '',
       selected,
       () => {
         setSelected([]);
         setTimeout(refetchNotifications, 500);
       }
     );
-  }, [lang, refetchNotifications, selected, setSelected]);
+  }, [locale, lang, refetchNotifications, selected, setSelected]);
+
+  const handleOpenModal = useCallback((current: number) => {
+    return () => {
+      setCurrent(current);
+      setOpenedModal(true);
+    };
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setOpenedModal(false);
+    setTimeout(refetchNotifications, 500);
+  }, [refetchNotifications]);
 
   return (
     <div className={styles.wrapper}>
+      <ReadModal
+        opened={openedModal}
+        defaultSelected={current}
+        notifications={notifications}
+        notLoading
+        close={handleCloseModal}
+      />
       <div className={styles.utils}>
-        {selected.length == notifications.length ? (
-          <Button onClick={() => setSelected([])}>
-            Unselect All
-          </Button>
-        ) : (
-          <Button
-            onClick={() =>
-              setSelected(notifications.map((elem) => elem.spec))
-            }
-          >
-            Select All
-          </Button>
-        )}
-        <Button
-          disabled={selected.length == 0}
-          onClick={handleDelete}
-        >
-          Delete
-        </Button>
+        <div className={styles.selectAll}>
+          {selected.length == notifications.length &&
+          selected.length !== 0 ? (
+            <Icon
+              size="xs"
+              tooltipLabel={locale.notification.list.unselect}
+              onClick={() => setSelected([])}
+            >
+              <Checkbox checked />
+            </Icon>
+          ) : (
+            <Icon
+              size="xs"
+              tooltipLabel={locale.notification.list.selectAll}
+              onClick={() =>
+                setSelected(notifications.map((elem) => elem.spec))
+              }
+            >
+              <Checkbox />
+            </Icon>
+          )}
+        </div>
+        {selected.length !== 0 && (
+          <>
+            <Icon
+              size="xs"
+              tooltipLabel={locale.notification.list.delete}
+              onClick={handleDelete}
+            >
+              <Trash />
+            </Icon>
 
-        <Button disabled={selected.length == 0} onClick={handleView}>
-          View
-        </Button>
+            <Icon
+              size="xs"
+              tooltipLabel={locale.notification.list.viewed}
+              onClick={handleView}
+            >
+              <MailOpened />
+            </Icon>
+          </>
+        )}
       </div>
       <div className={styles.notifications}>
         {notifications.map((notification, index) => (
@@ -154,11 +185,16 @@ function List() {
               (notification.new ? styles.new : '')
             }
           >
-            <Checkbox
-              checked={selected.includes(notification.spec)}
-              onChange={onCheckboxCheck(notification)}
-            />
-            <div className={styles.titleWrapper}>
+            <div className={styles.checkboxWrapper}>
+              <Checkbox
+                checked={selected.includes(notification.spec)}
+                onChange={onCheckboxCheck(notification)}
+              />
+            </div>
+            <div
+              className={styles.titleWrapper}
+              onClick={handleOpenModal(index)}
+            >
               <div className={styles.title}>{notification.title}</div>
               <div className={styles.shortDescription}>
                 {notification.shortDescription}
