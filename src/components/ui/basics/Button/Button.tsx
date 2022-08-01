@@ -1,39 +1,18 @@
-import {
-  FC,
-  memo,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-} from 'react';
-import {
-  Button as MantineButton,
-  ButtonProps,
-  Popover,
-  PopoverProps,
-} from '@mantine/core';
+import { FC, memo, useEffect, useMemo, useState } from 'react';
+import { Button as MantineButton, HoverCard } from '@mantine/core';
 import styles from './button.module.css';
+import { MyButtonProps } from '@custom-types/ui/basics/button';
 
-interface Props extends ButtonProps<'button'> {
-  popoverProps?: Omit<
-    PopoverProps,
-    'opened' | 'children' | 'target' | 'component'
-  >;
-  popoverContent?: string | ReactNode;
-  kind?: 'positive' | 'negative';
-  href?: string;
-}
-
-const Button: FC<Props> = ({
-  popoverProps,
-  popoverContent,
+const Button: FC<MyButtonProps> = ({
+  hoverCardProps,
+  hoverCardDropdownProps,
+  hoverCardTargetProps,
+  targetWrapperStyle,
+  dropdownContent,
   kind,
   variant,
   ...buttonProps
 }) => {
-  const [opened, setOpened] = useState(false);
-
   const [bgColor, setBgColor] = useState('#fff)');
   const [mainColor, setMainColor] = useState('var(--primary)');
   const [hoverColor, setHoverColor] = useState('var(--secondary');
@@ -113,89 +92,59 @@ const Button: FC<Props> = ({
   const button = useMemo(
     () => (
       <>
-        {!buttonProps.href ? (
-          <MantineButton
-            onMouseEnter={() => setOpened(true)}
-            onMouseLeave={() => setOpened(false)}
-            styles={{
-              label: {
-                fontSize: 'var(--font-size--btn)',
-                lineHeight: 'var(--font-size-btn-l)',
-                color: buttonProps.disabled
-                  ? 'var(--dark2)'
-                  : mainColor,
-                fontWeight: fontWeight,
+        <MantineButton
+          styles={{
+            label: {
+              fontSize: 'var(--font-size--btn)',
+              lineHeight: 'var(--font-size-btn-l)',
+              color: buttonProps.disabled
+                ? 'var(--dark2)'
+                : mainColor,
+              fontWeight: fontWeight,
+            },
+            root: {
+              backgroundColor: buttonProps.disabled
+                ? 'var(--dark5) !important'
+                : bgColor,
+              padding: 'var(--spacer-xs) var(--spacer-s)',
+              height: 'fit-content',
+              borderColor: buttonProps.disabled
+                ? 'var(--dark2)'
+                : mainColor,
+              '&:hover': {
+                backgroundColor: hoverColor,
               },
-              root: {
-                backgroundColor: buttonProps.disabled
-                  ? 'var(--dark5) !important'
-                  : bgColor,
-                padding: 'var(--spacer-xs) var(--spacer-s)',
-                height: 'fit-content',
-                borderColor: buttonProps.disabled
-                  ? 'var(--dark2)'
-                  : mainColor,
-                '&:hover': {
-                  backgroundColor: hoverColor,
-                },
-              },
-            }}
-            {...buttonProps}
-          />
-        ) : (
-          <MantineButton
-            onMouseEnter={() => setOpened(true)}
-            onMouseLeave={() => setOpened(false)}
-            component="a"
-            styles={{
-              label: {
-                fontSize: 'var(--font-size--btn)',
-                lineHeight: 'var(--font-size-btn-l)',
-                color: buttonProps.disabled
-                  ? 'var(--dark2)'
-                  : mainColor,
-                fontWeight: fontWeight,
-              },
-              root: {
-                backgroundColor: buttonProps.disabled
-                  ? 'var(--dark5) !important'
-                  : bgColor,
-                padding: 'var(--spacer-xs) var(--spacer-s)',
-                height: 'fit-content',
-                borderColor: buttonProps.disabled
-                  ? 'var(--dark2)'
-                  : mainColor,
-                '&:hover': {
-                  backgroundColor: hoverColor,
-                },
-              },
-            }}
-            {...(buttonProps as ButtonProps<'a'>)}
-          />
-        )}
+            },
+          }}
+          {...buttonProps}
+        />
       </>
     ),
     [bgColor, buttonProps, fontWeight, hoverColor, mainColor]
   );
 
   return (
-    <Popover
-      disabled={!!!popoverContent}
-      target={button}
+    <HoverCard
       withArrow
-      opened={opened}
       position="bottom"
-      placement="center"
       arrowSize={5}
       transition={'scale'}
       transitionDuration={300}
-      {...popoverProps}
-      style={{ ...popoverProps?.style, ...buttonProps.style }}
+      {...hoverCardProps}
     >
-      <div className={styles.popoverContentWrapper}>
-        {popoverContent}
+      <div style={targetWrapperStyle}>
+        <HoverCard.Target {...hoverCardTargetProps}>
+          <div>{button}</div>
+        </HoverCard.Target>
       </div>
-    </Popover>
+      {!!dropdownContent && (
+        <HoverCard.Dropdown {...hoverCardDropdownProps}>
+          <div className={styles.dropdownContentWrapper}>
+            {dropdownContent}
+          </div>
+        </HoverCard.Dropdown>
+      )}
+    </HoverCard>
   );
 };
 

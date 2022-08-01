@@ -1,40 +1,37 @@
-import { Popover, PopoverProps } from '@mantine/core';
 import { Help } from 'tabler-icons-react';
-import { FC, ReactNode, useState, memo } from 'react';
+import { FC, memo } from 'react';
 import styles from './helper.module.css';
 import { Icon } from '@ui/basics';
+import { MyHelperProps } from '@custom-types/ui/basics/helper';
+import { HoverCard } from '@mantine/core';
 
-interface Props
-  extends Omit<PopoverProps, 'opened' | 'children' | 'target'> {
-  content: string | ReactNode;
-}
-
-const Helper: FC<Props> = ({ content, ...props }) => {
-  const [opened, setOpened] = useState(false);
-
+const Helper: FC<MyHelperProps> = ({
+  dropdownContent,
+  hoverCardProps,
+  hoverCardTargetProps,
+  hoverCardDropdownProps,
+  ...props
+}) => {
   return (
-    <Popover
+    <HoverCard
       withArrow
       position="bottom"
-      placement="center"
       arrowSize={5}
       transition={'scale'}
       transitionDuration={300}
-      classNames={{ popover: styles.popover }}
-      {...props}
-      target={
-        <Icon size="xs">
-          <Help
-            onMouseEnter={() => setOpened(true)}
-            onMouseLeave={() => setOpened(false)}
-            color={'var(--dark4)'}
-          />
-        </Icon>
-      }
-      opened={opened}
+      {...hoverCardProps}
     >
-      <div className={styles.contentWrapper}>{content}</div>
-    </Popover>
+      <HoverCard.Target {...hoverCardTargetProps}>
+        <div>
+          <Icon size="xs">
+            <Help color={'var(--dark4)'} />
+          </Icon>
+        </div>
+      </HoverCard.Target>
+      <HoverCard.Dropdown {...hoverCardDropdownProps}>
+        <div className={styles.contentWrapper}>{dropdownContent}</div>
+      </HoverCard.Dropdown>
+    </HoverCard>
   );
 };
 

@@ -29,10 +29,14 @@ const Form: FC<{
         buttonLabel={buttonLabel}
         handleSubmit={handleSubmit}
         pages={[
-          <MainInfo form={form} />,
-          <TaskAdding form={form} initialTasks={form.values.tasks} />,
-          <TaskOrdering form={form} />,
-          <Preview form={form} />,
+          <MainInfo key={'0'} form={form} />,
+          <TaskAdding
+            key={'1'}
+            form={form}
+            initialTasks={form.values.tasks}
+          />,
+          <TaskOrdering key={'2'} form={form} />,
+          <Preview key={'3'} form={form} />,
         ]}
         labels={locale.assignmentSchema.form.steps.labels}
         descriptions={locale.assignmentSchema.form.steps.descriptions}

@@ -21,7 +21,7 @@ const NumberInput: FC<Props> = ({ helperContent, ...props }) => {
             <div className={inputStyles.labelRequired}>*</div>
           )}
         </div>
-        {helperContent && <Helper content={helperContent} />}
+        {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
       <MantineNumberInput size="lg" {...props} label={undefined} />
     </div>

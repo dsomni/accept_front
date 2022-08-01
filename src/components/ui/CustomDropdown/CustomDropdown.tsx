@@ -1,4 +1,3 @@
-import { HeaderLink } from '@components/layout/Navbar/Header/Links/HeaderLink';
 import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import { Button, Menu } from '@mantine/core';
@@ -12,23 +11,22 @@ const CustomDropdown: FC<{ links: IHeaderLink[]; label: string }> = ({
   const { locale } = useLocale();
 
   return (
-    <Menu
-      position="bottom"
-      gutter={19}
-      control={
+    <Menu position="bottom">
+      <Menu.Target>
         <Button className={styles.dropdownBth}>{label}</Button>
-      }
-    >
-      {links.map((link, index) => (
-        <Menu.Item
-          className={styles.items}
-          key={index}
-          component="a"
-          href={link.href}
-        >
-          {link.text(locale)}
-        </Menu.Item>
-      ))}
+      </Menu.Target>
+      <Menu.Dropdown>
+        {links.map((link, index) => (
+          <Menu.Item
+            className={styles.items}
+            key={index}
+            component="a"
+            href={link.href}
+          >
+            {link.text(locale)}
+          </Menu.Item>
+        ))}
+      </Menu.Dropdown>
     </Menu>
   );
 };

@@ -3,7 +3,7 @@ import IHeaderLink from '@custom-types/ui/IHeaderLink';
 import { HeaderLink } from '../Header/Links/HeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import styles from './sideBar.module.css';
-import { Burger, Group } from '@mantine/core';
+import { Burger, Stack } from '@mantine/core';
 import SignIn from '../SignIn/SignIn';
 import { pureCallback } from '@custom-types/ui/atomic';
 
@@ -24,7 +24,7 @@ export const Links: FC<{
         opened={true}
         onClick={onClose}
       />
-      <Group direction="column" className={styles.linkWrapper}>
+      <Stack align="flex-start" className={styles.linkWrapper}>
         <SignIn />
         {links.map((link, index) => (
           <div key={index}>
@@ -63,7 +63,7 @@ export const Links: FC<{
             )}
           </div>
         ))}
-      </Group>
+      </Stack>
     </>
   );
 };

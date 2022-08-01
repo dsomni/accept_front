@@ -12,7 +12,10 @@ const TaskLayout: FC<{
   title?: string;
 }> = ({ description, send, results, title }) => {
   const { locale } = useLocale();
-  const [activeTab, setActiveTab] = useState(0);
+
+  const [activeTab, setActiveTab] = useState<string | null>(
+    'description'
+  );
 
   return (
     <>
@@ -21,28 +24,43 @@ const TaskLayout: FC<{
           <title>{title}</title>
         </Head>
       )}
-      {results && send ? (
+      {results || send ? (
         <Tabs
-          grow
           style={{
             width: '100%',
             height: '100%',
           }}
           styles={{ tabLabel: { fontSize: 'var(--font-size-s)' } }}
-          active={activeTab}
+          value={activeTab}
           onTabChange={setActiveTab}
         >
-          <Tabs.Tab label={locale.task.description.self}>
-            {description}
-          </Tabs.Tab>
-          {send && (
-            <Tabs.Tab label={locale.task.send}>
-              {send(setActiveTab)}
+          <Tabs.List grow>
+            <Tabs.Tab value="description">
+              {locale.task.description.self}
             </Tabs.Tab>
+            {send && (
+              <Tabs.Tab value="send">{locale.task.send}</Tabs.Tab>
+            )}
+            {results && (
+              <Tabs.Tab value="results">
+                {locale.task.results}
+              </Tabs.Tab>
+            )}
+          </Tabs.List>
+
+          <Tabs.Panel value="gallery" pt="xs">
+            {description}
+          </Tabs.Panel>
+
+          {send && (
+            <Tabs.Panel value="messages" pt="xs">
+              {send(setActiveTab)}
+            </Tabs.Panel>
           )}
-          {results && (
-            <Tabs.Tab label={locale.task.results}>{results}</Tabs.Tab>
-          )}
+
+          <Tabs.Panel value="settings" pt="xs">
+            {results}
+          </Tabs.Panel>
         </Tabs>
       ) : (
         <>{description}</>

@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useCallback, useState } from 'react';
+import { FC, memo, ReactNode, useCallback } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
 import { callback } from '@custom-types/ui/atomic';
@@ -10,7 +10,7 @@ import {
 import { ILanguage } from '@custom-types/data/atomic';
 import { extensionValidator } from '@utils/extensionValidator';
 import { TextArea, Dropzone } from '@ui/basics';
-import { ButtonProps, PopoverProps } from '@mantine/core';
+import { MyButtonProps } from '@custom-types/ui/basics/button';
 
 const CodeArea: FC<{
   label: string;
@@ -20,13 +20,7 @@ const CodeArea: FC<{
   formProps?: any;
   classNames?: object;
   helperContent?: string | ReactNode;
-
-  buttonProps?: ButtonProps<'button'>;
-  buttonPopoverProps?: Omit<
-    PopoverProps,
-    'opened' | 'children' | 'target'
-  >;
-  buttonPopoverContent?: string | ReactNode;
+  buttonProps?: MyButtonProps;
 }> = ({
   label,
   setLanguage,
@@ -36,8 +30,6 @@ const CodeArea: FC<{
   classNames,
   helperContent,
   buttonProps,
-  buttonPopoverProps,
-  buttonPopoverContent,
 }) => {
   const { locale } = useLocale();
 
@@ -86,14 +78,11 @@ const CodeArea: FC<{
   return (
     <div className={styles.codeWrapper}>
       <Dropzone
-        style={{ height: '100%' }}
         onDrop={onDrop}
         title={locale.ui.codeArea.dragFiles}
         description={''}
         showButton
         buttonProps={buttonProps}
-        buttonPopoverContent={buttonPopoverContent}
-        buttonPopoverProps={buttonPopoverProps}
       >
         <div className={styles.inner}>
           <TextArea

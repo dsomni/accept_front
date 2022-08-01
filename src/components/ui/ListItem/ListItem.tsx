@@ -44,7 +44,7 @@ const ListItem: FC<{
                 <ActionIcon
                   onClick={() => onDelete(index)}
                   color="red"
-                  variant="hover"
+                  variant="transparent"
                   size="lg"
                 >
                   <Trash width={22} height={22} />
@@ -73,7 +73,7 @@ const ListItem: FC<{
                   <ActionIcon
                     onClick={() => onDelete(index)}
                     color="red"
-                    variant="hover"
+                    variant="transparent"
                     size="lg"
                   >
                     <Trash width={22} height={22} />
