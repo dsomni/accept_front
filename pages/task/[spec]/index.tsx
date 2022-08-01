@@ -33,16 +33,22 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   const router = useRouter();
 
-  const actions = (task.hint ? [{
-      color: 'grape',
-      icon: (
-        <Eye
-          width={STICKY_SIZES[width] / 3}
-          height={STICKY_SIZES[width] / 3}
-        />
-      ),
-      onClick: () => setOpenedHint(true),
-    }] : []).concat([
+  const actions = (
+    task.hint
+      ? [
+          {
+            color: 'grape',
+            icon: (
+              <Eye
+                width={STICKY_SIZES[width] / 3}
+                height={STICKY_SIZES[width] / 3}
+              />
+            ),
+            onClick: () => setOpenedHint(true),
+          },
+        ]
+      : []
+  ).concat([
     {
       color: 'green',
       icon: (

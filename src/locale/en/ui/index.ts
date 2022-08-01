@@ -9,8 +9,8 @@ import { roleSelector } from './roleSelector';
 export const ui = {
   codeArea,
   table,
-  langSelector,
   tagSelector,
+  langSelector,
   userSelector,
   groupSelector,
   roleSelector,

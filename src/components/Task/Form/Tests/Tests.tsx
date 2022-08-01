@@ -132,17 +132,17 @@ const Tests: FC<{
         showButton
         buttonProps={{
           style: {
-            margin: 'var(--spacer-s) 0',
             width: '100%',
           },
+          targetWrapperStyle: { margin: 'var(--spacer-s) 0' },
+          dropdownContent: helperContent,
         }}
-        buttonPopoverContent={helperContent}
       >
         <div className={styles.inner}>
           {form.values.tests.length == 0 && (
             <div className={styles.empty}>
               {locale.task.form.emptyTests}
-              <Helper content={helperContent} />
+              <Helper dropdownContent={helperContent} />
             </div>
           )}
           {form.values.tests.length > 0 &&
@@ -174,7 +174,7 @@ const Tests: FC<{
             />
           )}
           <Button
-            popoverProps={{ style: { width: '100%' } }}
+            hoverCardDropdownProps={{ style: { width: '100%' } }}
             size="lg"
             className={stepperStyles.addButton}
             color="var(--primary)"

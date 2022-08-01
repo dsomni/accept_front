@@ -39,9 +39,8 @@ const ProfileMenu: FC<{}> = ({}) => {
 
   return (
     <>
-      <Menu
-        trigger="hover"
-        control={
+      <Menu trigger="hover">
+        <Menu.Target>
           <Indicator
             size={24}
             label={amount > 99 ? '99+' : amount}
@@ -55,18 +54,19 @@ const ProfileMenu: FC<{}> = ({}) => {
           >
             <Avatar radius="xl" size="lg" color="white" />
           </Indicator>
-        }
-      >
-        <Menu.Label>{user?.shortName || ''}</Menu.Label>
-        <Menu.Item component="a" href="profile">
-          {locale.mainHeaderLinks.signOut.profile}
-        </Menu.Item>
-        <Menu.Item onClick={openModal}>
-          {locale.mainHeaderLinks.signOut.notifications}
-        </Menu.Item>
-        <Menu.Item onClick={handleSignOut}>
-          {locale.mainHeaderLinks.signOut.signOut}
-        </Menu.Item>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Label>{user?.shortName || ''}</Menu.Label>
+          <Menu.Item component="a" href="profile">
+            {locale.mainHeaderLinks.signOut.profile}
+          </Menu.Item>
+          <Menu.Item onClick={openModal}>
+            {locale.mainHeaderLinks.signOut.notifications}
+          </Menu.Item>
+          <Menu.Item onClick={handleSignOut}>
+            {locale.mainHeaderLinks.signOut.signOut}
+          </Menu.Item>
+        </Menu.Dropdown>
       </Menu>
     </>
   );

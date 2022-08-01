@@ -15,12 +15,12 @@ import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
-import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
 import { IUser, IUserListBundle } from '@custom-types/data/IUser';
 import { IGroup } from '@custom-types/data/IGroup';
 import { IRole } from '@custom-types/data/atomic';
 import { capitalize } from '@utils/capitalize';
+import { MultiSelect } from '@ui/basics';
 
 interface Item<T = any> {
   value: T;

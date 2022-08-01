@@ -40,7 +40,7 @@ const DeleteTag: FC<{
         onClick={() => setOpened(true)}
         tabIndex={5}
         color="red"
-        variant="hover"
+        variant="transparent"
         size="lg"
       >
         <Trash width={20} height={20} />

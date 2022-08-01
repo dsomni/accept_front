@@ -75,7 +75,7 @@ const EditTag: FC<{
         onClick={() => setOpened(true)}
         tabIndex={5}
         color="var(--primary)"
-        variant="hover"
+        variant="transparent"
         size="lg"
       >
         <Pencil width={20} height={20} />
