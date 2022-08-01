@@ -18,8 +18,8 @@ import { notification } from './notification';
 
 const en = {
   accept: 'Accept',
-  name: 'Title',
   loading: 'Loading',
+  name: 'Title',
   save: 'Save',
   delete: 'Delete',
   cancel: 'Cancel',
@@ -32,6 +32,7 @@ const en = {
   all: 'All',
   create: 'Create',
   edit: 'Edit',
+  toList: 'To list',
   validationError: 'Validation error',
   attempt,
   group,
