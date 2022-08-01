@@ -1,6 +1,6 @@
 import { FC, memo, ReactNode } from 'react';
 import {
-  InputWrapper as MantineInputWrapper,
+  Input as MantineInput,
   InputWrapperProps,
 } from '@mantine/core';
 import styles from './inputWrapper.module.css';
@@ -21,9 +21,9 @@ const InputWrapper: FC<Props> = ({ helperContent, ...props }) => {
             <div className={inputStyles.labelRequired}>*</div>
           )}
         </div>
-        {helperContent && <Helper content={helperContent} />}
+        {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
-      <MantineInputWrapper
+      <MantineInput.Wrapper
         classNames={{
           error: styles.error,
         }}
@@ -31,7 +31,7 @@ const InputWrapper: FC<Props> = ({ helperContent, ...props }) => {
         label={undefined}
       >
         {props.children}
-      </MantineInputWrapper>
+      </MantineInput.Wrapper>
     </div>
   );
 };

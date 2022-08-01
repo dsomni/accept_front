@@ -10,7 +10,7 @@ const OpenTask: FC<{ spec: string }> = ({ spec }) => {
       target="_blank"
       tabIndex={5}
       color="var(--primary)"
-      variant="hover"
+      variant="transparent"
       size="lg"
     >
       <Eye width={20} height={20} />

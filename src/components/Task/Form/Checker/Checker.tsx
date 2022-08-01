@@ -72,7 +72,6 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         }}
       />
       <div className={styles.tests}>
-        {' '}
         <Tests form={form} hideOutput />
       </div>
     </>

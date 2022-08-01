@@ -2,7 +2,6 @@ import { FC, memo, ReactNode } from 'react';
 import styles from './radio.module.css';
 import {
   Radio as MantineRadio,
-  RadioGroup,
   RadioProps,
   RadioGroupProps,
 } from '@mantine/core';
@@ -35,10 +34,10 @@ const Radio: FC<{
     <div className={styles.wrapper}>
       <div className={styles.labelWrapper}>
         <div className={styles.label}>{label}</div>
-        {helperContent && <Helper content={helperContent} />}
+        {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
 
-      <RadioGroup
+      <MantineRadio.Group
         classNames={{
           label: styles.radioLabel,
           radio: styles.radio,
@@ -57,7 +56,7 @@ const Radio: FC<{
             label={item.label}
           />
         ))}
-      </RadioGroup>
+      </MantineRadio.Group>
     </div>
   );
 };

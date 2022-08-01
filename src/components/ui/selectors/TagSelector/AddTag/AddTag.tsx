@@ -59,7 +59,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
         onClick={() => setOpened(true)}
         tabIndex={5}
         color="var(--primary)"
-        variant="hover"
+        variant="transparent"
         size="sm"
       >
         <Plus width={25} height={25} color="green" />

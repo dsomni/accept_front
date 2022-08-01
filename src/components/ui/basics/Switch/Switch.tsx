@@ -19,7 +19,7 @@ const Switch: FC<Props> = ({ helperContent, ...props }) => {
       />
       <div className={styles.labelWrapper}>
         <div className={styles.label}>{props.label}</div>
-        {helperContent && <Helper content={helperContent} />}
+        {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
     </div>
   );

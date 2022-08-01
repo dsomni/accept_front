@@ -13,7 +13,7 @@ import { sendRequest } from '@requests/request';
 
 const Send: FC<{
   spec: string;
-  setActiveTab: setter<number>;
+  setActiveTab: setter<string | undefined>;
   languages: ILanguage[];
 }> = ({ spec, setActiveTab, languages }) => {
   const { locale, lang } = useLocale();
@@ -50,7 +50,7 @@ const Send: FC<{
       { autoClose: 5000 }
     );
     setCookie('previous_program_lang', language);
-    setActiveTab(2);
+    setActiveTab('send');
   }, [language, code, spec, locale, lang, setActiveTab]);
 
   const onLangSelect = useCallback((value: string | null) => {
