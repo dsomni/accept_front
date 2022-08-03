@@ -1,11 +1,18 @@
-import { useState, ReactNode, useCallback, ChangeEvent } from 'react';
+import {
+  useState,
+  ReactNode,
+  useCallback,
+  ChangeEvent,
+  useEffect,
+  useMemo,
+} from 'react';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import styles from '@styles/notification/list.module.css';
 import {
   INotification,
   INotificationRecord,
 } from '@custom-types/data/notification';
-import { Checkbox } from '@mantine/core';
+import { Checkbox, Badge, Tooltip, Pagination } from '@mantine/core';
 import { Icon } from '@ui/basics';
 import { requestWithError } from '@utils/requestWithError';
 import { useLocale } from '@hooks/useLocale';
@@ -13,6 +20,9 @@ import { useRequest } from '@hooks/useRequest';
 import { getLocalDate } from '@utils/datetime';
 import { MailOpened, Trash } from 'tabler-icons-react';
 import ReadModal from '@components/Notification/ReadModal/ReadModal';
+import { useBackNotifications } from '@hooks/useBackNotifications';
+
+const ON_PAGE = 20;
 
 interface INotificationItem extends INotification {
   new: boolean;
@@ -24,15 +34,30 @@ function List() {
   >([]);
   const [openedModal, setOpenedModal] = useState(false);
   const [current, setCurrent] = useState(0);
+  const [activePage, setPage] = useState(1);
+
+  const displayedNotifications = useMemo(() => {
+    return notifications.slice(
+      ON_PAGE * (activePage - 1),
+      ON_PAGE * activePage
+    );
+  }, [activePage, notifications]);
 
   const { locale, lang } = useLocale();
 
   const [selected, setSelected] = useState<string[]>([]);
 
+  const { sendViewed, fetchNotificationsAmount } =
+    useBackNotifications();
+
   const processNotifications = useCallback(
     (res: INotificationRecord) => {
-      const newNotifications = res.new_notifications;
-      const oldNotifications = res.notifications;
+      const newNotifications = res.new_notifications
+        .map((item) => ({ ...item, date: new Date(item.date) }))
+        .sort((a, b) => b.date.getTime() - a.date.getTime());
+      const oldNotifications = res.notifications
+        .map((item) => ({ ...item, date: new Date(item.date) }))
+        .sort((a, b) => b.date.getTime() - a.date.getTime());
       const processedNotifications = [];
       for (let i = 0; i < newNotifications.length; i++) {
         const notification: INotificationItem = {
@@ -92,24 +117,34 @@ function List() {
       selected,
       () => {
         setSelected([]);
+        setTimeout(fetchNotificationsAmount, 500);
         refetchNotifications();
       }
     );
-  }, [locale, lang, refetchNotifications, selected, setSelected]);
+  }, [
+    locale,
+    lang,
+    refetchNotifications,
+    fetchNotificationsAmount,
+    selected,
+    setSelected,
+  ]);
 
   const handleView = useCallback(() => {
-    requestWithError<string[], boolean>(
-      'notification/viewed',
-      'POST',
-      locale.notification.list.requestViewed,
-      lang,
+    sendViewed(
       selected,
+      locale.notification.list.requestViewed,
       () => {
         setSelected([]);
         setTimeout(refetchNotifications, 500);
       }
     );
-  }, [locale, lang, refetchNotifications, selected, setSelected]);
+  }, [
+    sendViewed,
+    selected,
+    locale.notification.list.requestViewed,
+    refetchNotifications,
+  ]);
 
   const handleOpenModal = useCallback((current: number) => {
     return () => {
@@ -117,6 +152,13 @@ function List() {
       setOpenedModal(true);
     };
   }, []);
+
+  useEffect(() => {
+    const id = setInterval(refetchNotifications, 15000);
+    return () => {
+      clearInterval(id);
+    };
+  }, [refetchNotifications]);
 
   const handleCloseModal = useCallback(() => {
     setOpenedModal(false);
@@ -133,30 +175,17 @@ function List() {
         close={handleCloseModal}
       />
       <div className={styles.utils}>
-        <div className={styles.selectAll}>
-          {selected.length == notifications.length &&
-          selected.length !== 0 ? (
-            <Icon
-              size="xs"
-              tooltipLabel={locale.notification.list.unselect}
-              onClick={() => setSelected([])}
-            >
-              <Checkbox checked />
-            </Icon>
-          ) : (
-            <Icon
-              size="xs"
-              tooltipLabel={locale.notification.list.selectAll}
-              onClick={() =>
-                setSelected(notifications.map((elem) => elem.spec))
-              }
-            >
-              <Checkbox />
-            </Icon>
-          )}
-        </div>
-        {selected.length !== 0 && (
+        {selected.length !== 0 ? (
           <>
+            <Tooltip label={locale.notification.list.unselect}>
+              <Checkbox
+                checked={selected.length > 0}
+                indeterminate={
+                  selected.length !== notifications.length
+                }
+                onChange={() => setSelected([])}
+              />
+            </Tooltip>
             <Icon
               size="xs"
               tooltipLabel={locale.notification.list.delete}
@@ -173,10 +202,22 @@ function List() {
               <MailOpened />
             </Icon>
           </>
+        ) : (
+          <Tooltip label={locale.notification.list.selectAll}>
+            <Checkbox
+              checked={false}
+              onChange={() =>
+                setSelected(notifications.map((elem) => elem.spec))
+              }
+            />
+          </Tooltip>
         )}
       </div>
-      <div className={styles.notifications}>
-        {notifications.map((notification, index) => (
+      <div
+        className={styles.notifications}
+        style={{ minHeight: `${55 * ON_PAGE}px` }}
+      >
+        {displayedNotifications.map((notification, index) => (
           <div
             key={index}
             className={
@@ -195,7 +236,10 @@ function List() {
               className={styles.titleWrapper}
               onClick={handleOpenModal(index)}
             >
-              <div className={styles.title}>{notification.title}</div>
+              <div className={styles.title}>
+                {notification.title}{' '}
+                {notification.new && <Badge color="green">New</Badge>}
+              </div>
               <div className={styles.shortDescription}>
                 {notification.shortDescription}
               </div>
@@ -207,6 +251,12 @@ function List() {
           </div>
         ))}
       </div>
+      <Pagination
+        total={Math.ceil(notifications.length / ON_PAGE)}
+        position="center"
+        page={activePage}
+        onChange={setPage}
+      />
     </div>
   );
 }

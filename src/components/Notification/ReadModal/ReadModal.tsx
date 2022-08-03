@@ -31,10 +31,14 @@ const ReadModal: FC<{
   );
   const [viewed, setViewed] = useState<string[]>([]);
 
+  useEffect(() => {
+    setCurrent(defaultSelected || 0);
+    setViewed([]);
+  }, [defaultSelected]);
+
   const { locale } = useLocale();
 
-  const { sendViewed, fetchNotificationsAmount, loading } =
-    useBackNotifications();
+  const { sendViewed, loading } = useBackNotifications();
 
   const notification = useMemo(
     () => notifications[current],
@@ -60,12 +64,12 @@ const ReadModal: FC<{
   }, [notifications]);
 
   const handleClose = useCallback(() => {
-    sendViewed(viewed);
-    setViewed([]);
-    setTimeout(fetchNotificationsAmount, 500);
-    setCurrent(0);
+    sendViewed(viewed, locale.notification.list.requestViewed, () =>
+      setViewed([])
+    );
     close();
-  }, [close, sendViewed, viewed, fetchNotificationsAmount]);
+    setTimeout(() => setCurrent(0), 300);
+  }, [close, locale, sendViewed, viewed]);
 
   return (
     <div>
@@ -78,17 +82,21 @@ const ReadModal: FC<{
         classNames={{
           root: styles.wrapper,
           body: styles.body,
+          title: styles.titleWrapper,
         }}
         title={
-          <div className={styles.titleWrapper}>
+          <>
             <div className={styles.title}>
               {notification ? notification.title : ''}
+              <span className={styles.paging}>
+                {current + 1}/{notifications.length}
+              </span>
             </div>
             <div className={styles.author}>
               {locale.notification.form.author}:{' '}
               {notification ? notification.author : ''}
             </div>
-          </div>
+          </>
         }
         withCloseButton={false}
       >

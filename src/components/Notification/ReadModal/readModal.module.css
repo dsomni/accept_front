@@ -4,10 +4,25 @@
   flex-direction: column;
   gap: var(--spacer-m);
 }
-.title {
-  font-size: var(--font-size-xl);
+
+.titleWrapper {
+  width: 100%;
 }
+
+.title {
+  width: 100%;
+  font-size: var(--font-size-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .author {
   font-size: var(--font-size-s);
   color: var(--dark3);
+}
+
+.paging {
+  color: var(--dark3);
+  font-size: var(--font-size-s);
 }

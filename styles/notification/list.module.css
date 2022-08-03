@@ -8,14 +8,16 @@
 .utils {
   width: 80%;
   display: flex;
+  align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--spacer-s);
-  margin: 0 auto;
-  padding: var(--spacer-s) var(--spacer-m);
+  padding: 0 var(--spacer-m);
+  margin: var(--spacer-s) auto;
+  height: 30px;
 }
-.selectAll {
-  margin-right: var(--spacer-xs);
+.utils:first-child {
+  margin-right: var(--spacer-l);
 }
 .notifications {
   margin: 0 auto;
@@ -23,6 +25,7 @@
   border-top: 1px solid var(--dark5);
   display: flex;
   flex-direction: column;
+  margin-bottom: var(--spacer-m);
 }
 .notification {
   width: 100%;
@@ -35,7 +38,6 @@
 }
 
 .new {
-  font-weight: bold;
   background-color: unset;
 }
 
@@ -44,25 +46,29 @@
 }
 
 .titleWrapper {
-  width: 80%;
+  width: 75%;
   display: flex;
   flex-direction: column;
 }
 .title {
   width: 100%;
   font-size: var(--font-size-m);
+  color: var(--secondary);
 }
 .shortDescription {
   width: 100%;
   font-size: var(--font-size-xs);
+  color: var(--dark2);
 }
 .author {
   width: 10%;
-  font-size: var(--font-size-m);
-  margin: auto 0;
+  font-size: var(--font-size-s);
+  margin: auto var(--spacer-xs);
 }
 .date {
-  width: 10%;
+  display: flex;
+  align-items: center;
+  width: 15%;
 }
 
 .checkboxWrapper {
