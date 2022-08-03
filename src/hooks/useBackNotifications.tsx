@@ -7,6 +7,7 @@ import {
   infoNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import { requestWithError } from '@utils/requestWithError';
 import {
   createContext,
   FC,
@@ -22,7 +23,11 @@ import { useLocale } from './useLocale';
 interface INotificationContext {
   amount: number;
   notifications: INotification[];
-  sendViewed: (viewed: string[]) => void;
+  sendViewed: (
+    viewed: string[],
+    messages: { error: string; loading: string },
+    onSuccess: () => void
+  ) => void;
   loading: boolean;
   openModal: () => void;
   close: () => void;
@@ -46,7 +51,7 @@ export const BackNotificationsProvider: FC<{
     key: 'notifications_amount',
     defaultValue: '-1',
   });
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
 
   const fetchNotificationsAmount = useCallback(
     (first: boolean) => {
@@ -107,15 +112,28 @@ export const BackNotificationsProvider: FC<{
     setOpened(true);
   }, [fetchNotifications]);
 
-  const sendViewed = useCallback((viewed: string[]) => {
-    if (viewed.length > 0) {
-      sendRequest<string[], boolean>(
-        'notification/viewed',
-        'POST',
-        Array.from(new Set(viewed))
-      );
-    }
-  }, []);
+  const sendViewed = useCallback(
+    (
+      viewed: string[],
+      messages: { error: string; loading: string },
+      onSuccess: () => void
+    ) => {
+      if (viewed.length > 0) {
+        requestWithError<string[], boolean>(
+          'notification/viewed',
+          'POST',
+          messages,
+          lang,
+          Array.from(new Set(viewed)),
+          () => {
+            onSuccess();
+            setTimeout(fetchNotificationsAmount, 500);
+          }
+        );
+      }
+    },
+    [fetchNotificationsAmount, lang]
+  );
 
   const value: INotificationContext = useMemo(
     () => ({
