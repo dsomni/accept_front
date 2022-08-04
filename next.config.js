@@ -1,15 +1,19 @@
-const { API_ENDPOINT } = process.env;
+const { API_ENDPOINT, SERVER_URL, VERCEL_URL } = process.env;
 
 console.log('Config', { API_ENDPOINT });
 
 /** @type {import('next').NextConfig} */
 module.exports = {
+  env: {
+    API_ENDPOINT,
+    SERVER_URL: VERCEL_URL || SERVER_URL,
+  },
   reactStrictMode: false,
   async rewrites() {
     return [
       {
         source: '/back/:slug*',
-        destination: `http://${API_ENDPOINT}/api/:slug*`,
+        destination: `${API_ENDPOINT}/api/:slug*`,
       },
     ];
   },

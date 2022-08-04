@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
 const needRevalidation = (spec: string) =>
-  `http://${env.API_ENDPOINT}/api/task-need-revalidation/${spec}`;
-const url = `http://${env.API_ENDPOINT}/api/task-render`;
+  `${env.API_ENDPOINT}/api/task-need-revalidation/${spec}`;
+const url = `${env.API_ENDPOINT}/api/task-render`;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let revalidate = false;
