@@ -48,17 +48,17 @@ const TaskLayout: FC<{
             )}
           </Tabs.List>
 
-          <Tabs.Panel value="gallery" pt="xs">
+          <Tabs.Panel value="description" pt="xs">
             {description}
           </Tabs.Panel>
 
           {send && (
-            <Tabs.Panel value="messages" pt="xs">
+            <Tabs.Panel value="send" pt="xs">
               {send(setActiveTab)}
             </Tabs.Panel>
           )}
 
-          <Tabs.Panel value="settings" pt="xs">
+          <Tabs.Panel value="results" pt="xs">
             {results}
           </Tabs.Panel>
         </Tabs>
