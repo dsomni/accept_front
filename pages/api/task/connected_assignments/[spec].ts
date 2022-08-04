@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url =
-  'http://' + env.API_ENDPOINT + '/api/task-connected-assignments';
+const url = env.API_ENDPOINT + '/api/task-connected-assignments';
 
 export default async function ConnectedAssignments(
   req: NextApiRequest,

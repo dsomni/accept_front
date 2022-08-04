@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/task_tag';
+const url = env.API_ENDPOINT + '/api/task_tag';
 
 export default async function TagGet(
   req: NextApiRequest,

@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url =
-  'http://' + env.API_ENDPOINT + '/api/bundle/assignment_schema-list';
+const url = env.API_ENDPOINT + '/api/bundle/assignment_schema-list';
 
 export default async function ListAssignmentSchemas(
   req: NextApiRequest,

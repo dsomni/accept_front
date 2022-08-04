@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/user';
+const url = env.API_ENDPOINT + '/api/user';
 
 export default async function ListTasks(
   req: NextApiRequest,

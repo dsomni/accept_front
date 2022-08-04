@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/tournament';
+const url = env.API_ENDPOINT + '/api/tournament';
 
 export default async function TournamentToDisplay(
   req: NextApiRequest,

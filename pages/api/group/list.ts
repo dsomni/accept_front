@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/group';
+const url = env.API_ENDPOINT + '/api/group';
 
 export default async function ListGroups(
   req: NextApiRequest,

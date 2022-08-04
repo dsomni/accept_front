@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/whoami';
+const url = env.API_ENDPOINT + '/api/whoami';
 
 export default async function whoami(
   req: NextApiRequest,

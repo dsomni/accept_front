@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url =
-  'http://' + env.API_ENDPOINT + '/api/task/should-show-hint';
+const url = env.API_ENDPOINT + '/api/task/should-show-hint';
 
 export default async function ShowHint(
   req: NextApiRequest,

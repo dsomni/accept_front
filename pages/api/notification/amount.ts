@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url =
-  'http://' + env.API_ENDPOINT + '/api/notification/new-amount';
+const url = env.API_ENDPOINT + '/api/notification/new-amount';
 
 export default async function NotificationAmount(
   req: NextApiRequest,

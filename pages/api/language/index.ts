@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/language';
+const url = env.API_ENDPOINT + '/api/language';
 
 export default async function ListLanguages(
   req: NextApiRequest,

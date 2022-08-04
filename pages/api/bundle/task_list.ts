@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/bundle/task-list';
+const url = env.API_ENDPOINT + '/api/bundle/task-list';
 
 export default async function TaskListBundle(
   req: NextApiRequest,

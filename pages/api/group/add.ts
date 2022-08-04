@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/group';
+const url = env.API_ENDPOINT + '/api/group';
 
-const url2 = 'http://' + env.API_ENDPOINT + '/api/group-users';
+const url2 = env.API_ENDPOINT + '/api/group-users';
 
 export default async function AddGroup(
   req: NextApiRequest,

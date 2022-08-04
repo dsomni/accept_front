@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 import { serialize } from 'cookie';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/logout';
+const url = env.API_ENDPOINT + '/api/logout';
 
 export default async function signOut(
   req: NextApiRequest,

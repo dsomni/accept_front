@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/task-attempts';
+const url = env.API_ENDPOINT + '/api/task-attempts';
 
 export default async function Attempt(
   req: NextApiRequest,

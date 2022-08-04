@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/validateLogin';
+const url = env.API_ENDPOINT + '/api/validateLogin';
 
 export default async function validateLogin(
   req: NextApiRequest,

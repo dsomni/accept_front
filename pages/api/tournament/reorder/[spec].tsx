@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url =
-  'http://' + env.API_ENDPOINT + '/api/tournament_task/reorder';
+const url = env.API_ENDPOINT + '/api/tournament_task/reorder';
 
 export default async function ReorderTaskTournament(
   req: NextApiRequest,

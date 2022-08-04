@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/notification/delete';
+const url = env.API_ENDPOINT + '/api/notification/delete';
 
 export default async function Delete(
   req: NextApiRequest,

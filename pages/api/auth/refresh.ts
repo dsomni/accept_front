@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 import { serialize } from 'cookie';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/refresh';
+const url = env.API_ENDPOINT + '/api/refresh';
 
 export default async function refresh(
   req: NextApiRequest,

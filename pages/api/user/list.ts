@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
 
-const url = 'http://' + env.API_ENDPOINT + '/api/bundle/user-list';
+const url = env.API_ENDPOINT + '/api/bundle/user-list';
 
 export default async function ListUsers(
   req: NextApiRequest,
