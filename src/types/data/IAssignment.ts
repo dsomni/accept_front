@@ -4,10 +4,9 @@ import {
 } from './IAssignmentSchema';
 import { IAssignmentStatus } from './atomic';
 import { IGroup } from './IGroup';
-import { IUser } from './IUser';
 
 export interface IAssignment extends IAssignmentSchema {
-  starter: IUser;
+  starter: string;
   status: IAssignmentStatus;
   infinite: boolean;
 

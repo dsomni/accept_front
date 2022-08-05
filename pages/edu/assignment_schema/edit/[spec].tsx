@@ -24,7 +24,7 @@ function EditAssignmentSchema({
   const formValues = useMemo(
     () => ({
       ...assignment_schema,
-      author: assignment_schema.author.login,
+      author: assignment_schema.author,
       tags: assignment_schema.tags.map((tag) => ({
         label: tag.title,
         value: tag.spec,

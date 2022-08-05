@@ -11,12 +11,8 @@ const Description: FC<{ assignment: IAssignment }> = ({
       <div className={styles.titleWrapper}>
         <div className={styles.title}>{assignment.title}</div>
         <div className={styles.info}>
-          <div className={styles.author}>
-            {assignment.author.shortName}
-          </div>
-          <div className={styles.starter}>
-            {assignment.starter.shortName}
-          </div>
+          <div className={styles.author}>{assignment.author}</div>
+          <div className={styles.starter}>{assignment.starter}</div>
           {assignment.infinite ? (
             <div className={styles.duration}>Infinite</div>
           ) : (
