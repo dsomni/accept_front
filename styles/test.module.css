@@ -1,0 +1,27 @@
+.table td {
+  white-space: nowrap;
+  height: 50px;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.table thead th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.table tbody tr td:first-of-type {
+  background: white;
+  position: sticky;
+  left: 0;
+}
