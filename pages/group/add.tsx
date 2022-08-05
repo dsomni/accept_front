@@ -16,6 +16,7 @@ import {
 const initialValues = {
   spec: '',
   name: '',
+  readonly: false,
   members: [],
 };
 
@@ -56,6 +57,7 @@ function AddGroup(props: { users: IUser[] }) {
         group: {
           spec: form.values.spec,
           name: form.values.name,
+          readonly: false,
         },
         members: form.values.members,
       }

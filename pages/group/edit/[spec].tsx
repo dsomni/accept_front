@@ -65,6 +65,7 @@ function EditGroup(props: { group: IGroup; users: IUser[] }) {
         group: {
           spec: form.values.spec,
           name: form.values.name,
+          readonly: form.values.readonly,
         },
         members: form.values.members,
       }
