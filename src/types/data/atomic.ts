@@ -2,6 +2,12 @@ export interface IAttemptStatus {
   spec: number;
   name: string;
 }
+
+export interface IAssignmentStatus {
+  spec: number;
+  name: string;
+}
+
 export interface IVerdict {
   spec: number;
   fullText: string;

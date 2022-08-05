@@ -1,4 +1,5 @@
 import { assignmentSchema } from './assignmentSchema';
+import { assignment } from './assignment';
 import { attempt } from './attempt';
 import { task } from './task';
 import { group } from './group';
@@ -12,6 +13,7 @@ export const notify = {
     unauthorized: 'Вы не авторизованы',
   },
   assignmentSchema,
+  assignment,
   attempt,
   task,
   group,

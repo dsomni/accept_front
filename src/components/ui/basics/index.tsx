@@ -9,11 +9,13 @@ import NumberInput from './NumberInput/NumberInput';
 import MultiSelect from './Select/MultiSelect';
 import PasswordInput from './PasswordInput/PasswordInput';
 import Radio from './Radio/Radio';
+import RangeCalendar from './Calendar/RangeCalendar';
 import SegmentedControl from './SegmentedControl/SegmentedControl';
 import Select from './Select/Select';
 import Switch from './Switch/Switch';
 import TextArea from './TextArea/TextArea';
 import TextInput from './TextInput/TextInput';
+import TimeInput from './TimeInput/TimeInput';
 
 export {
   Button,
@@ -27,9 +29,11 @@ export {
   NumberInput,
   PasswordInput,
   Radio,
+  RangeCalendar,
   SegmentedControl,
   Select,
   Switch,
   TextArea,
   TextInput,
+  TimeInput,
 };
