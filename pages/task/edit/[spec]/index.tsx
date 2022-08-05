@@ -35,7 +35,7 @@ function EditTask(props: {
   const formValues = useMemo(
     () => ({
       ...task,
-      author: task.author.login,
+      author: task.author,
 
       checkType: task.checkType?.spec.toString() || '0',
       checkerCode: task.checker?.sourceCode || '',

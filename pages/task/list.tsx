@@ -115,8 +115,8 @@ const processData = (
     (task: ITaskDisplay): ITaskDisplayList => ({
       ...task,
       author: {
-        value: task.author.shortName,
-        display: task.author.shortName,
+        value: task.author,
+        display: task.author,
       },
       verdict: {
         value: task.verdict,
