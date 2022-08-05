@@ -37,7 +37,7 @@ export interface ITaskDisplay {
   spec: string;
   title: string;
   tags: ITag[];
-  author: IUser;
+  author: string;
   verdict: IVerdict;
   insertedDate: Date;
   complexity: number;
