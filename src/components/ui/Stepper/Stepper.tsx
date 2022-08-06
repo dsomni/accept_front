@@ -12,9 +12,10 @@ import stepperStyles from '@styles/ui/stepper.module.css';
 import { Stepper as MantineStepper } from '@mantine/core';
 import { AlertCircle } from 'tabler-icons-react';
 import { Button } from '@ui/basics';
+import { UseFormReturnType } from '@mantine/form';
 
 const Stepper: FC<{
-  form: any;
+  form: UseFormReturnType<any>;
   stepFields: string[][];
   pages: ReactNode[];
   handleSubmit: () => void;

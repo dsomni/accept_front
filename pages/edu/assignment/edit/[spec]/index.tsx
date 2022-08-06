@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -7,7 +7,7 @@ import {
   IAssignmentEditBundle,
 } from '@custom-types/data/IAssignment';
 import Form from '@components/Assignment/Form/Form';
-import { useForm } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 import { useLocale } from '@hooks/useLocale';
 import {
   errorNotification,
@@ -18,55 +18,57 @@ import { concatDateTime } from '@utils/datetime';
 
 function AssignmentEdit(props: IAssignmentEditBundle) {
   const { locale, lang } = useLocale();
-  const form = useForm({
-    initialValues: {
-      ...props.assignment,
-      startDate: new Date(props.assignment.start),
-      startTime: new Date(props.assignment.start),
-      endDate: new Date(props.assignment.end),
-      endTime: new Date(props.assignment.end),
+
+  const initialValues = {
+    ...props.assignment,
+    startDate: new Date(props.assignment.start),
+    startTime: new Date(props.assignment.start),
+    endDate: new Date(props.assignment.end),
+    endTime: new Date(props.assignment.end),
+  };
+
+  const handleSubmit = useCallback(
+    (form: UseFormReturnType<typeof initialValues>) => {
+      if (form.validate().hasErrors) {
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: locale.notify.group.validation.error,
+          autoClose: 5000,
+        });
+        return;
+      }
+
+      const assignment = {
+        spec: form.values.spec,
+        origin: form.values.origin,
+        starter: form.values.starter,
+        status: form.values.status,
+        infinite: form.values.infinite,
+        start: concatDateTime(
+          form.values.startDate,
+          form.values.startTime
+        ),
+        end: concatDateTime(form.values.endDate, form.values.endTime),
+        groups: form.values.groups,
+      };
+
+      requestWithNotify<IAssignmentAdd, IAssignmentAdd>(
+        `assignment/edit`,
+        'POST',
+        locale.notify.assignment.edit,
+        lang,
+        (response: IAssignmentAdd) => response.spec,
+        assignment
+      );
     },
-  });
-
-  const handleSubmit = useCallback(() => {
-    if (form.validate().hasErrors) {
-      const id = newNotification({});
-      errorNotification({
-        id,
-        title: locale.notify.group.validation.error,
-        autoClose: 5000,
-      });
-      return;
-    }
-
-    const assignment = {
-      spec: form.values.spec,
-      origin: form.values.origin,
-      starter: form.values.starter,
-      status: form.values.status,
-      infinite: form.values.infinite,
-      start: concatDateTime(
-        form.values.startDate,
-        form.values.startTime
-      ),
-      end: concatDateTime(form.values.endDate, form.values.endTime),
-      groups: form.values.groups,
-    };
-
-    requestWithNotify<IAssignmentAdd, IAssignmentAdd>(
-      `assignment/edit`,
-      'POST',
-      locale.notify.assignment.edit,
-      lang,
-      (response: IAssignmentAdd) => response.spec,
-      assignment
-    );
-  }, [form, lang, locale]);
+    [lang, locale]
+  );
 
   return (
     <>
       <Form
-        form={form}
+        initialValues={initialValues}
         handleSubmit={handleSubmit}
         buttonLabel={locale.edit}
         {...props}
@@ -103,7 +105,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         groups: response_json.groups,
         assignment: response_json.assignment,
       },
-      revalidate: 10 * 60,
+      revalidate: 3 * 60, //seconds
     };
   }
   return {

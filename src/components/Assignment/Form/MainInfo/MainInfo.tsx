@@ -1,4 +1,4 @@
-import { FC, memo, useMemo, useCallback } from 'react';
+import { FC, memo, useMemo, useCallback, useEffect } from 'react';
 import styles from './mainInfo.module.css';
 import {
   RangeCalendar,
@@ -8,11 +8,10 @@ import {
   InputWrapper,
 } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
+import { UseFormReturnType } from '@mantine/form';
 
-const MainInfo: FC<{ form: any }> = ({ form }) => {
+const MainInfo: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
   const { locale } = useLocale();
-  const initialStart = useMemo(() => form.values.startDate, []); //eslint-disable-line
-  const initialEnd = useMemo(() => form.values.endDate, []); //eslint-disable-line
   const setStart = useCallback(
     (start: Date | null) => form.setFieldValue('startDate', start),
     [form]
@@ -31,9 +30,9 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         >
           {form.values.infinite && <Overlay />}
           <RangeCalendar
-            start={initialStart}
+            start={form.values.startDate}
             setStart={setStart}
-            end={initialEnd}
+            end={form.values.endDate}
             setEnd={setEnd}
             allowSingleDateInRange
             inputWrapperProps={{
@@ -56,7 +55,6 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
             />
             <TimeInput
               label={locale.assignment.form.endTime}
-              value={initialEnd}
               {...form.getInputProps('endTime')}
               onBlur={() => {
                 form.validateField('endTime');

@@ -34,6 +34,10 @@ const RangeCalendar: FC<Props> = ({
 
   const { lang } = useLocale();
 
+  useEffect(() => {
+    setValue([start, end]);
+  }, [start, end]);
+
   const onChange = useCallback(
     (values: [Date | null, Date | null]) => {
       setValue(values);
