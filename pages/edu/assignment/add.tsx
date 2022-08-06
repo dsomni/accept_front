@@ -1,5 +1,11 @@
-import { ReactNode, useCallback, useEffect } from 'react';
-import { GetStaticProps } from 'next';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { GetStaticProps, NextPageContext } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
@@ -15,24 +21,36 @@ import {
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
-const initialValues = {
-  origin: '',
-  starter: '',
-  startDate: new Date(),
-  startTime: new Date(),
-  endDate: new Date(),
-  endTime: new Date(),
-  groups: [],
-  infinite: false,
-  status: 0,
-  dates: 0,
+const initialValues = (origin: string, duration: number) => {
+  let endDate = new Date();
+  let endTime = new Date(endDate);
+  endDate.setMinutes(endDate.getMinutes() + duration);
+  endTime.setMinutes(endTime.getMinutes() + duration);
+
+  return {
+    origin,
+    starter: '',
+    startDate: new Date(),
+    startTime: new Date(),
+    endDate,
+    endTime,
+    groups: [],
+    infinite: false,
+    status: 0,
+    dates: 0,
+  };
 };
 
-function AssignmentAdd(props: IAssignmentAddBundle) {
+interface IProps extends IAssignmentAddBundle {
+  origin: string;
+  duration: number;
+}
+
+function AssignmentAdd(props: IProps) {
   const { locale, lang } = useLocale();
 
   const form = useForm({
-    initialValues,
+    initialValues: initialValues(props.origin, props.duration),
     validate: {
       origin: (value) =>
         value.length == 0
@@ -46,23 +64,17 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
           : !values.endDate
           ? locale.assignment.form.validation.endDate
           : null,
-      startTime: (value) =>
-        !value ? locale.assignment.form.validation.startTime : null,
-      endTime: (value, values) =>
-        values.infinite
-          ? null
-          : !value
-          ? locale.assignment.form.validation.endTime
-          : null,
-      dates: (value, values) =>
-        values.infinite
+      dates: (value, values) => {
+        console.log(values.infinite);
+        return values.infinite
           ? null
           : values.startDate &&
             values.endDate &&
             values.startDate.getTime() + values.startTime.getTime() >=
               values.endDate.getTime() + values.endTime.getTime()
           ? locale.assignment.form.validation.date
-          : null,
+          : null;
+      },
       groups: (value) =>
         value.length == 0
           ? locale.assignment.form.validation.groups
@@ -97,7 +109,8 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         form={form}
         handleSubmit={handleSubmit}
         buttonLabel={locale.create}
-        {...props}
+        assignment_schemas={props.assignment_schemas}
+        groups={props.groups}
       />
     </>
   );
@@ -111,24 +124,27 @@ export default AssignmentAdd;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+AssignmentAdd.getInitialProps = async ({
+  req,
+  res,
+  err,
+  query,
+}: NextPageContext) => {
+  console.log(query);
   const response = await fetch(
     `${API_URL}/api/bundle/assignment-add`
-  );
-  if (response.status === 200) {
+  ).catch(() => ({ status: 404 }));
+  if (response instanceof Response && response.status === 200) {
     const response_json = await response.json();
     return {
-      props: {
-        assignment_schemas: response_json.schemas,
-        groups: response_json.groups,
-      },
-      revalidate: 10 * 60,
+      assignment_schemas: response_json.schemas,
+      groups: response_json.groups,
+      origin: (query.origin as string) || '',
+      duration: +(query.duration || 0),
     };
   }
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/Not-Found',
-    },
-  };
+  if (res) {
+    res.writeHead(307, { Location: '/404' });
+    res.end();
+  }
 };

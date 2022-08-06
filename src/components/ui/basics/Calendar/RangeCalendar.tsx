@@ -1,5 +1,5 @@
 import 'dayjs/locale/ru';
-import { FC, memo, useState, useCallback } from 'react';
+import { FC, memo, useState, useCallback, useEffect } from 'react';
 import {
   RangeCalendar as MantineRangeCalendar,
   RangeCalendarProps,

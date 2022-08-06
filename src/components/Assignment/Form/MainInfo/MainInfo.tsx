@@ -56,6 +56,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
             />
             <TimeInput
               label={locale.assignment.form.endTime}
+              value={initialEnd}
               {...form.getInputProps('endTime')}
               onBlur={() => {
                 form.validateField('endTime');
@@ -70,13 +71,12 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         <Switch
           label={locale.assignment.form.isInfinite}
           {...form.getInputProps('infinite', { type: 'checkbox' })}
-          onChange={(value) => {
+          onChange={(event) => {
             form.setFieldValue(
               'infinite',
-              value.currentTarget.checked
+              event.currentTarget.checked
             );
-            form.validateField('infinite');
-            form.validateField('dates');
+            form.clearErrors();
           }}
         />
       </div>
