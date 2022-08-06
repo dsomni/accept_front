@@ -40,7 +40,7 @@ function AssignmentEdit(props: IAssignmentEditBundle) {
     }
 
     const assignment = {
-      spec: '',
+      spec: form.values.spec,
       origin: form.values.origin,
       starter: form.values.starter,
       status: form.values.status,
