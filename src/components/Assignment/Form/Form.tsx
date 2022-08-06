@@ -1,20 +1,18 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useEffect } from 'react';
+import { FC, memo } from 'react';
 import { pureCallback } from '@custom-types/ui/atomic';
-import {
-  ITaskCheckType,
-  ITaskType,
-  IHintAlarmType,
-} from '@custom-types/data/atomic';
 import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { IGroup } from '@custom-types/data/IGroup';
 import MainInfo from './MainInfo/MainInfo';
 import Groups from './Groups/Groups';
 import Origin from './Origin/Origin';
-import Description from '../Description/Description';
 import Stepper from '@ui/Stepper/Stepper';
 
-const stepFields = [['start', 'end'], ['groups'], ['origin']];
+const stepFields = [
+  ['startDate', 'startTime', 'endDate', 'endTime', 'same'],
+  ['groups'],
+  ['origin'],
+];
 
 const Form: FC<{
   form: any;

@@ -24,6 +24,11 @@ module.exports = {
         destination: '/edu/assignment_schema/:slug*',
         permanent: false,
       },
+      {
+        source: '/assignment/:slug*',
+        destination: '/edu/assignment/:slug*',
+        permanent: false,
+      },
     ];
   },
 };

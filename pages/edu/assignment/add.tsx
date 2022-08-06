@@ -1,29 +1,97 @@
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { IAssignmentAddBundle } from '@custom-types/data/IAssignment';
+import {
+  IAssignmentAdd,
+  IAssignmentAddBundle,
+} from '@custom-types/data/IAssignment';
 import Form from '@components/Assignment/Form/Form';
 import { useForm } from '@mantine/form';
 import { useLocale } from '@hooks/useLocale';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const initialValues = {
   origin: '',
   starter: '',
-  startDate: null,
-  startTime: '',
-  endDate: null,
-  endTime: '',
+  startDate: new Date(),
+  startTime: new Date(0),
+  endDate: new Date(),
+  endTime: new Date(0),
   groups: [],
-  isInfinite: false,
+  infinite: false,
   status: 0,
+  same: false,
 };
 
 function AssignmentAdd(props: IAssignmentAddBundle) {
-  const form = useForm({ initialValues });
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
+
+  const form = useForm({
+    initialValues,
+    validate: {
+      origin: (value) =>
+        value.length == 0
+          ? locale.assignment.form.validation.origin
+          : null,
+      startDate: (value) =>
+        value ? locale.assignment.form.validation.startDate : null,
+      endDate: (value, values) =>
+        values.infinite
+          ? null
+          : !value
+          ? locale.assignment.form.validation.endDate
+          : null,
+      startTime: (value) =>
+        !value ? locale.assignment.form.validation.startTime : null,
+      endTime: (value, values) =>
+        values.infinite
+          ? null
+          : !value
+          ? locale.assignment.form.validation.endTime
+          : null,
+      // same: (value, values) =>
+      //   values.infinite
+      //     ? null
+      //     : values.startDate &&
+      //       values.endDate &&
+      //       values.startDate.getTime() == values.endDate.getTime() &&
+      //       values.startTime.getTime() == values.endTime.getTime()
+      //     ? locale.assignment.form.validation.date
+      //     : null,
+      groups: (value) =>
+        value.length == 0
+          ? locale.assignment.form.validation.groups
+          : null,
+    },
+  });
 
   const handleSubmit = useCallback(() => {
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.group.validation.error,
+        autoClose: 5000,
+      });
+      return;
+    }
+    const assignment = form.values;
+    requestWithNotify<IAssignmentAdd, boolean>(
+      'group/add',
+      'POST',
+      locale.notify.assignment.create,
+      lang,
+      (response: boolean) => '',
+      assignment
+    );
+  }, [form, lang, locale]);
+
+  useEffect(() => {
     console.log(form.values);
   }, [form.values]);
 

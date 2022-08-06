@@ -2,8 +2,13 @@ import LanguageSelector from '@ui/LanguageSelector/LanguageSelector';
 import { FC, memo, useState, useMemo, useCallback } from 'react';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './constraintsInfo.module.css';
-import { Box, Overlay } from '@mantine/core';
-import { Switch, SegmentedControl, NumberInput } from '@ui/basics';
+import { Box } from '@mantine/core';
+import {
+  Switch,
+  SegmentedControl,
+  NumberInput,
+  Overlay,
+} from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
@@ -78,9 +83,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
 
       <Box style={{ position: 'relative' }}>
         <div className={styles.languages}>
-          {!form.values.shouldRestrictLanguages && (
-            <Overlay opacity={0.7} color="#fff" blur={2} />
-          )}
+          {!form.values.shouldRestrictLanguages && <Overlay />}
           <SegmentedControl
             data={[
               {

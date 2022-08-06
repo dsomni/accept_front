@@ -2,8 +2,7 @@ import { IRole } from '@custom-types/data/atomic';
 import { IGroup } from '@custom-types/data/IGroup';
 import { GroupSelector, RoleSelector } from '@ui/selectors';
 import { FC, memo } from 'react';
-import { Switch } from '@ui/basics';
-import { Overlay } from '@mantine/core';
+import { Switch, Overlay } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 
 const GroupsRoles: FC<{
@@ -26,9 +25,7 @@ const GroupsRoles: FC<{
         {...form.getInputProps('broadcast', { type: 'checkbox' })}
       />
       <div style={{ position: 'relative' }}>
-        {form.values.broadcast && (
-          <Overlay opacity={0.7} color="#fff" blur={2} />
-        )}
+        {form.values.broadcast && <Overlay />}
         <RoleSelector
           form={form}
           roles={roles}

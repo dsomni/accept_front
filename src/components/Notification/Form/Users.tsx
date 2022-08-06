@@ -1,5 +1,5 @@
 import { IUser } from '@custom-types/data/IUser';
-import { Overlay } from '@mantine/core';
+import { Overlay } from '@ui/basics';
 import { UserSelector } from '@ui/selectors';
 import { FC, memo } from 'react';
 
@@ -9,9 +9,7 @@ const Users: FC<{ form: any; users: IUser[] }> = ({
 }) => {
   return (
     <div style={{ position: 'relative' }}>
-      {form.values.broadcast && (
-        <Overlay opacity={0.7} color="#fff" blur={2} />
-      )}
+      {form.values.broadcast && <Overlay />}
       <UserSelector
         form={form}
         users={users}

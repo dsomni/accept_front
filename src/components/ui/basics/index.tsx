@@ -3,10 +3,11 @@ import CustomEditor from './CustomEditor/CustomEditor';
 import Dropzone from './Dropzone/Dropzone';
 import Helper from './Helper/Helper';
 import Icon from './Icon/Icon';
-import Modal from './Modal/Modal';
 import InputWrapper from './InputWrapper/InputWrapper';
-import NumberInput from './NumberInput/NumberInput';
+import Modal from './Modal/Modal';
 import MultiSelect from './Select/MultiSelect';
+import NumberInput from './NumberInput/NumberInput';
+import Overlay from './Overlay/Overlay';
 import PasswordInput from './PasswordInput/PasswordInput';
 import Radio from './Radio/Radio';
 import RangeCalendar from './Calendar/RangeCalendar';
@@ -27,6 +28,7 @@ export {
   Modal,
   MultiSelect,
   NumberInput,
+  Overlay,
   PasswordInput,
   Radio,
   RangeCalendar,

@@ -16,6 +16,18 @@ export interface IAssignment extends IAssignmentSchema {
   groups: IGroup[];
 }
 
+export interface IAssignmentAdd {
+  origin: string;
+  starter: string;
+  status: number;
+  infinite: boolean;
+
+  start?: Date;
+  end?: Date;
+
+  groups: string[];
+}
+
 export interface IAssignmentAddBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];
   groups: IGroup[];

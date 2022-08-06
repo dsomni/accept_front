@@ -1,17 +1,14 @@
 import { FC, memo, ReactNode } from 'react';
-import {
-  Input as MantineInput,
-  InputWrapperProps,
-} from '@mantine/core';
+import { Input as MantineInput } from '@mantine/core';
 import styles from './inputWrapper.module.css';
 import inputStyles from '@styles/ui/input.module.css';
+import { MyInputWrapperProps } from '@custom-types/ui/basics/inputWrapper';
 import { Helper } from '@ui/basics';
 
-interface Props extends InputWrapperProps {
-  helperContent?: string | ReactNode;
-}
-
-const InputWrapper: FC<Props> = ({ helperContent, ...props }) => {
+const InputWrapper: FC<MyInputWrapperProps> = ({
+  helperContent,
+  ...props
+}) => {
   return (
     <div className={inputStyles.wrapper}>
       <div className={inputStyles.labelWrapper}>

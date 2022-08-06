@@ -7,4 +7,5 @@ export const form = {
   isInfinite: 'Infinite',
   startTime: 'Start time',
   endTime: 'End time',
+  calendar: 'Select start and end dates',
 };

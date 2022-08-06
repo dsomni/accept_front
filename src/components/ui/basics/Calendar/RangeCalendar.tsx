@@ -1,17 +1,38 @@
+import 'dayjs/locale/ru';
 import { FC, memo, useState, useCallback } from 'react';
-import { RangeCalendar as MantineRangeCalendar } from '@mantine/dates';
+import {
+  RangeCalendar as MantineRangeCalendar,
+  RangeCalendarProps,
+} from '@mantine/dates';
 import { setter } from '@custom-types/ui/atomic';
+import styles from './calendar.module.css';
+import { Helper, InputWrapper } from '@ui/basics';
+import { MyInputWrapperProps } from '@custom-types/ui/basics/inputWrapper';
+import { useLocale } from '@hooks/useLocale';
 
-const RangeCalendar: FC<{
+interface Props
+  extends Omit<RangeCalendarProps, 'value' | 'onChange'> {
   start: Date | null;
   end: Date | null;
   setStart: setter<Date | null>;
   setEnd: setter<Date | null>;
-}> = ({ start, end, setStart, setEnd }) => {
+  inputWrapperProps: MyInputWrapperProps;
+}
+
+const RangeCalendar: FC<Props> = ({
+  start,
+  end,
+  setStart,
+  setEnd,
+  inputWrapperProps,
+  ...props
+}) => {
   const [value, setValue] = useState<[Date | null, Date | null]>([
     start,
     end,
   ]);
+
+  const { lang } = useLocale();
 
   const onChange = useCallback(
     (values: [Date | null, Date | null]) => {
@@ -22,7 +43,16 @@ const RangeCalendar: FC<{
     [setStart, setEnd]
   );
 
-  return <MantineRangeCalendar value={value} onChange={onChange} />;
+  return (
+    <InputWrapper {...inputWrapperProps}>
+      <MantineRangeCalendar
+        locale={lang}
+        {...props}
+        value={value}
+        onChange={onChange}
+      />
+    </InputWrapper>
+  );
 };
 
 export default memo(RangeCalendar);

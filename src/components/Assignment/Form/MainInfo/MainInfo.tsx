@@ -1,7 +1,12 @@
 import { FC, memo, useMemo, useCallback } from 'react';
 import styles from './mainInfo.module.css';
-import { RangeCalendar, TimeInput, Switch } from '@ui/basics';
-import { Overlay } from '@mantine/core';
+import {
+  RangeCalendar,
+  TimeInput,
+  Switch,
+  Overlay,
+  InputWrapper,
+} from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
@@ -19,33 +24,61 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
 
   return (
     <>
-      <div style={{ width: 'fit-content' }}>
+      <InputWrapper {...form.getInputProps('same')}>
+        <div
+          className={styles.dateTimeInput}
+          style={{ position: 'relative' }}
+        >
+          {form.values.infinite && <Overlay />}
+          <RangeCalendar
+            start={initialStart}
+            setStart={setStart}
+            end={initialEnd}
+            setEnd={setEnd}
+            allowSingleDateInRange
+            inputWrapperProps={{
+              ...form.getInputProps('startDate'),
+              onBlur: () => {
+                form.validateField('startDate');
+                form.validateField('same');
+              },
+              label: locale.assignment.form.calendar,
+            }}
+          />
+          <div className={styles.timeInputs}>
+            <TimeInput
+              label={locale.assignment.form.startTime}
+              {...form.getInputProps('startTime')}
+              onBlur={() => {
+                form.validateField('startTime');
+                form.validateField('same');
+              }}
+            />
+            <TimeInput
+              label={locale.assignment.form.endTime}
+              {...form.getInputProps('endTime')}
+              onBlur={() => {
+                form.validateField('endTime');
+                form.validateField('same');
+              }}
+            />
+          </div>
+        </div>
+      </InputWrapper>
+
+      <div>
         <Switch
           label={locale.assignment.form.isInfinite}
-          {...form.getInputProps('isInfinite', { type: 'checkbox' })}
+          {...form.getInputProps('infinite', { type: 'checkbox' })}
+          onChange={(value) => {
+            form.setFieldValue(
+              'infinite',
+              value.currentTarget.checked
+            );
+            form.validateField('infinite');
+            form.validateField('same');
+          }}
         />
-      </div>
-      <div
-        className={styles.dateTimeInput}
-        style={{ position: 'relative' }}
-      >
-        {form.values.isInfinite && <Overlay opacity={0.2} />}
-        <RangeCalendar
-          start={initialStart}
-          setStart={setStart}
-          end={initialEnd}
-          setEnd={setEnd}
-        />
-        <div className={styles.timeInputs}>
-          <TimeInput
-            label={locale.assignment.form.startTime}
-            {...form.getInputProps('startTime')}
-          />
-          <TimeInput
-            label={locale.assignment.form.endTime}
-            {...form.getInputProps('endTime')}
-          />
-        </div>
       </div>
     </>
   );
