@@ -19,13 +19,13 @@ const initialValues = {
   origin: '',
   starter: '',
   startDate: new Date(),
-  startTime: new Date(0),
+  startTime: new Date(),
   endDate: new Date(),
-  endTime: new Date(0),
+  endTime: new Date(),
   groups: [],
   infinite: false,
   status: 0,
-  same: false,
+  dates: 0,
 };
 
 function AssignmentAdd(props: IAssignmentAddBundle) {
@@ -38,12 +38,12 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         value.length == 0
           ? locale.assignment.form.validation.origin
           : null,
-      startDate: (value) =>
-        value ? locale.assignment.form.validation.startDate : null,
-      endDate: (value, values) =>
-        values.infinite
+      startDate: (value, values) =>
+        !values.startDate
+          ? locale.assignment.form.validation.startDate
+          : values.infinite
           ? null
-          : !value
+          : !values.endDate
           ? locale.assignment.form.validation.endDate
           : null,
       startTime: (value) =>
@@ -54,15 +54,15 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
           : !value
           ? locale.assignment.form.validation.endTime
           : null,
-      // same: (value, values) =>
-      //   values.infinite
-      //     ? null
-      //     : values.startDate &&
-      //       values.endDate &&
-      //       values.startDate.getTime() == values.endDate.getTime() &&
-      //       values.startTime.getTime() == values.endTime.getTime()
-      //     ? locale.assignment.form.validation.date
-      //     : null,
+      dates: (value, values) =>
+        values.infinite
+          ? null
+          : values.startDate &&
+            values.endDate &&
+            values.startDate.getTime() + values.startTime.getTime() >=
+              values.endDate.getTime() + values.endTime.getTime()
+          ? locale.assignment.form.validation.date
+          : null,
       groups: (value) =>
         value.length == 0
           ? locale.assignment.form.validation.groups
@@ -90,10 +90,6 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
       assignment
     );
   }, [form, lang, locale]);
-
-  useEffect(() => {
-    console.log(form.values);
-  }, [form.values]);
 
   return (
     <>

@@ -4,6 +4,6 @@ export const validation = {
   endDate: 'Select end date',
   startTime: 'Select start time',
   endTime: 'Select end time',
-  date: 'Start and end dates cannot be the same',
+  date: 'Assignment must not to end simultaneously with the its start or earlier',
   groups: 'Select at least one group',
 };

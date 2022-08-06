@@ -9,7 +9,7 @@ import Origin from './Origin/Origin';
 import Stepper from '@ui/Stepper/Stepper';
 
 const stepFields = [
-  ['startDate', 'startTime', 'endDate', 'endTime', 'same'],
+  ['startDate', 'startTime', 'endDate', 'endTime', 'dates'],
   ['groups'],
   ['origin'],
 ];

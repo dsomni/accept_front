@@ -24,7 +24,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
 
   return (
     <>
-      <InputWrapper {...form.getInputProps('same')}>
+      <InputWrapper {...form.getInputProps('dates')}>
         <div
           className={styles.dateTimeInput}
           style={{ position: 'relative' }}
@@ -40,7 +40,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
               ...form.getInputProps('startDate'),
               onBlur: () => {
                 form.validateField('startDate');
-                form.validateField('same');
+                form.validateField('dates');
               },
               label: locale.assignment.form.calendar,
             }}
@@ -51,7 +51,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
               {...form.getInputProps('startTime')}
               onBlur={() => {
                 form.validateField('startTime');
-                form.validateField('same');
+                form.validateField('dates');
               }}
             />
             <TimeInput
@@ -59,7 +59,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
               {...form.getInputProps('endTime')}
               onBlur={() => {
                 form.validateField('endTime');
-                form.validateField('same');
+                form.validateField('dates');
               }}
             />
           </div>
@@ -76,7 +76,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
               value.currentTarget.checked
             );
             form.validateField('infinite');
-            form.validateField('same');
+            form.validateField('dates');
           }}
         />
       </div>
