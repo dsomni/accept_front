@@ -11,7 +11,7 @@ export default async function AddAssignmentSchema(
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify(req.body),
-    headers: { 'content-type': 'application/json' },
+    headers: req.headers as { [key: string]: string },
   });
   const status = response.status;
   const data = await response.json();

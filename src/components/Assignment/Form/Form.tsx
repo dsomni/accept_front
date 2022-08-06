@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useEffect } from 'react';
+import { FC, memo } from 'react';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { IAssignmentSchemaDisplay } from '@custom-types/data/IAssignmentSchema';
 import { IGroup } from '@custom-types/data/IGroup';

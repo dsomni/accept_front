@@ -10,20 +10,21 @@ export interface IAssignment extends IAssignmentSchema {
   status: IAssignmentStatus;
   infinite: boolean;
 
-  start?: Date;
-  end?: Date;
+  start: Date;
+  end: Date;
 
   groups: IGroup[];
 }
 
 export interface IAssignmentAdd {
+  spec: string;
   origin: string;
   starter: string;
   status: number;
   infinite: boolean;
 
-  start?: Date;
-  end?: Date;
+  start: Date;
+  end: Date;
 
   groups: string[];
 }
@@ -36,5 +37,5 @@ export interface IAssignmentAddBundle {
 export interface IAssignmentEditBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];
   groups: IGroup[];
-  assignment: IAssignment;
+  assignment: IAssignmentAdd;
 }

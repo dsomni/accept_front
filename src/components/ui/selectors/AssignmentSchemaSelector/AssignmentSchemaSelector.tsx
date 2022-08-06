@@ -12,7 +12,7 @@ const AssignmentSchemaSelector: FC<{
   const { locale } = useLocale();
   return (
     <Select
-      label={locale.ui.schemasSelector}
+      label={locale.ui.schemasSelector.label}
       data={schemas.map((schema) => ({
         value: schema.spec,
         label: schema.title,

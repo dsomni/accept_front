@@ -1,6 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
 import { Group } from '@mantine/core';
-import { FC, memo, ReactNode, useCallback, useState } from 'react';
+import {
+  FC,
+  memo,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { Stepper as MantineStepper } from '@mantine/core';
 import { AlertCircle } from 'tabler-icons-react';
@@ -38,10 +45,11 @@ const Stepper: FC<{
   const validateStep = useCallback(
     (step: number) => {
       var error = false;
-      stepFields[step].forEach((field: string) => {
+      for (let i = 0; i < stepFields[step].length; i++) {
+        const field = stepFields[step][i];
         const res = form.validateField(field);
         error = error || res.hasError;
-      });
+      }
       return error;
     },
     [form, stepFields]

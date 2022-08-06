@@ -1,11 +1,5 @@
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { GetStaticProps, NextPageContext } from 'next';
+import { ReactNode, useCallback } from 'react';
+import { NextPageContext } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
@@ -20,6 +14,8 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import { useUser } from '@hooks/useUser';
+import { concatDateTime } from '@utils/datetime';
 
 const initialValues = (origin: string, duration: number) => {
   let endDate = new Date();
@@ -30,11 +26,11 @@ const initialValues = (origin: string, duration: number) => {
   return {
     origin,
     starter: '',
-    startDate: new Date(),
+    startDate: new Date(10),
     startTime: new Date(),
     endDate,
     endTime,
-    groups: [],
+    groups: ['5fff0231-522c-496c-a870-0ce4e7051f87'],
     infinite: false,
     status: 0,
     dates: 0,
@@ -48,6 +44,7 @@ interface IProps extends IAssignmentAddBundle {
 
 function AssignmentAdd(props: IProps) {
   const { locale, lang } = useLocale();
+  const { user } = useUser();
 
   const form = useForm({
     initialValues: initialValues(props.origin, props.duration),
@@ -64,17 +61,15 @@ function AssignmentAdd(props: IProps) {
           : !values.endDate
           ? locale.assignment.form.validation.endDate
           : null,
-      dates: (value, values) => {
-        console.log(values.infinite);
-        return values.infinite
+      dates: (value, values) =>
+        values.infinite
           ? null
           : values.startDate &&
             values.endDate &&
             values.startDate.getTime() + values.startTime.getTime() >=
               values.endDate.getTime() + values.endTime.getTime()
           ? locale.assignment.form.validation.date
-          : null;
-      },
+          : null,
       groups: (value) =>
         value.length == 0
           ? locale.assignment.form.validation.groups
@@ -92,16 +87,29 @@ function AssignmentAdd(props: IProps) {
       });
       return;
     }
-    const assignment = form.values;
-    requestWithNotify<IAssignmentAdd, boolean>(
-      'group/add',
+
+    const assignment = {
+      spec: '',
+      origin: form.values.origin,
+      starter: user?.login || '',
+      status: form.values.status,
+      infinite: form.values.infinite,
+      start: concatDateTime(
+        form.values.startDate,
+        form.values.startTime
+      ),
+      end: concatDateTime(form.values.endDate, form.values.endTime),
+      groups: form.values.groups,
+    };
+    requestWithNotify<IAssignmentAdd, IAssignmentAdd>(
+      'assignment/add',
       'POST',
       locale.notify.assignment.create,
       lang,
-      (response: boolean) => '',
+      (response) => response.spec,
       assignment
     );
-  }, [form, lang, locale]);
+  }, [form, lang, locale, user]);
 
   return (
     <>
@@ -125,12 +133,9 @@ export default AssignmentAdd;
 const API_URL = getApiUrl();
 
 AssignmentAdd.getInitialProps = async ({
-  req,
   res,
-  err,
   query,
 }: NextPageContext) => {
-  console.log(query);
   const response = await fetch(
     `${API_URL}/api/bundle/assignment-add`
   ).catch(() => ({ status: 404 }));

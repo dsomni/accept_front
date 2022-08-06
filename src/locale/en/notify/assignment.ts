@@ -7,6 +7,11 @@ export const assignment = {
   create: {
     loading: 'Loading...',
     success: 'Assignment was successfully create',
-    error: 'Error on assignment create',
+    error: 'Error while creating assignment',
+  },
+  edit: {
+    loading: 'Loading...',
+    success: 'Assignment successfully edited',
+    error: 'Error while editing assignment',
   },
 };
