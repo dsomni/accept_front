@@ -1,4 +1,4 @@
-const { API_ENDPOINT, SERVER_URL, VERCEL_URL } = process.env;
+const { API_ENDPOINT } = process.env;
 
 console.log('Config', { API_ENDPOINT });
 
@@ -6,7 +6,6 @@ console.log('Config', { API_ENDPOINT });
 module.exports = {
   env: {
     API_ENDPOINT,
-    SERVER_URL: VERCEL_URL || SERVER_URL,
   },
   reactStrictMode: false,
   async rewrites() {
