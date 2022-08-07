@@ -1,11 +1,10 @@
 import { Button, Select } from '@ui/basics';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { capitalize } from '@utils/capitalize';
 import { setter } from '@custom-types/ui/atomic';
-import { getCookie, setCookie } from '@utils/cookies';
 import styles from './send.module.css';
 import { Send as SendPlane } from 'tabler-icons-react';
 import { ILanguage } from '@custom-types/data/atomic';
@@ -24,10 +23,6 @@ const Send: FC<{
       languages.length > 0 ? languages[0].spec.toString() : '1',
   });
   const [code, setCode] = useState('');
-
-  useEffect(() => {
-    console.log(language);
-  }, [language]);
 
   const handleSubmit = useCallback(() => {
     const body = {
