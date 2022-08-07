@@ -114,8 +114,11 @@ interface TableData {
   total: number;
 }
 
-const Results: FC<{ spec: string }> = ({ spec }) => {
-  const { locale, lang } = useLocale();
+const Results: FC<{ spec: string; activeTab: string }> = ({
+  spec,
+  activeTab,
+}) => {
+  const { locale } = useLocale();
   const { refreshAccess } = useUser();
 
   const columns: ITableColumn[] = useMemo(
@@ -190,13 +193,15 @@ const Results: FC<{ spec: string }> = ({ spec }) => {
 
   useEffect(() => {
     refetch();
-    const id = setInterval(() => {
-      if (needRefetch) refetch(false);
-    }, 2000);
-    return () => {
-      clearInterval(id);
-    };
-  }, [needRefetch, refetch]);
+    if (activeTab == 'results') {
+      const id = setInterval(() => {
+        if (needRefetch) refetch(false);
+      }, 2000);
+      return () => {
+        clearInterval(id);
+      };
+    }
+  }, [needRefetch, refetch, activeTab]);
 
   return (
     <div>

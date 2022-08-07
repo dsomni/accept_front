@@ -121,7 +121,11 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             />
           )
         }
-        results={isUser && <Results spec={task.spec} />}
+        results={(currentTab) =>
+          isUser && (
+            <Results activeTab={currentTab} spec={task.spec} />
+          )
+        }
       />
     </>
   );
