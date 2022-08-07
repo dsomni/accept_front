@@ -1,15 +1,14 @@
 import { Button, Select } from '@ui/basics';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { capitalize } from '@utils/capitalize';
 import { setter } from '@custom-types/ui/atomic';
-import { getCookie, setCookie } from '@utils/cookies';
 import styles from './send.module.css';
 import { Send as SendPlane } from 'tabler-icons-react';
 import { ILanguage } from '@custom-types/data/atomic';
-import { sendRequest } from '@requests/request';
+import { useLocalStorage } from '@mantine/hooks';
 
 const Send: FC<{
   spec: string;
@@ -18,19 +17,12 @@ const Send: FC<{
 }> = ({ spec, setActiveTab, languages }) => {
   const { locale, lang } = useLocale();
 
-  const [defaultLangSpec, setDefaultLangSpec] = useState<string>(
-    languages.length > 0 ? languages[0].spec.toString() : '1'
-  );
-  const [language, setLanguage] = useState<string>(defaultLangSpec);
+  const [language, setLanguage] = useLocalStorage<string>({
+    key: 'previous_program_lang',
+    defaultValue:
+      languages.length > 0 ? languages[0].spec.toString() : '1',
+  });
   const [code, setCode] = useState('');
-
-  useEffect(() => {
-    const prev_lang = getCookie('previous_program_lang');
-    if (prev_lang) {
-      setDefaultLangSpec(prev_lang);
-      setLanguage(prev_lang);
-    }
-  }, []);
 
   const handleSubmit = useCallback(() => {
     const body = {
@@ -49,13 +41,15 @@ const Send: FC<{
       () => {},
       { autoClose: 5000 }
     );
-    setCookie('previous_program_lang', language);
-    setActiveTab('send');
+    setActiveTab('results');
   }, [language, code, spec, locale, lang, setActiveTab]);
 
-  const onLangSelect = useCallback((value: string | null) => {
-    if (value) setLanguage(value);
-  }, []);
+  const onLangSelect = useCallback(
+    (value: string | null) => {
+      if (value) setLanguage(value);
+    },
+    [setLanguage]
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -63,7 +57,7 @@ const Send: FC<{
         <Select
           label={locale.language}
           onChange={onLangSelect}
-          value={language ? language : defaultLangSpec}
+          value={language}
           data={languages.map((lang) => ({
             label: capitalize(lang.name),
             value: lang.spec.toString(),

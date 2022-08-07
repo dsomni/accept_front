@@ -27,7 +27,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);
 
-  const { locale, lang } = useLocale();
+  const { locale } = useLocale();
   const { isTeacher, isUser } = useUser();
   const { width } = useWidth();
 
@@ -121,7 +121,11 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             />
           )
         }
-        results={isUser && <Results spec={task.spec} />}
+        results={(currentTab) =>
+          isUser && (
+            <Results activeTab={currentTab} spec={task.spec} />
+          )
+        }
       />
     </>
   );

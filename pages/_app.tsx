@@ -4,7 +4,6 @@ import { UserProvider } from '@hooks/useUser';
 import { WidthProvider } from '@hooks/useWidth';
 import { NotificationsProvider } from '@mantine/notifications';
 import '@styles/globals.css';
-import { getServerUrl } from '@utils/getServerUrl';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -17,8 +16,6 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-
-const SERVER_URL = getServerUrl();
 
 function getTaskSpec(url: string): string {
   const list = url.split('/');
@@ -43,7 +40,7 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
         const task_spec = getTaskSpec(url);
         // has spec
         if (task_spec) {
-          await fetch(`${SERVER_URL}/api/revalidate/task`, {
+          await fetch(`/api/revalidate/task`, {
             method: 'POST',
             body: JSON.stringify({ spec: task_spec }),
           });

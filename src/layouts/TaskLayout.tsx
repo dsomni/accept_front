@@ -8,7 +8,7 @@ import { FC, memo, ReactNode, useState } from 'react';
 const TaskLayout: FC<{
   description: ReactNode;
   send?: callback<any, ReactNode>;
-  results?: ReactNode;
+  results?: callback<any, ReactNode>;
   title?: string;
 }> = ({ description, send, results, title }) => {
   const { locale } = useLocale();
@@ -57,10 +57,11 @@ const TaskLayout: FC<{
               {send(setActiveTab)}
             </Tabs.Panel>
           )}
-
-          <Tabs.Panel value="results" pt="xs">
-            {results}
-          </Tabs.Panel>
+          {results && (
+            <Tabs.Panel value="results" pt="xs">
+              {results(activeTab)}
+            </Tabs.Panel>
+          )}
         </Tabs>
       ) : (
         <>{description}</>

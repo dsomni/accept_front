@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';
 
-function Assignment(props: { assignment: IAssignmentSchema }) {
+function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
   const assignment = props.assignment;
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
@@ -51,13 +51,13 @@ function Assignment(props: { assignment: IAssignmentSchema }) {
   );
 }
 
-Assignment.getLayout = (page: ReactNode) => {
+AssignmentSchema.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default Assignment;
+export default AssignmentSchema;
 
-const SERVER_URL = getApiUrl();
+const API_ENDPOINT = getApiUrl();
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params || typeof params?.spec !== 'string') {
@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const assignment = await fetch(
-    `${SERVER_URL}/api/assignment_schema/${params.spec}`,
+    `${API_ENDPOINT}/api/assignment_schema/${params.spec}`,
     {
       method: 'GET',
     }
