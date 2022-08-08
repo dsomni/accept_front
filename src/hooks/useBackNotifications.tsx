@@ -19,6 +19,7 @@ import {
   useState,
 } from 'react';
 import { useLocale } from './useLocale';
+import { useUser } from './useUser';
 
 interface INotificationContext {
   amount: number;
@@ -52,32 +53,35 @@ export const BackNotificationsProvider: FC<{
     defaultValue: '-1',
   });
   const { locale, lang } = useLocale();
+  const { user } = useUser();
 
   const fetchNotificationsAmount = useCallback(
     (first: boolean) => {
-      sendRequest<undefined, number>(
-        'notification/amount',
-        'GET'
-      ).then((res: IResponse<number>) => {
-        if (!res.error) {
-          if (
-            (Number(amount) >= 0 || first) &&
-            res.response > (amount || 0)
-          ) {
-            const id = newNotification({});
-            infoNotification({
-              id,
-              title: locale.notify.notification.hasNew,
-              message: locale.notify.notification.amount(
-                res.response
-              ),
-            });
+      if (user) {
+        sendRequest<undefined, number>(
+          'notification/amount',
+          'GET'
+        ).then((res: IResponse<number>) => {
+          if (!res.error) {
+            if (
+              (Number(amount) >= 0 || first) &&
+              res.response > (amount || 0)
+            ) {
+              const id = newNotification({});
+              infoNotification({
+                id,
+                title: locale.notify.notification.hasNew,
+                message: locale.notify.notification.amount(
+                  res.response
+                ),
+              });
+            }
+            setAmount(res.response.toString());
           }
-          setAmount(res.response.toString());
-        }
-      });
+        });
+      }
     },
-    [amount, locale.notify.notification, setAmount]
+    [amount, locale.notify.notification, setAmount, user]
   );
 
   useEffect(() => {
