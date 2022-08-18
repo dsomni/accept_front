@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, useEffect, useState } from 'react';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import styles from './description.module.css';
@@ -25,11 +24,11 @@ const Description: FC<{
   useEffect(() => {
     let cleanUp = false;
     if (assignment.tasks.length) {
-      setLoading(preview && true);
+      setLoading(!!preview);
       sendRequest<string[], ITaskDisplay[]>(
         'task/list-specs',
         'POST',
-        assignment.tasks.map((task) => task.value || task.spec),
+        assignment.tasks.map((task: any) => task.value || task.spec),
         5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
@@ -100,9 +99,7 @@ const Description: FC<{
                     </span>
                   )}
                 </td>
-                <td className={tableStyles.cell}>
-                  {row.author.shortName}
-                </td>
+                <td className={tableStyles.cell}>{row.author}</td>
                 <td
                   className={tableStyles.cell}
                   style={{

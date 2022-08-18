@@ -4,7 +4,9 @@ import { steps } from './steps';
 export const form = {
   steps,
   validation,
-  isInfinite: 'Бесконечный',
+  infinite: 'Бесконечный',
+  starter: 'Учитель',
+  author: 'Автор',
   startTime: 'Время начала',
   endTime: 'Время окончания',
   calendar: 'Выберете дату начала и окончания',

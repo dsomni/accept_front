@@ -34,7 +34,8 @@ function Assignment(props: { assignment: IAssignment }) {
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      onClick: () => router.push(`/task/edit/${assignment.spec}`),
+      onClick: () =>
+        router.push(`/edu/assignment/edit/${assignment.spec}`),
     },
     {
       color: 'red',
@@ -82,9 +83,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     `${API_URL}/api/assignment/${params.spec}`
   );
   if (response.status === 200) {
+    const assignment = await response.json();
     return {
       props: {
-        assignment: await response.json(),
+        assignment,
       },
       revalidate: 10 * 60,
     };

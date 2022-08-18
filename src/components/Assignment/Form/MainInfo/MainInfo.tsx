@@ -67,7 +67,7 @@ const MainInfo: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
 
       <div>
         <Switch
-          label={locale.assignment.form.isInfinite}
+          label={locale.assignment.form.infinite}
           {...form.getInputProps('infinite', { type: 'checkbox' })}
           onChange={(event) => {
             form.setFieldValue(

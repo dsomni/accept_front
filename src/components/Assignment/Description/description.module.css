@@ -1,3 +1,7 @@
+.wrapper {
+  padding: 0 var(--spacer-xl) var(--spacer-xxl) var(--spacer-xl);
+}
+
 .titleWrapper {
   display: flex;
   flex-direction: column;
@@ -12,12 +16,19 @@
   color: var(--dark3);
   display: flex;
   flex-direction: row;
+  gap: var(--spacer-m);
 }
+
+.usersInfo {
+  display: flex;
+  flex-direction: column;
+}
+
 .description {
+  margin-top: var(--spacer-l);
   max-width: 1000px;
 }
 
 .tasksWrapper {
-  display: flex;
-  flex-direction: column;
+  margin: var(--spacer-l) auto;
 }
