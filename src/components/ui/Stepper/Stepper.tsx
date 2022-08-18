@@ -26,6 +26,7 @@ const Stepper: FC<{
   customWrapper?: boolean;
   iconPosition?: 'right' | 'left';
   icons?: ReactNode[];
+  initialStep?: number;
 }> = ({
   form,
   stepFields,
@@ -38,10 +39,11 @@ const Stepper: FC<{
   customWrapper,
   iconPosition,
   icons,
+  initialStep,
 }) => {
   const { locale } = useLocale();
   const LAST_PAGE = pages.length - 1;
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(initialStep || 0);
 
   const validateStep = useCallback(
     (step: number) => {

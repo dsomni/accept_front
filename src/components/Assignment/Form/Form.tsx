@@ -69,6 +69,7 @@ const Form: FC<{
     <>
       <Stepper
         buttonLabel={buttonLabel}
+        initialStep={0}
         form={form}
         handleSubmit={() => handleSubmit(form)}
         stepFields={stepFields}
