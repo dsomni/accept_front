@@ -28,6 +28,18 @@ export interface IAssignmentAdd {
 
   groups: string[];
 }
+export interface IAssignmentSubmit {
+  spec: string;
+  origin: string;
+  starter: string;
+  status: number;
+  infinite: boolean;
+
+  start: string;
+  end: string;
+
+  groups: string[];
+}
 
 export interface IAssignmentAddBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];

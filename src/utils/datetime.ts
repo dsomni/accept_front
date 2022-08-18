@@ -11,3 +11,15 @@ export const concatDateTime = (date: Date, time: Date) => {
   date.setTime(date.getTime() + justTime);
   return date;
 };
+
+export const timezoneDate = (date: Date) => {
+  return new Date(
+    date.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+  );
+};
+
+export const UTCDate = (date: Date) => {
+  return new Date(
+    date.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+  );
+};

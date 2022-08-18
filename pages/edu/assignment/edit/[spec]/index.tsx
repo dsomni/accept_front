@@ -5,6 +5,7 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
   IAssignmentAdd,
   IAssignmentEditBundle,
+  IAssignmentSubmit,
 } from '@custom-types/data/IAssignment';
 import Form from '@components/Assignment/Form/Form';
 import { UseFormReturnType } from '@mantine/form';
@@ -14,17 +15,21 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { concatDateTime } from '@utils/datetime';
+import {
+  concatDateTime,
+  timezoneDate,
+  UTCDate,
+} from '@utils/datetime';
 
 function AssignmentEdit(props: IAssignmentEditBundle) {
   const { locale, lang } = useLocale();
 
   const initialValues = {
     ...props.assignment,
-    startDate: new Date(props.assignment.start),
-    startTime: new Date(props.assignment.start),
-    endDate: new Date(props.assignment.end),
-    endTime: new Date(props.assignment.end),
+    startDate: timezoneDate(new Date(props.assignment.start)),
+    startTime: timezoneDate(new Date(props.assignment.start)),
+    endDate: timezoneDate(new Date(props.assignment.end)),
+    endTime: timezoneDate(new Date(props.assignment.end)),
   };
 
   const handleSubmit = useCallback(
@@ -45,11 +50,12 @@ function AssignmentEdit(props: IAssignmentEditBundle) {
         starter: form.values.starter,
         status: form.values.status,
         infinite: form.values.infinite,
-        start: concatDateTime(
-          form.values.startDate,
-          form.values.startTime
+        start: UTCDate(
+          concatDateTime(form.values.startDate, form.values.startTime)
         ),
-        end: concatDateTime(form.values.endDate, form.values.endTime),
+        end: UTCDate(
+          concatDateTime(form.values.endDate, form.values.endTime)
+        ),
         groups: form.values.groups,
       };
 
