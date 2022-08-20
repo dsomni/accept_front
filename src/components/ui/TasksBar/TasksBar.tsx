@@ -1,96 +1,60 @@
 import { ITaskDisplay } from '@custom-types/data/ITask';
-import { useLogger } from '@mantine/hooks';
+import { ActionIcon } from '@mantine/core';
 import Link from 'next/link';
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo } from 'react';
 import { Home } from 'tabler-icons-react';
 import styles from './tasksBar.module.css';
 
 const colors = {
   NULL: 'var(--dark4)',
   OK: 'var(--positive)',
+  TESTING: 'var(--neutral)',
   ERR: 'var(--negative)',
 };
 
-const colors1 = [
-  'var(--dark4)',
-  'var(--positive)',
-  'var(--negative)',
-];
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const TasksBar: FC<{
   tasks: ITaskDisplay[];
   assignment: string;
-  dima?: boolean;
-}> = ({ tasks, assignment, dima }) => {
-  const [dimaVisible, setDimaVisible] = useState(false);
-
-  const dimaHandleClick = useCallback(() => {
-    setDimaVisible((visibility) => !visibility);
-  }, []);
-
+}> = ({ tasks, assignment }) => {
   return (
     <>
-      {tasks.length > 0 && !dima && (
+      {tasks.length > 0 && (
         <div className={styles.wrapper}>
-          <Link href={`/edu/assignment/${assignment}`}>
-            <div
-              className={styles.taskStatus}
-              style={{
-                backgroundColor: 'var(--primary)',
-              }}
-            >
-              <Home color="black" />
-            </div>
-          </Link>
+          <ActionIcon
+            className={styles.taskStatus}
+            style={{
+              backgroundColor: 'var(--primary)',
+            }}
+            component="a"
+            href={`/edu/assignment/${assignment}`}
+          >
+            <Home color="white" />
+          </ActionIcon>
           {tasks.map((task, index) => (
             <Link
               href={`/task/${task.spec}?assignment=${assignment}`}
               key={index}
+              passHref
             >
-              <div
+              <a
                 className={styles.taskStatus}
                 style={{
                   backgroundColor:
-                    colors1[Math.round(Math.random() * 2)],
-                  // backgroundColor: !task.verdict
-                  //   ? colors.NULL
-                  //   : task.verdict.shortText == 'OK'
-                  //   ? colors.OK
-                  //   : colors.ERR,
+                    task.status && task.status.spec != 2
+                      ? colors.TESTING
+                      : !task.verdict
+                      ? colors.NULL
+                      : task.verdict.shortText == 'OK'
+                      ? colors.OK
+                      : colors.ERR,
                 }}
               >
-                {task.title.slice(0, 2)}
-              </div>
+                {alphabet[index % 26]}
+              </a>
             </Link>
           ))}
-        </div>
-      )}
-      {tasks.length > 0 && dima && (
-        <div className={styles.dimaWrapper}>
-          <div className={styles.dimaArrow} onClick={dimaHandleClick}>
-            /\
-          </div>
-          <div
-            className={styles.dimaList}
-            style={{ display: dimaVisible ? 'block' : 'none' }}
-          >
-            {tasks.map((task, index) => (
-              <Link
-                key={index}
-                href={`/task/${task.spec}?assignment=${assignment}`}
-              >
-                <div
-                  className={styles.dimaTaskStatus}
-                  style={{
-                    backgroundColor:
-                      colors1[Math.round(Math.random() * 2)],
-                  }}
-                >
-                  {task.title}
-                </div>
-              </Link>
-            ))}
-          </div>
         </div>
       )}
     </>

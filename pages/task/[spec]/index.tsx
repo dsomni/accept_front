@@ -44,7 +44,6 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         1000
       ).then((res) => {
         if (!res.error) {
-          console.log(res.response);
           setTasks(res.response);
         }
       });

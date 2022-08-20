@@ -5,6 +5,7 @@ import {
   ITest,
   IHintAlarmType,
   IVerdict,
+  IAttemptStatus,
 } from './atomic';
 import { ITag } from './ITag';
 import { IUser } from './IUser';
@@ -41,6 +42,7 @@ export interface ITaskDisplay {
   verdict: IVerdict;
   insertedDate: Date;
   complexity: number;
+  status?: IAttemptStatus;
 }
 
 export interface ITask extends ITaskDisplay {
