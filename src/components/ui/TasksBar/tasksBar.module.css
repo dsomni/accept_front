@@ -1,0 +1,27 @@
+.wrapper {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 25vw;
+  height: var(--spacer-xs);
+
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  transition: height 0.3s;
+  cursor: pointer;
+}
+.wrapper:hover {
+  height: var(--spacer-xl);
+}
+
+.taskStatus {
+  width: 100%;
+  height: var(--spacer-xl);
+  border-radius: 20% 20% 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
