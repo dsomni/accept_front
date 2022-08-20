@@ -1,7 +1,7 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode, useState } from 'react';
-import { ITask } from '@custom-types/data/ITask';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
@@ -11,7 +11,6 @@ import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useRouter } from 'next/router';
 import { ILanguage } from '@custom-types/data/atomic';
-
 import { useLocale } from '@hooks/useLocale';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { Eye, Pencil, Trash } from 'tabler-icons-react';
@@ -19,6 +18,8 @@ import { useUser } from '@hooks/useUser';
 import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import { sendRequest } from '@requests/request';
+import TasksBar from '@ui/TasksBar/TasksBar';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -26,12 +27,51 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   const [activeModal, setActiveModal] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);
+  const [tasks, setTasks] = useState<ITaskDisplay[]>([]);
 
   const { locale } = useLocale();
   const { isTeacher, isUser } = useUser();
   const { width } = useWidth();
 
   const router = useRouter();
+
+  const fetch_tasks_assignment = useCallback((spec: string) => {
+    return () =>
+      sendRequest<undefined, ITaskDisplay[]>(
+        `assignment/tasks/${spec}`,
+        'GET',
+        undefined,
+        1000
+      ).then((res) => {
+        if (!res.error) {
+          setTasks(res.response);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    let id: undefined | NodeJS.Timer = undefined;
+    if (
+      router.query.assignment &&
+      typeof router.query.assignment === 'string'
+    ) {
+      if (id) {
+        clearInterval(id);
+      }
+      fetch_tasks_assignment(router.query.assignment)();
+      id = setInterval(
+        fetch_tasks_assignment(router.query.assignment),
+        10000
+      );
+    } else {
+      setTasks([]);
+    }
+    return () => {
+      if (id) {
+        clearInterval(id);
+      }
+    };
+  }, [router.query.assignment, fetch_tasks_assignment]);
 
   const actions = (
     task.hint
@@ -73,6 +113,12 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   return (
     <>
+      {typeof router.query.assignment === 'string' && (
+        <TasksBar
+          tasks={tasks}
+          assignment={router.query.assignment}
+        />
+      )}
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}

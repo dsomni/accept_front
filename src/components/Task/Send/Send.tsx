@@ -1,5 +1,5 @@
 import { Button, Select } from '@ui/basics';
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useState, useEffect } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -22,6 +22,17 @@ const Send: FC<{
     defaultValue:
       languages.length > 0 ? languages[0].spec.toString() : '1',
   });
+
+  useEffect(() => {
+    if (
+      !languages
+        .map((item) => item.spec.toString())
+        .includes(language)
+    ) {
+      setLanguage(languages[0].spec.toString());
+    }
+  }, [language, languages, setLanguage]);
+
   const [code, setCode] = useState('');
 
   const handleSubmit = useCallback(() => {
