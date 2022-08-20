@@ -1,7 +1,7 @@
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import { useLogger } from '@mantine/hooks';
 import Link from 'next/link';
-import { FC, memo } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { Home } from 'tabler-icons-react';
 import styles from './tasksBar.module.css';
 
@@ -17,14 +17,20 @@ const colors1 = [
   'var(--negative)',
 ];
 
-const TasksBar: FC<{ tasks: ITaskDisplay[]; assignment: string }> = ({
-  tasks,
-  assignment,
-}) => {
-  useLogger('TasksBar', [tasks]);
+const TasksBar: FC<{
+  tasks: ITaskDisplay[];
+  assignment: string;
+  dima?: boolean;
+}> = ({ tasks, assignment, dima }) => {
+  const [dimaVisible, setDimaVisible] = useState(false);
+
+  const dimaHandleClick = useCallback(() => {
+    setDimaVisible((visibility) => !visibility);
+  }, []);
+
   return (
     <>
-      {tasks.length > 0 && (
+      {tasks.length > 0 && !dima && (
         <div className={styles.wrapper}>
           <Link href={`/edu/assignment/${assignment}`}>
             <div
@@ -57,6 +63,34 @@ const TasksBar: FC<{ tasks: ITaskDisplay[]; assignment: string }> = ({
               </div>
             </Link>
           ))}
+        </div>
+      )}
+      {tasks.length > 0 && dima && (
+        <div className={styles.dimaWrapper}>
+          <div className={styles.dimaArrow} onClick={dimaHandleClick}>
+            /\
+          </div>
+          <div
+            className={styles.dimaList}
+            style={{ display: dimaVisible ? 'block' : 'none' }}
+          >
+            {tasks.map((task, index) => (
+              <Link
+                key={index}
+                href={`/task/${task.spec}?assignment=${assignment}`}
+              >
+                <div
+                  className={styles.dimaTaskStatus}
+                  style={{
+                    backgroundColor:
+                      colors1[Math.round(Math.random() * 2)],
+                  }}
+                >
+                  {task.title}
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </>
