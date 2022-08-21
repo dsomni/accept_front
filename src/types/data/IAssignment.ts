@@ -4,7 +4,7 @@ import {
 } from './IAssignmentSchema';
 import { IAssignmentStatus } from './atomic';
 import { IGroup } from './IGroup';
-
+import { IAttemptDisplay } from './IAttempt';
 export interface IAssignment extends IAssignmentSchema {
   starter: string;
   status: IAssignmentStatus;
@@ -50,4 +50,13 @@ export interface IAssignmentEditBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];
   groups: IGroup[];
   assignment: IAssignmentAdd;
+}
+
+export interface IAssignmentResults {
+  tasks: { spec: string; title: string }[];
+  users: { login: string; shortName: string }[];
+  results: {
+    best: IAttemptDisplay | null;
+    attempts: IAttemptDisplay[];
+  }[][];
 }
