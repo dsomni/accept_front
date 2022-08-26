@@ -1,6 +1,7 @@
 import { FC, memo } from 'react';
 import styles from './resultsTable.module.css';
 import DropdownList from './DropdownList/DropdownList';
+import Link from 'next/link';
 
 export interface ILabel {
   text: string;
@@ -18,19 +19,24 @@ const ResultsTable: FC<{
   data: IData[][];
 }> = ({ columns, rows, data }) => {
   return (
-    <div
-      style={{
-        width: '500px',
-        overflow: 'scroll',
-        height: '200px',
-      }}
-    >
+    <div className={styles.wrapper}>
       <table className={styles.table}>
         <thead>
           <tr>
-            <th></th>
+            <th>Popa</th>
             {columns.map((column, index) => (
-              <th key={index}>{column.text}</th>
+              <th key={index}>
+                <Link href={column.text} passHref>
+                  <a
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                  >
+                    {column.text}
+                  </a>
+                </Link>
+              </th>
             ))}
           </tr>
         </thead>

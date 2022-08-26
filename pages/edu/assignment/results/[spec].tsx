@@ -12,7 +12,12 @@ function AssignmentResults(props: {
   const spec = props.spec;
   const resultsData = props.results;
   return (
-    <>
+    <div
+      style={{
+        margin: 'var(--spacer-xl) auto 0 var(--spacer-s)',
+        width: 'max-content',
+      }}
+    >
       <ResultsTable
         columns={resultsData.tasks.map((task) => ({
           text: task.title,
@@ -30,13 +35,13 @@ function AssignmentResults(props: {
             rest: cell.attempts.map((attempt) => ({
               text: attempt.verdict
                 ? attempt.verdict.verdict.shortText
-                : '...',
+                : 'TS',
               href: `/attempt/${attempt.spec}`,
             })),
           }))
         )}
       />
-    </>
+    </div>
   );
 }
 

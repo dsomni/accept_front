@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import styles from './dropdownList.module.css';
 import { IData } from '../ResultsTable';
-import { HoverCard } from '@mantine/core';
+import { Menu } from '@mantine/core';
 import Link from 'next/link';
 
 const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
@@ -22,8 +22,8 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
         </div>
       )}
       {cell.rest.length > 0 && (
-        <HoverCard shadow="md" openDelay={500}>
-          <HoverCard.Target>
+        <Menu shadow="md" openDelay={500} trigger="hover">
+          <Menu.Target>
             <div
               style={{
                 color:
@@ -36,30 +36,31 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
             >
               {cell.best}
             </div>
-          </HoverCard.Target>
-          <HoverCard.Dropdown>
+          </Menu.Target>
+          <Menu.Dropdown>
             <div className={styles.restWrapper}>
               {cell.rest.map((item, index) => (
-                <Link key={index} href={item.href} passHref>
-                  <a
-                    style={{
-                      textDecoration: 'none',
-                      color: 'white',
-                      backgroundColor:
-                        item.text === '...'
-                          ? 'var(--neutral)'
-                          : cell.best === 'OK'
-                          ? 'var(--positive)'
-                          : 'var(--negative',
-                    }}
-                  >
-                    {item.text}
-                  </a>
-                </Link>
+                <Menu.Item key={index}>
+                  <Link href={item.href} passHref>
+                    <a
+                      style={{
+                        textDecoration: 'none',
+                        color:
+                          item.text === 'TS'
+                            ? 'var(--neutral)'
+                            : item.text === 'OK'
+                            ? 'var(--positive)'
+                            : 'var(--negative',
+                      }}
+                    >
+                      {item.text}
+                    </a>
+                  </Link>
+                </Menu.Item>
               ))}
             </div>
-          </HoverCard.Dropdown>
-        </HoverCard>
+          </Menu.Dropdown>
+        </Menu>
       )}
     </>
   );
