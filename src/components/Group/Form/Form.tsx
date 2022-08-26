@@ -21,10 +21,6 @@ const Form: FC<{
   const { locale } = useLocale();
   const { isAdmin } = useUser();
 
-  useEffect(() => {
-    form.setValues(initialValues);
-  }, [initialValues]); //eslint-disable-line
-
   const form = useForm({
     initialValues,
     validate: {
@@ -36,6 +32,10 @@ const Form: FC<{
           : null,
     },
   });
+
+  useEffect(() => {
+    form.setValues(initialValues);
+  }, [initialValues]); //eslint-disable-line
 
   useEffect(() => {
     if (Object.keys(form.errors).length > 0) {

@@ -1,7 +1,7 @@
 import Form from '@components/Group/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import { ReactNode, useCallback, useMemo } from 'react';
-import { useForm } from '@mantine/form';
+import { useForm, UseFormReturnType } from '@mantine/form';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -35,7 +35,7 @@ function EditGroup(props: { group: IGroup; users: IUser[] }) {
   );
 
   const handleSubmit = useCallback(
-    (form: any) => {
+    (form: UseFormReturnType<any>) => {
       if (form.validate().hasErrors) {
         const id = newNotification({});
         errorNotification({

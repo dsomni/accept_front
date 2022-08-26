@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/form';
+import { useForm, UseFormReturnType } from '@mantine/form';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { getApiUrl } from '@utils/getServerUrl';
 import { IGroup } from '@custom-types/data/IGroup';
@@ -26,7 +26,7 @@ function AddGroup(props: { users: IUser[] }) {
   const { locale, lang } = useLocale();
 
   const handleSubmit = useCallback(
-    (form: any) => {
+    (form: UseFormReturnType<any>) => {
       if (form.validate().hasErrors) {
         const id = newNotification({});
         errorNotification({
