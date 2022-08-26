@@ -25,51 +25,45 @@ function AddGroup(props: { users: IUser[] }) {
 
   const { locale, lang } = useLocale();
 
-  const form = useForm({
-    initialValues,
-    validate: {
-      name: (value) =>
-        value.length < 5 ? locale.group.form.validation.name : null,
-      members: (value) =>
-        value.length < 2
-          ? locale.group.form.validation.members
-          : null,
-    },
-  });
-
-  const handleSubmit = useCallback(() => {
-    if (form.validate().hasErrors) {
-      const id = newNotification({});
-      errorNotification({
-        id,
-        title: locale.notify.group.validation.error,
-        autoClose: 5000,
-      });
-      return;
-    }
-    requestWithNotify<{ group: IGroup; members: string[] }, boolean>(
-      'group/add',
-      'POST',
-      locale.notify.group.create,
-      lang,
-      (response: boolean) => '',
-      {
-        group: {
-          spec: form.values.spec,
-          name: form.values.name,
-          readonly: false,
-        },
-        members: form.values.members,
+  const handleSubmit = useCallback(
+    (form: any) => {
+      if (form.validate().hasErrors) {
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: locale.notify.group.validation.error,
+          autoClose: 5000,
+        });
+        return;
       }
-    );
-  }, [form, locale, lang]);
+      requestWithNotify<
+        { group: IGroup; members: string[] },
+        boolean
+      >(
+        'group/add',
+        'POST',
+        locale.notify.group.create,
+        lang,
+        (response: boolean) => '',
+        {
+          group: {
+            spec: form.values.spec,
+            name: form.values.name,
+            readonly: false,
+          },
+          members: form.values.members,
+        }
+      );
+    },
+    [locale, lang]
+  );
 
   return (
     <>
       <Form
-        form={form}
         handleSubmit={handleSubmit}
         buttonText={locale.create}
+        initialValues={initialValues}
         users={users}
       />
     </>
