@@ -1,5 +1,5 @@
 import { ActionIcon, Affix } from '@mantine/core';
-import { FC, memo, ReactNode } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';

@@ -1,19 +1,13 @@
 import {
   FC,
-  memo,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
   ReactNode,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
-import styles from './dropzone.module.css';
-import {
-  ButtonProps,
-  Group,
-  PopoverProps,
-  Text,
-} from '@mantine/core';
+import { Group, Text } from '@mantine/core';
 import { Dropzone as MantineDropzone } from '@mantine/dropzone';
 import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
@@ -86,7 +80,7 @@ const Dropzone: FC<{
           // display: drag > 1 ? 'block' : 'none',
           visibility: drag > 0 ? 'visible' : 'hidden',
         }}
-        onReject={(files) => dragEnd()}
+        onReject={(_) => dragEnd()}
       >
         <Group
           position="center"

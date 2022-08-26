@@ -1,9 +1,9 @@
-import { FC, memo, ReactNode } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import styles from './radio.module.css';
 import {
   Radio as MantineRadio,
-  RadioProps,
   RadioGroupProps,
+  RadioProps,
 } from '@mantine/core';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { setter } from '@custom-types/ui/atomic';

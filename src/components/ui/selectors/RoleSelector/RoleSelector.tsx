@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useCallback, useState, useEffect } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import {
   CustomTransferList,
   Item,

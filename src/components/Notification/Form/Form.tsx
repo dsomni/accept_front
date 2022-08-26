@@ -96,7 +96,7 @@ const Form: FC<{
       'POST',
       locale.notify.notification.create,
       lang,
-      (response: boolean) => '',
+      (_: boolean) => '',
       body
     );
   }, [form, locale, lang]);

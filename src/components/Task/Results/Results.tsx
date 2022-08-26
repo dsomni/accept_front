@@ -82,7 +82,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     label: locale.attempt.language,
     key: 'language',
     sortable: false,
-    sortFunction: (a: any, b: any) => 0,
+    sortFunction: (_: any, __: any) => 0,
     sorted: 0,
     allowMiddleState: true,
     hidable: false,
@@ -93,7 +93,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     label: locale.attempt.result,
     key: 'result',
     sortable: false,
-    sortFunction: (a: any, b: any) => 0,
+    sortFunction: (_: any, __: any) => 0,
     sorted: 0,
     allowMiddleState: true,
     hidable: false,
@@ -155,7 +155,7 @@ const Results: FC<{ spec: string; activeTab: string }> = ({
   );
 
   const onError = useCallback(
-    (res: any) => {
+    (_: any) => {
       if (refreshAccess() == 2) {
         setTableData({ data: [], total: 0 });
         const id = newNotification({});

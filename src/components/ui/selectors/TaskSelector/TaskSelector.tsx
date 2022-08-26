@@ -63,14 +63,10 @@ const TaskSelector: FC<{
   const itemComponent = useCallback(
     (item: any, handleSelect: any) => {
       return (
-        <TaskItem
-          item={item}
-          onSelect={() => handleSelect(item)}
-          refetch={refetch}
-        />
+        <TaskItem item={item} onSelect={() => handleSelect(item)} />
       );
     },
-    [refetch]
+    []
   );
 
   return (

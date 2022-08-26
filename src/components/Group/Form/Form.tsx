@@ -1,24 +1,41 @@
-import { pureCallback } from '@custom-types/ui/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { FC, useEffect, useState } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { TextInput, Button, Switch } from '@ui/basics';
+import { Button, Switch, TextInput } from '@ui/basics';
 
 import { UserSelector } from '@ui/selectors';
 import { useUser } from '@hooks/useUser';
+import { UseFormReturnType, useForm } from '@mantine/form';
 
 const Form: FC<{
-  form: any;
-  handleSubmit: pureCallback;
   buttonText: string;
   users: IUser[];
-}> = ({ form, handleSubmit, buttonText, users }) => {
+  handleSubmit: callback<UseFormReturnType<any>>;
+  initialValues: any;
+}> = ({ initialValues, handleSubmit, buttonText, users }) => {
   const [hasErrors, setHasErrors] = useState(false);
 
   const { locale } = useLocale();
   const { isAdmin } = useUser();
+
+  const form = useForm({
+    initialValues,
+    validate: {
+      name: (value) =>
+        value.length < 5 ? locale.group.form.validation.name : null,
+      members: (value) =>
+        value.length < 2
+          ? locale.group.form.validation.members
+          : null,
+    },
+  });
+
+  useEffect(() => {
+    form.setValues(initialValues);
+  }, [initialValues]); //eslint-disable-line
 
   useEffect(() => {
     if (Object.keys(form.errors).length > 0) {
@@ -50,11 +67,16 @@ const Form: FC<{
         </div>
       )}
 
-      <UserSelector form={form} users={users} field={'members'} />
+      <UserSelector
+        form={form}
+        users={users}
+        initialUsers={form.values.members}
+        field={'members'}
+      />
       <div className={styles.buttonWrapper}>
         <Button
           color="var(--primary)"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit(form)}
           disabled={hasErrors}
         >
           {buttonText}

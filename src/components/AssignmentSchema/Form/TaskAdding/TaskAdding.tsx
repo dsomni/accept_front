@@ -1,7 +1,6 @@
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC, memo } from 'react';
 import { TaskSelector } from '@ui/selectors';
-import styles from './taskAdding.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { InputWrapper } from '@ui/basics';
 

@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import Form from '@components/AssignmentSchema/Form/Form';
@@ -27,61 +27,40 @@ function AddAssignmentSchema() {
   const { locale, lang } = useLocale();
   const { user } = useUser();
 
-  const form = useForm({
-    initialValues,
-    validate: {
-      title: (value) =>
-        value.length < 5
-          ? locale.assignmentSchema.form.validation.title
-          : null,
-      description: (value) =>
-        value.length < 20
-          ? locale.assignmentSchema.form.validation.description
-          : null,
-      tasks: (value) =>
-        value
-          ? value.length === 0
-            ? locale.assignmentSchema.form.validation.tasks
-            : null
-          : locale.assignmentSchema.form.validation.tasks,
-      defaultDuration: (value) =>
-        value <= 5
-          ? locale.assignmentSchema.form.validation.defaultDuration
-          : null,
+  const handleSubmit = useCallback(
+    (form: UseFormReturnType<any>) => {
+      if (form.validate().hasErrors) {
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: locale.validationError,
+          autoClose: 5000,
+        });
+        return;
+      }
+      let body: any = {
+        ...form.values,
+        author: user?.shortName || 'undefined',
+        tasks: form.values['tasks'].map((task: Item) => task.value),
+        defaultDuration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
+        tags: form.values['tags'].map((tag: Item) => tag.value),
+      };
+      requestWithNotify(
+        'assignment_schema/add',
+        'POST',
+        locale.notify.assignmentSchema.create,
+        lang,
+        (response: IAssignmentSchema) => response.spec,
+        body
+      );
     },
-  });
-
-  const handleSubmit = useCallback(() => {
-    if (form.validate().hasErrors) {
-      const id = newNotification({});
-      errorNotification({
-        id,
-        title: locale.validationError,
-        autoClose: 5000,
-      });
-      return;
-    }
-    let body: any = {
-      ...form.values,
-      author: user?.shortName || 'undefined',
-      tasks: form.values['tasks'].map((task: Item) => task.value),
-      defaultDuration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
-      tags: form.values['tags'].map((tag: Item) => tag.value),
-    };
-    requestWithNotify(
-      'assignment_schema/add',
-      'POST',
-      locale.notify.assignmentSchema.create,
-      lang,
-      (response: IAssignmentSchema) => response.spec,
-      body
-    );
-  }, [form, user, locale, lang]);
+    [user, locale, lang]
+  );
 
   return (
     <>
       <Form
-        form={form}
+        initialValues={initialValues}
         handleSubmit={handleSubmit}
         buttonLabel={locale.form.create}
       />

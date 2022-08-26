@@ -27,7 +27,7 @@ export default NewNotification;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const addResponse = await fetch(
     `${API_URL}/api/bundle/notification-add`
   );

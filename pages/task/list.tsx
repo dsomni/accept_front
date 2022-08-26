@@ -4,10 +4,10 @@ import { ITaskDisplay } from '@custom-types/data/ITask';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
   ReactNode,
+  useCallback,
   useEffect,
   useMemo,
   useState,
-  useCallback,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
@@ -218,7 +218,7 @@ function TaskList() {
     [tags]
   );
 
-  const { data, loading, error, detail } = useRequest<
+  const { data, loading } = useRequest<
     {},
     ITaskListBundle,
     { tasks: ITaskDisplayList[]; tags: ITag[] }

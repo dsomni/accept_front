@@ -1,5 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
-import styles from './overlay.module.css';
+import { FC, memo } from 'react';
 import {
   Overlay as MantineOverlay,
   OverlayProps,

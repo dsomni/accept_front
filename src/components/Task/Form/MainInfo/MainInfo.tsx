@@ -1,10 +1,10 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useMemo, useCallback } from 'react';
+import { FC, memo, useCallback, useMemo } from 'react';
 import { TagSelector } from '@ui/selectors';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
-import { Radio, TextInput, NumberInput, Switch } from '@ui/basics';
+import { NumberInput, Radio, Switch, TextInput } from '@ui/basics';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const MainInfo: FC<{
@@ -70,6 +70,8 @@ const MainInfo: FC<{
         addURL={'tag/add'}
         updateURL={'tag/edit'}
         deleteURL={'tag/delete'}
+        form={form}
+        field={'tags'}
       />
 
       <NumberInput

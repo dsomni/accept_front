@@ -7,7 +7,7 @@ import { notify } from './notify';
 import { tournament } from './tournament';
 import { attempt } from './attempt';
 import { form, placeholders } from './form';
-import { mainHeaderLinks, credentials } from './layout';
+import { credentials, mainHeaderLinks } from './layout';
 import { date, months } from './date';
 import { users } from './users';
 import { errorPage } from './errorPage';

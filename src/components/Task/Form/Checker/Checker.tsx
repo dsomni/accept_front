@@ -1,4 +1,4 @@
-import { FC, memo, useState, useEffect } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { Select } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
@@ -13,7 +13,6 @@ const defaultLangSpec = '0';
 const Checker: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
   const [languages, setLanguages] = useState<ILanguage[]>([]);
-  const [language, setLanguage] = useState(defaultLangSpec);
 
   useEffect(() => {
     sendRequest<{}, ILanguage[]>(
@@ -32,7 +31,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
     <>
       <Select
         label={locale.language}
-        value={language}
+        value={defaultLangSpec}
         data={languages.map((lang) => ({
           label: lang.name,
           value: lang.spec.toString(),

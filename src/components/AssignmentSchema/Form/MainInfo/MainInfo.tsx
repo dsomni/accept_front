@@ -1,7 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useMemo } from 'react';
-import styles from './mainInfo.module.css';
-import { CustomEditor, TextInput, NumberInput } from '@ui/basics';
+import { CustomEditor, NumberInput, TextInput } from '@ui/basics';
 import { TagSelector } from '@ui/selectors';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
@@ -47,6 +46,8 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         addURL={'assignment_tag/add'}
         updateURL={'assignment_tag/edit'}
         deleteURL={'assignment_tag/delete'}
+        form={form}
+        field={'tags'}
       />
       <NumberInput
         classNames={{

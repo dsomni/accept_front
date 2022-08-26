@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from 'react';
-import { Menu, Avatar, Indicator } from '@mantine/core';
+import { Avatar, Indicator, Menu } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useLocale } from '@hooks/useLocale';
 import {

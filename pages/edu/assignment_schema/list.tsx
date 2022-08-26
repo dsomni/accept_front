@@ -178,7 +178,7 @@ function AssignmentList() {
     [tags]
   );
 
-  const { data, loading, error, detail, refetch } = useRequest<
+  const { data, loading } = useRequest<
     {},
     IAssignmentSchemaListBundle,
     {

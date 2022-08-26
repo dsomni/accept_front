@@ -3,7 +3,6 @@ import { ActionIcon, Button, Group, Modal } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import styles from './deleteTag.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -22,7 +21,7 @@ const DeleteTag: FC<{
       'POST',
       locale.tag.delete,
       lang,
-      (response: any) => '',
+      (_: any) => '',
       {
         spec: item.value,
       },

@@ -2,16 +2,15 @@ import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { INotification } from '@custom-types/data/notification';
 import { useLocalStorage } from '@mantine/hooks';
 import { IResponse, sendRequest } from '@requests/request';
-import { getCookie, setCookie } from '@utils/cookies';
 import {
   infoNotification,
   newNotification,
 } from '@utils/notificationFunctions';
 import { requestWithError } from '@utils/requestWithError';
 import {
-  createContext,
   FC,
   ReactNode,
+  createContext,
   useCallback,
   useContext,
   useEffect,

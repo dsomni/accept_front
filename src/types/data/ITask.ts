@@ -1,14 +1,13 @@
 import {
-  ITaskCheckType,
+  IAttemptStatus,
+  IHintAlarmType,
   ILanguage,
+  ITaskCheckType,
   ITaskType,
   ITest,
-  IHintAlarmType,
   IVerdict,
-  IAttemptStatus,
 } from './atomic';
 import { ITag } from './ITag';
-import { IUser } from './IUser';
 
 export interface IHint {
   content: string;

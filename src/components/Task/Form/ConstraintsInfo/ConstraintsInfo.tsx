@@ -1,13 +1,13 @@
 import LanguageSelector from '@ui/LanguageSelector/LanguageSelector';
-import { FC, memo, useState, useMemo, useCallback } from 'react';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './constraintsInfo.module.css';
 import { Box } from '@mantine/core';
 import {
-  Switch,
-  SegmentedControl,
   NumberInput,
   Overlay,
+  SegmentedControl,
+  Switch,
 } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 import stepperStyles from '@styles/ui/stepper.module.css';

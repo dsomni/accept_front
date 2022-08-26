@@ -1,7 +1,7 @@
 import Form from '@components/Group/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import { ReactNode, useCallback, useMemo } from 'react';
-import { useForm } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -33,50 +33,42 @@ function EditGroup(props: { group: IGroup; users: IUser[] }) {
     }),
     [group, users]
   );
-  const form = useForm({
-    initialValues: formValues,
-    validate: {
-      name: (value) =>
-        value.length < 5 ? locale.group.form.validation.name : null,
-      members: (value) =>
-        value.length < 2
-          ? locale.group.form.validation.members
-          : null,
-    },
-  });
 
-  const handleSubmit = useCallback(() => {
-    if (form.validate().hasErrors) {
-      const id = newNotification({});
-      errorNotification({
-        id,
-        title: locale.notify.group.validation.error,
-        autoClose: 5000,
-      });
-      return;
-    }
-    requestWithNotify(
-      `group/edit`,
-      'POST',
-      locale.notify.group.edit,
-      lang,
-      (response: IGroup) => response.spec,
-      {
-        group: {
-          spec: form.values.spec,
-          name: form.values.name,
-          readonly: form.values.readonly,
-        },
-        members: form.values.members,
+  const handleSubmit = useCallback(
+    (form: UseFormReturnType<any>) => {
+      if (form.validate().hasErrors) {
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: locale.notify.group.validation.error,
+          autoClose: 5000,
+        });
+        return;
       }
-    );
-  }, [form, locale, lang]);
+      requestWithNotify(
+        `group/edit`,
+        'POST',
+        locale.notify.group.edit,
+        lang,
+        (response: IGroup) => response.spec,
+        {
+          group: {
+            spec: form.values.spec,
+            name: form.values.name,
+            readonly: form.values.readonly,
+          },
+          members: form.values.members,
+        }
+      );
+    },
+    [locale, lang]
+  );
 
   return (
     <div>
       <Form
-        form={form}
         handleSubmit={handleSubmit}
+        initialValues={formValues}
         buttonText={locale.edit}
         users={users}
       />

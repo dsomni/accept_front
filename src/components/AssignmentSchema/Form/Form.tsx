@@ -1,11 +1,12 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import MainInfo from './MainInfo/MainInfo';
 import TaskAdding from './TaskAdding/TaskAdding';
 import Preview from './Preview/Preview';
 import { TaskOrdering } from './TaskOrdering/TaskOrdering';
-import { pureCallback } from '@custom-types/ui/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import Stepper from '@ui/Stepper/Stepper';
+import { UseFormReturnType, useForm } from '@mantine/form';
 
 const stepFields = [
   ['title', 'description', 'tags', 'defaultDuration'],
@@ -15,11 +16,39 @@ const stepFields = [
 ];
 
 const Form: FC<{
-  form: any;
-  handleSubmit: pureCallback<void>;
+  handleSubmit: callback<UseFormReturnType<any>>;
+  initialValues: any;
   buttonLabel: string;
-}> = ({ form, handleSubmit, buttonLabel }) => {
+}> = ({ handleSubmit, buttonLabel, initialValues }) => {
   const { locale } = useLocale();
+
+  const form = useForm({
+    initialValues,
+    validate: {
+      title: (value) =>
+        value.length < 5
+          ? locale.assignmentSchema.form.validation.title
+          : null,
+      description: (value) =>
+        value.length < 20
+          ? locale.assignmentSchema.form.validation.description
+          : null,
+      tasks: (value) =>
+        value
+          ? value.length === 0
+            ? locale.assignmentSchema.form.validation.tasks
+            : null
+          : locale.assignmentSchema.form.validation.tasks,
+      defaultDuration: (value) =>
+        value <= 5
+          ? locale.assignmentSchema.form.validation.defaultDuration
+          : null,
+    },
+  });
+
+  useEffect(() => {
+    form.setValues(initialValues);
+  }, [initialValues]); //eslint-disable-line
 
   return (
     <>
@@ -27,7 +56,7 @@ const Form: FC<{
         stepFields={stepFields}
         form={form}
         buttonLabel={buttonLabel}
-        handleSubmit={handleSubmit}
+        handleSubmit={() => handleSubmit(form)}
         pages={[
           <MainInfo key={'0'} form={form} />,
           <TaskAdding

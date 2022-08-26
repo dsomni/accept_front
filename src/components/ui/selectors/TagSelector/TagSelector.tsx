@@ -11,6 +11,7 @@ import {
 import { TagItem } from './TagItem/TagItem';
 import AddTag from './AddTag/AddTag';
 import { setter } from '@custom-types/ui/atomic';
+import { InputWrapper } from '@ui/basics';
 
 const TagSelector: FC<{
   initialTags: Item[];
@@ -20,6 +21,8 @@ const TagSelector: FC<{
   addURL: string;
   updateURL: string;
   deleteURL: string;
+  form: any;
+  field: string;
 }> = ({
   setUsed,
   classNames,
@@ -28,6 +31,8 @@ const TagSelector: FC<{
   addURL,
   updateURL,
   deleteURL,
+  form,
+  field,
 }) => {
   const { locale } = useLocale();
 
@@ -82,7 +87,10 @@ const TagSelector: FC<{
   );
 
   return (
-    <div className={styles.wrapper}>
+    <InputWrapper
+      className={styles.wrapper}
+      {...form.getInputProps(field)}
+    >
       {!loading && (
         <CustomTransferList
           defaultOptions={availableTags}
@@ -100,7 +108,7 @@ const TagSelector: FC<{
           shouldSortChosen={true}
         />
       )}
-    </div>
+    </InputWrapper>
   );
 };
 

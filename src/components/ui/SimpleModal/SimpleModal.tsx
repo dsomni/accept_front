@@ -1,6 +1,6 @@
 import { pureCallback } from '@custom-types/ui/atomic';
 import { Modal } from '@mantine/core';
-import { FC, memo, ReactNode } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import styles from './simpleModal.module.css';
 
 const SimpleModal: FC<{

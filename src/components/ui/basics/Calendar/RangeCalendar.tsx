@@ -1,12 +1,11 @@
 import 'dayjs/locale/ru';
-import { FC, memo, useState, useCallback, useEffect } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import {
   RangeCalendar as MantineRangeCalendar,
   RangeCalendarProps,
 } from '@mantine/dates';
 import { setter } from '@custom-types/ui/atomic';
-import styles from './calendar.module.css';
-import { Helper, InputWrapper } from '@ui/basics';
+import { InputWrapper } from '@ui/basics';
 import { MyInputWrapperProps } from '@custom-types/ui/basics/inputWrapper';
 import { useLocale } from '@hooks/useLocale';
 

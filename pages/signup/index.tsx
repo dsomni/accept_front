@@ -1,24 +1,23 @@
 import { LoginLayout } from '@layouts/LoginLayout';
-import { ReactElement, useCallback, useState } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {
-  newNotification,
   errorNotification,
+  newNotification,
 } from '@utils/notificationFunctions';
 import { IRegUser, IUser } from '@custom-types/data/IUser';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { sendRequest } from '@requests/request';
 import {
-  AlertCircle,
+  AlignJustified,
   LetterCase,
   ShieldLock,
-  AlignJustified,
 } from 'tabler-icons-react';
-import { TextInput, Button, PasswordInput } from '@ui/basics';
+import { PasswordInput, TextInput } from '@ui/basics';
 import Stepper from '@ui/Stepper/Stepper';
 
 const stepFields = [
@@ -27,18 +26,9 @@ const stepFields = [
   ['name', 'email'],
 ];
 
-type formFields =
-  | 'login'
-  | 'password'
-  | 'confirmPassword'
-  | 'name'
-  | 'email';
 function SignUp() {
   const { locale, lang } = useLocale();
   const router = useRouter();
-
-  const [active, setActive] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   const form = useForm({
     initialValues: {
@@ -77,52 +67,8 @@ function SignUp() {
     },
   });
 
-  const validateStep = useCallback(
-    (step: number) => {
-      var error = false;
-      stepFields[step].forEach((field: string) => {
-        const res = form.validateField(field);
-        error = error || res.hasError;
-      });
-      return error;
-    },
-    [form]
-  );
-
-  const nextStep = useCallback(
-    () =>
-      setActive((current) => {
-        if (!validateStep(current)) {
-          return current < 2 ? current + 1 : current;
-        }
-        return current < 3 ? current + 1 : current;
-      }),
-    [validateStep]
-  );
-  const prevStep = useCallback(
-    () =>
-      setActive((current) => (current > 0 ? current - 1 : current)),
-    []
-  );
-
-  const getErrorsStep = useCallback(
-    (step: number) => {
-      let error = false;
-      for (let i = 0; i < stepFields[step].length; i++) {
-        const field = stepFields[step][i];
-        if (form.errors[field]) {
-          error = true;
-          break;
-        }
-      }
-      return error;
-    },
-    [form.errors]
-  );
-
   const onLoginBlur = useCallback(() => {
     if (!form.validateField('login').hasError) {
-      setLoading(true);
       sendRequest<undefined, boolean>(
         `auth/validateLogin/${form.values.login}`,
         'GET',
@@ -135,7 +81,6 @@ function SignUp() {
             ? locale.auth.errors.login.used
             : null
         );
-        setLoading(false);
       });
     }
   }, [form, locale]);
@@ -168,21 +113,11 @@ function SignUp() {
       'POST',
       locale.notify.auth.signUp,
       lang,
-      (user) => '',
+      (_) => '',
       user,
       () => router.push(`/signin?referrer=${router.query.referrer}`)
     );
   }, [locale, lang, form, router]);
-
-  const onStepperChange = useCallback(
-    (newStep: number) => {
-      if (newStep !== 0) onLoginBlur();
-      if (newStep < active || !validateStep(active)) {
-        setActive(newStep);
-      }
-    },
-    [active, validateStep, onLoginBlur]
-  );
 
   return (
     <>

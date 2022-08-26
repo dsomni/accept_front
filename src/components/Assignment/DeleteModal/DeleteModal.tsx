@@ -1,10 +1,7 @@
-import { ITaskDisplay } from '@custom-types/data/ITask';
 import { IAssignment } from '@custom-types/data/IAssignment';
 import { useLocale } from '@hooks/useLocale';
 import { Group } from '@mantine/core';
-import { sendRequest } from '@requests/request';
-import Link from 'next/link';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';

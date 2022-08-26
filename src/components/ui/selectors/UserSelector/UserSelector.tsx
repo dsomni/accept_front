@@ -7,14 +7,14 @@ import {
 import styles from './userSelector.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { SegmentedControl, InputWrapper } from '@ui/basics';
+import { InputWrapper, SegmentedControl } from '@ui/basics';
 import { ActionIcon } from '@mantine/core';
 import { Eye } from 'tabler-icons-react';
 
 const UserSelector: FC<{
   form: any;
-  users: IUser[];
   field: string;
+  users: IUser[];
   initialUsers?: string[];
 }> = ({ form, users, field, initialUsers }) => {
   const [availableUsers, setAvailableUsers] = useState<Item[]>([]);

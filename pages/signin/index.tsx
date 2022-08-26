@@ -4,13 +4,13 @@ import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { useForm } from '@mantine/form';
-import { Button, TextInput, PasswordInput } from '@ui/basics';
+import { Button, PasswordInput, TextInput } from '@ui/basics';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {
+  errorNotification,
   newNotification,
   successNotification,
-  errorNotification,
 } from '@utils/notificationFunctions';
 
 function SignIn() {
@@ -90,7 +90,7 @@ function SignIn() {
         />
         <Button
           type="button"
-          onClick={(event) => handleSignIn(form.values)}
+          onClick={(_) => handleSignIn(form.values)}
           disabled={Object.keys(form.errors).length > 0 || loading}
           className={styles.enterButton}
         >

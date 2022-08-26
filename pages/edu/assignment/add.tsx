@@ -110,7 +110,7 @@ export default AssignmentAdd;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch(
     `${API_URL}/api/bundle/assignment-add`
   );

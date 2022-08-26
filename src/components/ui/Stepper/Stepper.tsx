@@ -1,13 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { Group } from '@mantine/core';
-import {
-  FC,
-  memo,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { FC, ReactNode, memo, useCallback, useState } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { Stepper as MantineStepper } from '@mantine/core';
 import { AlertCircle } from 'tabler-icons-react';

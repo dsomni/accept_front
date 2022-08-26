@@ -10,7 +10,6 @@ const Helper: FC<MyHelperProps> = ({
   hoverCardProps,
   hoverCardTargetProps,
   hoverCardDropdownProps,
-  ...props
 }) => {
   return (
     <HoverCard

@@ -10,7 +10,6 @@ import { Pencil } from 'tabler-icons-react';
 import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 
-import { isSuccessful } from '@requests/request';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -53,7 +52,7 @@ const EditTag: FC<{
           'POST',
           locale.tag.edit,
           lang,
-          (response: boolean) => '',
+          (_: boolean) => '',
           {
             spec: item.value,
             title: title,

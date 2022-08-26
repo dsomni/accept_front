@@ -3,7 +3,7 @@ import { useLocale } from '@hooks/useLocale';
 import { Tabs } from '@mantine/core';
 import Head from 'next/head';
 
-import { FC, memo, ReactNode, useState } from 'react';
+import { FC, ReactNode, memo, useState } from 'react';
 
 const TaskLayout: FC<{
   description: ReactNode;

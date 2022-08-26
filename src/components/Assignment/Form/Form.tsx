@@ -7,7 +7,7 @@ import MainInfo from './MainInfo/MainInfo';
 import Groups from './Groups/Groups';
 import Origin from './Origin/Origin';
 import Stepper from '@ui/Stepper/Stepper';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { UseFormReturnType, useForm } from '@mantine/form';
 
 const stepFields = [
   ['startDate', 'startTime', 'endDate', 'endTime', 'dates'],

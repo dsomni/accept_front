@@ -22,6 +22,7 @@ const Icon: FC<MyIconProps> = ({
         openDelay={500}
         withArrow
         disabled={!!!tooltipLabel}
+        {...tooltipProps}
       >
         <ActionIcon
           {...props}

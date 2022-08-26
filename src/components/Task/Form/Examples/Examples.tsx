@@ -4,7 +4,6 @@ import { useLocale } from '@hooks/useLocale';
 import { Button, InputWrapper } from '@ui/basics';
 
 import { FC, memo, useCallback } from 'react';
-import styles from './examples.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Examples: FC<{ form: any }> = ({ form }) => {

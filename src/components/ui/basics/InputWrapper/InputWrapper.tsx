@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
+import { FC, memo } from 'react';
 import { Input as MantineInput } from '@mantine/core';
 import styles from './inputWrapper.module.css';
 import inputStyles from '@styles/ui/input.module.css';
