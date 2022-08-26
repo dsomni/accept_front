@@ -80,7 +80,7 @@ const Dropzone: FC<{
           // display: drag > 1 ? 'block' : 'none',
           visibility: drag > 0 ? 'visible' : 'hidden',
         }}
-        onReject={(files) => dragEnd()}
+        onReject={(_) => dragEnd()}
       >
         <Group
           position="center"

@@ -1,7 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -16,10 +15,8 @@ import { IAssignment } from '@custom-types/data/IAssignment';
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
   const [activeModal, setActiveModal] = useState(false);
-  const [openedHint, setOpenedHint] = useState(false);
 
-  const { locale, lang } = useLocale();
-  const { isTeacher, isUser } = useUser();
+  const { isTeacher } = useUser();
   const { width } = useWidth();
 
   const router = useRouter();

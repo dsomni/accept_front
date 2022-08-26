@@ -4,7 +4,7 @@ import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 import { pureCallback, setter } from '@custom-types/ui/atomic';
 
-export interface Item<T = any> {
+export interface Item {
   label: string;
   [key: string]: any;
 }

@@ -21,7 +21,7 @@ const DeleteTag: FC<{
       'POST',
       locale.tag.delete,
       lang,
-      (response: any) => '',
+      (_: any) => '',
       {
         spec: item.value,
       },

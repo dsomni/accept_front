@@ -44,7 +44,7 @@ function AddGroup(props: { users: IUser[] }) {
         'POST',
         locale.notify.group.create,
         lang,
-        (response: boolean) => '',
+        (_: boolean) => '',
         {
           group: {
             spec: form.values.spec,
@@ -78,7 +78,7 @@ export default AddGroup;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const usersResponse = await fetch(`${API_URL}/api/user`, {
     method: 'GET',
   });

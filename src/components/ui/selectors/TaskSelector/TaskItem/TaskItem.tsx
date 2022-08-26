@@ -7,8 +7,7 @@ import { pureCallback } from '@custom-types/ui/atomic';
 export const TaskItem: FC<{
   item: Item;
   onSelect: pureCallback<void>;
-  refetch: pureCallback<void>;
-}> = ({ item, onSelect, refetch }) => {
+}> = ({ item, onSelect }) => {
   return (
     <div className={styles.itemWrapper}>
       <div className={styles.item} onClick={() => onSelect()}>

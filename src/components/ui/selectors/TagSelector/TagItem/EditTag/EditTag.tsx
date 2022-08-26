@@ -52,7 +52,7 @@ const EditTag: FC<{
           'POST',
           locale.tag.edit,
           lang,
-          (response: boolean) => '',
+          (_: boolean) => '',
           {
             spec: item.value,
             title: title,

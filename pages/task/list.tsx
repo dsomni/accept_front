@@ -218,7 +218,7 @@ function TaskList() {
     [tags]
   );
 
-  const { data, loading, error, detail } = useRequest<
+  const { data, loading } = useRequest<
     {},
     ITaskListBundle,
     { tasks: ITaskDisplayList[]; tags: ITag[] }

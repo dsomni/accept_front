@@ -89,7 +89,7 @@ const Form: FC<{
           : value > 100
           ? locale.task.form.validation.complexity.most
           : null,
-      examples: (value, values) =>
+      examples: (value) =>
         value.length < 1
           ? locale.task.form.validation.examples.number
           : value.filter(

@@ -13,7 +13,7 @@ const PrimitiveTable: FC<{
       total = columns.length;
       return {
         gridTemplateColumns:
-          columns.map((column) => 100 / total).join('% ') + '%',
+          columns.map((_) => 100 / total).join('% ') + '%',
       };
     }
     for (let i = 0; i < columns.length; i++) {

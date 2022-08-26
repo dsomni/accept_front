@@ -56,7 +56,7 @@ export const sendRequest = <ISend, IReceive>(
       return res as IResponse<IReceive>;
     })
     .catch(
-      (e) =>
+      (_) =>
         ({
           error: true,
           response: {},

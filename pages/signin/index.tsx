@@ -90,7 +90,7 @@ function SignIn() {
         />
         <Button
           type="button"
-          onClick={(event) => handleSignIn(form.values)}
+          onClick={(_) => handleSignIn(form.values)}
           disabled={Object.keys(form.errors).length > 0 || loading}
           className={styles.enterButton}
         >

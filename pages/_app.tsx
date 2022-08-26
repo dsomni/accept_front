@@ -34,19 +34,16 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on(
-      'beforeHistoryChange',
-      async (url, { shallow }) => {
-        const task_spec = getTaskSpec(url);
-        // has spec
-        if (task_spec) {
-          await fetch(`/api/revalidate/task`, {
-            method: 'POST',
-            body: JSON.stringify({ spec: task_spec }),
-          });
-        }
+    router.events.on('beforeHistoryChange', async (url) => {
+      const task_spec = getTaskSpec(url);
+      // has spec
+      if (task_spec) {
+        await fetch(`/api/revalidate/task`, {
+          method: 'POST',
+          body: JSON.stringify({ spec: task_spec }),
+        });
       }
-    );
+    });
   }, [router]);
 
   return (

@@ -43,7 +43,7 @@ export const CustomDraggableList: FC<{
                     draggableId={index.toString()}
                     index={index}
                   >
-                    {(provider, snapshot) => (
+                    {(provider, _) => (
                       <div
                         ref={provider.innerRef}
                         className={classNames?.itemWrapper}
