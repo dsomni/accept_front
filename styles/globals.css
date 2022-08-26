@@ -27,6 +27,7 @@ body {
   --dark3: #666;
   --dark4: #999;
   --dark5: #ccc;
+  --dark6: #f8f8f8;
 }
 :root {
   --font-size-huge: 2.5rem;
@@ -123,6 +124,7 @@ body {
 
 *::-webkit-scrollbar {
   width: var(--spacer-xxs);
+  height: var(--spacer-xxs);
 }
 
 *::-webkit-scrollbar-thumb {

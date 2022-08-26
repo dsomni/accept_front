@@ -1,0 +1,41 @@
+.table td {
+  white-space: nowrap;
+  height: 50px;
+  border-bottom: 1px solid black;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.wrapper {
+  overflow: scroll;
+}
+
+.table tr:nth-child(odd) td:first-of-type,
+.table tr:nth-child(odd) {
+  background-color: var(--dark6);
+}
+
+.table thead th {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0 var(--spacer-s) var(--spacer-s) 0;
+  width: max-content;
+  border-bottom: 1px solid black;
+}
+
+.table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.table tbody tr td:first-of-type {
+  background: white;
+  position: sticky;
+  left: 0;
+  padding-right: var(--spacer-s);
+}

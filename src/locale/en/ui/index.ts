@@ -5,6 +5,7 @@ import { langSelector } from './langSelector';
 import { userSelector } from './userSelector';
 import { groupSelector } from './groupSelector';
 import { roleSelector } from './roleSelector';
+import { schemasSelector } from './schemasSelector';
 
 export const ui = {
   codeArea,
@@ -14,4 +15,5 @@ export const ui = {
   userSelector,
   groupSelector,
   roleSelector,
+  schemasSelector,
 };

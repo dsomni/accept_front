@@ -103,8 +103,8 @@ const processData = (
     (assignment_schema: IAssignmentSchemaDisplay): any => ({
       ...assignment_schema,
       author: {
-        value: assignment_schema.author.shortName,
-        display: assignment_schema.author.shortName,
+        value: assignment_schema.author,
+        display: assignment_schema.author,
       },
       title: {
         value: assignment_schema.title,

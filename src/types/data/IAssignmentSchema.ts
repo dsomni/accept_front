@@ -1,11 +1,10 @@
 import { ITag } from './ITag';
 import { ITaskDisplay } from './ITask';
-import { IUser } from './IUser';
 
 export interface IAssignmentSchema {
   spec: string;
   title: string;
-  author: IUser;
+  author: string;
   description: string;
   tasks: ITaskDisplay[];
   tags: ITag[];
@@ -15,7 +14,7 @@ export interface IAssignmentSchema {
 export interface IAssignmentSchemaDisplay {
   spec: string;
   title: string;
-  author: IUser;
+  author: string;
   taskNumber: number;
   tags: ITag[];
   defaultDuration: number;

@@ -1,0 +1,15 @@
+.dateTimeInput {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xl);
+  justify-content: space-around;
+}
+
+.timeInputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+}

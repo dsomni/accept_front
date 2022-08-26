@@ -63,7 +63,7 @@ function AddAssignmentSchema() {
     }
     let body: any = {
       ...form.values,
-      author: user?.login || '',
+      author: user?.shortName || 'undefined',
       tasks: form.values['tasks'].map((task: Item) => task.value),
       defaultDuration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
       tags: form.values['tags'].map((tag: Item) => tag.value),
@@ -76,7 +76,7 @@ function AddAssignmentSchema() {
       (response: IAssignmentSchema) => response.spec,
       body
     );
-  }, [form, user?.login, locale, lang]);
+  }, [form, user, locale, lang]);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { projects } from './projects';
 import { auth } from './auth';
 import { task } from './task';
 import { assignmentSchema } from './assignmentSchema';
+import { assignment } from './assignment';
 import { notify } from './notify';
 import { tournament } from './tournament';
 import { attempt } from './attempt';
@@ -34,6 +35,8 @@ const ru = {
   edit: 'Изменить',
   toList: 'К списку',
   validationError: 'Ошибка валидации',
+  assignmentSchema,
+  assignment,
   attempt,
   group,
   placeholders,
@@ -45,7 +48,6 @@ const ru = {
   auth,
   task,
   form,
-  assignmentSchema,
   users,
   notify,
   errorPage,
