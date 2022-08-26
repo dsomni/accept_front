@@ -2,7 +2,7 @@ import { removeOneElement } from '@utils/removeOneElement';
 import { FC, ReactNode, useCallback, useState } from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
-import { setter, pureCallback } from '@custom-types/ui/atomic';
+import { pureCallback, setter } from '@custom-types/ui/atomic';
 
 export interface Item<T = any> {
   label: string;

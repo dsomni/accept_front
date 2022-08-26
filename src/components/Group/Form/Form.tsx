@@ -4,11 +4,11 @@ import { FC, useEffect, useState } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { TextInput, Button, Switch } from '@ui/basics';
+import { Button, Switch, TextInput } from '@ui/basics';
 
 import { UserSelector } from '@ui/selectors';
 import { useUser } from '@hooks/useUser';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { UseFormReturnType, useForm } from '@mantine/form';
 
 const Form: FC<{
   buttonText: string;

@@ -3,7 +3,7 @@ import { ITest } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useCallback, useMemo } from 'react';
 import styles from './tests.module.css';
-import { Helper, InputWrapper, Dropzone, Button } from '@ui/basics';
+import { Button, Dropzone, Helper, InputWrapper } from '@ui/basics';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
 const Tests: FC<{

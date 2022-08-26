@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import {
-  HoverCardProps,
   HoverCardDropdownProps,
+  HoverCardProps,
   HoverCardTargetProps,
 } from '@mantine/core';
 

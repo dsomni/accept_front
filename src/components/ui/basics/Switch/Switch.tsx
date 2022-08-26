@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import { Switch as MantineSwitch, SwitchProps } from '@mantine/core';
 import styles from './switch.module.css';
 import { Helper } from '@ui/basics';

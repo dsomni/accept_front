@@ -1,6 +1,6 @@
 import { callback } from '@custom-types/ui/atomic';
 import { availableMethods, sendRequest } from '@requests/request';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface IRequestData<Answer> {
   data: Answer | undefined;

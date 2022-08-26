@@ -1,4 +1,4 @@
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 import styles from '@styles/error.module.css';
 import { useLocale } from '@hooks/useLocale';
 

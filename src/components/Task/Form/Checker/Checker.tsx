@@ -1,4 +1,4 @@
-import { FC, memo, useState, useEffect } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { Select } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';

@@ -1,12 +1,12 @@
 import { IWidth } from '@custom-types/ui/atomic';
 import { useMediaQuery } from '@mantine/hooks';
 import {
-  useState,
-  useEffect,
-  createContext,
   FC,
-  useContext,
   ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 
 export interface IWidthContext {

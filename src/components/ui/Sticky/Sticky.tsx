@@ -1,6 +1,6 @@
 import { ActionIcon, Affix, Transition } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import { FC, memo, ReactNode, useState } from 'react';
+import { FC, ReactNode, memo, useState } from 'react';
 import ActionButton from './ActionButton/ActionButton';
 import styles from './sticky.module.css';
 import { DotsVertical, X } from 'tabler-icons-react';

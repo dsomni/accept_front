@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { ActionIcon } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { Copy, Checks } from 'tabler-icons-react';
+import { Checks, Copy } from 'tabler-icons-react';
 
 const CopyButton: FC<{ toCopy: string }> = ({ toCopy }) => {
   const clipboard = useClipboard({ timeout: 300 });

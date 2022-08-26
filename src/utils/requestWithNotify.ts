@@ -4,7 +4,7 @@ import {
   successNotification,
 } from '@utils/notificationFunctions';
 
-import { sendRequest, availableMethods } from '@requests/request';
+import { availableMethods, sendRequest } from '@requests/request';
 import { IAvailableLang } from '@custom-types/ui/ILocale';
 import { callback, setter } from '@custom-types/ui/atomic';
 

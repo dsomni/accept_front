@@ -3,7 +3,7 @@ import {
   updateNotification,
 } from '@mantine/notifications';
 import { defaultClassNames } from '@constants/NotificationClassNames';
-import { X, Check, InfoCircle } from 'tabler-icons-react';
+import { Check, InfoCircle, X } from 'tabler-icons-react';
 import { v4 as uuidv4 } from 'uuid';
 
 const radius = '10px';

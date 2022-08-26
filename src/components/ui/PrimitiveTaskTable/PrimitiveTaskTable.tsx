@@ -1,6 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo } from 'react';
-import styles from './primitiveTaskTable.module.css';
 import tableStyles from '@styles/ui/primitiveTable.module.css';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { ITag } from '@custom-types/data/ITag';

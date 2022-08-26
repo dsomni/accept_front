@@ -3,8 +3,8 @@ import { reorderList } from '@utils/reorderList';
 import { FC, useEffect, useState } from 'react';
 import {
   DragDropContext,
-  Droppable,
   Draggable,
+  Droppable,
 } from 'react-beautiful-dnd';
 import { GridDots } from 'tabler-icons-react';
 import { callback } from '@custom-types/ui/atomic';

@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useMemo } from 'react';
+import { FC, ReactNode, memo, useMemo } from 'react';
 
 const PrimitiveTable: FC<{
   columns: string[];

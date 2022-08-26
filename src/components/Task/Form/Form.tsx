@@ -9,9 +9,9 @@ import ConstraintsInfo from '@components/Task/Form/ConstraintsInfo/ConstraintsIn
 import Examples from '@components/Task/Form/Examples/Examples';
 import { callback } from '@custom-types/ui/atomic';
 import {
+  IHintAlarmType,
   ITaskCheckType,
   ITaskType,
-  IHintAlarmType,
   ITest,
 } from '@custom-types/data/atomic';
 import Stepper from '@ui/Stepper/Stepper';

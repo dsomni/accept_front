@@ -1,4 +1,4 @@
-import { CustomEditor, Radio, NumberInput } from '@ui/basics';
+import { CustomEditor, NumberInput, Radio } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useMemo } from 'react';
 import styles from './descriptionInfo.module.css';

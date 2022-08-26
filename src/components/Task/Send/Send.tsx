@@ -1,5 +1,5 @@
 import { Button, Select } from '@ui/basics';
-import { FC, memo, useCallback, useState, useEffect } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';

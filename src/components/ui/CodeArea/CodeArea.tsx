@@ -1,15 +1,15 @@
-import { FC, memo, ReactNode, useCallback } from 'react';
+import { FC, ReactNode, memo, useCallback } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import styles from './codeArea.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import {
+  errorNotification,
   newNotification,
   successNotification,
-  errorNotification,
 } from '@utils/notificationFunctions';
 import { ILanguage } from '@custom-types/data/atomic';
 import { extensionValidator } from '@utils/extensionValidator';
-import { TextArea, Dropzone } from '@ui/basics';
+import { Dropzone, TextArea } from '@ui/basics';
 import { MyButtonProps } from '@custom-types/ui/basics/button';
 
 const CodeArea: FC<{

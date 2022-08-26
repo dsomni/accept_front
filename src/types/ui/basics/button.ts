@@ -1,9 +1,9 @@
 import { CSSProperties, ReactNode } from 'react';
 import {
-  HoverCardProps,
-  HoverCardDropdownProps,
-  HoverCardTargetProps,
   ButtonProps,
+  HoverCardDropdownProps,
+  HoverCardProps,
+  HoverCardTargetProps,
 } from '@mantine/core';
 
 export type MyButtonProps = ButtonProps &

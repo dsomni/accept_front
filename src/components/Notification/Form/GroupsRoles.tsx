@@ -2,7 +2,7 @@ import { IRole } from '@custom-types/data/atomic';
 import { IGroup } from '@custom-types/data/IGroup';
 import { GroupSelector, RoleSelector } from '@ui/selectors';
 import { FC, memo } from 'react';
-import { Switch, Overlay } from '@ui/basics';
+import { Overlay, Switch } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 
 const GroupsRoles: FC<{

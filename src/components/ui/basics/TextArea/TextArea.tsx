@@ -1,5 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
-import styles from './textArea.module.css';
+import { FC, ReactNode, memo } from 'react';
 import inputStyles from '@styles/ui/input.module.css';
 import {
   Textarea as MantineTextarea,

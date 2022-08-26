@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
-import { Button as MantineButton, HoverCard } from '@mantine/core';
+import { HoverCard, Button as MantineButton } from '@mantine/core';
 import styles from './button.module.css';
 import { MyButtonProps } from '@custom-types/ui/basics/button';
 

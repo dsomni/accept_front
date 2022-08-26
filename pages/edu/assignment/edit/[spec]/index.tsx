@@ -5,7 +5,6 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
   IAssignmentAdd,
   IAssignmentEditBundle,
-  IAssignmentSubmit,
 } from '@custom-types/data/IAssignment';
 import Form from '@components/Assignment/Form/Form';
 import { UseFormReturnType } from '@mantine/form';
@@ -16,9 +15,9 @@ import {
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import {
+  UTCDate,
   concatDateTime,
   timezoneDate,
-  UTCDate,
 } from '@utils/datetime';
 
 function AssignmentEdit(props: IAssignmentEditBundle) {

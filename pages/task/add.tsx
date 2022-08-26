@@ -10,10 +10,9 @@ import { useRequest } from '@hooks/useRequest';
 import { ITaskAddBundle } from '@custom-types/data/bundle';
 
 import {
+  IHintAlarmType,
   ITaskCheckType,
   ITaskType,
-  IHintAlarmType,
-  ITest,
 } from '@custom-types/data/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import {

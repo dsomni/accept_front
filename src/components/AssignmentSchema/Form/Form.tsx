@@ -6,7 +6,7 @@ import Preview from './Preview/Preview';
 import { TaskOrdering } from './TaskOrdering/TaskOrdering';
 import { callback } from '@custom-types/ui/atomic';
 import Stepper from '@ui/Stepper/Stepper';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { UseFormReturnType, useForm } from '@mantine/form';
 
 const stepFields = [
   ['title', 'description', 'tags', 'defaultDuration'],

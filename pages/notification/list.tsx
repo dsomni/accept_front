@@ -1,10 +1,10 @@
 import {
-  useState,
+  ChangeEvent,
   ReactNode,
   useCallback,
-  ChangeEvent,
   useEffect,
   useMemo,
+  useState,
 } from 'react';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import styles from '@styles/notification/list.module.css';
@@ -12,7 +12,7 @@ import {
   INotification,
   INotificationRecord,
 } from '@custom-types/data/notification';
-import { Checkbox, Badge, Tooltip, Pagination } from '@mantine/core';
+import { Badge, Checkbox, Pagination, Tooltip } from '@mantine/core';
 import { Icon } from '@ui/basics';
 import { requestWithError } from '@utils/requestWithError';
 import { useLocale } from '@hooks/useLocale';

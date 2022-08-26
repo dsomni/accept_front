@@ -2,8 +2,8 @@ import { useLocale } from '@hooks/useLocale';
 
 import {
   FC,
-  memo,
   ReactNode,
+  memo,
   useEffect,
   useRef,
   useState,

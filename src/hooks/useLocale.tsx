@@ -1,17 +1,17 @@
 import {
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-  useEffect,
   FC,
   ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 import {
   IAvailableLang,
-  locales,
-  ILocaleContext,
   ILocale,
+  ILocaleContext,
+  locales,
 } from '@custom-types/ui/ILocale';
 import { getCookie, setCookie } from '@utils/cookies';
 

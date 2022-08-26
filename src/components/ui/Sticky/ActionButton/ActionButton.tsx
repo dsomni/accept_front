@@ -3,7 +3,6 @@ import { useWidth } from '@hooks/useWidth';
 import { ActionIcon } from '@mantine/core';
 import { FC, memo } from 'react';
 import { IStickyAction } from '../Sticky';
-import styles from './sticky.module.css';
 
 const ActionButton: FC<{
   action: IStickyAction;

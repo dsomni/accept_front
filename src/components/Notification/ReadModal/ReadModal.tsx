@@ -3,10 +3,10 @@ import { Button, Modal } from '@ui/basics';
 import {
   FC,
   memo,
-  useState,
-  useMemo,
   useCallback,
   useEffect,
+  useMemo,
+  useState,
 } from 'react';
 import styles from './readModal.module.css';
 import { Group, LoadingOverlay } from '@mantine/core';

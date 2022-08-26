@@ -6,8 +6,8 @@ import { Search } from 'tabler-icons-react';
 
 import {
   FC,
-  memo,
   ReactNode,
+  memo,
   useCallback,
   useEffect,
   useMemo,

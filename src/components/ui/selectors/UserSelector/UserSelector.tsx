@@ -7,7 +7,7 @@ import {
 import styles from './userSelector.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { SegmentedControl, InputWrapper } from '@ui/basics';
+import { InputWrapper, SegmentedControl } from '@ui/basics';
 import { ActionIcon } from '@mantine/core';
 import { Eye } from 'tabler-icons-react';
 

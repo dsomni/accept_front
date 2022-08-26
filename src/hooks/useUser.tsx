@@ -1,10 +1,10 @@
 import { IUser, IUserContext } from '@custom-types/data/IUser';
-import { sendRequest, isSuccessful } from '@requests/request';
+import { isSuccessful, sendRequest } from '@requests/request';
 import { getCookie, setCookie } from '@utils/cookies';
 import {
-  createContext,
   FC,
   ReactNode,
+  createContext,
   useCallback,
   useContext,
   useEffect,

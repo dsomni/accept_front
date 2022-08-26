@@ -6,19 +6,18 @@ import { useForm } from '@mantine/form';
 import styles from '@styles/auth/login.module.css';
 import Link from 'next/link';
 import {
-  newNotification,
   errorNotification,
+  newNotification,
 } from '@utils/notificationFunctions';
 import { IRegUser, IUser } from '@custom-types/data/IUser';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { sendRequest } from '@requests/request';
 import {
-  AlertCircle,
+  AlignJustified,
   LetterCase,
   ShieldLock,
-  AlignJustified,
 } from 'tabler-icons-react';
-import { TextInput, Button, PasswordInput } from '@ui/basics';
+import { PasswordInput, TextInput } from '@ui/basics';
 import Stepper from '@ui/Stepper/Stepper';
 
 const stepFields = [

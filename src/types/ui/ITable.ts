@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export interface ITableColumn {
   label: string;
   key: string;
