@@ -13,8 +13,8 @@ import { Eye } from 'tabler-icons-react';
 
 const UserSelector: FC<{
   form: any;
-  users: IUser[];
   field: string;
+  users: IUser[];
   initialUsers?: string[];
 }> = ({ form, users, field, initialUsers }) => {
   const [availableUsers, setAvailableUsers] = useState<Item[]>([]);

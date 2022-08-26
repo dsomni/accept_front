@@ -1,6 +1,6 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
 import { useUser } from '@hooks/useUser';
 import Form from '@components/AssignmentSchema/Form/Form';

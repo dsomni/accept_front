@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { useForm, UseFormReturnType } from '@mantine/form';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { UseFormReturnType } from '@mantine/form';
+import { ReactNode, useCallback } from 'react';
 import { getApiUrl } from '@utils/getServerUrl';
 import { IGroup } from '@custom-types/data/IGroup';
 import Form from '@components/Group/Form/Form';

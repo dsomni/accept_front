@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import Tests from '@components/Task/Form/Tests/Tests';
 import Checker from '@components/Task/Form/Checker/Checker';
 import Preview from '@components/Task/Form/Preview/Preview';
@@ -7,13 +7,15 @@ import MainInfo from '@components/Task/Form/MainInfo/MainInfo';
 import DescriptionInfo from '@components/Task/Form/DescriptionInfo/DescriptionInfo';
 import ConstraintsInfo from '@components/Task/Form/ConstraintsInfo/ConstraintsInfo';
 import Examples from '@components/Task/Form/Examples/Examples';
-import { pureCallback } from '@custom-types/ui/atomic';
+import { callback } from '@custom-types/ui/atomic';
 import {
   ITaskCheckType,
   ITaskType,
   IHintAlarmType,
+  ITest,
 } from '@custom-types/data/atomic';
 import Stepper from '@ui/Stepper/Stepper';
+import { UseFormReturnType, useForm } from '@mantine/form';
 
 const stepFields = [
   ['title', 'tags', 'complexity', 'taskType', 'checkType', 'hasHint'],
@@ -38,28 +40,103 @@ const stepFields = [
 ];
 
 const Form: FC<{
-  form: any;
-  handleSubmit: pureCallback<void>;
+  handleSubmit: callback<UseFormReturnType<any>>;
+  initialValues: any;
   buttonLabel: string;
   taskTypes: ITaskType[];
   taskCheckTypes: ITaskCheckType[];
   hintAlarmTypes: IHintAlarmType[];
 }> = ({
-  form,
   handleSubmit,
   buttonLabel,
   taskTypes,
   taskCheckTypes,
   hintAlarmTypes,
+  initialValues,
 }) => {
   const { locale } = useLocale();
+
+  const form = useForm({
+    initialValues,
+    validate: {
+      title: (value) =>
+        value.length < 5 ? locale.task.form.validation.title : null,
+      tags: (value) =>
+        value.length < 1 ? locale.task.form.validation.tags : null,
+      description: (value) =>
+        value.length < 20
+          ? locale.task.form.validation.description
+          : null,
+      inputFormat: (value) =>
+        value.length == 0
+          ? locale.task.form.validation.inputFormat
+          : null,
+      outputFormat: (value) =>
+        value.length == 0
+          ? locale.task.form.validation.outputFormat
+          : null,
+      constraintsMemory: (value) =>
+        value < 0 || value > 1024
+          ? locale.task.form.validation.constraints.memory
+          : null,
+      constraintsTime: (value) =>
+        value < 0.5 || value > 30
+          ? locale.task.form.validation.constraints.time
+          : null,
+      complexity: (value) =>
+        value < 0
+          ? locale.task.form.validation.complexity.least
+          : value > 100
+          ? locale.task.form.validation.complexity.most
+          : null,
+      examples: (value, values) =>
+        value.length < 1
+          ? locale.task.form.validation.examples.number
+          : value.filter(
+              (pair: ITest) =>
+                pair.inputData.trim() || pair.outputData.trim()
+            ).length != value.length
+          ? locale.task.form.validation.examples.empty
+          : null,
+      tests: (value, values) =>
+        value.length < 1
+          ? locale.task.form.validation.tests.number
+          : value.filter(
+              (pair: ITest) =>
+                (pair.inputData.trim() && values.taskType == '0') ||
+                (pair.outputData.trim() && values.taskType == '0')
+            ).length != value.length
+          ? locale.task.form.validation.tests.empty
+          : null,
+      checkerCode: (value, values) =>
+        values.checkType == '1' && value.length == 0
+          ? locale.task.form.validation.checkerCode
+          : null,
+      hintContent: (value, values) =>
+        values.hasHint
+          ? value.length == 0
+            ? locale.task.form.validation.hintContent
+            : null
+          : null,
+      hintAlarm: (value, values) =>
+        values.hasHint
+          ? value < 0
+            ? locale.task.form.validation.hintAlarm
+            : null
+          : null,
+    },
+  });
+
+  useEffect(() => {
+    form.setValues(initialValues);
+  }, [initialValues]); //eslint-disable-line
 
   return (
     <>
       <Stepper
         buttonLabel={buttonLabel}
         form={form}
-        handleSubmit={handleSubmit}
+        handleSubmit={() => handleSubmit(form)}
         stepFields={stepFields}
         pages={[
           <MainInfo
