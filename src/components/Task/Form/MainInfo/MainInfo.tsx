@@ -70,6 +70,8 @@ const MainInfo: FC<{
         addURL={'tag/add'}
         updateURL={'tag/edit'}
         deleteURL={'tag/delete'}
+        form={form}
+        field={'tags'}
       />
 
       <NumberInput
