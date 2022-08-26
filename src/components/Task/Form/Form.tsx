@@ -103,8 +103,8 @@ const Form: FC<{
           ? locale.task.form.validation.tests.number
           : value.filter(
               (pair: ITest) =>
-                (pair.inputData.trim() && values.taskType == '0') ||
-                (pair.outputData.trim() && values.taskType == '0')
+                (pair.inputData.trim() || values.taskType != '0') &&
+                (pair.outputData.trim() || values.checkType != '0')
             ).length != value.length
           ? locale.task.form.validation.tests.empty
           : null,

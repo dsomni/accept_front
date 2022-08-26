@@ -1,0 +1,18 @@
+.wrapper {
+  padding: var(--spacer-m);
+}
+
+.buttonWrapper {
+  margin-left: auto;
+  width: fit-content;
+}
+
+.itemsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+}
+
+.itemTitle {
+  font-size: var(--font-size-m);
+}

@@ -57,11 +57,13 @@ export interface ITask extends ITaskDisplay {
 
   allowedLanguages: ILanguage[];
   forbiddenLanguages: ILanguage[];
+
+  testsNumber: number;
+  taskType: ITaskType;
 }
 
 export interface ITaskEdit extends ITask {
   tests: ITest[];
   checker: IChecker | undefined;
   checkType: ITaskCheckType | undefined;
-  taskType: ITaskType;
 }

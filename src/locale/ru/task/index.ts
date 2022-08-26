@@ -5,6 +5,7 @@ import { form } from './form';
 
 export const task = {
   send: 'Отправка',
+  answer: 'Ответ',
   results: 'Результаты',
   description,
 
