@@ -42,6 +42,7 @@ const MainInfo: FC<{
     (value: string) => {
       form.setFieldValue('taskType', value);
       value === '1' ? form.setFieldValue('checkType', '0') : () => {};
+      form.validateField('tests');
     },
     [form]
   );
@@ -105,9 +106,10 @@ const MainInfo: FC<{
             field={'checkType'}
             form={form}
             items={taskCheckTypeItems}
-            onChange={(value) =>
-              form.setFieldValue('checkType', value)
-            }
+            onChange={(value) => {
+              form.setFieldValue('checkType', value);
+              form.validateField('tests');
+            }}
           />
         )}
         {!form.values.isTournament && (

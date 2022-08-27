@@ -12,6 +12,7 @@ export const task = {
   modals,
   description,
   send: 'Send',
+  answer: 'Answer',
   results: 'Results',
   list,
   form,

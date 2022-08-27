@@ -20,10 +20,12 @@ import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
+import SendText from '@components/Task/SendText/SendText';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
   const languages = props.languages;
+  console.log(task);
   const [activeModal, setActiveModal] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);
@@ -159,13 +161,20 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           />
         }
         send={(set) =>
-          isUser && (
+          isUser &&
+          (task.taskType.spec == 0 ? (
             <Send
               spec={task.spec}
               setActiveTab={set}
               languages={languages}
             />
-          )
+          ) : (
+            <SendText
+              spec={task.spec}
+              testsNumber={task.testsNumber}
+              setActiveTab={set}
+            />
+          ))
         }
         results={(currentTab) =>
           isUser && (
