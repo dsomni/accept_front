@@ -215,7 +215,7 @@ function AddTask() {
       (response: ITaskDisplay) => response.spec,
       body
     );
-  }, [form, locale, user?.login, lang]);
+  }, [form, user?.shortName, locale, lang]);
 
   return (
     <>
