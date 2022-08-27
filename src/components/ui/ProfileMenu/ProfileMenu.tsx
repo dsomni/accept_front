@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from 'react';
-import { Menu, Avatar, Indicator } from '@mantine/core';
+import { Menu, Avatar } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -8,6 +8,8 @@ import {
   successNotification,
 } from '@utils/notificationFunctions';
 import { useBackNotifications } from '@hooks/useBackNotifications';
+import { link } from '@constants/Avatar';
+import { Indicator } from '@ui/basics';
 
 const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
@@ -42,17 +44,14 @@ const ProfileMenu: FC<{}> = ({}) => {
       <Menu trigger="hover">
         <Menu.Target>
           <Indicator
-            size={24}
             label={amount > 99 ? '99+' : amount}
             disabled={amount <= 0}
-            styles={{
-              indicator: {
-                backgroundColor: 'var(--accent)',
-                fontSize: 'var(--font-size-s)',
-              },
-            }}
           >
-            <Avatar radius="xl" size="lg" color="white" />
+            <Avatar
+              radius="lg"
+              size="lg"
+              src={user ? link(user.login) : undefined}
+            />
           </Indicator>
         </Menu.Target>
         <Menu.Dropdown>

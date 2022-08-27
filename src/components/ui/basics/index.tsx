@@ -17,6 +17,7 @@ import Switch from './Switch/Switch';
 import TextArea from './TextArea/TextArea';
 import TextInput from './TextInput/TextInput';
 import TimeInput from './TimeInput/TimeInput';
+import Indicator from './Indicator/Indicator';
 
 export {
   Button,
@@ -38,4 +39,5 @@ export {
   TextArea,
   TextInput,
   TimeInput,
+  Indicator,
 };

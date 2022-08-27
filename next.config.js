@@ -14,6 +14,10 @@ module.exports = {
         source: '/back/:slug*',
         destination: `${API_ENDPOINT}/api/:slug*`,
       },
+      {
+        source: '/profile',
+        destination: `/profile/me`,
+      },
     ];
   },
   async redirects() {

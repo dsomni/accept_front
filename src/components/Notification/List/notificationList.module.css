@@ -2,26 +2,22 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: var(--spacer-xxl);
 }
 
 .utils {
-  width: 80%;
   display: flex;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--spacer-s);
   padding: 0 var(--spacer-m);
-  margin: var(--spacer-s) auto;
+  margin: var(--spacer-s) 0;
   height: 30px;
 }
 .utils:first-child {
   margin-right: var(--spacer-l);
 }
 .notifications {
-  margin: 0 auto;
-  width: 80%;
   border-top: 1px solid var(--dark5);
   display: flex;
   flex-direction: column;
