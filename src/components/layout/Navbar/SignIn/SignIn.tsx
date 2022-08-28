@@ -1,14 +1,9 @@
-import { FC, memo, useCallback } from 'react';
+import { FC } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { Button } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import styles from './signIn.module.css';
-import {
-  errorNotification,
-  newNotification,
-  successNotification,
-} from '@utils/notificationFunctions';
 import ProfileMenu from '@ui/ProfileMenu/ProfileMenu';
 
 const SignIn: FC = () => {
@@ -30,7 +25,7 @@ const SignIn: FC = () => {
             })
           }
         >
-          {locale.mainHeaderLinks.signin}
+          {locale.mainHeaderLinks.signIn}
         </Button>
       ) : (
         <ProfileMenu />
