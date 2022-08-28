@@ -8,7 +8,7 @@ import {
   Bell,
   Robot,
   Alarm,
-  Settings,
+  Settings as SettingsIcon,
   AlignRight,
 } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
@@ -17,9 +17,10 @@ import { link } from '@constants/Avatar';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { Indicator } from '@ui/basics';
 import styles from './profile.module.css';
+import Settings from '@components/Profile/Settings/Settings';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
-  const [current, setCurrent] = useState(3);
+  const [current, setCurrent] = useState(4);
 
   const { amount } = useBackNotifications();
 
@@ -31,7 +32,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       <NotificationList key={1} />,
       <div key={3} />,
       <AttemptListProfile key={2} />,
-      <div key={4} />,
+      <Settings user={user} key={4} />,
     ],
     [user]
   );
@@ -85,7 +86,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
           />
           <ProfileLink
             link={{
-              icon: <Settings color="var(--secondary)" />,
+              icon: <SettingsIcon color="var(--secondary)" />,
               title: locale.profile.settings,
             }}
             isActive={current === 4}

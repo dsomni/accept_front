@@ -2,6 +2,9 @@ export const labels = {
   login: 'Логин',
   password: 'Пароль',
   confirmPassword: 'Подтверждение пароля',
-  name: 'ФИО',
+  fullName: 'ФИО',
+  name: 'Имя',
+  surname: 'Фамилия',
+  patronymic: 'Отчество',
   email: 'Электронная почта',
 };

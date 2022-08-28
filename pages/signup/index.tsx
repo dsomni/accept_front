@@ -260,8 +260,8 @@ function SignUp() {
             <TextInput
               id="name"
               required
-              label={locale.auth.labels.name}
-              placeholder={locale.auth.placeholders.name}
+              label={locale.auth.labels.fullName}
+              placeholder={locale.auth.placeholders.fullName}
               classNames={{
                 label: styles.label,
               }}

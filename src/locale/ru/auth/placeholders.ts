@@ -1,6 +1,6 @@
 export const placeholders = {
   login: 'Логин',
   password: 'Пароль',
-  name: 'Иванов Иван Иванович',
+  fullName: 'Иванов Иван Иванович',
   email: 'example@example.com',
 };

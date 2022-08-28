@@ -1,0 +1,20 @@
+.label {
+  font-size: var(--font-size-s);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+}
+.password {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
+}

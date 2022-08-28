@@ -2,6 +2,9 @@ export const labels = {
   login: 'Login',
   password: 'Password',
   confirmPassword: 'Confirm password',
+  fullName: 'Name, Surname and Patronymic (optional)',
   name: 'Name',
+  surname: 'Surname',
+  patronymic: 'Patronymic',
   email: 'Email',
 };
