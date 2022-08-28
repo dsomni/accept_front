@@ -1,7 +1,6 @@
-import { FC, memo, useEffect, useMemo, useState } from 'react';
-import styles from './profile.module.css';
+import { FC, memo, useMemo, useState } from 'react';
 import { IUser } from '@custom-types/data/IUser';
-import { Avatar, Navbar, Divider, AppShell } from '@mantine/core';
+import { Avatar, Navbar } from '@mantine/core';
 import ProfileLink from '@components/Profile/ProfileLInk/ProfileLink';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import {
@@ -17,6 +16,8 @@ import { link } from '@constants/Avatar';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { Indicator } from '@ui/basics';
 import AttemptList from '@ui/AttemptList/AttemptList';
+import tableStyles from '@styles/ui/customTable.module.css';
+import styles from './profile.module.css';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const [current, setCurrent] = useState(0);
@@ -30,7 +31,19 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       <ProfileInfo user={user} key={0} />,
       <NotificationList key={1} />,
       <div key={3} />,
-      <AttemptList url={`attempt/my`} activeTab key={2} />,
+      <AttemptList
+        url={`attempt/my`}
+        activeTab
+        key={2}
+        classNames={{
+          wrapper: tableStyles.wrapper,
+          table: tableStyles.table,
+          headerCell: styles.headerCell,
+          cell: styles.cell,
+          even: tableStyles.even,
+          odd: tableStyles.odd,
+        }}
+      />,
       <div key={4} />,
     ],
     [user]

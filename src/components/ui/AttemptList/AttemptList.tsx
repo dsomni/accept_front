@@ -114,10 +114,11 @@ interface TableData {
   total: number;
 }
 
-const AttemptsList: FC<{ url: string; activeTab: boolean }> = ({
-  url,
-  activeTab,
-}) => {
+const AttemptsList: FC<{
+  url: string;
+  activeTab: boolean;
+  classNames?: any;
+}> = ({ url, activeTab, classNames }) => {
   const { locale } = useLocale();
   const { refreshAccess } = useUser();
 
@@ -206,17 +207,21 @@ const AttemptsList: FC<{ url: string; activeTab: boolean }> = ({
         setSearchParams={setSearchParams}
         searchParams={searchParams}
         noDefault
-        classNames={{
-          wrapper: tableStyles.wrapper,
-          table: tableStyles.table,
-          author: tableStyles.author,
-          grade: tableStyles.grade,
-          verdict: tableStyles.verdict,
-          headerCell: tableStyles.headerCell,
-          cell: tableStyles.cell,
-          even: tableStyles.even,
-          odd: tableStyles.odd,
-        }}
+        classNames={
+          classNames
+            ? classNames
+            : {
+                wrapper: tableStyles.wrapper,
+                table: tableStyles.table,
+                author: tableStyles.author,
+                grade: tableStyles.grade,
+                verdict: tableStyles.verdict,
+                headerCell: tableStyles.headerCell,
+                cell: tableStyles.cell,
+                even: tableStyles.even,
+                odd: tableStyles.odd,
+              }
+        }
         defaultOnPage={defaultOnPage}
         onPage={[5, 10]}
       />
