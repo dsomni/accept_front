@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     redirect: {
       permanent: false,
-      destination: '/Not-Found',
+      destination: '/signin?referrer=%2Fprofile%2Fme',
     },
   };
 };
