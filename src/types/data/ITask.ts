@@ -34,6 +34,11 @@ export interface Example {
   outputData: string;
 }
 
+export interface ITaskBaseInfo {
+  spec: string;
+  title: string;
+}
+
 export interface ITaskDisplay {
   spec: string;
   title: string;

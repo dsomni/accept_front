@@ -1,5 +1,6 @@
 export const attempt = {
   date: 'Date',
+  task: 'Task',
   language: 'Language',
   result: 'Result',
   verdict: 'Verdict',

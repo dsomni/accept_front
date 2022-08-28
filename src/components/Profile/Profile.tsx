@@ -3,6 +3,7 @@ import { IUser } from '@custom-types/data/IUser';
 import { Avatar, Navbar } from '@mantine/core';
 import ProfileLink from '@components/Profile/ProfileLInk/ProfileLink';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
+import AttemptListProfile from '@components/Profile/AttemptListProfile/AttemptListProfile';
 import {
   Bell,
   Robot,
@@ -15,12 +16,10 @@ import NotificationList from '@components/Notification/List/NotificationList';
 import { link } from '@constants/Avatar';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { Indicator } from '@ui/basics';
-import AttemptList from '@ui/AttemptList/AttemptList';
-import tableStyles from '@styles/ui/customTable.module.css';
 import styles from './profile.module.css';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(3);
 
   const { amount } = useBackNotifications();
 
@@ -31,19 +30,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       <ProfileInfo user={user} key={0} />,
       <NotificationList key={1} />,
       <div key={3} />,
-      <AttemptList
-        url={`attempt/my`}
-        activeTab
-        key={2}
-        classNames={{
-          wrapper: tableStyles.wrapper,
-          table: tableStyles.table,
-          headerCell: styles.headerCell,
-          cell: styles.cell,
-          even: tableStyles.even,
-          odd: tableStyles.odd,
-        }}
-      />,
+      <AttemptListProfile key={2} />,
       <div key={4} />,
     ],
     [user]

@@ -1,27 +1,12 @@
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import Table from '@ui/Table/Table';
-import { ITableColumn } from '@custom-types/ui/ITable';
+import { FC, memo } from 'react';
+import styles from './attemptListProfile.module.css';
 import tableStyles from '@styles/ui/customTable.module.css';
-import { useLocale } from '@hooks/useLocale';
-
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
-import { ILocale } from '@custom-types/ui/ILocale';
-import { getLocalDate } from '@utils/datetime';
-import { useUser } from '@hooks/useUser';
-import { useRequest } from '@hooks/useRequest';
-import { BaseSearch } from '@custom-types/data/request';
-import {
-  errorNotification,
-  newNotification,
-} from '@utils/notificationFunctions';
 import AttemptList from '@ui/AttemptList/AttemptList';
+import { ILocale } from '@custom-types/ui/ILocale';
+import { ITableColumn } from '@custom-types/ui/ITable';
+import { getLocalDate } from '@utils/datetime';
+import Link from 'next/link';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
@@ -60,6 +45,14 @@ const refactorAttempt = (
     display: <>{attempt.language.name}</>,
     value: attempt.language,
   },
+  task: {
+    display: (
+      <Link href={`/task/${attempt.task.spec}`} passHref>
+        <a className={styles.taskLink}>{attempt.task.title}</a>
+      </Link>
+    ),
+    value: attempt.task,
+  },
 });
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
@@ -77,44 +70,62 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: false,
     hidable: false,
     hidden: false,
+    size: 4,
+  },
+  {
+    label: locale.attempt.task,
+    key: 'task',
+    sortable: false,
+    sortFunction: (_: any, __: any) => 0,
+    sorted: 0,
+    allowMiddleState: false,
+    hidable: false,
+    hidden: false,
     size: 5,
   },
   {
     label: locale.attempt.language,
     key: 'language',
     sortable: false,
-    sortFunction: (a: any, b: any) => 0,
+    sortFunction: (_: any, __: any) => 0,
     sorted: 0,
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 5,
+    size: 3,
   },
   {
     label: locale.attempt.result,
     key: 'result',
     sortable: false,
-    sortFunction: (a: any, b: any) => 0,
+    sortFunction: (_: any, __: any) => 0,
     sorted: 0,
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 5,
+    size: 3,
   },
 ];
 
-const Results: FC<{ spec: string; activeTab: string }> = ({
-  spec,
-  activeTab,
-}) => {
+const AttemptListProfile: FC<{}> = ({}) => {
   return (
     <AttemptList
-      url={`task/attempts/${spec}`}
+      url={`attempt/my`}
+      activeTab
       initialColumns={initialColumns}
       refactorAttempt={refactorAttempt}
-      activeTab={activeTab === 'results'}
+      key={2}
+      noDefault
+      classNames={{
+        wrapper: tableStyles.wrapper,
+        table: tableStyles.table,
+        headerCell: styles.headerCell,
+        cell: styles.cell,
+        even: tableStyles.even,
+        odd: tableStyles.odd,
+      }}
     />
   );
 };
 
-export default memo(Results);
+export default memo(AttemptListProfile);

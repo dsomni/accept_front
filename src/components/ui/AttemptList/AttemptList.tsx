@@ -10,7 +10,6 @@ import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { getLocalDate } from '@utils/datetime';
@@ -21,86 +20,6 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
-
-const refactorAttempt = (
-  attempt: IAttemptDisplay,
-  locale: ILocale
-): any => ({
-  ...attempt,
-  result: {
-    display: (
-      <div
-        style={{
-          color:
-            attempt.status.spec == 2
-              ? attempt.verdict.verdict.spec == 0
-                ? 'var(--positive)'
-                : 'var(--negative)'
-              : 'black',
-        }}
-      >
-        {attempt.status.spec == 2
-          ? attempt.verdict.verdict.shortText +
-            ' #' +
-            (attempt.verdict.test + 1).toString()
-          : locale.attempt.statuses[attempt.status.spec]}
-      </div>
-    ),
-    value:
-      attempt.status.spec == 2
-        ? attempt.verdict.verdict.spec
-        : attempt.status.spec - 10,
-  },
-  date: {
-    display: <>{getLocalDate(attempt.date)}</>,
-    value: new Date(attempt.date).getTime(),
-  },
-  language: {
-    display: <>{attempt.language.name}</>,
-    value: attempt.language,
-  },
-});
-
-const initialColumns = (locale: ILocale): ITableColumn[] => [
-  {
-    label: locale.attempt.date,
-    key: 'date',
-    sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.date.value > b.date.value
-        ? -1
-        : a.date.value == b.date.value
-        ? 0
-        : 1,
-    sorted: -1,
-    allowMiddleState: false,
-    hidable: false,
-    hidden: false,
-    size: 5,
-  },
-  {
-    label: locale.attempt.language,
-    key: 'language',
-    sortable: false,
-    sortFunction: (a: any, b: any) => 0,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: false,
-    hidden: false,
-    size: 5,
-  },
-  {
-    label: locale.attempt.result,
-    key: 'result',
-    sortable: false,
-    sortFunction: (a: any, b: any) => 0,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: false,
-    hidden: false,
-    size: 5,
-  },
-];
 
 const defaultOnPage = 10;
 
@@ -118,13 +37,23 @@ const AttemptsList: FC<{
   url: string;
   activeTab: boolean;
   classNames?: any;
-}> = ({ url, activeTab, classNames }) => {
+  initialColumns: (locale: ILocale) => ITableColumn[];
+  refactorAttempt: (attempt: IAttemptDisplay, locale: ILocale) => any;
+  noDefault?: boolean;
+}> = ({
+  url,
+  activeTab,
+  classNames,
+  initialColumns,
+  refactorAttempt,
+  noDefault,
+}) => {
   const { locale } = useLocale();
   const { refreshAccess } = useUser();
 
   const columns: ITableColumn[] = useMemo(
     () => initialColumns(locale),
-    [locale]
+    [locale, initialColumns]
   );
 
   const [needRefetch, setNeedRefetch] = useState(true);
@@ -152,7 +81,7 @@ const AttemptsList: FC<{
       ),
       total: response.total,
     }),
-    [locale]
+    [locale, refactorAttempt]
   );
 
   const onError = useCallback(
@@ -206,7 +135,7 @@ const AttemptsList: FC<{
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}
-        noDefault
+        noDefault={noDefault}
         classNames={
           classNames
             ? classNames
