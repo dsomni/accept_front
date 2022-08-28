@@ -43,20 +43,22 @@ const ProfileMenu: FC<{}> = ({}) => {
     <>
       <Menu trigger="hover">
         <Menu.Target>
-          <Indicator
-            label={amount > 99 ? '99+' : amount}
-            disabled={amount <= 0}
-          >
-            <Avatar
-              radius="lg"
-              size="lg"
-              src={user ? link(user.login) : undefined}
-            />
-          </Indicator>
+          <div>
+            <Indicator
+              label={amount > 99 ? '99+' : amount}
+              disabled={amount <= 0}
+            >
+              <Avatar
+                radius="lg"
+                size="lg"
+                src={user ? link(user.login) : undefined}
+              />
+            </Indicator>
+          </div>
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>{user?.shortName || ''}</Menu.Label>
-          <Menu.Item component="a" href="profile">
+          <Menu.Item component="a" href="profile/me">
             {locale.mainHeaderLinks.signOut.profile}
           </Menu.Item>
           <Menu.Item onClick={openModal}>
