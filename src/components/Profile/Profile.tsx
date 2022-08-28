@@ -16,6 +16,7 @@ import NotificationList from '@components/Notification/List/NotificationList';
 import { link } from '@constants/Avatar';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { Indicator } from '@ui/basics';
+import AttemptList from '@ui/AttemptList/AttemptList';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const [current, setCurrent] = useState(0);
@@ -28,8 +29,8 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
     () => [
       <ProfileInfo user={user} key={0} />,
       <NotificationList key={1} />,
-      <div key={2} />,
       <div key={3} />,
+      <AttemptList url={`attempt/my`} activeTab key={2} />,
       <div key={4} />,
     ],
     [user]

@@ -31,6 +31,7 @@ const Table: FC<{
   loading: boolean;
   setSearchParams: setter;
   searchParams: BaseSearch;
+  noDefault?: boolean;
 }> = ({
   columns,
   classNames,
@@ -43,6 +44,7 @@ const Table: FC<{
   loading,
   setSearchParams,
   searchParams,
+  noDefault,
 }) => {
   const { locale } = useLocale();
 
@@ -196,7 +198,17 @@ const Table: FC<{
   );
 
   return (
-    <div className={styles.wrapper + ' ' + classNames.wrapper}>
+    <div
+      className={styles.wrapper + ' ' + classNames.wrapper}
+      style={
+        noDefault
+          ? {}
+          : {
+              width: '80vw',
+              margin: 'var(--spacer-s) 10vw 10vh 10vw',
+            }
+      }
+    >
       <div className={styles.main}>
         <div className={styles.searchWrapper}>
           {withSearch && (
