@@ -5,11 +5,11 @@ import ProfileLink from '@components/Profile/ProfileLInk/ProfileLink';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import AttemptListProfile from '@components/Profile/AttemptListProfile/AttemptListProfile';
 import {
+  Alarm,
+  AlignRight,
   Bell,
   Robot,
-  Alarm,
   Settings as SettingsIcon,
-  AlignRight,
 } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
 import NotificationList from '@components/Notification/List/NotificationList';

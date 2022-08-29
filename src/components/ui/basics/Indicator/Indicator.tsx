@@ -1,8 +1,7 @@
 import { FC, memo } from 'react';
-import styles from './indicator.module.css';
 import {
-  Indicator as MantineIndicator,
   IndicatorProps,
+  Indicator as MantineIndicator,
 } from '@mantine/core';
 
 const Indicator: FC<IndicatorProps> = ({ children, ...props }) => {

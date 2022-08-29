@@ -1,7 +1,7 @@
 import { IUser } from '@custom-types/data/IUser';
 import { useLocale } from '@hooks/useLocale';
 import { useForm } from '@mantine/form';
-import { Button, TextInput, PasswordInput } from '@ui/basics';
+import { Button, PasswordInput, TextInput } from '@ui/basics';
 import { FC, memo, useCallback } from 'react';
 import styles from './settings.module.css';
 import { requestWithNotify } from '@utils/requestWithNotify';

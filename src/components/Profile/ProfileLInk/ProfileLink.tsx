@@ -1,6 +1,6 @@
-import { FC, memo, ReactNode } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import styles from './profileLink.module.css';
-import { UnstyledButton, Group } from '@mantine/core';
+import { Group, UnstyledButton } from '@mantine/core';
 import { pureCallback } from '@custom-types/ui/atomic';
 
 export interface ILink {

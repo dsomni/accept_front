@@ -2,15 +2,15 @@ import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import {
   ReactNode,
+  memo,
   useCallback,
   useEffect,
   useMemo,
-  memo,
   useState,
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { Lock, Run, Clock, Infinity } from 'tabler-icons-react';
+import { Clock, Infinity, Lock, Run } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 
 import { BaseSearch } from '@custom-types/data/request';
