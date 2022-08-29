@@ -60,7 +60,7 @@ export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(
     [body, method, onError, onSuccess, process, revalidate, url]
   );
 
-  useEffect(() => refetch(true), []);
+  useEffect(() => refetch(true), [refetch]);
 
   return { data, loading, error, detail, refetch };
 }
