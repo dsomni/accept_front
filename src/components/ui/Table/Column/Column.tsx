@@ -43,7 +43,13 @@ const Column: FC<{
 
   return (
     <th
-      className={classNames[column.key] + ' ' + classNames.headerCell}
+      className={
+        styles.header +
+        ' ' +
+        classNames[column.key] +
+        ' ' +
+        classNames.headerCell
+      }
       onClick={column.sortable ? nextOrder : () => {}}
     >
       <div className={styles.label}>{column.label}</div>

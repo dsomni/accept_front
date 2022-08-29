@@ -5,6 +5,7 @@ import {
 import { IAssignmentStatus } from './atomic';
 import { IGroup } from './IGroup';
 import { IAttemptDisplay } from './IAttempt';
+import { ITag } from './ITag';
 export interface IAssignment extends IAssignmentSchema {
   starter: string;
   status: IAssignmentStatus;
@@ -28,19 +29,6 @@ export interface IAssignmentAdd {
 
   groups: string[];
 }
-export interface IAssignmentSubmit {
-  spec: string;
-  origin: string;
-  starter: string;
-  status: number;
-  infinite: boolean;
-
-  start: string;
-  end: string;
-
-  groups: string[];
-}
-
 export interface IAssignmentAddBundle {
   assignment_schemas: IAssignmentSchemaDisplay[];
   groups: IGroup[];
@@ -59,4 +47,28 @@ export interface IAssignmentResults {
     best: IAttemptDisplay | null;
     attempts: IAttemptDisplay[];
   }[][];
+}
+
+export interface IAssignmentDisplay {
+  spec: string;
+  title: string;
+  author: string;
+  taskNumber: number;
+  tags: ITag[];
+  defaultDuration: number;
+  starter: string;
+  origin: string;
+  groups: IGroup[];
+
+  status: IAssignmentStatus;
+  infinite: boolean;
+
+  start: Date;
+  end: Date;
+}
+
+export interface IAssignmentListBundle {
+  assignments: IAssignmentDisplay[];
+  tags: ITag[];
+  groups: IGroup[];
 }

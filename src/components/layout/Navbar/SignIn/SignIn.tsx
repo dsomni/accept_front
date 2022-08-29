@@ -4,7 +4,6 @@ import { Button } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import styles from './signIn.module.css';
-
 import ProfileMenu from '@ui/ProfileMenu/ProfileMenu';
 
 const SignIn: FC = () => {
@@ -26,7 +25,7 @@ const SignIn: FC = () => {
             })
           }
         >
-          {locale.mainHeaderLinks.signin}
+          {locale.mainHeaderLinks.signIn}
         </Button>
       ) : (
         <ProfileMenu />

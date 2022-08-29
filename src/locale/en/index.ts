@@ -16,6 +16,7 @@ import { ui } from './ui';
 import { helpers } from './helpers';
 import { tag } from './tag';
 import { notification } from './notification';
+import { profile } from './profile';
 
 const en = {
   accept: 'Accept',
@@ -35,17 +36,20 @@ const en = {
   edit: 'Edit',
   toList: 'To list',
   validationError: 'Validation error',
+  yourProfile: 'Your Profile',
   assignmentSchema,
   assignment,
   attempt,
+  auth,
+  date,
   group,
   placeholders,
   credentials,
   mainHeaderLinks,
+  notification,
   projects,
-  date,
+  profile,
   months,
-  auth,
   task,
   form,
   users,
@@ -55,7 +59,6 @@ const en = {
   ui,
   helpers,
   tag,
-  notification,
 };
 
 export default en;

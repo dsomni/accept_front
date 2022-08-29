@@ -1,4 +1,10 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .sortIcon {
-  height: var(--spacer-m);
-  width: var(--spacer-m);
+  display: flex;
+  align-items: flex-end;
 }

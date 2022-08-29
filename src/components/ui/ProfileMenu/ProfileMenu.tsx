@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from 'react';
-import { Avatar, Indicator, Menu } from '@mantine/core';
+import { Avatar, Menu } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -8,6 +8,8 @@ import {
   successNotification,
 } from '@utils/notificationFunctions';
 import { useBackNotifications } from '@hooks/useBackNotifications';
+import { link } from '@constants/Avatar';
+import { Indicator } from '@ui/basics';
 
 const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
@@ -41,23 +43,22 @@ const ProfileMenu: FC<{}> = ({}) => {
     <>
       <Menu trigger="hover">
         <Menu.Target>
-          <Indicator
-            size={24}
-            label={amount > 99 ? '99+' : amount}
-            disabled={amount <= 0}
-            styles={{
-              indicator: {
-                backgroundColor: 'var(--accent)',
-                fontSize: 'var(--font-size-s)',
-              },
-            }}
-          >
-            <Avatar radius="xl" size="lg" color="white" />
-          </Indicator>
+          <div>
+            <Indicator
+              label={amount > 99 ? '99+' : amount}
+              disabled={amount <= 0}
+            >
+              <Avatar
+                radius="lg"
+                size="lg"
+                src={user ? link(user.login) : undefined}
+              />
+            </Indicator>
+          </div>
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>{user?.shortName || ''}</Menu.Label>
-          <Menu.Item component="a" href="profile">
+          <Menu.Item component="a" href="/profile/me">
             {locale.mainHeaderLinks.signOut.profile}
           </Menu.Item>
           <Menu.Item onClick={openModal}>

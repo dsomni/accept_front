@@ -1,7 +1,7 @@
 export const mainHeaderLinks = {
   main: 'Главная',
   about: 'О нас',
-  signin: 'Вход',
+  signIn: 'Вход',
   signOut: {
     signOut: 'Выход',
     profile: 'Профиль',

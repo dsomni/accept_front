@@ -16,6 +16,7 @@ import { ui } from './ui';
 import { helpers } from './helpers';
 import { tag } from './tag';
 import { notification } from './notification';
+import { profile } from './profile';
 
 const ru = {
   accept: 'Accept',
@@ -35,13 +36,16 @@ const ru = {
   edit: 'Изменить',
   toList: 'К списку',
   validationError: 'Ошибка валидации',
+  yourProfile: 'Ваш профиль',
   assignmentSchema,
   assignment,
   attempt,
   group,
   placeholders,
+  profile,
   credentials,
   mainHeaderLinks,
+  notification,
   projects,
   date,
   months,
@@ -55,7 +59,6 @@ const ru = {
   ui,
   helpers,
   tag,
-  notification,
 };
 
 export default ru;

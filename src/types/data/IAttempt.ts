@@ -3,6 +3,7 @@ import {
   ILanguage,
   ITestResultDisplay,
 } from './atomic';
+import { ITaskBaseInfo } from './ITask';
 
 export interface IAttemptDisplay {
   spec: string;
@@ -10,4 +11,5 @@ export interface IAttemptDisplay {
   status: IAttemptStatus;
   date: Date;
   verdict: ITestResultDisplay;
+  task: ITaskBaseInfo;
 }

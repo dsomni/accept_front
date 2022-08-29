@@ -1,13 +1,13 @@
 import {
   ChangeEvent,
-  ReactNode,
+  FC,
+  memo,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import { DefaultLayout } from '@layouts/DefaultLayout';
-import styles from '@styles/notification/list.module.css';
+import styles from './notificationList.module.css';
 import {
   INotification,
   INotificationRecord,
@@ -22,13 +22,13 @@ import { MailOpened, Trash } from 'tabler-icons-react';
 import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 
-const ON_PAGE = 20;
+const ON_PAGE = 10;
 
 interface INotificationItem extends INotification {
   new: boolean;
 }
 
-function List() {
+const NotificationList: FC<{}> = ({}) => {
   const [notifications, setNotifications] = useState<
     INotificationItem[]
   >([]);
@@ -259,10 +259,6 @@ function List() {
       />
     </div>
   );
-}
-
-List.getLayout = (page: ReactNode) => {
-  return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default List;
+export default memo(NotificationList);

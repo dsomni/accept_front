@@ -73,3 +73,12 @@
   text-align: right;
   color: grey;
 }
+
+.groups {
+  font-size: var(--font-size-xs);
+  display: flex;
+  gap: var(--spacer-xxs);
+  flex-direction: row;
+  flex-wrap: wrap;
+  color: var(--dark2);
+}
