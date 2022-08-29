@@ -22,3 +22,7 @@
 .activeLine {
   background-color: var(--primary);
 }
+
+.wrapper {
+  flex-wrap: nowrap;
+}

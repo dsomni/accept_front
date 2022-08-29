@@ -68,3 +68,7 @@
 .overall {
   font-size: var(--font-size-m);
 }
+
+.emptyMessage {
+  margin: var(--spacer-xxl) auto;
+}

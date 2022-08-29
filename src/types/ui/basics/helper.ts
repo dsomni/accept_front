@@ -10,4 +10,5 @@ export type MyHelperProps = {
   hoverCardDropdownProps?: Omit<HoverCardDropdownProps, 'children'>;
   hoverCardTargetProps?: HoverCardTargetProps;
   dropdownContent?: string | ReactNode;
+  customIcon?: ReactNode;
 };

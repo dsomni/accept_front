@@ -18,9 +18,10 @@ import { useBackNotifications } from '@hooks/useBackNotifications';
 import { Indicator } from '@ui/basics';
 import styles from './profile.module.css';
 import Settings from '@components/Profile/Settings/Settings';
+import AssignmentList from '@components/Profile/AssignmentList/AssignmentList';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
-  const [current, setCurrent] = useState(4);
+  const [current, setCurrent] = useState(0);
 
   const { amount } = useBackNotifications();
 
@@ -30,7 +31,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
     () => [
       <ProfileInfo user={user} key={0} />,
       <NotificationList key={1} />,
-      <div key={3} />,
+      <AssignmentList key={3} />,
       <AttemptListProfile key={2} />,
       <Settings user={user} key={4} />,
     ],

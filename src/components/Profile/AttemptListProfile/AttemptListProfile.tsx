@@ -7,6 +7,7 @@ import { ILocale } from '@custom-types/ui/ILocale';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { getLocalDate } from '@utils/datetime';
 import Link from 'next/link';
+import { useLocale } from '@hooks/useLocale';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
@@ -108,12 +109,14 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 ];
 
 const AttemptListProfile: FC<{}> = ({}) => {
+  const { locale } = useLocale();
   return (
     <AttemptList
       url={`attempt/my`}
       activeTab
       initialColumns={initialColumns}
       refactorAttempt={refactorAttempt}
+      empty={<>{locale.profile.empty.attempts}</>}
       key={2}
       noDefault
       classNames={{

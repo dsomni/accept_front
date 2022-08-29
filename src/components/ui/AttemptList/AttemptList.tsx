@@ -1,6 +1,7 @@
 import {
   FC,
   memo,
+  ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -12,7 +13,6 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
 import { ILocale } from '@custom-types/ui/ILocale';
-import { getLocalDate } from '@utils/datetime';
 import { useUser } from '@hooks/useUser';
 import { useRequest } from '@hooks/useRequest';
 import { BaseSearch } from '@custom-types/data/request';
@@ -40,6 +40,7 @@ const AttemptsList: FC<{
   initialColumns: (locale: ILocale) => ITableColumn[];
   refactorAttempt: (attempt: IAttemptDisplay, locale: ILocale) => any;
   noDefault?: boolean;
+  empty?: ReactNode;
 }> = ({
   url,
   activeTab,
@@ -47,6 +48,7 @@ const AttemptsList: FC<{
   initialColumns,
   refactorAttempt,
   noDefault,
+  empty,
 }) => {
   const { locale } = useLocale();
   const { refreshAccess } = useUser();
@@ -136,6 +138,7 @@ const AttemptsList: FC<{
         setSearchParams={setSearchParams}
         searchParams={searchParams}
         noDefault={noDefault}
+        empty={empty}
         classNames={
           classNames
             ? classNames

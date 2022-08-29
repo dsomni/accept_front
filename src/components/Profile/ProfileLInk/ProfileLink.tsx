@@ -21,13 +21,13 @@ const ProfileLink: FC<{
         }`}
         onClick={onClick}
       >
-        <Group spacing="xs">
+        <Group spacing="xs" className={styles.wrapper}>
           <div
             className={`${styles.line} ${
               isActive ? styles.activeLine : ''
             }`}
           ></div>
-          <Group>
+          <Group className={styles.wrapper}>
             {link.icon}
             <div>{link.title}</div>
           </Group>

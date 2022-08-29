@@ -5,7 +5,6 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import {
   IAssignmentAdd,
   IAssignmentEditBundle,
-  IAssignmentSubmit,
 } from '@custom-types/data/IAssignment';
 import Form from '@components/Assignment/Form/Form';
 import { UseFormReturnType } from '@mantine/form';

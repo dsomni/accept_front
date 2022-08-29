@@ -32,6 +32,7 @@ const Table: FC<{
   setSearchParams: setter;
   searchParams: BaseSearch;
   noDefault?: boolean;
+  empty?: ReactNode;
 }> = ({
   columns,
   classNames,
@@ -45,6 +46,7 @@ const Table: FC<{
   setSearchParams,
   searchParams,
   noDefault,
+  empty,
 }) => {
   const { locale } = useLocale();
 
@@ -209,59 +211,63 @@ const Table: FC<{
             }
       }
     >
-      <div className={styles.main}>
-        <div className={styles.searchWrapper}>
-          {withSearch && (
-            <div className={styles.search}>
-              <Input
-                icon={<Search />}
-                classNames={{
-                  input: styles.inputElem,
-                }}
-                onChange={(e: any) => handleSearch(e.target.value)}
-                placeholder={locale.placeholders.search}
-                value={search}
-              />
-            </div>
-          )}
-          {availableColumns.length > 0 && (
-            <div className={styles.columnSelect}>
-              <MultiSelect
-                classNames={{
-                  value: styles.selected,
-                  input: styles.inputElem,
-                }}
-                data={availableColumns}
-                value={selectedColumns}
-                onChange={handleChange}
-                placeholder={locale.placeholders.showColumns}
-              />
-            </div>
-          )}
-          {additionalSearch || <></>}
-        </div>
-        <div style={{ position: 'relative' }}>
-          <LoadingOverlay
-            visible={loading}
-            loader={<Loader size="xl" />}
+      {!loading && empty && localRows.length == 0 ? (
+        <div className={styles.emptyMessage}>{empty}</div>
+      ) : (
+        <div className={styles.main}>
+          <div className={styles.searchWrapper}>
+            {withSearch && (
+              <div className={styles.search}>
+                <Input
+                  icon={<Search />}
+                  classNames={{
+                    input: styles.inputElem,
+                  }}
+                  onChange={(e: any) => handleSearch(e.target.value)}
+                  placeholder={locale.placeholders.search}
+                  value={search}
+                />
+              </div>
+            )}
+            {availableColumns.length > 0 && (
+              <div className={styles.columnSelect}>
+                <MultiSelect
+                  classNames={{
+                    value: styles.selected,
+                    input: styles.inputElem,
+                  }}
+                  data={availableColumns}
+                  value={selectedColumns}
+                  onChange={handleChange}
+                  placeholder={locale.placeholders.showColumns}
+                />
+              </div>
+            )}
+            {additionalSearch || <></>}
+          </div>
+          <div style={{ position: 'relative' }}>
+            <LoadingOverlay
+              visible={loading}
+              loader={<Loader size="lg" />}
+            />
+            <InnerTable
+              columns={localColumns}
+              classNames={classNames}
+              rows={localRows}
+              sort={sort}
+            />
+          </div>
+          <PageNavigation
+            onPage={onPage}
+            defaultOnPage={defaultOnPage}
+            perPage={perPage}
+            page={page}
+            totalLength={totalLength}
+            handlePerPageChange={handlePerPageChange}
+            handlePageChange={handlePageChange}
           />
-          <InnerTable
-            columns={localColumns}
-            classNames={classNames}
-            rows={localRows}
-            sort={sort}
-          />
         </div>
-        <PageNavigation
-          onPage={onPage}
-          defaultOnPage={defaultOnPage}
-          perPage={perPage}
-          page={page}
-          totalLength={totalLength}
-          handlePerPageChange={handlePerPageChange}
-          handlePageChange={handlePageChange}
-        />
-      </div>
+      )}
     </div>
   );
 };

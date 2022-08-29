@@ -58,7 +58,7 @@ const ProfileMenu: FC<{}> = ({}) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>{user?.shortName || ''}</Menu.Label>
-          <Menu.Item component="a" href="profile/me">
+          <Menu.Item component="a" href="/profile/me">
             {locale.mainHeaderLinks.signOut.profile}
           </Menu.Item>
           <Menu.Item onClick={openModal}>
