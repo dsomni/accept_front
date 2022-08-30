@@ -41,6 +41,7 @@ export interface IAssignmentEditBundle {
 }
 
 export interface IAssignmentResults {
+  assignment: IAssignment;
   tasks: { spec: string; title: string }[];
   users: { login: string; shortName: string }[];
   results: {

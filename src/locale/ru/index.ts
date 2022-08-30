@@ -17,6 +17,7 @@ import { helpers } from './helpers';
 import { tag } from './tag';
 import { notification } from './notification';
 import { profile } from './profile';
+import { dashboard } from './dashboard';
 
 const ru = {
   accept: 'Accept',
@@ -40,6 +41,7 @@ const ru = {
   assignmentSchema,
   assignment,
   attempt,
+  dashboard,
   group,
   placeholders,
   profile,

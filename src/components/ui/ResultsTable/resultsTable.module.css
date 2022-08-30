@@ -9,6 +9,8 @@
 }
 
 .wrapper {
+  max-height: inherit;
+  max-width: inherit;
   overflow: scroll;
 }
 

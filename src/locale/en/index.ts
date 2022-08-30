@@ -17,6 +17,7 @@ import { helpers } from './helpers';
 import { tag } from './tag';
 import { notification } from './notification';
 import { profile } from './profile';
+import { dashboard } from './dashboard';
 
 const en = {
   accept: 'Accept',
@@ -42,6 +43,7 @@ const en = {
   attempt,
   auth,
   date,
+  dashboard,
   group,
   placeholders,
   credentials,
