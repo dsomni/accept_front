@@ -30,11 +30,19 @@ function AssignmentResults(props: {
         data={resultsData.results.map((row) =>
           row.map((cell) => ({
             best: cell.best
-              ? cell.best.verdict.verdict.shortText
+              ? cell.best.status.spec === 2
+                ? `${cell.best.verdict.verdict.shortText} #${
+                    cell.best.verdict.test + 1
+                  }`
+                : cell.best.status.spec === 1
+                ? 'TS'
+                : 'TS'
               : '-',
             rest: cell.attempts.map((attempt) => ({
               text: attempt.verdict
-                ? attempt.verdict.verdict.shortText
+                ? `${attempt.verdict.verdict.shortText} #${
+                    attempt.verdict.test + 1
+                  }`
                 : 'TS',
               href: `/attempt/${attempt.spec}`,
             })),

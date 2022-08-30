@@ -12,7 +12,7 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
           style={{
             color:
               cell.best === '-'
-                ? 'dark3'
+                ? 'var(--dark3)'
                 : cell.best === 'OK'
                 ? 'var(--positive)'
                 : 'var(--negative',
@@ -22,14 +22,21 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
         </div>
       )}
       {cell.rest.length > 0 && (
-        <Menu shadow="md" openDelay={500} trigger="hover">
+        <Menu
+          shadow="md"
+          openDelay={500}
+          trigger="hover"
+          position="bottom-start"
+        >
           <Menu.Target>
             <div
               style={{
                 color:
                   cell.best === '-'
-                    ? 'dark3'
-                    : cell.best === 'OK'
+                    ? 'var(--dark3)'
+                    : cell.best.startsWith('TS')
+                    ? 'var(--neutral)'
+                    : cell.best.startsWith('OK')
                     ? 'var(--positive)'
                     : 'var(--negative',
               }}
@@ -45,12 +52,11 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
                     <a
                       style={{
                         textDecoration: 'none',
-                        color:
-                          item.text === 'TS'
-                            ? 'var(--neutral)'
-                            : item.text === 'OK'
-                            ? 'var(--positive)'
-                            : 'var(--negative',
+                        color: item.text.startsWith('TS')
+                          ? 'var(--neutral)'
+                          : item.text.startsWith('OK')
+                          ? 'var(--positive)'
+                          : 'var(--negative',
                       }}
                     >
                       {item.text}

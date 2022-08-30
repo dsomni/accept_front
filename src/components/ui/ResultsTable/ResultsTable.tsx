@@ -23,10 +23,10 @@ const ResultsTable: FC<{
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Popa</th>
+            <th></th>
             {columns.map((column, index) => (
               <th key={index}>
-                <Link href={column.text} passHref>
+                <Link href={column.href} passHref>
                   <a
                     style={{
                       textDecoration: 'none',
@@ -43,9 +43,20 @@ const ResultsTable: FC<{
         <tbody>
           {rows.map((row, index) => (
             <tr key={index}>
-              <td className={styles.rowHeader}>{row.text}</td>
+              <td className={styles.rowHeader}>
+                <Link href={row.href} passHref>
+                  <a
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                  >
+                    {row.text}
+                  </a>
+                </Link>
+              </td>
               {data[index].map((cell, idx) => (
-                <td key={idx}>
+                <td key={idx} style={{ cursor: 'pointer' }}>
                   <DropdownList cell={cell} />
                 </td>
               ))}

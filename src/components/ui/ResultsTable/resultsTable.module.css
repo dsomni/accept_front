@@ -39,3 +39,7 @@
   left: 0;
   padding-right: var(--spacer-s);
 }
+
+.table td {
+  min-width: var(--spacer-xxl);
+}
