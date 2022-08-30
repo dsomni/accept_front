@@ -27,7 +27,8 @@ const Form: FC<{
   users: IUser[];
   groups: IGroup[];
   roles: IRole[];
-}> = ({ users, groups, roles }) => {
+  noDefault?: boolean;
+}> = ({ users, groups, roles, noDefault }) => {
   const { locale, lang } = useLocale();
 
   const form = useForm({
@@ -108,6 +109,7 @@ const Form: FC<{
         form={form}
         handleSubmit={handleSubmit}
         stepFields={stepFields}
+        noDefault={noDefault}
         pages={[
           <MainInfo key="1" form={form} />,
           <DescriptionInfo key="2" form={form} />,

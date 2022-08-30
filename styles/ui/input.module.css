@@ -13,7 +13,7 @@
 }
 
 .label {
-  font-size: var(--font-size-label-l);
+  font-size: var(--font-size-label-m);
   display: flex;
   flex-direction: row;
   align-items: flex-start;

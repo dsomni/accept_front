@@ -1,13 +1,13 @@
-import { FC, memo, useMemo, useState } from 'react';
+import { FC, ReactNode, memo, useMemo, useState } from 'react';
 import { IUser } from '@custom-types/data/IUser';
 import { Avatar, Navbar } from '@mantine/core';
-import ProfileLink from '@components/Profile/ProfileLInk/ProfileLink';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import AttemptListProfile from '@components/Profile/AttemptListProfile/AttemptListProfile';
 import {
   Alarm,
   AlignRight,
-  Bell,
+  BellPlus,
+  BellRinging,
   Robot,
   Settings as SettingsIcon,
 } from 'tabler-icons-react';
@@ -19,6 +19,14 @@ import { Indicator } from '@ui/basics';
 import styles from './profile.module.css';
 import Settings from '@components/Profile/Settings/Settings';
 import AssignmentList from '@components/Profile/AssignmentList/AssignmentList';
+import CreateNotification from '@components/Profile/CreateNotification/CreateNotification';
+import ProfileLink from './ProfileLInk/ProfileLink';
+
+interface IProfileLink {
+  page: ReactNode;
+  icon: ReactNode;
+  title: string;
+}
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const [current, setCurrent] = useState(0);
@@ -27,16 +35,47 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
 
   const { locale } = useLocale();
 
-  const pages = useMemo(
-    () => [
-      <ProfileInfo user={user} key={0} />,
-      <NotificationList key={1} />,
-      <AssignmentList key={3} />,
-      <AttemptListProfile key={2} />,
-      <Settings user={user} key={4} />,
-    ],
-    [user]
-  );
+  const links: IProfileLink[] = useMemo(() => {
+    let globalLinks = [
+      {
+        page: <ProfileInfo user={user} />,
+        icon: <Robot color="var(--secondary)" />,
+        title: locale.profile.profile,
+      },
+      {
+        page: <NotificationList />,
+        icon: (
+          <Indicator disabled={amount <= 0} size={8}>
+            <BellRinging color="var(--secondary)" />
+          </Indicator>
+        ),
+        title: locale.profile.notification,
+      },
+      {
+        page: <AssignmentList />,
+        icon: <Alarm color="var(--secondary)" />,
+        title: locale.profile.assignments,
+      },
+      {
+        page: <AttemptListProfile />,
+        icon: <AlignRight color="var(--secondary)" />,
+        title: locale.profile.attempts,
+      },
+      {
+        page: <Settings user={user} />,
+        icon: <SettingsIcon color="var(--secondary)" />,
+        title: locale.profile.settings,
+      },
+    ];
+    if (user.role.accessLevel > 1) {
+      globalLinks.splice(4, 0, {
+        page: <CreateNotification />,
+        icon: <BellPlus color="var(--secondary)" />,
+        title: locale.profile.createNotification,
+      });
+    }
+    return globalLinks;
+  }, [user, locale, amount]);
 
   return (
     <div className={styles.wrapper}>
@@ -49,53 +88,22 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
           </div>
         </Navbar.Section>
         <Navbar.Section grow mt="md">
-          <ProfileLink
-            link={{
-              icon: <Robot color="var(--secondary)" />,
-              title: locale.profile.profile,
-            }}
-            isActive={current === 0}
-            onClick={() => setCurrent(0)}
-          />
-          <ProfileLink
-            link={{
-              icon: (
-                <Indicator disabled={amount <= 0} size={8}>
-                  <Bell color="var(--secondary)" />
-                </Indicator>
-              ),
-              title: locale.profile.notification,
-            }}
-            isActive={current === 1}
-            onClick={() => setCurrent(1)}
-          />
-          <ProfileLink
-            link={{
-              icon: <Alarm color="var(--secondary)" />,
-              title: locale.profile.assignments,
-            }}
-            isActive={current === 2}
-            onClick={() => setCurrent(2)}
-          />
-          <ProfileLink
-            link={{
-              icon: <AlignRight color="var(--secondary)" />,
-              title: locale.profile.attempts,
-            }}
-            isActive={current === 3}
-            onClick={() => setCurrent(3)}
-          />
-          <ProfileLink
-            link={{
-              icon: <SettingsIcon color="var(--secondary)" />,
-              title: locale.profile.settings,
-            }}
-            isActive={current === 4}
-            onClick={() => setCurrent(4)}
-          />
+          {links.map((element, idx) => (
+            <ProfileLink
+              key={idx}
+              link={{
+                icon: element.icon,
+                title: element.title,
+              }}
+              isActive={current === idx}
+              onClick={() => setCurrent(idx)}
+            />
+          ))}
         </Navbar.Section>
       </Navbar>
-      <div className={styles.contentWrapper}>{pages[current]}</div>
+      <div className={styles.contentWrapper}>
+        {links[current].page}
+      </div>
     </div>
   );
 };

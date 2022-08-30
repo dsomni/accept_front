@@ -20,6 +20,7 @@ const Stepper: FC<{
   iconPosition?: 'right' | 'left';
   icons?: ReactNode[];
   initialStep?: number;
+  noDefault?: boolean;
 }> = ({
   form,
   stepFields,
@@ -33,6 +34,7 @@ const Stepper: FC<{
   iconPosition,
   icons,
   initialStep,
+  noDefault,
 }) => {
   const { locale } = useLocale();
   const LAST_PAGE = pages.length - 1;
@@ -92,7 +94,13 @@ const Stepper: FC<{
   return (
     <>
       <MantineStepper
-        className={customWrapper ? undefined : stepperStyles.stepper}
+        className={
+          customWrapper
+            ? undefined
+            : !noDefault
+            ? stepperStyles.stepper
+            : undefined
+        }
         classNames={
           contentClass
             ? { content: contentClass }
