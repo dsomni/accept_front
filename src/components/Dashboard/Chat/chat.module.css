@@ -2,8 +2,65 @@
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   padding: var(--spacer-xs);
   outline: 3px black groove;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xs);
+  align-items: flex-start;
+}
+
+.sendWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.messages {
+  display: flex;
+  height: 100%;
+  max-height: 300px;
+  flex-direction: column;
+  min-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.message {
+  max-width: 50%;
+  min-width: 200px;
+  background-color: var(--dark4);
+  border-radius: 0 10px 10px 0;
+  padding: var(--spacer-xs) var(--spacer-s);
+}
+
+.own {
+  align-self: flex-end;
+  background-color: var(--primary-light);
+  border-radius: 10px 0 0 10px;
+}
+
+.date {
+  font-size: var(--font-size-xxs);
+  align-self: flex-end;
+}
+
+.content {
+  font-size: var(--font-size-m);
+  align-self: flex-start;
+}
+
+.user {
+  font-size: var(--font-size-xxs);
+  justify-self: flex-end;
+}
+
+.input {
+  width: 80%;
+}
+.button {
+  width: 20%;
 }
