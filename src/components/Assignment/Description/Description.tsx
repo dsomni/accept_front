@@ -74,7 +74,10 @@ const Description: FC<{ assignment: IAssignment }> = ({
         dangerouslySetInnerHTML={{ __html: assignment.description }}
       />
       <div className={styles.tasksWrapper}>
-        <PrimitiveTaskTable tasks={tasks} />
+        <PrimitiveTaskTable
+          tasks={tasks}
+          linkQuery={`assignment=${assignment.spec}`}
+        />
       </div>
     </div>
   );
