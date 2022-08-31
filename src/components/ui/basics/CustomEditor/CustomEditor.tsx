@@ -58,7 +58,7 @@ const CustomEditor: FC<{
             editor={Editor}
             data={form.values[name]}
             config={editorConfiguration}
-            onChange={(event: any, editor: any) => {
+            onChange={(_: any, editor: any) => {
               const data = editor.getData();
               form.setFieldValue(name, data);
             }}
