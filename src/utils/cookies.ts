@@ -10,11 +10,7 @@ export const setCookie = (
       cookie += `${key}=${value};`;
     }
   }
-  console.log(cookie);
-
   document.cookie = cookie;
-  console.log(5);
-  console.log(document.cookie);
 };
 
 export const getCookie = (
