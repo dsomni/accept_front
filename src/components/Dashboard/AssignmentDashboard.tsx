@@ -19,7 +19,7 @@ const AssignmentDashboard: FC<{
   spec: string;
   results: IAssignmentResults;
 }> = ({ spec, results }) => {
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState(0);
   const { locale } = useLocale();
   const links: IMenuLink[] = useMemo(
     () => [
@@ -27,7 +27,7 @@ const AssignmentDashboard: FC<{
         page: (
           <div className={styles.mainInfo}>
             <TimeInfo />
-            <Chat />
+            <Chat spec={spec} />
           </div>
         ),
         icon: <Database color="var(--secondary)" />,

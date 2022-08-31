@@ -9,7 +9,6 @@ function AssignmentDashboardPage(props: {
   spec: string;
   results: IAssignmentResults;
 }) {
-  console.log(props.results);
   return (
     <AssignmentDashboard spec={props.spec} results={props.results} />
   );
