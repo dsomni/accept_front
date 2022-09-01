@@ -11,6 +11,8 @@ interface FetchWrapperProps {
   notWriteToRes?: boolean;
 }
 
+const refresh_url = `${getApiUrl()}/api/refresh`;
+
 export const fetchWrapper = async (props: FetchWrapperProps) => {
   const { req, res, url, method, customBody, notWriteToRes, ..._ } =
     props;
@@ -28,20 +30,21 @@ export const fetchWrapper = async (props: FetchWrapperProps) => {
     headers: {
       'content-type': 'application/json',
       ...(req.headers as { [key: string]: string }),
-    },
+    } as { [key: string]: string },
   };
   let response = await fetch(fetch_url, fetch_data);
 
-  const status = response.status;
-
-  if (status == 401) {
+  if (response.status == 401) {
     try {
-      const refresh_response = await fetch(url, {
+      const refresh_response = await fetch(refresh_url, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        credentials: 'include',
+        headers: req.headers as { [key: string]: string },
       });
+
       if (refresh_response.status === 200) {
-        const refresh_data = await response.json();
+        const refresh_data = await refresh_response.json();
+
         res.setHeader('Set-Cookie', [
           serialize(
             'access_token_cookie',
@@ -55,14 +58,23 @@ export const fetchWrapper = async (props: FetchWrapperProps) => {
           ),
         ]);
 
-        response = await fetch(fetch_url, fetch_data);
+        response = await fetch(fetch_url, {
+          ...fetch_data,
+          headers: {
+            ...fetch_data.headers,
+            cookie:
+              `access_token_cookie=${refresh_data['new_access_token']};` +
+              fetch_data.headers.cookie,
+          },
+        });
       }
     } catch {}
   }
 
   if (!!!notWriteToRes) {
     const data = await response.json();
-    res.status(status).json(data);
+
+    res.status(response.status).json(data);
   }
   return response;
 };
