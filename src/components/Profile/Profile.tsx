@@ -20,7 +20,7 @@ import styles from './profile.module.css';
 import Settings from '@components/Profile/Settings/Settings';
 import AssignmentList from '@components/Profile/AssignmentList/AssignmentList';
 import CreateNotification from '@components/Profile/CreateNotification/CreateNotification';
-import ProfileLink from '@components/Profile/ProfileLink/ProfileLink';
+import ProfileLink from '@components/Profile/ProfileLink1/ProfileLink';
 
 interface IProfileLink {
   page: ReactNode;
