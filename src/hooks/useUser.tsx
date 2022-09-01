@@ -24,7 +24,6 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
         const accessLevel = res.response.role.accessLevel;
         const user = res.response;
         setCookie('user', JSON.stringify(user), {
-          'max-age': 10 * 60,
           path: '/',
         });
         setValue((prev) => ({
@@ -125,6 +124,24 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
     }));
     return 2;
   }, [refresh, whoAmI]);
+
+  const checkTokensExpiration = useCallback(() => {
+    if (!!!getCookie('refresh_token_cookie')) {
+      whoAmI();
+      return;
+    }
+    if (!!!getCookie('access_token_cookie')) {
+      refresh();
+      return;
+    }
+  }, [refresh, whoAmI]);
+
+  useEffect(() => {
+    const id = setInterval(checkTokensExpiration, 300000);
+    return () => {
+      clearInterval(id);
+    };
+  }, [checkTokensExpiration]);
 
   const [value, setValue] = useState<IUserContext>(() => ({
     user: undefined,
