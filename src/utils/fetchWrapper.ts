@@ -6,14 +6,27 @@ export const fetchWrapper = async (
   req: NextApiRequest,
   res: NextApiResponse,
   url: string,
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  customBody?: any,
+  notWriteToRes?: boolean
 ) => {
-  const response = await fetch(`${getApiUrl()}/${url}`, {
-    method: method || 'GET',
-    credentials: 'include',
-    body: JSON.stringify(req.body),
-    headers: req.headers as { [key: string]: string },
-  });
+  const fetchMethod = method || 'GET';
+  const fetch_url = `${getApiUrl()}/${url}`;
+  const fetch_data = {
+    method: fetchMethod,
+    credentials: 'include' as RequestCredentials,
+    body:
+      fetchMethod == 'GET'
+        ? null
+        : customBody
+        ? JSON.stringify(customBody)
+        : JSON.stringify(req.body),
+    headers: {
+      'content-type': 'application/json',
+      ...(req.headers as { [key: string]: string }),
+    },
+  };
+  let response = await fetch(fetch_url, fetch_data);
 
   const status = response.status;
 
@@ -38,22 +51,14 @@ export const fetchWrapper = async (
           ),
         ]);
 
-        const repeated_response = await fetch(
-          `${getApiUrl()}/${url}`,
-          {
-            method: method || 'GET',
-            credentials: 'include',
-            body: JSON.stringify(req.body),
-            headers: req.headers as { [key: string]: string },
-          }
-        );
-
-        const data = await repeated_response.json();
-        res.status(status).json(data);
+        response = await fetch(fetch_url, fetch_data);
       }
     } catch {}
   }
 
-  const data = await response.json();
-  res.status(status).json(data);
+  if (!!!notWriteToRes) {
+    const data = await response.json();
+    res.status(status).json(data);
+  }
+  return response;
 };
