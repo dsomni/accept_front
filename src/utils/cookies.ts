@@ -4,7 +4,7 @@ export const setCookie = (
   cookieParams?: object
 ) => {
   let cookie = `${name}=${content};`;
-  cookieParams = { Path: '/', SameSite: 'None', ...cookieParams };
+  cookieParams = { Path: '/', ...cookieParams };
   if (cookieParams) {
     for (const [key, value] of Object.entries(cookieParams)) {
       cookie += `${key}=${value};`;

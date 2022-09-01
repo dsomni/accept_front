@@ -18,7 +18,7 @@ export default async function refresh(
       res.setHeader('Set-Cookie', [
         serialize('access_token_cookie', data['new_access_token'], {
           secure: process.env.NODE_ENV !== 'development',
-          maxAge: 30 * 60,
+          maxAge: data['new_access_token_max_age'],
           sameSite: 'strict',
           path: '/',
         }),

@@ -5,9 +5,10 @@ import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { ITag } from '@custom-types/data/ITag';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 
-const PrimitiveTaskTable: FC<{ tasks: ITaskDisplay[] }> = ({
-  tasks,
-}) => {
+const PrimitiveTaskTable: FC<{
+  tasks: ITaskDisplay[];
+  linkQuery?: string;
+}> = ({ tasks, linkQuery }) => {
   const { locale } = useLocale();
 
   return (
@@ -24,7 +25,9 @@ const PrimitiveTaskTable: FC<{ tasks: ITaskDisplay[] }> = ({
           <>
             <td className={tableStyles.titleWrapper}>
               <a
-                href={`/task/${row.spec}`}
+                href={`/task/${row.spec}${
+                  linkQuery ? '?' + linkQuery : ''
+                }`}
                 target="_blank"
                 rel="noreferrer"
                 className={tableStyles.title}

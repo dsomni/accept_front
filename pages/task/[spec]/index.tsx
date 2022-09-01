@@ -25,7 +25,6 @@ import SendText from '@components/Task/SendText/SendText';
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
   const languages = props.languages;
-  console.log(task);
   const [activeModal, setActiveModal] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);

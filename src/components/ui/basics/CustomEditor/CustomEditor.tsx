@@ -9,10 +9,11 @@ import {
   useState,
 } from 'react';
 import { InputWrapper } from '@ui/basics';
+import { APIs } from '@constants/url';
 
 const editorConfiguration = {
   simpleUpload: {
-    uploadUrl: 'http://localhost:8000/api/image/upload',
+    uploadUrl: `${APIs.server}/api/image`,
 
     withCredentials: true,
   },
@@ -58,7 +59,7 @@ const CustomEditor: FC<{
             editor={Editor}
             data={form.values[name]}
             config={editorConfiguration}
-            onChange={(event: any, editor: any) => {
+            onChange={(_: any, editor: any) => {
               const data = editor.getData();
               form.setFieldValue(name, data);
             }}
