@@ -1,19 +1,14 @@
+import { fetchWrapper } from '@utils/fetchWrapper';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { env } from 'process';
-
-const url = env.API_ENDPOINT + '/api/notification/viewed';
 
 export default async function Viewed(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const response = await fetch(url, {
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/notification/viewed',
     method: 'POST',
-    credentials: 'include',
-    body: JSON.stringify(req.body),
-    headers: req.headers as { [key: string]: string },
   });
-  const status = response.status;
-  const data = await response.json();
-  res.status(status).json(data);
 }

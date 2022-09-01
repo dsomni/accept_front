@@ -30,7 +30,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
     startTime: new Date(),
     endDate: new Date(),
     endTime: new Date(),
-    groups: ['5fff0231-522c-496c-a870-0ce4e7051f87'],
+    groups: [],
     infinite: false,
     status: 0,
     dates: 0,
