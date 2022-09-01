@@ -5,5 +5,10 @@ export default async function AddAssignmentTag(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/assignment_tag', 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/assignment_tag',
+    method: 'POST',
+  });
 }

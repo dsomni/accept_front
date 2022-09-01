@@ -5,9 +5,9 @@ export default async function Task(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(
-    req,
-    res,
-    `api/bundle/task-page/${req.query.spec}`
-  );
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/bundle/task-page/${req.query.spec}`,
+  });
 }

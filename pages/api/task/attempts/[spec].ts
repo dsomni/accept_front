@@ -5,10 +5,10 @@ export default async function Attempt(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(
-    req,
-    res,
-    `api/task-attempts/${req.query.spec}`,
-    'POST'
-  );
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/task-attempts/${req.query.spec}`,
+    method: 'POST',
+  });
 }

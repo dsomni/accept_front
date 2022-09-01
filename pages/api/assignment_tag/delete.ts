@@ -5,10 +5,10 @@ export default async function DeleteAssignmentTag(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(
-    req,
-    res,
-    `api/assignment_tag/${req.body.spec}`,
-    'DELETE'
-  );
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/assignment_tag/${req.body.spec}`,
+    method: 'DELETE',
+  });
 }

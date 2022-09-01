@@ -5,5 +5,10 @@ export default async function Attempt(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/attempt/my', 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/attempt/my',
+    method: 'POST',
+  });
 }

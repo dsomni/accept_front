@@ -5,5 +5,10 @@ export default async function DeleteTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, `api/task/${req.body.spec}`, 'DELETE');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/task/${req.body.spec}`,
+    method: 'DELETE',
+  });
 }

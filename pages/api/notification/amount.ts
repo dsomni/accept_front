@@ -5,5 +5,9 @@ export default async function NotificationAmount(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/notification/new-amount');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/notification/new-amount',
+  });
 }

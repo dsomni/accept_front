@@ -5,5 +5,10 @@ export default async function EditAssignmentSchema(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, `api/assignment`, 'PUT');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/assignment`,
+    method: 'PUT',
+  });
 }

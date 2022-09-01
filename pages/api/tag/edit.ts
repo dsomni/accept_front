@@ -5,5 +5,10 @@ export default async function EditTag(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/task_tag', 'PUT');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/task_tag',
+    method: 'PUT',
+  });
 }

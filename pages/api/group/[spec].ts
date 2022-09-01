@@ -5,5 +5,9 @@ export default async function Group(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, `api/group/${req.query.spec}`);
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/group/${req.query.spec}`,
+  });
 }

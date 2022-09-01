@@ -5,9 +5,9 @@ export default async function ConnectedAssignments(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(
-    req,
-    res,
-    `api/task-connected-assignments/${req.query.spec}`
-  );
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/task-connected-assignments/${req.query.spec}`,
+  });
 }

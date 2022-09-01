@@ -5,5 +5,9 @@ export default async function ListAssignmentSchemas(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/bundle/assignment_schema-list');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/bundle/assignment_schema-list',
+  });
 }

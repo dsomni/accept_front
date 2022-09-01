@@ -5,5 +5,9 @@ export default async function Attempt(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, `api/bundle/assignment/my`);
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/bundle/assignment/my`,
+  });
 }

@@ -5,5 +5,9 @@ export default async function ListStudents(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/user-by-role/student');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/user-by-role/student',
+  });
 }

@@ -5,5 +5,10 @@ export default async function TaskAddBundle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, '/api/bundle/task-add', 'DELETE');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: '/api/bundle/task-add',
+    method: 'DELETE',
+  });
 }

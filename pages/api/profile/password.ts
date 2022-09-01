@@ -5,5 +5,10 @@ export default async function Attempt(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/user/password', 'PUT');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/user/password',
+    method: 'PUT',
+  });
 }

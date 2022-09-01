@@ -5,5 +5,10 @@ export default async function EditTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/task', 'PUT');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/task',
+    method: 'PUT',
+  });
 }

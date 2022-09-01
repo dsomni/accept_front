@@ -5,5 +5,5 @@ export default async function ListTags(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/task_tag');
+  await fetchWrapper({ req: req, res: res, url: 'api/task_tag' });
 }

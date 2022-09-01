@@ -5,9 +5,9 @@ export default async function validateLogin(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(
-    req,
-    res,
-    `api/validateLogin/${req.query.login}`
-  );
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/validateLogin/${req.query.login}`,
+  });
 }

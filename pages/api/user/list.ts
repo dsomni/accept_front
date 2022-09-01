@@ -5,5 +5,9 @@ export default async function ListUsers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/bundle/user-list');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/bundle/user-list',
+  });
 }

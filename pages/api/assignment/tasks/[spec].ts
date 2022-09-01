@@ -5,9 +5,9 @@ export default async function TaskToDisplay(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(
-    req,
-    res,
-    `api/assignment-tasks/${req.query.spec}`
-  );
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/assignment-tasks/${req.query.spec}`,
+  });
 }

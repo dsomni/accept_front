@@ -2,14 +2,18 @@ import { getApiUrl } from '@utils/getServerUrl';
 import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export const fetchWrapper = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  url: string,
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
-  customBody?: any,
-  notWriteToRes?: boolean
-) => {
+interface FetchWrapperProps {
+  req: NextApiRequest;
+  res: NextApiResponse;
+  url: string;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  customBody?: any;
+  notWriteToRes?: boolean;
+}
+
+export const fetchWrapper = async (props: FetchWrapperProps) => {
+  const { req, res, url, method, customBody, notWriteToRes, ..._ } =
+    props;
   const fetchMethod = method || 'GET';
   const fetch_url = `${getApiUrl()}/${url}`;
   const fetch_data = {

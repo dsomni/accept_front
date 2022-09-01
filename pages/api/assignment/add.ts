@@ -5,5 +5,10 @@ export default async function AddAssignmentSchema(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, `api/assignment`, 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/assignment`,
+    method: 'POST',
+  });
 }

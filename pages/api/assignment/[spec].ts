@@ -5,5 +5,9 @@ export default async function AssignmentSchema(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, `api/assignment/${req.query.spec}`);
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/assignment/${req.query.spec}`,
+  });
 }

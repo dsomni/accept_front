@@ -5,5 +5,9 @@ export default async function NotificationAddBundle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/bundle/notification-add');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/bundle/notification-add',
+  });
 }

@@ -5,5 +5,9 @@ export default async function TaskListBundle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/bundle/task-list');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/bundle/task-list',
+  });
 }

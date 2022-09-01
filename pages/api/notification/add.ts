@@ -5,5 +5,10 @@ export default async function AddNotification(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/notification', 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/notification',
+    method: 'POST',
+  });
 }

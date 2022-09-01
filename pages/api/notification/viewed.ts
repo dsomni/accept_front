@@ -5,5 +5,10 @@ export default async function Viewed(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/notification/viewed', 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/notification/viewed',
+    method: 'POST',
+  });
 }

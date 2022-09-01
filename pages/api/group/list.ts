@@ -5,5 +5,5 @@ export default async function ListGroups(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/group');
+  await fetchWrapper({ req: req, res: res, url: 'api/group' });
 }

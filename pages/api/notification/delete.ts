@@ -5,5 +5,10 @@ export default async function Delete(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/notification/delete', 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/notification/delete',
+    method: 'POST',
+  });
 }

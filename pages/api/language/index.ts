@@ -5,5 +5,5 @@ export default async function ListLanguages(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/language');
+  await fetchWrapper({ req: req, res: res, url: 'api/language' });
 }

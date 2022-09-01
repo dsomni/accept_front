@@ -5,5 +5,10 @@ export default async function AddTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await fetchWrapper(req, res, 'api/task', 'POST');
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: 'api/task',
+    method: 'POST',
+  });
 }
