@@ -2,16 +2,11 @@ import { ReactNode } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
-import { IAssignmentResults } from '@custom-types/data/IAssignment';
+import { IAssignment } from '@custom-types/data/IAssignment';
 import AssignmentDashboard from '@components/Dashboard/AssignmentDashboard';
 
-function AssignmentDashboardPage(props: {
-  spec: string;
-  results: IAssignmentResults;
-}) {
-  return (
-    <AssignmentDashboard spec={props.spec} results={props.results} />
-  );
+function AssignmentDashboardPage(props: { assignment: IAssignment }) {
+  return <AssignmentDashboard assignment={props.assignment} />;
 }
 
 AssignmentDashboardPage.getLayout = (page: ReactNode) => {
@@ -32,12 +27,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const response = await fetch(
-    `${API_URL}/api/assignment-results/${params.spec}`
+    `${API_URL}/api/assignment/${params.spec}`
   );
   if (response.status === 200) {
-    const results = await response.json();
+    const assignment = await response.json();
     return {
-      props: { spec: params.spec, results },
+      props: { assignment: assignment },
       revalidate: 10 * 60,
     };
   }

@@ -1,4 +1,3 @@
-import { IAssignmentResults } from '@custom-types/data/IAssignment';
 import { FC, ReactNode, memo, useMemo, useState } from 'react';
 import Chat from '@components/Dashboard/Chat/Chat';
 import Results from '@components/Dashboard/Results/Results';
@@ -8,6 +7,7 @@ import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import { Group, Navbar, UnstyledButton } from '@mantine/core';
 import { AlignRight, Database, Table } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
+import { IAssignment } from '@custom-types/data/IAssignment';
 
 interface IMenuLink {
   page: ReactNode;
@@ -16,9 +16,8 @@ interface IMenuLink {
 }
 
 const AssignmentDashboard: FC<{
-  spec: string;
-  results: IAssignmentResults;
-}> = ({ spec, results }) => {
+  assignment: IAssignment;
+}> = ({ assignment }) => {
   const [current, setCurrent] = useState(0);
   const { locale } = useLocale();
   const links: IMenuLink[] = useMemo(
@@ -26,15 +25,15 @@ const AssignmentDashboard: FC<{
       {
         page: (
           <div className={styles.mainInfo}>
-            <TimeInfo />
-            <Chat spec={spec} />
+            <TimeInfo assignment={assignment} />
+            <Chat spec={assignment.spec} />
           </div>
         ),
         icon: <Database color="var(--secondary)" />,
         title: locale.dashboard.assignment.mainInfo,
       },
       {
-        page: <Results results={results} spec={spec} />,
+        page: <Results spec={assignment.spec} />,
         icon: <Table color="var(--secondary)" />,
 
         title: locale.dashboard.assignment.results,
@@ -42,15 +41,15 @@ const AssignmentDashboard: FC<{
       {
         page: (
           <AttemptsList
-            spec={spec}
-            shouldRefetch={results.assignment.status.spec != 1}
+            spec={assignment.spec}
+            shouldRefetch={assignment.status.spec != 1}
           />
         ),
         icon: <AlignRight color="var(--secondary)" />,
         title: locale.dashboard.assignment.attempts,
       },
     ],
-    [results, spec, locale]
+    [assignment, locale]
   );
 
   return (

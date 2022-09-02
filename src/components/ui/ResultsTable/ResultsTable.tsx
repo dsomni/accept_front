@@ -2,6 +2,9 @@ import { FC, memo } from 'react';
 import styles from './resultsTable.module.css';
 import DropdownList from './DropdownList/DropdownList';
 import Link from 'next/link';
+import { setter } from '@custom-types/ui/atomic';
+import { Icon } from '@ui/basics';
+import { RefreshDot } from 'tabler-icons-react';
 
 export interface ILabel {
   text: string;
@@ -17,13 +20,18 @@ const ResultsTable: FC<{
   columns: ILabel[];
   rows: ILabel[];
   data: IData[][];
-}> = ({ columns, rows, data }) => {
+  refetch: setter<boolean>;
+}> = ({ columns, rows, data, refetch }) => {
   return (
     <div className={styles.wrapper}>
       <table className={styles.table}>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <Icon size="sm" onClick={() => refetch(true)}>
+                <RefreshDot color="var(--secondary)" />
+              </Icon>
+            </th>
             {columns.map((column, index) => (
               <th key={index}>
                 <Link href={column.href} passHref>

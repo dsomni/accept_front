@@ -3,7 +3,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: var(--spacer-xs);
+  padding: var(--spacer-s);
   outline: 3px black groove;
 }
 

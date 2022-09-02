@@ -1,5 +1,4 @@
 .wrapper {
-  height: 100%;
   width: 100%;
   padding: var(--spacer-xs);
   outline: 3px black groove;

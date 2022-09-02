@@ -1,7 +1,7 @@
 .mainInfo {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacer-l);
+  flex-direction: row;
+  gap: var(--spacer-s);
 }
 .button {
   display: block;
