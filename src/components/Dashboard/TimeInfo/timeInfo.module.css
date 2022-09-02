@@ -1,8 +1,21 @@
 .wrapper {
   width: 100%;
-  padding: var(--spacer-xs);
   outline: 3px black groove;
   display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  margin-right: var(--spacer-s);
+}
+
+.title a {
+  font-size: var(--font-size-xxl);
+  color: var(--primary);
+  text-decoration: none;
 }

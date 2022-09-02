@@ -10,4 +10,10 @@ export const form = {
   startTime: 'Время начала',
   endTime: 'Время окончания',
   calendar: 'Выберете дату начала и окончания',
+  status: {
+    text: 'Статус',
+    pending: 'Ожидается',
+    running: 'В процессе',
+    finished: 'Завершён',
+  },
 };

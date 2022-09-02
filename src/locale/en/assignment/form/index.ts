@@ -10,4 +10,10 @@ export const form = {
   infinite: 'Infinite',
   endTime: 'End time',
   calendar: 'Select start and end dates',
+  status: {
+    text: 'Status',
+    pending: 'Pending',
+    running: 'Running',
+    finished: 'Finished',
+  },
 };
