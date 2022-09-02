@@ -1,0 +1,46 @@
+.button {
+  display: block;
+  width: 100%;
+  padding: var(--spacer-xs) var(--spacer-s);
+}
+
+.button:hover {
+  background-color: #dddddd30;
+}
+
+.line {
+  height: var(--spacer-m);
+  width: 4px;
+  border-radius: 50px;
+  background-color: transparent;
+}
+
+.activeButton {
+  background-color: #e7f5ff66 !important;
+}
+
+.activeLine {
+  background-color: var(--primary);
+}
+
+.groupWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-m);
+  flex-wrap: nowrap;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-m);
+  flex-wrap: nowrap;
+  margin-bottom: var(--spacer-xl);
+}
+
+.pageWrapper {
+  width: 100%;
+  margin-top: var(--spacer-l);
+  margin-right: var(--spacer-m);
+  overflow: auto;
+}
