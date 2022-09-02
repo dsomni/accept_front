@@ -1,6 +1,6 @@
-import { FC, ReactNode, memo, useMemo, useState } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { IUser } from '@custom-types/data/IUser';
-import { Avatar, Navbar } from '@mantine/core';
+import { Avatar } from '@mantine/core';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import AttemptListProfile from '@components/Profile/AttemptListProfile/AttemptListProfile';
 import {
@@ -20,22 +20,15 @@ import styles from './profile.module.css';
 import Settings from '@components/Profile/Settings/Settings';
 import AssignmentList from '@components/Profile/AssignmentList/AssignmentList';
 import CreateNotification from '@components/Profile/CreateNotification/CreateNotification';
-import ProfileLink from '@components/Profile/ProfileLink/ProfileLink';
-
-interface IProfileLink {
-  page: ReactNode;
-  icon: ReactNode;
-  title: string;
-}
+import LeftMenu from '@ui/LeftMenu/LeftMenu';
+import { IMenuLink } from '@custom-types/ui/IMenuLink';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
-  const [current, setCurrent] = useState(0);
-
   const { amount } = useBackNotifications();
 
   const { locale } = useLocale();
 
-  const links: IProfileLink[] = useMemo(() => {
+  const links: IMenuLink[] = useMemo(() => {
     let globalLinks = [
       {
         page: <ProfileInfo user={user} />,
@@ -78,33 +71,18 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
   }, [user, locale, amount]);
 
   return (
-    <div className={styles.wrapper}>
-      <Navbar p="xs" width={{ base: 300 }} withBorder={false}>
-        <Navbar.Section className={styles.header}>
+    <LeftMenu
+      links={links}
+      topContent={
+        <div className={styles.header}>
           <Avatar src={link(user.login)} size="lg" radius="lg" />
           <div className={styles.shortInfo}>
             <div className={styles.shortName}>{user.shortName}</div>
             <div className={styles.login}>{user.login}</div>
           </div>
-        </Navbar.Section>
-        <Navbar.Section grow mt="md">
-          {links.map((element, idx) => (
-            <ProfileLink
-              key={idx}
-              link={{
-                icon: element.icon,
-                title: element.title,
-              }}
-              isActive={current === idx}
-              onClick={() => setCurrent(idx)}
-            />
-          ))}
-        </Navbar.Section>
-      </Navbar>
-      <div className={styles.contentWrapper}>
-        {links[current].page}
-      </div>
-    </div>
+        </div>
+      }
+    />
   );
 };
 

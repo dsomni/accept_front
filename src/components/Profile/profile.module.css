@@ -1,22 +1,9 @@
-.wrapper {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  gap: var(--spacer-m);
-  margin: var(--spacer-m) var(--spacer-m) var(--spacer-xxl)
-    var(--spacer-s);
-}
-
 .header {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: var(--spacer-s);
   padding: var(--spacer-s) var(--spacer-m);
-}
-
-.contentWrapper {
-  width: 100%;
 }
 
 .shortInfo {
