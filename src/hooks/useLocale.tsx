@@ -4,8 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
-  useState,
+  useMemo,
 } from 'react';
 import {
   IAvailableLang,
@@ -13,13 +12,13 @@ import {
   ILocaleContext,
   locales,
 } from '@custom-types/ui/ILocale';
-import { getCookie, setCookie } from '@utils/cookies';
+import { useLocalStorage } from '@mantine/hooks';
 
 const langList = Object.keys(locales) as IAvailableLang[];
 
 const LocaleContext = createContext<ILocaleContext>(null!);
 
-const defaultLocale = 'ru';
+const defaultLang = 'ru';
 
 function getWeekDays(locale: ILocale) {
   return [
@@ -53,34 +52,28 @@ function getMonths(locale: ILocale) {
 export const LocaleProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const set = useCallback((lang: IAvailableLang) => {
-    setCookie('NEXT_LOCALE', lang);
-    setLocale(lang);
-    setValue((prev) => {
-      return {
-        ...prev,
-        lang,
-        locale: locales[lang],
-        weekDays: getWeekDays(locales[lang]),
-        months: getMonths(locales[lang]),
-      };
-    });
-  }, []);
-  const [locale, setLocale] = useState<IAvailableLang>(defaultLocale);
-  useEffect(() => {
-    const lang = getCookie('NEXT_LOCALE');
-    if (lang) {
-      set(lang as IAvailableLang);
-    }
-  }, []); // eslint-disable-line
-  const [value, setValue] = useState<ILocaleContext>(() => ({
-    locale: locales[locale as IAvailableLang],
-    set,
-    lang: locale as IAvailableLang,
-    langList,
-    weekDays: getWeekDays(locales[locale as IAvailableLang]),
-    months: getMonths(locales[locale as IAvailableLang]),
-  }));
+  const [lang, setLang] = useLocalStorage<IAvailableLang>({
+    key: 'accept_locale',
+    defaultValue: defaultLang,
+  });
+  const set = useCallback(
+    (lang: IAvailableLang) => {
+      setLang(lang);
+    },
+    [setLang]
+  );
+
+  const value = useMemo<ILocaleContext>(
+    () => ({
+      locale: locales[lang as IAvailableLang],
+      set,
+      lang: lang as IAvailableLang,
+      langList,
+      weekDays: getWeekDays(locales[lang as IAvailableLang]),
+      months: getMonths(locales[lang as IAvailableLang]),
+    }),
+    [lang, set]
+  );
 
   return (
     <LocaleContext.Provider value={value}>

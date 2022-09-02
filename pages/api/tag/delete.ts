@@ -1,17 +1,14 @@
+import { fetchWrapper } from '@utils/fetchWrapper';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { env } from 'process';
-
-const url = env.API_ENDPOINT + '/api/task_tag';
 
 export default async function DeleteTag(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const spec = req.body.spec;
-  const response = await fetch(`${url}/${spec}`, {
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/task_tag/${req.body.spec}`,
     method: 'DELETE',
   });
-  const status = response.status;
-  const data = await response.json();
-  res.status(status).json(data);
 }

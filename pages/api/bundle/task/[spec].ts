@@ -1,18 +1,13 @@
+import { fetchWrapper } from '@utils/fetchWrapper';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { env } from 'process';
-
-const url = env.API_ENDPOINT + '/api/bundle/task-page';
 
 export default async function Task(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const headers = req.headers;
-  const response = await fetch(`${url}/${req.query.spec}`, {
-    credentials: 'include',
-    headers: headers as { [key: string]: string },
+  await fetchWrapper({
+    req: req,
+    res: res,
+    url: `api/bundle/task-page/${req.query.spec}`,
   });
-  const status = response.status;
-  const data = await response.json();
-  res.status(status).json(data);
 }
