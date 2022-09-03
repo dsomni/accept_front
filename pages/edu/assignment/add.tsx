@@ -17,11 +17,15 @@ import { useUser } from '@hooks/useUser';
 import { concatDateTime } from '@utils/datetime';
 import { UseFormReturnType } from '@mantine/form/lib/types';
 import { useRouter } from 'next/router';
+import { INewNotification } from '@custom-types/data/notification';
+import { sendRequest } from '@requests/request';
+import { useBackNotifications } from '@hooks/useBackNotifications';
 
 function AssignmentAdd(props: IAssignmentAddBundle) {
   const { locale, lang } = useLocale();
   const { user } = useUser();
   const router = useRouter();
+  const { notifyAboutCreation } = useBackNotifications();
 
   const [initialValues, setInitialValues] = useState({
     origin: '',
@@ -34,6 +38,10 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
     infinite: false,
     status: 0,
     dates: 0,
+    notificationTitle: 'Вам задан новый урок',
+    notificationDescription: '',
+    notificationShortDescription:
+      'Проверьте вкладку "Мои уроки" в профиле',
   });
 
   useEffect(() => {
@@ -68,7 +76,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
       const assignment = {
         spec: '',
         origin: form.values.origin,
-        starter: user?.login || '',
+        starter: user?.login || 'System',
         status: form.values.status,
         infinite: form.values.infinite,
         start: concatDateTime(
@@ -78,6 +86,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         end: concatDateTime(form.values.endDate, form.values.endTime),
         groups: form.values.groups,
       };
+
       requestWithNotify<IAssignmentAdd, IAssignmentAdd>(
         'assignment/add',
         'POST',
@@ -86,13 +95,36 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         (response) => response.spec,
         assignment
       );
+      const notification: INewNotification = {
+        spec: '',
+        title: form.values.notificationTitle,
+        shortDescription: form.values.notificationShortDescription,
+        description: form.values.notificationDescription,
+        logins: [],
+        groups: form.values.groups,
+        roles: [],
+        author: user?.login || '',
+        broadcast: false,
+      };
+
+      sendRequest<INewNotification, string>(
+        'notification/add',
+        'POST',
+        notification
+      ).then((res) => {
+        console.log(res);
+        if (!res.error) {
+          notifyAboutCreation(res.response);
+        }
+      });
     },
-    [lang, locale, user]
+    [lang, locale, notifyAboutCreation, user?.login]
   );
 
   return (
     <>
       <Form
+        shouldNotify={true}
         handleSubmit={handleSubmit}
         buttonLabel={locale.create}
         initialValues={initialValues}

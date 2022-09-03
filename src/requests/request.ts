@@ -21,9 +21,7 @@ export const sendRequest = <ISend, IReceive>(
   if (revalidate) {
     const data = CheckStorage(path + JSON.stringify(body));
     if (data) {
-      return Promise<IResponse<IReceive>>.resolve(
-        data as IResponse<IReceive>
-      );
+      return Promise.resolve(data as IResponse<IReceive>);
     }
   }
 
@@ -36,14 +34,14 @@ export const sendRequest = <ISend, IReceive>(
     options.body = JSON.stringify(body);
   }
   return fetch(withPrefix(path), options)
-    .then((res) =>
+    .then((res: any) =>
       res.status === 200
-        ? res.json().then((res) => ({
+        ? res.json().then((res: any) => ({
             error: false,
             detail: res.detail,
             response: res as IReceive,
           }))
-        : res.json().then((res) => ({
+        : res.json().then((res: any) => ({
             error: true,
             detail: res.detail,
             response: {},
@@ -53,7 +51,7 @@ export const sendRequest = <ISend, IReceive>(
       revalidate
         ? SaveInStorage(path + JSON.stringify(body), res, revalidate)
         : null;
-      return res as IResponse<IReceive>;
+      return res as unknown as IResponse<IReceive>;
     })
     .catch(
       (_) =>

@@ -1,6 +1,6 @@
 import { IUser, IUserContext } from '@custom-types/data/IUser';
 import { isSuccessful, sendRequest } from '@requests/request';
-import { getCookie, setCookie } from '@utils/cookies';
+import { clearCookie, getCookie, setCookie } from '@utils/cookies';
 import {
   FC,
   ReactNode,
@@ -90,6 +90,9 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
   const signOut = useCallback(async () => {
     const res = await isSuccessful('auth/signout', 'GET');
     if (!res.error) {
+      clearCookie('access_token_cookie');
+      clearCookie('refresh_token_cookie');
+      clearCookie('user');
       setValue((prev) => ({
         ...prev,
         user: undefined,
