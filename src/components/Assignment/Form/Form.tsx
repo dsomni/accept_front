@@ -12,7 +12,12 @@ import { UseFormReturnType, useForm } from '@mantine/form';
 const stepFields = [
   ['startDate', 'startTime', 'endDate', 'endTime', 'dates'],
   ['groups'],
-  ['origin'],
+  [
+    'origin',
+    'notificationTitle',
+    'notificationDescription',
+    'notificationShortDescription',
+  ],
 ];
 
 const Form: FC<{
@@ -20,6 +25,7 @@ const Form: FC<{
   initialValues: any;
   buttonLabel: string;
   groups: IGroup[];
+  shouldNotify: boolean;
   assignment_schemas: IAssignmentSchemaDisplay[];
 }> = ({
   handleSubmit,
@@ -27,6 +33,7 @@ const Form: FC<{
   buttonLabel,
   groups,
   assignment_schemas,
+  shouldNotify,
 }) => {
   const { locale } = useLocale();
 
@@ -62,6 +69,14 @@ const Form: FC<{
         value.length == 0
           ? locale.assignment.form.validation.groups
           : null,
+
+      notificationTitle: (value) =>
+        value.length == 0
+          ? locale.notification.form.validate.title
+          : null,
+
+      notificationShortDescription: () => null,
+      notificationDescription: () => null,
     },
   });
 
@@ -69,7 +84,6 @@ const Form: FC<{
     <>
       <Stepper
         buttonLabel={buttonLabel}
-        initialStep={0}
         form={form}
         handleSubmit={() => handleSubmit(form)}
         stepFields={stepFields}
@@ -79,6 +93,7 @@ const Form: FC<{
           <Origin
             key={2}
             form={form}
+            shouldNotify={shouldNotify}
             assignmentSchemas={assignment_schemas}
           />,
         ]}

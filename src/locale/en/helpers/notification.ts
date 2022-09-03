@@ -14,4 +14,7 @@ export const notification = {
     'Otherwise, select respondents/respondent groups using forms on this and the next pages',
     'Do not worry: if the selected categories intersects, the user will receive only one notification',
   ],
+  assignmentCreation: [
+    'Notification will be sent to the all participants of assignment',
+  ],
 };

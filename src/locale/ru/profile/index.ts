@@ -2,7 +2,7 @@ export const profile = {
   groups: 'Группы',
   profile: 'Профиль',
   attempts: 'Попытки',
-  assignments: 'Ваши уроки',
+  assignments: 'Мои уроки',
   notification: 'Уведомления',
   settings: 'Настройки',
   createNotification: 'Создать уведомление',

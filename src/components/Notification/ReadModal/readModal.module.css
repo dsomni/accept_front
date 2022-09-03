@@ -26,3 +26,14 @@
   color: var(--dark3);
   font-size: var(--font-size-s);
 }
+
+.seeProfileWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.seeProfileWrapper p:first-child {
+  font-size: var(--font-size-l);
+}
