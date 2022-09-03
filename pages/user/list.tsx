@@ -103,7 +103,7 @@ const refactorUser = (user: IUser): any => ({
   },
 });
 
-function UsersList() {
+function UsersListPage() {
   return (
     <UserList
       url={'user/list'}
@@ -113,8 +113,8 @@ function UsersList() {
   );
 }
 
-UsersList.getLayout = (page: ReactNode) => {
+UsersListPage.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default UsersList;
+export default UsersListPage;
