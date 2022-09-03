@@ -5,9 +5,10 @@ import styles from './leftMenu.module.css';
 
 const LeftMenu: FC<{
   links: IMenuLink[];
+  initialStep?: number;
   topContent?: ReactNode;
-}> = ({ links, topContent }) => {
-  const [current, setCurrent] = useState(0);
+}> = ({ links, initialStep, topContent }) => {
+  const [current, setCurrent] = useState(initialStep || 0);
 
   return (
     <div className={styles.wrapper}>

@@ -4,11 +4,19 @@ import Results from '@components/Dashboard/Results/Results';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import styles from './dashboard.module.css';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
-import { AlignRight, Database, Table } from 'tabler-icons-react';
+import {
+  AlignRight,
+  Database,
+  Puzzle,
+  Table,
+  Users,
+} from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
 import { IAssignment } from '@custom-types/data/IAssignment';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
+import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
+import TaskList from './TaskList/TaskList';
 
 const AssignmentDashboard: FC<{
   assignment: IAssignment;
@@ -42,11 +50,21 @@ const AssignmentDashboard: FC<{
         icon: <AlignRight color="var(--secondary)" />,
         title: locale.dashboard.assignment.attempts,
       },
+      {
+        page: <ParticipantsList spec={assignment.spec} />,
+        icon: <Users color="var(--secondary)" />,
+        title: locale.dashboard.assignment.participants,
+      },
+      {
+        page: <TaskList spec={assignment.spec} />,
+        icon: <Puzzle color="var(--secondary)" />,
+        title: locale.dashboard.assignment.tasks,
+      },
     ],
     [assignment, locale]
   );
 
-  return <LeftMenu links={links} />;
+  return <LeftMenu initialStep={4} links={links} />;
 };
 
 export default memo(AssignmentDashboard);

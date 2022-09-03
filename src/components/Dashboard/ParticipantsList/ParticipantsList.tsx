@@ -1,11 +1,13 @@
+import { FC, memo } from 'react';
 import { ITableColumn } from '@custom-types/ui/ITable';
-import { DefaultLayout } from '@layouts/DefaultLayout';
-import { ReactNode } from 'react';
+
 import tableStyles from '@styles/ui/customTable.module.css';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { IUser } from '@custom-types/data/IUser';
 import { capitalize } from '@utils/capitalize';
 import UserList from '@ui/UserList/UserList';
+
+import styles from './participantsList.module.css';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -103,18 +105,26 @@ const refactorUser = (user: IUser): any => ({
   },
 });
 
-function UsersList() {
+const ParticipantsList: FC<{ spec: string }> = ({ spec }) => {
   return (
-    <UserList
-      url={'user/list'}
-      refactorUser={refactorUser}
-      initialColumns={initialColumns}
-    />
+    <div className={styles.wrapper}>
+      <UserList
+        url={`assignment/participants/${spec}`}
+        refactorUser={refactorUser}
+        initialColumns={initialColumns}
+        noDefault
+        empty={<></>}
+        classNames={{
+          wrapper: tableStyles.wrapper,
+          table: tableStyles.table,
+          headerCell: styles.headerCell,
+          cell: styles.cell,
+          even: tableStyles.even,
+          odd: tableStyles.odd,
+        }}
+      />
+    </div>
   );
-}
-
-UsersList.getLayout = (page: ReactNode) => {
-  return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default UsersList;
+export default memo(ParticipantsList);
