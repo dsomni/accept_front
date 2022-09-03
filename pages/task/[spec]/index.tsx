@@ -7,7 +7,7 @@ import { getApiUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useRouter } from 'next/router';
 import { ILanguage } from '@custom-types/data/atomic';
@@ -74,9 +74,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
     };
   }, [router.query.assignment, fetch_tasks_assignment]);
 
-  const actions = (
+  const actions: IStickyAction[] = (
     task.hint
-      ? [
+      ? ([
           {
             color: 'grape',
             icon: (
@@ -87,18 +87,18 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             ),
             onClick: () => setOpenedHint(true),
           },
-        ]
+        ] as IStickyAction[])
       : []
   ).concat([
     {
       color: 'green',
+      href: `/task/edit/${task.spec}`,
       icon: (
         <Pencil
           width={STICKY_SIZES[width] / 3}
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      onClick: () => router.push(`/task/edit/${task.spec}`),
     },
     {
       color: 'red',

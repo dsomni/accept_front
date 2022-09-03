@@ -6,7 +6,6 @@ import tableStyles from '@styles/ui/customTable.module.css';
 import { ILocale } from '@custom-types/ui/ILocale';
 import TaskList from '@ui/TaskList/TaskList';
 import SingularSticky from '@ui/Sticky/SingularSticky';
-import router from 'next/router';
 import { Plus } from 'tabler-icons-react';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
@@ -149,7 +148,7 @@ function TaskListPage() {
       />{' '}
       <SingularSticky
         color="green"
-        onClick={() => router.push(`/task/add/`)}
+        href={`/task/add`}
         icon={<Plus height={25} width={25} />}
       />
     </div>

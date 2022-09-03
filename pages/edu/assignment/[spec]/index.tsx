@@ -30,8 +30,7 @@ function Assignment(props: { assignment: IAssignment }) {
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      onClick: () =>
-        router.push(`/edu/assignment/edit/${assignment.spec}`),
+      href: `/edu/assignment/edit/${assignment.spec}`,
     },
     {
       color: 'red',

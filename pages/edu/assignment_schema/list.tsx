@@ -14,7 +14,6 @@ import {
   IAssignmentSchemaDisplay,
   IAssignmentSchemaListBundle,
 } from '@custom-types/data/IAssignmentSchema';
-import { useRouter } from 'next/router';
 import { Plus } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 import SingularSticky from '@ui/Sticky/SingularSticky';
@@ -145,7 +144,7 @@ const defaultOnPage = 10;
 
 function AssignmentList() {
   const { locale } = useLocale();
-  const router = useRouter();
+
   const [list, setList] = useState<IAssignmentSchemaDisplayList[]>(
     []
   );
@@ -270,7 +269,7 @@ function AssignmentList() {
       />
       <SingularSticky
         color="green"
-        onClick={() => router.push(`/edu/assignment_schema/add/`)}
+        href={`/edu/assignment_schema/add`}
         icon={<Plus height={25} width={25} />}
       />
     </div>
