@@ -99,7 +99,13 @@ const TimeInfo: FC<{ assignment: IAssignment }> = ({
       <div className={styles.timerWrapper}>
         {!assignment.infinite && (
           <div className={styles.timer}>
-            {assignment.status.spec != 2 ? timer : ''}
+            {assignment.status.spec != 2
+              ? `${
+                  assignment.status.spec == 0
+                    ? locale.timer.beforeStart
+                    : locale.timer.beforeEnd
+                } ${timer}`
+              : ''}
           </div>
         )}
       </div>

@@ -23,10 +23,13 @@ export const UTCDate = (date: Date) => {
   );
 };
 
+const addFrontZero = (number: number) =>
+  number > 9 ? number.toString() : '0' + number;
+
 const getLabeledTime = (time: number) => ({
-  seconds: Math.floor(time / 1000) % 60,
-  minutes: Math.floor(time / 1000 / 60) % 60,
-  hours: Math.floor(time / 1000 / 60 / 60) % 24,
+  seconds: addFrontZero(Math.floor(time / 1000) % 60),
+  minutes: addFrontZero(Math.floor(time / 1000 / 60) % 60),
+  hours: addFrontZero(Math.floor(time / 1000 / 60 / 60) % 24),
   days: Math.floor(time / 1000 / 60 / 60 / 24) % 30,
   months: Math.floor(time / 1000 / 60 / 60 / 24 / 30) % 12,
   years: Math.floor(time / 1000 / 60 / 60 / 24 / 30 / 12),
@@ -34,9 +37,17 @@ const getLabeledTime = (time: number) => ({
 
 export const timerDate = (time: number, locale: ILocale): string => {
   const date = getLabeledTime(time);
-  return `${date.years ? `${date.years} ${locale.timer.years}` : ''}${
-    date.months ? `${date.months} ${locale.timer.months}` + ' ' : ''
-  }${date.days ? `${date.days} ${locale.timer.days}` + ' ' : ''}${
-    date.hours
-  }:${date.minutes}:${date.seconds}`;
+  return `${
+    date.years
+      ? `${date.years} ${locale.timer.years(date.years)} `
+      : ''
+  }${
+    date.months
+      ? `${date.months} ${locale.timer.months(date.months)} ` + ' '
+      : ''
+  }${
+    date.days
+      ? `${date.days} ${locale.timer.days(date.days)} ` + ' '
+      : ''
+  }${date.hours}:${date.minutes}:${date.seconds}`;
 };
