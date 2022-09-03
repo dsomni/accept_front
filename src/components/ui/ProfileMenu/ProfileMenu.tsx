@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from 'react';
-import { Avatar, Menu } from '@mantine/core';
+import { Avatar, Group, Menu } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useLocale } from '@hooks/useLocale';
 import {
@@ -10,6 +10,8 @@ import {
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { link } from '@constants/Avatar';
 import { Indicator } from '@ui/basics';
+import styles from './profileMenu.module.css';
+import { BellRinging, Logout, Robot } from 'tabler-icons-react';
 
 const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
@@ -59,13 +61,30 @@ const ProfileMenu: FC<{}> = ({}) => {
         <Menu.Dropdown>
           <Menu.Label>{user?.shortName || ''}</Menu.Label>
           <Menu.Item component="a" href="/profile/me">
-            {locale.mainHeaderLinks.signOut.profile}
+            <Group spacing="xs" className={styles.wrapper}>
+              <Robot color="var(--secondary)" size={20} />
+              <div>{locale.mainHeaderLinks.signOut.profile}</div>
+            </Group>
           </Menu.Item>
           <Menu.Item onClick={openModal}>
-            {locale.mainHeaderLinks.signOut.notifications}
+            <Group spacing="xs" className={styles.wrapper}>
+              <Group className={styles.wrapper}>
+                <Indicator disabled={amount <= 0} size={6}>
+                  <BellRinging color="var(--secondary)" size={20} />
+                </Indicator>
+                <div>
+                  {locale.mainHeaderLinks.signOut.notifications}
+                </div>
+              </Group>
+            </Group>
           </Menu.Item>
           <Menu.Item onClick={handleSignOut}>
-            {locale.mainHeaderLinks.signOut.signOut}
+            <Group spacing="xs" className={styles.wrapper}>
+              <Group className={styles.wrapper}>
+                <Logout color="var(--secondary)" size={20} />
+                <div>{locale.mainHeaderLinks.signOut.signOut}</div>
+              </Group>
+            </Group>
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

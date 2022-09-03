@@ -109,7 +109,6 @@ const Form: FC<{
   return (
     <>
       <Stepper
-        initialStep={3}
         buttonLabel={locale.create}
         form={form}
         handleSubmit={handleSubmit}

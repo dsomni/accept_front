@@ -25,3 +25,9 @@ export const getCookie = (
   }
   if (defaultValue) return defaultValue;
 };
+
+export const clearCookie = (name: string) => {
+  setCookie(name, '', {
+    'Max-Age': 0,
+  });
+};
