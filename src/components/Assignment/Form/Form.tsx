@@ -71,7 +71,7 @@ const Form: FC<{
           : null,
 
       notificationTitle: (value) =>
-        value.length == 0
+        shouldNotify && value.length == 0
           ? locale.notification.form.validate.title
           : null,
 
