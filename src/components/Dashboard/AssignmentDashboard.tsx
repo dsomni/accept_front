@@ -1,4 +1,4 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useMemo, useState } from 'react';
 import Chat from '@components/Dashboard/Chat/Chat';
 import Results from '@components/Dashboard/Results/Results';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
@@ -7,8 +7,10 @@ import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import {
   AlignRight,
   Database,
+  Pencil,
   Puzzle,
   Table,
+  Trash,
   Users,
 } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
@@ -17,6 +19,11 @@ import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
 import TaskList from './TaskList/TaskList';
+import { useUser } from '@hooks/useUser';
+import { useWidth } from '@hooks/useWidth';
+import { STICKY_SIZES } from '@constants/Sizes';
+import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
+import Sticky from '@ui/Sticky/Sticky';
 
 const AssignmentDashboard: FC<{
   assignment: IAssignment;
@@ -64,7 +71,49 @@ const AssignmentDashboard: FC<{
     [assignment, locale]
   );
 
-  return <LeftMenu initialStep={4} links={links} />;
+  const [activeModal, setActiveModal] = useState(false);
+
+  const { isTeacher } = useUser();
+  const { width } = useWidth();
+
+  const actions = [
+    {
+      color: 'green',
+      icon: (
+        <Pencil
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+      href: `/edu/assignment/edit/${assignment.spec}`,
+    },
+    {
+      color: 'red',
+      icon: (
+        <Trash
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+      onClick: () => setActiveModal(true),
+    },
+  ];
+
+  return (
+    <>
+      {isTeacher && (
+        <>
+          <DeleteModal
+            active={activeModal}
+            setActive={setActiveModal}
+            assignment={assignment}
+          />
+          <Sticky actions={actions} color={'--prime'} />
+        </>
+      )}
+      <LeftMenu links={links} />
+    </>
+  );
 };
 
 export default memo(AssignmentDashboard);

@@ -11,7 +11,8 @@ import { useWidth } from '@hooks/useWidth';
 export interface IStickyAction {
   icon: ReactNode;
   color: string;
-  onClick: setter<any>;
+  onClick?: setter<any>;
+  href?: string;
 }
 
 const Sticky: FC<{
