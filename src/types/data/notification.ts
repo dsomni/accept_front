@@ -5,6 +5,8 @@ export interface INotification {
   description: string;
   author: string;
   date: Date;
+  viewed: boolean;
+  sent: boolean;
 }
 
 export interface INewNotification {

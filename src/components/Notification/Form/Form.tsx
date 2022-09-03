@@ -15,6 +15,7 @@ import {
 } from '@utils/notificationFunctions';
 import Stepper from '@ui/Stepper/Stepper';
 import { INewNotification } from '@custom-types/data/notification';
+import { useBackNotifications } from '@hooks/useBackNotifications';
 
 const stepFields = [
   ['title', 'author'],
@@ -30,6 +31,8 @@ const Form: FC<{
   noDefault?: boolean;
 }> = ({ users, groups, roles, noDefault }) => {
   const { locale, lang } = useLocale();
+
+  const { notifyAboutCreation } = useBackNotifications();
 
   const form = useForm({
     initialValues: {
@@ -92,19 +95,21 @@ const Form: FC<{
     const body: INewNotification = {
       ...form.values,
     };
-    requestWithNotify<INewNotification, boolean>(
+    requestWithNotify<INewNotification, string>(
       'notification/add',
       'POST',
       locale.notify.notification.create,
       lang,
-      (_: boolean) => '',
-      body
+      (_: string) => '',
+      body,
+      notifyAboutCreation
     );
-  }, [form, locale, lang]);
+  }, [form, locale, lang, notifyAboutCreation]);
 
   return (
     <>
       <Stepper
+        initialStep={3}
         buttonLabel={locale.create}
         form={form}
         handleSubmit={handleSubmit}

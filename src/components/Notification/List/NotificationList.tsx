@@ -8,10 +8,7 @@ import {
   useState,
 } from 'react';
 import styles from './notificationList.module.css';
-import {
-  INotification,
-  INotificationRecord,
-} from '@custom-types/data/notification';
+import { INotification } from '@custom-types/data/notification';
 import { Badge, Checkbox, Pagination, Tooltip } from '@mantine/core';
 import { Icon } from '@ui/basics';
 import { requestWithError } from '@utils/requestWithError';
@@ -24,14 +21,10 @@ import { useBackNotifications } from '@hooks/useBackNotifications';
 
 const ON_PAGE = 10;
 
-interface INotificationItem extends INotification {
-  new: boolean;
-}
-
 const NotificationList: FC<{}> = ({}) => {
-  const [notifications, setNotifications] = useState<
-    INotificationItem[]
-  >([]);
+  const [notifications, setNotifications] = useState<INotification[]>(
+    []
+  );
   const [openedModal, setOpenedModal] = useState(false);
   const [current, setCurrent] = useState(0);
   const [activePage, setPage] = useState(1);
@@ -47,45 +40,27 @@ const NotificationList: FC<{}> = ({}) => {
 
   const [selected, setSelected] = useState<string[]>([]);
 
-  const { sendViewed, fetchNotificationsAmount } =
+  const { sendViewed, refetchNewNotifications } =
     useBackNotifications();
 
   const processNotifications = useCallback(
-    (res: INotificationRecord) => {
-      const newNotifications = res.new_notifications
+    (res: INotification[]) => {
+      const notifications = res
         .map((item) => ({ ...item, date: new Date(item.date) }))
         .sort((a, b) => b.date.getTime() - a.date.getTime());
-      const oldNotifications = res.notifications
-        .map((item) => ({ ...item, date: new Date(item.date) }))
-        .sort((a, b) => b.date.getTime() - a.date.getTime());
-      const processedNotifications = [];
-      for (let i = 0; i < newNotifications.length; i++) {
-        const notification: INotificationItem = {
-          ...newNotifications[i],
-          new: true,
-        };
-        processedNotifications.push(notification);
-      }
-      for (let i = 0; i < oldNotifications.length; i++) {
-        const notification: INotificationItem = {
-          ...oldNotifications[i],
-          new: false,
-        };
-        processedNotifications.push(notification);
-      }
-      setNotifications(processedNotifications);
+      setNotifications(notifications);
     },
     [setNotifications]
   );
 
   const { refetch: refetchNotifications } = useRequest<
     {},
-    INotificationRecord,
+    INotification[],
     void
   >('notification/list', 'GET', undefined, processNotifications);
 
   const onCheckboxCheck = useCallback(
-    (notification: INotificationItem) => {
+    (notification: INotification) => {
       return (event: ChangeEvent<HTMLInputElement>) => {
         if (event.currentTarget.checked) {
           setSelected((selected) => {
@@ -117,7 +92,7 @@ const NotificationList: FC<{}> = ({}) => {
       selected,
       () => {
         setSelected([]);
-        setTimeout(fetchNotificationsAmount, 500);
+        setTimeout(refetchNewNotifications, 500);
         refetchNotifications();
       }
     );
@@ -125,7 +100,7 @@ const NotificationList: FC<{}> = ({}) => {
     locale,
     lang,
     refetchNotifications,
-    fetchNotificationsAmount,
+    refetchNewNotifications,
     selected,
     setSelected,
   ]);
@@ -223,7 +198,7 @@ const NotificationList: FC<{}> = ({}) => {
             className={
               styles.notification +
               ' ' +
-              (notification.new ? styles.new : '')
+              (!notification.viewed ? styles.new : '')
             }
           >
             <div className={styles.checkboxWrapper}>
@@ -238,7 +213,9 @@ const NotificationList: FC<{}> = ({}) => {
             >
               <div className={styles.title}>
                 {notification.title}{' '}
-                {notification.new && <Badge color="green">New</Badge>}
+                {!notification.viewed && (
+                  <Badge color="green">New</Badge>
+                )}
               </div>
               <div className={styles.shortDescription}>
                 {notification.shortDescription}

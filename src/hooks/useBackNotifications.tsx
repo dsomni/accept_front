@@ -1,11 +1,11 @@
 import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { INotification } from '@custom-types/data/notification';
-import { useLocalStorage } from '@mantine/hooks';
-import { IResponse, sendRequest } from '@requests/request';
+import { sendRequest } from '@requests/request';
 import {
   infoNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+
 import { requestWithError } from '@utils/requestWithError';
 import {
   FC,
@@ -31,7 +31,8 @@ interface INotificationContext {
   loading: boolean;
   openModal: () => void;
   close: () => void;
-  fetchNotificationsAmount: () => void;
+  refetchNewNotifications: () => void;
+  notifyAboutCreation: (spec: string) => void;
 }
 
 const BackNotificationsContext = createContext<INotificationContext>(
@@ -47,55 +48,19 @@ export const BackNotificationsProvider: FC<{
     []
   );
 
-  const [amount, setAmount] = useLocalStorage({
-    key: 'notifications_amount',
-    defaultValue: '-1',
-  });
-  const { locale, lang } = useLocale();
+  const { lang } = useLocale();
   const { user } = useUser();
 
-  const fetchNotificationsAmount = useCallback(
-    (first: boolean) => {
-      if (user) {
-        sendRequest<undefined, number>(
-          'notification/amount',
-          'GET'
-        ).then((res: IResponse<number>) => {
-          if (!res.error) {
-            if (
-              (Number(amount) >= 0 || first) &&
-              res.response > (amount || 0)
-            ) {
-              const id = newNotification({});
-              infoNotification({
-                id,
-                title: locale.notify.notification.hasNew,
-                message: locale.notify.notification.amount(
-                  res.response
-                ),
-              });
-            }
-            setAmount(res.response.toString());
-          }
-        });
+  const [webSocket, setWebSocket] = useState<WebSocket>();
+
+  const handleSend = useCallback(
+    (spec: string) => {
+      if (webSocket && webSocket.readyState === 1) {
+        webSocket.send(spec);
       }
     },
-    [amount, locale.notify.notification, setAmount, user]
+    [webSocket]
   );
-
-  useEffect(() => {
-    fetchNotificationsAmount(true);
-  }, []); // eslint-disable-line
-
-  useEffect(() => {
-    const id = setInterval(
-      () => fetchNotificationsAmount(false),
-      60000
-    );
-    return () => {
-      clearInterval(id);
-    };
-  }, [fetchNotificationsAmount]);
 
   const fetchNotifications = useCallback(() => {
     setLoading(true);
@@ -105,10 +70,42 @@ export const BackNotificationsProvider: FC<{
     ).then((res) => {
       if (!res.error) {
         setNotifications(res.response);
+        res.response.map((notification) => {
+          if (!notification.sent) {
+            const id = newNotification({});
+            infoNotification({
+              id,
+              title: notification.title,
+              message: notification.shortDescription,
+            });
+          }
+        });
       }
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    const ws = new WebSocket(
+      `ws://${
+        process.env.API_ENDPOINT?.split('://')[1]
+      }/ws/notification/${user?.login}`
+    );
+
+    ws.onmessage = (event) => {
+      const shouldRefetch = JSON.parse(event.data) as boolean;
+      if (shouldRefetch) {
+        fetchNotifications();
+      }
+    };
+
+    setWebSocket(ws);
+
+    return () => {
+      ws.close();
+    };
+  }, [fetchNotifications, user]);
 
   const handleOpenModal = useCallback(() => {
     fetchNotifications();
@@ -130,31 +127,32 @@ export const BackNotificationsProvider: FC<{
           Array.from(new Set(viewed)),
           () => {
             onSuccess();
-            setTimeout(fetchNotificationsAmount, 500);
+            setTimeout(fetchNotifications, 500);
           }
         );
       }
     },
-    [fetchNotificationsAmount, lang]
+    [fetchNotifications, lang]
   );
 
   const value: INotificationContext = useMemo(
     () => ({
-      amount: Number(amount),
+      amount: notifications.length,
       notifications,
       sendViewed,
       loading,
       openModal: handleOpenModal,
-      fetchNotificationsAmount: () => fetchNotificationsAmount(false),
       close: () => setOpened(false),
+      refetchNewNotifications: () => fetchNotifications,
+      notifyAboutCreation: handleSend,
     }),
     [
-      amount,
       notifications,
       sendViewed,
       loading,
       handleOpenModal,
-      fetchNotificationsAmount,
+      fetchNotifications,
+      handleSend,
     ]
   );
 
