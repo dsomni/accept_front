@@ -7,6 +7,7 @@ import { IGroup } from './IGroup';
 import { IAttemptDisplay } from './IAttempt';
 import { ITag } from './ITag';
 export interface IAssignment extends IAssignmentSchema {
+  origin: string;
   starter: string;
   status: IAssignmentStatus;
   infinite: boolean;
