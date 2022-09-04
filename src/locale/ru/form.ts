@@ -14,4 +14,5 @@ export const placeholders = {
   selectGroups: 'Выберете группы',
   selectRoles: 'Выберете роли',
   title: 'Введите название',
+  chat: 'Введите сообщение',
 };

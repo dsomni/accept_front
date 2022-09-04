@@ -1,9 +1,18 @@
 import { useUser } from '@hooks/useUser';
-import { Icon, TextInput } from '@ui/basics';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { Icon } from '@ui/basics';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Send } from 'tabler-icons-react';
 import styles from './chat.module.css';
 import { IMessage } from '@custom-types/data/IMessage';
+import { Textarea } from '@mantine/core';
+import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
 
 const Chat: FC<{ spec: string }> = ({ spec }) => {
@@ -11,6 +20,10 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
   const [webSocket, setWebSocket] = useState<WebSocket>();
   const [message, setMessage] = useState('');
   const { user } = useUser();
+  const messagesDiv = useRef<HTMLDivElement>(null!);
+  const [justSend, setJustSend] = useState(true);
+
+  const { locale } = useLocale();
 
   useEffect(() => {
     if (!user) return;
@@ -20,18 +33,29 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
       }/ws/chat/${spec}/${user?.login}`
     );
 
-    ws.onmessage = (event) => {
-      setMessages((messages) => {
-        return [...messages, JSON.parse(event.data)];
-      });
-    };
-
     setWebSocket(ws);
 
     return () => {
       ws.close();
     };
   }, [spec, user]);
+
+  useEffect(() => {
+    if (webSocket) {
+      webSocket.onmessage = (event) => {
+        setMessages((messages) => {
+          return [...messages, JSON.parse(event.data)];
+        });
+        setTimeout(() => {
+          if (justSend && messagesDiv.current) {
+            messagesDiv.current.scrollTop =
+              messagesDiv.current.scrollHeight;
+            setJustSend(false);
+          }
+        }, 100);
+      };
+    }
+  }, [justSend, webSocket]);
 
   const handleSend = useCallback(() => {
     if (
@@ -41,36 +65,60 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
     ) {
       webSocket.send(message.trim());
     }
+    setJustSend(true);
+    setMessage('');
   }, [webSocket, message]);
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.messages}>
+      <div ref={messagesDiv} className={styles.messages}>
         {messages.map((message, index) => (
           <div
-            className={`${styles.message} ${
+            className={`${styles.messageWrapper} ${
               message.user.login === user?.login ? styles.own : ''
             }`}
             key={index}
           >
-            <div className={styles.user}>
-              {message.user.shortName}
-            </div>
-            <div className={styles.content}>{message.content}</div>
-            <div className={styles.date}>
-              {getLocalDate(message.date)}
+            <div className={styles.message}>
+              <div className={styles.user}>
+                {message.user.shortName}
+              </div>
+
+              <div className={styles.content}>{message.content}</div>
+              <div className={styles.date}>
+                {getLocalDate(message.date)}
+              </div>
             </div>
           </div>
         ))}
       </div>
       <div className={styles.sendWrapper}>
-        <TextInput
+        <Textarea
           className={styles.input}
+          styles={{
+            root: {
+              width: '100%',
+              height: '100%',
+              padding: 0,
+            },
+            wrapper: { height: '100%' },
+            input: {
+              height: '100%',
+              border: 'none',
+              fontSize: 'var(--font-size-s)',
+            },
+          }}
+          value={message}
           onChange={(event) => setMessage(event.currentTarget.value)}
+          placeholder={locale.placeholders.chat}
+          minRows={1}
+          maxRows={3}
+          autosize
         />
         <Icon
           className={styles.button}
           onClick={handleSend}
+          size={'sm'}
           color="var(--primary)"
         >
           <Send />
