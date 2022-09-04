@@ -1,6 +1,5 @@
 import { ReactNode, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -21,8 +20,6 @@ function Assignment(props: { assignment: IAssignment }) {
 
   const { isTeacher } = useUser();
   const { width } = useWidth();
-
-  const router = useRouter();
 
   const actions = [
     {
@@ -55,8 +52,7 @@ function Assignment(props: { assignment: IAssignment }) {
         assignment={
           {
             ...assignment,
-            taskNumber: 0,
-            origin: '',
+            taskNumber: assignment.tasks.length,
           } as IAssignmentDisplay
         }
       />
