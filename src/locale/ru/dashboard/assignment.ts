@@ -4,4 +4,8 @@ export const assignment = {
   attempts: 'Попытки',
   participants: 'Участники',
   tasks: 'Задачи',
+  timeInfo: {
+    enterManually: 'Ввести вручную',
+    addTimeToEnd: 'Добавить время к дате окончания',
+  },
 };

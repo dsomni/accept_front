@@ -10,7 +10,10 @@ import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Description from '@components/Assignment/Description/Description';
 import { Pencil, Trash } from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
-import { IAssignment } from '@custom-types/data/IAssignment';
+import {
+  IAssignment,
+  IAssignmentDisplay,
+} from '@custom-types/data/IAssignment';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
@@ -49,7 +52,13 @@ function Assignment(props: { assignment: IAssignment }) {
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}
-        assignment={assignment}
+        assignment={
+          {
+            ...assignment,
+            taskNumber: 0,
+            origin: '',
+          } as IAssignmentDisplay
+        }
       />
       {isTeacher && <Sticky actions={actions} color={'--prime'} />}
       <Description assignment={assignment} />

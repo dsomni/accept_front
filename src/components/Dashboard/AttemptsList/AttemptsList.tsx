@@ -108,10 +108,10 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   },
 ];
 
-const AttemptList: FC<{ spec: string; shouldRefetch: boolean }> = ({
-  spec,
-  shouldRefetch,
-}) => {
+const AttemptList: FC<{
+  spec: string;
+  shouldNotRefetch: boolean;
+}> = ({ spec, shouldNotRefetch }) => {
   const { locale } = useLocale();
   return (
     <div className={styles.wrapper}>
@@ -122,7 +122,7 @@ const AttemptList: FC<{ spec: string; shouldRefetch: boolean }> = ({
         refactorAttempt={refactorAttempt}
         empty={<>{locale.profile.empty.attempts}</>}
         noDefault
-        shouldRefetch={shouldRefetch}
+        shouldNotRefetch={shouldNotRefetch}
         classNames={{
           wrapper: tableStyles.wrapper,
           table: tableStyles.table,

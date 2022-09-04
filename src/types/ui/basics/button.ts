@@ -14,5 +14,6 @@ export type MyButtonProps = ButtonProps &
     hoverCardTargetProps?: HoverCardTargetProps;
     dropdownContent?: string | ReactNode;
     targetWrapperStyle?: CSSProperties;
+    buttonWrapperStyle?: CSSProperties;
     kind?: 'positive' | 'negative';
   };

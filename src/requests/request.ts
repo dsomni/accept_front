@@ -16,7 +16,7 @@ export const sendRequest = <ISend, IReceive>(
   path: string,
   method: availableMethods,
   body?: ISend extends object ? ISend : object,
-  revalidate?: number // millis
+  revalidate?: number // milliseconds
 ): Promise<IResponse<IReceive>> => {
   if (revalidate) {
     const data = CheckStorage(path + JSON.stringify(body));

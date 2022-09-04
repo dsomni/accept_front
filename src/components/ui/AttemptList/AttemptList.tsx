@@ -37,12 +37,12 @@ const AttemptsList: FC<{
   url: string;
   activeTab: boolean;
   classNames?: any;
-  initialColumns: (locale: ILocale) => ITableColumn[];
-  refactorAttempt: (attempt: IAttemptDisplay, locale: ILocale) => any;
+  initialColumns: (_: ILocale) => ITableColumn[];
+  refactorAttempt: (_: IAttemptDisplay, __: ILocale) => any;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
-  shouldRefetch?: boolean;
+  shouldNotRefetch?: boolean;
 }> = ({
   url,
   activeTab,
@@ -52,7 +52,7 @@ const AttemptsList: FC<{
   noDefault,
   empty,
   defaultRowsOnPage,
-  shouldRefetch,
+  shouldNotRefetch,
 }) => {
   const { locale } = useLocale();
   const { refreshAccess } = useUser();
@@ -126,7 +126,7 @@ const AttemptsList: FC<{
 
   useEffect(() => {
     refetch();
-    if (activeTab && shouldRefetch) {
+    if (activeTab && !shouldNotRefetch) {
       const id = setInterval(() => {
         if (needRefetch) refetch(false);
       }, 2000);
@@ -134,7 +134,7 @@ const AttemptsList: FC<{
         clearInterval(id);
       };
     }
-  }, [needRefetch, refetch, activeTab, shouldRefetch]);
+  }, [needRefetch, refetch, activeTab, shouldNotRefetch]);
 
   return (
     <div>

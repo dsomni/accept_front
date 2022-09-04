@@ -1,14 +1,57 @@
-import { IAssignment } from '@custom-types/data/IAssignment';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './timeInfo.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate, timerDate } from '@utils/datetime';
 import { useInterval } from '@mantine/hooks';
+import { Button } from '@ui/basics';
 
-const TimeInfo: FC<{ assignment: IAssignment }> = ({
-  assignment,
-}) => {
+import { sendRequest } from '@requests/request';
+import { ILocale } from '@custom-types/ui/ILocale';
+import CustomTimeModal from '@components/Dashboard/TimeInfo/CustomTimeModal/CustomTimeModal';
+import { IAssignmentStatus } from '@custom-types/data/atomic';
+import { IAssignmentDisplay } from '@custom-types/data/IAssignment';
+
+interface ITimeChangeButton {
+  value: number;
+  multiple: number;
+  units: (_: ILocale, __: number) => string;
+}
+
+const DECREASE_TIME: ITimeChangeButton[] = [
+  {
+    value: 1,
+    multiple: 3600,
+    units: (locale: ILocale, value: number) =>
+      locale.timer.hours(value),
+  },
+  {
+    value: 10,
+    multiple: 60,
+    units: (locale: ILocale, value: number) =>
+      locale.timer.minutes(value),
+  },
+];
+
+const INCREASE_TIME: ITimeChangeButton[] = [
+  {
+    value: 10,
+    multiple: 60,
+    units: (locale: ILocale, value: number) =>
+      locale.timer.minutes(value),
+  },
+  {
+    value: 1,
+    multiple: 3600,
+    units: (locale: ILocale, value: number) =>
+      locale.timer.hours(value),
+  },
+];
+
+const TimeInfo: FC<{
+  assignment: IAssignmentDisplay;
+  refetch: () => void;
+}> = ({ assignment, refetch }) => {
   const { locale } = useLocale();
   const [timer, setTimer] = useState('');
 
@@ -19,6 +62,7 @@ const TimeInfo: FC<{ assignment: IAssignment }> = ({
       let date = 0;
       switch (assignment.status.spec) {
         case 0:
+          console.log(new Date(assignment.start), new Date());
           date =
             new Date(assignment.start).getTime() -
             new Date().getTime();
@@ -32,12 +76,7 @@ const TimeInfo: FC<{ assignment: IAssignment }> = ({
       }
       return timerDate(date, locale);
     });
-  }, [
-    assignment.end,
-    assignment.start,
-    assignment.status.spec,
-    locale,
-  ]);
+  }, [assignment, locale]);
 
   const interval = useInterval(tick, 1000);
 
@@ -46,6 +85,22 @@ const TimeInfo: FC<{ assignment: IAssignment }> = ({
     interval.start();
     return interval.stop;
   }, [interval]);
+
+  const handleTimeButton = useCallback(
+    (time: number) => {
+      sendRequest<
+        { amount: number },
+        { end: Date; status: IAssignmentStatus }
+      >(`assignment/time/${assignment.spec}`, 'POST', {
+        amount: time,
+      }).then((res) => {
+        if (!res.error) {
+          refetch();
+        }
+      });
+    },
+    [assignment.spec, refetch]
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -95,19 +150,65 @@ const TimeInfo: FC<{ assignment: IAssignment }> = ({
           </div>
         </div>
       </div>
-      <div className={styles.settingsWrapper}></div>
-      <div className={styles.timerWrapper}>
-        {!assignment.infinite && (
-          <div className={styles.timer}>
-            {assignment.status.spec != 2
-              ? `${
-                  assignment.status.spec == 0
-                    ? locale.timer.beforeStart
-                    : locale.timer.beforeEnd
-                } ${timer}`
-              : ''}
-          </div>
-        )}
+      <div className={styles.timeWrapper}>
+        <div className={styles.timerWrapper}>
+          {!assignment.infinite && (
+            <div className={styles.timer}>
+              {assignment.status.spec != 2
+                ? `${
+                    assignment.status.spec == 0
+                      ? locale.timer.beforeStart
+                      : locale.timer.beforeEnd
+                  } ${timer}`
+                : ''}
+            </div>
+          )}
+        </div>
+        <div className={styles.buttonsWrapper}>
+          {DECREASE_TIME.map((buttonObject, idx) => (
+            <Button
+              key={idx}
+              targetWrapperStyle={{ width: '100%' }}
+              buttonWrapperStyle={{ width: '100%' }}
+              style={{ borderRight: 'none', borderRadius: 0 }}
+              fullWidth
+              variant="light"
+              onClick={() =>
+                handleTimeButton(
+                  -(buttonObject.value * buttonObject.multiple)
+                )
+              }
+            >
+              {`- ${buttonObject.value} ${buttonObject.units(
+                locale,
+                buttonObject.value
+              )}`}
+            </Button>
+          ))}
+          <CustomTimeModal
+            handleTime={(time: number) => handleTimeButton(time)}
+          />
+          {INCREASE_TIME.map((buttonObject, idx) => (
+            <Button
+              key={idx}
+              targetWrapperStyle={{ width: '100%' }}
+              buttonWrapperStyle={{ width: '100%' }}
+              style={{ borderRight: 'none', borderRadius: 0 }}
+              fullWidth
+              variant="light"
+              onClick={() =>
+                handleTimeButton(
+                  buttonObject.value * buttonObject.multiple
+                )
+              }
+            >
+              {`+ ${buttonObject.value} ${buttonObject.units(
+                locale,
+                buttonObject.value
+              )}`}
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { FC, memo, useMemo, useState } from 'react';
+import { FC, memo, useEffect, useMemo, useState } from 'react';
 import Chat from '@components/Dashboard/Chat/Chat';
 import Results from '@components/Dashboard/Results/Results';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
@@ -14,7 +14,7 @@ import {
   Users,
 } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
-import { IAssignment } from '@custom-types/data/IAssignment';
+import { IAssignmentDisplay } from '@custom-types/data/IAssignment';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
@@ -24,51 +24,64 @@ import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Sticky from '@ui/Sticky/Sticky';
+import { useRequest } from '@hooks/useRequest';
 
 const AssignmentDashboard: FC<{
-  assignment: IAssignment;
-}> = ({ assignment }) => {
+  spec: string;
+}> = ({ spec }) => {
   const { locale } = useLocale();
+
+  const [assignment, setAssignment] = useState<IAssignmentDisplay>();
+
+  const { data, refetch } = useRequest<undefined, IAssignmentDisplay>(
+    `assignment/display/${spec}`,
+    'GET'
+  );
+
+  useEffect(() => {
+    if (data) setAssignment(data);
+  }, [data]);
+
   const links: IMenuLink[] = useMemo(
     () => [
       {
-        page: (
+        page: assignment && (
           <div className={styles.mainInfo}>
-            <TimeInfo assignment={assignment} />
-            <Chat spec={assignment.spec} />
+            <TimeInfo assignment={assignment} refetch={refetch} />
+            <Chat spec={spec} />
           </div>
         ),
         icon: <Database color="var(--secondary)" />,
         title: locale.dashboard.assignment.mainInfo,
       },
       {
-        page: <Results spec={assignment.spec} />,
+        page: <Results spec={spec} />,
         icon: <Table color="var(--secondary)" />,
 
         title: locale.dashboard.assignment.results,
       },
       {
-        page: (
+        page: assignment && (
           <AttemptsList
             spec={assignment.spec}
-            shouldRefetch={assignment.status.spec != 1}
+            shouldNotRefetch={assignment.status.spec != 1}
           />
         ),
         icon: <AlignRight color="var(--secondary)" />,
         title: locale.dashboard.assignment.attempts,
       },
       {
-        page: <ParticipantsList spec={assignment.spec} />,
+        page: <ParticipantsList spec={spec} />,
         icon: <Users color="var(--secondary)" />,
         title: locale.dashboard.assignment.participants,
       },
       {
-        page: <TaskList spec={assignment.spec} />,
+        page: <TaskList spec={spec} />,
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.assignment.tasks,
       },
     ],
-    [assignment, locale]
+    [assignment, locale, refetch, spec]
   );
 
   const [activeModal, setActiveModal] = useState(false);
@@ -85,7 +98,7 @@ const AssignmentDashboard: FC<{
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      href: `/edu/assignment/edit/${assignment.spec}`,
+      href: `/edu/assignment/edit/${spec}`,
     },
     {
       color: 'red',
@@ -103,11 +116,13 @@ const AssignmentDashboard: FC<{
     <>
       {isTeacher && (
         <>
-          <DeleteModal
-            active={activeModal}
-            setActive={setActiveModal}
-            assignment={assignment}
-          />
+          {assignment && (
+            <DeleteModal
+              active={activeModal}
+              setActive={setActiveModal}
+              assignment={assignment}
+            />
+          )}
           <Sticky actions={actions} color={'--prime'} />
         </>
       )}

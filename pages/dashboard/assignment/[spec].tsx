@@ -2,11 +2,10 @@ import { ReactNode } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
-import { IAssignment } from '@custom-types/data/IAssignment';
 import AssignmentDashboard from '@components/Dashboard/AssignmentDashboard';
 
-function AssignmentDashboardPage(props: { assignment: IAssignment }) {
-  return <AssignmentDashboard assignment={props.assignment} />;
+function AssignmentDashboardPage(props: { spec: string }) {
+  return <AssignmentDashboard spec={props.spec} />;
 }
 
 AssignmentDashboardPage.getLayout = (page: ReactNode) => {
@@ -32,7 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (response.status === 200) {
     const assignment = await response.json();
     return {
-      props: { assignment: assignment },
+      props: { spec: assignment.spec },
       revalidate: 10 * 60,
     };
   }

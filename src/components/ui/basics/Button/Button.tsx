@@ -8,6 +8,7 @@ const Button: FC<MyButtonProps> = ({
   hoverCardDropdownProps,
   hoverCardTargetProps,
   targetWrapperStyle,
+  buttonWrapperStyle,
   dropdownContent,
   kind,
   variant,
@@ -134,7 +135,7 @@ const Button: FC<MyButtonProps> = ({
     >
       <div style={targetWrapperStyle}>
         <HoverCard.Target {...hoverCardTargetProps}>
-          <div>{button}</div>
+          <div style={buttonWrapperStyle}>{button}</div>
         </HoverCard.Target>
       </div>
       {!!dropdownContent && (
