@@ -26,12 +26,13 @@ const CustomTimeModal: FC<{ handleTime: (_: number) => void }> = ({
         targetWrapperStyle={{ width: '100%' }}
         buttonWrapperStyle={{ width: '100%' }}
         style={{
-          borderRight: 'none',
+          borderLeft: 'none',
           borderRadius: 0,
+          fontSize: 'var(--font-size-s)',
         }}
         fullWidth
         onClick={() => setOpened(true)}
-        variant="light"
+        variant="outline"
       >
         {locale.dashboard.assignment.timeInfo.enterManually}
       </Button>

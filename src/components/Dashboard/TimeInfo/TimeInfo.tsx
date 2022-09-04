@@ -170,9 +170,13 @@ const TimeInfo: FC<{
               key={idx}
               targetWrapperStyle={{ width: '100%' }}
               buttonWrapperStyle={{ width: '100%' }}
-              style={{ borderRight: 'none', borderRadius: 0 }}
+              style={{
+                borderLeft: idx == 0 ? undefined : 'none',
+                borderRadius: 0,
+                fontSize: 'var(--font-size-s)',
+              }}
               fullWidth
-              variant="light"
+              variant="outline"
               onClick={() =>
                 handleTimeButton(
                   -(buttonObject.value * buttonObject.multiple)
@@ -193,9 +197,13 @@ const TimeInfo: FC<{
               key={idx}
               targetWrapperStyle={{ width: '100%' }}
               buttonWrapperStyle={{ width: '100%' }}
-              style={{ borderRight: 'none', borderRadius: 0 }}
+              style={{
+                borderLeft: 'none',
+                borderRadius: 0,
+                fontSize: 'var(--font-size-s)',
+              }}
               fullWidth
-              variant="light"
+              variant="outline"
               onClick={() =>
                 handleTimeButton(
                   buttonObject.value * buttonObject.multiple
