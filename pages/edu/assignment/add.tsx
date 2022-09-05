@@ -112,7 +112,6 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         'POST',
         notification
       ).then((res) => {
-        console.log(res);
         if (!res.error) {
           notifyAboutCreation(res.response);
         }
