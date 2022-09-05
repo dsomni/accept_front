@@ -89,18 +89,13 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
     label: locale.attempt.author,
     key: 'author',
-    sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.author.value > b.author.value
-        ? -1
-        : a.author.value == b.author.value
-        ? 0
-        : 1,
+    sortable: false,
+    sortFunction: (_: any, __: any) => 0,
     sorted: 0,
-    allowMiddleState: true,
+    allowMiddleState: false,
     hidable: false,
     hidden: false,
-    size: 4,
+    size: 3,
   },
   {
     label: locale.attempt.task,

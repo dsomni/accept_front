@@ -35,6 +35,7 @@ const SimpleModal: FC<{
           title: styles.modalTitle,
         }}
         onClose={close}
+        zIndex={200}
       >
         <div className={styles.content}>{children}</div>
       </Modal>

@@ -4,6 +4,7 @@ import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import {
   AlignRight,
+  BellPlus,
   Database,
   Pencil,
   Puzzle,
@@ -25,6 +26,7 @@ import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import { useInterval } from '@mantine/hooks';
+import CreateNotification from './CreateNotification/CreateNotification';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -86,6 +88,15 @@ const AssignmentDashboard: FC<{
         page: <TaskList spec={spec} />,
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.assignment.tasks,
+      },
+      {
+        page: assignment && (
+          <CreateNotification
+            groups={assignment.groups.map((group) => group.spec)}
+          />
+        ),
+        icon: <BellPlus color="var(--secondary)" />,
+        title: locale.dashboard.assignment.createNotification,
       },
     ],
     [assignment, locale, refetch, spec]

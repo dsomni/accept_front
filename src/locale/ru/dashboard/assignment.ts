@@ -4,6 +4,7 @@ export const assignment = {
   attempts: 'Попытки',
   participants: 'Участники',
   tasks: 'Задачи',
+  createNotification: 'Создать уведомление',
   timeInfo: {
     enterManually: 'Ввести вручную',
     addTimeToEnd: 'Добавить время к дате окончания',

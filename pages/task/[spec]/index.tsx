@@ -138,7 +138,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           opened={openedHint}
           close={() => setOpenedHint(false)}
         >
-          {task.hint.content}
+          <div
+            dangerouslySetInnerHTML={{ __html: task.hint.content }}
+          />
         </SimpleModal>
       )}
       {isUser && !isTeacher && showHint && task.hint && (
