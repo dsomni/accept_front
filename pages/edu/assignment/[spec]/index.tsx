@@ -13,6 +13,7 @@ import {
   IAssignment,
   IAssignmentDisplay,
 } from '@custom-types/data/IAssignment';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
@@ -57,6 +58,7 @@ function Assignment(props: { assignment: IAssignment }) {
         }
       />
       {isTeacher && <Sticky actions={actions} />}
+      <ChatSticky spec={assignment.spec} />
       <Description assignment={assignment} />
     </>
   );

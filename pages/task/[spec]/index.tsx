@@ -21,6 +21,7 @@ import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
 import SendText from '@components/Task/SendText/SendText';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -119,6 +120,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           tasks={tasks}
           assignment={router.query.assignment}
         />
+      )}
+      {typeof router.query.assignment === 'string' && (
+        <ChatSticky spec={router.query.assignment} />
       )}
       <DeleteModal
         active={activeModal}
