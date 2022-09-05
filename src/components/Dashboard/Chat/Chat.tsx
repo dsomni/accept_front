@@ -59,7 +59,6 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
   }, [justSend, webSocket]);
 
   const handleSend = useCallback(() => {
-    console.log(message);
     if (
       webSocket &&
       webSocket.readyState === 1 &&

@@ -97,7 +97,6 @@ const TimeInfo: FC<{
 
   const handleTimeButton = useCallback(
     (time: number) => {
-      console.log(1);
       sendRequest<
         { amount: number },
         { end: Date; status: IAssignmentStatus }
