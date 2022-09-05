@@ -116,14 +116,15 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   return (
     <>
       {typeof router.query.assignment === 'string' && (
-        <TasksBar
-          tasks={tasks}
-          assignment={router.query.assignment}
-        />
+        <>
+          <TasksBar
+            tasks={tasks}
+            assignment={router.query.assignment}
+          />
+          <ChatSticky spec={router.query.assignment} />
+        </>
       )}
-      {typeof router.query.assignment === 'string' && (
-        <ChatSticky spec={router.query.assignment} />
-      )}
+
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}

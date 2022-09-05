@@ -5,13 +5,6 @@ import { FC, memo } from 'react';
 import { Home } from 'tabler-icons-react';
 import styles from './tasksBar.module.css';
 
-const colors = {
-  NULL: 'var(--dark4)',
-  OK: 'var(--positive)',
-  TESTING: 'var(--neutral)',
-  ERR: 'var(--negative)',
-};
-
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const TasksBar: FC<{
@@ -39,17 +32,15 @@ const TasksBar: FC<{
               passHref
             >
               <a
-                className={styles.taskStatus}
-                style={{
-                  backgroundColor:
-                    task.status && task.status.spec != 2
-                      ? colors.TESTING
-                      : !task.verdict
-                      ? colors.NULL
-                      : task.verdict.shortText == 'OK'
-                      ? colors.OK
-                      : colors.ERR,
-                }}
+                className={`${styles.taskStatus} ${
+                  task.status && task.status.spec != 2
+                    ? styles.testing
+                    : !task.verdict
+                    ? styles.null
+                    : task.verdict.shortText == 'OK'
+                    ? styles.ok
+                    : styles.err
+                }`}
               >
                 {alphabet[index % 26]}
               </a>
