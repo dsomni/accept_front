@@ -56,7 +56,7 @@ function Assignment(props: { assignment: IAssignment }) {
           } as IAssignmentDisplay
         }
       />
-      {isTeacher && <Sticky actions={actions} color={'--prime'} />}
+      {isTeacher && <Sticky actions={actions} />}
       <Description assignment={assignment} />
     </>
   );

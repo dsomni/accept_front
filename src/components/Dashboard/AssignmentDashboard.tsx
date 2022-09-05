@@ -1,8 +1,6 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
-import Chat from '@components/Dashboard/Chat/Chat';
 import Results from '@components/Dashboard/Results/Results';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
-import styles from './dashboard.module.css';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import {
   AlignRight,
@@ -25,6 +23,7 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -46,10 +45,7 @@ const AssignmentDashboard: FC<{
     () => [
       {
         page: assignment && (
-          <div className={styles.mainInfo}>
-            <TimeInfo assignment={assignment} refetch={refetch} />
-            <Chat spec={spec} />
-          </div>
+          <TimeInfo assignment={assignment} refetch={refetch} />
         ),
         icon: <Database color="var(--secondary)" />,
         title: locale.dashboard.assignment.mainInfo,
@@ -123,9 +119,10 @@ const AssignmentDashboard: FC<{
               assignment={assignment}
             />
           )}
-          <Sticky actions={actions} color={'--prime'} />
+          <Sticky actions={actions} />
         </>
       )}
+      <ChatSticky spec={spec} />
       <LeftMenu links={links} />
     </>
   );

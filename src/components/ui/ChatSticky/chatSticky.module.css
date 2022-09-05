@@ -1,0 +1,16 @@
+.iconWrapper {
+  width: 4rem;
+  height: 2.5rem;
+}
+
+.iconRoot:hover {
+  background-color: var(--secondary);
+}
+
+.iconRoot {
+  background-color: var(--secondary);
+  border-radius: 10px 10px 0 0;
+  border-bottom: 0;
+  width: 100%;
+  height: 100%;
+}

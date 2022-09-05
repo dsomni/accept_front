@@ -14,8 +14,13 @@ import { IMessage } from '@custom-types/data/IMessage';
 import { Textarea } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
+import { setter } from '@custom-types/ui/atomic';
 
-const Chat: FC<{ spec: string }> = ({ spec }) => {
+const Chat: FC<{
+  spec: string;
+  opened: boolean;
+  setHasNew: setter<boolean>;
+}> = ({ spec, opened, setHasNew }) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [webSocket, setWebSocket] = useState<WebSocket>();
   const [message, setMessage] = useState('');
@@ -44,6 +49,9 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
   useEffect(() => {
     if (webSocket) {
       webSocket.onmessage = (event) => {
+        if (!opened) {
+          setHasNew(true);
+        }
         setMessages((messages) => {
           return [...messages, JSON.parse(event.data)];
         });
@@ -56,7 +64,7 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
         }, 100);
       };
     }
-  }, [justSend, webSocket]);
+  }, [justSend, webSocket, setHasNew, opened]);
 
   const handleSend = useCallback(() => {
     if (
@@ -72,22 +80,25 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
 
   useEffect(() => {
     const handleClick = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && event.shiftKey) {
+      if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
         handleSend();
       }
     };
-    if (textArea.current) {
-      textArea.current.addEventListener('keydown', handleClick);
+    const ref = textArea.current;
+    if (ref) {
+      ref.addEventListener('keydown', handleClick);
     }
     return () => {
-      if (textArea.current)
-        textArea.current.removeEventListener('keydown', handleClick);
+      if (ref) ref.removeEventListener('keydown', handleClick);
     };
   }, [textArea, handleSend]);
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      style={{ visibility: opened ? 'visible' : 'hidden' }}
+    >
       <div ref={messagesDiv} className={styles.messages}>
         {messages.map((message, index) => (
           <div

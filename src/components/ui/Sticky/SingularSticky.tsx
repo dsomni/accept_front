@@ -11,12 +11,12 @@ type positions = {
 
 const SingularSticky: FC<{
   icon: ReactNode;
-  color: string;
+  color?: string;
   onClick?: pureCallback;
   href?: string;
   position?: positions;
   classNames?: any;
-}> = ({ icon, position, classNames, ...props }) => {
+}> = ({ icon, position, color, classNames, ...props }) => {
   const { width } = useWidth();
   return (
     <Affix
@@ -32,6 +32,7 @@ const SingularSticky: FC<{
         radius={60}
         size={STICKY_SIZES[width]}
         className={classNames?.button}
+        style={{ backgroundColor: color || 'var(--positive)' }}
         {...props}
       >
         {icon}

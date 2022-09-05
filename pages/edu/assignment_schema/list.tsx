@@ -268,7 +268,6 @@ function AssignmentList() {
         }
       />
       <SingularSticky
-        color="green"
         href={`/edu/assignment_schema/add`}
         icon={<Plus height={25} width={25} />}
       />

@@ -18,7 +18,7 @@ export interface IStickyAction {
 const Sticky: FC<{
   actions: IStickyAction[];
   classNames?: any;
-  color: string;
+  color?: string;
 }> = ({ actions, classNames, color }) => {
   const [visible, setVisible] = useState(false);
   const ref = useClickOutside(() => setVisible(false));
@@ -44,7 +44,7 @@ const Sticky: FC<{
         size={STICKY_SIZES[width]}
         className={classNames?.button}
         onClick={() => setVisible((visible) => !visible)}
-        color={color}
+        style={{ backgroundColor: color || 'var(--secondary)' }}
       >
         {!visible && (
           <DotsVertical

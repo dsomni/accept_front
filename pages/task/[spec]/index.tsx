@@ -142,11 +142,10 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
               height={STICKY_SIZES[width] / 3}
             />
           }
-          color={'grape'}
           onClick={() => setOpenedHint(true)}
         />
       )}
-      {isTeacher && <Sticky actions={actions} color={'--prime'} />}
+      {isTeacher && <Sticky actions={actions} />}
       <TaskLayout
         title={task.title}
         description={

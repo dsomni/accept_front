@@ -1,12 +1,20 @@
 .wrapper {
-  height: 70vh;
-  width: 70%;
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  right: 80px;
+  height: 60vh;
+  width: 25vw;
+  min-width: 300px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
-  border-left: 2px var(--primary) solid;
-  border-bottom: 2px var(--primary) solid;
-  border-radius: 5px;
+  background-color: #ffffffcc;
+  outline: 2px black solid;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
   font-size: var(--font-size-s);
+  padding-top: var(--spacer-xxs);
 }
 
 .messages {
@@ -19,8 +27,12 @@
   overflow-y: scroll;
   overflow-x: hidden;
   padding-bottom: var(--spacer-s);
-  border-bottom: solid var(--secondary) 2px;
+  border-bottom: solid black 2px;
   gap: var(--spacer-s);
+}
+
+.messages::-webkit-scrollbar {
+  width: 2px;
 }
 
 .sendWrapper {
@@ -28,6 +40,7 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
+  background-color: #ffffffff;
 }
 
 .message {

@@ -147,7 +147,6 @@ function TaskListPage() {
         initialColumns={initialColumns}
       />{' '}
       <SingularSticky
-        color="green"
         href={`/task/add`}
         icon={<Plus height={25} width={25} />}
       />
