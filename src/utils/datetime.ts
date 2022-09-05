@@ -35,19 +35,19 @@ const getLabeledTime = (time: number) => ({
   years: Math.floor(time / 1000 / 60 / 60 / 24 / 30 / 12),
 });
 
-export const timerDate = (time: number, locale: ILocale): string => {
-  const date = getLabeledTime(time);
-  return `${
-    date.years
-      ? `${date.years} ${locale.timer.years(date.years)} `
-      : ''
-  }${
-    date.months
-      ? `${date.months} ${locale.timer.months(date.months)} ` + ' '
-      : ''
-  }${
-    date.days
-      ? `${date.days} ${locale.timer.days(date.days)} ` + ' '
-      : ''
-  }${date.hours}:${date.minutes}:${date.seconds}`;
+export const timerDate = (time: number, locale: ILocale): any => {
+  return getLabeledTime(time);
+  // return `${
+  //   date.years
+  //     ? `${date.years} ${locale.timer.years(date.years)} `
+  //     : ''
+  // }${
+  //   date.months
+  //     ? `${date.months} ${locale.timer.months(date.months)} ` + ' '
+  //     : ''
+  // }${
+  //   date.days
+  //     ? `${date.days} ${locale.timer.days(date.days)} ` + ' '
+  //     : ''
+  // }${date.hours}:${date.minutes}:${date.seconds}`;
 };

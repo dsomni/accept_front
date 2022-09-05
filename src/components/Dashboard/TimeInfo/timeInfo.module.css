@@ -26,17 +26,48 @@
   gap: var(--spacer-m);
   align-items: center;
 }
+
 .buttonsWrapper {
   display: flex;
   flex-direction: row;
   width: 100%;
 }
+
 .timerWrapper {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  align-self: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.timerWrapper > div {
+  display: inline-flex;
+  flex-direction: row;
 }
 
 .timer {
   font-size: var(--font-size-m);
+  display: flex;
+  flex-direction: row;
+}
+
+.numberWrapper {
+  width: 5rem;
+  border-radius: 10px;
+  font-size: var(--font-size-xl);
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.before {
+  font-size: var(--font-size-xl);
+  color: var(--primary);
+}
+
+.numberTitle {
+  font-size: var(--font-size-s);
 }

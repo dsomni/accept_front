@@ -53,29 +53,38 @@ const TimeInfo: FC<{
   refetch: () => void;
 }> = ({ assignment, refetch }) => {
   const { locale } = useLocale();
-  const [timer, setTimer] = useState('');
+
+  const [seconds, setSeconds] = useState('00');
+  const [minutes, setMinutes] = useState('00');
+  const [hours, setHours] = useState('00');
+
+  const [days, setDays] = useState(0);
+  const [months, setMonths] = useState(0);
+  const [years, setYears] = useState(0);
 
   const [isBrowser, setIsBrowser] = useState(false);
 
   const tick = useCallback(() => {
-    setTimer(() => {
-      let date = 0;
-      switch (assignment.status.spec) {
-        case 0:
-          console.log(new Date(assignment.start), new Date());
-          date =
-            new Date(assignment.start).getTime() -
-            new Date().getTime();
-          break;
-        case 1:
-          date =
-            new Date(assignment.end).getTime() - new Date().getTime();
-          break;
-        default:
-          date = 0;
-      }
-      return timerDate(date, locale);
-    });
+    let date = 0;
+    switch (assignment.status.spec) {
+      case 0:
+        date =
+          new Date(assignment.start).getTime() - new Date().getTime();
+        break;
+      case 1:
+        date =
+          new Date(assignment.end).getTime() - new Date().getTime();
+        break;
+      default:
+        date = 0;
+    }
+    const time = timerDate(date, locale);
+    setSeconds(time.seconds);
+    setMinutes(time.minutes);
+    setHours(time.hours);
+    setDays(time.days);
+    setMonths(time.months);
+    setYears(time.years);
   }, [assignment, locale]);
 
   const interval = useInterval(tick, 1000);
@@ -88,6 +97,7 @@ const TimeInfo: FC<{
 
   const handleTimeButton = useCallback(
     (time: number) => {
+      console.log(1);
       sendRequest<
         { amount: number },
         { end: Date; status: IAssignmentStatus }
@@ -151,72 +161,114 @@ const TimeInfo: FC<{
         </div>
       </div>
       <div className={styles.timeWrapper}>
-        <div className={styles.timerWrapper}>
-          {!assignment.infinite && (
-            <div className={styles.timer}>
-              {assignment.status.spec != 2
-                ? `${
-                    assignment.status.spec == 0
-                      ? locale.timer.beforeStart
-                      : locale.timer.beforeEnd
-                  } ${timer}`
-                : ''}
+        <div className={styles.before}>
+          {assignment.status.spec != 2
+            ? `${
+                assignment.status.spec == 0
+                  ? locale.timer.beforeStart
+                  : locale.timer.beforeEnd
+              }`
+            : ''}
+        </div>
+        {assignment.status.spec !== 2 && (
+          <div className={styles.timerWrapper}>
+            <div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{years}</div>
+                <div className={styles.numberTitle}>
+                  {locale.timer.years(+years)}
+                </div>
+              </div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{months}</div>
+                <div className={styles.numberTitle}>
+                  {locale.timer.months(+months)}
+                </div>
+              </div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{days}</div>
+                <div className={styles.numberTitle}>
+                  {locale.timer.days(+days)}
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-        <div className={styles.buttonsWrapper}>
-          {DECREASE_TIME.map((buttonObject, idx) => (
-            <Button
-              key={idx}
-              targetWrapperStyle={{ width: '100%' }}
-              buttonWrapperStyle={{ width: '100%' }}
-              style={{
-                borderLeft: idx == 0 ? undefined : 'none',
-                borderRadius: 0,
-                fontSize: 'var(--font-size-s)',
-              }}
-              fullWidth
-              variant="outline"
-              onClick={() =>
-                handleTimeButton(
-                  -(buttonObject.value * buttonObject.multiple)
-                )
-              }
-            >
-              {`- ${buttonObject.value} ${buttonObject.units(
-                locale,
-                buttonObject.value
-              )}`}
-            </Button>
-          ))}
-          <CustomTimeModal
-            handleTime={(time: number) => handleTimeButton(time)}
-          />
-          {INCREASE_TIME.map((buttonObject, idx) => (
-            <Button
-              key={idx}
-              targetWrapperStyle={{ width: '100%' }}
-              buttonWrapperStyle={{ width: '100%' }}
-              style={{
-                borderLeft: 'none',
-                borderRadius: 0,
-                fontSize: 'var(--font-size-s)',
-              }}
-              fullWidth
-              variant="outline"
-              onClick={() =>
-                handleTimeButton(
-                  buttonObject.value * buttonObject.multiple
-                )
-              }
-            >
-              {`+ ${buttonObject.value} ${buttonObject.units(
-                locale,
-                buttonObject.value
-              )}`}
-            </Button>
-          ))}
-        </div>
+            <div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{hours}</div>
+                <div className={styles.numberTitle}>
+                  {locale.timer.hours(+hours)}
+                </div>
+              </div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{minutes}</div>
+                <div className={styles.numberTitle}>
+                  {locale.timer.minutes(+minutes)}
+                </div>
+              </div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{seconds}</div>
+                <div className={styles.numberTitle}>
+                  {locale.timer.seconds(+seconds)}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {assignment.status.spec !== 0 && (
+          <div className={styles.buttonsWrapper}>
+            {DECREASE_TIME.map((buttonObject, idx) => (
+              <Button
+                key={idx}
+                targetWrapperStyle={{ width: '100%' }}
+                buttonWrapperStyle={{ width: '100%' }}
+                style={{
+                  borderLeft: idx == 0 ? undefined : 'none',
+                  borderRadius: 0,
+                  fontSize: 'var(--font-size-s)',
+                }}
+                fullWidth
+                variant="outline"
+                onClick={() =>
+                  handleTimeButton(
+                    -(buttonObject.value * buttonObject.multiple)
+                  )
+                }
+              >
+                {`- ${buttonObject.value} ${buttonObject.units(
+                  locale,
+                  buttonObject.value
+                )}`}
+              </Button>
+            ))}
+            <CustomTimeModal
+              handleTime={(time: number) => handleTimeButton(time)}
+            />
+            {INCREASE_TIME.map((buttonObject, idx) => (
+              <Button
+                key={idx}
+                targetWrapperStyle={{ width: '100%' }}
+                buttonWrapperStyle={{ width: '100%' }}
+                style={{
+                  borderLeft: 'none',
+                  borderRadius: 0,
+                  fontSize: 'var(--font-size-s)',
+                }}
+                fullWidth
+                variant="outline"
+                onClick={() =>
+                  handleTimeButton(
+                    buttonObject.value * buttonObject.multiple
+                  )
+                }
+              >
+                {`+ ${buttonObject.value} ${buttonObject.units(
+                  locale,
+                  buttonObject.value
+                )}`}
+              </Button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
