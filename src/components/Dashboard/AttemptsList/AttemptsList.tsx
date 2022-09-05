@@ -54,6 +54,19 @@ const refactorAttempt = (
     ),
     value: attempt.task,
   },
+  author: {
+    display: (
+      <div className={tableStyles.titleWrapper}>
+        <a
+          className={tableStyles.title}
+          href={`/profile/${attempt.author}`}
+        >
+          {attempt.author}
+        </a>
+      </div>
+    ),
+    value: attempt.author,
+  },
 });
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
@@ -69,6 +82,22 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
         : 1,
     sorted: -1,
     allowMiddleState: false,
+    hidable: false,
+    hidden: false,
+    size: 4,
+  },
+  {
+    label: locale.attempt.author,
+    key: 'author',
+    sortable: true,
+    sortFunction: (a: any, b: any) =>
+      a.author.value > b.author.value
+        ? -1
+        : a.author.value == b.author.value
+        ? 0
+        : 1,
+    sorted: 0,
+    allowMiddleState: true,
     hidable: false,
     hidden: false,
     size: 4,

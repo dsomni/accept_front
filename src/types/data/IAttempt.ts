@@ -12,4 +12,5 @@ export interface IAttemptDisplay {
   date: Date;
   verdict: ITestResultDisplay;
   task: ITaskBaseInfo;
+  author: string;
 }

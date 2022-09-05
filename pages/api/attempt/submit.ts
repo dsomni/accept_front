@@ -8,7 +8,7 @@ export default async function Attempt(
   await fetchWrapper({
     req: req,
     res: res,
-    url: `api/attempt/${req.body.spec}`,
+    url: `api/attempt`,
     method: 'POST',
   });
 }
