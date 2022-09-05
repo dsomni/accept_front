@@ -137,6 +137,9 @@ const Chat: FC<{
               fontSize: 'var(--font-size-s)',
             },
           }}
+          classNames={{
+            input: styles.textInput,
+          }}
           value={message}
           onChange={(event) => setMessage(event.currentTarget.value)}
           placeholder={locale.placeholders.chat}
@@ -149,6 +152,7 @@ const Chat: FC<{
           onClick={handleSend}
           size={'sm'}
           color="var(--primary)"
+          wrapperClassName={styles.iconWrapper}
         >
           <Send />
         </Icon>

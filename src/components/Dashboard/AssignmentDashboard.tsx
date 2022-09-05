@@ -24,6 +24,7 @@ import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import { useInterval } from '@mantine/hooks';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -36,6 +37,16 @@ const AssignmentDashboard: FC<{
     `assignment/display/${spec}`,
     'GET'
   );
+
+  const refetchAssignment = useInterval(
+    () => refetch(false),
+    60 * 1000
+  );
+
+  useEffect(() => {
+    refetchAssignment.start();
+    return refetchAssignment.stop;
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     if (data) setAssignment(data);

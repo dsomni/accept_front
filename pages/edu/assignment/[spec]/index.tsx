@@ -14,6 +14,7 @@ import {
   IAssignmentDisplay,
 } from '@custom-types/data/IAssignment';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import Timer from '@ui/Timer/Timer';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
@@ -59,6 +60,7 @@ function Assignment(props: { assignment: IAssignment }) {
       />
       {isTeacher && <Sticky actions={actions} />}
       <ChatSticky spec={assignment.spec} />
+      <Timer spec={assignment.spec} />
       <Description assignment={assignment} />
     </>
   );

@@ -93,7 +93,7 @@ const TimeInfo: FC<{
     setIsBrowser(true);
     interval.start();
     return interval.stop;
-  }, [interval]);
+  }, [tick]); // eslint-disable-line
 
   const handleTimeButton = useCallback(
     (time: number) => {
@@ -162,12 +162,10 @@ const TimeInfo: FC<{
       <div className={styles.timeWrapper}>
         <div className={styles.before}>
           {assignment.status.spec != 2
-            ? `${
-                assignment.status.spec == 0
-                  ? locale.timer.beforeStart
-                  : locale.timer.beforeEnd
-              }`
-            : ''}
+            ? assignment.status.spec == 0
+              ? locale.timer.beforeStart
+              : locale.timer.beforeEnd
+            : locale.timer.finished}
         </div>
         {assignment.status.spec !== 2 && (
           <div className={styles.timerWrapper}>

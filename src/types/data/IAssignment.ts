@@ -74,3 +74,11 @@ export interface IAssignmentListBundle {
   tags: ITag[];
   groups: IGroup[];
 }
+
+export interface IAssignmentTimeInfo {
+  status: IAssignmentStatus;
+  infinite: boolean;
+
+  start: Date;
+  end: Date;
+}

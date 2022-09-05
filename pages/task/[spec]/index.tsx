@@ -22,6 +22,7 @@ import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
 import SendText from '@components/Task/SendText/SendText';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import Timer from '@ui/Timer/Timer';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -122,6 +123,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             assignment={router.query.assignment}
           />
           <ChatSticky spec={router.query.assignment} />
+          <Timer spec={router.query.assignment} />
         </>
       )}
 

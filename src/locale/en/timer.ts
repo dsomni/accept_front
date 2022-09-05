@@ -1,6 +1,7 @@
 export const timer = {
   beforeStart: 'Before start',
   beforeEnd: 'Before end',
+  finished: 'Finished',
   years: (year: number): string =>
     year == 1 || year == -1 ? 'year' : 'years',
   months: (month: number): string =>

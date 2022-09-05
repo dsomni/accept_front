@@ -1,6 +1,7 @@
 export const timer = {
   beforeStart: 'До начала',
   beforeEnd: 'До окончания',
+  finished: 'Окончен',
   years: (year: number): string => {
     const absYear = Math.abs(year);
     return absYear == 1
