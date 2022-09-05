@@ -22,6 +22,7 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
   const { user } = useUser();
   const messagesDiv = useRef<HTMLDivElement>(null!);
   const [justSend, setJustSend] = useState(true);
+  const textArea = useRef<HTMLTextAreaElement>(null);
 
   const { locale } = useLocale();
 
@@ -58,6 +59,7 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
   }, [justSend, webSocket]);
 
   const handleSend = useCallback(() => {
+    console.log(message);
     if (
       webSocket &&
       webSocket.readyState === 1 &&
@@ -68,6 +70,22 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
     setJustSend(true);
     setMessage('');
   }, [webSocket, message]);
+
+  useEffect(() => {
+    const handleClick = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+        handleSend();
+      }
+    };
+    if (textArea.current) {
+      textArea.current.addEventListener('keydown', handleClick);
+    }
+    return () => {
+      if (textArea.current)
+        textArea.current.removeEventListener('keydown', handleClick);
+    };
+  }, [textArea, handleSend]);
 
   return (
     <div className={styles.wrapper}>
@@ -95,6 +113,7 @@ const Chat: FC<{ spec: string }> = ({ spec }) => {
       <div className={styles.sendWrapper}>
         <Textarea
           className={styles.input}
+          ref={textArea}
           styles={{
             root: {
               width: '100%',
