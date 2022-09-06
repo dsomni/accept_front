@@ -42,12 +42,12 @@ const Timer: FC<{ spec: string }> = ({ spec }) => {
           date = 0;
       }
     }
-    const time = timerDate(date, locale);
+    const time = timerDate(date);
     setSeconds(time.seconds);
     setMinutes(time.minutes);
     setHours(time.hours);
     setDays(time.days + time.months * 30 + time.years * 365);
-  }, [data, loading, locale, refetchTimer]);
+  }, [data, loading, refetchTimer]);
 
   const interval = useInterval(tick, 1000);
 
