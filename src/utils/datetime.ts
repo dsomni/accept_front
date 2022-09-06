@@ -1,7 +1,5 @@
-import { ILocale } from '@custom-types/ui/ILocale';
-
 export const getLocalDate = (date: Date) => {
-  return timezoneDate(new Date(date)).toLocaleString();
+  return timezoneDate(date).toLocaleString();
 };
 
 export const concatDateTime = (date: Date, time: Date) => {
@@ -13,7 +11,8 @@ export const concatDateTime = (date: Date, time: Date) => {
 
 export const timezoneDate = (date: Date) => {
   return new Date(
-    date.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+    new Date(date).getTime() -
+      new Date().getTimezoneOffset() * 60 * 1000
   );
 };
 
@@ -35,19 +34,6 @@ const getLabeledTime = (time: number) => ({
   years: Math.floor(time / 1000 / 60 / 60 / 24 / 30 / 12),
 });
 
-export const timerDate = (time: number, locale: ILocale): any => {
+export const timerDate = (time: number): any => {
   return getLabeledTime(time);
-  // return `${
-  //   date.years
-  //     ? `${date.years} ${locale.timer.years(date.years)} `
-  //     : ''
-  // }${
-  //   date.months
-  //     ? `${date.months} ${locale.timer.months(date.months)} ` + ' '
-  //     : ''
-  // }${
-  //   date.days
-  //     ? `${date.days} ${locale.timer.days(date.days)} ` + ' '
-  //     : ''
-  // }${date.hours}:${date.minutes}:${date.seconds}`;
 };

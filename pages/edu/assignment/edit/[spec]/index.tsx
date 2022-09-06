@@ -25,10 +25,10 @@ function AssignmentEdit(props: IAssignmentEditBundle) {
 
   const initialValues = {
     ...props.assignment,
-    startDate: timezoneDate(new Date(props.assignment.start)),
-    startTime: timezoneDate(new Date(props.assignment.start)),
-    endDate: timezoneDate(new Date(props.assignment.end)),
-    endTime: timezoneDate(new Date(props.assignment.end)),
+    startDate: timezoneDate(props.assignment.start),
+    startTime: timezoneDate(props.assignment.start),
+    endDate: timezoneDate(props.assignment.end),
+    endTime: timezoneDate(props.assignment.end),
     notificationTitle: '',
     notificationDescription: '',
     notificationShortDescription: '',

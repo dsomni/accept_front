@@ -78,14 +78,14 @@ const TimeInfo: FC<{
       default:
         date = 0;
     }
-    const time = timerDate(date, locale);
+    const time = timerDate(date);
     setSeconds(time.seconds);
     setMinutes(time.minutes);
     setHours(time.hours);
     setDays(time.days);
     setMonths(time.months);
     setYears(time.years);
-  }, [assignment, locale]);
+  }, [assignment]);
 
   const interval = useInterval(tick, 1000);
 
