@@ -6,13 +6,11 @@ import Description from '@components/AssignmentSchema/Description/Description';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import Sticky from '@ui/Sticky/Sticky';
 import { Pencil, Trash } from 'tabler-icons-react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';
 
 function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
   const assignment = props.assignment;
-  const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -31,11 +29,8 @@ function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
         actions={[
           {
             color: 'green',
-            onClick: () => {
-              router.push(
-                `/edu/assignment_schema/edit/${assignment.spec}`
-              );
-            },
+            href: `/edu/assignment_schema/edit/${assignment.spec}`,
+
             icon: <Pencil height={20} width={20} />,
           },
           {

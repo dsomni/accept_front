@@ -82,8 +82,6 @@ const Description: FC<{
                 <td className={tableStyles.titleWrapper}>
                   <a
                     href={`/task/${row.spec}`}
-                    target="_blank"
-                    rel="noreferrer"
                     className={tableStyles.title}
                   >
                     {row.title}

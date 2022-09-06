@@ -29,7 +29,7 @@ const Tests: FC<{
 
   const onDrop = useCallback(
     async (files: File[]) => {
-      if (files === []) return;
+      if (files.length === 0) return;
       const length = files.length;
       var inputs: { content: string; index: number }[] = [];
       var outputs: {
@@ -107,7 +107,7 @@ const Tests: FC<{
         }
       }
 
-      if (tests !== []) form.setFieldValue('tests', tests);
+      if (tests.length !== 0) form.setFieldValue('tests', tests);
     },
     [form]
   );

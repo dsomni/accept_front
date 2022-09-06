@@ -9,6 +9,8 @@
 }
 
 .wrapper {
+  max-height: inherit;
+  max-width: inherit;
   overflow: scroll;
 }
 
@@ -38,6 +40,7 @@
   position: sticky;
   left: 0;
   padding-right: var(--spacer-s);
+  padding-left: var(--spacer-xs);
 }
 
 .table td {

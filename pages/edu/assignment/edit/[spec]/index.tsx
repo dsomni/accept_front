@@ -29,6 +29,9 @@ function AssignmentEdit(props: IAssignmentEditBundle) {
     startTime: timezoneDate(new Date(props.assignment.start)),
     endDate: timezoneDate(new Date(props.assignment.end)),
     endTime: timezoneDate(new Date(props.assignment.end)),
+    notificationTitle: '',
+    notificationDescription: '',
+    notificationShortDescription: '',
   };
 
   const handleSubmit = useCallback(
@@ -73,6 +76,7 @@ function AssignmentEdit(props: IAssignmentEditBundle) {
   return (
     <>
       <Form
+        shouldNotify={false}
         initialValues={initialValues}
         handleSubmit={handleSubmit}
         buttonLabel={locale.edit}

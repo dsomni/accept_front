@@ -1,4 +1,4 @@
-import { IAssignment } from '@custom-types/data/IAssignment';
+import { IAssignmentDisplay } from '@custom-types/data/IAssignment';
 import { useLocale } from '@hooks/useLocale';
 import { Group } from '@mantine/core';
 import { FC, memo, useCallback, useState } from 'react';
@@ -11,7 +11,7 @@ import { Button } from '@ui/basics';
 const DeleteModal: FC<{
   active: boolean;
   setActive: callback<boolean, void>;
-  assignment: IAssignment;
+  assignment: IAssignmentDisplay;
 }> = ({ active, setActive, assignment }) => {
   const { locale, lang } = useLocale();
   const [toList, setToList] = useState(false);

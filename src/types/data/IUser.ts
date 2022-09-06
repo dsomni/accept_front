@@ -26,7 +26,7 @@ export interface IUserContext {
   isStudent: boolean;
   isTeacher: boolean;
   isAdmin: boolean;
-  signIn: (login: string, password: string) => Promise<Boolean>;
+  signIn: (_: string, __: string) => Promise<Boolean>;
   signOut: pureCallback<Promise<Boolean>>;
   refresh: pureCallback<Promise<void>>;
   refreshAccess: pureCallback<number>;
@@ -45,4 +45,10 @@ export interface IUserListBundle {
   users: IUser[];
   groups: IGroup[];
   roles: IRole[];
+}
+
+export interface IUserDisplay {
+  login: string;
+  role: IRole;
+  shortName: string;
 }

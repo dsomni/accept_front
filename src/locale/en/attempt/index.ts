@@ -5,5 +5,6 @@ export const attempt = {
   result: 'Result',
   verdict: 'Verdict',
   status: 'Status',
+  author: 'User',
   statuses: ['Pending', 'Testing', 'Finished'],
 };

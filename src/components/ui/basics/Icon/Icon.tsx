@@ -11,12 +11,13 @@ const Icon: FC<MyIconProps> = ({
   size,
   tooltipLabel,
   tooltipProps,
+  wrapperClassName,
   ...props
 }) => {
   const { width } = useWidth();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${wrapperClassName || ''}`}>
       <Tooltip
         label={tooltipLabel}
         openDelay={500}

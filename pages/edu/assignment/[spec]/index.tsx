@@ -1,6 +1,5 @@
 import { ReactNode, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -10,7 +9,12 @@ import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Description from '@components/Assignment/Description/Description';
 import { Pencil, Trash } from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
-import { IAssignment } from '@custom-types/data/IAssignment';
+import {
+  IAssignment,
+  IAssignmentDisplay,
+} from '@custom-types/data/IAssignment';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import Timer from '@ui/Timer/Timer';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
@@ -18,8 +22,6 @@ function Assignment(props: { assignment: IAssignment }) {
 
   const { isTeacher } = useUser();
   const { width } = useWidth();
-
-  const router = useRouter();
 
   const actions = [
     {
@@ -30,8 +32,7 @@ function Assignment(props: { assignment: IAssignment }) {
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      onClick: () =>
-        router.push(`/edu/assignment/edit/${assignment.spec}`),
+      href: `/edu/assignment/edit/${assignment.spec}`,
     },
     {
       color: 'red',
@@ -50,9 +51,16 @@ function Assignment(props: { assignment: IAssignment }) {
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}
-        assignment={assignment}
+        assignment={
+          {
+            ...assignment,
+            taskNumber: assignment.tasks.length,
+          } as IAssignmentDisplay
+        }
       />
-      {isTeacher && <Sticky actions={actions} color={'--prime'} />}
+      {isTeacher && <Sticky actions={actions} />}
+      <ChatSticky spec={assignment.spec} />
+      <Timer spec={assignment.spec} />
       <Description assignment={assignment} />
     </>
   );

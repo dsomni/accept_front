@@ -10,7 +10,7 @@ const Indicator: FC<IndicatorProps> = ({ children, ...props }) => {
       size={24}
       styles={{
         indicator: {
-          backgroundColor: 'var(--accent)',
+          backgroundColor: props.color || 'var(--accent)',
           fontSize: 'var(--font-size-s)',
         },
       }}

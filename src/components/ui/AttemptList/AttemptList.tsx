@@ -21,7 +21,7 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 
-const defaultOnPage = 10;
+const DEFAULT_ON_PAGE = 10;
 
 interface PagerResponse {
   data: IAttemptDisplay[];
@@ -37,10 +37,12 @@ const AttemptsList: FC<{
   url: string;
   activeTab: boolean;
   classNames?: any;
-  initialColumns: (locale: ILocale) => ITableColumn[];
-  refactorAttempt: (attempt: IAttemptDisplay, locale: ILocale) => any;
+  initialColumns: (_: ILocale) => ITableColumn[];
+  refactorAttempt: (_: IAttemptDisplay, __: ILocale) => any;
   noDefault?: boolean;
   empty?: ReactNode;
+  defaultRowsOnPage?: number;
+  shouldNotRefetch?: boolean;
 }> = ({
   url,
   activeTab,
@@ -49,9 +51,15 @@ const AttemptsList: FC<{
   refactorAttempt,
   noDefault,
   empty,
+  defaultRowsOnPage,
+  shouldNotRefetch,
 }) => {
   const { locale } = useLocale();
   const { refreshAccess } = useUser();
+  const defaultOnPage = useMemo(
+    () => defaultRowsOnPage || DEFAULT_ON_PAGE,
+    [defaultRowsOnPage]
+  );
 
   const columns: ITableColumn[] = useMemo(
     () => initialColumns(locale),
@@ -87,7 +95,7 @@ const AttemptsList: FC<{
   );
 
   const onError = useCallback(
-    (res: any) => {
+    (_: any) => {
       if (refreshAccess() == 2) {
         setTableData({ data: [], total: 0 });
         const id = newNotification({});
@@ -118,7 +126,7 @@ const AttemptsList: FC<{
 
   useEffect(() => {
     refetch();
-    if (activeTab) {
+    if (activeTab && !shouldNotRefetch) {
       const id = setInterval(() => {
         if (needRefetch) refetch(false);
       }, 2000);
@@ -126,7 +134,7 @@ const AttemptsList: FC<{
         clearInterval(id);
       };
     }
-  }, [needRefetch, refetch, activeTab]);
+  }, [needRefetch, refetch, activeTab, shouldNotRefetch]);
 
   return (
     <div>
@@ -155,7 +163,7 @@ const AttemptsList: FC<{
               }
         }
         defaultOnPage={defaultOnPage}
-        onPage={[5, 10]}
+        onPage={[5, defaultOnPage]}
       />
     </div>
   );

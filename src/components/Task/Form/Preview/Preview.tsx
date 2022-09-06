@@ -45,7 +45,6 @@ const Preview: FC<{ form: any }> = ({ form }) => {
               height={STICKY_SIZES[width] / 3}
             />
           }
-          color={'grape'}
           onClick={() => setOpenedHint(true)}
         />
       )}

@@ -8,7 +8,7 @@ export default async function AddAssignmentSchema(
   await fetchWrapper({
     req: req,
     res: res,
-    url: `api/assignment`,
+    url: 'api/assignment',
     method: 'POST',
   });
 }

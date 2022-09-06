@@ -10,12 +10,14 @@ const SimpleModal: FC<{
   children: ReactNode;
   centered?: boolean;
   hideCloseButton?: boolean;
+  size?: string | number;
 }> = ({
   title,
   opened,
   close,
   children,
   centered,
+  size,
   hideCloseButton,
 }) => {
   return (
@@ -24,7 +26,7 @@ const SimpleModal: FC<{
         transition="fade"
         transitionDuration={450}
         transitionTimingFunction="ease"
-        size="xl"
+        size={size}
         centered={centered}
         withCloseButton={!!!hideCloseButton}
         opened={opened}
@@ -33,6 +35,7 @@ const SimpleModal: FC<{
           title: styles.modalTitle,
         }}
         onClose={close}
+        zIndex={200}
       >
         <div className={styles.content}>{children}</div>
       </Modal>

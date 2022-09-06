@@ -19,7 +19,7 @@
 }
 
 .cell {
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
 }
 .headerCell,
 .cell {
@@ -28,7 +28,7 @@
 }
 
 .headerCell {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
   user-select: none;
   border-bottom: solid 2px black;
   display: flex;
@@ -65,7 +65,7 @@
 }
 
 .tags {
-  font-size: 0.7em;
+  font-size: var(--font-size-xs);
   display: flex;
   gap: var(--spacer-xxs);
   flex-direction: row;

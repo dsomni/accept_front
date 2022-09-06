@@ -28,8 +28,6 @@ const PrimitiveTaskTable: FC<{
                 href={`/task/${row.spec}${
                   linkQuery ? '?' + linkQuery : ''
                 }`}
-                target="_blank"
-                rel="noreferrer"
                 className={tableStyles.title}
               >
                 {row.title}

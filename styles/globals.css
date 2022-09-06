@@ -53,6 +53,8 @@ body {
 }
 
 :root {
+  --spacer-xhuge: 24rem;
+  --spacer-huge: 12rem;
   --spacer-xxl: 6rem;
   --spacer-xl: 3rem;
   --spacer-l: 2rem;

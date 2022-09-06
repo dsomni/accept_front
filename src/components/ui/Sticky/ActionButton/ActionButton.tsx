@@ -10,6 +10,7 @@ const ActionButton: FC<{
   const { width } = useWidth();
   return (
     <ActionIcon
+      component={action.onClick ? 'button' : 'a'}
       radius={40}
       size={(STICKY_SIZES[width] * 2) / 3}
       variant="filled"

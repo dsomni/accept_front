@@ -7,6 +7,7 @@ import { IGroup } from './IGroup';
 import { IAttemptDisplay } from './IAttempt';
 import { ITag } from './ITag';
 export interface IAssignment extends IAssignmentSchema {
+  origin: string;
   starter: string;
   status: IAssignmentStatus;
   infinite: boolean;
@@ -41,6 +42,7 @@ export interface IAssignmentEditBundle {
 }
 
 export interface IAssignmentResults {
+  assignment: IAssignment;
   tasks: { spec: string; title: string }[];
   users: { login: string; shortName: string }[];
   results: {
@@ -71,4 +73,12 @@ export interface IAssignmentListBundle {
   assignments: IAssignmentDisplay[];
   tags: ITag[];
   groups: IGroup[];
+}
+
+export interface IAssignmentTimeInfo {
+  status: IAssignmentStatus;
+  infinite: boolean;
+
+  start: Date;
+  end: Date;
 }

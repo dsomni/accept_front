@@ -7,7 +7,7 @@ import { getApiUrl } from '@utils/getServerUrl';
 import Description from '@components/Task/Description/Description';
 import Send from '@components/Task/Send/Send';
 import Results from '@components/Task/Results/Results';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useRouter } from 'next/router';
 import { ILanguage } from '@custom-types/data/atomic';
@@ -21,6 +21,8 @@ import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
 import SendText from '@components/Task/SendText/SendText';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import Timer from '@ui/Timer/Timer';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -74,9 +76,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
     };
   }, [router.query.assignment, fetch_tasks_assignment]);
 
-  const actions = (
+  const actions: IStickyAction[] = (
     task.hint
-      ? [
+      ? ([
           {
             color: 'grape',
             icon: (
@@ -87,18 +89,18 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             ),
             onClick: () => setOpenedHint(true),
           },
-        ]
+        ] as IStickyAction[])
       : []
   ).concat([
     {
       color: 'green',
+      href: `/task/edit/${task.spec}`,
       icon: (
         <Pencil
           width={STICKY_SIZES[width] / 3}
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      onClick: () => router.push(`/task/edit/${task.spec}`),
     },
     {
       color: 'red',
@@ -115,11 +117,16 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   return (
     <>
       {typeof router.query.assignment === 'string' && (
-        <TasksBar
-          tasks={tasks}
-          assignment={router.query.assignment}
-        />
+        <>
+          <TasksBar
+            tasks={tasks}
+            assignment={router.query.assignment}
+          />
+          <ChatSticky spec={router.query.assignment} />
+          <Timer spec={router.query.assignment} />
+        </>
       )}
+
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}
@@ -131,7 +138,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           opened={openedHint}
           close={() => setOpenedHint(false)}
         >
-          {task.hint.content}
+          <div
+            dangerouslySetInnerHTML={{ __html: task.hint.content }}
+          />
         </SimpleModal>
       )}
       {isUser && !isTeacher && showHint && task.hint && (
@@ -142,11 +151,10 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
               height={STICKY_SIZES[width] / 3}
             />
           }
-          color={'grape'}
           onClick={() => setOpenedHint(true)}
         />
       )}
-      {isTeacher && <Sticky actions={actions} color={'--prime'} />}
+      {isTeacher && <Sticky actions={actions} />}
       <TaskLayout
         title={task.title}
         description={

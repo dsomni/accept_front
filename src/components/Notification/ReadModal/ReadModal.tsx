@@ -12,6 +12,7 @@ import styles from './readModal.module.css';
 import { Group, LoadingOverlay } from '@mantine/core';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { useLocale } from '@hooks/useLocale';
+import { getLocalDate } from '@utils/datetime';
 
 const ReadModal: FC<{
   opened: boolean;
@@ -86,16 +87,29 @@ const ReadModal: FC<{
         }}
         title={
           <>
-            <div className={styles.title}>
-              {notification ? notification.title : ''}
-              <span className={styles.paging}>
-                {current + 1}/{notifications.length}
-              </span>
-            </div>
-            <div className={styles.author}>
-              {locale.notification.form.author}:{' '}
-              {notification ? notification.author : ''}
-            </div>
+            {notification ? (
+              <div>
+                <div className={styles.title}>
+                  {notification.title}
+                  <span className={styles.paging}>
+                    {current + 1}/{notifications.length}
+                  </span>
+                </div>
+                <div className={styles.author}>
+                  {locale.notification.form.author}:{' '}
+                  {notification.author}
+                </div>
+                <div className={styles.date}>
+                  {getLocalDate(notification.date)}
+                </div>
+              </div>
+            ) : (
+              <div className={styles.seeProfileWrapper}>
+                {locale.notification.seeProfile.map((par, index) => (
+                  <p key={index}>{par}</p>
+                ))}
+              </div>
+            )}
           </>
         }
         withCloseButton={false}
@@ -104,7 +118,6 @@ const ReadModal: FC<{
         {notification && (
           <>
             <div
-              className={styles.description}
               dangerouslySetInnerHTML={{
                 __html: notification.description,
               }}

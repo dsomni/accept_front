@@ -9,4 +9,5 @@ export type MyIconProps = Omit<ActionIconProps, 'size'> &
     size?: IconSizes;
     tooltipLabel?: string;
     tooltipProps?: TooltipProps;
+    wrapperClassName?: string;
   };

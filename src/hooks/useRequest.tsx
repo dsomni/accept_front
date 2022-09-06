@@ -34,6 +34,7 @@ export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(
       if (shouldSetLoading) setLoading(true);
       setError(false);
       setDetail('');
+
       sendRequest<Body, ReqAnswer>(
         url,
         method || 'GET',
