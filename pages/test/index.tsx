@@ -1,17 +1,14 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { ReactElement } from 'react';
+import { Button } from '@ui/basics';
+import { openText } from '@utils/openText';
+import { ReactElement, useCallback } from 'react';
 
 function TestPage() {
-  console.log(new Date().getTimezoneOffset());
-  return (
-    <div
-      style={{
-        width: '500px',
-        overflow: 'scroll',
-        height: '200px',
-      }}
-    ></div>
-  );
+  const onClick = useCallback(() => {
+    openText('lol '.repeat(5000));
+  }, []);
+
+  return <Button onClick={onClick}>open text</Button>;
 }
 
 TestPage.getLayout = (page: ReactElement) => {
