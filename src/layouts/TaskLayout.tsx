@@ -1,9 +1,9 @@
-import { callback } from '@custom-types/ui/atomic';
+import { callback, setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { Tabs } from '@mantine/core';
+import { Tabs } from '@ui/basics';
 import Head from 'next/head';
 
-import { FC, ReactNode, memo, useState } from 'react';
+import { FC, ReactNode, memo, useMemo } from 'react';
 
 const TaskLayout: FC<{
   description: ReactNode;
@@ -13,8 +13,33 @@ const TaskLayout: FC<{
 }> = ({ description, send, results, title }) => {
   const { locale } = useLocale();
 
-  const [activeTab, setActiveTab] = useState<string | null>(
-    'description'
+  const pages = useMemo(
+    () => [
+      {
+        value: 'description',
+        title: locale.task.description.self,
+        page: (_: string | null, __: setter<string | null>) => (
+          <>{description}</>
+        ),
+      },
+      {
+        value: 'send',
+        title: locale.task.send,
+        page: (
+          activeTab: string | null,
+          setActiveTab: setter<string | null>
+        ) => <>{send && send(setActiveTab)}</>,
+      },
+      {
+        value: 'results',
+        title: locale.task.send,
+        page: (
+          activeTab: string | null,
+          _: setter<string | null>
+        ) => <>{results && results(activeTab)}</>,
+      },
+    ],
+    [description, locale, results, send]
   );
 
   return (
@@ -25,44 +50,7 @@ const TaskLayout: FC<{
         </Head>
       )}
       {results || send ? (
-        <Tabs
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-          styles={{ tabLabel: { fontSize: 'var(--font-size-s)' } }}
-          value={activeTab}
-          onTabChange={setActiveTab}
-        >
-          <Tabs.List grow>
-            <Tabs.Tab value="description">
-              {locale.task.description.self}
-            </Tabs.Tab>
-            {send && (
-              <Tabs.Tab value="send">{locale.task.send}</Tabs.Tab>
-            )}
-            {results && (
-              <Tabs.Tab value="results">
-                {locale.task.results}
-              </Tabs.Tab>
-            )}
-          </Tabs.List>
-
-          <Tabs.Panel value="description" pt="xs">
-            {description}
-          </Tabs.Panel>
-
-          {send && (
-            <Tabs.Panel value="send" pt="xs">
-              {send(setActiveTab)}
-            </Tabs.Panel>
-          )}
-          {results && (
-            <Tabs.Panel value="results" pt="xs">
-              {results(activeTab)}
-            </Tabs.Panel>
-          )}
-        </Tabs>
+        <Tabs pages={pages} defaultPage={'description'} />
       ) : (
         <>{description}</>
       )}

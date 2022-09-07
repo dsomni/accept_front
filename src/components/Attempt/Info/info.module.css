@@ -1,0 +1,35 @@
+.infoWrapper {
+  margin: var(--spacer-l) var(--spacer-xxl) var(--spacer-xxl)
+    var(--spacer-xl);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: var(--font-size-m);
+  gap: var(--spacer-s);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+}
+
+.right {
+  min-width: 200px;
+  font-size: var(--font-size-s);
+}
+
+.column {
+  margin-right: auto;
+  padding: var(--spacer-xxs) var(--spacer-xs);
+}
+
+.cell {
+  font-size: var(--font-size-s);
+  padding: var(--spacer-xs) var(--spacer-s);
+}

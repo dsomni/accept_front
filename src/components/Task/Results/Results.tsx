@@ -5,6 +5,8 @@ import { IAttemptDisplay } from '@custom-types/data/IAttempt';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { getLocalDate } from '@utils/datetime';
 
+import tableStyles from '@styles/ui/customTable.module.css';
+
 import AttemptList from '@ui/AttemptList/AttemptList';
 
 const refactorAttempt = (
@@ -37,7 +39,14 @@ const refactorAttempt = (
         : attempt.status.spec - 10,
   },
   date: {
-    display: <>{getLocalDate(attempt.date)}</>,
+    display: (
+      <a
+        className={tableStyles.link}
+        href={`/attempt/${attempt.spec}`}
+      >
+        {getLocalDate(attempt.date)}
+      </a>
+    ),
     value: new Date(attempt.date).getTime(),
   },
   language: {
