@@ -23,8 +23,8 @@ export interface IAttempt {
   language: ILanguage;
   status: IAttemptStatus;
   constraints?: IConstraints;
-  programText: String;
-  textAnswers: String[];
+  programText: string;
+  textAnswers: string[];
   date: Date;
   results: IFullTestResult[];
   verdict: ITestResultDisplay;

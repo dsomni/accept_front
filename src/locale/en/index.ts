@@ -39,6 +39,10 @@ const en = {
   toList: 'To list',
   validationError: 'Validation error',
   yourProfile: 'Your Profile',
+  copy: {
+    label: 'Copy code to clipboard',
+    done: 'Copied code to clipboard',
+  },
   assignmentSchema,
   assignment,
   attempt,

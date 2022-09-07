@@ -1,7 +1,8 @@
 .codeWrapper {
-  margin: var(--spacer-l) var(--spacer-l) var(--spacer-xxl)
-    var(--spacer-xl);
-  border: 3px solid var(--secondary);
+  margin: var(--spacer-l) auto var(--spacer-xxl) auto;
   width: 80vw;
-  min-height: 500px;
+}
+
+.codeWrapper pre {
+  min-height: 100px;
 }

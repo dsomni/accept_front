@@ -39,6 +39,10 @@ const ru = {
   toList: 'К списку',
   validationError: 'Ошибка валидации',
   yourProfile: 'Ваш профиль',
+  copy: {
+    label: 'Копировать',
+    done: 'Скопировано!',
+  },
   assignmentSchema,
   assignment,
   attempt,

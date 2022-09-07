@@ -19,20 +19,20 @@ function Assignment(props: { attempt: IAttempt }) {
     () => [
       {
         value: 'info',
-        title: locale.task.description.self,
+        title: locale.attempt.pages.info,
         page: (_: string | null, __: setter<string | null>) => (
           <Info attempt={attempt} />
         ),
       },
       {
         value: 'code',
-        title: locale.task.send,
+        title: locale.attempt.pages.code,
         page: (_: string | null, __: setter<string | null>) => (
           <Code attempt={attempt} />
         ),
       },
     ],
-    [attempt, locale.task.description.self, locale.task.send]
+    [attempt, locale]
   );
 
   return (

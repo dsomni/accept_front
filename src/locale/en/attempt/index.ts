@@ -14,4 +14,8 @@ export const attempt = {
   memory: 'Memory',
   test: 'Test',
   statuses: ['Pending', 'Testing', 'Finished'],
+  pages: {
+    info: 'Information',
+    code: 'Attempt code',
+  },
 };
