@@ -39,7 +39,14 @@ const refactorAttempt = (
         : attempt.status.spec - 10,
   },
   date: {
-    display: <>{getLocalDate(attempt.date)}</>,
+    display: (
+      <a
+        className={tableStyles.link}
+        href={`/attempt/${attempt.spec}`}
+      >
+        {getLocalDate(attempt.date)}
+      </a>
+    ),
     value: new Date(attempt.date).getTime(),
   },
   language: {
