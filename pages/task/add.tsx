@@ -34,7 +34,7 @@ const initialValues = {
   outputFormat: '',
   remark: '',
 
-  hasHint: true,
+  hasHint: false,
   hintContent: '',
   hintAlarmType: '0',
   hintAlarm: 0,

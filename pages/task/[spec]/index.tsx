@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import { ILanguage } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import SingularSticky from '@ui/Sticky/SingularSticky';
-import { Eye, Pencil, Trash } from 'tabler-icons-react';
+import { Eye, Notes, Pencil, Trash } from 'tabler-icons-react';
 import { useUser } from '@hooks/useUser';
 import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
@@ -92,6 +92,16 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         ] as IStickyAction[])
       : []
   ).concat([
+    {
+      color: 'blue',
+      href: `/task/tests/${task.spec}`,
+      icon: (
+        <Notes
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+    },
     {
       color: 'green',
       href: `/task/edit/${task.spec}`,

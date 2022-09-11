@@ -62,3 +62,18 @@ export interface IHintAlarmType {
   spec: number;
   name: string;
 }
+
+export interface IConstraints {
+  time?: number;
+  memory?: number;
+}
+
+export interface IFullTestResult {
+  test: ITest;
+  verdict: IVerdict;
+}
+
+export interface IPartialTestResult {
+  test: number; // index
+  verdict: IVerdict;
+}

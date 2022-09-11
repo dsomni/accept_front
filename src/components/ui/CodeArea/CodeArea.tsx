@@ -21,6 +21,7 @@ const CodeArea: FC<{
   classNames?: object;
   helperContent?: string | ReactNode;
   buttonProps?: MyButtonProps;
+  minRows?: number;
 }> = ({
   label,
   setLanguage,
@@ -30,6 +31,7 @@ const CodeArea: FC<{
   classNames,
   helperContent,
   buttonProps,
+  minRows,
 }) => {
   const { locale } = useLocale();
 
@@ -90,7 +92,7 @@ const CodeArea: FC<{
             classNames={classNames}
             placeholder={locale.placeholders.code}
             onChange={(e) => setCode(e.target.value)}
-            minRows={40}
+            minRows={minRows || 40}
             label={label}
             {...formProps}
           />
