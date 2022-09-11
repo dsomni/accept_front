@@ -43,6 +43,7 @@ const ru = {
     label: 'Копировать',
     done: 'Скопировано!',
   },
+  newTab: 'Открыть в новой вкладке',
   assignmentSchema,
   assignment,
   attempt,

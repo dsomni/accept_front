@@ -77,7 +77,6 @@ const Dropzone: FC<{
           left: 0,
           right: 0,
           zIndex: 5,
-          // display: drag > 1 ? 'block' : 'none',
           visibility: drag > 0 ? 'visible' : 'hidden',
         }}
         onReject={(_) => dragEnd()}
@@ -130,10 +129,6 @@ const Dropzone: FC<{
         <Button
           variant="outline"
           onClick={() => openRef.current()}
-          // style={{
-          //   display: drag > 0 ? 'none' : 'block',
-          //   marginTop: 'var(--spacer-l)',
-          // }}
           targetWrapperStyle={{
             display: drag > 0 ? 'none' : 'block',
             marginTop: 'var(--spacer-l)',

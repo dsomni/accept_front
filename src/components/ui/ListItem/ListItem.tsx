@@ -2,6 +2,7 @@ import { callback } from '@custom-types/ui/atomic';
 import { ActionIcon, Textarea } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import { FC, memo } from 'react';
+import OpenTextInNewTab from '@ui/OpenTextInNewTab/OpenTextInNewTab';
 import styles from './listItem.module.css';
 
 const ListItem: FC<{
@@ -49,6 +50,9 @@ const ListItem: FC<{
                 >
                   <Trash width={22} height={22} />
                 </ActionIcon>
+                <OpenTextInNewTab
+                  text={form.values[field][index]['inputData']}
+                />
               </div>
             }
             minRows={2}
@@ -79,6 +83,9 @@ const ListItem: FC<{
                     <Trash width={22} height={22} />
                   </ActionIcon>
                 )}
+                <OpenTextInNewTab
+                  text={form.values[field][index]['outputData']}
+                />
               </div>
             }
             minRows={2}

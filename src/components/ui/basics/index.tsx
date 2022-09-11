@@ -19,6 +19,7 @@ import TextInput from './TextInput/TextInput';
 import TimeInput from './TimeInput/TimeInput';
 import Indicator from './Indicator/Indicator';
 import Tabs from './Tabs/Tabs';
+import Tip from './Tip/Tip';
 
 export {
   Button,
@@ -42,4 +43,5 @@ export {
   TimeInput,
   Indicator,
   Tabs,
+  Tip,
 };

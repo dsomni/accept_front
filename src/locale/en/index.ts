@@ -43,6 +43,7 @@ const en = {
     label: 'Copy code to clipboard',
     done: 'Copied code to clipboard',
   },
+  newTab: 'Open in the new tab',
   assignmentSchema,
   assignment,
   attempt,
