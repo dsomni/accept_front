@@ -19,6 +19,7 @@ const Dropzone: FC<{
   onDrop: (_: any) => void;
   title: string;
   description: string;
+  plural?: boolean;
 
   accept?: string[];
 
@@ -27,6 +28,7 @@ const Dropzone: FC<{
 }> = ({
   children,
   onDrop,
+  plural,
   accept,
   title,
   description,
@@ -135,7 +137,9 @@ const Dropzone: FC<{
           }}
           {...buttonProps}
         >
-          {locale.ui.codeArea.selectFiles}
+          {plural
+            ? locale.ui.codeArea.selectFiles
+            : locale.ui.codeArea.selectFile}
         </Button>
       )}
       {children}

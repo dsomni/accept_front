@@ -44,6 +44,7 @@ const Checker: FC<{ form: any }> = ({ form }) => {
       />
       <CodeArea
         languages={languages}
+        minRows={20}
         helperContent={
           <div>
             {locale.helpers.task.checker.map((p, idx) => (

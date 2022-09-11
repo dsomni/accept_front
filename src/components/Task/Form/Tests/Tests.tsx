@@ -130,6 +130,7 @@ const Tests: FC<{
         title={locale.ui.codeArea.dragFiles}
         description={''}
         showButton
+        plural
         buttonProps={{
           style: {
             width: '100%',
