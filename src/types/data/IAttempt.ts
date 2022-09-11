@@ -1,8 +1,8 @@
 import {
   IAttemptStatus,
   IConstraints,
-  IFullTestResult,
   ILanguage,
+  IPartialTestResult,
   ITestResultDisplay,
 } from './atomic';
 import { ITaskBaseInfo } from './ITask';
@@ -26,7 +26,7 @@ export interface IAttempt {
   programText: string;
   textAnswers: string[];
   date: Date;
-  results: IFullTestResult[];
+  results: IPartialTestResult[];
   verdict: ITestResultDisplay;
   task: ITaskBaseInfo;
   author: IUserDisplay;

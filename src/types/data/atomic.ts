@@ -72,3 +72,8 @@ export interface IFullTestResult {
   test: ITest;
   verdict: IVerdict;
 }
+
+export interface IPartialTestResult {
+  test: number; // index
+  verdict: IVerdict;
+}

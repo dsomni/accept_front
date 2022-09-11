@@ -68,9 +68,9 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
           <PrimitiveTable
             columnSizes={[1, 2]}
             columns={[locale.attempt.test, locale.attempt.result]}
-            rows={attempt.results.map((row, index) => ({
+            rows={attempt.results.map((row) => ({
               ...row,
-              index: index + 1,
+              index: row.test + 1,
             }))}
             classNames={{
               column: styles.column,
