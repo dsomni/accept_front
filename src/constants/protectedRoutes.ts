@@ -1,6 +1,6 @@
 export const accessLevels = {
-  user: 0,
-  student: 1,
+  user: 1,
+  student: 2,
   teacher: 3,
   admin: 50,
   developer: 100,
