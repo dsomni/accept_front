@@ -1,15 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getApiUrl } from '@utils/getServerUrl';
+import { protectedRoutesInfo } from './src/constants/protectedRoutes';
 
-const protectedRoutesInfo: { [key: string]: number } = {
-  '/task/add': 3,
-  '/task/edit': 3,
-  '/edu/assignment_schema/add': 3,
-  '/edu/assignment_schema/edit': 3,
-  '/edu/assignment/add': 3,
-  '/edu/assignment/edit': 3,
-};
 const protectedRoutes = Object.keys(protectedRoutesInfo).sort();
 
 const isProtected = (route: string): boolean => {
@@ -39,7 +31,6 @@ const removeSpec = (pathname: string): string => {
 
 // const apiUrl = getApiUrl();
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (
