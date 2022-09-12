@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  cursor: pointer;
+  margin: var(--spacer-xs) var(--spacer-s);
+}
+
+.itemLabel {
+  width: 100%;
+}
+.itemIcon {
+  width: fit-content;
+  padding: 0 var(--spacer-m);
+}

@@ -1,0 +1,8 @@
+.codeWrapper {
+  margin: var(--spacer-l) auto var(--spacer-xxl) auto;
+  width: 80vw;
+}
+
+.codeWrapper pre {
+  min-height: 100px;
+}

@@ -1,0 +1,19 @@
+.link {
+  text-decoration: none;
+  font-size: var(--font-size-l);
+  color: inherit !important;
+}
+
+.link:hover {
+  background-color: #14c3ff1a;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacer-m) 70px var(--spacer-m) var(--spacer-l);
+}
+.paddingLinks {
+  padding: var(--spacer-xxs) var(--spacer-m);
+}

@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacer-s);
+  padding: var(--spacer-s) var(--spacer-m);
+}
+
+.shortInfo {
+  display: flex;
+  flex-direction: column;
+}
+.shortName {
+  font-size: var(--font-size-l);
+}
+.login {
+  color: var(--dark4);
+}

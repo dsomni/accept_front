@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xs);
+  width: 100%;
+}
+
+.labelWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xxs);
+  align-items: flex-end;
+}
+
+.label {
+  font-size: var(--font-size-label-m);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.labelRequired {
+  font-size: var(--font-size-s);
+  color: var(--negative);
+}

@@ -1,0 +1,4 @@
+.wrapper {
+  flex-wrap: nowrap;
+  gap: var(--spacer-xs);
+}

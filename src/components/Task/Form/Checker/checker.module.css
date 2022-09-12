@@ -1,0 +1,8 @@
+.tests {
+  margin-top: var(--spacer-l);
+}
+
+.tests > * {
+  margin: 0;
+  width: 100%;
+}

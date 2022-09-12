@@ -1,0 +1,55 @@
+.wrapper {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 30vw;
+  height: var(--spacer-xs);
+
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  transition: height 0.3s;
+  cursor: pointer;
+}
+.wrapper:hover {
+  height: var(--spacer-xl);
+}
+
+.taskStatus {
+  width: 100%;
+  text-decoration: none;
+  max-width: var(--spacer-xl);
+  height: var(--spacer-xl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px 10px 0 0;
+}
+
+.null {
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.ok {
+  color: white;
+  background-color: var(--positive);
+}
+
+.testing {
+  color: white;
+  background-color: var(--neutral);
+}
+
+.err {
+  color: white;
+  background-color: var(--negative);
+}
+
+@media screen and (max-width: 700px) {
+  .wrapper {
+    width: 70vw;
+  }
+}

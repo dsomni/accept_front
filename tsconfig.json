@@ -16,6 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@ui/*": ["src/components/ui/*"],
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@custom-types/*": ["src/types/*"],
@@ -23,6 +24,7 @@
       "@utils/*": ["src/utils/*"],
       "@locale/*": ["src/locale/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/layouts/*"],
       "@styles/*": ["styles/*"]
     }
   },

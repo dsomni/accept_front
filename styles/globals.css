@@ -2,37 +2,133 @@ html,
 body {
   margin: 0 !important;
   padding: 0 !important;
-  min-width: 800px;
+  --removed-scroll-width: 0 !important;
   font-size: 14px;
+  min-width: 400px;
 }
 
-@media only screen and (max-width: 1080px) {
+:root {
+  --primary: #2ea3f2;
+  --primary-light: #e7f5ff;
+  --secondary: #1c7ed6;
+  --secondary-light: #d0ebffa6;
+  --positive: #04b504;
+  --positive-light: #65ba6579;
+  --positive-light2: #d3f4d348;
+  --negative: #ff0000;
+  --neutral: #ffae00;
+  --negative-light: #fe7d7d6a;
+  --negative-light2: #f6cfcf4a;
+  --accent: #ff00d0;
+}
+:root {
+  --dark1: #000;
+  --dark2: #333;
+  --dark3: #666;
+  --dark4: #999;
+  --dark5: #ccc;
+  --dark6: #f8f8f8;
+}
+:root {
+  --font-size-huge: 2.5rem;
+  --font-size-xxl: 2rem;
+  --font-size-xl: 1.7rem;
+  --font-size-l: 1.4rem;
+  --font-size-m: 1.2rem;
+  --font-size-s: 1rem;
+  --font-size-xs: 0.8rem;
+  --font-size-xxs: 0.6rem;
+}
+:root {
+  --font-size-btn-l: 1.2rem;
+  --font-size-btn-m: 1rem;
+  --font-size-btn-s: 0.8rem;
+}
+
+:root {
+  --font-size-label-l: 1.4rem;
+  --font-size-label-m: 1.2rem;
+  --font-size-label-s: 1rem;
+  --font-size-label-xs: 0.8rem;
+}
+
+:root {
+  --spacer-xhuge: 24rem;
+  --spacer-huge: 12rem;
+  --spacer-xxl: 6rem;
+  --spacer-xl: 3rem;
+  --spacer-l: 2rem;
+  --spacer-m: 1.5rem;
+  --spacer-s: 1rem;
+  --spacer-xs: 0.6rem;
+  --spacer-xxs: 0.3rem;
+}
+
+.text-tiny {
+  font-size: var(--font-size-xxs);
+}
+
+.text-small {
+  font-size: var(--font-size-xs);
+}
+
+.text-big {
+  font-size: var(--font-size-l);
+}
+
+.text-huge {
+  font-size: var(--font-size-xl);
+}
+
+@media only screen and (min-width: 320px) {
+  html,
+  body {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 480px) {
   html,
   body {
     font-size: 16px;
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (min-width: 1440px) {
+  html,
+  body {
+    font-size: 17px;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
   html,
   body {
     font-size: 20px;
   }
 }
 
-@media only screen and (max-width: 500px) {
-  html,
-  body {
-    font-size: 26px;
-  }
-}
-
 * {
-  font-family: 'Roboto', sans-serif !important;
+  font-family: 'Exo 2' !important;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box !important;
+}
+
+*::-webkit-scrollbar {
+  width: var(--spacer-xxs);
+  height: var(--spacer-xxs);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--dark3);
 }

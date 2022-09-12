@@ -1,0 +1,32 @@
+.content {
+  width: 100%;
+  min-height: 62vh;
+  background-image: url(/media/code.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.info {
+  padding: 0 var(--spacer-xs);
+  background-color: #00000060;
+  border-radius: 10%;
+}
+.title {
+  font-size: 6em;
+  padding: 0 0 var(--spacer-xs) 0;
+}
+.version {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacer-m);
+  display: flex;
+  justify-content: flex-end;
+}
+.logoWrapper {
+  margin: var(--spacer-l) 0 var(--spacer-xs) 0 !important;
+  user-select: none;
+}

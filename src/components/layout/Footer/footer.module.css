@@ -1,0 +1,26 @@
+.wrapper {
+  background-color: var(--dark2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacer-s);
+  padding: var(--spacer-l) 0;
+}
+
+.githubs {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-s);
+  align-items: center;
+  margin-top: var(--spacer-l);
+}
+
+.github a:hover {
+  background-color: inherit;
+}
+
+.copyright {
+  color: white;
+  font-size: var(--font-size-xs);
+}

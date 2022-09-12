@@ -1,0 +1,8 @@
+.restWrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100px;
+  width: var(--spacer-xxl);
+  overflow-y: scroll;
+  cursor: pointer;
+}

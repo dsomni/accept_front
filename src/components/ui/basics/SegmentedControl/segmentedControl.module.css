@@ -1,0 +1,13 @@
+.root {
+  background-color: '#00000000';
+  width: fit-content;
+}
+.label {
+  font-size: var(--font-size-m);
+}
+.active {
+  background-color: var(--primary);
+}
+.labelActive {
+  color: white !important;
+}

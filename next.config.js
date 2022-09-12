@@ -4,17 +4,34 @@ console.log('Config', { API_ENDPOINT });
 
 /** @type {import('next').NextConfig} */
 module.exports = {
-  reactStrictMode: true,
+  env: {
+    API_ENDPOINT,
+  },
+  reactStrictMode: false,
   async rewrites() {
     return [
       {
-        source: '/:slug*',
-        destination: `https://${API_ENDPOINT}/:slug*`,
+        source: '/back/:slug*',
+        destination: `${API_ENDPOINT}/api/:slug*`,
+      },
+      {
+        source: '/profile',
+        destination: `/profile/me`,
       },
     ];
   },
-  i18n: {
-    locales: ['ru', 'en'],
-    defaultLocale: 'ru',
+  async redirects() {
+    return [
+      {
+        source: '/assignment_schema/:slug*',
+        destination: '/edu/assignment_schema/:slug*',
+        permanent: false,
+      },
+      {
+        source: '/assignment/:slug*',
+        destination: '/edu/assignment/:slug*',
+        permanent: false,
+      },
+    ];
   },
 };

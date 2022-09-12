@@ -1,0 +1,17 @@
+.selectedMulti {
+  font-size: var(--font-size-s);
+  min-height: var(--spacer-l);
+}
+
+.selectedMulti span {
+  overflow: visible;
+}
+
+.inputElemMulti {
+  font-size: var(--font-size-s);
+  min-height: var(--spacer-xl);
+  display: flex;
+}
+.inputElemMulti input {
+  font-size: var(--font-size-s);
+}
