@@ -155,6 +155,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       )}
       {isUser && !isTeacher && showHint && task.hint && (
         <SingularSticky
+          color="var(--accent)"
           icon={
             <Eye
               width={STICKY_SIZES[width] / 3}

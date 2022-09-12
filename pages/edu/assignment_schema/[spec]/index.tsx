@@ -25,7 +25,6 @@ function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
         assignment={assignment}
       />
       <Sticky
-        color={'--primary'}
         actions={[
           {
             color: 'green',

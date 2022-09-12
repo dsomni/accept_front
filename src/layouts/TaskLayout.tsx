@@ -1,5 +1,6 @@
 import { callback, setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
+import { useUser } from '@hooks/useUser';
 import { Tabs } from '@ui/basics';
 import Head from 'next/head';
 
@@ -12,6 +13,8 @@ const TaskLayout: FC<{
   title?: string;
 }> = ({ description, send, results, title }) => {
   const { locale } = useLocale();
+
+  const { isUser } = useUser();
 
   const pages = useMemo(
     () => [
@@ -32,7 +35,7 @@ const TaskLayout: FC<{
       },
       {
         value: 'results',
-        title: locale.task.send,
+        title: locale.task.results,
         page: (
           activeTab: string | null,
           _: setter<string | null>
@@ -49,7 +52,7 @@ const TaskLayout: FC<{
           <title>{title}</title>
         </Head>
       )}
-      {results || send ? (
+      {isUser && (results || send) ? (
         <Tabs pages={pages} defaultPage={'description'} />
       ) : (
         <>{description}</>

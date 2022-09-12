@@ -34,7 +34,7 @@ export const fetchWrapper = async (props: FetchWrapperProps) => {
   };
   let response = await fetch(fetch_url, fetch_data);
 
-  if (response.status == 401) {
+  if (response.status == 401 || response.status == 403) {
     try {
       const refresh_response = await fetch(refresh_url, {
         method: 'POST',

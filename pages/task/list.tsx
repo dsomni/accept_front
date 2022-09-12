@@ -7,6 +7,7 @@ import { ILocale } from '@custom-types/ui/ILocale';
 import TaskList from '@ui/TaskList/TaskList';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { Plus } from 'tabler-icons-react';
+import { useUser } from '@hooks/useUser';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -138,6 +139,7 @@ const refactorTask = (task: ITaskDisplay): any => ({
 });
 
 function TaskListPage() {
+  const { isTeacher } = useUser();
   return (
     <div>
       {' '}
@@ -146,10 +148,12 @@ function TaskListPage() {
         refactorTask={refactorTask}
         initialColumns={initialColumns}
       />{' '}
-      <SingularSticky
-        href={`/task/add`}
-        icon={<Plus height={25} width={25} />}
-      />
+      {isTeacher && (
+        <SingularSticky
+          href={`/task/add`}
+          icon={<Plus height={25} width={25} />}
+        />
+      )}
     </div>
   );
 }

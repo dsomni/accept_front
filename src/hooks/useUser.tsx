@@ -1,3 +1,4 @@
+import { accessLevels } from '@constants/protectedRoutes';
 import { IUser, IUserContext } from '@custom-types/data/IUser';
 import { isSuccessful, sendRequest } from '@requests/request';
 import { clearCookie, getCookie, setCookie } from '@utils/cookies';
@@ -31,9 +32,10 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
           user: res.response,
           accessLevel,
           isUser: accessLevel > 0,
-          isStudent: accessLevel > 1,
-          isTeacher: accessLevel > 2,
-          isAdmin: accessLevel > 50,
+          isStudent: accessLevel >= accessLevels.student,
+          isTeacher: accessLevel >= accessLevels.teacher,
+          isAdmin: accessLevel >= accessLevels.admin,
+          isDeveloper: accessLevel >= accessLevels.student,
         }));
       } else {
         setValue((prev) => ({
@@ -44,6 +46,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
           isStudent: false,
           isTeacher: false,
           isAdmin: false,
+          isDeveloper: false,
         }));
       }
     } else {
@@ -53,10 +56,12 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
           ...prev,
           user: user,
           accessLevel: user.role.accessLevel,
-          isUser: user.role.accessLevel > 0,
-          isStudent: user.role.accessLevel > 1,
-          isTeacher: user.role.accessLevel > 2,
-          isAdmin: user.role.accessLevel > 50,
+          isUser: user.role.accessLevel > accessLevels.student,
+          isStudent: user.role.accessLevel > accessLevels.student,
+          isTeacher: user.role.accessLevel > accessLevels.teacher,
+          isAdmin: user.role.accessLevel > accessLevels.admin,
+          isDeveloper:
+            user.role.accessLevel >= accessLevels.developer,
         }));
       } catch (error) {
         setCookie('user', '', { 'max-age': 0 });
@@ -101,6 +106,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
         isStudent: false,
         isTeacher: false,
         isAdmin: false,
+        isDeveloper: false,
       }));
       return true;
     }
@@ -124,6 +130,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
       isStudent: false,
       isTeacher: false,
       isAdmin: false,
+      isDeveloper: false,
     }));
     return 2;
   }, [refresh, whoAmI]);
@@ -153,6 +160,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
     isStudent: false,
     isTeacher: false,
     isAdmin: false,
+    isDeveloper: false,
     signIn,
     signOut,
     refresh,

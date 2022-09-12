@@ -29,7 +29,7 @@ const Results: FC<{
           }))}
           data={data.results.map((row) =>
             row.map((cell) => ({
-              best: cell.best
+              best: cell.best?.verdict
                 ? cell.best.status.spec === 2
                   ? `${cell.best.verdict.verdict.shortText} #${
                       cell.best.verdict.test + 1

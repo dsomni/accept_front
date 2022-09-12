@@ -28,4 +28,5 @@
 }
 .logoWrapper {
   margin: var(--spacer-l) 0 var(--spacer-xs) 0 !important;
+  user-select: none;
 }
