@@ -72,8 +72,9 @@ export async function middleware(request: NextRequest) {
     }
     if (users_level_responce.status !== 200)
       return NextResponse.redirect(request.nextUrl.origin + `/500`);
-    const users_level = users_level_responce.json();
-    console.log(accessLevel, users_level);
+    const users_level = await users_level_responce.json();
+    if (users_level < accessLevel)
+      return NextResponse.redirect(request.nextUrl.origin + '/403');
   }
   return NextResponse.next();
 }
