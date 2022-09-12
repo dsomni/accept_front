@@ -1,6 +1,5 @@
 import Table from '@ui/Table/Table';
 import { ITableColumn } from '@custom-types/ui/ITable';
-import { ITaskDisplay } from '@custom-types/data/ITask';
 import {
   FC,
   ReactNode,
@@ -12,39 +11,32 @@ import {
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { ITag } from '@custom-types/data/ITag';
-import { hasSubarray } from '@utils/hasSubarray';
-import { ITaskListBundle } from '@custom-types/data/bundle';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { BaseSearch } from '@custom-types/data/request';
 import Fuse from 'fuse.js';
-import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
+import { IGroupDisplay } from '@custom-types/data/IGroup';
 
 interface Item {
   value: any;
   display: string | ReactNode;
 }
 
-interface ITaskDisplayList
-  extends Omit<
-    ITaskDisplay,
-    'title' | 'author' | 'verdict' | 'complexity'
-  > {
+interface IGroupDisplayList
+  extends Omit<IGroupDisplay, 'title' | 'participants' | 'readonly'> {
   title: Item;
-  author: Item;
-  verdict: Item;
-  complexity: Item;
+  participants: Item;
+  readonly: Item;
 }
 
 const DEFAULT_ON_PAGE = 10;
 
-const TaskList: FC<{
+const GroupsList: FC<{
   url: string;
   classNames?: any;
   initialColumns: (_: ILocale) => ITableColumn[];
-  refactorTask: (_: ITaskDisplay) => any;
+  refactorGroup: (_: IGroupDisplay) => any;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
@@ -52,7 +44,7 @@ const TaskList: FC<{
   url,
   classNames,
   initialColumns,
-  refactorTask,
+  refactorGroup,
   noDefault,
   empty,
   defaultRowsOnPage,
@@ -68,25 +60,18 @@ const TaskList: FC<{
     [initialColumns, locale]
   );
 
-  const [tags, setTags] = useState<ITag[]>([]);
-  const [currentTags, setCurrentTags] = useState<string[]>([]);
-
-  const [tasks, setTasks] = useState<ITaskDisplayList[]>([]);
+  const [groups, setGroups] = useState<IGroupDisplayList[]>([]);
 
   const processData = useCallback(
-    (
-      response: ITaskListBundle
-    ): { tasks: ITaskDisplayList[]; tags: ITag[] } => ({
-      tasks: response.tasks.map((item) => refactorTask(item)),
-      tags: response.tags,
-    }),
-    [refactorTask]
+    (response: IGroupDisplay[]): IGroupDisplayList[] =>
+      response.map((item) => refactorGroup(item)),
+    [refactorGroup]
   );
 
   const { data, loading } = useRequest<
     {},
-    ITaskListBundle,
-    { tasks: ITaskDisplayList[]; tags: ITag[] }
+    IGroupDisplay[],
+    IGroupDisplayList[]
   >(url, 'GET', undefined, processData);
 
   const [searchParams, setSearchParams] = useState<BaseSearch>({
@@ -97,25 +82,12 @@ const TaskList: FC<{
     sort_by: [],
     search_params: {
       search: '',
-      keys: [
-        'title.value',
-        'author.value',
-        'verdict.value.shortText',
-      ],
+      keys: ['name.value'],
     },
   });
 
-  const searchTags = useMemo(
-    () =>
-      tags.map((tag) => ({
-        label: tag.title,
-        value: tag.spec,
-      })),
-    [tags]
-  );
-
   const applyFilters = useCallback(
-    (data: ITaskDisplayList[]) => {
+    (data: IGroupDisplayList[]) => {
       var list = [...data];
       const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
@@ -129,17 +101,7 @@ const TaskList: FC<{
               .search(searchParams.search_params.search)
               .map((result) => result.item);
 
-      const tagged =
-        currentTags.length > 0
-          ? searched.filter((task) =>
-              hasSubarray(
-                task.tags.map((tag) => tag.spec),
-                currentTags
-              )
-            )
-          : searched;
-
-      const sorted = tagged.sort((a, b) =>
+      const sorted = searched.sort((a, b) =>
         customTableSort(a, b, searchParams.sort_by, columns)
       );
 
@@ -149,15 +111,14 @@ const TaskList: FC<{
           ? searchParams.pager.skip + searchParams.pager.limit
           : undefined
       );
-      setTasks(paged);
+      setGroups(paged);
     },
-    [columns, currentTags, searchParams]
+    [columns, searchParams]
   );
 
   useEffect(() => {
     if (data) {
-      applyFilters(data.tasks);
-      setTags(data.tags);
+      applyFilters(data);
     }
   }, [applyFilters, data]);
 
@@ -166,7 +127,7 @@ const TaskList: FC<{
       <Table
         withSearch
         columns={columns}
-        rows={tasks}
+        rows={groups}
         classNames={
           classNames
             ? classNames
@@ -186,23 +147,13 @@ const TaskList: FC<{
         empty={empty}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}
-        total={data?.tasks.length || 0}
+        total={data?.length || 0}
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}
-        additionalSearch={
-          <div>
-            <MultiSelect
-              searchable
-              data={searchTags}
-              onChange={setCurrentTags}
-              placeholder={locale.placeholders.selectTags}
-            />
-          </div>
-        }
       />
     </div>
   );
 };
 
-export default memo(TaskList);
+export default memo(GroupsList);

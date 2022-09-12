@@ -5,4 +5,14 @@ export const group = {
   name: 'Title',
   readonly: 'Readonly',
   form,
+  list: {
+    name: 'Name',
+    participants: 'Participants',
+    readonly: 'Mutable',
+  },
+  modals: {
+    delete: 'Delete group',
+    deleteConfidence:
+      'Are you sure you want to permanently delete this group?',
+  },
 };

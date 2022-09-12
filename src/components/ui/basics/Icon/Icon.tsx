@@ -26,6 +26,7 @@ const Icon: FC<MyIconProps> = ({
         {...tooltipProps}
       >
         <ActionIcon
+          component={props.onClick ? 'button' : 'a'}
           {...props}
           size={
             size

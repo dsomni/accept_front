@@ -8,7 +8,15 @@ export const mainHeaderLinks = {
     notifications: 'Уведомления',
   },
   projects: 'Проекты',
+  lists: 'Списки',
+  listLinks: {
+    tasks: 'Задачи',
+    groups: 'Группы',
+    schemas: 'Схемы уроков',
+    users: 'Пользователи',
+  },
 };
+
 export const credentials = {
   company: 'Blue Crane Inc.',
   startYear: '2020',

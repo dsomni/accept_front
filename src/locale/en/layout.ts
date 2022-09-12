@@ -8,6 +8,13 @@ export const mainHeaderLinks = {
     notifications: 'Notifications',
   },
   projects: 'Projects',
+  lists: 'Lists',
+  listLinks: {
+    tasks: 'Tasks',
+    groups: 'Groups',
+    schemas: 'Schemas',
+    users: 'Users',
+  },
 };
 
 export const credentials = {

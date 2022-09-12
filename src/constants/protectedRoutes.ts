@@ -22,4 +22,5 @@ export const protectedRoutesInfo: { [key: string]: number } = {
   '/task/edit': accessLevels.teacher,
   '/task/tests': accessLevels.teacher,
   '/user/list': accessLevels.teacher,
+  '/group/list': accessLevels.teacher,
 };

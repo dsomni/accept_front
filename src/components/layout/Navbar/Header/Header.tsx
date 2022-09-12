@@ -6,12 +6,11 @@ import styles from './header.module.css';
 
 const Header: FC<{
   links: IHeaderLink[];
-  dropdown: IHeaderLink[];
-}> = ({ links, dropdown }) => {
+}> = ({ links }) => {
   return (
     <div className={styles.header}>
       <Logo />
-      <Links links={links} dropdownLinks={dropdown} />
+      <Links links={links} />
     </div>
   );
 };

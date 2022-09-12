@@ -20,22 +20,22 @@ const refactorAttempt = (
         style={{
           color:
             attempt.status.spec == 2
-              ? attempt.verdict.verdict.spec == 0
+              ? attempt.verdict?.verdict.spec == 0
                 ? 'var(--positive)'
                 : 'var(--negative)'
               : 'black',
         }}
       >
         {attempt.status.spec == 2
-          ? attempt.verdict.verdict.shortText +
+          ? (attempt.verdict?.verdict.shortText || '') +
             ' #' +
-            (attempt.verdict.test + 1).toString()
+            ((attempt.verdict?.test || 0) + 1).toString()
           : locale.attempt.statuses[attempt.status.spec]}
       </div>
     ),
     value:
       attempt.status.spec == 2
-        ? attempt.verdict.verdict.spec
+        ? attempt.verdict?.verdict.spec
         : attempt.status.spec - 10,
   },
   date: {
