@@ -27,7 +27,7 @@ const Results: FC<{
   });
 
   useEffect(() => {
-    refetch(true);
+    if (!loading) refetch(true);
   }, [fetchDate]); // eslint-disable-line
 
   return (
@@ -72,6 +72,8 @@ const Results: FC<{
                   : cell.best.status.spec === 1
                   ? 'TS'
                   : 'TS'
+                : cell.best?.status.spec == 0
+                ? 'TS'
                 : '-',
               rest: cell.attempts.map((attempt) => ({
                 text: attempt.verdict
