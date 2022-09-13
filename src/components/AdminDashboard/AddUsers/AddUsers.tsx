@@ -156,6 +156,7 @@ const AddUsers: FC<{}> = ({}) => {
     const data = getAddUserData(file);
     setUsers(data as IStudentAdd[]);
     setErrors([]);
+    setTable('users');
   }, []);
 
   const handleSend = useCallback(() => {
@@ -188,7 +189,10 @@ const AddUsers: FC<{}> = ({}) => {
                   >
                     {locale.student.errors[item.message.kind]}
                   </div>
-                  <Helper dropdownContent={item.message.text[lang]} />
+                  <Helper
+                    hoverCardProps={{ arrowSize: 15 }}
+                    dropdownContent={item.message.text[lang]}
+                  />
                 </div>
               ),
             },
@@ -220,22 +224,34 @@ const AddUsers: FC<{}> = ({}) => {
       >
         <div className={styles.tableWrapper}>
           {errors.length > 0 && (
-            <SegmentedControl
-              value={table}
-              onChange={(value) =>
-                setTable(value as 'users' | 'errors')
-              }
-              data={[
-                {
-                  label: locale.student.segments.users,
-                  value: 'users',
-                },
-                {
-                  label: locale.student.segments.errors,
-                  value: 'errors',
-                },
-              ]}
-            />
+            <div className={styles.segmentControl}>
+              <SegmentedControl
+                value={table}
+                onChange={(value) =>
+                  setTable(value as 'users' | 'errors')
+                }
+                data={[
+                  {
+                    label: locale.student.segments.users,
+                    value: 'users',
+                  },
+                  {
+                    label: locale.student.segments.errors,
+                    value: 'errors',
+                  },
+                ]}
+              />
+              <Helper
+                hoverCardProps={{ arrowSize: 15 }}
+                dropdownContent={
+                  <div>
+                    {locale.helpers.student.errors.map((p, idx) => (
+                      <p key={idx}>{p}</p>
+                    ))}
+                  </div>
+                }
+              />
+            </div>
           )}
           {table != 'errors' && (
             <NewUsersList
