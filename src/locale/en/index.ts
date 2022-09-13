@@ -19,6 +19,7 @@ import { notification } from './notification';
 import { profile } from './profile';
 import { dashboard } from './dashboard';
 import { timer } from './timer';
+import { student } from './student';
 
 const en = {
   accept: 'Accept',
@@ -69,6 +70,7 @@ const en = {
   helpers,
   tag,
   timer,
+  student,
 };
 
 export default en;

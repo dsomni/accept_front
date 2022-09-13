@@ -16,12 +16,22 @@ import { BaseSearch } from '@custom-types/data/request';
 
 import Fuse from 'fuse.js';
 import { customTableSort } from '@utils/customTableSort';
-import { IStudentAdd } from '@custom-types/data/IStudent';
+import { IStudentAddResponse } from '@custom-types/data/IStudent';
 
 const DEFAULT_ON_PAGE = 10;
 
-const NewUsersList: FC<{
-  data: IStudentAdd[];
+interface Item {
+  value: any;
+  display: string | ReactNode;
+}
+
+export interface IStudentAddResponseTable
+  extends IStudentAddResponse {
+  error: Item;
+}
+
+const StudentErrorList: FC<{
+  data: IStudentAddResponse[];
   initialColumns: (_: ILocale) => ITableColumn[];
   classNames?: any;
   empty?: ReactNode;
@@ -38,7 +48,7 @@ const NewUsersList: FC<{
 }) => {
   const { locale } = useLocale();
 
-  const [users, setUsers] = useState<IStudentAdd[]>(data);
+  const [users, setUsers] = useState<IStudentAddResponse[]>(data);
 
   const defaultOnPage = useMemo(
     () => defaultRowsOnPage || DEFAULT_ON_PAGE,
@@ -63,7 +73,7 @@ const NewUsersList: FC<{
   });
 
   const applyFilters = useCallback(
-    (data: IStudentAdd[]) => {
+    (data: IStudentAddResponse[]) => {
       var list = [...data];
       const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
@@ -124,10 +134,10 @@ const NewUsersList: FC<{
               }
         }
         defaultOnPage={defaultOnPage}
-        onPage={[defaultOnPage, 30]}
+        onPage={[defaultOnPage, 5]}
       />
     </div>
   );
 };
 
-export default memo(NewUsersList);
+export default memo(StudentErrorList);

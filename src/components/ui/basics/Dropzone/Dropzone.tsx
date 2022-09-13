@@ -13,6 +13,7 @@ import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
 import { Button } from '@ui/basics';
 import { MyButtonProps } from '@custom-types/ui/basics/button';
+import styles from './dropzone.module.css';
 
 const Dropzone: FC<{
   children: ReactNode;
@@ -20,7 +21,7 @@ const Dropzone: FC<{
   title: string;
   description: string;
   plural?: boolean;
-
+  additionalButtons?: ReactNode;
   accept?: string[];
 
   showButton?: boolean;
@@ -32,7 +33,7 @@ const Dropzone: FC<{
   accept,
   title,
   description,
-
+  additionalButtons,
   showButton,
   buttonProps,
 }) => {
@@ -128,19 +129,21 @@ const Dropzone: FC<{
       </MantineDropzone>
 
       {showButton && (
-        <Button
-          variant="outline"
-          onClick={() => openRef.current()}
-          targetWrapperStyle={{
-            display: drag > 0 ? 'none' : 'block',
-            marginTop: 'var(--spacer-l)',
-          }}
-          {...buttonProps}
-        >
-          {plural
-            ? locale.ui.codeArea.selectFiles
-            : locale.ui.codeArea.selectFile}
-        </Button>
+        <div className={styles.buttons}>
+          <Button
+            variant="outline"
+            onClick={() => openRef.current()}
+            targetWrapperStyle={{
+              display: drag > 0 ? 'none' : 'block',
+            }}
+            {...buttonProps}
+          >
+            {plural
+              ? locale.ui.codeArea.selectFiles
+              : locale.ui.codeArea.selectFile}
+          </Button>
+          {additionalButtons}
+        </div>
       )}
       {children}
     </div>

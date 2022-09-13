@@ -5,4 +5,5 @@ export const list = {
   login: 'Login',
   role: 'Role',
   password: 'Password',
+  error: 'Errors',
 };

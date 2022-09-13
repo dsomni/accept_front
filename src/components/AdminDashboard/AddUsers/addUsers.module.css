@@ -1,0 +1,9 @@
+.errorWrapper {
+  display: flex;
+  gap: var(--spacer-xxs);
+}
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+}

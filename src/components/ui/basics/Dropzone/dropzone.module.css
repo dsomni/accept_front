@@ -1,0 +1,6 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-s);
+  margin-top: var(--spacer-l);
+}
