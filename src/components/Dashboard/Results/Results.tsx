@@ -7,11 +7,17 @@ import { LoadingOverlay } from '@mantine/core';
 
 const Results: FC<{
   spec: string;
-}> = ({ spec }) => {
+  isFinished: boolean;
+  endDate: Date;
+}> = ({ spec, isFinished, endDate }) => {
   const { data, loading, refetch } = useRequest<
-    {},
+    {
+      dueDate: Date | undefined;
+    },
     IAssignmentResults
-  >(`assignment/results/${spec}`, 'GET');
+  >(`assignment/results/${spec}`, 'POST', {
+    dueDate: isFinished ? endDate : undefined,
+  });
 
   return (
     <div className={styles.wrapper}>
