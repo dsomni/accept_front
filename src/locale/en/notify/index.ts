@@ -8,6 +8,7 @@ import { profile } from './profile';
 import { notification } from './notification';
 import { tournament } from './tournament';
 import { tournament_task } from './tournament_task';
+import { students } from './students';
 
 export const notify = {
   errors: {
@@ -23,4 +24,5 @@ export const notify = {
   tournament_task,
   notification,
   profile,
+  students,
 };

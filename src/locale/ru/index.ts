@@ -33,6 +33,7 @@ const ru = {
   error: 'Ошибка',
   success: 'Успешно',
   language: 'Язык',
+  add: 'Добавить',
   all: 'Все',
   create: 'Создать',
   edit: 'Изменить',

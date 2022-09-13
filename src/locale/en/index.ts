@@ -33,6 +33,7 @@ const en = {
   error: 'Error',
   success: 'Successes',
   language: 'Language',
+  add: 'Add',
   all: 'All',
   create: 'Create',
   edit: 'Edit',
