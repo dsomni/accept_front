@@ -7,4 +7,5 @@ export const labels = {
   surname: 'Surname',
   patronymic: 'Patronymic',
   email: 'Email',
+  role: 'Role',
 };

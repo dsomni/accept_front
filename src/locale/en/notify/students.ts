@@ -1,6 +1,6 @@
 export const students = {
   add: {
-    loading: 'Loading...',
+    loading: 'It may take a while',
     error: 'Error while adding students.',
     success: 'Students were added successfully.',
   },

@@ -9,6 +9,7 @@ import { notification } from './notification';
 import { tournament } from './tournament';
 import { tournament_task } from './tournament_task';
 import { students } from './students';
+import { user } from './user';
 
 export const notify = {
   errors: {
@@ -25,4 +26,5 @@ export const notify = {
   notification,
   profile,
   students,
+  user,
 };

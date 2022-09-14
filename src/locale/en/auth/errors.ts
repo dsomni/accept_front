@@ -13,7 +13,14 @@ export const errors = {
   name: {
     len: 'Name is too long',
     surname: 'You need to enter surname and name',
+    short: 'Name is too short',
+    invalid: 'Name contains invalid symbols',
+  },
+  surname: {
+    short: 'Surname is too short',
+    invalid: 'Surname contains invalid symbols',
   },
   email: 'Email is incorrect',
   confirm: 'Passwords did not match',
+  role: 'Select a role',
 };
