@@ -4,14 +4,12 @@ import {
   Helper,
   SegmentedControl,
 } from '@ui/basics';
-import { MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
 import { FC, memo, useCallback, useState } from 'react';
 import { getAddUserData } from '@utils/readExcel';
 import NewUsersList from '@ui/NewUsersList/NewUsersList';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { useLocale } from '@hooks/useLocale';
-import { requestWithNotify } from '@utils/requestWithNotify';
 import {
   IStudentAdd,
   IStudentAddResponse,
@@ -20,6 +18,15 @@ import StudentErrorList, {
   IStudentAddResponseTable,
 } from '@ui/StudentErrorList/StudentErrorList';
 import styles from './addUsers.module.css';
+import { sendRequest } from '@requests/request';
+import {
+  errorNotification,
+  newNotification,
+  successNotification,
+  warningNotification,
+} from '@utils/notificationFunctions';
+
+const USERS_AT_ONCE = 50;
 
 const usersInitialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -77,6 +84,13 @@ const usersInitialColumns = (locale: ILocale): ITableColumn[] => [
   },
 ];
 
+const compKind = (a: any, b: any) =>
+  a.error.value === 'error' && b.error.value !== 'error'
+    ? 1
+    : a.error.value !== 'error' && b.error.value === 'error'
+    ? -1
+    : 0;
+
 const errorsInitialColumns = (locale: ILocale): ITableColumn[] => [
   {
     label: locale.users.list.login,
@@ -124,13 +138,8 @@ const errorsInitialColumns = (locale: ILocale): ITableColumn[] => [
     label: locale.users.list.error,
     key: 'error',
     sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.message.type === 'error' && b.message.type !== 'error'
-        ? 1
-        : a.message.type !== 'error' && b.message.type === 'error'
-        ? -1
-        : 0,
-    sorted: 1,
+    sortFunction: compKind,
+    sorted: -1,
     allowMiddleState: true,
     hidable: false,
     hidden: false,
@@ -138,10 +147,10 @@ const errorsInitialColumns = (locale: ILocale): ITableColumn[] => [
   },
 ];
 
-// @ts-ignore-line
-let reverse = (a: string[]): string[] => [...a].map(a.pop, a);
-
-const ACCEPTED = reverse(MS_EXCEL_MIME_TYPE);
+const ACCEPTED = [
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-excel',
+];
 
 const AddUsers: FC<{}> = ({}) => {
   const { locale, lang } = useLocale();
@@ -159,49 +168,98 @@ const AddUsers: FC<{}> = ({}) => {
     setTable('users');
   }, []);
 
-  const handleSend = useCallback(() => {
-    requestWithNotify<IStudentAdd[], IStudentAddResponse[]>(
+  const sendUsers = useCallback(async (users: IStudentAdd[]) => {
+    return await sendRequest<IStudentAdd[], IStudentAddResponse[]>(
       'students/add',
       'POST',
-      locale.notify.students.add,
-      lang,
-      (resp) =>
-        `${locale.student.add.error}: ${
-          resp.filter((item) => item.message.kind === 'error').length
-        }`,
-      users,
-      (resp) => {
-        setErrors(
-          resp.map((item) => ({
-            ...item,
-            error: {
-              value: item.message.kind,
-              display: (
-                <div className={styles.errorWrapper}>
-                  <div
-                    className={styles.error}
-                    style={{
-                      color:
-                        item.message.kind == 'error'
-                          ? 'var(--negative)'
-                          : 'var(--neutral)',
-                    }}
-                  >
-                    {locale.student.errors[item.message.kind]}
-                  </div>
-                  <Helper
-                    hoverCardProps={{ arrowSize: 15 }}
-                    dropdownContent={item.message.text[lang]}
-                  />
-                </div>
-              ),
-            },
-          }))
-        );
-        if (resp.length !== 0) setTable('errors');
-      }
+      users
     );
-  }, [users, lang, locale]);
+  }, []);
+
+  const handleSend = useCallback(async () => {
+    const id = newNotification({
+      title: locale.loading,
+      autoClose: false,
+    });
+
+    await sendRequest<{}, {}>('students/start-add', 'GET');
+    for (let idx = 0; idx < users.length / USERS_AT_ONCE; idx++) {
+      await sendUsers(
+        users.slice(
+          idx * USERS_AT_ONCE,
+          Math.min((idx + 1) * USERS_AT_ONCE, users.length)
+        )
+      ).then((res) => {
+        return res;
+      });
+    }
+    // Promise.all(responses).then((responses) => {
+    let wrong_students: IStudentAddResponse[] = [];
+
+    await sendRequest<{}, IStudentAddResponse[]>(
+      'students/end-add',
+      'GET'
+    ).then((res) => {
+      if (res.error) {
+        errorNotification({
+          id,
+          title: `${locale.student.add.error} (${wrong_students.length})`,
+          autoClose: 20000,
+        });
+        return;
+      }
+      wrong_students = res.response;
+    });
+
+    setErrors(
+      wrong_students.map((item) => ({
+        ...item,
+        error: {
+          value: item.message.kind,
+          display: (
+            <div className={styles.errorWrapper}>
+              <div
+                className={styles.error}
+                style={{
+                  color:
+                    item.message.kind == 'error'
+                      ? 'var(--negative)'
+                      : 'var(--neutral)',
+                }}
+              >
+                {locale.student.errors[item.message.kind]}
+              </div>
+              <Helper
+                hoverCardProps={{ arrowSize: 15 }}
+                dropdownContent={item.message.text[lang]}
+                iconColor={
+                  item.message.kind == 'error'
+                    ? 'var(--negative)'
+                    : 'var(--neutral)'
+                }
+              />
+            </div>
+          ),
+        },
+      }))
+    );
+    setTable('errors');
+
+    if (wrong_students.length != 0) {
+      warningNotification({
+        id,
+        title: `${locale.student.add.warning} (${wrong_students.length})`,
+        autoClose: 20000,
+      });
+      return;
+    }
+    successNotification({
+      id,
+      title: locale.student.add.success,
+      autoClose: 30000,
+    });
+    // });
+  }, [locale, users, sendUsers, lang]);
 
   return (
     <>
@@ -210,7 +268,6 @@ const AddUsers: FC<{}> = ({}) => {
         title={''}
         description={''}
         accept={ACCEPTED}
-        buttonProps={{ style: { marginBottom: 'var(--spacer-m)' } }}
         showButton
         additionalButtons={
           <>
@@ -219,6 +276,17 @@ const AddUsers: FC<{}> = ({}) => {
                 {locale.add}
               </Button>
             )}
+            <Helper
+              dropdownContent={
+                <div>
+                  {locale.helpers.student.tableFormat.map(
+                    (p, idx) => (
+                      <p key={idx}>{p}</p>
+                    )
+                  )}
+                </div>
+              }
+            />
           </>
         }
       >
@@ -257,7 +325,7 @@ const AddUsers: FC<{}> = ({}) => {
             <NewUsersList
               data={users}
               initialColumns={usersInitialColumns}
-              empty={<div>Перетащите файл сюда</div>}
+              empty={<div>{locale.ui.codeArea.dragFile}</div>}
               noDefault
             />
           )}
@@ -265,7 +333,7 @@ const AddUsers: FC<{}> = ({}) => {
             <StudentErrorList
               data={errors}
               initialColumns={errorsInitialColumns}
-              empty={<div>Перетащите файл сюда</div>}
+              empty={<div>{locale.ui.codeArea.dragFile}</div>}
               noDefault
             />
           )}

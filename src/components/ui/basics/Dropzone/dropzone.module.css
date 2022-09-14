@@ -3,4 +3,6 @@
   flex-direction: row;
   gap: var(--spacer-s);
   margin-top: var(--spacer-l);
+  align-items: center;
+  margin-bottom: var(--spacer-m);
 }

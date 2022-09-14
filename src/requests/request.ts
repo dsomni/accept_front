@@ -33,6 +33,7 @@ export const sendRequest = <ISend, IReceive>(
   if (body) {
     options.body = JSON.stringify(body);
   }
+
   return fetch(withPrefix(path), options)
     .then((res: any) =>
       res.status === 200
