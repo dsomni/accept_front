@@ -50,6 +50,9 @@ const GroupsList: FC<{
   defaultRowsOnPage,
 }) => {
   const { locale } = useLocale();
+
+  const [total, setTotal] = useState(0);
+
   const defaultOnPage = useMemo(
     () => defaultRowsOnPage || DEFAULT_ON_PAGE,
     [defaultRowsOnPage]
@@ -105,6 +108,8 @@ const GroupsList: FC<{
         customTableSort(a, b, searchParams.sort_by, columns)
       );
 
+      setTotal(sorted.length);
+
       const paged = sorted.slice(
         searchParams.pager.skip,
         searchParams.pager.limit > 0
@@ -144,10 +149,12 @@ const GroupsList: FC<{
               }
         }
         noDefault={noDefault}
-        empty={empty}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}
-        total={data?.length || 0}
+        total={total}
+        empty={empty || <>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}

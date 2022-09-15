@@ -40,6 +40,8 @@ const NewUsersList: FC<{
 
   const [users, setUsers] = useState<IStudentAdd[]>(data);
 
+  const [total, setTotal] = useState(0);
+
   const defaultOnPage = useMemo(
     () => defaultRowsOnPage || DEFAULT_ON_PAGE,
     [defaultRowsOnPage]
@@ -81,6 +83,8 @@ const NewUsersList: FC<{
         customTableSort(a, b, searchParams.sort_by, columns)
       );
 
+      setTotal(sorted.length);
+
       const paged = sorted.slice(
         searchParams.pager.skip,
         searchParams.pager.limit > 0
@@ -101,12 +105,14 @@ const NewUsersList: FC<{
       <Table
         columns={columns}
         rows={users}
-        total={data.length}
+        total={total}
         loading={false}
         setSearchParams={setSearchParams}
         searchParams={searchParams}
         noDefault={noDefault}
-        empty={empty}
+        empty={empty || <>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         withSearch
         classNames={
           classNames

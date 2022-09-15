@@ -120,7 +120,9 @@ const StudentErrorList: FC<{
         setSearchParams={setSearchParams}
         searchParams={searchParams}
         noDefault={noDefault}
-        empty={empty}
+        empty={empty || <>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         withSearch
         classNames={
           classNames

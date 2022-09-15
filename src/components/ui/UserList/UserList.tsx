@@ -206,7 +206,9 @@ const UsersList: FC<{
               }
         }
         noDefault={noDefault}
-        empty={empty}
+        empty={empty || <>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.users.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}
         total={total}

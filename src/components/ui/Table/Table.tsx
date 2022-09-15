@@ -33,6 +33,8 @@ const Table: FC<{
   searchParams: BaseSearch;
   noDefault?: boolean;
   empty?: ReactNode;
+  isEmpty?: boolean;
+  nothingFound?: ReactNode;
 }> = ({
   columns,
   classNames,
@@ -47,6 +49,8 @@ const Table: FC<{
   searchParams,
   noDefault,
   empty,
+  isEmpty,
+  nothingFound,
 }) => {
   const { locale } = useLocale();
 
@@ -211,8 +215,14 @@ const Table: FC<{
             }
       }
     >
-      {!loading && empty && localRows.length == 0 ? (
-        <div className={styles.emptyMessage}>{empty}</div>
+      {!loading && empty && isEmpty ? (
+        <div
+          className={`${styles.emptyMessage} ${
+            classNames?.emptyMessage || ''
+          }`}
+        >
+          {empty}
+        </div>
       ) : (
         <div className={styles.main}>
           <div className={styles.searchWrapper}>
@@ -245,27 +255,39 @@ const Table: FC<{
             )}
             {additionalSearch || <></>}
           </div>
-          <div style={{ position: 'relative' }}>
-            <LoadingOverlay
-              visible={loading}
-              loader={<Loader size="lg" />}
-            />
-            <InnerTable
-              columns={localColumns}
-              classNames={classNames}
-              rows={localRows}
-              sort={sort}
-            />
-          </div>
-          <PageNavigation
-            onPage={onPage}
-            defaultOnPage={defaultOnPage}
-            perPage={perPage}
-            page={page}
-            totalLength={totalLength}
-            handlePerPageChange={handlePerPageChange}
-            handlePageChange={handlePageChange}
-          />
+          {!loading && total == 0 && nothingFound ? (
+            <div
+              className={`${styles.nothingFoundMessage} ${
+                classNames?.nothingFoundMessage || ''
+              }`}
+            >
+              {nothingFound}
+            </div>
+          ) : (
+            <>
+              <div style={{ position: 'relative' }}>
+                <LoadingOverlay
+                  visible={loading}
+                  loader={<Loader size="lg" />}
+                />
+                <InnerTable
+                  columns={localColumns}
+                  classNames={classNames}
+                  rows={localRows}
+                  sort={sort}
+                />
+              </div>
+              <PageNavigation
+                onPage={onPage}
+                defaultOnPage={defaultOnPage}
+                perPage={perPage}
+                page={page}
+                totalLength={totalLength}
+                handlePerPageChange={handlePerPageChange}
+                handlePageChange={handlePageChange}
+              />
+            </>
+          )}
         </div>
       )}
     </div>

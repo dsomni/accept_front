@@ -142,12 +142,11 @@ function TaskListPage() {
   const { isTeacher } = useUser();
   return (
     <div>
-      {' '}
       <TaskList
         url={'bundle/task_list'}
         refactorTask={refactorTask}
         initialColumns={initialColumns}
-      />{' '}
+      />
       {isTeacher && (
         <SingularSticky
           href={`/task/add`}
