@@ -1,6 +1,6 @@
 import { callback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
@@ -25,7 +25,7 @@ const Form: FC<{
     initialValues,
     validate: {
       name: (value) =>
-        value.length < 5 ? locale.group.form.validation.name : null,
+        value.length < 3 ? locale.group.form.validation.name : null,
       members: (value) =>
         value.length < 2
           ? locale.group.form.validation.members
@@ -36,6 +36,14 @@ const Form: FC<{
   useEffect(() => {
     form.setValues(initialValues);
   }, [initialValues]); //eslint-disable-line
+
+  const setFieldValue = useCallback(
+    (users: string[]) => form.setFieldValue('members', users),
+    [] // eslint-disable-line
+  );
+  const initialProps = useMemo(() => {
+    form.getInputProps('members');
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     if (Object.keys(form.errors).length > 0) {
@@ -68,10 +76,10 @@ const Form: FC<{
       )}
 
       <UserSelector
-        form={form}
+        setFieldValue={setFieldValue}
+        inputProps={initialProps}
         users={users}
         initialUsers={form.values.members}
-        field={'members'}
       />
       <div className={styles.buttonWrapper}>
         <Button

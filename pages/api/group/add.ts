@@ -26,4 +26,6 @@ export default async function AddGroup(
       customBody: req.body.members,
     });
   }
+
+  res.status(createResponse.status).json(data);
 }

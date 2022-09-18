@@ -12,11 +12,11 @@ import { ActionIcon } from '@mantine/core';
 import { Eye } from 'tabler-icons-react';
 
 const UserSelector: FC<{
-  form: any;
-  field: string;
+  setFieldValue: (_: string[]) => void;
+  inputProps: any;
   users: IUser[];
   initialUsers?: string[];
-}> = ({ form, users, field, initialUsers }) => {
+}> = ({ setFieldValue, inputProps, users, initialUsers }) => {
   const [availableUsers, setAvailableUsers] = useState<Item[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,8 +25,8 @@ const UserSelector: FC<{
 
   useEffect(() => {
     setLoading(true);
-    const newAvailableUsers = [];
-    const newSelectedUsers = [];
+    let newAvailableUsers = [];
+    let newSelectedUsers = [];
 
     for (let i = 0; i < users.length; i++) {
       if (
@@ -64,11 +64,12 @@ const UserSelector: FC<{
             <div className={styles.name}>{user[displayedField]}</div>
 
             <div className={styles.groups}>
-              {user.groups.map(
-                (group, index) =>
-                  group.name +
-                  (index == user.groups.length - 1 ? '' : ', ')
-              )}
+              {user.groups.map((group, index) => (
+                <div key={index} className={styles.group}>
+                  {group.name +
+                    (index == user.groups.length - 1 ? '' : ', ')}
+                </div>
+              ))}
             </div>
           </div>
           <div className={styles.actions}>
@@ -110,15 +111,12 @@ const UserSelector: FC<{
       />
 
       {!loading && (
-        <InputWrapper {...form.getInputProps(field)}>
+        <InputWrapper {...inputProps}>
           <CustomTransferList
             defaultOptions={availableUsers}
             defaultChosen={selectedUsers}
             setUsed={(users: Item[]) =>
-              form.setFieldValue(
-                field,
-                users.map((user) => user.login)
-              )
+              setFieldValue(users.map((user) => user.login))
             }
             classNames={{ label: stepperStyles.label }}
             titles={[

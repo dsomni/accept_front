@@ -109,7 +109,7 @@ const refactorUser = (user: IUser): any => ({
 function UsersListPage() {
   return (
     <UserList
-      url={'user/list'}
+      url={'user/listBundle'}
       refactorUser={refactorUser}
       initialColumns={initialColumns}
     />

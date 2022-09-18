@@ -66,9 +66,7 @@ const refactorGroup = (group: IGroupDisplay): any => ({
     value: group.name,
     display: (
       <div className={tableStyles.titleWrapper}>
-        <a className={tableStyles.title} href={`/task/${group.spec}`}>
-          {group.name}
-        </a>
+        <div style={{ color: 'var(--primary)' }}>{group.name}</div>
         <div
           style={{
             display: 'flex',
