@@ -17,7 +17,7 @@ export default async function AddGroup(
   const status = createResponse.status;
   const data = await createResponse.json();
 
-  if (status == 200 && data.spec) {
+  if (status == 200 && data.spec && req.body.members.length > 0) {
     await fetchWrapper({
       req: req,
       res: res,

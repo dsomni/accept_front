@@ -20,6 +20,7 @@ import { profile } from './profile';
 import { dashboard } from './dashboard';
 import { timer } from './timer';
 import { student } from './student';
+import { grade } from './grade';
 
 const ru = {
   accept: 'Accept',
@@ -71,6 +72,7 @@ const ru = {
   tag,
   timer,
   student,
+  grade,
 };
 
 export default ru;

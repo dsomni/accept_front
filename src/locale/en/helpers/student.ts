@@ -10,5 +10,11 @@ export const student = {
     'fullName - user`s full name; between each words there must be exactly one space; can consist of 3 or 2 (in case of absence of patronymic) words',
     'grade - group to which user will be added; group must be in such form: `11 A`, cannot be empty',
     'password - user`s password; cannot be empty',
+    'In case if the grade does not exist, you can create it on the corresponding tab',
+  ],
+  attention: [
+    'Creation of users may take some time (5-10 minutes)',
+    "During creation some site's features may not work correctly",
+    "Due to this, we recommend to add students when the site's load is low",
   ],
 };

@@ -25,6 +25,7 @@
   font-size: var(--font-size-xs);
   color: var(--dark3);
   max-width: 60%;
+  gap: var(--spacer-xxs);
 }
 
 .group {

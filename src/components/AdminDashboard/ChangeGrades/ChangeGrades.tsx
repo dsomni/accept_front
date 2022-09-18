@@ -7,18 +7,10 @@ import {
 } from '@ui/basics';
 import { FC, memo, useCallback, useState } from 'react';
 import { getAddUserData } from '@utils/readExcel';
-import NewUsersList from '@ui/NewUsersList/NewUsersList';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { useLocale } from '@hooks/useLocale';
-import {
-  IStudentAdd,
-  IStudentAddResponse,
-} from '@custom-types/data/IStudent';
-import StudentErrorList, {
-  IStudentAddResponseTable,
-} from '@ui/StudentErrorList/StudentErrorList';
-import styles from './addUsers.module.css';
+import styles from './changeGrades.module.css';
 import { sendRequest } from '@requests/request';
 import {
   errorNotification,
@@ -27,9 +19,16 @@ import {
   warningNotification,
 } from '@utils/notificationFunctions';
 import { AlertCircle } from 'tabler-icons-react';
+import {
+  IGradeChange,
+  IGradeChangeResponse,
+} from '@custom-types/data/IStudent';
+import ChangeGradeList from '@ui/ChangeGradeList/ChangeGradeList';
+import ChangeGradeErrorList, {
+  IGradeChangeResponseTable,
+} from '@ui/ChangeGradeErrorList/ChangeGradeErrorList';
 
 const USERS_AT_ONCE = 50;
-const ERRORS_AT_ONCE = 8;
 
 const usersInitialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -43,18 +42,6 @@ const usersInitialColumns = (locale: ILocale): ITableColumn[] => [
     hidable: false,
     hidden: false,
     size: 2,
-  },
-  {
-    label: locale.users.list.fullName,
-    key: 'fullName',
-    sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.fullName > b.fullName ? 1 : a.fullName == b.fullName ? 0 : -1,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: true,
-    hidden: false,
-    size: 3,
   },
   {
     label: locale.users.list.grade,
@@ -73,17 +60,6 @@ const usersInitialColumns = (locale: ILocale): ITableColumn[] => [
     hidable: true,
     hidden: false,
     size: 1,
-  },
-  {
-    label: locale.users.list.password,
-    key: 'password',
-    sortable: false,
-    sortFunction: (_: any, __: any) => 0,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: true,
-    hidden: true,
-    size: 2,
   },
 ];
 
@@ -106,18 +82,6 @@ const errorsInitialColumns = (locale: ILocale): ITableColumn[] => [
     hidable: false,
     hidden: false,
     size: 2,
-  },
-  {
-    label: locale.users.list.fullName,
-    key: 'fullName',
-    sortable: true,
-    sortFunction: (a: any, b: any) =>
-      a.fullName > b.fullName ? 1 : a.fullName == b.fullName ? 0 : -1,
-    sorted: 0,
-    allowMiddleState: true,
-    hidable: true,
-    hidden: false,
-    size: 3,
   },
   {
     label: locale.users.list.grade,
@@ -155,10 +119,10 @@ const ACCEPTED = [
   'application/vnd.ms-excel',
 ];
 
-const AddUsers: FC<{}> = ({}) => {
+const ChangeGrades: FC<{}> = ({}) => {
   const { locale, lang } = useLocale();
-  const [users, setUsers] = useState<IStudentAdd[]>([]);
-  const [errors, setErrors] = useState<IStudentAddResponseTable[]>(
+  const [users, setUsers] = useState<IGradeChange[]>([]);
+  const [errors, setErrors] = useState<IGradeChangeResponseTable[]>(
     []
   );
   const [table, setTable] = useState<'users' | 'errors'>('users');
@@ -166,14 +130,14 @@ const AddUsers: FC<{}> = ({}) => {
   const onDrop = useCallback(async (files: any[]) => {
     const file = await files[0].arrayBuffer();
     const data = getAddUserData(file);
-    setUsers(data as IStudentAdd[]);
+    setUsers(data as IGradeChange[]);
     setErrors([]);
     setTable('users');
   }, []);
 
-  const sendUsers = useCallback(async (users: IStudentAdd[]) => {
-    return await sendRequest<IStudentAdd[], IStudentAddResponse[]>(
-      'students/add',
+  const sendUsers = useCallback(async (users: IGradeChange[]) => {
+    return await sendRequest<IGradeChange[], IGradeChangeResponse[]>(
+      'grades/change',
       'POST',
       users
     );
@@ -185,10 +149,9 @@ const AddUsers: FC<{}> = ({}) => {
       autoClose: false,
     });
 
-    let errors: string[] = [];
-    await sendRequest<{}, {}>('students/start-add', 'GET');
+    await sendRequest<{}, {}>('grades/start-change', 'GET');
     for (let idx = 0; idx < users.length / USERS_AT_ONCE; idx++) {
-      const res = await sendUsers(
+      await sendUsers(
         users.slice(
           idx * USERS_AT_ONCE,
           Math.min((idx + 1) * USERS_AT_ONCE, users.length)
@@ -196,35 +159,26 @@ const AddUsers: FC<{}> = ({}) => {
       ).then((res) => {
         return res;
       });
-      if (res.error) {
-        errors.push(
-          `${idx * USERS_AT_ONCE}-${Math.min(
-            (idx + 1) * USERS_AT_ONCE,
-            users.length
-          )}`
-        );
-      }
     }
-    // Promise.all(responses).then((responses) => {
-    let wrong_students: IStudentAddResponse[] = [];
+    let wrong_grades: IGradeChangeResponse[] = [];
 
-    await sendRequest<{}, IStudentAddResponse[]>(
-      'students/end-add',
+    await sendRequest<{}, IGradeChangeResponse[]>(
+      'grades/end-change',
       'GET'
     ).then((res) => {
       if (res.error) {
         errorNotification({
           id,
-          title: `${locale.student.add.error} (${wrong_students.length})`,
+          title: `${locale.student.add.error} (${wrong_grades.length})`,
           autoClose: 20000,
         });
         return;
       }
-      wrong_students = res.response;
+      wrong_grades = res.response;
     });
 
     setErrors(
-      wrong_students.map((item) => ({
+      wrong_grades.map((item) => ({
         ...item,
         error: {
           value: item.message.kind,
@@ -257,46 +211,19 @@ const AddUsers: FC<{}> = ({}) => {
     );
     setTable('errors');
 
-    if (errors.length > 0) {
-      errorNotification({
-        id,
-        title: `${locale.student.add.error}`,
-        autoClose: 10000,
-      });
-      for (let idx = 0; idx < errors.length / ERRORS_AT_ONCE; idx++) {
-        const id = newNotification({
-          title: locale.loading,
-          autoClose: false,
-        });
-        errorNotification({
-          id,
-          title: `${locale.student.add.error}`,
-          message: `${locale.student.add.errorDetail} ${errors
-            .slice(
-              idx * ERRORS_AT_ONCE,
-              Math.min((idx + 1) * ERRORS_AT_ONCE, errors.length)
-            )
-            .join(', ')}`,
-          autoClose: 20000,
-        });
-      }
-      return;
-    }
-
-    if (wrong_students.length != 0) {
+    if (wrong_grades.length != 0) {
       warningNotification({
         id,
-        title: `${locale.student.add.warning} (${wrong_students.length})`,
+        title: `${locale.grade.change.warning} (${wrong_grades.length})`,
         autoClose: 20000,
       });
       return;
     }
     successNotification({
       id,
-      title: locale.student.add.success,
+      title: locale.grade.change.success,
       autoClose: 30000,
     });
-    // });
   }, [locale, users, sendUsers, lang]);
 
   return (
@@ -311,24 +238,22 @@ const AddUsers: FC<{}> = ({}) => {
           <>
             {users.length > 0 && (
               <Button onClick={handleSend} color={'var(--positive)'}>
-                {locale.add}
+                {locale.edit}
               </Button>
             )}
             <Helper
               dropdownContent={
                 <div>
-                  {locale.helpers.student.tableFormat.map(
-                    (p, idx) => (
-                      <p key={idx}>{p}</p>
-                    )
-                  )}
+                  {locale.helpers.grade.tableFormat.map((p, idx) => (
+                    <p key={idx}>{p}</p>
+                  ))}
                 </div>
               }
             />
             <Helper
               dropdownContent={
                 <div>
-                  {locale.helpers.student.attention.map((p, idx) => (
+                  {locale.helpers.grade.attention.map((p, idx) => (
                     <p key={idx}>{p}</p>
                   ))}
                 </div>
@@ -365,7 +290,7 @@ const AddUsers: FC<{}> = ({}) => {
                 hoverCardProps={{ arrowSize: 15 }}
                 dropdownContent={
                   <div>
-                    {locale.helpers.student.errors.map((p, idx) => (
+                    {locale.helpers.grade.errors.map((p, idx) => (
                       <p key={idx}>{p}</p>
                     ))}
                   </div>
@@ -374,7 +299,7 @@ const AddUsers: FC<{}> = ({}) => {
             </div>
           )}
           {table != 'errors' && (
-            <NewUsersList
+            <ChangeGradeList
               data={users}
               initialColumns={usersInitialColumns}
               empty={<div>{locale.ui.codeArea.dragFile}</div>}
@@ -382,7 +307,7 @@ const AddUsers: FC<{}> = ({}) => {
             />
           )}
           {table == 'errors' && (
-            <StudentErrorList
+            <ChangeGradeErrorList
               data={errors}
               initialColumns={errorsInitialColumns}
               empty={<div>{locale.ui.codeArea.dragFile}</div>}
@@ -395,4 +320,4 @@ const AddUsers: FC<{}> = ({}) => {
   );
 };
 
-export default memo(AddUsers);
+export default memo(ChangeGrades);

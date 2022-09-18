@@ -4,7 +4,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { Button, Switch, TextInput } from '@ui/basics';
+import { Button, Helper, Switch, TextInput } from '@ui/basics';
 
 import { UserSelector } from '@ui/selectors';
 import { useUser } from '@hooks/useUser';
@@ -67,10 +67,19 @@ const Form: FC<{
       />
 
       {isAdmin && (
-        <div style={{ width: 'fit-content' }}>
+        <div className={styles.readOnlySwitch}>
           <Switch
             label={locale.group.readonly}
             {...form.getInputProps('readonly', { type: 'checkbox' })}
+          />
+          <Helper
+            dropdownContent={
+              <div>
+                {locale.helpers.group.readOnly.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+            }
           />
         </div>
       )}
