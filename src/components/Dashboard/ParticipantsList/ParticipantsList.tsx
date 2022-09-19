@@ -8,6 +8,7 @@ import { capitalize } from '@utils/capitalize';
 import UserList from '@ui/UserList/UserList';
 
 import styles from './participantsList.module.css';
+import { useLocale } from '@hooks/useLocale';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -106,6 +107,8 @@ const refactorUser = (user: IUser): any => ({
 });
 
 const ParticipantsList: FC<{ spec: string }> = ({ spec }) => {
+  const { locale } = useLocale();
+
   return (
     <div className={styles.wrapper}>
       <UserList
@@ -113,7 +116,7 @@ const ParticipantsList: FC<{ spec: string }> = ({ spec }) => {
         refactorUser={refactorUser}
         initialColumns={initialColumns}
         noDefault
-        empty={<></>}
+        empty={<>{locale.ui.table.emptyMessage}</>}
         classNames={{
           wrapper: tableStyles.wrapper,
           table: tableStyles.table,

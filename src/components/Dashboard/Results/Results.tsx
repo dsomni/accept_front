@@ -51,7 +51,7 @@ const Results: FC<{
         />
       )}
       <LoadingOverlay visible={loading} />
-      {data && (
+      {data && data.users.length > 0 && data.tasks.length > 0 ? (
         <ResultsTable
           refetch={refetch}
           columns={data.tasks.map((task) => ({
@@ -86,6 +86,10 @@ const Results: FC<{
             }))
           )}
         />
+      ) : (
+        <div className={styles.empty}>
+          {locale.ui.table.emptyMessage}
+        </div>
       )}
     </div>
   );

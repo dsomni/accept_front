@@ -5,12 +5,12 @@ import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import {
   AlignRight,
   BellPlus,
-  Database,
   Pencil,
   Puzzle,
   Table,
   Trash,
   Users,
+  Vocabulary,
 } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
 import { IAssignmentDisplay } from '@custom-types/data/IAssignment';
@@ -60,7 +60,7 @@ const AssignmentDashboard: FC<{
         page: assignment && (
           <TimeInfo assignment={assignment} refetch={refetch} />
         ),
-        icon: <Database color="var(--secondary)" />,
+        icon: <Vocabulary color="var(--secondary)" />,
         title: locale.dashboard.assignment.mainInfo,
       },
       {

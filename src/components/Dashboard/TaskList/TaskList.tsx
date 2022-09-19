@@ -5,6 +5,7 @@ import { ILocale } from '@custom-types/ui/ILocale';
 import { default as TaskListUI } from '@ui/TaskList/TaskList';
 import styles from './taskList.module.css';
 import { ITaskDisplay } from '@custom-types/data/ITask';
+import { useLocale } from '@hooks/useLocale';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -76,6 +77,8 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 ];
 
 const TaskList: FC<{ spec: string }> = ({ spec }) => {
+  const { locale } = useLocale();
+
   const refactorTask = useCallback(
     (task: ITaskDisplay): any => ({
       ...task,
@@ -149,7 +152,7 @@ const TaskList: FC<{ spec: string }> = ({ spec }) => {
         refactorTask={refactorTask}
         initialColumns={initialColumns}
         noDefault
-        empty={<></>}
+        empty={<>{locale.ui.table.emptyMessage}</>}
         classNames={{
           wrapper: tableStyles.wrapper,
           table: tableStyles.table,

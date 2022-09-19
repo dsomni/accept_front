@@ -6,3 +6,8 @@
   flex-direction: column;
   gap: var(--spacer-m);
 }
+
+.empty {
+  margin: var(--spacer-xxl) auto;
+  font-size: var(--font-size-l);
+}

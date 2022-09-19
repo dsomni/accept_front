@@ -147,6 +147,7 @@ const AttemptsList: FC<{
         searchParams={searchParams}
         noDefault={noDefault}
         empty={empty}
+        isEmpty={tableData.total == 0}
         classNames={
           classNames
             ? classNames

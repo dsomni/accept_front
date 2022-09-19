@@ -7,7 +7,7 @@ import { getApiUrl } from '@utils/getServerUrl';
 import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Description from '@components/Assignment/Description/Description';
-import { Pencil, Trash } from 'tabler-icons-react';
+import { Dashboard, Pencil, Trash } from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
 import {
   IAssignment,
@@ -27,6 +27,16 @@ function Assignment(props: { assignment: IAssignment }) {
   const { width } = useWidth();
 
   const actions = [
+    {
+      color: 'grape',
+      icon: (
+        <Dashboard
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+      href: `/dashboard/assignment/${assignment.spec}`,
+    },
     {
       color: 'green',
       icon: (
