@@ -40,8 +40,8 @@ const DEFAULT_ON_PAGE = 10;
 const UsersList: FC<{
   url: string;
   classNames?: any;
-  initialColumns: (locale: ILocale) => ITableColumn[];
-  refactorUser: (user: IUser) => any;
+  initialColumns: (_: ILocale) => ITableColumn[];
+  refactorUser: (_: IUser) => any;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
@@ -72,6 +72,7 @@ const UsersList: FC<{
   const [currentRoles, setCurrentRoles] = useState<string[]>([]);
 
   const [users, setUsers] = useState<IUserDisplayList[]>([]);
+  const [total, setTotal] = useState(0);
 
   const processData = useCallback(
     (
@@ -163,6 +164,8 @@ const UsersList: FC<{
         customTableSort(a, b, searchParams.sort_by, columns)
       );
 
+      setTotal(sorted.length);
+
       const paged = sorted.slice(
         searchParams.pager.skip,
         searchParams.pager.limit > 0
@@ -171,7 +174,7 @@ const UsersList: FC<{
       );
       setUsers(paged);
     },
-    [columns, currentGroups, currentRoles, searchParams]
+    [columns, currentGroups, currentRoles, searchParams, setTotal]
   );
 
   useEffect(() => {
@@ -203,10 +206,12 @@ const UsersList: FC<{
               }
         }
         noDefault={noDefault}
-        empty={empty}
+        empty={empty || <>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.users.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}
-        total={users.length}
+        total={total}
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}

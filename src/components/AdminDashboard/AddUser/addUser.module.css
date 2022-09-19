@@ -1,0 +1,21 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+  margin-bottom: var(--spacer-xl);
+}
+
+.main,
+.fullName {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+}
+
+.customTransferListWrapper {
+  justify-content: flex-start;
+}
+
+.roleSelector {
+  max-width: 300px;
+}

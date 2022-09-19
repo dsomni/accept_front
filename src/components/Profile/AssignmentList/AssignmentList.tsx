@@ -274,6 +274,8 @@ function AssignmentList() {
   const [currentTags, setCurrentTags] = useState<string[]>([]);
   const [currentGroups, setCurrentGroups] = useState<string[]>([]);
 
+  const [total, setTotal] = useState(0);
+
   const [searchParams, setSearchParams] = useState<BaseSearch>({
     pager: {
       skip: 0,
@@ -362,6 +364,8 @@ function AssignmentList() {
         customTableSort(a, b, searchParams.sort_by, columns)
       );
 
+      setTotal(sorted.length);
+
       const paged = sorted.slice(
         searchParams.pager.skip,
         searchParams.pager.limit > 0
@@ -400,12 +404,14 @@ function AssignmentList() {
         defaultOnPage={10}
         onPage={[5, 10]}
         noDefault
-        total={data?.assignments.length || 0}
+        total={total}
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}
         withSearch
         empty={<>{locale.profile.empty.assignments}</>}
+        isEmpty={data?.assignments.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         additionalSearch={
           <div className={styles.searchWrapper}>
             <MultiSelect

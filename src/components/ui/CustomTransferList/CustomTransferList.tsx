@@ -25,7 +25,7 @@ export const CustomTransferList: FC<{
   defaultChosen: Item[];
   setUsed: setter<Item[]>;
   titles: [string, string];
-  classNames: object;
+  classNames: any;
   rightComponent?: pureCallback<ReactNode>;
   itemComponent: (item: any, onSelect: any) => ReactNode;
   shouldSortChosen?: boolean;
@@ -78,7 +78,13 @@ export const CustomTransferList: FC<{
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={`${styles.wrapper} ${
+        classNames?.customTransferListWrapper
+          ? classNames.customTransferListWrapper
+          : ''
+      }`}
+    >
       <div className={styles.leftWrapper}>
         <SelectField
           classNames={classNames}

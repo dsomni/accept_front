@@ -1,10 +1,10 @@
 import { callback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { Button, Switch, TextInput } from '@ui/basics';
+import { Button, Helper, Switch, TextInput } from '@ui/basics';
 
 import { UserSelector } from '@ui/selectors';
 import { useUser } from '@hooks/useUser';
@@ -25,7 +25,7 @@ const Form: FC<{
     initialValues,
     validate: {
       name: (value) =>
-        value.length < 5 ? locale.group.form.validation.name : null,
+        value.length < 3 ? locale.group.form.validation.name : null,
       members: (value) =>
         value.length < 2
           ? locale.group.form.validation.members
@@ -36,6 +36,14 @@ const Form: FC<{
   useEffect(() => {
     form.setValues(initialValues);
   }, [initialValues]); //eslint-disable-line
+
+  const setFieldValue = useCallback(
+    (users: string[]) => form.setFieldValue('members', users),
+    [] // eslint-disable-line
+  );
+  const initialProps = useMemo(() => {
+    form.getInputProps('members');
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     if (Object.keys(form.errors).length > 0) {
@@ -59,19 +67,28 @@ const Form: FC<{
       />
 
       {isAdmin && (
-        <div style={{ width: 'fit-content' }}>
+        <div className={styles.readOnlySwitch}>
           <Switch
             label={locale.group.readonly}
             {...form.getInputProps('readonly', { type: 'checkbox' })}
+          />
+          <Helper
+            dropdownContent={
+              <div>
+                {locale.helpers.group.readOnly.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+            }
           />
         </div>
       )}
 
       <UserSelector
-        form={form}
+        setFieldValue={setFieldValue}
+        inputProps={initialProps}
         users={users}
         initialUsers={form.values.members}
-        field={'members'}
       />
       <div className={styles.buttonWrapper}>
         <Button

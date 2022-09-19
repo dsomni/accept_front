@@ -5,10 +5,16 @@ import { ReactNode } from 'react';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import { IUser } from '@custom-types/data/IUser';
 import styles from '@styles/profile/login.module.css';
+import { useUser } from '@hooks/useUser';
+import ProfileEditModal from '@components/Profile/ProfileEditModal/ProfileEditModal';
 
 function MyProfile(props: { user: IUser }) {
+  const { isAdmin, accessLevel } = useUser();
   return (
     <div className={styles.wrapper}>
+      {isAdmin && accessLevel > props.user.role.accessLevel && (
+        <ProfileEditModal {...props} />
+      )}
       <ProfileInfo {...props} />
     </div>
   );

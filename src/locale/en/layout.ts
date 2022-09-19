@@ -2,10 +2,11 @@ export const mainHeaderLinks = {
   main: 'Main',
   about: 'About',
   signIn: 'SignIn',
-  signOut: {
+  profileLinks: {
     signOut: 'SignOut',
     profile: 'Profile',
     notifications: 'Notifications',
+    adminDashboard: 'Admin Panel',
   },
   projects: 'Projects',
   lists: 'Lists',

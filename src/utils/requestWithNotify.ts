@@ -27,7 +27,6 @@ export const requestWithNotify = <T, V>(
   const id = newNotification({
     title: locale.loading,
     message: locale.loading + '...',
-    autoClose: defaultAutoClose,
     ...params,
   });
   sendRequest<T, V>(endpoint, method, body).then((res) => {

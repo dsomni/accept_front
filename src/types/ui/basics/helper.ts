@@ -11,4 +11,5 @@ export type MyHelperProps = {
   hoverCardTargetProps?: HoverCardTargetProps;
   dropdownContent?: string | ReactNode;
   customIcon?: ReactNode;
+  iconColor?: string;
 };

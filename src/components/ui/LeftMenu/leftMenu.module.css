@@ -20,6 +20,7 @@
 }
 
 .activeLine {
+  flex-shrink: 0;
   background-color: var(--primary);
 }
 
@@ -43,4 +44,8 @@
   margin-top: var(--spacer-l);
   margin-right: var(--spacer-m);
   overflow: auto;
+}
+
+.groupWrapper svg {
+  flex-shrink: 0;
 }

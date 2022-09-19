@@ -49,7 +49,7 @@ function AddGroup(props: { users: IUser[] }) {
           group: {
             spec: form.values.spec,
             name: form.values.name,
-            readonly: false,
+            readonly: form.values.readonly,
           },
           members: form.values.members,
         }

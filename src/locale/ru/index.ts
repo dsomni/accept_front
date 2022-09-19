@@ -19,6 +19,8 @@ import { notification } from './notification';
 import { profile } from './profile';
 import { dashboard } from './dashboard';
 import { timer } from './timer';
+import { student } from './student';
+import { grade } from './grade';
 
 const ru = {
   accept: 'Accept',
@@ -33,6 +35,7 @@ const ru = {
   error: 'Ошибка',
   success: 'Успешно',
   language: 'Язык',
+  add: 'Добавить',
   all: 'Все',
   create: 'Создать',
   edit: 'Изменить',
@@ -68,6 +71,8 @@ const ru = {
   helpers,
   tag,
   timer,
+  student,
+  grade,
 };
 
 export default ru;
