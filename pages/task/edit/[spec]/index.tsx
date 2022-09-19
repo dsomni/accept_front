@@ -22,6 +22,7 @@ import {
 } from '@utils/notificationFunctions';
 import { UseFormReturnType } from '@mantine/form';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import Title from '@ui/Title/Title';
 
 function EditTask(props: {
   task: ITaskEdit;
@@ -146,14 +147,17 @@ function EditTask(props: {
     [user?.login, locale, lang]
   );
   return (
-    <Form
-      handleSubmit={handleSubmit}
-      initialValues={formValues}
-      buttonLabel={locale.form.update}
-      taskTypes={taskTypes}
-      taskCheckTypes={taskCheckTypes}
-      hintAlarmTypes={hintAlarmTypes}
-    />
+    <>
+      <Title title={locale.titles.task.edit} />
+      <Form
+        handleSubmit={handleSubmit}
+        initialValues={formValues}
+        buttonLabel={locale.form.update}
+        taskTypes={taskTypes}
+        taskCheckTypes={taskCheckTypes}
+        hintAlarmTypes={hintAlarmTypes}
+      />
+    </>
   );
 }
 

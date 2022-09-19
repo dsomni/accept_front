@@ -15,10 +15,13 @@ import {
 } from '@custom-types/data/IAssignment';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import Timer from '@ui/Timer/Timer';
+import Title from '@ui/Title/Title';
+import { useLocale } from '@hooks/useLocale';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
   const [activeModal, setActiveModal] = useState(false);
+  const { locale } = useLocale();
 
   const { isTeacher } = useUser();
   const { width } = useWidth();
@@ -48,6 +51,9 @@ function Assignment(props: { assignment: IAssignment }) {
 
   return (
     <>
+      <Title
+        title={`${locale.titles.assignment.spec} ${assignment.title}`}
+      />
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}

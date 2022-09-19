@@ -8,6 +8,8 @@ import TaskList from '@ui/TaskList/TaskList';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { Plus } from 'tabler-icons-react';
 import { useUser } from '@hooks/useUser';
+import Title from '@ui/Title/Title';
+import { useLocale } from '@hooks/useLocale';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -140,8 +142,10 @@ const refactorTask = (task: ITaskDisplay): any => ({
 
 function TaskListPage() {
   const { isTeacher } = useUser();
+  const { locale } = useLocale();
   return (
     <div>
+      <Title title={locale.titles.task.list} />
       <TaskList
         url={'bundle/task_list'}
         refactorTask={refactorTask}

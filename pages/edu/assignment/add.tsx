@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import { INewNotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
 import { useBackNotifications } from '@hooks/useBackNotifications';
+import Title from '@ui/Title/Title';
 
 function AssignmentAdd(props: IAssignmentAddBundle) {
   const { locale, lang } = useLocale();
@@ -122,6 +123,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
 
   return (
     <>
+      <Title title={locale.titles.assignment.add} />
       <Form
         shouldNotify={true}
         handleSubmit={handleSubmit}

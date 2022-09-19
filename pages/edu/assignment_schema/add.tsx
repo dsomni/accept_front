@@ -12,6 +12,7 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import Title from '@ui/Title/Title';
 
 const initialValues = {
   spec: '',
@@ -59,6 +60,7 @@ function AddAssignmentSchema() {
 
   return (
     <>
+      <Title title={locale.titles.assignment_schema.add} />
       <Form
         initialValues={initialValues}
         handleSubmit={handleSubmit}

@@ -4,9 +4,17 @@ import { GetServerSideProps } from 'next';
 import { ReactNode } from 'react';
 import Profile from '@components/Profile/Profile';
 import { IUser } from '@custom-types/data/IUser';
+import Title from '@ui/Title/Title';
+import { useLocale } from '@hooks/useLocale';
 
 function MyProfile(props: { user: IUser }) {
-  return <Profile {...props} />;
+  const { locale } = useLocale();
+  return (
+    <>
+      <Title title={locale.titles.profile.me} />
+      <Profile {...props} />;
+    </>
+  );
 }
 
 MyProfile.getLayout = (page: ReactNode) => {
@@ -17,12 +25,11 @@ export default MyProfile;
 
 const API_URL = getApiUrl();
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context
+) => {
   const response = await fetch(`${API_URL}/api/bundle/profile`, {
-    headers: req.headers as { [key: string]: string },
+    headers: context.req.headers as { [key: string]: string },
   });
 
   if (response.status === 200) {

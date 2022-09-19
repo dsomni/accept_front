@@ -10,6 +10,8 @@ import { IGroupDisplay } from '@custom-types/data/IGroup';
 import { Icon } from '@ui/basics';
 import GroupList from '@ui/GroupList/GroupList';
 import DeleteModal from '@components/Group/DeleteModal/DeleteModal';
+import Title from '@ui/Title/Title';
+import { useLocale } from '@hooks/useLocale';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -102,8 +104,10 @@ const refactorGroup = (group: IGroupDisplay): any => ({
 
 function TaskListPage() {
   const { isTeacher } = useUser();
+  const { locale } = useLocale();
   return (
     <div>
+      <Title title={locale.titles.group.list} />
       <GroupList
         url={'group/list'}
         refactorGroup={refactorGroup}

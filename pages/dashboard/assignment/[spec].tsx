@@ -3,9 +3,17 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
 import AssignmentDashboard from '@components/Dashboard/AssignmentDashboard';
+import { useLocale } from '@hooks/useLocale';
+import Title from '@ui/Title/Title';
 
 function AssignmentDashboardPage(props: { spec: string }) {
-  return <AssignmentDashboard spec={props.spec} />;
+  const { locale } = useLocale();
+  return (
+    <>
+      <Title title={locale.titles.dashboard.assignment} />
+      <AssignmentDashboard spec={props.spec} />;
+    </>
+  );
 }
 
 AssignmentDashboardPage.getLayout = (page: ReactNode) => {

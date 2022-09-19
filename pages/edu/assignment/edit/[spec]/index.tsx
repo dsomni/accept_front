@@ -19,6 +19,7 @@ import {
   concatDateTime,
   timezoneDate,
 } from '@utils/datetime';
+import Title from '@ui/Title/Title';
 
 function AssignmentEdit(props: IAssignmentEditBundle) {
   const { locale, lang } = useLocale();
@@ -75,6 +76,7 @@ function AssignmentEdit(props: IAssignmentEditBundle) {
 
   return (
     <>
+      <Title title={locale.titles.assignment.edit} />
       <Form
         shouldNotify={false}
         initialValues={initialValues}

@@ -13,6 +13,7 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import Title from '@ui/Title/Title';
 
 function EditAssignmentSchema({
   assignment_schema,
@@ -71,6 +72,7 @@ function EditAssignmentSchema({
 
   return (
     <>
+      <Title title={locale.titles.assignment_schema.edit} />
       <Form
         initialValues={formValues}
         handleSubmit={handleSubmit}

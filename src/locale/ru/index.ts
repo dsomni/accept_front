@@ -21,6 +21,7 @@ import { dashboard } from './dashboard';
 import { timer } from './timer';
 import { student } from './student';
 import { grade } from './grade';
+import { titles } from './titles';
 
 const ru = {
   accept: 'Accept',
@@ -73,6 +74,7 @@ const ru = {
   timer,
   student,
   grade,
+  titles,
 };
 
 export default ru;
