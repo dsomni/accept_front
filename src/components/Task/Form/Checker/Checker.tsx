@@ -62,7 +62,6 @@ const Checker: FC<{ form: any }> = ({ form }) => {
         setCode={(value) => form.setFieldValue('checkerCode', value)}
         formProps={{
           ...form.getInputProps('checkerCode'),
-          onBlur: () => form.validateField('checkerCode'),
         }}
         buttonProps={{
           style: {

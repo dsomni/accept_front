@@ -116,9 +116,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
         noClampOnBlur
         hideControls
         min={0}
-        onBlur={() => {
-          form.validateField('constraintsMemory');
-        }}
         {...form.getInputProps('constraintsMemory')}
       />
       <NumberInput
@@ -126,9 +123,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
         required
         hideControls
         precision={1}
-        onBlur={() => {
-          form.validateField('constraintsTime');
-        }}
         {...form.getInputProps('constraintsTime')}
       />
     </>

@@ -125,6 +125,7 @@ const Form: FC<{
             : null
           : null,
     },
+    validateInputOnBlur: true,
   });
 
   useEffect(() => {

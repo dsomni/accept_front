@@ -1,11 +1,4 @@
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, memo, useCallback, useEffect, useMemo } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IGroup } from '@custom-types/data/IGroup';
 import { useLocale } from '@hooks/useLocale';
@@ -29,8 +22,6 @@ const initialValues = {
 };
 
 const AddGrade: FC<{}> = ({}) => {
-  const [hasErrors, setHasErrors] = useState(false);
-
   const { locale, lang } = useLocale();
 
   const { data, loading } = useRequest<{}, IUser[]>(
@@ -91,14 +82,6 @@ const AddGrade: FC<{}> = ({}) => {
     form.setValues(initialValues);
   }, [initialValues]); //eslint-disable-line
 
-  useEffect(() => {
-    if (Object.keys(form.errors).length > 0) {
-      setHasErrors(true);
-    } else {
-      setHasErrors(false);
-    }
-  }, [form.errors]);
-
   return (
     <div className={stepperStyles.wrapper}>
       <TextInput
@@ -124,7 +107,7 @@ const AddGrade: FC<{}> = ({}) => {
         <Button
           color="var(--primary)"
           onClick={() => handleSubmit(form)}
-          disabled={hasErrors}
+          disabled={Object.keys(form.errors).length > 0}
         >
           {locale.create}
         </Button>

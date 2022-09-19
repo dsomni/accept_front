@@ -20,6 +20,9 @@ export const errors = {
     short: 'Surname is too short',
     invalid: 'Surname contains invalid symbols',
   },
+  patronymic: {
+    invalid: 'Patronymic contains invalid symbols',
+  },
   email: 'Email is incorrect',
   confirm: 'Passwords did not match',
   role: 'Select a role',

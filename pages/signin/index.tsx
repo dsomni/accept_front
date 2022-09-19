@@ -28,6 +28,7 @@ function SignIn() {
       password: (value) =>
         value.length == 0 ? locale.auth.errors.password.exists : null,
     },
+    validateInputOnBlur: true,
   });
 
   const [loading, setLoading] = useState(false);
@@ -73,7 +74,6 @@ function SignIn() {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() => form.validateField('login')}
           {...form.getInputProps('login')}
         />
         <PasswordInput
@@ -85,7 +85,6 @@ function SignIn() {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() => form.validateField('password')}
           {...form.getInputProps('password')}
         />
         <Button
