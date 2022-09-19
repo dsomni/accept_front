@@ -9,6 +9,7 @@ import { setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import Info from '@components/Attempt/Info/Info';
 import Code from '@components/Attempt/Code/Code';
+import Title from '@ui/Title/Title';
 
 function Assignment(props: { attempt: IAttempt }) {
   const attempt = props.attempt;
@@ -37,6 +38,9 @@ function Assignment(props: { attempt: IAttempt }) {
 
   return (
     <>
+      <Title
+        title={`${locale.titles.attempt} ${attempt.author.login}`}
+      />
       <Tabs pages={pages} defaultPage={'info'} />
     </>
   );

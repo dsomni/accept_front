@@ -7,6 +7,8 @@ import { IUser } from '@custom-types/data/IUser';
 import { capitalize } from '@utils/capitalize';
 import UserList from '@ui/UserList/UserList';
 import { accessLevels } from '@constants/protectedRoutes';
+import Title from '@ui/Title/Title';
+import { useLocale } from '@hooks/useLocale';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -107,12 +109,16 @@ const refactorUser = (user: IUser): any => ({
 });
 
 function UsersListPage() {
+  const { locale } = useLocale();
   return (
-    <UserList
-      url={'user/listBundle'}
-      refactorUser={refactorUser}
-      initialColumns={initialColumns}
-    />
+    <>
+      <Title title={locale.titles.user.list} />
+      <UserList
+        url={'user/listBundle'}
+        refactorUser={refactorUser}
+        initialColumns={initialColumns}
+      />
+    </>
   );
 }
 

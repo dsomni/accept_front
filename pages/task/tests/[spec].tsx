@@ -12,6 +12,7 @@ import { sendRequest } from '@requests/request';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { useLocale } from '@hooks/useLocale';
 import ListItem from '@ui/ListItem/ListItem';
+import Title from '@ui/Title/Title';
 
 function TestsPage(props: { spec: string }) {
   const spec = props.spec;
@@ -48,6 +49,7 @@ function TestsPage(props: { spec: string }) {
 
   return (
     <div className={stepperStyles.wrapper}>
+      <Title title={locale.titles.task.tests} />
       {form.values.tests.map((test, index) => (
         <div key={index} className={stepperStyles.example}>
           <ListItem

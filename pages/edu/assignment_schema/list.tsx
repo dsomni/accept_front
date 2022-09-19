@@ -24,6 +24,7 @@ import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
 import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
+import Title from '@ui/Title/Title';
 
 interface Item {
   value: any;
@@ -239,6 +240,7 @@ function AssignmentList() {
 
   return (
     <div>
+      <Title title={locale.titles.assignment_schema.list} />
       <Table
         columns={columns}
         rows={list}
