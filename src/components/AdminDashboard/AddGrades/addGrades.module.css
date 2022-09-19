@@ -1,0 +1,24 @@
+.gradesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+  margin-bottom: var(--spacer-l);
+}
+
+.gradeWrapper {
+  display: grid;
+  grid-template-columns: 9fr 9fr 1fr;
+  grid-column-gap: var(--spacer-m);
+  align-items: center;
+}
+
+.addButton span {
+  font-size: var(--font-size-xxl);
+}
+.addButton {
+  width: 100%;
+}
+
+.submitButton {
+  margin-top: var(--spacer-m);
+}

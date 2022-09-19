@@ -1,4 +1,4 @@
 export const userSelector = {
-  unselected: 'Выбранные пользователи',
-  selected: 'Пользователи',
+  unselected: 'Пользователи',
+  selected: 'Выбранные пользователи',
 };

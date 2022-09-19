@@ -2,6 +2,7 @@ export const codeArea = {
   selectFiles: 'Выберете файлы',
   selectFile: 'Выберете файл',
   dragFiles: 'Перетащите файлы сюда',
+  dragFile: 'Перетащите файл сюда',
   notification: {
     uploading: { title: 'Загружаем файл...', description: '' },
     reject: {

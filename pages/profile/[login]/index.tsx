@@ -5,10 +5,18 @@ import { ReactNode } from 'react';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import { IUser } from '@custom-types/data/IUser';
 import styles from '@styles/profile/login.module.css';
+import { useUser } from '@hooks/useUser';
+import ProfileEditModal from '@components/Profile/ProfileEditModal/ProfileEditModal';
+import Title from '@ui/Title/Title';
 
 function MyProfile(props: { user: IUser }) {
+  const { isAdmin, accessLevel } = useUser();
   return (
     <div className={styles.wrapper}>
+      <Title title={props.user.shortName} />
+      {isAdmin && accessLevel >= props.user.role.accessLevel && (
+        <ProfileEditModal {...props} />
+      )}
       <ProfileInfo {...props} />
     </div>
   );
@@ -22,10 +30,10 @@ export default MyProfile;
 
 const API_URL = getApiUrl();
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context
+) => {
+  const req = context.req;
   if (!req || !req.url)
     return {
       redirect: {

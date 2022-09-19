@@ -13,8 +13,9 @@ const GroupSelector: FC<{
   form: any;
   groups: IGroup[];
   initialGroups: string[];
+  classNames?: any;
   field: string;
-}> = ({ form, groups, initialGroups, field }) => {
+}> = ({ form, groups, initialGroups, field, classNames }) => {
   const [availableGroups, setAvailableGroups] = useState<Item[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<Item[]>([]);
   const { locale } = useLocale();
@@ -66,7 +67,7 @@ const GroupSelector: FC<{
                 groups.map((group) => group.spec)
               )
             }
-            classNames={{ label: stepperStyles.label }}
+            classNames={{ label: stepperStyles.label, ...classNames }}
             titles={[
               locale.ui.groupSelector.unselected,
               locale.ui.groupSelector.selected,

@@ -11,11 +11,17 @@ import { useBackNotifications } from '@hooks/useBackNotifications';
 import { link } from '@constants/Avatar';
 import { Indicator } from '@ui/basics';
 import styles from './profileMenu.module.css';
-import { BellRinging, Logout, Robot } from 'tabler-icons-react';
+import {
+  BellRinging,
+  Crown,
+  Logout,
+  Robot,
+} from 'tabler-icons-react';
+import { accessLevels } from '@constants/protectedRoutes';
 
 const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
-  const { user, signOut } = useUser();
+  const { user, signOut, accessLevel } = useUser();
 
   const { amount, openModal } = useBackNotifications();
 
@@ -43,7 +49,7 @@ const ProfileMenu: FC<{}> = ({}) => {
 
   return (
     <>
-      <Menu trigger="hover">
+      <Menu trigger="hover" zIndex={1000}>
         <Menu.Target>
           <div>
             <Indicator
@@ -63,7 +69,7 @@ const ProfileMenu: FC<{}> = ({}) => {
           <Menu.Item component="a" href="/profile/me">
             <Group spacing="xs" className={styles.wrapper}>
               <Robot color="var(--secondary)" size={20} />
-              <div>{locale.mainHeaderLinks.signOut.profile}</div>
+              <div>{locale.mainHeaderLinks.profileLinks.profile}</div>
             </Group>
           </Menu.Item>
           <Menu.Item onClick={openModal}>
@@ -73,16 +79,28 @@ const ProfileMenu: FC<{}> = ({}) => {
                   <BellRinging color="var(--secondary)" size={20} />
                 </Indicator>
                 <div>
-                  {locale.mainHeaderLinks.signOut.notifications}
+                  {locale.mainHeaderLinks.profileLinks.notifications}
                 </div>
               </Group>
             </Group>
           </Menu.Item>
+          {accessLevel >= accessLevels.admin && (
+            <Menu.Item component="a" href="/dashboard/admin">
+              <Group spacing="xs" className={styles.wrapper}>
+                <Crown color="var(--secondary)" size={20} />
+                <div>
+                  {locale.mainHeaderLinks.profileLinks.adminDashboard}
+                </div>
+              </Group>
+            </Menu.Item>
+          )}
           <Menu.Item onClick={handleSignOut}>
             <Group spacing="xs" className={styles.wrapper}>
               <Group className={styles.wrapper}>
                 <Logout color="var(--secondary)" size={20} />
-                <div>{locale.mainHeaderLinks.signOut.signOut}</div>
+                <div>
+                  {locale.mainHeaderLinks.profileLinks.signOut}
+                </div>
               </Group>
             </Group>
           </Menu.Item>

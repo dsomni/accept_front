@@ -12,6 +12,7 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import Title from '@ui/Title/Title';
 
 const initialValues = {
   spec: '',
@@ -49,7 +50,7 @@ function AddGroup(props: { users: IUser[] }) {
           group: {
             spec: form.values.spec,
             name: form.values.name,
-            readonly: false,
+            readonly: form.values.readonly,
           },
           members: form.values.members,
         }
@@ -60,6 +61,7 @@ function AddGroup(props: { users: IUser[] }) {
 
   return (
     <>
+      <Title title={locale.titles.group.add} />
       <Form
         handleSubmit={handleSubmit}
         buttonText={locale.create}

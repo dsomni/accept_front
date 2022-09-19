@@ -36,7 +36,8 @@
     "react-beautiful-dnd": "13.1.0",
     "react-dom": "^18.2.0",
     "tabler-icons-react": "^1.54.0",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.11/xlsx-0.18.11.tgz"
   },
   "devDependencies": {
     "@types/cookie": "0.5.1",

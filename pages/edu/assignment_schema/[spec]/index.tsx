@@ -6,18 +6,20 @@ import Description from '@components/AssignmentSchema/Description/Description';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import Sticky from '@ui/Sticky/Sticky';
 import { Pencil, Trash } from 'tabler-icons-react';
-import Head from 'next/head';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';
+import { useLocale } from '@hooks/useLocale';
+import Title from '@ui/Title/Title';
 
 function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
   const assignment = props.assignment;
   const [openModal, setOpenModal] = useState(false);
+  const { locale } = useLocale();
 
   return (
     <>
-      <Head>
-        <title>{assignment.title}</title>
-      </Head>
+      <Title
+        title={`${locale.titles.assignment_schema.spec} ${assignment.title}`}
+      />
       <Description assignment={assignment} />
       <DeleteModal
         active={openModal}

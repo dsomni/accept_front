@@ -11,6 +11,7 @@ const Helper: FC<MyHelperProps> = ({
   hoverCardTargetProps,
   hoverCardDropdownProps,
   customIcon,
+  iconColor,
   ...props
 }) => {
   return (
@@ -28,7 +29,7 @@ const Helper: FC<MyHelperProps> = ({
             customIcon
           ) : (
             <Icon size="xs">
-              <Help color={'var(--dark4)'} />
+              <Help color={iconColor || 'var(--dark4)'} />
             </Icon>
           )}
         </div>

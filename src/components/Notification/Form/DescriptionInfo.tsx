@@ -9,9 +9,6 @@ const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
     <>
       <TextInput
         label={locale.notification.form.shortDescription}
-        onBlur={() => {
-          form.validateField('shortDescription');
-        }}
         helperContent={
           <div>
             {locale.helpers.notification.shortDescription.map(

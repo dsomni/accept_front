@@ -8,6 +8,6 @@ export default async function ListUsers(
   await fetchWrapper({
     req: req,
     res: res,
-    url: 'api/bundle/user-list',
+    url: 'api/user',
   });
 }

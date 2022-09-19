@@ -58,13 +58,23 @@ function SignUp() {
         !value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
           ? locale.auth.errors.email
           : null,
+
       name: (value) =>
         value.length > 50
           ? locale.auth.errors.name.len
-          : value.split(' ').length < 2
+          : value.trim().split(' ').length < 2
           ? locale.auth.errors.name.surname
+          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
+          ? locale.auth.errors.name.invalid
           : null,
+      // name: (value) =>
+      //   value.length > 50
+      //     ? locale.auth.errors.name.len
+      //     : value.split(' ').length < 2
+      //     ? locale.auth.errors.name.surname
+      //     : null,
     },
+    validateInputOnBlur: true,
   });
 
   const onLoginBlur = useCallback(() => {
@@ -175,8 +185,11 @@ function SignUp() {
                   ))}
                 </div>
               }
-              onBlur={() => form.validateField('password')}
               {...form.getInputProps('password')}
+              onBlur={() => {
+                form.validateField('password');
+                form.validateField('confirmPassword');
+              }}
             />
             <PasswordInput
               id="confirmPassword"
@@ -187,7 +200,6 @@ function SignUp() {
                 label: styles.label,
               }}
               size="lg"
-              onBlur={() => form.validateField('confirmPassword')}
               {...form.getInputProps('confirmPassword')}
             />
           </>,
@@ -201,7 +213,6 @@ function SignUp() {
                 label: styles.label,
               }}
               size="lg"
-              onBlur={() => form.validateField('name')}
               {...form.getInputProps('name')}
             />
             <TextInput
@@ -212,7 +223,6 @@ function SignUp() {
                 label: styles.label,
               }}
               size="lg"
-              onBlur={() => form.validateField('email')}
               {...form.getInputProps('email')}
             />
           </>,

@@ -9,4 +9,8 @@ export const assignment = {
     enterManually: 'Enter manually',
     addTimeToEnd: 'Add time to finish date',
   },
+  toDate: {
+    actual: 'Actual',
+    end: 'To the end',
+  },
 };

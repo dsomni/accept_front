@@ -13,7 +13,7 @@ export interface IAttemptDisplay {
   language: ILanguage;
   status: IAttemptStatus;
   date: Date;
-  verdict: ITestResultDisplay;
+  verdict?: ITestResultDisplay;
   task: ITaskBaseInfo;
   author: string;
 }

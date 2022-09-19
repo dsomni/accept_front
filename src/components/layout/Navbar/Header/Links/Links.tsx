@@ -10,8 +10,7 @@ import SignIn from '@components/layout/Navbar/SignIn/SignIn';
 
 const Links: FC<{
   links: IHeaderLink[];
-  dropdownLinks: IHeaderLink[];
-}> = ({ links, dropdownLinks }) => {
+}> = ({ links }) => {
   const { locale } = useLocale();
 
   return (
@@ -19,10 +18,10 @@ const Links: FC<{
       <Group position="right" spacing="xl">
         {links.map((link, index) => (
           <div key={index}>
-            {link.text(locale) == 'dropdown' ? (
+            {link.type == 'dropdown' ? (
               <CustomDropdown
-                links={dropdownLinks}
-                label={locale.mainHeaderLinks.projects}
+                links={link?.links || []}
+                label={link.text(locale)}
               />
             ) : (
               <HeaderLink

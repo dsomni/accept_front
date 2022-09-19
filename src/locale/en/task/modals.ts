@@ -3,7 +3,7 @@ export const modals = {
   edit: 'Edit task',
   delete: 'Delete task',
   deleteConfidence:
-    'Are you sure you want to permanently delete the task?',
+    'Are you sure you want to permanently delete this task?',
   usedInAssignments:
     'This task is currently used in the following assignments',
 };

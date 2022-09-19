@@ -2,12 +2,20 @@ export const mainHeaderLinks = {
   main: 'Main',
   about: 'About',
   signIn: 'SignIn',
-  signOut: {
+  profileLinks: {
     signOut: 'SignOut',
     profile: 'Profile',
     notifications: 'Notifications',
+    adminDashboard: 'Admin Panel',
   },
   projects: 'Projects',
+  lists: 'Lists',
+  listLinks: {
+    tasks: 'Tasks',
+    groups: 'Groups',
+    schemas: 'Schemas',
+    users: 'Users',
+  },
 };
 
 export const credentials = {

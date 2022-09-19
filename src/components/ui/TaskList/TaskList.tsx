@@ -43,8 +43,8 @@ const DEFAULT_ON_PAGE = 10;
 const TaskList: FC<{
   url: string;
   classNames?: any;
-  initialColumns: (locale: ILocale) => ITableColumn[];
-  refactorTask: (task: ITaskDisplay) => any;
+  initialColumns: (_: ILocale) => ITableColumn[];
+  refactorTask: (_: ITaskDisplay) => any;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
@@ -72,6 +72,7 @@ const TaskList: FC<{
   const [currentTags, setCurrentTags] = useState<string[]>([]);
 
   const [tasks, setTasks] = useState<ITaskDisplayList[]>([]);
+  const [total, setTotal] = useState(0);
 
   const processData = useCallback(
     (
@@ -142,6 +143,7 @@ const TaskList: FC<{
       const sorted = tagged.sort((a, b) =>
         customTableSort(a, b, searchParams.sort_by, columns)
       );
+      setTotal(sorted.length);
 
       const paged = sorted.slice(
         searchParams.pager.skip,
@@ -183,10 +185,12 @@ const TaskList: FC<{
               }
         }
         noDefault={noDefault}
-        empty={empty}
+        empty={empty || <>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.tasks.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}
-        total={tasks.length}
+        total={total}
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}

@@ -64,7 +64,15 @@ const AssignmentDashboard: FC<{
         title: locale.dashboard.assignment.mainInfo,
       },
       {
-        page: <Results spec={spec} />,
+        page: assignment && (
+          <Results
+            spec={spec}
+            isFinished={
+              !assignment.infinite && assignment.status.spec == 2
+            }
+            endDate={assignment.end}
+          />
+        ),
         icon: <Table color="var(--secondary)" />,
 
         title: locale.dashboard.assignment.results,

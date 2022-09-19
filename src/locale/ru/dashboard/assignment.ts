@@ -9,4 +9,8 @@ export const assignment = {
     enterManually: 'Ввести вручную',
     addTimeToEnd: 'Добавить время к дате окончания',
   },
+  toDate: {
+    actual: 'Текущие',
+    end: 'По окончании',
+  },
 };

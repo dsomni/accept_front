@@ -24,6 +24,7 @@ import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
 import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
+import Title from '@ui/Title/Title';
 
 interface Item {
   value: any;
@@ -151,6 +152,8 @@ function AssignmentList() {
   const [tags, setTags] = useState<ITag[]>([]);
   const [currentTags, setCurrentTags] = useState<string[]>([]);
 
+  const [total, setTotal] = useState(0);
+
   const [searchParams, setSearchParams] = useState<BaseSearch>({
     pager: {
       skip: 0,
@@ -215,6 +218,8 @@ function AssignmentList() {
         customTableSort(a, b, searchParams.sort_by, columns)
       );
 
+      setTotal(sorted.length);
+
       const paged = sorted.slice(
         searchParams.pager.skip,
         searchParams.pager.limit > 0
@@ -235,6 +240,7 @@ function AssignmentList() {
 
   return (
     <div>
+      <Title title={locale.titles.assignment_schema.list} />
       <Table
         columns={columns}
         rows={list}
@@ -251,7 +257,10 @@ function AssignmentList() {
         }}
         defaultOnPage={10}
         onPage={[5, 10]}
-        total={data?.assignment_schemas.length || 0}
+        total={total}
+        empty={<>{locale.ui.table.emptyMessage}</>}
+        isEmpty={data?.assignment_schemas.length == 0}
+        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         loading={loading}
         setSearchParams={setSearchParams}
         searchParams={searchParams}

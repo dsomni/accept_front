@@ -80,6 +80,7 @@ const Form: FC<{
           ? locale.notification.form.validate.users
           : null,
     },
+    validateInputOnBlur: true,
   });
 
   const handleSubmit = useCallback(() => {

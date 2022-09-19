@@ -1,4 +1,4 @@
 export const groupSelector = {
-  unselected: 'Выбранные группы',
-  selected: 'Группы',
+  unselected: 'Группы',
+  selected: 'Выбранные группы',
 };

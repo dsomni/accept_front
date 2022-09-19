@@ -2,4 +2,7 @@
   min-height: 200px;
   max-width: inherit;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
 }

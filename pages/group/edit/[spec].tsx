@@ -12,6 +12,7 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import Title from '@ui/Title/Title';
 
 function EditGroup(props: { group: IGroup; users: IUser[] }) {
   const group = props.group;
@@ -66,6 +67,7 @@ function EditGroup(props: { group: IGroup; users: IUser[] }) {
 
   return (
     <div>
+      <Title title={locale.titles.group.edit} />
       <Form
         handleSubmit={handleSubmit}
         initialValues={formValues}

@@ -52,9 +52,6 @@ const MainInfo: FC<{
       <TextInput
         label={locale.task.form.title}
         required
-        onBlur={() => {
-          form.validateField('title');
-        }}
         {...form.getInputProps('title')}
       />
 
@@ -80,9 +77,6 @@ const MainInfo: FC<{
         required
         noClampOnBlur
         hideControls
-        onBlur={() => {
-          form.validateField('complexity');
-        }}
         {...form.getInputProps('complexity')}
       />
       <div className={styles.radioGroups}>

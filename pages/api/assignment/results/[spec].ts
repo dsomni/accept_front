@@ -9,5 +9,6 @@ export default async function AssignmentResults(
     req: req,
     res: res,
     url: `api/assignment-results/${req.query.spec}`,
+    method: 'POST',
   });
 }

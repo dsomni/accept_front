@@ -19,6 +19,10 @@ import { notification } from './notification';
 import { profile } from './profile';
 import { dashboard } from './dashboard';
 import { timer } from './timer';
+import { student } from './student';
+import { grade } from './grade';
+import { titles } from './titles';
+import { todo } from './todo';
 
 const en = {
   accept: 'Accept',
@@ -33,6 +37,7 @@ const en = {
   error: 'Error',
   success: 'Successes',
   language: 'Language',
+  add: 'Add',
   all: 'All',
   create: 'Create',
   edit: 'Edit',
@@ -68,6 +73,10 @@ const en = {
   helpers,
   tag,
   timer,
+  student,
+  grade,
+  titles,
+  todo,
 };
 
 export default en;

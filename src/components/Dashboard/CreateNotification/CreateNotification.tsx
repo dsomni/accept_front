@@ -31,6 +31,7 @@ const CreateNotification: FC<{ groups: string[] }> = ({ groups }) => {
       notificationShortDescription: () => null,
       notificationDescription: () => null,
     },
+    validateInputOnBlur: true,
   });
 
   const handleSubmit = useCallback(() => {
@@ -84,16 +85,10 @@ const CreateNotification: FC<{ groups: string[] }> = ({ groups }) => {
         <TextInput
           label={locale.notification.form.title}
           required
-          onBlur={() => {
-            form.validateField('notificationTitle');
-          }}
           {...form.getInputProps('notificationTitle')}
         />
         <TextInput
           label={locale.notification.form.shortDescription}
-          onBlur={() => {
-            form.validateField('notificationShortDescription');
-          }}
           helperContent={
             <div>
               {locale.helpers.notification.shortDescription.map(
@@ -124,7 +119,10 @@ const CreateNotification: FC<{ groups: string[] }> = ({ groups }) => {
         />
       </div>
       <Group position="center">
-        <Button disabled={!form.isValid()} onClick={handleSubmit}>
+        <Button
+          disabled={Object.keys(form.errors).length > 0}
+          onClick={handleSubmit}
+        >
           {locale.create}
         </Button>
       </Group>

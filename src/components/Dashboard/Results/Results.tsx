@@ -1,20 +1,55 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import ResultsTable from '@ui/ResultsTable/ResultsTable';
 import styles from './results.module.css';
 import { useRequest } from '@hooks/useRequest';
 import { IAssignmentResults } from '@custom-types/data/IAssignment';
 import { LoadingOverlay } from '@mantine/core';
+import { SegmentedControl } from '@ui/basics';
+import { useLocale } from '@hooks/useLocale';
 
 const Results: FC<{
   spec: string;
-}> = ({ spec }) => {
+  isFinished: boolean;
+  endDate: Date;
+}> = ({ spec, isFinished, endDate }) => {
+  const { locale } = useLocale();
+  const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
+    isFinished ? 'end' : 'actual'
+  );
+
   const { data, loading, refetch } = useRequest<
-    {},
+    {
+      toDate: Date | undefined;
+    },
     IAssignmentResults
-  >(`assignment/results/${spec}`, 'GET');
+  >(`assignment/results/${spec}`, 'POST', {
+    toDate: fetchDate == 'end' ? endDate : undefined,
+  });
+
+  useEffect(() => {
+    if (!loading) refetch(true);
+  }, [fetchDate]); // eslint-disable-line
 
   return (
     <div className={styles.wrapper}>
+      {isFinished && (
+        <SegmentedControl
+          data={[
+            {
+              label: locale.dashboard.assignment.toDate.end,
+              value: 'end',
+            },
+            {
+              label: locale.dashboard.assignment.toDate.actual,
+              value: 'actual',
+            },
+          ]}
+          value={fetchDate}
+          onChange={(value) =>
+            setFetchDate(value as 'actual' | 'end')
+          }
+        />
+      )}
       <LoadingOverlay visible={loading} />
       {data && (
         <ResultsTable
@@ -37,6 +72,8 @@ const Results: FC<{
                   : cell.best.status.spec === 1
                   ? 'TS'
                   : 'TS'
+                : cell.best?.status.spec == 0
+                ? 'TS'
                 : '-',
               rest: cell.attempts.map((attempt) => ({
                 text: attempt.verdict
