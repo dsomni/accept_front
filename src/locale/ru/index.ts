@@ -22,6 +22,7 @@ import { timer } from './timer';
 import { student } from './student';
 import { grade } from './grade';
 import { titles } from './titles';
+import { todo } from './todo';
 
 const ru = {
   accept: 'Accept',
@@ -75,6 +76,7 @@ const ru = {
   student,
   grade,
   titles,
+  todo,
 };
 
 export default ru;
