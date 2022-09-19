@@ -49,7 +49,7 @@ const ProfileMenu: FC<{}> = ({}) => {
 
   return (
     <>
-      <Menu trigger="hover">
+      <Menu trigger="hover" zIndex={1000}>
         <Menu.Target>
           <div>
             <Indicator

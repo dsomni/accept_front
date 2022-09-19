@@ -14,7 +14,7 @@ const CustomDropdown: FC<{ links: IHeaderLink[]; label: string }> = ({
   const { accessLevel } = useUser();
 
   return (
-    <Menu position="bottom">
+    <Menu position="bottom" zIndex={1000}>
       <Menu.Target>
         <Button className={styles.dropdownBth}>{label}</Button>
       </Menu.Target>
