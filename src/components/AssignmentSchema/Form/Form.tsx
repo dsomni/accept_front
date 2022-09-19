@@ -44,6 +44,7 @@ const Form: FC<{
           ? locale.assignmentSchema.form.validation.defaultDuration
           : null,
     },
+    validateInputOnBlur: true,
   });
 
   useEffect(() => {

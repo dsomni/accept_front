@@ -40,16 +40,10 @@ const Origin: FC<{
           <TextInput
             label={locale.notification.form.title}
             required
-            onBlur={() => {
-              form.validateField('notificationTitle');
-            }}
             {...form.getInputProps('notificationTitle')}
           />
           <TextInput
             label={locale.notification.form.shortDescription}
-            onBlur={() => {
-              form.validateField('notificationShortDescription');
-            }}
             helperContent={
               <div>
                 {locale.helpers.notification.shortDescription.map(

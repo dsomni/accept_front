@@ -1,10 +1,16 @@
 import { callback } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IUser } from '@custom-types/data/IUser';
-import { Button, Helper, Switch, TextInput } from '@ui/basics';
+import {
+  Button,
+  Helper,
+  InputWrapper,
+  Switch,
+  TextInput,
+} from '@ui/basics';
 
 import { UserSelector } from '@ui/selectors';
 import { useUser } from '@hooks/useUser';
@@ -16,8 +22,6 @@ const Form: FC<{
   handleSubmit: callback<UseFormReturnType<any>>;
   initialValues: any;
 }> = ({ initialValues, handleSubmit, buttonText, users }) => {
-  const [hasErrors, setHasErrors] = useState(false);
-
   const { locale } = useLocale();
   const { isAdmin } = useUser();
 
@@ -31,6 +35,8 @@ const Form: FC<{
           ? locale.group.form.validation.members
           : null,
     },
+    validateInputOnBlur: true,
+    validateInputOnChange: true,
   });
 
   useEffect(() => {
@@ -45,14 +51,6 @@ const Form: FC<{
     form.getInputProps('members');
   }, []); // eslint-disable-line
 
-  useEffect(() => {
-    if (Object.keys(form.errors).length > 0) {
-      setHasErrors(true);
-    } else {
-      setHasErrors(false);
-    }
-  }, [form.errors]);
-
   return (
     <div className={stepperStyles.wrapper}>
       <TextInput
@@ -62,7 +60,6 @@ const Form: FC<{
         }}
         required
         disabled={form.values.readonly}
-        onBlur={() => form.validateField('name')}
         {...form.getInputProps('name')}
       />
 
@@ -83,18 +80,22 @@ const Form: FC<{
           />
         </div>
       )}
-
-      <UserSelector
-        setFieldValue={setFieldValue}
-        inputProps={initialProps}
-        users={users}
-        initialUsers={form.values.members}
-      />
+      <InputWrapper {...form.getInputProps('members')}>
+        <UserSelector
+          setFieldValue={setFieldValue}
+          inputProps={initialProps}
+          users={users}
+          initialUsers={form.values.members}
+        />
+      </InputWrapper>
       <div className={styles.buttonWrapper}>
         <Button
           color="var(--primary)"
-          onClick={() => handleSubmit(form)}
-          disabled={hasErrors}
+          onClick={() => {
+            form.validate();
+            handleSubmit(form);
+          }}
+          disabled={Object.keys(form.errors).length !== 0}
         >
           {buttonText}
         </Button>

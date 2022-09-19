@@ -27,7 +27,6 @@ const AddUser: FC<{}> = ({}) => {
       role: '1',
       groups: [],
     },
-    validateInputOnChange: true,
     validate: {
       login: (value) =>
         value.length < 5
@@ -44,18 +43,23 @@ const AddUser: FC<{}> = ({}) => {
       name: (value) =>
         value.length < 2
           ? locale.auth.errors.name.short
-          : !value.match(/^[а-яА-ЯЁё -]+$/)
+          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
           ? locale.auth.errors.name.invalid
           : null,
       surname: (value) =>
         value.length < 2
           ? locale.auth.errors.surname.short
-          : !value.match(/^[а-яА-ЯЁё -]+$/)
+          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
           ? locale.auth.errors.surname.invalid
+          : null,
+      patronymic: (value) =>
+        !value.match(/^[a-zA-Zа-яА-ЯЁё -]*$/)
+          ? locale.auth.errors.patronymic.invalid
           : null,
       role: (value) =>
         value.length == 0 ? locale.auth.errors.role : null,
     },
+    validateInputOnBlur: true,
   });
   const { locale, lang } = useLocale();
 

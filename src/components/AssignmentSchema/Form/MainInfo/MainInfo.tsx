@@ -23,9 +23,6 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         size="lg"
         label={locale.assignmentSchema.form.title}
         required
-        onBlur={() => {
-          form.validateField('title');
-        }}
         {...form.getInputProps('title')}
       />
       <CustomEditor
@@ -56,9 +53,6 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         size="lg"
         label={locale.assignmentSchema.form.defaultDuration}
         min={0}
-        onBlur={() => {
-          form.validateField('defaultDuration');
-        }}
         {...form.getInputProps('defaultDuration')}
       />
     </>

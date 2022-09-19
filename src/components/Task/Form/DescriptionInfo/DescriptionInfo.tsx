@@ -69,14 +69,12 @@ const DescriptionInfo: FC<{
             onChange={(value) =>
               form.setFieldValue('hintAlarmType', value)
             }
-            onBlur={() => form.validateField('hintAlarmType')}
           />
           <NumberInput
             size="md"
             label={locale.task.form.hint.showAfter}
             hideControls
             min={0}
-            onBlur={() => form.validateField('hintAlarm')}
             {...form.getInputProps('hintAlarm')}
           />
           <CustomEditor

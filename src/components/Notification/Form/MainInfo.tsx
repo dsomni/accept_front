@@ -14,16 +14,10 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
       <TextInput
         label={locale.notification.form.title}
         required
-        onBlur={() => {
-          form.validateField('title');
-        }}
         {...form.getInputProps('title')}
       />
       <TextInput
         label={locale.notification.form.author}
-        onBlur={() => {
-          form.validateField('author');
-        }}
         helperContent={
           <div>
             {locale.helpers.notification.author.map((p, idx) => (

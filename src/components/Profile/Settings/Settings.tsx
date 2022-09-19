@@ -26,7 +26,25 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
         !value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
           ? locale.auth.errors.email
           : null,
+
+      name: (value) =>
+        value.length < 2
+          ? locale.auth.errors.name.short
+          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
+          ? locale.auth.errors.name.invalid
+          : null,
+      surname: (value) =>
+        value.length < 2
+          ? locale.auth.errors.surname.short
+          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
+          ? locale.auth.errors.surname.invalid
+          : null,
+      patronymic: (value) =>
+        !value.match(/^[a-zA-Zа-яА-ЯЁё -]*$/)
+          ? locale.auth.errors.patronymic.invalid
+          : null,
     },
+    validateInputOnBlur: true,
   });
 
   const password_form = useForm({
@@ -44,6 +62,7 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
       confirmPassword: (value, values) =>
         value !== values.password ? locale.auth.errors.confirm : null,
     },
+    validateInputOnBlur: true,
   });
 
   const handleMain = useCallback(() => {
@@ -112,7 +131,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() => main_form.validateField('name')}
           {...main_form.getInputProps('name')}
         />
         <TextInput
@@ -121,7 +139,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() => main_form.validateField('surname')}
           {...main_form.getInputProps('surname')}
         />
         <TextInput
@@ -130,7 +147,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() => main_form.validateField('patronymic')}
           {...main_form.getInputProps('patronymic')}
         />
         <TextInput
@@ -139,7 +155,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() => main_form.validateField('email')}
           {...main_form.getInputProps('email')}
         />
         <div className={styles.button}>
@@ -166,7 +181,10 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
             </div>
           }
           size="lg"
-          onBlur={() => password_form.validateField('password')}
+          onBlur={() => {
+            password_form.validateField('password');
+            password_form.validateField('confirmPassword');
+          }}
           {...password_form.getInputProps('password')}
         />
         <PasswordInput
@@ -176,14 +194,11 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
             label: styles.label,
           }}
           size="lg"
-          onBlur={() =>
-            password_form.validateField('confirmPassword')
-          }
           {...password_form.getInputProps('confirmPassword')}
         />
         <div className={styles.button}>
           <Button
-            disabled={!password_form.isValid()}
+            disabled={Object.keys(password_form.errors).length > 0}
             type="button"
             onClick={handlePassword}
           >

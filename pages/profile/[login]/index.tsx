@@ -14,7 +14,7 @@ function MyProfile(props: { user: IUser }) {
   return (
     <div className={styles.wrapper}>
       <Title title={props.user.shortName} />
-      {isAdmin && accessLevel > props.user.role.accessLevel && (
+      {isAdmin && accessLevel >= props.user.role.accessLevel && (
         <ProfileEditModal {...props} />
       )}
       <ProfileInfo {...props} />

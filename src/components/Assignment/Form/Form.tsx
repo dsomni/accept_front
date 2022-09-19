@@ -78,6 +78,7 @@ const Form: FC<{
       notificationShortDescription: () => null,
       notificationDescription: () => null,
     },
+    validateInputOnBlur: true,
   });
 
   return (

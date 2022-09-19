@@ -9,7 +9,7 @@ import { Button, Select, TextInput } from '@ui/basics';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { Pencil } from 'tabler-icons-react';
 import styles from './profileEditModal.module.css';
 
@@ -17,9 +17,6 @@ const ProfileEditModal: FC<{ user: IUser }> = ({ user }) => {
   const { locale, lang } = useLocale();
   const [opened, setOpened] = useState(false);
   const { accessLevel } = useUser();
-  useEffect(() => {
-    console.log(accessLevel);
-  }, [accessLevel]);
 
   const form = useForm({
     initialValues: {
@@ -36,7 +33,7 @@ const ProfileEditModal: FC<{ user: IUser }> = ({ user }) => {
 
   const filterRoles = useCallback(
     (data: IRole[]) =>
-      data.filter((item) => item.accessLevel < accessLevel),
+      data.filter((item) => item.accessLevel <= accessLevel),
     [accessLevel]
   );
 
@@ -67,29 +64,22 @@ const ProfileEditModal: FC<{ user: IUser }> = ({ user }) => {
         onClick={open}
       />
 
-      <SimpleModal
-        opened={opened}
-        close={close}
-        title={`${locale.edit} ${user.login}`}
-      >
+      <SimpleModal opened={opened} close={close}>
         <div className={styles.wrapper}>
           <div className={styles.fields}>
             <TextInput
               label={locale.auth.labels.name}
               size="lg"
-              onBlur={() => form.validateField('name')}
               {...form.getInputProps('name')}
             />
             <TextInput
               label={locale.auth.labels.surname}
               size="lg"
-              onBlur={() => form.validateField('surname')}
               {...form.getInputProps('surname')}
             />
             <TextInput
               label={locale.auth.labels.patronymic}
               size="lg"
-              onBlur={() => form.validateField('patronymic')}
               {...form.getInputProps('patronymic')}
             />
             <div style={{ position: 'relative' }}>
