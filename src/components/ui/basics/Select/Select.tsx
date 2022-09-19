@@ -5,7 +5,7 @@ const Select: FC<SelectProps> = (props) => {
   return (
     <MantineSelect
       styles={{
-        label: { fontSize: 'var(--font-size-m)' },
+        label: { fontSize: 'var(--font-size-input-m)' },
         input: { fontSize: 'var(--font-size-s)' },
       }}
       {...props}
