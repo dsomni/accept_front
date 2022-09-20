@@ -7,7 +7,7 @@ import { IGroup } from '@custom-types/data/IGroup';
 import Form from '@components/Group/Form/Form';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { GetStaticProps } from 'next';
-import { IUser } from '@custom-types/data/IUser';
+import { IUserDisplay } from '@custom-types/data/IUser';
 import {
   errorNotification,
   newNotification,
@@ -21,7 +21,7 @@ const initialValues = {
   members: [],
 };
 
-function AddGroup(props: { users: IUser[] }) {
+function AddGroup(props: { users: IUserDisplay[] }) {
   const users = props.users;
 
   const { locale, lang } = useLocale();
@@ -81,7 +81,7 @@ export default AddGroup;
 const API_URL = getApiUrl();
 
 export const getStaticProps: GetStaticProps = async () => {
-  const usersResponse = await fetch(`${API_URL}/api/user`, {
+  const usersResponse = await fetch(`${API_URL}/api/user-display`, {
     method: 'GET',
   });
   if (usersResponse.status === 200) {

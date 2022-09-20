@@ -7,32 +7,30 @@ import { getApiUrl } from '@utils/getServerUrl';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { IGroup } from '@custom-types/data/IGroup';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { IUser } from '@custom-types/data/IUser';
+import { IUserDisplay } from '@custom-types/data/IUser';
 import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
 import Title from '@ui/Title/Title';
 
-function EditGroup(props: { group: IGroup; users: IUser[] }) {
+function EditGroup(props: {
+  group: IGroup;
+  users: IUserDisplay[];
+  members: IUserDisplay[];
+}) {
   const group = props.group;
   const users = props.users;
+  const members = props.members;
 
   const { locale, lang } = useLocale();
 
   const formValues = useMemo(
     () => ({
       ...group,
-      members: users
-        .filter(
-          (user) =>
-            user.groups.findIndex(
-              (item) => item.spec === group.spec
-            ) >= 0
-        )
-        .map((user) => user.login),
+      members: members.map((user) => user.login),
     }),
-    [group, users]
+    [group, members]
   );
 
   const handleSubmit = useCallback(
@@ -107,6 +105,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         group: groupBundle.group,
         users: groupBundle.users,
+        members: groupBundle.members,
       },
     };
   }

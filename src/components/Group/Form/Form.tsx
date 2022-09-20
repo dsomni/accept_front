@@ -3,7 +3,7 @@ import { useLocale } from '@hooks/useLocale';
 import { FC, useCallback, useEffect, useMemo } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
-import { IUser } from '@custom-types/data/IUser';
+import { IUserDisplay } from '@custom-types/data/IUser';
 import {
   Button,
   Helper,
@@ -18,7 +18,7 @@ import { UseFormReturnType, useForm } from '@mantine/form';
 
 const Form: FC<{
   buttonText: string;
-  users: IUser[];
+  users: IUserDisplay[];
   handleSubmit: callback<UseFormReturnType<any>>;
   initialValues: any;
 }> = ({ initialValues, handleSubmit, buttonText, users }) => {
