@@ -29,9 +29,15 @@ export const titles = {
     spec: 'Assignment',
   },
   assignment_schema: {
-    add: 'Add assingment schema',
+    add: 'Add assignment schema',
     edit: 'Edit assignment schema',
     spec: 'Schema of',
     list: 'Assignment schemas',
+  },
+  tournament: {
+    add: 'Add tournament',
+    edit: 'Edit tournament',
+    spec: 'Tournament',
+    list: 'Tournament list',
   },
 };

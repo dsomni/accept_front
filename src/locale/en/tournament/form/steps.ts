@@ -1,18 +1,16 @@
 export const steps = {
-  first: {
-    label: 'First step',
-    description: 'Main info',
-  },
-  second: {
-    label: 'Second step',
-    description: 'Secondary info',
-  },
-  third: {
-    label: 'Third step',
-    description: 'Type info',
-  },
-  fourth: {
-    label: 'Fourth step',
-    description: 'Preview',
-  },
+  labels: [
+    'First step',
+    'Second step',
+    'Third step',
+    'Fourth step',
+    'Fifth step',
+  ],
+  descriptions: [
+    'Main info',
+    'Time',
+    'Task order',
+    'Moderators',
+    'Preview',
+  ],
 };

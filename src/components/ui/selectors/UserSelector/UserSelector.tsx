@@ -6,7 +6,7 @@ import {
 } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './userSelector.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
-import { IUser } from '@custom-types/data/IUser';
+import { IUserDisplay } from '@custom-types/data/IUser';
 import { InputWrapper, SegmentedControl } from '@ui/basics';
 import { ActionIcon } from '@mantine/core';
 import { Eye } from 'tabler-icons-react';
@@ -14,7 +14,7 @@ import { Eye } from 'tabler-icons-react';
 const UserSelector: FC<{
   setFieldValue: (_: string[]) => void;
   inputProps: any;
-  users: IUser[];
+  users: IUserDisplay[];
   initialUsers?: string[];
 }> = ({ setFieldValue, inputProps, users, initialUsers }) => {
   const [availableUsers, setAvailableUsers] = useState<Item[]>([]);
@@ -54,24 +54,13 @@ const UserSelector: FC<{
   >('shortName');
 
   const itemComponent = useCallback(
-    (user: IUser, handleSelect: any) => {
+    (user: IUserDisplay, handleSelect: any) => {
       return (
         <div
           className={styles.itemWrapper}
           onClick={() => handleSelect(user)}
         >
-          <div className={styles.nameWrapper}>
-            <div className={styles.name}>{user[displayedField]}</div>
-
-            <div className={styles.groups}>
-              {user.groups.map((group, index) => (
-                <div key={index} className={styles.group}>
-                  {group.name +
-                    (index == user.groups.length - 1 ? '' : ', ')}
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className={styles.name}>{user[displayedField]}</div>
           <div className={styles.actions}>
             <ActionIcon<'a'>
               component="a"
