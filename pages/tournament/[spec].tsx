@@ -13,8 +13,6 @@ import {
   ITournament,
   ITournamentDisplay,
 } from '@custom-types/data/ITournament';
-import ChatSticky from '@ui/ChatSticky/ChatSticky';
-import Timer from '@ui/Timer/Timer';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
 
@@ -75,8 +73,8 @@ function Tournament(props: { tournament: ITournament }) {
         }
       />
       {isTeacher && <Sticky actions={actions} />}
-      <ChatSticky spec={tournament.spec} />
-      <Timer spec={tournament.spec} />
+      {/* <ChatSticky spec={tournament.spec} /> */}
+      {/* <Timer spec={tournament.spec} /> */}
       <Description tournament={tournament} />
     </>
   );

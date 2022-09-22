@@ -50,6 +50,7 @@ const Form: FC<{
 
   useEffect(() => {
     form.setValues(initialValues);
+    console.log(initialValues.tasks);
   }, [initialValues]); //eslint-disable-line
 
   const form = useForm({

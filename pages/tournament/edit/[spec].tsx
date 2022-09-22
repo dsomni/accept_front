@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useLocale } from '@hooks/useLocale';
@@ -95,7 +95,7 @@ function TournamentEdit(props: ITournamentEditBundle) {
       <Title title={locale.titles.tournament.edit} />
       <Form
         handleSubmit={handleSubmit}
-        buttonLabel={locale.create}
+        buttonLabel={locale.edit}
         initialValues={initialValues}
         users={users || []}
         {...props}
@@ -112,9 +112,17 @@ export default TournamentEdit;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params || typeof params?.spec !== 'string') {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
   const response = await fetch(
-    `${API_URL}/api/bundle/tournament-edit`
+    `${API_URL}/api/bundle/tournament-edit/${params.spec}`
   );
   if (response.status === 200) {
     const response_json = await response.json();
@@ -132,5 +140,12 @@ export const getStaticProps: GetStaticProps = async () => {
       permanent: false,
       destination: '/Not-Found',
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
   };
 };

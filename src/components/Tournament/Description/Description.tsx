@@ -3,8 +3,6 @@ import styles from './description.module.css';
 import { ITournament } from '@custom-types/data/ITournament';
 import { getLocalDate } from '@utils/datetime';
 import { useLocale } from '@hooks/useLocale';
-import { ITaskDisplay } from '@custom-types/data/ITask';
-import { sendRequest } from '@requests/request';
 import PrimitiveTaskTable from '@ui/PrimitiveTaskTable/PrimitiveTaskTable';
 
 const Description: FC<{ tournament: ITournament }> = ({
@@ -14,31 +12,10 @@ const Description: FC<{ tournament: ITournament }> = ({
   const [startDate, setStartDate] = useState('-');
   const [endDate, setEndDate] = useState('-');
 
-  const [tasks, setTasks] = useState(tournament.tasks);
-
   useEffect(() => {
     setStartDate(getLocalDate(tournament.start));
     setEndDate(getLocalDate(tournament.end));
   }, [tournament.end, tournament.start]);
-
-  useEffect(() => {
-    let cleanUp = false;
-    if (tournament.tasks.length) {
-      sendRequest<string[], ITaskDisplay[]>(
-        'task/list-specs',
-        'POST',
-        tournament.tasks.map((task: any) => task.value || task.spec),
-        5000
-      ).then((res) => {
-        if (!cleanUp && !res.error) {
-          setTasks(res.response);
-        }
-      });
-    }
-    return () => {
-      cleanUp = true;
-    };
-  }, [tournament.tasks]);
 
   return (
     <div className={styles.wrapper}>
@@ -67,7 +44,7 @@ const Description: FC<{ tournament: ITournament }> = ({
       />
       <div className={styles.tasksWrapper}>
         <PrimitiveTaskTable
-          tasks={tasks}
+          tasks={tournament.tasks}
           linkQuery={`tournament=${tournament.spec}`}
         />
       </div>
