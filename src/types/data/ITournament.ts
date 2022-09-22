@@ -1,7 +1,38 @@
-import { IAssessmentType } from './atomic';
+import { IAssessmentType, ITournamentStatus } from './atomic';
 import { ITag } from './ITag';
+import { ITaskDisplay } from './ITask';
 
-export interface ITournament {}
+export interface ITournamentDisplay {
+  spec: string;
+  author: string;
+  title: string;
+
+  tags: ITag[];
+
+  status: ITournamentStatus;
+
+  start: Date;
+  end: Date;
+}
+
+export interface ITournament {
+  spec: string;
+  author: string;
+  title: string;
+  description: string;
+  tasks: ITaskDisplay[];
+
+  tags: ITag[];
+
+  status: ITournamentStatus;
+
+  start: Date;
+  end: Date;
+  frozeResults: Date;
+
+  participantsNumber: number;
+  allowRegistrationAfterStart: boolean;
+}
 
 export interface ITournamentAddBundle {
   assessmentTypes: IAssessmentType[];
@@ -19,7 +50,7 @@ export interface ITournamentAdd {
   author: string;
   title: string;
   description: string;
-  tasks: string[];
+  tasks: ITaskDisplay[];
 
   tags: string[];
 

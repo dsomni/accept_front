@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import { GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -10,7 +10,6 @@ import {
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { useUser } from '@hooks/useUser';
 import { UseFormReturnType } from '@mantine/form/lib/types';
-import { useRouter } from 'next/router';
 import Title from '@ui/Title/Title';
 import {
   ITournamentAdd,
@@ -24,54 +23,40 @@ import { IUserDisplay } from '@custom-types/data/IUser';
 function TournamentAdd(props: ITournamentAddBundle) {
   const { locale, lang } = useLocale();
   const { user } = useUser();
-  const router = useRouter();
 
   const { data: users } = useRequest<{}, IUserDisplay[]>(
     'user/list-display',
     'GET'
   );
 
-  const [initialValues, setInitialValues] = useState({
-    spec: '',
-    author: user?.login || '',
-    title: '',
-    description: '',
-    tasks: [],
-    tags: [],
-    status: 0,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialValues = useMemo(
+    () => ({
+      spec: '',
+      author: user?.login || '',
+      title: 'Новый турнир',
+      description: 'Это новый турнир блаблабла',
+      tasks: [],
+      tags: [],
+      status: 0,
 
-    startDate: new Date(),
-    startTime: new Date(),
-    endDate: new Date(),
-    endTime: new Date(),
-    frozeResultsDate: new Date(),
-    frozeResultsTime: new Date(),
+      startDate: new Date(),
+      startTime: new Date(),
+      endDate: new Date(),
+      endTime: new Date(),
+      frozeResultsDate: new Date(),
+      frozeResultsTime: new Date(),
 
-    participants: [],
+      participants: [],
 
-    moderators: [],
-    assessmentType: '0',
+      moderators: [],
+      assessmentType: '0',
 
-    shouldPenalizeAttempt: true,
-    allowRegistrationAfterStart: false,
-  });
-
-  useEffect(() => {
-    const origin = (router.query.origin as string) || '';
-    const duration = +(router.query.duration || 0);
-    if (origin || duration) {
-      let endDate = new Date();
-      let endTime = new Date(endDate);
-      endDate.setMinutes(endDate.getMinutes() + duration);
-      endTime.setMinutes(endTime.getMinutes() + duration);
-      setInitialValues((initialValues) => ({
-        ...initialValues,
-        origin,
-        endDate,
-        endTime,
-      }));
-    }
-  }, [router.query.duration, router.query.origin]);
+      shouldPenalizeAttempt: true,
+      allowRegistrationAfterStart: false,
+    }),
+    [user?.login]
+  );
 
   const handleSubmit = useCallback(
     (form: UseFormReturnType<typeof initialValues>) => {

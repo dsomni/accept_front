@@ -3,6 +3,7 @@ import { steps } from './steps';
 export const form = {
   steps,
   title: 'Название',
+  author: 'Автор',
   description: 'Описание',
   allowRegistrationAfterStart: 'Регистрация после начала',
   shouldPenalizeAttempt: 'Штрафовать за попытки',

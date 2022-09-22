@@ -4,6 +4,7 @@ export const form = {
   steps,
   title: 'Title',
   description: 'Description',
+  author: 'Author',
   allowRegistrationAfterStart: 'Registration after start',
   shouldPenalizeAttempt: 'Penalize attempts',
   assessmentType: {
