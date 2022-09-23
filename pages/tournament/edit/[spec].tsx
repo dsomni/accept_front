@@ -58,8 +58,9 @@ function TournamentEdit(props: ITournamentEditBundle) {
         author: form.values.author,
         title: form.values.title,
         description: form.values.description,
-        tasks: form.values.tasks,
-        tags: form.values.tags,
+        tasks: form.values.tasks.map((task) => task.spec),
+        // @ts-ignore-line
+        tags: form.values.tags.map((tag) => tag.value),
         status: form.values.status,
         participants: form.values.participants,
         moderators: form.values.moderators,

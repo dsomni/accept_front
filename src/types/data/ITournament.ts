@@ -40,25 +40,19 @@ export interface ITournamentAddBundle {
 }
 
 export interface ITournamentEditBundle {
-  tournament: ITournamentAdd;
+  tournament: ITournamentEdit;
   assessmentTypes: IAssessmentType[];
   tags: ITag[];
 }
 
-export interface ITournamentAdd {
-  spec: string;
-  author: string;
-  title: string;
-  description: string;
-  tasks: ITaskDisplay[];
-
+export interface ITournamentAdd
+  extends Omit<
+    ITournament,
+    'tasks' | 'status' | 'tags' | 'participantsNumber'
+  > {
+  tasks: string[];
   tags: string[];
-
   status: number;
-
-  start: Date;
-  end: Date;
-  frozeResults: Date;
 
   participants: string[];
 
@@ -66,5 +60,9 @@ export interface ITournamentAdd {
   assessmentType: number;
 
   shouldPenalizeAttempt: boolean;
-  allowRegistrationAfterStart: boolean;
+}
+
+export interface ITournamentEdit
+  extends Omit<ITournamentAdd, 'tasks'> {
+  tasks: ITaskDisplay[];
 }
