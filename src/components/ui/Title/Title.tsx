@@ -6,9 +6,7 @@ const Title: FC<{ title: string }> = ({ title }) => {
   const { locale } = useLocale();
   return (
     <Head>
-      <title>
-        {title} | {locale.titles.accept}
-      </title>
+      <title>{`${title} | ${locale.titles.accept}`}</title>
     </Head>
   );
 };

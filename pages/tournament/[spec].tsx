@@ -43,7 +43,7 @@ function Tournament(props: { tournament: ITournament }) {
           height={STICKY_SIZES[width] / 3}
         />
       ),
-      href: `/edu/tournament/edit/${tournament.spec}`,
+      href: `/tournament/edit/${tournament.spec}`,
     },
     {
       color: 'red',
