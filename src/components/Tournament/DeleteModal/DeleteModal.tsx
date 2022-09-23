@@ -21,7 +21,7 @@ const DeleteModal: FC<{
       spec: tournament.spec,
     };
     requestWithNotify(
-      'tournaments/delete',
+      'tournament/delete',
       'POST',
       locale.notify.tournament.delete,
       lang,
