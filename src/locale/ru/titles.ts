@@ -20,7 +20,8 @@ export const titles = {
   },
   dashboard: {
     admin: 'Панель управления администрации',
-    assignment: 'Панель управления уроком',
+    assignment: 'Управление уроком',
+    tournament: 'Управление турниром',
   },
   attempt: 'Попытка',
   assignment: {
