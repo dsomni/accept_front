@@ -51,25 +51,28 @@ export async function middleware(request: NextRequest) {
           )}`,
         }
       : undefined;
-    const users_level_response = await fetch(
+    const user_level_response = await fetch(
       `${process.env.API_ENDPOINT}/api/accessLevel`,
       {
         method: 'GET',
         headers: headers,
       }
     );
-    if (users_level_response.status === 401) {
+
+    if (user_level_response.status === 401) {
       return NextResponse.redirect(
         request.nextUrl.origin + `/signin?referrer=${pathname}`
       );
     }
-    if (users_level_response.status === 403) {
+    if (user_level_response.status === 403) {
       return NextResponse.redirect(request.nextUrl.origin + '/403');
     }
-    if (users_level_response.status !== 200)
+    if (user_level_response.status !== 200)
       return NextResponse.redirect(request.nextUrl.origin + `/500`);
-    const users_level = await users_level_response.json();
-    if (users_level < accessLevel)
+    const user_level = await user_level_response.json();
+    console.log(user_level);
+
+    if (user_level < accessLevel)
       return NextResponse.redirect(request.nextUrl.origin + '/403');
   }
   return NextResponse.next();
