@@ -13,6 +13,7 @@ const MultiSelect: FC<MultiSelectProps> = (props) => {
         input: styles.inputElemMulti,
       }}
       {...props}
+      clearable={false}
     />
   );
 };

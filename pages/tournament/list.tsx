@@ -46,7 +46,7 @@ interface ITournamentDisplayList
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
-    label: locale.tournament.list.status,
+    label: '',
     key: 'status',
     sortable: true,
     sortFunction: (a: any, b: any) => {
@@ -58,7 +58,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     },
     sorted: 0,
     allowMiddleState: true,
-    hidable: true,
+    hidable: false,
     hidden: false,
     size: 1,
   },
@@ -76,7 +76,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 5,
+    size: 6,
   },
   {
     label: locale.tournament.list.author,
@@ -93,7 +93,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 3,
   },
   {
     label: locale.tournament.list.start,
@@ -128,6 +128,23 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     hidable: true,
     hidden: false,
     size: 4,
+  },
+  {
+    label: locale.tournament.list.participantsNumber,
+    key: 'participantsNumber',
+    sortable: true,
+    sortFunction: (a: any, b: any) => {
+      return a.participantsNumber.value > b.participantsNumber.value
+        ? 1
+        : a.participantsNumber.value == b.participantsNumber.value
+        ? 0
+        : -1;
+    },
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: true,
+    hidden: true,
+    size: 3,
   },
 ];
 
@@ -167,6 +184,10 @@ const processData = (
       end: {
         value: tournament.end,
         display: <div>{getLocalDate(tournament.end)}</div>,
+      },
+      participantsNumber: {
+        value: tournament.participantsNumber,
+        display: <div>{tournament.participantsNumber}</div>,
       },
       title: {
         value: tournament.title,

@@ -14,4 +14,9 @@ export const tournament = {
     success: 'The tournament was deleted successfully',
     error: 'Error when deleting the tournament',
   },
+  registration: {
+    loading: 'Registering',
+    success: 'You were successfully registered',
+    error: 'Error during registration',
+  },
 };

@@ -4,4 +4,5 @@ export const list = {
   start: 'Начало',
   end: 'Окончание',
   status: 'Статус',
+  participantsNumber: 'Участники',
 };

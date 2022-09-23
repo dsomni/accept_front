@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -21,7 +21,7 @@ function Tournament(props: { tournament: ITournament }) {
   const [activeModal, setActiveModal] = useState(false);
   const { locale } = useLocale();
 
-  const { isTeacher } = useUser();
+  const { isAdmin, user } = useUser();
   const { width } = useWidth();
 
   const actions = [
@@ -68,11 +68,15 @@ function Tournament(props: { tournament: ITournament }) {
         tournament={
           {
             ...tournament,
-            taskNumber: tournament.tasks.length,
+            participantsNumber: tournament.participants.length,
           } as ITournamentDisplay
         }
       />
-      {isTeacher && <Sticky actions={actions} />}
+      {(isAdmin ||
+        tournament.moderators.includes(user?.login || '') ||
+        tournament.author == user?.login) && (
+        <Sticky actions={actions} />
+      )}
       {/* <ChatSticky spec={tournament.spec} /> */}
       {/* <Timer spec={tournament.spec} /> */}
       <Description tournament={tournament} />
@@ -88,25 +92,35 @@ export default Tournament;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  query,
+}) => {
+  if (!query.spec) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
+        destination: '/Not-Found',
       },
     };
   }
-  const response = await fetch(
-    `${API_URL}/api/tournament/${params.spec}`
-  );
+  const spec = query.spec;
+
+  const response = await fetch(`${API_URL}/api/tournament/${spec}`, {
+    headers: req.headers as { [key: string]: string },
+  });
+
   if (response.status === 200) {
+    // res.setHeader(
+    //   'Cache-Control',
+    //   'public, s-maxage=10, stale-while-revalidate=59'
+    // );
     const tournament = await response.json();
     return {
       props: {
         tournament,
       },
-      revalidate: 10 * 60,
     };
   }
   return {
@@ -114,12 +128,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       permanent: false,
       destination: '/Not-Found',
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };

@@ -11,26 +11,18 @@ export interface ITournamentDisplay {
 
   status: ITournamentStatus;
 
+  participantsNumber: number;
   start: Date;
   end: Date;
 }
 
-export interface ITournament {
-  spec: string;
-  author: string;
-  title: string;
+export interface ITournament
+  extends Omit<ITournamentDisplay, 'participantsNumber'> {
   description: string;
   tasks: ITaskDisplay[];
 
-  tags: ITag[];
-
-  status: ITournamentStatus;
-
-  start: Date;
-  end: Date;
-  frozeResults: Date;
-
-  participantsNumber: number;
+  moderators: string[];
+  participants: string[];
   allowRegistrationAfterStart: boolean;
 }
 
@@ -64,6 +56,7 @@ export interface ITournamentAdd
 
   moderators: string[];
   assessmentType: number;
+  frozeResults: Date;
 
   shouldPenalizeAttempt: boolean;
 }

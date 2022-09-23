@@ -10,6 +10,7 @@ import Dates from './Dates/Dates';
 import TaskOrdering from './TaskOrdering/TaskOrdering';
 import Moderators from './Moderators/Moderators';
 import Preview from './Preview/Preview';
+import { concatDateTime } from '@utils/datetime';
 
 const stepFields: string[][] = [
   [
@@ -64,7 +65,6 @@ const Form: FC<{
         form={form}
         handleSubmit={() => handleSubmit(form)}
         stepFields={stepFields}
-        initialStep={4}
         pages={[
           <MainInfo
             key={'0'}
@@ -74,7 +74,20 @@ const Form: FC<{
           <Dates key={'1'} form={form} />,
           <TaskOrdering key={'2'} form={form} />,
           <Moderators key={'3'} form={form} users={users} />,
-          <Preview key={'4'} tournament={form.values} />,
+          <Preview
+            key={'4'}
+            tournament={{
+              ...form.values,
+              start: concatDateTime(
+                form.values.startDate,
+                form.values.startTime
+              ),
+              end: concatDateTime(
+                form.values.endDate,
+                form.values.endTime
+              ),
+            }}
+          />,
         ]}
         labels={locale.tournament.form.steps.labels}
         descriptions={locale.tournament.form.steps.descriptions}
