@@ -174,7 +174,7 @@ const processData = (
           <div className={tableStyles.titleWrapper}>
             <a
               className={tableStyles.title}
-              href={`/edu/tournament/${tournament.spec}`}
+              href={`/tournament/${tournament.spec}`}
             >
               {tournament.title}
             </a>
@@ -331,7 +331,7 @@ function TournamentList() {
         }
       />
       <SingularSticky
-        href={`/edu/tournament/add`}
+        href={`/tournament/add`}
         icon={<Plus height={25} width={25} />}
       />
     </div>
