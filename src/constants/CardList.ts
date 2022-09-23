@@ -17,6 +17,6 @@ export const cardList: IProjectCard[] = [
     title: (locale) => locale.projects.tournaments.title,
     description: (locale) => locale.projects.tournaments.description,
     image: 'media/code2.jpg',
-    href: '/tourneys',
+    href: '/tournament/list',
   },
 ];

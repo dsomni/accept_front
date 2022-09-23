@@ -37,6 +37,12 @@ const listLinks: IHeaderLink[] = [
     permission: 'teacher',
   },
   {
+    text: (locale) => locale.mainHeaderLinks.listLinks.tournaments,
+    type: 'regular',
+    href: '/tournament/list',
+    permission: 'teacher',
+  },
+  {
     text: (locale) => locale.mainHeaderLinks.listLinks.users,
     type: 'regular',
     href: '/user/list',

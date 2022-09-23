@@ -34,6 +34,12 @@ export interface ITournament {
   allowRegistrationAfterStart: boolean;
 }
 
+export interface ITournamentListBundle {
+  tournaments: ITournamentDisplay[];
+  tags: ITag[];
+  statuses: ITournamentStatus[];
+}
+
 export interface ITournamentAddBundle {
   assessmentTypes: IAssessmentType[];
   tags: ITag[];

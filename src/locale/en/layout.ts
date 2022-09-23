@@ -15,6 +15,7 @@ export const mainHeaderLinks = {
     groups: 'Groups',
     schemas: 'Schemas',
     users: 'Users',
+    tournaments: 'Tournaments',
   },
 };
 
