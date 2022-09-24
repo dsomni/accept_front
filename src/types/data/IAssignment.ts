@@ -76,7 +76,7 @@ export interface IAssignmentListBundle {
 }
 
 export interface IAssignmentTimeInfo {
-  status: IAssignmentStatus;
+  status: number;
   infinite: boolean;
 
   start: Date;

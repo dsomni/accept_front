@@ -154,7 +154,7 @@ function AddTask() {
         };
       }
       requestWithNotify(
-        !tournament ? 'task/add' : `tournament/task/${tournament}`,
+        !tournament ? 'task/add' : `tournament/tasks/${tournament}`,
         'POST',
         locale.notify.task.create,
         lang,

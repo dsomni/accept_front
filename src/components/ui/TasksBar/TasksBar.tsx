@@ -9,8 +9,9 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const TasksBar: FC<{
   tasks: ITaskDisplay[];
-  assignment: string;
-}> = ({ tasks, assignment }) => {
+  homeHref: string;
+  taskQuery: string;
+}> = ({ tasks, homeHref, taskQuery }) => {
   return (
     <>
       {tasks.length > 0 && (
@@ -21,13 +22,13 @@ const TasksBar: FC<{
               backgroundColor: 'var(--primary)',
             }}
             component="a"
-            href={`/edu/assignment/${assignment}`}
+            href={homeHref}
           >
             <Home color="white" />
           </ActionIcon>
           {tasks.map((task, index) => (
             <Link
-              href={`/task/${task.spec}?assignment=${assignment}`}
+              href={`/task/${task.spec}?${taskQuery}`}
               key={index}
               passHref
             >

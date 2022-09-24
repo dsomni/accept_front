@@ -65,3 +65,11 @@ export interface ITournamentEdit
   extends Omit<ITournamentAdd, 'tasks'> {
   tasks: ITaskDisplay[];
 }
+
+export interface IAssignmentTimeInfo {
+  status: number;
+  infinite: boolean;
+
+  start: Date;
+  end: Date;
+}
