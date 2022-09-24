@@ -14,7 +14,7 @@ const projectLinks: IHeaderLink[] = [
   {
     text: (locale) => locale.projects.tournaments.title,
     type: 'regular',
-    href: '/tournaments',
+    href: '/tournament/list',
   },
 ];
 

@@ -7,7 +7,7 @@ import { getApiUrl } from '@utils/getServerUrl';
 import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
 import Description from '@components/Tournament/Description/Description';
-import { Dashboard, Pencil, Trash } from 'tabler-icons-react';
+import { Dashboard, Pencil, Plus, Trash } from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
 import {
   ITournament,
@@ -44,6 +44,16 @@ function Tournament(props: { tournament: ITournament }) {
         />
       ),
       href: `/tournament/edit/${tournament.spec}`,
+    },
+    {
+      color: 'green',
+      icon: (
+        <Plus
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+      href: `/task/add?tournament=${tournament.spec}`,
     },
     {
       color: 'red',
