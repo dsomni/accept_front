@@ -28,6 +28,7 @@ import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
 import SendText from '@components/Task/SendText/SendText';
 import Timer from '@ui/Timer/Timer';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -150,7 +151,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             homeHref={`/${type}/${spec}`}
             taskQuery={`${type}=${spec}`}
           />
-          {/* <ChatSticky spec={spec} /> */}
+          <ChatSticky spec={spec} />
           <Timer url={`${type}/info/${spec}`} />
         </>
       )}

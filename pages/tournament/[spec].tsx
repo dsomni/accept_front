@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
@@ -7,7 +7,12 @@ import { getApiUrl } from '@utils/getServerUrl';
 import Sticky from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
 import Description from '@components/Tournament/Description/Description';
-import { Dashboard, Pencil, Plus, Trash } from 'tabler-icons-react';
+import {
+  Dashboard,
+  Pencil,
+  PlaylistAdd,
+  Trash,
+} from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
 import {
   ITournament,
@@ -15,6 +20,8 @@ import {
 } from '@custom-types/data/ITournament';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
+import Timer from '@ui/Timer/Timer';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
 
 function Tournament(props: { tournament: ITournament }) {
   const tournament = props.tournament;
@@ -23,6 +30,18 @@ function Tournament(props: { tournament: ITournament }) {
 
   const { isAdmin, user } = useUser();
   const { width } = useWidth();
+
+  const special = useMemo(
+    () =>
+      isAdmin ||
+      tournament.moderators.includes(user?.login || '') ||
+      tournament.author == user?.login,
+    [isAdmin, tournament.author, tournament.moderators, user?.login]
+  );
+
+  useEffect(() => {
+    console.log(special);
+  }, [special]);
 
   const actions = [
     {
@@ -38,6 +57,16 @@ function Tournament(props: { tournament: ITournament }) {
     {
       color: 'green',
       icon: (
+        <PlaylistAdd
+          width={STICKY_SIZES[width] / 3}
+          height={STICKY_SIZES[width] / 3}
+        />
+      ),
+      href: `/task/add?tournament=${tournament.spec}`,
+    },
+    {
+      color: 'green',
+      icon: (
         <Pencil
           width={STICKY_SIZES[width] / 3}
           height={STICKY_SIZES[width] / 3}
@@ -45,16 +74,7 @@ function Tournament(props: { tournament: ITournament }) {
       ),
       href: `/tournament/edit/${tournament.spec}`,
     },
-    {
-      color: 'green',
-      icon: (
-        <Plus
-          width={STICKY_SIZES[width] / 3}
-          height={STICKY_SIZES[width] / 3}
-        />
-      ),
-      href: `/task/add?tournament=${tournament.spec}`,
-    },
+
     {
       color: 'red',
       icon: (
@@ -82,13 +102,12 @@ function Tournament(props: { tournament: ITournament }) {
           } as ITournamentDisplay
         }
       />
-      {(isAdmin ||
-        tournament.moderators.includes(user?.login || '') ||
-        tournament.author == user?.login) && (
-        <Sticky actions={actions} />
+      {special && <Sticky actions={actions} />}
+      {(special ||
+        tournament.participants.includes(user?.login || '')) && (
+        <ChatSticky spec={tournament.spec} />
       )}
-      {/* <ChatSticky spec={tournament.spec} /> */}
-      {/* <Timer spec={tournament.spec} /> */}
+      <Timer url={`tournament/info/${tournament.spec}`} />
       <Description tournament={tournament} />
     </>
   );
@@ -104,7 +123,6 @@ const API_URL = getApiUrl();
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
-  res,
   query,
 }) => {
   if (!query.spec) {

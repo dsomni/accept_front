@@ -8,6 +8,7 @@ import {
 } from 'react';
 import styles from './description.module.css';
 import { ITournament } from '@custom-types/data/ITournament';
+import { ITaskDisplay } from '@custom-types/data/ITask';
 import { getLocalDate } from '@utils/datetime';
 import { useLocale } from '@hooks/useLocale';
 import PrimitiveTaskTable from '@ui/PrimitiveTaskTable/PrimitiveTaskTable';
@@ -16,6 +17,7 @@ import { Helper } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { Icon } from '@ui/basics';
 import { AlertCircle } from 'tabler-icons-react';
+import { sendRequest } from '@requests/request';
 
 const Description: FC<{
   tournament: ITournament;
@@ -24,11 +26,31 @@ const Description: FC<{
   const { locale, lang } = useLocale();
   const [startDate, setStartDate] = useState('-');
   const [endDate, setEndDate] = useState('-');
+  const [tasks, setTasks] = useState(tournament.tasks);
 
   const { user, isAdmin } = useUser();
 
   const [successfullyRegistered, setSuccessfullyRegistered] =
     useState(false);
+
+  useEffect(() => {
+    let cleanUp = false;
+    if (tournament.tasks.length && !isPreview) {
+      sendRequest<undefined, ITaskDisplay[]>(
+        `tournament/tasks/${tournament.spec}`,
+        'GET',
+        undefined,
+        5000
+      ).then((res) => {
+        if (!cleanUp && !res.error) {
+          setTasks(res.response);
+        }
+      });
+    }
+    return () => {
+      cleanUp = true;
+    };
+  }, [tournament.spec, tournament.tasks, isPreview]);
 
   const registered = useMemo(
     () =>
@@ -125,7 +147,7 @@ const Description: FC<{
         )}
       <div className={styles.tasksWrapper}>
         <PrimitiveTaskTable
-          tasks={tournament.tasks}
+          tasks={tasks}
           linkQuery={`tournament=${tournament.spec}`}
           empty={
             isPreview

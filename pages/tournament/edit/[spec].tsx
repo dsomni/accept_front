@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
@@ -28,8 +28,17 @@ function TournamentEdit(props: ITournamentEditBundle) {
 
   const { data: users } = useRequest<{}, IUserDisplay[]>(
     'user/list-display',
-    'GET'
+    'GET',
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    20000
   );
+
+  useEffect(() => {
+    console.log(props.tournament.moderators);
+  }, [props.tournament.moderators]);
 
   const initialValues = useMemo(
     () => ({
