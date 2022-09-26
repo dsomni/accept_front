@@ -31,6 +31,7 @@ const Dates: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
           {form.values.infinite && <Overlay />}
           <RangeCalendar
             start={form.values.startDate}
+            initialMonth={form.values.startDate}
             setStart={setStart}
             end={form.values.endDate}
             setEnd={setEnd}
@@ -76,7 +77,7 @@ const Dates: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
           label={locale.tournament.form.freezeTableTime}
           {...form.getInputProps('frozeResultsTime')}
           onBlur={() => {
-            form.validateField('endTime');
+            form.validateField('frozeResultsDate');
             form.validateField('dates');
           }}
         />

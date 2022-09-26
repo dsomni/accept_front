@@ -62,8 +62,14 @@ export interface ITournamentAdd
 }
 
 export interface ITournamentEdit
-  extends Omit<ITournamentAdd, 'tasks'> {
+  extends Omit<
+    ITournamentAdd,
+    'tasks' | 'assessmentType' | 'tags' | 'status'
+  > {
   tasks: ITaskDisplay[];
+  assessmentType: IAssessmentType;
+  tags: ITag[];
+  status: ITournamentStatus;
 }
 
 export interface IAssignmentTimeInfo {

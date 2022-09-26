@@ -14,7 +14,11 @@ import {
   ITournamentAdd,
   ITournamentEditBundle,
 } from '@custom-types/data/ITournament';
-import { concatDateTime, timezoneDate } from '@utils/datetime';
+import {
+  UTCDate,
+  concatDateTime,
+  timezoneDate,
+} from '@utils/datetime';
 import Form from '@components/Tournament/Form/Form';
 import { useRequest } from '@hooks/useRequest';
 import { IUserDisplay } from '@custom-types/data/IUser';
@@ -30,7 +34,12 @@ function TournamentEdit(props: ITournamentEditBundle) {
   const initialValues = useMemo(
     () => ({
       ...props.tournament,
-      assessmentType: props.tournament.assessmentType.toString(),
+
+      tags: props.tournament.tags.map((tag) => ({
+        value: tag.spec,
+        label: tag.title,
+      })),
+      assessmentType: props.tournament.assessmentType.spec.toString(),
       startDate: timezoneDate(props.tournament.start),
       startTime: timezoneDate(props.tournament.start),
       endDate: timezoneDate(props.tournament.end),
@@ -61,21 +70,24 @@ function TournamentEdit(props: ITournamentEditBundle) {
         tasks: form.values.tasks.map((task) => task.spec),
         // @ts-ignore-line
         tags: form.values.tags.map((tag) => tag.value),
-        status: form.values.status,
+        status: form.values.status.spec,
         participants: form.values.participants,
         moderators: form.values.moderators,
         assessmentType: +form.values.assessmentType,
         shouldPenalizeAttempt: form.values.shouldPenalizeAttempt,
         allowRegistrationAfterStart:
           form.values.allowRegistrationAfterStart,
-        start: concatDateTime(
-          form.values.startDate,
-          form.values.startTime
+        start: UTCDate(
+          concatDateTime(form.values.startDate, form.values.startTime)
         ),
-        end: concatDateTime(form.values.endDate, form.values.endTime),
-        frozeResults: concatDateTime(
-          form.values.frozeResultsDate,
-          form.values.frozeResultsTime
+        end: UTCDate(
+          concatDateTime(form.values.endDate, form.values.endTime)
+        ),
+        frozeResults: UTCDate(
+          concatDateTime(
+            form.values.frozeResultsDate,
+            form.values.frozeResultsTime
+          )
         ),
       };
 

@@ -81,7 +81,7 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
             label={locale.name}
             size="md"
             onChange={(e: any) => {
-              validate(title);
+              validate(e.target.value);
               setTitle(e.target.value);
             }}
             error={error}
