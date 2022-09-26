@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
@@ -38,10 +38,6 @@ function Tournament(props: { tournament: ITournament }) {
       tournament.author == user?.login,
     [isAdmin, tournament.author, tournament.moderators, user?.login]
   );
-
-  useEffect(() => {
-    console.log(special);
-  }, [special]);
 
   const actions = [
     {

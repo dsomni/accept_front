@@ -33,6 +33,14 @@ const Description: FC<{
   const [successfullyRegistered, setSuccessfullyRegistered] =
     useState(false);
 
+  const special = useMemo(
+    () =>
+      isAdmin ||
+      tournament.moderators.includes(user?.login || '') ||
+      tournament.author == user?.login,
+    [isAdmin, tournament.author, tournament.moderators, user?.login]
+  );
+
   useEffect(() => {
     let cleanUp = false;
     if (tournament.tasks.length && !isPreview) {
@@ -150,7 +158,7 @@ const Description: FC<{
           tasks={tasks}
           linkQuery={`tournament=${tournament.spec}`}
           empty={
-            isPreview
+            !special || isPreview
               ? locale.tournament.emptyTasks
               : locale.tournament.addTasks
           }
