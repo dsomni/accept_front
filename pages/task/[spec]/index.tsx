@@ -66,7 +66,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           `${type}/tasks/${spec}`,
           'GET',
           undefined,
-          1000
+          5000
         ).then((res) => {
           if (!res.error) {
             setTasks(res.response);

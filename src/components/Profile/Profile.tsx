@@ -22,11 +22,14 @@ import AssignmentList from '@components/Profile/AssignmentList/AssignmentList';
 import CreateNotification from '@components/Profile/CreateNotification/CreateNotification';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
+import { useUser } from '@hooks/useUser';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const { amount } = useBackNotifications();
 
   const { locale } = useLocale();
+
+  const { isTeacher } = useUser();
 
   const links: IMenuLink[] = useMemo(() => {
     let globalLinks = [
@@ -60,7 +63,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
         title: locale.profile.settings,
       },
     ];
-    if (user.role.accessLevel > 1) {
+    if (isTeacher) {
       globalLinks.splice(4, 0, {
         page: <CreateNotification />,
         icon: <BellPlus color="var(--secondary)" />,
@@ -68,7 +71,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       });
     }
     return globalLinks;
-  }, [user, locale, amount]);
+  }, [user, locale, amount, isTeacher]);
 
   return (
     <LeftMenu

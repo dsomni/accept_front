@@ -106,13 +106,16 @@ const refactorUser = (user: IUser): any => ({
   },
 });
 
-const ParticipantsList: FC<{ spec: string }> = ({ spec }) => {
+const ParticipantsList: FC<{
+  type: 'assignment' | 'tournament';
+  spec: string;
+}> = ({ type, spec }) => {
   const { locale } = useLocale();
 
   return (
     <div className={styles.wrapper}>
       <UserList
-        url={`assignment/participants/${spec}`}
+        url={`${type}/participants/${spec}`}
         refactorUser={refactorUser}
         initialColumns={initialColumns}
         noDefault

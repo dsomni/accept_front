@@ -10,7 +10,7 @@ import {
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { Clock, Infinity, Lock, Run } from 'tabler-icons-react';
+import { Clock, Infinity, Lock, Plus, Run } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 
 import { BaseSearch } from '@custom-types/data/request';
@@ -28,6 +28,8 @@ import {
 import styles from './assignmentList.module.css';
 import { IGroup } from '@custom-types/data/IGroup';
 import { colorGenerator } from '@utils/consistentColorGenerator';
+import SingularSticky from '@ui/Sticky/SingularSticky';
+import { useUser } from '@hooks/useUser';
 
 interface Item {
   value: any;
@@ -276,6 +278,8 @@ function AssignmentList() {
 
   const [total, setTotal] = useState(0);
 
+  const { isTeacher } = useUser();
+
   const [searchParams, setSearchParams] = useState<BaseSearch>({
     pager: {
       skip: 0,
@@ -386,50 +390,59 @@ function AssignmentList() {
   }, [data, applyFilters]);
 
   return (
-    <div style={{ position: 'relative' }}>
-      <Table
-        columns={columns}
-        rows={list}
-        classNames={{
-          wrapper: tableStyles.wrapper,
-          table: tableStyles.table,
-          author: tableStyles.author,
-          grade: tableStyles.grade,
-          verdict: tableStyles.verdict,
-          headerCell: styles.headerCell,
-          cell: styles.cell,
-          even: tableStyles.even,
-          odd: tableStyles.odd,
-        }}
-        defaultOnPage={10}
-        onPage={[5, 10]}
-        noDefault
-        total={total}
-        loading={loading}
-        setSearchParams={setSearchParams}
-        searchParams={searchParams}
-        withSearch
-        empty={<>{locale.profile.empty.assignments}</>}
-        isEmpty={data?.assignments.length == 0}
-        nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
-        additionalSearch={
-          <div className={styles.searchWrapper}>
-            <MultiSelect
-              searchable
-              data={searchTags}
-              onChange={setCurrentTags}
-              placeholder={locale.placeholders.selectTags}
-            />
-            <MultiSelect
-              searchable
-              data={searchGroups}
-              onChange={setCurrentGroups}
-              placeholder={locale.placeholders.selectGroups}
-            />
-          </div>
-        }
-      />
-    </div>
+    <>
+      <div style={{ position: 'relative' }}>
+        <Table
+          columns={columns}
+          rows={list}
+          classNames={{
+            wrapper: tableStyles.wrapper,
+            table: tableStyles.table,
+            author: tableStyles.author,
+            grade: tableStyles.grade,
+            verdict: tableStyles.verdict,
+            headerCell: styles.headerCell,
+            cell: styles.cell,
+            even: tableStyles.even,
+            odd: tableStyles.odd,
+          }}
+          defaultOnPage={10}
+          onPage={[5, 10]}
+          noDefault
+          total={total}
+          loading={loading}
+          setSearchParams={setSearchParams}
+          searchParams={searchParams}
+          withSearch
+          empty={<>{locale.profile.empty.assignments}</>}
+          isEmpty={data?.assignments.length == 0}
+          nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
+          additionalSearch={
+            <div className={styles.searchWrapper}>
+              <MultiSelect
+                searchable
+                data={searchTags}
+                onChange={setCurrentTags}
+                placeholder={locale.placeholders.selectTags}
+              />
+              <MultiSelect
+                searchable
+                data={searchGroups}
+                onChange={setCurrentGroups}
+                placeholder={locale.placeholders.selectGroups}
+              />
+            </div>
+          }
+        />
+      </div>
+      {isTeacher && (
+        <SingularSticky
+          color={'var(--positive)'}
+          href={'/edu/assignment/add'}
+          icon={<Plus height={20} width={20} />}
+        />
+      )}
+    </>
   );
 }
 

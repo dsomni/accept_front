@@ -9,8 +9,17 @@ import { Button } from '@ui/basics';
 import { sendRequest } from '@requests/request';
 import { ILocale } from '@custom-types/ui/ILocale';
 import CustomTimeModal from '@components/Dashboard/TimeInfo/CustomTimeModal/CustomTimeModal';
-import { IAssignmentStatus } from '@custom-types/data/atomic';
-import { IAssignmentDisplay } from '@custom-types/data/IAssignment';
+
+interface BaseTimeInfo {
+  start: Date;
+  end: Date;
+  status: 0 | 1 | 2;
+  infinite?: boolean;
+}
+
+interface TimeInfo extends BaseTimeInfo {
+  infinite: boolean;
+}
 
 interface ITimeChangeButton {
   value: number;
@@ -48,10 +57,18 @@ const INCREASE_TIME: ITimeChangeButton[] = [
   },
 ];
 
+interface BaseEntity {
+  spec: string;
+  title: string;
+  starter: string;
+}
+
 const TimeInfo: FC<{
-  assignment: IAssignmentDisplay;
+  type: 'tournament' | 'assignment';
+  timeInfo: BaseTimeInfo;
   refetch: () => void;
-}> = ({ assignment, refetch }) => {
+  entity: BaseEntity;
+}> = ({ type, timeInfo, refetch, entity }) => {
   const { locale } = useLocale();
 
   const [seconds, setSeconds] = useState('00');
@@ -66,14 +83,14 @@ const TimeInfo: FC<{
 
   const tick = useCallback(() => {
     let date = 0;
-    switch (assignment.status.spec) {
+    switch (timeInfo.status) {
       case 0:
         date =
-          new Date(assignment.start).getTime() - new Date().getTime();
+          new Date(timeInfo.start).getTime() - new Date().getTime();
         break;
       case 1:
         date =
-          new Date(assignment.end).getTime() - new Date().getTime();
+          new Date(timeInfo.end).getTime() - new Date().getTime();
         break;
       default:
         date = 0;
@@ -85,7 +102,7 @@ const TimeInfo: FC<{
     setDays(time.days);
     setMonths(time.months);
     setYears(time.years);
-  }, [assignment]);
+  }, [timeInfo]);
 
   const interval = useInterval(tick, 1000);
 
@@ -99,8 +116,8 @@ const TimeInfo: FC<{
     (time: number) => {
       sendRequest<
         { amount: number },
-        { end: Date; status: IAssignmentStatus }
-      >(`assignment/time/${assignment.spec}`, 'POST', {
+        { end: Date; status: TimeInfo }
+      >(`${type}/time/${entity.spec}`, 'POST', {
         amount: time,
       }).then((res) => {
         if (!res.error) {
@@ -108,7 +125,7 @@ const TimeInfo: FC<{
         }
       });
     },
-    [assignment.spec, refetch]
+    [type, entity.spec, refetch]
   );
 
   return (
@@ -116,44 +133,34 @@ const TimeInfo: FC<{
       <div className={styles.infoWrapper}>
         <div className={styles.main}>
           <div className={styles.title}>
-            <Link
-              href={`/edu/assignment/${assignment.spec}`}
-              passHref
-            >
-              <a>{assignment.title}</a>
+            <Link href={`/${type}/${entity.spec}`} passHref>
+              <a>{entity.title}</a>
             </Link>
             <div className={styles.status}>
               {locale.assignment.form.status.text}:{' '}
-              {
-                locale.assignment.form.status[
-                  assignment.status.name as
-                    | 'finished'
-                    | 'pending'
-                    | 'running'
-                ]
-              }
+              {locale.assignment.form.status[timeInfo.status]}
             </div>
           </div>
           <div className={styles.starter}>
             {locale.assignment.form.starter}
             {': '}
-            {assignment.starter}
+            {entity.starter}
           </div>
         </div>
         <div className={styles.time}>
           <div className={styles.start}>
             {locale.assignment.form.startTime}
             {': '}
-            {isBrowser && getLocalDate(assignment.start)}
+            {isBrowser && getLocalDate(timeInfo.start)}
           </div>
           <div className={styles.end}>
-            {assignment.infinite ? (
+            {timeInfo.infinite ? (
               locale.assignment.form.infinite
             ) : (
               <>
                 {locale.assignment.form.endTime}
                 {': '}
-                {isBrowser && getLocalDate(assignment.end)}
+                {isBrowser && getLocalDate(timeInfo.end)}
               </>
             )}
           </div>
@@ -161,13 +168,13 @@ const TimeInfo: FC<{
       </div>
       <div className={styles.timeWrapper}>
         <div className={styles.before}>
-          {assignment.status.spec != 2
-            ? assignment.status.spec == 0
+          {timeInfo.status != 2
+            ? timeInfo.status == 0
               ? locale.timer.beforeStart
               : locale.timer.beforeEnd
             : locale.timer.finished}
         </div>
-        {assignment.status.spec !== 2 && (
+        {timeInfo.status !== 2 && (
           <div className={styles.timerWrapper}>
             <div>
               <div className={styles.numberWrapper}>
@@ -211,7 +218,7 @@ const TimeInfo: FC<{
             </div>
           </div>
         )}
-        {assignment.status.spec !== 0 && (
+        {timeInfo.status !== 0 && (
           <div className={styles.buttonsWrapper}>
             {DECREASE_TIME.map((buttonObject, idx) => (
               <Button

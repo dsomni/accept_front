@@ -12,8 +12,8 @@ export const form = {
   calendar: 'Select start and end dates',
   status: {
     text: 'Status',
-    pending: 'Pending',
-    running: 'Running',
-    finished: 'Finished',
+    0: 'Pending',
+    1: 'Running',
+    2: 'Finished',
   },
 };

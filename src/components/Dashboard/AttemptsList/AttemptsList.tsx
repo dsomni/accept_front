@@ -11,7 +11,8 @@ import { useLocale } from '@hooks/useLocale';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
-  locale: ILocale
+  locale: ILocale,
+  type: string
 ): any => ({
   ...attempt,
   result: {
@@ -55,7 +56,10 @@ const refactorAttempt = (
   },
   task: {
     display: (
-      <Link href={`/task/${attempt.task.spec}`} passHref>
+      <Link
+        href={`/task/${attempt.task.spec}?${type}=${attempt.task.spec}`}
+        passHref
+      >
         <a className={styles.taskLink}>{attempt.task.title}</a>
       </Link>
     ),
@@ -142,15 +146,19 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 const AttemptList: FC<{
   spec: string;
   shouldNotRefetch: boolean;
-}> = ({ spec, shouldNotRefetch }) => {
+  type: 'assignment' | 'tournament';
+}> = ({ spec, shouldNotRefetch, type }) => {
   const { locale } = useLocale();
   return (
     <div className={styles.wrapper}>
       <AttemptListUI
-        url={`assignment/attempts/${spec}`}
+        url={`${type}/attempts/${spec}`}
         activeTab
         initialColumns={initialColumns}
-        refactorAttempt={refactorAttempt}
+        refactorAttempt={(
+          attempt: IAttemptDisplay,
+          locale: ILocale
+        ) => refactorAttempt(attempt, locale, type)}
         empty={<>{locale.profile.empty.attempts}</>}
         noDefault
         shouldNotRefetch={shouldNotRefetch}

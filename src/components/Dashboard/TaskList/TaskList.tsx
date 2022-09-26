@@ -76,7 +76,10 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   },
 ];
 
-const TaskList: FC<{ spec: string }> = ({ spec }) => {
+const TaskList: FC<{
+  type: 'assignment' | 'tournament';
+  spec: string;
+}> = ({ type, spec }) => {
   const { locale } = useLocale();
 
   const refactorTask = useCallback(
@@ -125,7 +128,7 @@ const TaskList: FC<{ spec: string }> = ({ spec }) => {
           <div className={tableStyles.titleWrapper}>
             <a
               className={tableStyles.title}
-              href={`/task/${task.spec}?assignment=${spec}`}
+              href={`/task/${task.spec}?${type}=${spec}`}
             >
               {task.title}
             </a>
@@ -143,12 +146,12 @@ const TaskList: FC<{ spec: string }> = ({ spec }) => {
         ),
       },
     }),
-    [spec]
+    [spec, type]
   );
   return (
     <div className={styles.wrapper}>
       <TaskListUI
-        url={`assignment/bundle/tasks/${spec}`}
+        url={`${type}/bundle/tasks/${spec}`}
         refactorTask={refactorTask}
         initialColumns={initialColumns}
         noDefault

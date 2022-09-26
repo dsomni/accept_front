@@ -34,7 +34,7 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
     infinite: data.infinite || false,
     status: data.status,
   }));
-  const refetchTimer = useInterval(() => refetch(false), 3000);
+  const refetchTimer = useInterval(() => refetch(false), 15000);
 
   const [days, setDays] = useState('00');
   const [hours, setHours] = useState('00');

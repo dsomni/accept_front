@@ -117,7 +117,7 @@ function AddTask() {
       } = form.values;
       let body: any = {
         ...values,
-        author: user?.shortName || 'unknown',
+        author: user?.login || 'unknown',
         checkType: +form.values['checkType'],
         taskType: +form.values['taskType'],
         constraints: {
