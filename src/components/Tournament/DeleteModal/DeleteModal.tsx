@@ -1,4 +1,4 @@
-import { ITournamentDisplay } from '@custom-types/data/ITournament';
+import { ITournament } from '@custom-types/data/ITournament';
 import { useLocale } from '@hooks/useLocale';
 import { Group } from '@mantine/core';
 import { FC, memo, useCallback, useState } from 'react';
@@ -11,7 +11,7 @@ import { Button } from '@ui/basics';
 const DeleteModal: FC<{
   active: boolean;
   setActive: callback<boolean, void>;
-  tournament: ITournamentDisplay;
+  tournament: ITournament;
 }> = ({ active, setActive, tournament }) => {
   const { locale, lang } = useLocale();
   const [toList, setToList] = useState(false);

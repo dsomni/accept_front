@@ -14,10 +14,7 @@ import {
   Trash,
 } from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
-import {
-  ITournament,
-  ITournamentDisplay,
-} from '@custom-types/data/ITournament';
+import { ITournament } from '@custom-types/data/ITournament';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
 import Timer from '@ui/Timer/Timer';
@@ -91,12 +88,9 @@ function Tournament(props: { tournament: ITournament }) {
       <DeleteModal
         active={activeModal}
         setActive={setActiveModal}
-        tournament={
-          {
-            ...tournament,
-            participantsNumber: tournament.participants.length,
-          } as ITournamentDisplay
-        }
+        tournament={{
+          ...tournament,
+        }}
       />
       {special && <Sticky actions={actions} />}
       {(special ||

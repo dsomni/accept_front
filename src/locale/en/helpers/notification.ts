@@ -15,6 +15,6 @@ export const notification = {
     'Do not worry: if the selected categories intersects, the user will receive only one notification',
   ],
   assignmentCreation: [
-    'Notification will be sent to the all participants of assignment',
+    'Notification will be sent to the all participants',
   ],
 };

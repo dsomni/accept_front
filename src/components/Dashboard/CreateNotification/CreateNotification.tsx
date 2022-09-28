@@ -11,7 +11,10 @@ import { Group } from '@mantine/core';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
-const CreateNotification: FC<{ groups: string[] }> = ({ groups }) => {
+const CreateNotification: FC<{
+  groups?: string[];
+  logins?: string[];
+}> = ({ groups = [], logins = [] }) => {
   const { locale, lang } = useLocale();
   const { user } = useUser();
   const { notifyAboutCreation } = useBackNotifications();
@@ -40,8 +43,8 @@ const CreateNotification: FC<{ groups: string[] }> = ({ groups }) => {
       title: form.values.notificationTitle,
       shortDescription: form.values.notificationShortDescription,
       description: form.values.notificationDescription,
-      logins: [],
-      groups: groups,
+      logins: logins || [],
+      groups: groups || [],
       roles: [],
       author: user?.login || '',
       broadcast: false,
@@ -59,6 +62,7 @@ const CreateNotification: FC<{ groups: string[] }> = ({ groups }) => {
   }, [
     form.values,
     groups,
+    logins,
     user?.login,
     locale,
     lang,

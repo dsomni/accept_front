@@ -1,6 +1,7 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
 import {
   AlignRight,
+  BellPlus,
   Pencil,
   Puzzle,
   Trash,
@@ -8,7 +9,7 @@ import {
   Vocabulary,
 } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
-import { ITournamentDisplay } from '@custom-types/data/ITournament';
+import { ITournament } from '@custom-types/data/ITournament';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import { useUser } from '@hooks/useUser';
@@ -23,16 +24,17 @@ import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
 import TaskList from './TaskList/TaskList';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
+import CreateNotification from './CreateNotification/CreateNotification';
 
 const TournamentDashboard: FC<{
   spec: string;
 }> = ({ spec }) => {
   const { locale } = useLocale();
 
-  const [tournament, setTournament] = useState<ITournamentDisplay>();
+  const [tournament, setTournament] = useState<ITournament>();
 
-  const { data, refetch } = useRequest<undefined, ITournamentDisplay>(
-    `tournament/display/${spec}`,
+  const { data, refetch } = useRequest<undefined, ITournament>(
+    `tournament/${spec}`,
     'GET'
   );
 
@@ -102,15 +104,19 @@ const TournamentDashboard: FC<{
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.tournament.tasks,
       },
-      // {
-      //   page: tournament && (
-      //     <CreateNotification
-      //       groups={tournament.groups.map((group) => group.spec)}
-      //     />
-      //   ),
-      //   icon: <BellPlus color="var(--secondary)" />,
-      //   title: locale.dashboard.tournament.createNotification,
-      // },
+      {
+        page: tournament && (
+          <CreateNotification
+            logins={[
+              ...tournament.participants,
+              ...tournament.moderators,
+              tournament.author,
+            ]}
+          />
+        ),
+        icon: <BellPlus color="var(--secondary)" />,
+        title: locale.dashboard.tournament.createNotification,
+      },
     ],
     [tournament, locale, refetch, spec]
   );
