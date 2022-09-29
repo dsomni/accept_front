@@ -1,14 +1,52 @@
+import { IRole } from '@custom-types/data/atomic';
+import { IGroup } from '@custom-types/data/IGroup';
+import { IUser } from '@custom-types/data/IUser';
+import { useRequest } from '@hooks/useRequest';
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { Button } from '@ui/basics';
-import { openText } from '@utils/openText';
-import { ReactElement, useCallback } from 'react';
+import { useForm } from '@mantine/form';
+import { UserSelector } from '@ui/selectors';
+import { ReactElement, useCallback, useMemo } from 'react';
 
 function TestPage() {
-  const onClick = useCallback(() => {
-    openText('lol '.repeat(5000));
-  }, []);
+  const { data } = useRequest<
+    {},
+    any,
+    {
+      users: IUser[];
+      groups: IGroup[];
+      roles: IRole[];
+    }
+  >('notification/addBundle', 'GET');
 
-  return <Button onClick={onClick}>open text</Button>;
+  const users: IUser[] = useMemo(
+    () => (data ? data.users : []),
+    [data]
+  );
+
+  const form = useForm({
+    initialValues: {
+      members: [] as string[],
+    },
+  });
+
+  const setFieldValue = useCallback(
+    (users: string[]) => form.setFieldValue('members', users),
+    [] // eslint-disable-line
+  );
+  const initialProps = useMemo(() => {
+    form.getInputProps('members');
+  }, []); // eslint-disable-line
+  return (
+    <div style={{ position: 'relative' }}>
+      <UserSelector
+        key={users.length}
+        setFieldValue={setFieldValue}
+        inputProps={initialProps}
+        users={users}
+        initialUsers={[]}
+      />
+    </div>
+  );
 }
 
 TestPage.getLayout = (page: ReactElement) => {

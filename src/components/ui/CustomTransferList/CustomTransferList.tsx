@@ -27,7 +27,7 @@ export const CustomTransferList: FC<{
   titles: [string, string];
   classNames: any;
   rightComponent?: pureCallback<ReactNode>;
-  itemComponent: (item: any, onSelect: any) => ReactNode;
+  itemComponent: (_: any, __: any) => ReactNode;
   shouldSortChosen?: boolean;
   searchKeys?: string[];
 }> = ({
@@ -58,13 +58,14 @@ export const CustomTransferList: FC<{
         if (shouldSortChosen) return chosen.sort(cmpItem);
         return chosen;
       });
-
+      console.log(chosen);
       setUsed(chosen);
     },
     [chosen, setUsed, shouldSortChosen]
   );
   const handleSelectRight = useCallback(
     (item: Item) => {
+      console.log(item);
       setChosen((chosen) => {
         return removeOneElement(chosen, item);
       });
@@ -87,6 +88,7 @@ export const CustomTransferList: FC<{
     >
       <div className={styles.leftWrapper}>
         <SelectField
+          key={options.length}
           classNames={classNames}
           title={titles[0]}
           values={options}
@@ -98,6 +100,7 @@ export const CustomTransferList: FC<{
       </div>
       <div className={styles.rightWrapper}>
         <SelectField
+          key={chosen.length}
           classNames={classNames}
           title={titles[1]}
           values={chosen}
