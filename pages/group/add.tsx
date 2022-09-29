@@ -2,17 +2,16 @@ import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { UseFormReturnType } from '@mantine/form';
 import { ReactNode, useCallback } from 'react';
-import { getApiUrl } from '@utils/getServerUrl';
 import { IGroup } from '@custom-types/data/IGroup';
 import Form from '@components/Group/Form/Form';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { GetStaticProps } from 'next';
 import { IUserDisplay } from '@custom-types/data/IUser';
 import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
 import Title from '@ui/Title/Title';
+import { useRequest } from '@hooks/useRequest';
 
 const initialValues = {
   spec: '',
@@ -21,8 +20,16 @@ const initialValues = {
   members: [],
 };
 
-function AddGroup(props: { users: IUserDisplay[] }) {
-  const users = props.users;
+function AddGroup() {
+  const { data: users } = useRequest<{}, IUserDisplay[]>(
+    'user/list-display',
+    'GET',
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    20000
+  );
 
   const { locale, lang } = useLocale();
 
@@ -66,7 +73,7 @@ function AddGroup(props: { users: IUserDisplay[] }) {
         handleSubmit={handleSubmit}
         buttonText={locale.create}
         initialValues={initialValues}
-        users={users}
+        users={users || []}
       />
     </>
   );
@@ -77,26 +84,3 @@ AddGroup.getLayout = (page: ReactNode) => {
 };
 
 export default AddGroup;
-
-const API_URL = getApiUrl();
-
-export const getStaticProps: GetStaticProps = async () => {
-  const usersResponse = await fetch(`${API_URL}/api/user-display`, {
-    method: 'GET',
-  });
-  if (usersResponse.status === 200) {
-    const users = await usersResponse.json();
-    return {
-      props: {
-        users: users,
-      },
-      revalidate: 120, //seconds
-    };
-  }
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/Not-Found',
-    },
-  };
-};
