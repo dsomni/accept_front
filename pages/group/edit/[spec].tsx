@@ -13,14 +13,24 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 import Title from '@ui/Title/Title';
+import { useRequest } from '@hooks/useRequest';
 
 function EditGroup(props: {
   group: IGroup;
   users: IUserDisplay[];
   members: IUserDisplay[];
 }) {
+  const { data: users } = useRequest<{}, IUserDisplay[]>(
+    'user/list-display',
+    'GET',
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    20000
+  );
+
   const group = props.group;
-  const users = props.users;
   const members = props.members;
 
   const { locale, lang } = useLocale();
@@ -70,7 +80,7 @@ function EditGroup(props: {
         handleSubmit={handleSubmit}
         initialValues={formValues}
         buttonText={locale.edit}
-        users={users}
+        users={users || []}
       />
     </div>
   );
@@ -104,9 +114,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         group: groupBundle.group,
-        users: groupBundle.users,
         members: groupBundle.members,
       },
+      revalidate: 60,
     };
   }
   return {
