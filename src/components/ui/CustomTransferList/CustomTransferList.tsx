@@ -1,5 +1,11 @@
 import { removeOneElement } from '@utils/removeOneElement';
-import { FC, ReactNode, useCallback, useState } from 'react';
+import {
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 import { pureCallback, setter } from '@custom-types/ui/atomic';
@@ -47,6 +53,16 @@ export const CustomTransferList: FC<{
   const [options, setOptions] = useState(
     defaultOptions.sort(cmpItem)
   );
+
+  useEffect(() => {
+    setOptions(defaultOptions.sort(cmpItem));
+  }, [defaultOptions]);
+
+  useEffect(() => {
+    setChosen(
+      shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
+    );
+  }, [defaultChosen, defaultOptions, shouldSortChosen]);
 
   const handleSelectLeft = useCallback(
     (item: Item) => {
