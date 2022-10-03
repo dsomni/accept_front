@@ -12,12 +12,17 @@ export interface IResult {
 }
 
 export interface ITableResults {
-  results: IResult[];
+  attempts: IResult[];
   best?: IResult;
+}
+
+export interface IUserResult {
+  user: IUserDisplay;
+  results: ITableResults[];
+  score: number;
 }
 
 export interface IFullResults {
   tasks: ITaskBaseInfo[];
-  users: IUserDisplay[];
-  results: ITableResults[][];
+  user_results: IUserResult[];
 }

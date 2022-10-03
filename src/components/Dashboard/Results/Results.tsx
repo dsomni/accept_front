@@ -51,33 +51,42 @@ const Results: FC<{
         />
       )}
       <LoadingOverlay visible={loading} />
-      {data && data.users.length > 0 && data.tasks.length > 0 ? (
+      {data &&
+      data.user_results.length > 0 &&
+      data.tasks.length > 0 ? (
         <ResultsTable
           refetch={refetch}
-          columns={data.tasks.map((task) => ({
-            text: task.title,
-            href: `/task/${task.spec}?assignment=${spec}`,
+          columns={[
+            ...data.tasks.map((task) => ({
+              text: task.title,
+              href: `/task/${task.spec}?assignment=${spec}`,
+            })),
+            {
+              text: locale.assignment.score,
+              href: undefined,
+            },
+          ]}
+          rows={data.user_results.map((user_result) => ({
+            text: user_result.user.shortName,
+            href: `/profile/${user_result.user.login}`,
           }))}
-          rows={data.users.map((user) => ({
-            text: user.shortName,
-            href: `/profile/${user.login}`,
-          }))}
-          data={data.results.map((row) =>
-            row.map((cell) => ({
-              best: cell.best?.verdict
-                ? `${cell.best.verdict.shortText} #${
-                    cell.best.verdictTest + 1
-                  }`
-                : '-',
-              rest: cell.results.map((result) => ({
-                text: result.verdict
-                  ? `${result.verdict.shortText} #${
-                      result.verdictTest + 1
-                    }`
-                  : '?',
-                href: `/attempt/${result.attempt}`,
-              })),
-            }))
+          data={data.user_results.map((user_result) =>
+            user_result.results
+              .map((cell) => ({
+                best: cell.best?.verdict
+                  ? `${cell.best.verdict.shortText} #${cell.best.verdictTest}`
+                  : '-',
+                rest: cell.attempts.map((attempt) => ({
+                  text: attempt.verdict
+                    ? `${attempt.verdict.shortText} #${attempt.verdictTest}`
+                    : '?',
+                  href: `/attempt/${attempt.attempt}`,
+                })),
+              }))
+              .concat({
+                best: user_result.score.toString(),
+                rest: [],
+              })
           )}
         />
       ) : (

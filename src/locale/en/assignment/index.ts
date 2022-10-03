@@ -7,4 +7,5 @@ export const assignment = {
   modals: {
     delete: 'Delete assignment',
   },
+  score: 'Score',
 };
