@@ -103,7 +103,7 @@ function TournamentEdit(props: ITournamentEditBundle) {
       requestWithNotify<ITournamentAdd, string>(
         'tournament/edit',
         'POST',
-        locale.notify.tournament.create,
+        locale.notify.tournament.edit,
         lang,
         (response) => response,
         tournament

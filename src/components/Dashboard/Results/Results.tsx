@@ -12,7 +12,8 @@ const Results: FC<{
   isFinished: boolean;
   endDate: Date;
   type: string;
-}> = ({ spec, isFinished, endDate, type }) => {
+  full: boolean;
+}> = ({ spec, isFinished, endDate, type, full }) => {
   const { locale } = useLocale();
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
@@ -77,12 +78,14 @@ const Results: FC<{
                 best: cell.best?.verdict
                   ? `${cell.best.verdict.shortText} #${cell.best.verdictTest}`
                   : '-',
-                rest: cell.attempts.map((attempt) => ({
-                  text: attempt.verdict
-                    ? `${attempt.verdict.shortText} #${attempt.verdictTest}`
-                    : '?',
-                  href: `/attempt/${attempt.attempt}`,
-                })),
+                rest: full
+                  ? cell.attempts.map((attempt) => ({
+                      text: attempt.verdict
+                        ? `${attempt.verdict.shortText} #${attempt.verdictTest}`
+                        : '?',
+                      href: `/attempt/${attempt.attempt}`,
+                    }))
+                  : [],
               }))
               .concat({
                 best: user_result.score.toString(),

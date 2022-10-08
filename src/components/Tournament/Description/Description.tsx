@@ -62,12 +62,10 @@ const Description: FC<{
 
   const registered = useMemo(
     () =>
-      isAdmin ||
+      special ||
       successfullyRegistered ||
-      tournament.author == user?.login ||
-      tournament.moderators.includes(user?.login || '') ||
       tournament.participants.includes(user?.login || ''),
-    [user?.login, tournament, isAdmin, successfullyRegistered]
+    [user?.login, special, tournament, successfullyRegistered]
   );
 
   const handleRegistration = useCallback(() => {
@@ -159,7 +157,9 @@ const Description: FC<{
           linkQuery={`tournament=${tournament.spec}`}
           empty={
             !special || isPreview
-              ? locale.tournament.emptyTasks
+              ? registered
+                ? locale.tournament.emptyTasks
+                : locale.tournament.needRegistration
               : locale.tournament.addTasks
           }
         />

@@ -82,6 +82,7 @@ const AssignmentDashboard: FC<{
             }
             endDate={assignment.end}
             type={'assignment'}
+            full
           />
         ),
         icon: <Table color="var(--secondary)" />,

@@ -79,6 +79,7 @@ const TournamentDashboard: FC<{
             isFinished={tournament.status.spec == 2}
             endDate={tournament.end}
             type={'tournament'}
+            full
           />
         ),
         icon: <Table color="var(--secondary)" />,

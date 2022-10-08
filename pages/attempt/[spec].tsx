@@ -2,18 +2,20 @@ import { ReactNode, useMemo } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
-import { IAttempt } from '@custom-types/data/IAttempt';
-
 import { Tabs } from '@ui/basics';
 import { setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
+import { useUser } from '@hooks/useUser';
 import Info from '@components/Attempt/Info/Info';
 import Code from '@components/Attempt/Code/Code';
 import Title from '@ui/Title/Title';
+import { IAttempt } from '@custom-types/data/IAttempt';
+import styles from '@styles/attempt.module.css';
 
-function Assignment(props: { attempt: IAttempt }) {
+function Assignment(props: { attempt: IAttempt; author: string }) {
   const attempt = props.attempt;
-
+  const author = props.author;
+  const { user, isTeacher } = useUser();
   const { locale } = useLocale();
 
   const pages = useMemo(
@@ -37,12 +39,19 @@ function Assignment(props: { attempt: IAttempt }) {
   );
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <Title
         title={`${locale.titles.attempt} ${attempt.author.login}`}
       />
-      <Tabs pages={pages} defaultPage={'info'} />
-    </>
+
+      {(!!user && user.login == author) || isTeacher ? (
+        <Tabs pages={pages} defaultPage={'info'} />
+      ) : (
+        <div className={styles.notAllowed}>
+          {locale.attempt.notAllowed}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -64,15 +73,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const response = await fetch(
-    `${API_URL}/api/attempt/${params.spec}`
+    `${API_URL}/api/bundle/attempt/${params.spec}`
   );
   if (response.status === 200) {
-    const attempt = await response.json();
+    const res = await response.json();
     return {
       props: {
-        attempt,
+        attempt: res.attempt,
+        author: res.author,
       },
-      revalidate: attempt.status.spec === 2 ? 10 * 60 * 60 : 20,
+      revalidate: res.attempt.status.spec === 2 ? 10 * 60 * 60 : 20,
     };
   }
   return {

@@ -27,6 +27,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
         setCookie('user', JSON.stringify(user), {
           path: '/',
         });
+        console.log('1', accessLevel);
         setValue((prev) => ({
           ...prev,
           user: res.response,
@@ -52,14 +53,15 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
     } else {
       try {
         const user = JSON.parse(cookie_user) as IUser;
+
         setValue((prev) => ({
           ...prev,
           user: user,
           accessLevel: user.role.accessLevel,
-          isUser: user.role.accessLevel > accessLevels.student,
-          isStudent: user.role.accessLevel > accessLevels.student,
-          isTeacher: user.role.accessLevel > accessLevels.teacher,
-          isAdmin: user.role.accessLevel > accessLevels.admin,
+          isUser: user.role.accessLevel >= accessLevels.student,
+          isStudent: user.role.accessLevel >= accessLevels.student,
+          isTeacher: user.role.accessLevel >= accessLevels.teacher,
+          isAdmin: user.role.accessLevel >= accessLevels.admin,
           isDeveloper:
             user.role.accessLevel >= accessLevels.developer,
         }));

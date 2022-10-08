@@ -5,6 +5,7 @@ import { modals } from './modals';
 export const tournament = {
   emptyTasks: 'Задач пока нет',
   addTasks: 'Добавьте задачи',
+  needRegistration: 'Требуется регистрация',
   register: 'Зарегистрироваться',
   form,
   list,

@@ -6,6 +6,7 @@ export const attempt = {
   verdict: 'Verdict',
   status: 'Status',
   author: 'User',
+  notAllowed: 'You not allowed to see this attempt',
   constraints: {
     time: 'Time constraint',
     memory: 'Memory constraint',

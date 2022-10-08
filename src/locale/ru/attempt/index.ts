@@ -18,4 +18,5 @@ export const attempt = {
     info: 'Информация',
     code: 'Код посылки',
   },
+  notAllowed: 'Доступ ограничен',
 };
