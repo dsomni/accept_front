@@ -11,7 +11,8 @@ const Results: FC<{
   spec: string;
   isFinished: boolean;
   endDate: Date;
-}> = ({ spec, isFinished, endDate }) => {
+  type: string;
+}> = ({ spec, isFinished, endDate, type }) => {
   const { locale } = useLocale();
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
@@ -22,7 +23,7 @@ const Results: FC<{
       toDate: Date | undefined;
     },
     IFullResults
-  >(`assignment/results/${spec}`, 'POST', {
+  >(`${type}/results/${spec}`, 'POST', {
     toDate: fetchDate == 'end' ? endDate : undefined,
   });
 
@@ -59,7 +60,7 @@ const Results: FC<{
           columns={[
             ...data.tasks.map((task) => ({
               text: task.title,
-              href: `/task/${task.spec}?assignment=${spec}`,
+              href: `/task/${task.spec}?${type}=${spec}`,
             })),
             {
               text: locale.assignment.score,

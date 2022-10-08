@@ -81,6 +81,7 @@ const AssignmentDashboard: FC<{
               !assignment.infinite && assignment.status.spec == 2
             }
             endDate={assignment.end}
+            type={'assignment'}
           />
         ),
         icon: <Table color="var(--secondary)" />,

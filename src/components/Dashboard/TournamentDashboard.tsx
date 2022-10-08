@@ -4,6 +4,7 @@ import {
   BellPlus,
   Pencil,
   Puzzle,
+  Table,
   Trash,
   Users,
   Vocabulary,
@@ -25,6 +26,7 @@ import ParticipantsList from '@components/Dashboard/ParticipantsList/Participant
 import TaskList from './TaskList/TaskList';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import CreateNotification from './CreateNotification/CreateNotification';
+import Results from './Results/Results';
 
 const TournamentDashboard: FC<{
   spec: string;
@@ -70,19 +72,18 @@ const TournamentDashboard: FC<{
         icon: <Vocabulary color="var(--secondary)" />,
         title: locale.dashboard.tournament.mainInfo,
       },
-      // {
-      //   page: tournament && (
-      //     <Results
-      //       spec={spec}
-      //       isFinished={
-      //         !tournament.infinite && tournament.status.spec == 2
-      //       }
-      //       endDate={tournament.end}
-      //     />
-      //   ),
-      //   icon: <Table color="var(--secondary)" />,
-      //   title: locale.dashboard.tournament.results,
-      // },
+      {
+        page: tournament && (
+          <Results
+            spec={spec}
+            isFinished={tournament.status.spec == 2}
+            endDate={tournament.end}
+            type={'tournament'}
+          />
+        ),
+        icon: <Table color="var(--secondary)" />,
+        title: locale.dashboard.tournament.results,
+      },
       {
         page: tournament && (
           <AttemptsList
