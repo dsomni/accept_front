@@ -46,7 +46,9 @@ const ResultsTable: FC<{
                     </a>
                   </Link>
                 ) : (
-                  <>{column.text}</>
+                  <div style={{ width: 'fit-content' }}>
+                    {column.text}
+                  </div>
                 )}
               </th>
             ))}

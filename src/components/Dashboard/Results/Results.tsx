@@ -34,7 +34,7 @@ const Results: FC<{
 
   return (
     <div className={styles.wrapper}>
-      {isFinished && (
+      {full && isFinished && (
         <SegmentedControl
           data={[
             {

@@ -26,6 +26,7 @@
   z-index: 1;
   padding: 0 var(--spacer-s) var(--spacer-s) 0;
   width: max-content;
+  text-align: left;
   border-bottom: 1px solid black;
 }
 
