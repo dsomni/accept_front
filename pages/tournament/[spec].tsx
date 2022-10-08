@@ -11,6 +11,7 @@ import {
   Dashboard,
   Pencil,
   PlaylistAdd,
+  ReportAnalytics,
   Trash,
 } from 'tabler-icons-react';
 import { STICKY_SIZES } from '@constants/Sizes';
@@ -19,6 +20,7 @@ import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
 import Timer from '@ui/Timer/Timer';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import SingularSticky from '@ui/Sticky/SingularSticky';
 
 function Tournament(props: { tournament: ITournament }) {
   const tournament = props.tournament;
@@ -92,7 +94,21 @@ function Tournament(props: { tournament: ITournament }) {
           ...tournament,
         }}
       />
-      {special && <Sticky actions={actions} />}
+      {special ? (
+        <Sticky actions={actions} />
+      ) : (
+        tournament.participants.includes(user?.login || '') && (
+          <SingularSticky
+            icon={
+              <ReportAnalytics
+                width={STICKY_SIZES[width] / 2}
+                height={STICKY_SIZES[width] / 2}
+              />
+            }
+            href={`/tournament/results/${tournament.spec}`}
+          />
+        )
+      )}
       {(special ||
         tournament.participants.includes(user?.login || '')) && (
         <ChatSticky spec={tournament.spec} />

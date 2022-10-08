@@ -39,6 +39,7 @@ export const titles = {
     add: 'Add tournament',
     edit: 'Edit tournament',
     spec: 'Tournament',
+    results: 'Results of tournament',
     list: 'Tournament list',
   },
 };

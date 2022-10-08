@@ -5,22 +5,37 @@ import { ITournament } from '@custom-types/data/ITournament';
 import { GetServerSideProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { useUser } from '@hooks/useUser';
+import { useLocale } from '@hooks/useLocale';
+import Title from '@ui/Title/Title';
+import styles from '@styles/results.module.css';
 
 function Tournament({ tournament }: { tournament: ITournament }) {
   const { user, isTeacher } = useUser();
 
+  const { locale } = useLocale();
+
   return (
     <>
-      <Results
-        spec={tournament.spec}
-        type={'tournament'}
-        isFinished={tournament.status.spec == 2}
-        endDate={tournament.end}
-        full={
-          isTeacher ||
-          (!!user && user?.login in tournament.moderators)
-        }
+      <Title
+        title={`${locale.titles.tournament.results} ${tournament.title}`}
       />
+      <div className={styles.wrapper}>
+        <div
+          className={styles.title}
+        >{`${locale.titles.tournament.results} ${tournament.title}`}</div>
+        <div className={styles.resultsWrapper}>
+          <Results
+            spec={tournament.spec}
+            type={'tournament'}
+            isFinished={tournament.status.spec == 2}
+            endDate={tournament.end}
+            full={
+              isTeacher ||
+              (!!user && user?.login in tournament.moderators)
+            }
+          />
+        </div>
+      </div>
     </>
   );
 }
