@@ -111,7 +111,8 @@ const Description: FC<{
         dangerouslySetInnerHTML={{ __html: tournament.description }}
       />
       {!registered &&
-        (tournament.status.spec == 0 ||
+        !(tournament.status.spec === 2) &&
+        (tournament.status.spec === 0 ||
           tournament.allowRegistrationAfterStart) && (
           <div className={styles.registrationWrapper}>
             <div
