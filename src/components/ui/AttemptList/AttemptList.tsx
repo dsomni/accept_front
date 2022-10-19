@@ -39,6 +39,7 @@ const AttemptsList: FC<{
   classNames?: any;
   initialColumns: (_: ILocale) => ITableColumn[];
   refactorAttempt: (_: IAttemptDisplay, __: ILocale) => any;
+  toDate?: Date;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
@@ -49,6 +50,7 @@ const AttemptsList: FC<{
   classNames,
   initialColumns,
   refactorAttempt,
+  toDate,
   noDefault,
   empty,
   defaultRowsOnPage,
@@ -113,10 +115,17 @@ const AttemptsList: FC<{
   );
 
   const { data, loading, refetch } = useRequest<
-    BaseSearch,
+    { search: BaseSearch; toDate?: Date },
     PagerResponse,
     TableData
-  >(url, 'POST', searchParams, processData, undefined, onError);
+  >(
+    url,
+    'POST',
+    { search: searchParams, toDate: toDate },
+    processData,
+    undefined,
+    onError
+  );
 
   useEffect(() => {
     if (data) {
@@ -124,17 +133,20 @@ const AttemptsList: FC<{
     }
   }, [data]);
 
-  useEffect(() => {
-    refetch();
-    if (activeTab && !shouldNotRefetch) {
-      const id = setInterval(() => {
-        if (needRefetch) refetch(false);
-      }, 2000);
-      return () => {
-        clearInterval(id);
-      };
-    }
-  }, [needRefetch, refetch, activeTab, shouldNotRefetch]);
+  useEffect(
+    () => {
+      refetch();
+      if (activeTab && !shouldNotRefetch) {
+        const id = setInterval(() => {
+          if (needRefetch) refetch(false);
+        }, 2000);
+        return () => {
+          clearInterval(id);
+        };
+      }
+    },
+    [needRefetch, toDate, activeTab, shouldNotRefetch, searchParams] // eslint-disable-line
+  );
 
   return (
     <div>

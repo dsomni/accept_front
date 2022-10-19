@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import styles from './attemptsList.module.css';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
@@ -8,6 +8,7 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import { getLocalDate } from '@utils/datetime';
 import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
+import { SegmentedControl } from '@ui/basics';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
@@ -150,19 +151,46 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 const AttemptList: FC<{
   spec: string;
   shouldNotRefetch: boolean;
+  isFinished: boolean;
+  endDate: Date;
   type: 'assignment' | 'tournament';
-}> = ({ spec, shouldNotRefetch, type }) => {
+}> = ({ spec, shouldNotRefetch, isFinished, endDate, type }) => {
   const { locale } = useLocale();
+  const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
+    isFinished ? 'end' : 'actual'
+  );
+  const refactor = useCallback(
+    (attempt: IAttemptDisplay, locale: ILocale) =>
+      refactorAttempt(attempt, locale, type),
+    [type]
+  );
+
   return (
     <div className={styles.wrapper}>
+      {isFinished && (
+        <SegmentedControl
+          data={[
+            {
+              label: locale.dashboard.assignment.toDate.end,
+              value: 'end',
+            },
+            {
+              label: locale.dashboard.assignment.toDate.actual,
+              value: 'actual',
+            },
+          ]}
+          value={fetchDate}
+          onChange={(value) =>
+            setFetchDate(value as 'actual' | 'end')
+          }
+        />
+      )}
       <AttemptListUI
         url={`${type}/attempts/${spec}`}
         activeTab
         initialColumns={initialColumns}
-        refactorAttempt={(
-          attempt: IAttemptDisplay,
-          locale: ILocale
-        ) => refactorAttempt(attempt, locale, type)}
+        refactorAttempt={refactor}
+        toDate={fetchDate == 'end' ? endDate : undefined}
         empty={<>{locale.profile.empty.attempts}</>}
         noDefault
         shouldNotRefetch={shouldNotRefetch}
