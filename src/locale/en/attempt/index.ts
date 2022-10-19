@@ -20,4 +20,23 @@ export const attempt = {
     info: 'Information',
     code: 'Attempt code',
   },
+  ban: {
+    title: 'Ban attempt',
+    action: 'Ban',
+    reason: 'Ban reason',
+    request: {
+      loading: 'Loading...',
+      success: 'Attempt was successfully banned',
+      error: 'Error during attempt ban',
+    },
+  },
+  unban: {
+    title: 'Unban attempt',
+    action: 'Unban',
+    request: {
+      loading: 'Loading...',
+      success: 'Attempt was successfully unbanned',
+      error: 'Error during attempt unban',
+    },
+  },
 };

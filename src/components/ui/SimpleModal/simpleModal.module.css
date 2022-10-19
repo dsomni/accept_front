@@ -1,4 +1,11 @@
-.modalTitle {
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacer-xs);
+}
+
+.title {
   font-size: var(--font-size-l);
   color: var(--secondary);
 }

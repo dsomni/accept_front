@@ -4,7 +4,8 @@ import { FC, ReactNode, memo } from 'react';
 import styles from './simpleModal.module.css';
 
 const SimpleModal: FC<{
-  title?: string;
+  title?: ReactNode;
+  titleHelper?: ReactNode;
   opened: boolean;
   close: pureCallback<void>;
   children: ReactNode;
@@ -13,6 +14,7 @@ const SimpleModal: FC<{
   size?: string | number;
 }> = ({
   title,
+  titleHelper,
   opened,
   close,
   children,
@@ -30,10 +32,16 @@ const SimpleModal: FC<{
         centered={centered}
         withCloseButton={!!!hideCloseButton}
         opened={opened}
-        title={title}
-        classNames={{
-          title: styles.modalTitle,
-        }}
+        title={
+          titleHelper ? (
+            <div className={styles.titleWrapper}>
+              <div className={styles.title}>{title}</div>
+              {titleHelper}
+            </div>
+          ) : (
+            title
+          )
+        }
         onClose={close}
         zIndex={200}
       >

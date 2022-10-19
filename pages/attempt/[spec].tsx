@@ -12,11 +12,20 @@ import Title from '@ui/Title/Title';
 import { IAttempt } from '@custom-types/data/IAttempt';
 import styles from '@styles/attempt.module.css';
 import TextAnswer from '@components/Attempt/TextAnswer/TextAnswer';
+import BanModal from '@components/Attempt/BanModals/BanModal';
+import UnbanModal from '@components/Attempt/BanModals/UnbanModal';
+import { useRequest } from '@hooks/useRequest';
+
 function Assignment(props: { attempt: IAttempt; author: string }) {
   const attempt = props.attempt;
   const author = props.author;
   const { user, isTeacher } = useUser();
   const { locale } = useLocale();
+
+  const { data, loading, error } = useRequest<{}, boolean>(
+    `attempt/can_ban/${attempt.spec}`,
+    'GET'
+  );
 
   const pages = useMemo(
     () => [
@@ -49,6 +58,16 @@ function Assignment(props: { attempt: IAttempt; author: string }) {
       <Title
         title={`${locale.titles.attempt} ${attempt.author.login}`}
       />
+
+      {!loading && !error && data && (
+        <>
+          {attempt.status.spec != 3 ? (
+            <BanModal attempt={attempt} />
+          ) : (
+            <UnbanModal attempt={attempt} />
+          )}
+        </>
+      )}
 
       {(!!user && user.login == author) || isTeacher ? (
         <Tabs pages={pages} defaultPage={'info'} />
