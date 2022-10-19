@@ -79,7 +79,7 @@ const Results: FC<{
                   ? `${cell.best.verdict.shortText} #${cell.best.verdictTest}`
                   : '-',
                 rest: full
-                  ? cell.attempts.map((attempt) => ({
+                  ? cell.attempts.reverse().map((attempt) => ({
                       text: attempt.verdict
                         ? `${attempt.verdict.shortText} #${attempt.verdictTest}`
                         : '?',

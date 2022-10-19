@@ -11,7 +11,7 @@ import Code from '@components/Attempt/Code/Code';
 import Title from '@ui/Title/Title';
 import { IAttempt } from '@custom-types/data/IAttempt';
 import styles from '@styles/attempt.module.css';
-
+import TextAnswer from '@components/Attempt/TextAnswer/TextAnswer';
 function Assignment(props: { attempt: IAttempt; author: string }) {
   const attempt = props.attempt;
   const author = props.author;
@@ -31,7 +31,13 @@ function Assignment(props: { attempt: IAttempt; author: string }) {
         value: 'code',
         title: locale.attempt.pages.code,
         page: (_: string | null, __: setter<string | null>) => (
-          <Code attempt={attempt} />
+          <>
+            {attempt.textAnswers.length == 0 ? (
+              <Code attempt={attempt} />
+            ) : (
+              <TextAnswer attempt={attempt} />
+            )}
+          </>
         ),
       },
     ],

@@ -1,0 +1,10 @@
+.itemsWrapper {
+  margin: var(--spacer-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+}
+
+.itemTitle {
+  font-size: var(--font-size-m);
+}
