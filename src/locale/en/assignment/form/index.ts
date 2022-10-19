@@ -9,6 +9,7 @@ export const form = {
   starter: 'Starter',
   infinite: 'Infinite',
   endTime: 'End time',
+  frozeTime: 'Table froze time',
   calendar: 'Select start and end dates',
   status: {
     text: 'Status',

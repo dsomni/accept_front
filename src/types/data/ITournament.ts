@@ -24,6 +24,7 @@ export interface ITournament
   moderators: string[];
   participants: string[];
   allowRegistrationAfterStart: boolean;
+  frozeResults: Date;
 }
 
 export interface ITournamentListBundle {

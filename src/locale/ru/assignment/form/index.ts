@@ -9,6 +9,7 @@ export const form = {
   author: 'Автор',
   startTime: 'Время начала',
   endTime: 'Время окончания',
+  frozeTime: 'Время заморозки таблицы',
   calendar: 'Выберете дату начала и окончания',
   status: {
     text: 'Статус',

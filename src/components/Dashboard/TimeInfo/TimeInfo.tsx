@@ -17,6 +17,7 @@ import CustomTimeModal from '@components/Dashboard/TimeInfo/CustomTimeModal/Cust
 interface BaseTimeInfo {
   start: Date;
   end: Date;
+  froze?: Date;
   status: 0 | 1 | 2;
   infinite?: boolean;
 }
@@ -170,6 +171,14 @@ const TimeInfo: FC<{
               </>
             )}
           </div>
+          <br />
+          {timeInfo.froze && (
+            <div className={styles.froze}>
+              {locale.assignment.form.frozeTime}
+              {': '}
+              {isBrowser && getLocalDate(timeInfo.froze)}
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.timeWrapper}>

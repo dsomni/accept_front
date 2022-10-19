@@ -64,6 +64,7 @@ const TournamentDashboard: FC<{
             timeInfo={{
               start: tournament.start,
               end: tournament.end,
+              froze: tournament.frozeResults,
               status: tournament.status.spec as 0 | 1 | 2,
             }}
             refetch={refetch}
