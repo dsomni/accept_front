@@ -5,6 +5,7 @@ export const attempt = {
   result: 'Result',
   verdict: 'Verdict',
   status: 'Status',
+  banReason: 'Ban reason',
   author: 'User',
   notAllowed: 'You not allowed to see this attempt',
   constraints: {
@@ -14,7 +15,7 @@ export const attempt = {
   time: 'Time',
   memory: 'Memory',
   test: 'Test',
-  statuses: ['Pending', 'Testing', 'Finished'],
+  statuses: ['Pending', 'Testing', 'Finished', 'Banned'],
   pages: {
     info: 'Information',
     code: 'Attempt code',

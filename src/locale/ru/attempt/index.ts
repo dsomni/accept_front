@@ -5,6 +5,7 @@ export const attempt = {
   result: 'Результат',
   verdict: 'Вердикт',
   status: 'Статус',
+  banReason: 'Причина бана',
   author: 'Пользователь',
   constraints: {
     time: 'Ограничение по времени',
@@ -13,7 +14,12 @@ export const attempt = {
   time: 'Время',
   memory: 'Память',
   test: 'Тест',
-  statuses: ['В очереди', 'Тестируется', 'Протестирована'],
+  statuses: [
+    'В очереди',
+    'Тестируется',
+    'Протестирована',
+    'Забанена',
+  ],
   pages: {
     info: 'Информация',
     code: 'Код посылки',

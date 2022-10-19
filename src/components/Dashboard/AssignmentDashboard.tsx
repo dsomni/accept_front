@@ -166,7 +166,7 @@ const AssignmentDashboard: FC<{
         </>
       )}
       <ChatSticky spec={spec} />
-      <LeftMenu links={links} initialStep={1} />
+      <LeftMenu links={links} />
     </>
   );
 };

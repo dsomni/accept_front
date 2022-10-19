@@ -24,6 +24,8 @@ const refactorAttempt = (
               ? attempt.verdict?.verdict.spec == 0
                 ? 'var(--positive)'
                 : 'var(--negative)'
+              : attempt.status.spec == 3
+              ? 'var(--accent)'
               : 'black',
         }}
       >
@@ -37,6 +39,8 @@ const refactorAttempt = (
     value:
       attempt.status.spec == 2
         ? attempt.verdict?.verdict.spec
+        : attempt.status.spec == 3
+        ? attempt.status.spec - 20
         : attempt.status.spec - 10,
   },
   date: {
