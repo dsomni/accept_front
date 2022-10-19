@@ -1,3 +1,5 @@
+import { checkAccess, checkPermission } from '@utils/checkAccess';
+
 export const accessLevels = {
   user: 1,
   student: 2,
@@ -6,22 +8,54 @@ export const accessLevels = {
   developer: 100,
 };
 
-export const protectedRoutesInfo: { [key: string]: number } = {
-  '/dashboard/assignment': accessLevels.teacher,
-  '/edu/assignment_schema/add': accessLevels.teacher,
-  '/edu/assignment_schema/edit': accessLevels.teacher,
-  '/edu/assignment_schema/list': accessLevels.teacher,
-  '/edu/assignment_schema': accessLevels.teacher,
-  '/edu/assignment': accessLevels.user,
-  '/edu/assignment/add': accessLevels.teacher,
-  '/edu/assignment/edit': accessLevels.teacher,
-  '/group/add': accessLevels.teacher,
-  '/group/edit': accessLevels.teacher,
-  '/notification/add': accessLevels.teacher,
-  '/task/add': accessLevels.teacher,
-  '/task/edit': accessLevels.teacher,
-  '/task/tests': accessLevels.teacher,
-  '/user/list': accessLevels.teacher,
-  '/group/list': accessLevels.teacher,
-  '/dashboard/admin': accessLevels.admin,
+const TOURNAMENT_URL = 'api/tournament-has-rights';
+
+export const protectedRoutesInfo: {
+  [key: string]: (
+    _: string,
+    __: { Cookie: string } | undefined
+  ) => Promise<string | boolean>;
+} = {
+  '/dashboard/assignment': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/dashboard/tournament': (pathname, headers) =>
+    checkPermission(TOURNAMENT_URL, pathname, headers),
+  '/tournament': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.user),
+  '/tournament/add': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/tournament/edit': (pathname, headers) =>
+    checkPermission(TOURNAMENT_URL, pathname, headers),
+  '/edu/assignment_schema/add': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/edu/assignment_schema/edit': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/edu/assignment_schema/list': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/edu/assignment_schema': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/edu/assignment': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.user),
+  '/edu/assignment/add': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/edu/assignment/edit': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/group/add': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/group/edit': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/notification/add': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/task/add': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/task/edit': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/task/tests': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/user/list': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/group/list': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.teacher),
+  '/dashboard/admin': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.admin),
 };

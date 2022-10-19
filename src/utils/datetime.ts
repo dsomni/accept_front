@@ -26,14 +26,14 @@ const addFrontZero = (number: number) =>
   number > 9 ? number.toString() : '0' + number;
 
 const getLabeledTime = (time: number) => ({
-  seconds: addFrontZero(Math.floor(time / 1000) % 60),
-  minutes: addFrontZero(Math.floor(time / 1000 / 60) % 60),
-  hours: addFrontZero(Math.floor(time / 1000 / 60 / 60) % 24),
-  days: Math.floor(time / 1000 / 60 / 60 / 24) % 30,
-  months: Math.floor(time / 1000 / 60 / 60 / 24 / 30) % 12,
-  years: Math.floor(time / 1000 / 60 / 60 / 24 / 30 / 12),
+  seconds: addFrontZero(Math.floor(time) % 60),
+  minutes: addFrontZero(Math.floor(time / 60) % 60),
+  hours: addFrontZero(Math.floor(time / 60 / 60) % 24),
+  days: Math.floor(time / 60 / 60 / 24) % 30,
+  months: Math.floor(time / 60 / 60 / 24 / 30) % 12,
+  years: Math.floor(time / 60 / 60 / 24 / 30 / 12),
 });
 
 export const timerDate = (time: number): any => {
-  return getLabeledTime(time);
+  return getLabeledTime(time / 1000);
 };

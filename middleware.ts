@@ -29,8 +29,6 @@ const removeSpec = (pathname: string): string => {
   return pathname;
 };
 
-// const apiUrl = getApiUrl();
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (
@@ -41,37 +39,20 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   const route = removeSpec(pathname);
+
   if (isProtected(route)) {
-    const accessLevel = protectedRoutesInfo[route];
+    const access = protectedRoutesInfo[route];
+
     const access_token = request.cookies.get('access_token_cookie');
     const headers = access_token
-      ? {
-          Cookie: `access_token_cookie=${request.cookies.get(
-            'access_token_cookie'
-          )}`,
-        }
+      ? { Cookie: `access_token_cookie=${access_token}` }
       : undefined;
-    const user_level_response = await fetch(
-      `${process.env.API_ENDPOINT}/api/accessLevel`,
-      {
-        method: 'GET',
-        headers: headers,
-      }
-    );
 
-    if (user_level_response.status === 401) {
-      return NextResponse.redirect(
-        request.nextUrl.origin + `/signin?referrer=${pathname}`
-      );
+    const accepted = await access(pathname, headers);
+    if (typeof accepted != 'boolean') {
+      return NextResponse.redirect(request.nextUrl.origin + accepted);
     }
-    if (user_level_response.status === 403) {
-      return NextResponse.redirect(request.nextUrl.origin + '/403');
-    }
-    if (user_level_response.status !== 200)
-      return NextResponse.redirect(request.nextUrl.origin + `/500`);
-    const user_level = await user_level_response.json();
-
-    if (user_level < accessLevel)
+    if (!accepted)
       return NextResponse.redirect(request.nextUrl.origin + '/403');
   }
   return NextResponse.next();

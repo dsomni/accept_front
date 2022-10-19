@@ -2,7 +2,11 @@ import { FC, memo, useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './timeInfo.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { getLocalDate, timerDate } from '@utils/datetime';
+import {
+  getLocalDate,
+  timerDate,
+  timezoneDate,
+} from '@utils/datetime';
 import { useInterval } from '@mantine/hooks';
 import { Button } from '@ui/basics';
 
@@ -86,11 +90,13 @@ const TimeInfo: FC<{
     switch (timeInfo.status) {
       case 0:
         date =
-          new Date(timeInfo.start).getTime() - new Date().getTime();
+          timezoneDate(new Date(timeInfo.start)).getTime() -
+          new Date().getTime();
         break;
       case 1:
         date =
-          new Date(timeInfo.end).getTime() - new Date().getTime();
+          timezoneDate(new Date(timeInfo.end)).getTime() -
+          new Date().getTime();
         break;
       default:
         date = 0;
