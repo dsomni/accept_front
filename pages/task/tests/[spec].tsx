@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
@@ -13,6 +13,7 @@ import stepperStyles from '@styles/ui/stepper.module.css';
 import { useLocale } from '@hooks/useLocale';
 import ListItem from '@ui/ListItem/ListItem';
 import Title from '@ui/Title/Title';
+import { Button } from '@ui/basics';
 
 function TestsPage(props: { spec: string }) {
   const spec = props.spec;
@@ -43,6 +44,29 @@ function TestsPage(props: { spec: string }) {
     initialValues: { tests },
   });
 
+  const downloadTests = useCallback(async () => {
+    const { downloadZip } = await import('client-zip');
+    const files: { name: string; input: string }[] = [];
+    tests.forEach((test, index) => {
+      files.push({
+        name: `input${index}.txt`,
+        input: test.inputData,
+      });
+      files.push({
+        name: `output${index}.txt`,
+        input: test.outputData,
+      });
+    });
+    const blob = await downloadZip(files).blob();
+    const link = document.createElement('a');
+    const href = URL.createObjectURL(blob);
+    link.href = href;
+    link.download = 'tests.zip';
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(href);
+  }, [tests]);
+
   useEffect(() => {
     form.setFieldValue('tests', tests);
   }, [tests]); // eslint-disable-line
@@ -50,6 +74,19 @@ function TestsPage(props: { spec: string }) {
   return (
     <div className={stepperStyles.wrapper}>
       <Title title={locale.titles.task.tests} />
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div style={{ width: '50%' }}>
+          <Button fullWidth onClick={downloadTests}>
+            {locale.download}
+          </Button>
+        </div>
+      </div>
       {form.values.tests.map((test, index) => (
         <div key={index} className={stepperStyles.example}>
           <ListItem

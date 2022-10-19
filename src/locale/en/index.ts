@@ -31,6 +31,7 @@ const en = {
   save: 'Save',
   delete: 'Delete',
   cancel: 'Cancel',
+  download: 'Download',
   yes: 'Yes',
   no: 'No',
   sure: "I'm sure",

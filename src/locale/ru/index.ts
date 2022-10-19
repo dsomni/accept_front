@@ -27,6 +27,7 @@ import { todo } from './todo';
 const ru = {
   accept: 'Accept',
   loading: 'Загрузка',
+  download: 'Скачать',
   name: 'Название',
   save: 'Сохранить',
   delete: 'Удалить',

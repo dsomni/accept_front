@@ -847,6 +847,11 @@ chalk@^4.0.0:
 "ckeditor5-custom-build@file:./ckeditor5-custom":
   version "0.0.0"
 
+client-zip@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/client-zip/-/client-zip-2.2.2.tgz#58dcc66f2534954a50b506d2bd864b51ba98370d"
+  integrity sha512-Jh1Sz/iBTfYuLQv6yKzrrXofJy17Q7YRhBfh5HH/6i4Z+ACjTfmRJllWQKoe4eFWwXeUoOjEathqXfuGGX4jhg==
+
 clsx@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
