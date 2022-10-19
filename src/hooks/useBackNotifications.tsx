@@ -13,7 +13,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -85,27 +84,27 @@ export const BackNotificationsProvider: FC<{
     });
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
-    const ws = new WebSocket(
-      `ws://${
-        process.env.API_ENDPOINT?.split('://')[1]
-      }/ws/notification/${user?.login}`
-    );
+  // useEffect(() => {
+  //   if (!user) return;
+  //   const ws = new WebSocket(
+  //     `ws://${
+  //       process.env.API_ENDPOINT?.split('://')[1]
+  //     }/ws/notification/${user?.login}`
+  //   );
 
-    ws.onmessage = (event) => {
-      const shouldRefetch = JSON.parse(event.data) as boolean;
-      if (shouldRefetch) {
-        fetchNotifications();
-      }
-    };
+  //   ws.onmessage = (event) => {
+  //     const shouldRefetch = JSON.parse(event.data) as boolean;
+  //     if (shouldRefetch) {
+  //       fetchNotifications();
+  //     }
+  //   };
 
-    setWebSocket(ws);
+  //   setWebSocket(ws);
 
-    return () => {
-      ws.close();
-    };
-  }, [fetchNotifications, user]);
+  //   return () => {
+  //     ws.close();
+  //   };
+  // }, [fetchNotifications, user]);
 
   const handleOpenModal = useCallback(() => {
     fetchNotifications();
