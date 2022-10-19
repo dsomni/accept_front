@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react';
 import SingularSticky from '@ui/Sticky/SingularSticky';
-import { BarrierBlock } from 'tabler-icons-react';
+import { HeartBroken } from 'tabler-icons-react';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { IAttempt } from '@custom-types/data/IAttempt';
 import { useLocale } from '@hooks/useLocale';
@@ -8,27 +8,41 @@ import { Button, Helper, TextInput } from '@ui/basics';
 import { Group } from '@mantine/core';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import styles from './banModal.module.css';
+import { useForm } from '@mantine/form';
 
 const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
   const [opened, setOpened] = useState(false);
-  const [reason, setReason] = useState('');
   const { locale, lang } = useLocale();
+
+  const form = useForm({
+    initialValues: {
+      reason: '',
+    },
+    validate: {
+      reason: (value) =>
+        value.length < 5
+          ? locale.attempt.ban.validation.reason.tooShort
+          : null,
+    },
+    validateInputOnChange: true,
+  });
 
   const handleBan = useCallback(() => {
     requestWithNotify(
-      'attempt/ban',
+      `attempt/ban/${attempt.spec}`,
       'POST',
       locale.attempt.ban.request,
       lang,
       () => '',
-      { spec: attempt.spec, author: attempt.author }
+      { reason: form.values.reason },
+      () => window.location.reload()
     );
-  }, [locale, lang, attempt]);
+  }, [locale, lang, attempt, form.values.reason]);
 
   return (
     <>
       <SingularSticky
-        icon={<BarrierBlock width={32} height={32} />}
+        icon={<HeartBroken width={32} height={32} />}
         color="red"
         onClick={() => setOpened(true)}
       />
@@ -52,8 +66,7 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
           <div>
             <TextInput
               label={locale.attempt.ban.reason}
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
+              {...form.getInputProps('reason')}
             />
           </div>
           <Group
@@ -71,6 +84,7 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
             <Button
               variant="outline"
               kind="positive"
+              disabled={!form.isValid()}
               onClick={handleBan}
             >
               {locale.attempt.ban.action}

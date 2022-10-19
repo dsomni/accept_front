@@ -29,10 +29,18 @@ export const attempt = {
       success: 'Attempt was successfully banned',
       error: 'Error during attempt ban',
     },
+    validation: {
+      reason: {
+        tooShort: 'Reason is too short',
+      },
+    },
   },
   unban: {
     title: 'Unban attempt',
     action: 'Unban',
+    previousBanDate: 'Ban date:',
+    previousBanRequester: 'Initiator:',
+    previousBanReason: 'Reason:',
     request: {
       loading: 'Loading...',
       success: 'Attempt was successfully unbanned',

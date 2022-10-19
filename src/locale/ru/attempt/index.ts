@@ -34,10 +34,18 @@ export const attempt = {
       success: 'Попытка была успешно забанена',
       error: 'Ошибка при бане попытки',
     },
+    validation: {
+      reason: {
+        tooShort: 'Причина слишком коротка',
+      },
+    },
   },
   unban: {
     title: 'Разбанить попытку',
     action: 'Разбанить',
+    previousBanDate: 'Дата бана:',
+    previousBanRequester: 'Инициатор:',
+    previousBanReason: 'Причина:',
     request: {
       loading: 'Загрузка...',
       success: 'Попытка была успешно разбанена',

@@ -33,14 +33,10 @@ const SimpleModal: FC<{
         withCloseButton={!!!hideCloseButton}
         opened={opened}
         title={
-          titleHelper ? (
-            <div className={styles.titleWrapper}>
-              <div className={styles.title}>{title}</div>
-              {titleHelper}
-            </div>
-          ) : (
-            title
-          )
+          <div className={styles.titleWrapper}>
+            <div className={styles.title}>{title}</div>
+            {titleHelper ? titleHelper : <></>}
+          </div>
         }
         onClose={close}
         zIndex={200}
