@@ -9,6 +9,9 @@ import UserList from '@ui/UserList/UserList';
 
 import styles from './participantsList.module.css';
 import { useLocale } from '@hooks/useLocale';
+import { sendRequest } from '@requests/request';
+import Link from 'next/link';
+import { Button } from '@ui/basics';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -60,20 +63,33 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     hidden: false,
     size: 2,
   },
+  {
+    label: locale.ban,
+    key: 'ban',
+    sortable: false,
+    sortFunction: (_: any, __: any) => 0,
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: true,
+    hidden: false,
+    size: 2,
+  },
 ];
 
-const refactorUser = (user: IUser): any => ({
+const refactorUser = (
+  locale: ILocale,
+  type: 'assignment' | 'tournament',
+  user: IUser,
+  spec: string
+): any => ({
   ...user,
   login: {
     value: user.login,
     display: (
       <div className={tableStyles.titleWrapper}>
-        <a
-          className={tableStyles.title}
-          href={`/profile/${user.login}`}
-        >
-          {user.login}
-        </a>
+        <Link href={`/profile/${user.login}`} passHref>
+          <a className={tableStyles.title}>{user.login}</a>
+        </Link>
         {user.groups.length > 0 && (
           <span className={tableStyles.tags}>
             {user.groups.map((group, idx) => (
@@ -104,7 +120,29 @@ const refactorUser = (user: IUser): any => ({
       </div>
     ),
   },
+  ban: {
+    value: '',
+    display: (
+      <>
+        {type === 'tournament' && (
+          <Button
+            variant="outline"
+            kind="negative"
+            onClick={() => handleBan(user.login, spec)}
+          >
+            {locale.ban}
+          </Button>
+        )}
+      </>
+    ),
+  },
 });
+
+const handleBan = (login: string, spec: string) => {
+  sendRequest(`tournament/participants/ban/${spec}`, 'POST', {
+    user: login,
+  });
+};
 
 const ParticipantsList: FC<{
   type: 'assignment' | 'tournament';
@@ -116,7 +154,9 @@ const ParticipantsList: FC<{
     <div className={styles.wrapper}>
       <UserList
         url={`${type}/participants/${spec}`}
-        refactorUser={refactorUser}
+        refactorUser={(user) =>
+          refactorUser(locale, type, user, spec)
+        }
         initialColumns={initialColumns}
         noDefault
         empty={<>{locale.ui.table.emptyMessage}</>}

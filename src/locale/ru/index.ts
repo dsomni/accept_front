@@ -42,6 +42,8 @@ const ru = {
   all: 'Все',
   create: 'Создать',
   edit: 'Изменить',
+  ban: 'Забанить',
+  unban: 'Разбанить',
   toList: 'К списку',
   validationError: 'Ошибка валидации',
   yourProfile: 'Ваш профиль',

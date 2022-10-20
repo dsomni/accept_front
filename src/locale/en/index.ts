@@ -42,6 +42,8 @@ const en = {
   all: 'All',
   create: 'Create',
   edit: 'Edit',
+  ban: 'Ban',
+  unban: 'Unban',
   toList: 'To list',
   validationError: 'Validation error',
   yourProfile: 'Your Profile',
