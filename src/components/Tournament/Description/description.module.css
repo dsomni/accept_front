@@ -10,6 +10,10 @@
 .title {
   color: var(--primary);
   font-size: var(--font-size-huge);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--spacer-xs);
 }
 
 .info {

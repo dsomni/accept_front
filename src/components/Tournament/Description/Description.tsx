@@ -18,6 +18,7 @@ import { requestWithNotify } from '@utils/requestWithNotify';
 import { Icon } from '@ui/basics';
 import { AlertCircle } from 'tabler-icons-react';
 import { sendRequest } from '@requests/request';
+import PrintTasks from '@components/Task/PrintTasks/PrintTasks';
 
 const Description: FC<{
   tournament: ITournament;
@@ -88,7 +89,10 @@ const Description: FC<{
   return (
     <div className={styles.wrapper}>
       <div className={styles.titleWrapper}>
-        <div className={styles.title}>{tournament.title}</div>
+        <div className={styles.title}>
+          {tournament.title}
+          <PrintTasks tasks={tasks.map((task) => task.spec)} />
+        </div>
         <div className={styles.info}>
           <div className={styles.usersInfo}>
             <div className={styles.author}>
