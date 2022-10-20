@@ -3,9 +3,8 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 
 import tableStyles from '@styles/ui/customTable.module.css';
 import { ILocale } from '@custom-types/ui/ILocale';
-import { IUser } from '@custom-types/data/IUser';
 import { capitalize } from '@utils/capitalize';
-import UserList from '@ui/UserList/UserList';
+import UserList, { IParticipant } from '@ui/UserList/UserList';
 
 import styles from './participantsList.module.css';
 import { useLocale } from '@hooks/useLocale';
@@ -66,8 +65,9 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
     label: locale.ban,
     key: 'ban',
-    sortable: false,
-    sortFunction: (_: any, __: any) => 0,
+    sortable: true,
+    sortFunction: (a: boolean, b: boolean): -1 | 0 | 1 =>
+      a !== b ? 0 : a ? 1 : -1,
     sorted: 0,
     allowMiddleState: true,
     hidable: true,
@@ -79,7 +79,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 const refactorUser = (
   locale: ILocale,
   type: 'assignment' | 'tournament',
-  user: IUser,
+  user: IParticipant,
   spec: string
 ): any => ({
   ...user,
@@ -121,27 +121,43 @@ const refactorUser = (
     ),
   },
   ban: {
-    value: '',
+    value: user.banned,
     display: (
       <>
         {type === 'tournament' && (
-          <Button
-            variant="outline"
-            kind="negative"
-            onClick={() => handleBan(user.login, spec)}
-          >
-            {locale.ban}
-          </Button>
+          <>
+            {!user.banned ? (
+              <Button
+                variant="outline"
+                kind="negative"
+                onClick={() => handleBan(user.login, spec, true)}
+              >
+                {locale.ban}
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                kind="positive"
+                onClick={() => handleBan(user.login, spec, false)}
+              >
+                {locale.unban}
+              </Button>
+            )}
+          </>
         )}
       </>
     ),
   },
 });
 
-const handleBan = (login: string, spec: string) => {
-  sendRequest(`tournament/participants/ban/${spec}`, 'POST', {
-    user: login,
-  });
+const handleBan = (login: string, spec: string, ban: boolean) => {
+  sendRequest(
+    `tournament/participants/${ban ? 'ban' : 'unban'}/${spec}`,
+    'POST',
+    {
+      user: login,
+    }
+  );
 };
 
 const ParticipantsList: FC<{
