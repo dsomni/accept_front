@@ -15,7 +15,6 @@ import PrimitiveTaskTable from '@ui/PrimitiveTaskTable/PrimitiveTaskTable';
 import { useUser } from '@hooks/useUser';
 import { Helper } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { Icon } from '@ui/basics';
 import { AlertCircle } from 'tabler-icons-react';
 import { sendRequest } from '@requests/request';
 import PrintTasks from '@components/Task/PrintTasks/PrintTasks';
@@ -147,11 +146,7 @@ const Description: FC<{
                     )}
                   </div>
                 }
-                customIcon={
-                  <Icon size="xs">
-                    <AlertCircle color={'var(--negative)'} />
-                  </Icon>
-                }
+                customIcon={<AlertCircle color={'var(--negative)'} />}
               />
             )}
           </div>

@@ -4,11 +4,11 @@ import { HeartBroken } from 'tabler-icons-react';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { IAttempt } from '@custom-types/data/IAttempt';
 import { useLocale } from '@hooks/useLocale';
-import { Helper, TextInput } from '@ui/basics';
+import { TextInput } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { useForm } from '@mantine/form';
-import modalStyles from '@styles/ui/common/modal.module.css';
 import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
+import modalStyles from '@styles/ui/modal.module.css';
 
 const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
   const [opened, setOpened] = useState(false);
@@ -48,16 +48,12 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
       />
       <SimpleModal
         title={locale.attempt.ban.title}
-        titleHelper={
-          <Helper
-            dropdownContent={
-              <div>
-                {locale.helpers.attempt.ban.map((p, idx) => (
-                  <p key={idx}>{p}</p>
-                ))}
-              </div>
-            }
-          />
+        helperContent={
+          <div>
+            {locale.helpers.attempt.ban.map((p, idx) => (
+              <p key={idx}>{p}</p>
+            ))}
+          </div>
         }
         opened={opened}
         close={() => setOpened(false)}
@@ -66,6 +62,8 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
           <div>
             <TextInput
               label={locale.attempt.ban.reason}
+              shrink
+              required
               {...form.getInputProps('reason')}
             />
           </div>

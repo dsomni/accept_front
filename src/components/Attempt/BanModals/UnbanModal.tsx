@@ -4,11 +4,11 @@ import { HeartPlus } from 'tabler-icons-react';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { IAttempt } from '@custom-types/data/IAttempt';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Helper } from '@ui/basics';
-import { Group } from '@mantine/core';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { getLocalDate } from '@utils/datetime';
 import styles from './banModal.module.css';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const UnbanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
   const [opened, setOpened] = useState(false);
@@ -35,21 +35,17 @@ const UnbanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
       />
       <SimpleModal
         title={locale.attempt.unban.title}
-        titleHelper={
-          <Helper
-            dropdownContent={
-              <div>
-                {locale.helpers.attempt.unban.map((p, idx) => (
-                  <p key={idx}>{p}</p>
-                ))}
-              </div>
-            }
-          />
+        helperContent={
+          <div>
+            {locale.helpers.attempt.unban.map((p, idx) => (
+              <p key={idx}>{p}</p>
+            ))}
+          </div>
         }
         opened={opened}
         close={() => setOpened(false)}
       >
-        <div className={styles.wrapper}>
+        <div className={modalStyles.verticalContent}>
           <div className={styles.rowsWrapper}>
             <div>
               {locale.attempt.unban.previousBanDate}{' '}
@@ -64,26 +60,16 @@ const UnbanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
               {attempt.banInfo?.reason || ''}
             </div>
           </div>
-          <Group
-            position="right"
-            spacing="lg"
-            className={styles.buttons}
-          >
-            <Button
-              variant="outline"
-              kind="negative"
-              onClick={() => setOpened(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              kind="positive"
-              onClick={handleUnban}
-            >
-              {locale.attempt.unban.action}
-            </Button>
-          </Group>
+          <SimpleButtonGroup
+            actionButton={{
+              label: locale.attempt.unban.action,
+              onClick: handleUnban,
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setOpened(false),
+            }}
+          />
         </div>
       </SimpleModal>
     </>

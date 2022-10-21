@@ -1,11 +1,12 @@
 import { pureCallback } from '@custom-types/ui/atomic';
 import { Modal } from '@mantine/core';
 import { FC, ReactNode, memo } from 'react';
-import styles from '@styles/ui/common/modal.module.css';
+import modalStyles from '@styles/ui/modal.module.css';
+import { Helper } from '@ui/basics';
 
 const SimpleModal: FC<{
   title?: ReactNode;
-  titleHelper?: ReactNode;
+  helperContent?: ReactNode;
   opened: boolean;
   close: pureCallback<void>;
   children: ReactNode;
@@ -14,7 +15,7 @@ const SimpleModal: FC<{
   size?: string | number;
 }> = ({
   title,
-  titleHelper,
+  helperContent,
   opened,
   close,
   children,
@@ -33,9 +34,11 @@ const SimpleModal: FC<{
         withCloseButton={!!!hideCloseButton}
         opened={opened}
         title={
-          <div className={styles.titleWrapper}>
-            <div className={styles.title}>{title}</div>
-            {titleHelper || <></>}
+          <div className={modalStyles.titleWrapper}>
+            <div className={modalStyles.title}>{title}</div>
+            {helperContent && (
+              <Helper dropdownContent={helperContent} />
+            )}
           </div>
         }
         onClose={close}

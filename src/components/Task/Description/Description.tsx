@@ -9,7 +9,6 @@ import CopyButton from '@ui/CopyButton/CopyButton';
 import { sendRequest } from '@requests/request';
 import { setter } from '@custom-types/ui/atomic';
 import { AlertCircle } from 'tabler-icons-react';
-import { Icon } from '@ui/basics';
 import TagList from '@ui/TagList/TagList';
 
 const Description: FC<{
@@ -57,9 +56,7 @@ const Description: FC<{
       />
       {languagesRestrictions && (
         <div className={styles.languagesRestrictions}>
-          <Icon size="sm">
-            <AlertCircle color={'var(--negative)'} />
-          </Icon>
+          <AlertCircle color={'var(--negative)'} />
 
           <div className={styles.alert}>
             {locale.task.description.languagesRestrictions}

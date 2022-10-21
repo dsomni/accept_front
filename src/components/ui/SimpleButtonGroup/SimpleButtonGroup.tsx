@@ -14,22 +14,26 @@ interface ButtonInfo {
 const SimpleButtonGroup: FC<{
   actionButton: ButtonInfo;
   cancelButton: ButtonInfo;
-}> = ({ actionButton, cancelButton }) => {
+  reversePositive?: boolean;
+}> = ({ actionButton, cancelButton, reversePositive }) => {
   const { locale } = useLocale();
 
   return (
     <Group position="right" spacing="lg">
       <Button
         variant="outline"
-        kind="negative"
+        kind={reversePositive ? 'positive' : 'negative'}
+        shrink
         onClick={cancelButton.onClick}
+        autoFocus
         {...cancelButton.props}
       >
         {cancelButton.label || locale.no}
       </Button>
       <Button
         variant="outline"
-        kind="positive"
+        kind={reversePositive ? 'negative' : 'positive'}
+        shrink
         onClick={actionButton.onClick}
         {...actionButton.props}
       >

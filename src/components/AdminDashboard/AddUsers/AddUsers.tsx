@@ -2,7 +2,6 @@ import {
   Button,
   Dropzone,
   Helper,
-  Icon,
   SegmentedControl,
 } from '@ui/basics';
 import { FC, memo, useCallback, useState } from 'react';
@@ -333,11 +332,7 @@ const AddUsers: FC<{}> = ({}) => {
                   ))}
                 </div>
               }
-              customIcon={
-                <Icon size="xs">
-                  <AlertCircle color={'var(--negative)'} />
-                </Icon>
-              }
+              customIcon={<AlertCircle color={'var(--negative)'} />}
             />
           </>
         }

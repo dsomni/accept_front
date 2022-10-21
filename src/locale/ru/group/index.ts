@@ -12,6 +12,7 @@ export const group = {
   },
   modals: {
     delete: 'Удалить группу',
+    deletion: 'Удаление группы',
     deleteConfidence:
       'Вы уверены, что хотите навсегда удалить эту группу?',
   },
