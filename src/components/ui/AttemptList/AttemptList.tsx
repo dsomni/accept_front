@@ -15,7 +15,7 @@ import { IAttemptDisplay } from '@custom-types/data/IAttempt';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { useUser } from '@hooks/useUser';
 import { useRequest } from '@hooks/useRequest';
-import { BaseSearch } from '@custom-types/data/request';
+import { BaseSearch, DateSearch } from '@custom-types/data/request';
 import {
   errorNotification,
   newNotification,
@@ -115,13 +115,13 @@ const AttemptsList: FC<{
   );
 
   const { data, loading, refetch } = useRequest<
-    { search: BaseSearch; toDate?: Date },
+    DateSearch,
     PagerResponse,
     TableData
   >(
     url,
     'POST',
-    { search: searchParams, toDate: toDate },
+    { ...searchParams, toDate },
     processData,
     undefined,
     onError
