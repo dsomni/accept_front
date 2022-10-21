@@ -1,3 +1,87 @@
 .dropdownContentWrapper {
   font-size: var(--font-size-xs);
 }
+
+.buttonWrapper {
+  --bg-color: var(--primary);
+  --main-color: #fff;
+  --border-color: #fff;
+  --hover-color: var(--secondary);
+  --font-size: var(--font-size-btn-l);
+}
+
+.shrink.buttonWrapper {
+  --font-size: var(--font-size-btn-m);
+}
+
+.label {
+  font-size: var(--font-size);
+  line-height: var(--font-size);
+  color: var(--main-color);
+  font-weight: 400;
+}
+.root {
+  background-color: var(--bg-color);
+  padding: var(--spacer-xs) var(--spacer-s);
+  height: fit-content;
+  border-color: var(--border-color);
+}
+
+.root:hover {
+  background-color: var(--hover-color);
+}
+
+.outline.buttonWrapper {
+  --bg-color: #fff;
+  --main-color: var(--primary);
+  --hover-color: var(--primary-light2);
+  --border-color: var(--main-color);
+}
+
+.light.buttonWrapper {
+  --bg-color: #e7f5ff;
+  --border-color: var(--bg-color);
+  --main-color: var(--primary);
+  --hover-color: #d0ebffa6;
+}
+
+.positive.outline.buttonWrapper {
+  --bg-color: #fff;
+  --main-color: var(--positive);
+  --hover-color: #d3f4d348;
+}
+
+.positive.light.buttonWrapper {
+  --bg-color: #e2fbe6;
+  --main-color: #40c057;
+  --hover-color: #a1ffa1b0;
+}
+
+.positive.buttonWrapper {
+  --bg-color: var(--positive);
+  --hover-color: #40c057;
+}
+
+.negative.outline.buttonWrapper {
+  --bg-color: #fff;
+  --main-color: var(--negative);
+  --hover-color: #f6cfcf4a;
+}
+
+.negative.light.buttonWrapper {
+  --bg-color: #fe7d7d6a;
+  --main-color: var(--negative);
+  --hover-color: #ff70706a;
+}
+
+.negative.buttonWrapper {
+  --bg-color: var(--negative);
+  --hover-color: #f10202;
+}
+
+/* should be at bottom */
+.disabled.buttonWrapper {
+  --bg-color: var(--dark5);
+  --main-color: var(--dark2);
+  --border-color: var(--dark2);
+}
