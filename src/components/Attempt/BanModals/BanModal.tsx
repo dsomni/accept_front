@@ -4,11 +4,11 @@ import { HeartBroken } from 'tabler-icons-react';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { IAttempt } from '@custom-types/data/IAttempt';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Helper, TextInput } from '@ui/basics';
-import { Group } from '@mantine/core';
+import { Helper, TextInput } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import styles from './banModal.module.css';
 import { useForm } from '@mantine/form';
+import modalStyles from '@styles/ui/common/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
   const [opened, setOpened] = useState(false);
@@ -62,34 +62,26 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
         opened={opened}
         close={() => setOpened(false)}
       >
-        <div className={styles.wrapper}>
+        <div className={modalStyles.verticalContent}>
           <div>
             <TextInput
               label={locale.attempt.ban.reason}
               {...form.getInputProps('reason')}
             />
           </div>
-          <Group
-            position="right"
-            spacing="lg"
-            className={styles.buttons}
-          >
-            <Button
-              variant="outline"
-              kind="negative"
-              onClick={() => setOpened(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              kind="positive"
-              disabled={!form.isValid()}
-              onClick={handleBan}
-            >
-              {locale.attempt.ban.action}
-            </Button>
-          </Group>
+          <SimpleButtonGroup
+            actionButton={{
+              label: locale.attempt.ban.action,
+              onClick: handleBan,
+              props: {
+                disabled: !form.isValid(),
+              },
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setOpened(false),
+            }}
+          />
         </div>
       </SimpleModal>
     </>

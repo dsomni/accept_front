@@ -1,7 +1,7 @@
 import { pureCallback } from '@custom-types/ui/atomic';
 import { Modal } from '@mantine/core';
 import { FC, ReactNode, memo } from 'react';
-import styles from './simpleModal.module.css';
+import styles from '@styles/ui/common/modal.module.css';
 
 const SimpleModal: FC<{
   title?: ReactNode;
@@ -35,13 +35,13 @@ const SimpleModal: FC<{
         title={
           <div className={styles.titleWrapper}>
             <div className={styles.title}>{title}</div>
-            {titleHelper ? titleHelper : <></>}
+            {titleHelper || <></>}
           </div>
         }
         onClose={close}
         zIndex={200}
       >
-        <div className={styles.content}>{children}</div>
+        <div>{children}</div>
       </Modal>
     </div>
   );
