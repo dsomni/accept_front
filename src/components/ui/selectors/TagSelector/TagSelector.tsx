@@ -17,6 +17,7 @@ const TagSelector: FC<{
   initialTags: Item[];
   setUsed: setter<any>;
   classNames?: object;
+  shrink?: boolean;
   fetchURL: string;
   addURL: string;
   updateURL: string;
@@ -26,6 +27,7 @@ const TagSelector: FC<{
 }> = ({
   setUsed,
   classNames,
+  shrink,
   initialTags,
   fetchURL,
   addURL,
@@ -80,15 +82,17 @@ const TagSelector: FC<{
           refetch={refetch}
           updateURL={updateURL}
           deleteURL={deleteURL}
+          shrink={shrink}
         />
       );
     },
-    [refetch, deleteURL, updateURL]
+    [refetch, updateURL, deleteURL, shrink]
   );
 
   return (
     <InputWrapper
       className={styles.wrapper}
+      shrink={shrink}
       {...form.getInputProps(field)}
     >
       {!loading && (
@@ -106,6 +110,7 @@ const TagSelector: FC<{
             <AddTag addURL={addURL} refetch={refetch} />
           )}
           shouldSortChosen={true}
+          shrink={shrink}
         />
       )}
     </InputWrapper>

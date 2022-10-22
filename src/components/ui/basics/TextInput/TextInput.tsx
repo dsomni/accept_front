@@ -1,10 +1,10 @@
 import { FC, ReactNode, memo } from 'react';
-import inputStyles from '@styles/ui/input.module.css';
 import {
   TextInput as MantineInput,
   TextInputProps,
 } from '@mantine/core';
 import { Helper } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
 
 interface Props extends TextInputProps {
   helperContent?: string | ReactNode;

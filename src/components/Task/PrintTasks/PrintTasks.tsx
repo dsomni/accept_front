@@ -18,7 +18,6 @@ const PrintTasks: FC<{ tasks: string[] }> = ({
     ).then((res) => {
       if (!res.error) {
         setTasks(res.response);
-        console.log(res.response);
       }
     });
   }, [task_specs]);

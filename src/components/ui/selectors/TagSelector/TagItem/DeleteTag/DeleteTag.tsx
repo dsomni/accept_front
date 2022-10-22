@@ -1,11 +1,13 @@
 import { FC, memo, useCallback, useState } from 'react';
-import { ActionIcon, Button, Group, Modal } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
-import styles from './deleteTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
+import { Icon } from '@ui/basics';
 
 const DeleteTag: FC<{
   item: Item;
@@ -34,54 +36,31 @@ const DeleteTag: FC<{
   }, [deleteURL, locale.tag.delete, lang, item.value, refetch]);
 
   return (
-    <div className={styles.wrapper}>
-      <ActionIcon
-        onClick={() => setOpened(true)}
-        tabIndex={5}
-        color="red"
-        variant="transparent"
-        size="lg"
-      >
-        <Trash width={20} height={20} />
-      </ActionIcon>
-      <Modal
+    <>
+      <Icon onClick={() => setOpened(true)} color="red" size="xs">
+        <Trash />
+      </Icon>
+      <SimpleModal
         opened={opened}
-        centered
-        onClose={() => setOpened(false)}
-        size="md"
+        close={() => setOpened(false)}
         title={locale.ui.tagSelector.delete + ` '${item.label}'`}
-        classNames={{
-          title: styles.modalTitle,
-        }}
       >
-        <div className={styles.form}>
-          <div className={styles.question}>
-            {locale.ui.tagSelector.deleteConfidence}
-          </div>
-          <Group
-            position="right"
-            spacing="lg"
-            className={styles.buttons}
-          >
-            <Button
-              variant="outline"
-              color="green"
-              autoFocus
-              onClick={() => setOpened(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              color="red"
-              onClick={() => handleSubmit()}
-            >
-              {locale.delete}
-            </Button>
-          </Group>
+        <div className={modalStyles.verticalContent}>
+          <div>{locale.ui.tagSelector.deleteConfidence}</div>
+          <SimpleButtonGroup
+            reversePositive
+            actionButton={{
+              label: locale.delete,
+              onClick: handleSubmit,
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setOpened(false),
+            }}
+          />
         </div>
-      </Modal>
-    </div>
+      </SimpleModal>
+    </>
   );
 };
 

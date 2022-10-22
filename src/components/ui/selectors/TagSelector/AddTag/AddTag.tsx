@@ -1,12 +1,13 @@
 import { FC, memo, useCallback, useState } from 'react';
-import { Group, Modal } from '@mantine/core';
 import { Plus } from 'tabler-icons-react';
-import styles from './addTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 import { pureCallback } from '@custom-types/ui/atomic';
-import { Button, Icon, TextInput } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { ITag } from '@custom-types/data/ITag';
+import { Icon, TextInput } from '@ui/basics';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   refetch,
@@ -53,33 +54,21 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
   );
 
   return (
-    <div className={styles.wrapper}>
-      <Icon
-        onClick={() => setOpened(true)}
-        tabIndex={5}
-        color="var(--primary)"
-        variant="transparent"
-        size="sm"
-      >
-        <Plus width={25} height={25} color="green" />
+    <>
+      <Icon onClick={() => setOpened(true)} size="sm">
+        <Plus color="var(--positive)" />
       </Icon>
-      <Modal
+      <SimpleModal
         opened={opened}
-        centered
-        onClose={() => setOpened(false)}
-        size="md"
+        close={() => setOpened(false)}
         title={locale.ui.tagSelector.add}
-        classNames={{
-          title: styles.modalTitle,
-        }}
       >
-        <div className={styles.form}>
+        <div className={modalStyles.verticalContent}>
           <TextInput
-            className={styles.input}
+            shrink
             autoFocus
             required
             label={locale.name}
-            size="md"
             onChange={(e: any) => {
               validate(e.target.value);
               setTitle(e.target.value);
@@ -87,30 +76,22 @@ const AddTag: FC<{ refetch: pureCallback<void>; addURL: string }> = ({
             error={error}
             placeholder={locale.ui.tagSelector.addPlaceholder}
           />
-          <Group
-            position="right"
-            spacing="lg"
-            className={styles.buttons}
-          >
-            <Button
-              variant="outline"
-              kind="negative"
-              onClick={() => setOpened(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              kind="positive"
-              disabled={!!error}
-              onClick={() => handleSubmit(title)}
-            >
-              {locale.save}
-            </Button>
-          </Group>
+          <SimpleButtonGroup
+            actionButton={{
+              label: locale.save,
+              onClick: () => handleSubmit(title),
+              props: {
+                disabled: !!error,
+              },
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setOpened(false),
+            }}
+          />
         </div>
-      </Modal>
-    </div>
+      </SimpleModal>
+    </>
   );
 };
 

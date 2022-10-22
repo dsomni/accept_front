@@ -36,6 +36,7 @@ export const CustomTransferList: FC<{
   itemComponent: (_: any, __: any) => ReactNode;
   shouldSortChosen?: boolean;
   searchKeys?: string[];
+  shrink?: boolean;
 }> = ({
   defaultOptions,
   defaultChosen,
@@ -46,6 +47,7 @@ export const CustomTransferList: FC<{
   itemComponent,
   shouldSortChosen,
   searchKeys,
+  shrink,
 }) => {
   const [chosen, setChosen] = useState(
     shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
@@ -74,14 +76,13 @@ export const CustomTransferList: FC<{
         if (shouldSortChosen) return chosen.sort(cmpItem);
         return chosen;
       });
-      console.log(chosen);
+
       setUsed(chosen);
     },
     [chosen, setUsed, shouldSortChosen]
   );
   const handleSelectRight = useCallback(
     (item: Item) => {
-      console.log(item);
       setChosen((chosen) => {
         return removeOneElement(chosen, item);
       });
@@ -100,7 +101,7 @@ export const CustomTransferList: FC<{
         classNames?.customTransferListWrapper
           ? classNames.customTransferListWrapper
           : ''
-      }`}
+      }  ${shrink ? styles.shrink : ''}`}
     >
       <div className={styles.leftWrapper}>
         <SelectField
@@ -112,6 +113,7 @@ export const CustomTransferList: FC<{
           rightComponent={rightComponent}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
+          shrink={shrink}
         />
       </div>
       <div className={styles.rightWrapper}>
@@ -123,6 +125,7 @@ export const CustomTransferList: FC<{
           handleSelect={handleSelectRight}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
+          shrink={shrink}
         />
       </div>
     </div>

@@ -59,14 +59,13 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
         close={() => setOpened(false)}
       >
         <div className={modalStyles.verticalContent}>
-          <div>
-            <TextInput
-              label={locale.attempt.ban.reason}
-              shrink
-              required
-              {...form.getInputProps('reason')}
-            />
-          </div>
+          <TextInput
+            label={locale.attempt.ban.reason}
+            shrink
+            required
+            {...form.getInputProps('reason')}
+          />
+
           <SimpleButtonGroup
             actionButton={{
               label: locale.attempt.ban.action,
