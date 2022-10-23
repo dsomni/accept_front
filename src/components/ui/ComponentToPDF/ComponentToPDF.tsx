@@ -14,7 +14,7 @@ const ComponentToPDF: FC<{
     <div>
       <ReactToPrint
         trigger={() => (
-          <Icon color="var(--primary)" size="sm">
+          <Icon size="xs" color="var(--primary)">
             <Printer />
           </Icon>
         )}

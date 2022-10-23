@@ -90,7 +90,20 @@ const Description: FC<{
       <div className={styles.titleWrapper}>
         <div className={styles.title}>
           {tournament.title}
-          <PrintTasks tasks={tasks.map((task) => task.spec)} />
+          <PrintTasks
+            title={
+              <div className={styles.title}>{tournament.title}</div>
+            }
+            description={
+              <div
+                className={styles.description}
+                dangerouslySetInnerHTML={{
+                  __html: tournament.description,
+                }}
+              />
+            }
+            tasks={tasks.map((task) => task.spec)}
+          />
         </div>
         <div className={styles.info}>
           <div className={styles.usersInfo}>

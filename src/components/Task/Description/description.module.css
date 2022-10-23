@@ -1,10 +1,13 @@
 .wrapper {
-  display: flex;
+  display: block;
   flex-direction: column;
-  gap: var(--spacer-xs);
   padding: var(--spacer-s) var(--spacer-l);
   font-size: var(--font-size-s);
   margin-bottom: var(--spacer-xl);
+}
+
+.wrapper > * {
+  margin-bottom: var(--spacer-xs);
 }
 
 .title {
@@ -25,7 +28,6 @@
   gap: var(--spacer-m);
   font-size: var(--font-size-xs);
   color: var(--dark3);
-  margin-bottom: var(--spacer-xs);
 }
 
 .tags {
@@ -65,8 +67,10 @@
   font-size: var(--font-size-l);
   padding: var(--spacer-s) 0;
 }
+
 .examplesLabel {
   padding: var(--spacer-m) 0 0 0;
+  margin-bottom: var(--spacer-xs);
 }
 
 .table {
@@ -100,5 +104,24 @@
 @media screen and (max-width: 480px) {
   .wrapper {
     padding: var(--spacer-xs) var(--spacer-s);
+  }
+}
+
+@media print {
+  .wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tablesWrapper {
+    width: 80%;
+  }
+
+  .table {
+    break-inside: avoid;
+  }
+
+  .tbody tr {
+    width: 50px;
   }
 }
