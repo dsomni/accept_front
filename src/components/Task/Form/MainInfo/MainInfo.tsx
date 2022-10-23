@@ -82,7 +82,6 @@ const MainInfo: FC<{
           form={form}
           items={taskTypeItems}
           onChange={handlerTaskType}
-          required
           helperContent={
             <div>
               {locale.helpers.task.taskType.map((p, idx) => (
@@ -97,7 +96,6 @@ const MainInfo: FC<{
             field={'checkType'}
             form={form}
             items={taskCheckTypeItems}
-            required
             onChange={(value) => {
               form.setFieldValue('checkType', value);
               form.validateField('tests');
