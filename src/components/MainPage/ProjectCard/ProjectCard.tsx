@@ -11,18 +11,11 @@ export const ProjectCard: FC<{
   card: IProjectCard;
 }> = ({ left, card }) => {
   const { locale } = useLocale();
+  const position = left ? styles.left : styles.right;
 
   return (
-    <div
-      className={
-        styles.wrapper + ' ' + (left ? styles.left : styles.right)
-      }
-    >
-      <div
-        className={
-          styles.card + ' ' + (left ? styles.left : styles.right)
-        }
-      >
+    <div className={`${styles.wrapper} ${position}`}>
+      <div className={`${styles.card} ${position}`}>
         <div className={styles.content}>
           <div
             className={styles.image}

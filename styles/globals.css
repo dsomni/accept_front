@@ -114,6 +114,13 @@ body {
   }
 }
 
+@media print {
+  html,
+  body {
+    font-size: 22px;
+  }
+}
+
 * {
   font-family: 'Exo 2' !important;
 }

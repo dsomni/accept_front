@@ -13,7 +13,8 @@ import stepperStyles from '@styles/ui/stepper.module.css';
 import { useLocale } from '@hooks/useLocale';
 import ListItem from '@ui/ListItem/ListItem';
 import Title from '@ui/Title/Title';
-import { Button } from '@ui/basics';
+import SingularSticky from '@ui/Sticky/SingularSticky';
+import { Download } from 'tabler-icons-react';
 
 function TestsPage(props: { spec: string }) {
   const spec = props.spec;
@@ -61,11 +62,11 @@ function TestsPage(props: { spec: string }) {
     const link = document.createElement('a');
     const href = URL.createObjectURL(blob);
     link.href = href;
-    link.download = 'tests.zip';
+    link.download = `${spec}_tests.zip`;
     link.click();
     link.remove();
     URL.revokeObjectURL(href);
-  }, [tests]);
+  }, [tests, spec]);
 
   useEffect(() => {
     form.setFieldValue('tests', tests);
@@ -74,19 +75,11 @@ function TestsPage(props: { spec: string }) {
   return (
     <div className={stepperStyles.wrapper}>
       <Title title={locale.titles.task.tests} />
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div style={{ width: '50%' }}>
-          <Button fullWidth onClick={downloadTests}>
-            {locale.download}
-          </Button>
-        </div>
-      </div>
+      <SingularSticky
+        onClick={downloadTests}
+        color="var(--primary)"
+        icon={<Download />}
+      />
       {form.values.tests.map((test, index) => (
         <div key={index} className={stepperStyles.example}>
           <ListItem
