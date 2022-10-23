@@ -5,17 +5,19 @@ import {
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './roleSelector.module.css';
-import stepperStyles from '@styles/ui/stepper.module.css';
 import { InputWrapper } from '@ui/basics';
 import { IRole } from '@custom-types/data/atomic';
 import { capitalize } from '@utils/capitalize';
+import inputStyles from '@styles/ui/input.module.css';
 
 const RoleSelector: FC<{
   form: any;
   roles: IRole[];
   initialRoles: number[];
+  classNames?: any;
   field: string;
-}> = ({ form, roles, initialRoles, field }) => {
+  shrink?: boolean;
+}> = ({ form, roles, initialRoles, classNames, field, shrink }) => {
   const [availableRole, setAvailableRole] = useState<Item[]>([]);
   const [selectedRole, setSelectedRole] = useState<Item[]>([]);
   const { locale } = useLocale();
@@ -43,7 +45,9 @@ const RoleSelector: FC<{
     (role: IRole, handleSelect: any) => {
       return (
         <div
-          className={styles.itemWrapper}
+          className={`${styles.itemWrapper} ${
+            shrink ? inputStyles.shrink : ''
+          }`}
           onClick={() => handleSelect(role)}
           style={{ cursor: 'pointer' }}
         >
@@ -51,13 +55,13 @@ const RoleSelector: FC<{
         </div>
       );
     },
-    []
+    [shrink]
   );
 
   return (
     <div>
       {!loading && (
-        <InputWrapper {...form.getInputProps(field)}>
+        <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
           <CustomTransferList
             defaultOptions={availableRole}
             defaultChosen={selectedRole}
@@ -67,7 +71,7 @@ const RoleSelector: FC<{
                 roles.map((role) => role.spec)
               )
             }
-            classNames={{ label: stepperStyles.label }}
+            classNames={classNames || {}}
             titles={[
               locale.ui.roleSelector.unselected,
               locale.ui.roleSelector.selected,

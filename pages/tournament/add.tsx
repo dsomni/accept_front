@@ -26,7 +26,12 @@ function TournamentAdd(props: ITournamentAddBundle) {
 
   const { data: users } = useRequest<{}, IUserDisplay[]>(
     'user/list-display',
-    'GET'
+    'GET',
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    20000
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

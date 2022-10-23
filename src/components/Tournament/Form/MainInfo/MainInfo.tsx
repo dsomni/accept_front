@@ -2,7 +2,6 @@ import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useCallback, useMemo } from 'react';
 import { CustomEditor, Radio, Switch, TextInput } from '@ui/basics';
 import { TagSelector } from '@ui/selectors';
-import stepperStyles from '@styles/ui/stepper.module.css';
 import styles from './mainInfo.module.css';
 import { IAssessmentType } from '@custom-types/data/atomic';
 
@@ -41,9 +40,6 @@ const MainInfo: FC<{
   return (
     <>
       <TextInput
-        classNames={{
-          label: stepperStyles.label,
-        }}
         size="lg"
         label={locale.tournament.form.title}
         required
@@ -55,9 +51,6 @@ const MainInfo: FC<{
         name={'description'}
       />
       <TagSelector
-        classNames={{
-          label: stepperStyles.label,
-        }}
         initialTags={initialTags}
         setUsed={(value) => form.setFieldValue('tags', value)}
         fetchURL={'tournament_tag/list'}

@@ -5,9 +5,9 @@ import {
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './groupSelector.module.css';
-import stepperStyles from '@styles/ui/stepper.module.css';
 import { IGroup } from '@custom-types/data/IGroup';
 import { InputWrapper } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
 
 const GroupSelector: FC<{
   form: any;
@@ -15,7 +15,8 @@ const GroupSelector: FC<{
   initialGroups: string[];
   classNames?: any;
   field: string;
-}> = ({ form, groups, initialGroups, field, classNames }) => {
+  shrink?: boolean;
+}> = ({ form, groups, initialGroups, field, classNames, shrink }) => {
   const [availableGroups, setAvailableGroups] = useState<Item[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<Item[]>([]);
   const { locale } = useLocale();
@@ -43,7 +44,9 @@ const GroupSelector: FC<{
     (group: IGroup, handleSelect: any) => {
       return (
         <div
-          className={styles.itemWrapper}
+          className={`${styles.itemWrapper} ${
+            shrink ? inputStyles.shrink : ''
+          }`}
           onClick={() => handleSelect(group)}
           style={{ cursor: 'pointer' }}
         >
@@ -57,7 +60,7 @@ const GroupSelector: FC<{
   return (
     <div>
       {!loading && (
-        <InputWrapper {...form.getInputProps(field)}>
+        <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
           <CustomTransferList
             defaultOptions={availableGroups}
             defaultChosen={selectedGroups}
@@ -67,7 +70,7 @@ const GroupSelector: FC<{
                 groups.map((group) => group.spec)
               )
             }
-            classNames={{ label: stepperStyles.label, ...classNames }}
+            classNames={{ ...classNames }}
             titles={[
               locale.ui.groupSelector.unselected,
               locale.ui.groupSelector.selected,

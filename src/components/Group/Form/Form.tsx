@@ -56,9 +56,6 @@ const Form: FC<{
     <div className={stepperStyles.wrapper}>
       <TextInput
         label={locale.group.name}
-        classNames={{
-          label: stepperStyles.label,
-        }}
         required
         disabled={form.values.readonly}
         {...form.getInputProps('name')}
