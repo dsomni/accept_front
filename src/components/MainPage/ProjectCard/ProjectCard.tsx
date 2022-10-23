@@ -1,10 +1,10 @@
 import { IProjectCard } from '@custom-types/ui/IProjectCard';
 import { useLocale } from '@hooks/useLocale';
+import { Button, Icon } from '@ui/basics';
 
 import { FC } from 'react';
-import styles from './projectCard.module.css';
 import { ChevronRight } from 'tabler-icons-react';
-import { Button, Icon } from '@ui/basics';
+import styles from './projectCard.module.css';
 
 export const ProjectCard: FC<{
   left: boolean;

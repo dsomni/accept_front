@@ -1,12 +1,17 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { ReactElement } from 'react';
-import { cardList } from '@constants/CardList';
+import Title from '@ui/Title/Title';
 import TopContent from '@components/MainPage/TopContent/TopContent';
+import { useLocale } from '@hooks/useLocale';
 import { ProjectCard } from '@components/MainPage/ProjectCard/ProjectCard';
+import { cardList } from '@constants/CardList';
 
 function IndexPage() {
+  const { locale } = useLocale();
+
   return (
     <>
+      <Title title={locale.titles.main} />
       <TopContent />
       <div>
         {cardList.map((card, index) => {
