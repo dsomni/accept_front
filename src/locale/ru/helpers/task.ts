@@ -15,4 +15,7 @@ export const task = {
   ],
   checkerPlaceholder:
     'Пример чекера для задачи "Увеличить число на 1" на языке Python:\n\ntest_input=int(input())\nuser_output=int(input())\nprint(1 if user_output - test_input == 1 else 0)',
+  emptyTextAnswer: [
+    'Необходимо заполнить хотя бы одно текстовое поле',
+  ],
 };
