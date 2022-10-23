@@ -21,6 +21,7 @@ const Stepper: FC<{
   icons?: ReactNode[];
   initialStep?: number;
   noDefault?: boolean;
+  shrink?: boolean;
 }> = ({
   form,
   stepFields,
@@ -35,6 +36,7 @@ const Stepper: FC<{
   icons,
   initialStep,
   noDefault,
+  shrink,
 }) => {
   const { locale } = useLocale();
   const LAST_PAGE = pages.length - 1;
@@ -134,13 +136,13 @@ const Stepper: FC<{
           </MantineStepper.Step>
         ))}
       </MantineStepper>
-      <Group
-        position="center"
-        mt="xl"
-        className={stepperStyles.buttons}
-      >
+      <Group position="center" className={stepperStyles.buttons}>
         {currentStep !== 0 && (
-          <Button variant="outline" onClick={prevStep}>
+          <Button
+            variant="outline"
+            onClick={prevStep}
+            shrink={shrink}
+          >
             {locale.form.back}
           </Button>
         )}
@@ -148,10 +150,10 @@ const Stepper: FC<{
           onClick={
             currentStep !== LAST_PAGE ? nextStep : handleSubmit
           }
+          shrink={shrink}
           disabled={
             currentStep !== LAST_PAGE && getErrorsStep(currentStep)
           }
-          type="button"
         >
           {currentStep === LAST_PAGE ? buttonLabel : locale.form.next}
         </Button>
