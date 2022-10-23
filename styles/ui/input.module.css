@@ -28,6 +28,17 @@
   font-size: var(--font-size-label-s);
 }
 
+.label2 {
+  font-size: var(--font-size-label-s);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.shrink .label2 {
+  font-size: var(--font-size-label-xs);
+}
+
 .shrink .label {
   font-size: var(--font-size-label-s);
 }

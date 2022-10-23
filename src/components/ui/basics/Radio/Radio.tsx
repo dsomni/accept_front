@@ -8,6 +8,7 @@ import {
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { setter } from '@custom-types/ui/atomic';
 import { Helper } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
 
 const Radio: FC<{
   label: ReactNode;
@@ -19,6 +20,8 @@ const Radio: FC<{
   groupProps?: RadioGroupProps;
   radioProps?: RadioProps;
   helperContent?: string | ReactNode;
+  required?: boolean;
+  shrink?: boolean;
 }> = ({
   label,
   field,
@@ -29,20 +32,27 @@ const Radio: FC<{
   groupProps,
   radioProps,
   helperContent,
+  required,
+  shrink,
 }) => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.labelWrapper}>
-        <div className={styles.label}>{label}</div>
+    <div
+      className={`${styles.wrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
+      <div className={inputStyles.labelWrapper}>
+        <div className={inputStyles.label}>
+          {label}
+          {required && (
+            <div className={inputStyles.labelRequired}>*</div>
+          )}
+        </div>
         {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
 
       <MantineRadio.Group
-        classNames={{
-          label: styles.radioLabel,
-          radio: styles.radio,
-        }}
-        size="md"
+        size={shrink ? 'sm' : 'md'}
         {...groupProps}
         {...form.getInputProps(field)}
         onChange={onChange}
@@ -50,9 +60,12 @@ const Radio: FC<{
       >
         {items.map((item: Item, index: number) => (
           <MantineRadio
+            key={index}
+            classNames={{
+              label: inputStyles.label2,
+            }}
             {...radioProps}
             value={item.value}
-            key={index}
             label={item.label}
           />
         ))}
