@@ -1,5 +1,4 @@
 import { useLocale } from '@hooks/useLocale';
-
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import styles from './tagSelector.module.css';
 import { sendRequest } from '@requests/request';

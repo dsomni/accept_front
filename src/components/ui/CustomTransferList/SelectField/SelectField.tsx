@@ -127,7 +127,7 @@ export const SelectField: FC<{
   }, [values.length, search, searchText]);
 
   return (
-    <>
+    <div className={shrink ? inputStyles.shrink : ''}>
       <div className={`${inputStyles.label} ${classNames.label}`}>
         {title}
       </div>
@@ -157,6 +157,6 @@ export const SelectField: FC<{
           style={{ height: postfixHeight }}
         />
       </div>
-    </>
+    </div>
   );
 };

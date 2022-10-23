@@ -2,15 +2,21 @@ import { pureCallback } from '@custom-types/ui/atomic';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { FC } from 'react';
 import styles from './languageItem.module.css';
+import inputStyles from '@styles/ui/input.module.css';
 
 export const LanguageItem: FC<{
   item: Item;
   onSelect: pureCallback<void>;
-}> = ({ item, onSelect }) => {
+  shrink?: boolean;
+}> = ({ item, onSelect, shrink }) => {
   return (
-    <div className={styles.itemWrapper}>
+    <div
+      className={`${styles.itemWrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
       <div className={styles.item} onClick={() => onSelect()}>
-        <div>{item.label}</div>
+        <div className={inputStyles.label}>{item.label}</div>
       </div>
     </div>
   );
