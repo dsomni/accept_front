@@ -1,11 +1,10 @@
 import { IProjectCard } from '@custom-types/ui/IProjectCard';
 import { useLocale } from '@hooks/useLocale';
-import { Button } from '@mantine/core';
 
 import { FC } from 'react';
 import styles from './projectCard.module.css';
-import Link from 'next/link';
 import { ChevronRight } from 'tabler-icons-react';
+import { Button, Icon } from '@ui/basics';
 
 export const ProjectCard: FC<{
   left: boolean;
@@ -36,17 +35,19 @@ export const ProjectCard: FC<{
           <div className={styles.description}>
             {card.description(locale)}
           </div>
-          <Link href={card.href} passHref>
-            <Button
-              className={styles.button}
-              variant="outline"
-              radius="md"
-              component="a"
-              rightIcon={<ChevronRight width={32} height={32} />}
-            >
-              {locale.projects.view}
-            </Button>
-          </Link>
+
+          <Button
+            className={styles.button}
+            variant="outline"
+            href={card.href}
+            rightIcon={
+              <Icon color="var(--primary)">
+                <ChevronRight />
+              </Icon>
+            }
+          >
+            {locale.projects.view}
+          </Button>
         </div>
       </div>
     </div>

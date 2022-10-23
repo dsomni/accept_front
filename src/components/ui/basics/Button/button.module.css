@@ -16,7 +16,7 @@
 
 .label {
   font-size: var(--font-size);
-  line-height: var(--font-size);
+  line-height: calc(var(--font-size) * 1.2);
   color: var(--main-color);
   font-weight: 400;
 }
