@@ -30,10 +30,11 @@ const Form: FC<{
     validate: {
       name: (value) =>
         value.length < 3 ? locale.group.form.validation.name : null,
-      members: (value) =>
-        value.length < 2
+      members: (value) => {
+        value.length < 1
           ? locale.group.form.validation.members
-          : null,
+          : null;
+      },
     },
     validateInputOnBlur: true,
     validateInputOnChange: true,

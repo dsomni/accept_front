@@ -58,7 +58,6 @@ const MainInfo: FC<{
         initialTags={initialTags}
         setUsed={(values: Item[]) => {
           form.setFieldValue('tags', values);
-          form.validateField('tags');
         }}
         fetchURL={'tag/list'}
         addURL={'tag/add'}

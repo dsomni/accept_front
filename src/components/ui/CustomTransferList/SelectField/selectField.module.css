@@ -1,6 +1,7 @@
 .searchBar {
   width: 100%;
 }
+
 .header {
   width: 100%;
   display: flex;
@@ -11,7 +12,7 @@
 
 .content {
   max-height: 500px;
-  min-height: 200px;
+  min-height: 300px;
   overflow-x: hidden;
   overflow-y: scroll;
   margin-top: var(--spacer-xs);
@@ -28,6 +29,7 @@
 .content::-webkit-scrollbar-thumb {
   background-color: #aaaaaa;
 }
+
 .title {
   padding: var(--spacer-xs) 0;
 }
