@@ -35,8 +35,12 @@
   align-items: flex-start;
 }
 
-.shrink .subLabel {
-  font-size: var(--font-size-label-xs);
+.selectInput {
+  display: flex;
+}
+
+.selectValue span {
+  overflow: visible;
 }
 
 .shrink .label {
@@ -48,5 +52,9 @@
 }
 
 .shrink .error {
+  font-size: var(--font-size-label-xs);
+}
+
+.shrink .subLabel {
   font-size: var(--font-size-label-xs);
 }

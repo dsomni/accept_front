@@ -6,21 +6,6 @@
   justify-content: space-between;
 }
 
-.inputElem {
-  font-size: var(--font-size-s);
-  min-height: var(--spacer-xl);
-  display: flex;
-}
-
-.selected {
-  font-size: var(--font-size-s);
-  min-height: var(--spacer-l);
-}
-
-.selected span {
-  overflow: visible;
-}
-
 .searchWrapper {
   display: flex;
   flex-direction: row;
