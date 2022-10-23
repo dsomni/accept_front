@@ -48,7 +48,7 @@ const UsersList: FC<{
   url: string;
   classNames?: any;
   initialColumns: (_: ILocale) => ITableColumn[];
-  refactorUser: (_: any, __: boolean) => IUserDisplayList;
+  refactorUser: (_: IParticipant) => IUserDisplayList;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
@@ -90,9 +90,13 @@ const UsersList: FC<{
       roles: IRole[];
     } => ({
       users: [
-        ...response.users.map((item) => refactorUser(item, false)),
+        ...response.users.map((user) =>
+          refactorUser({ ...user, banned: false })
+        ),
         ...(response.banned
-          ? response.banned?.map((item) => refactorUser(item, true))
+          ? response.banned.map((user) =>
+              refactorUser({ ...user, banned: true })
+            )
           : []),
       ],
       groups: response.groups,

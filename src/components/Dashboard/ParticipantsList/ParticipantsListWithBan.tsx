@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { ITableColumn } from '@custom-types/ui/ITable';
 
 import tableStyles from '@styles/ui/customTable.module.css';
@@ -9,6 +9,8 @@ import UserList, { IParticipant } from '@ui/UserList/UserList';
 import styles from './participantsList.module.css';
 import { useLocale } from '@hooks/useLocale';
 import Link from 'next/link';
+import { Button } from '@ui/basics';
+import { requestWithNotify } from '@utils/requestWithNotify';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -60,9 +62,27 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     hidden: false,
     size: 2,
   },
+  {
+    label: locale.ban,
+    key: 'ban',
+    sortable: true,
+    sortFunction: (a: any, b: any): -1 | 0 | 1 =>
+      a.value !== b.value ? 0 : a.value ? 1 : -1,
+    sorted: 0,
+    allowMiddleState: true,
+    hidable: true,
+    hidden: false,
+    size: 2,
+  },
 ];
 
-const refactorUser = (user: IParticipant): any => ({
+const refactorUser = (
+  locale: ILocale,
+  type: 'assignment' | 'tournament',
+  user: IParticipant,
+  spec: string,
+  handleBan: (_: string, __: string, ___: boolean) => void
+): any => ({
   ...user,
   login: {
     value: user.login,
@@ -101,19 +121,72 @@ const refactorUser = (user: IParticipant): any => ({
       </div>
     ),
   },
+  ban: {
+    value: user.banned,
+    display: (
+      <>
+        {type === 'tournament' && (
+          <>
+            {!user.banned ? (
+              <Button
+                variant="outline"
+                kind="negative"
+                onClick={() => handleBan(user.login, spec, true)}
+              >
+                {locale.ban}
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                kind="positive"
+                onClick={() => handleBan(user.login, spec, false)}
+              >
+                {locale.unban}
+              </Button>
+            )}
+          </>
+        )}
+      </>
+    ),
+  },
 });
 
-const ParticipantsList: FC<{
+const ParticipantsListWithBan: FC<{
   type: 'assignment' | 'tournament';
   spec: string;
 }> = ({ type, spec }) => {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
+  const [refetch, setRefetch] = useState(false);
+
+  const handleBan = useCallback(
+    (login: string, spec: string, ban: boolean) => {
+      requestWithNotify(
+        `tournament/participants/${ban ? 'ban' : 'unban'}/${spec}`,
+        'POST',
+        ban
+          ? locale.notify.tournament.banUser
+          : locale.notify.tournament.unbanUser,
+        lang,
+        () => '',
+        {
+          login,
+        },
+        () => {
+          setRefetch((val) => !val);
+        }
+      );
+    },
+    [locale, lang]
+  );
 
   return (
     <div className={styles.wrapper}>
       <UserList
+        key={+refetch}
         url={`${type}/participants/${spec}`}
-        refactorUser={(user) => refactorUser(user)}
+        refactorUser={(user) =>
+          refactorUser(locale, type, user, spec, handleBan)
+        }
         initialColumns={initialColumns}
         noDefault
         empty={<>{locale.ui.table.emptyMessage}</>}
@@ -130,4 +203,4 @@ const ParticipantsList: FC<{
   );
 };
 
-export default memo(ParticipantsList);
+export default memo(ParticipantsListWithBan);

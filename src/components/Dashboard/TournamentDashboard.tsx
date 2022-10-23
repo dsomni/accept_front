@@ -22,11 +22,11 @@ import { useRequest } from '@hooks/useRequest';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import { useInterval } from '@mantine/hooks';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
-import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
 import TaskList from './TaskList/TaskList';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import CreateNotification from './CreateNotification/CreateNotification';
 import Results from './Results/Results';
+import ParticipantsListWithBan from './ParticipantsList/ParticipantsListWithBan';
 
 const TournamentDashboard: FC<{
   spec: string;
@@ -100,7 +100,9 @@ const TournamentDashboard: FC<{
         title: locale.dashboard.tournament.attempts,
       },
       {
-        page: <ParticipantsList type={'tournament'} spec={spec} />,
+        page: (
+          <ParticipantsListWithBan type={'tournament'} spec={spec} />
+        ),
         icon: <Users color="var(--secondary)" />,
         title: locale.dashboard.tournament.participants,
       },

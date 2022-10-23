@@ -19,4 +19,14 @@ export const tournament = {
     success: 'You were successfully registered',
     error: 'Error during registration',
   },
+  banUser: {
+    loading: 'Banning user',
+    success: 'User has been successfully banned',
+    error: 'Error during user banning',
+  },
+  unbanUser: {
+    loading: 'Unbanning user',
+    success: 'User has been successfully unbanned',
+    error: 'Error during user unbanning',
+  },
 };
