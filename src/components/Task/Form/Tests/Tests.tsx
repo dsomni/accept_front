@@ -136,7 +136,7 @@ const Tests: FC<{
           style: {
             width: '100%',
           },
-          targetWrapperStyle: { margin: 'var(--spacer-s) 0' },
+          // targetWrapperStyle: { margin: 'var(--spacer-s) 0' },
           dropdownContent: helperContent,
         }}
       >
