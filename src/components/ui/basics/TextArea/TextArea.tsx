@@ -8,11 +8,16 @@ import { Helper } from '@ui/basics';
 
 interface Props extends TextareaProps {
   helperContent?: string | ReactNode;
+  shrink?: boolean;
 }
 
-const TextArea: FC<Props> = ({ helperContent, ...props }) => {
+const TextArea: FC<Props> = ({ helperContent, shrink, ...props }) => {
   return (
-    <div className={inputStyles.wrapper}>
+    <div
+      className={`${inputStyles.wrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
       <div className={inputStyles.labelWrapper}>
         <div className={inputStyles.label}>
           {props.label}
@@ -22,7 +27,11 @@ const TextArea: FC<Props> = ({ helperContent, ...props }) => {
         </div>
         {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
-      <MantineTextarea size="lg" {...props} label={undefined} />
+      <MantineTextarea
+        size={shrink ? 'md' : 'lg'}
+        {...props}
+        label={undefined}
+      />
     </div>
   );
 };

@@ -1,5 +1,7 @@
 export const titles = {
   accept: 'Accept',
+  main: 'Main',
+  about: 'ABout',
   task: {
     add: 'Add task',
     edit: 'Edit task',

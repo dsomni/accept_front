@@ -50,9 +50,6 @@ const MainInfo: FC<{
         {...form.getInputProps('title')}
       />
       <CustomEditor
-        classNames={{
-          label: stepperStyles.label,
-        }}
         label={locale.tournament.form.description}
         form={form}
         name={'description'}

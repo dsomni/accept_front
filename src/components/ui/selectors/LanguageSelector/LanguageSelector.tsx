@@ -15,8 +15,9 @@ const LanguageSelector: FC<{
   initialLangs: Item[];
   setUsed: setter<any>;
   classNames?: object;
+  shrink?: boolean;
   fetchURL: string;
-}> = ({ setUsed, classNames, initialLangs, fetchURL }) => {
+}> = ({ setUsed, classNames, shrink, initialLangs, fetchURL }) => {
   const { locale } = useLocale();
 
   const [selectedLangs, setSelectedLangs] =
@@ -63,12 +64,13 @@ const LanguageSelector: FC<{
     (item: Item, handleSelect: any) => {
       return (
         <LanguageItem
+          shrink={shrink}
           item={item}
           onSelect={() => handleSelect(item)}
         />
       );
     },
-    []
+    [shrink]
   );
 
   return (
@@ -85,6 +87,7 @@ const LanguageSelector: FC<{
           ]}
           itemComponent={itemComponent}
           shouldSortChosen={true}
+          shrink={shrink}
         />
       )}
     </div>

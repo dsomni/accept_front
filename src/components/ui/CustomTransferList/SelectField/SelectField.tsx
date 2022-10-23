@@ -9,11 +9,11 @@ import {
 } from 'react';
 import styles from './selectField.module.css';
 import { Item } from '../CustomTransferList';
-import { Text } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import Fuse from 'fuse.js';
 import { TextInput } from '@ui/basics';
 import { useDebouncedValue } from '@mantine/hooks';
+import inputStyles from '@styles/ui/input.module.css';
 
 const RANGE_SIZE = 20;
 
@@ -25,6 +25,7 @@ export const SelectField: FC<{
   itemComponent: (_: any, __: any) => ReactNode;
   classNames: any;
   searchKeys?: string[];
+  shrink?: boolean;
 }> = ({
   title,
   values,
@@ -33,6 +34,7 @@ export const SelectField: FC<{
   itemComponent,
   classNames,
   searchKeys,
+  shrink,
 }) => {
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
@@ -50,10 +52,6 @@ export const SelectField: FC<{
   const [searched, setSearched] = useState(values);
   const [elementHeight, setElementHeight] = useState(0);
   const [postfixHeight, setPostfixHeight] = useState(0);
-
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
 
   useEffect(() => {
     if (element.current) {
@@ -88,7 +86,7 @@ export const SelectField: FC<{
 
   useEffect(() => {
     const area = scrollable.current;
-    console.log('listener');
+
     if (area) {
       area.addEventListener('scroll', handleScroll);
     }
@@ -129,17 +127,16 @@ export const SelectField: FC<{
   }, [values.length, search, searchText]);
 
   return (
-    <>
-      <Text
-        size="lg"
-        className={styles.title + ' ' + classNames.label}
-      >
+    <div className={shrink ? inputStyles.shrink : ''}>
+      <div className={`${inputStyles.label} ${classNames.label}`}>
         {title}
-      </Text>
+      </div>
+
       <div className={styles.header}>
         <div className={styles.searchBar}>
           <TextInput
             placeholder={locale.form.search}
+            shrink={shrink}
             onChange={(e: any) => setSearchText(e.target.value)}
           />
         </div>
@@ -160,6 +157,6 @@ export const SelectField: FC<{
           style={{ height: postfixHeight }}
         />
       </div>
-    </>
+    </div>
   );
 };

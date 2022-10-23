@@ -2,23 +2,29 @@ import { FC, ReactNode, memo } from 'react';
 import { Switch as MantineSwitch, SwitchProps } from '@mantine/core';
 import styles from './switch.module.css';
 import { Helper } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
 interface Props extends SwitchProps {
   helperContent?: string | ReactNode;
+  shrink?: boolean;
 }
 
-const Switch: FC<Props> = ({ helperContent, ...props }) => {
+const Switch: FC<Props> = ({ helperContent, shrink, ...props }) => {
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={`${styles.wrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
       <MantineSwitch
         classNames={{
           input: styles.input,
         }}
-        size="lg"
+        size={shrink ? 'sm' : 'md'}
         {...props}
         label={undefined}
       />
-      <div className={styles.labelWrapper}>
-        <div className={styles.label}>{props.label}</div>
+      <div className={inputStyles.labelWrapper}>
+        <div className={inputStyles.label}>{props.label}</div>
         {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
     </div>

@@ -12,7 +12,7 @@ export const task = {
   checker: [
     "The checker is firstly read the test input data, and then (from a new line) the result of the user's program execution",
     'To mark an answer as correct, the checker must return 1. Any other result from the checker marks the answer as incorrect',
-    'Example of a checker for the task "Increase the number by 1" in Python:',
-    'test_input=int(input()); user_output=int(input()); print(1 if user_output - test_input == 1 else 0); ',
   ],
+  checkerPlaceholder:
+    'Example of a checker for the task "Increase the number by 1" in Python:\n\ntest_input=int(input())\nuser_output=int(input())\nprint(1 if user_output - test_input == 1 else 0)',
 };

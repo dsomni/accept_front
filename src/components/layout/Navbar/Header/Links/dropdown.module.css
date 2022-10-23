@@ -1,0 +1,7 @@
+.item {
+  font-size: var(--font-size-m);
+}
+
+.item:hover {
+  background-color: #eee;
+}

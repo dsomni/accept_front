@@ -1,13 +1,12 @@
 import { useLocale } from '@hooks/useLocale';
-import { Group } from '@mantine/core';
-
 import { FC, memo, useCallback, useState } from 'react';
-import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
-import { Button, Icon } from '@ui/basics';
+import { Icon } from '@ui/basics';
 import { IGroupDisplay } from '@custom-types/data/IGroup';
 import { Trash } from 'tabler-icons-react';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const DeleteModal: FC<{
   group: IGroupDisplay;
@@ -37,33 +36,23 @@ const DeleteModal: FC<{
         opened={active}
         close={() => setActive(false)}
         hideCloseButton={true}
-        title={locale.group.modals.delete + ` '${group.name}' ?`}
+        title={locale.group.modals.deletion}
       >
-        <div className={deleteModalStyles.form}>
-          <div className={deleteModalStyles.question}>
-            {locale.group.modals.deleteConfidence}
+        <div className={modalStyles.verticalContent}>
+          <div>
+            {locale.group.modals.delete + ` '${group.name}' ?`}
           </div>
-          <Group
-            position="right"
-            spacing="lg"
-            className={deleteModalStyles.buttons}
-          >
-            <Button
-              variant="outline"
-              kind="positive"
-              autoFocus
-              onClick={() => setActive(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              kind="negative"
-              onClick={() => handleDelete()}
-            >
-              {locale.delete}
-            </Button>
-          </Group>
+          <SimpleButtonGroup
+            reversePositive
+            actionButton={{
+              label: locale.delete,
+              onClick: handleDelete,
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setActive(false),
+            }}
+          />
         </div>
       </SimpleModal>
     </>

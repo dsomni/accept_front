@@ -1,7 +1,6 @@
 import { FC, memo } from 'react';
 import { CustomEditor, TextInput } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
-import stepperStyles from '@styles/ui/stepper.module.css';
 
 const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -21,9 +20,6 @@ const DescriptionInfo: FC<{ form: any }> = ({ form }) => {
         {...form.getInputProps('shortDescription')}
       />
       <CustomEditor
-        classNames={{
-          label: stepperStyles.label,
-        }}
         helperContent={
           <div>
             {locale.helpers.notification.description.map((p, idx) => (

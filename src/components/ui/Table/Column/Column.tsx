@@ -1,4 +1,5 @@
 import { ITableColumn } from '@custom-types/ui/ITable';
+import { Icon } from '@ui/basics';
 import { FC, memo, useCallback, useState } from 'react';
 import { Triangle, TriangleInverted } from 'tabler-icons-react';
 import styles from './column.module.css';
@@ -56,9 +57,13 @@ const Column: FC<{
       {column.sortable && (
         <div className={styles.sortIcon}>
           {currentOrder === -1 ? (
-            <TriangleInverted width={22} height={22} />
+            <Icon size="xs">
+              <TriangleInverted color="black" />
+            </Icon>
           ) : currentOrder === 1 ? (
-            <Triangle width={22} height={22} />
+            <Icon size="xs">
+              <Triangle color="black" />
+            </Icon>
           ) : (
             <></>
           )}

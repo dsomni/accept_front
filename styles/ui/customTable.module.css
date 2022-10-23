@@ -2,6 +2,7 @@
   min-height: 70vh;
   padding-bottom: var(--spacer-l);
 }
+
 .table {
   width: 100%;
   border-spacing: 0px !important;
@@ -10,6 +11,7 @@
 .table tr {
   display: grid;
 }
+
 .author {
   text-align: left;
 }
@@ -19,8 +21,9 @@
 }
 
 .cell {
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
 }
+
 .headerCell,
 .cell {
   padding: var(--spacer-m);
@@ -28,7 +31,7 @@
 }
 
 .headerCell {
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
   user-select: none;
   border-bottom: solid 2px black;
   display: flex;

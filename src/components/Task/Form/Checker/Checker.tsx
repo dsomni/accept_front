@@ -6,7 +6,6 @@ import styles from './checker.module.css';
 import { ILanguage } from '@custom-types/data/atomic';
 import { sendRequest } from '@requests/request';
 import Tests from '@components/Task/Form/Tests/Tests';
-import stepperStyles from '@styles/ui/stepper.module.css';
 
 const defaultLangSpec = '0';
 
@@ -28,52 +27,45 @@ const Checker: FC<{ form: any }> = ({ form }) => {
   }, []);
 
   return (
-    <>
-      <Select
-        label={locale.language}
-        value={defaultLangSpec}
-        data={languages.map((lang) => ({
-          label: lang.name,
-          value: lang.spec.toString(),
-        }))}
-        classNames={{
-          label: stepperStyles.label,
-        }}
-        onBlur={() => form.validateField('checkerLang')}
-        {...form.getInputProps('checkerLang')}
-      />
-      <CodeArea
-        languages={languages}
-        minRows={20}
-        helperContent={
-          <div>
-            {locale.helpers.task.checker.map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
-          </div>
-        }
-        classNames={{
-          label: stepperStyles.label,
-        }}
-        label={locale.task.form.checker}
-        setLanguage={(value) =>
-          form.setFieldValue('checkerLang', value)
-        }
-        setCode={(value) => form.setFieldValue('checkerCode', value)}
-        formProps={{
-          ...form.getInputProps('checkerCode'),
-        }}
-        buttonProps={{
-          style: {
-            marginBottom: 'var(--spacer-xs)',
-            marginTop: 'var(--spacer-s)',
-          },
-        }}
-      />
-      <div className={styles.tests}>
-        <Tests form={form} hideOutput />
+    <div className={styles.wrapper}>
+      <div className={styles.checkerWrapper}>
+        <Select
+          label={locale.language}
+          value={defaultLangSpec}
+          data={languages.map((lang) => ({
+            label: lang.name,
+            value: lang.spec.toString(),
+          }))}
+          required
+          onBlur={() => form.validateField('checkerLang')}
+          {...form.getInputProps('checkerLang')}
+        />
+        <CodeArea
+          languages={languages}
+          minRows={15}
+          helperContent={
+            <div>
+              {locale.helpers.task.checker.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
+          }
+          label={locale.task.form.checker}
+          setLanguage={(value) =>
+            form.setFieldValue('checkerLang', value)
+          }
+          setCode={(value) =>
+            form.setFieldValue('checkerCode', value)
+          }
+          formProps={{
+            ...form.getInputProps('checkerCode'),
+          }}
+          placeholder={locale.helpers.task.checkerPlaceholder}
+        />
       </div>
-    </>
+
+      <Tests form={form} hideOutput />
+    </div>
   );
 };
 

@@ -1,12 +1,13 @@
 import { ITournament } from '@custom-types/data/ITournament';
 import { useLocale } from '@hooks/useLocale';
-import { Group } from '@mantine/core';
 import { FC, memo, useCallback, useState } from 'react';
-import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { callback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { Button } from '@ui/basics';
+import deleteModalStyles from '@styles/ui/deleteModal.module.css';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -38,38 +39,35 @@ const DeleteModal: FC<{
         opened={active}
         close={() => setActive(false)}
         hideCloseButton={true}
-        title={`${locale.tournament.modals.delete} '${tournament.title}' ?`}
+        title={locale.tournament.modals.deletion}
       >
-        <div className={deleteModalStyles.form}>
-          <Group
-            position="right"
-            spacing="lg"
-            className={deleteModalStyles.buttons}
-          >
-            {!toList ? (
-              <>
-                <Button
-                  variant="outline"
-                  kind="positive"
-                  autoFocus
-                  onClick={() => setActive(false)}
-                >
-                  {locale.cancel}
-                </Button>
-                <Button
-                  variant="outline"
-                  kind="negative"
-                  onClick={() => handleDelete()}
-                >
-                  {locale.delete}
-                </Button>
-              </>
-            ) : (
-              <Button variant="outline" href="/tournament/list">
-                {locale.toList}
-              </Button>
-            )}
-          </Group>
+        <div className={modalStyles.verticalContent}>
+          <div>
+            {locale.tournament.modals.delete +
+              ` '${tournament.title}' ?`}
+          </div>
+
+          {!toList ? (
+            <SimpleButtonGroup
+              reversePositive
+              actionButton={{
+                label: locale.delete,
+                onClick: handleDelete,
+              }}
+              cancelButton={{
+                label: locale.cancel,
+                onClick: () => setActive(false),
+              }}
+            />
+          ) : (
+            <Button
+              variant="outline"
+              href="/tournament/list"
+              targetWrapperClassName={deleteModalStyles.toListButton}
+            >
+              {locale.toList}
+            </Button>
+          )}
         </div>
       </SimpleModal>
     </>

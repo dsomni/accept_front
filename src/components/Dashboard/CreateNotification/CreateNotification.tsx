@@ -3,7 +3,6 @@ import { useForm } from '@mantine/form';
 import { Button, CustomEditor, Helper, TextInput } from '@ui/basics';
 import { FC, memo, useCallback } from 'react';
 import styles from './createNotification.module.css';
-import stepperStyles from '@styles/ui/stepper.module.css';
 import { INewNotification } from '@custom-types/data/notification';
 
 import { useUser } from '@hooks/useUser';
@@ -105,9 +104,6 @@ const CreateNotification: FC<{
           {...form.getInputProps('notificationShortDescription')}
         />
         <CustomEditor
-          classNames={{
-            label: stepperStyles.label,
-          }}
           helperContent={
             <div>
               {locale.helpers.notification.description.map(

@@ -1,25 +1,29 @@
 .wrapper {
   width: 100%;
 }
+
 .card {
   width: 60vw;
-  min-height: 65vh;
+  min-height: 40vh;
   margin: 5vh 5vw;
   padding: 0 0 var(--spacer-m) 0;
-  box-shadow: 0 -var(--spacer-xxs) var(--spacer-xxs) -3px
-      rgb(0 0 0 / 20%),
-    0 -var(--spacer-xs) var(--spacer-m) 1px rgb(0 0 0 / 14%),
-    0 -var(--spacer-xxs) var(--spacer-s) 3px rgb(0 0 0 / 12%);
+  box-shadow: 0 var(--spacer-xxs) var(--spacer-xxs) -3px rgb(0 0 0 /
+          20%),
+    0 var(--spacer-xs) var(--spacer-m) 1px rgb(0 0 0 / 14%),
+    0 var(--spacer-xxs) var(--spacer-s) 3px rgb(0 0 0 / 12%);
   border-radius: 2%;
 }
+
 .left {
   display: flex;
   flex-direction: row;
 }
+
 .right {
   display: flex;
   flex-direction: row-reverse;
 }
+
 .content {
   width: 100%;
   height: 100%;
@@ -27,17 +31,20 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 .title {
-  font-size: 4em;
+  font-size: 3rem;
   color: white;
   width: 100%;
   background-color: #000000c7;
   padding: var(--spacer-xxs) var(--spacer-s);
 }
+
 .description {
-  font-size: var(--font-size-xl);
+  font-size: 1.3rem;
   padding: var(--spacer-m) var(--spacer-s);
 }
+
 .image {
   border-radius: 2% 2% 0 0;
   width: 100%;
@@ -53,22 +60,24 @@
 }
 
 .button {
-  font-size: var(--font-size-xl);
   margin: var(--spacer-xxs) var(--spacer-s);
-  font-weight: 600;
-  padding: 0.8em;
   border: 2px solid #1c7ed6bf;
-  width: fit-content;
-  height: fit-content;
+  border-radius: 8px;
+}
+
+.button span {
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 1080px) {
   .content {
     width: 100%;
   }
+
   .image {
     width: 100%;
   }
+
   .card {
     width: 100%;
   }

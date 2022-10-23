@@ -27,7 +27,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({
         setCookie('user', JSON.stringify(user), {
           path: '/',
         });
-        console.log('1', accessLevel);
+
         setValue((prev) => ({
           ...prev,
           user: res.response,

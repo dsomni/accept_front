@@ -25,10 +25,10 @@ export const form = {
   checker: 'Чекер',
   hint: {
     title: 'Подсказка',
-    alarmType: 'Вид триггера',
+    alarmType: 'Вид триггера подсказки',
     hintAlarmTypes: ['Попытки', 'Время (минуты)'],
     text: 'Текст подсказки',
-    showAfter: 'Показать после',
+    showAfter: 'Показать подсказку после',
   },
   remark: 'Примечание',
   tests: 'Тесты',

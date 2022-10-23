@@ -1,9 +1,8 @@
 import { setter } from '@custom-types/ui/atomic';
 import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
-import { Input, Loader, MultiSelect } from '@mantine/core';
+import { Loader } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
-
 import {
   FC,
   ReactNode,
@@ -18,6 +17,7 @@ import styles from './table.module.css';
 import { BaseSearch } from '@custom-types/data/request';
 import PageNavigation from './PageNavigation';
 import { LoadingOverlay } from '@mantine/core';
+import { MultiSelect, TextInput } from '@ui/basics';
 
 const Table: FC<{
   columns: ITableColumn[];
@@ -228,7 +228,7 @@ const Table: FC<{
           <div className={styles.searchWrapper}>
             {withSearch && (
               <div className={styles.search}>
-                <Input
+                <TextInput
                   icon={<Search />}
                   classNames={{
                     input: styles.inputElem,
@@ -242,10 +242,6 @@ const Table: FC<{
             {availableColumns.length > 0 && (
               <div className={styles.columnSelect}>
                 <MultiSelect
-                  classNames={{
-                    value: styles.selected,
-                    input: styles.inputElem,
-                  }}
                   data={availableColumns}
                   value={selectedColumns}
                   onChange={handleChange}

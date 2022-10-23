@@ -1,5 +1,5 @@
 .root {
-  background-color: '#00000000';
+  background-color: #ffffff;
   width: fit-content;
 }
 .label {
@@ -9,5 +9,5 @@
   background-color: var(--primary);
 }
 .labelActive {
-  color: white !important;
+  color: #ffffff !important;
 }
