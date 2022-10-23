@@ -1,8 +1,11 @@
-.tests {
-  margin-top: var(--spacer-l);
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xl);
 }
 
-.tests > * {
-  margin: 0;
-  width: 100%;
+.checkerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
 }

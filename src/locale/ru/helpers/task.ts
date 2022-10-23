@@ -12,7 +12,7 @@ export const task = {
   checker: [
     'Чекеру на вход сначала подаются входные данные теста, а затем (с новой строки) результат выполнения программы пользователя',
     'Чтобы отметить ответ как верный, чекер должен вернуть 1. Любой другой результат от чекера помечает ответ как неверный',
-    'Пример чекера для задачи "Увеличить число на 1" на языке Python:',
-    'test_input=int(input()); user_output=int(input()); print(1 if user_output - test_input == 1 else 0); ',
   ],
+  checkerPlaceholder:
+    'Пример чекера для задачи "Увеличить число на 1" на языке Python:\n\ntest_input=int(input())\nuser_output=int(input())\nprint(1 if user_output - test_input == 1 else 0)',
 };
