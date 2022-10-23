@@ -39,6 +39,7 @@ body {
 }
 
 :root {
+  --font-size-btn-xl: 1.4rem;
   --font-size-btn-l: 1.2rem;
   --font-size-btn-m: 1rem;
   --font-size-btn-s: 0.8rem;

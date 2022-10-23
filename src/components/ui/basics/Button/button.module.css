@@ -20,6 +20,7 @@
   color: var(--main-color);
   font-weight: 400;
 }
+
 .root {
   background-color: var(--bg-color);
   padding: var(--spacer-xs) var(--spacer-s);
@@ -34,7 +35,7 @@
 .outline.buttonWrapper {
   --bg-color: #fff;
   --main-color: var(--primary);
-  --hover-color: var(--primary-light2);
+  --hover-color: #e7f5ff;
   --border-color: var(--main-color);
 }
 
@@ -77,6 +78,14 @@
 .negative.buttonWrapper {
   --bg-color: var(--negative);
   --hover-color: #f10202;
+}
+
+.header.buttonWrapper {
+  --bg-color: #ffffff00;
+  --main-color: var(--dark1);
+  --border-color: #ffffff00;
+  --hover-color: #9dd5ff42;
+  --font-size: var(--font-size-btn-xl);
 }
 
 /* should be at bottom */

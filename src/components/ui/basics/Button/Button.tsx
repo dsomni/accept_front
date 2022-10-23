@@ -14,7 +14,7 @@ const Button: FC<MyButtonProps> = ({
   kind,
   variant,
   shrink,
-  ...buttonProps
+  ...props
 }) => {
   return (
     <HoverCard
@@ -37,7 +37,7 @@ const Button: FC<MyButtonProps> = ({
                 shrink ? styles.shrink : ''
               }` +
               ' ' +
-              (buttonProps.disabled
+              (props.disabled
                 ? styles.disabled
                 : `${kind && styles[kind]} ${
                     variant && styles[variant]
@@ -49,7 +49,8 @@ const Button: FC<MyButtonProps> = ({
                 label: styles.label,
                 root: styles.root,
               }}
-              {...buttonProps}
+              component={props.onClick ? 'button' : 'a'}
+              {...props}
             />
           </div>
         </HoverCard.Target>
