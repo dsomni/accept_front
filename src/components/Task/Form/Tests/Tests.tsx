@@ -10,7 +10,8 @@ const Tests: FC<{
   form: any;
   hideInput?: boolean;
   hideOutput?: boolean;
-}> = ({ form, hideInput, hideOutput }) => {
+  shrink?: boolean;
+}> = ({ form, hideInput, hideOutput, shrink }) => {
   const { locale } = useLocale();
 
   const onDeleteTest = useCallback(
@@ -147,38 +148,32 @@ const Tests: FC<{
             </div>
           )}
           {form.values.tests.length > 0 &&
-            form.values.tests.map(
-              (_: [string, string], index: number) => (
-                <div key={index} className={stepperStyles.example}>
-                  <ListItem
-                    field="tests"
-                    label={locale.task.form.test + ' #' + (index + 1)}
-                    InLabel={locale.task.form.inputTest}
-                    OutLabel={locale.task.form.outputTest}
-                    form={form}
-                    hideInput={
-                      hideInput || form.values.taskType == '1'
-                    }
-                    hideOutput={hideOutput}
-                    index={index}
-                    onDelete={onDeleteTest}
-                    maxRows={7}
-                  />
-                </div>
-              )
-            )}
+            form.values.tests.map((_: ITest, index: number) => (
+              <div key={index} className={stepperStyles.example}>
+                <ListItem
+                  field="tests"
+                  label={locale.task.form.test + ' #' + (index + 1)}
+                  InLabel={locale.task.form.inputTest}
+                  OutLabel={locale.task.form.outputTest}
+                  form={form}
+                  hideInput={hideInput || form.values.taskType == '1'}
+                  hideOutput={hideOutput}
+                  index={index}
+                  onDelete={onDeleteTest}
+                  maxRows={7}
+                  shrink={shrink}
+                />
+              </div>
+            ))}
           {form.errors.tests && (
             <InputWrapper
+              shrink={shrink}
               {...form.getInputProps('tests')}
               onChange={() => {}}
-              styles={{ error: { fontSize: 'var(--font-size-m)' } }}
             />
           )}
           <Button
-            hoverCardDropdownProps={{ style: { width: '100%' } }}
-            size="lg"
             className={stepperStyles.addButton}
-            color="var(--primary)"
             variant="light"
             onClick={() => {
               form.setFieldValue(

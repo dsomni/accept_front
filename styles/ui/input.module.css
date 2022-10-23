@@ -28,14 +28,14 @@
   font-size: var(--font-size-label-s);
 }
 
-.label2 {
+.subLabel {
   font-size: var(--font-size-label-s);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
 
-.shrink .label2 {
+.shrink .subLabel {
   font-size: var(--font-size-label-xs);
 }
 

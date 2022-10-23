@@ -111,7 +111,7 @@ const Stepper: FC<{
         iconPosition={iconPosition || 'right'}
         active={currentStep}
         onStepClick={onStepperChange}
-        breakpoint={1000}
+        // breakpoint={1000}
       >
         {pages.map((page, index) => (
           <MantineStepper.Step

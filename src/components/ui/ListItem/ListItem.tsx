@@ -1,9 +1,10 @@
 import { callback } from '@custom-types/ui/atomic';
-import { ActionIcon, Textarea } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import { FC, memo } from 'react';
 import OpenTextInNewTab from '@ui/OpenTextInNewTab/OpenTextInNewTab';
 import styles from './listItem.module.css';
+import inputStyles from '@styles/ui/input.module.css';
+import { Icon, TextArea } from '@ui/basics';
 
 const ListItem: FC<{
   label: string;
@@ -19,6 +20,7 @@ const ListItem: FC<{
   onDelete?: callback<number, void>;
   readonly?: boolean;
   classNames?: any;
+  shrink?: boolean;
 }> = ({
   label,
   InLabel,
@@ -33,29 +35,36 @@ const ListItem: FC<{
   field,
   readonly,
   classNames,
+  shrink,
 }) => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.globalLabel}>{label}</div>
+    <div
+      className={`${styles.wrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
+      <div className={`${styles.label} ${inputStyles.label}`}>
+        {label}
+        {onDelete && (
+          <Icon
+            onClick={() => onDelete(index)}
+            color="red"
+            variant="transparent"
+            size="xs"
+          >
+            <Trash />
+          </Icon>
+        )}
+      </div>
       <div className={styles.example}>
         {!hideInput && (
-          <Textarea
-            size="lg"
-            className={styles.exampleInput}
+          <TextArea
             autosize
             label={
-              <div className={styles.label + ' ' + classNames?.label}>
+              <div
+                className={`${styles.label} ${inputStyles.subLabel} ${classNames?.label}`}
+              >
                 {InLabel}
-                {onDelete && (
-                  <ActionIcon
-                    onClick={() => onDelete(index)}
-                    color="red"
-                    variant="transparent"
-                    size="lg"
-                  >
-                    <Trash width={22} height={22} />
-                  </ActionIcon>
-                )}
                 <OpenTextInNewTab
                   text={form.values[field][index]['inputData']}
                 />
@@ -79,23 +88,13 @@ const ListItem: FC<{
           />
         )}
         {!hideOutput && (
-          <Textarea
-            size="lg"
+          <TextArea
             autosize
-            className={styles.exampleInput}
             label={
-              <div className={styles.label + ' ' + classNames?.label}>
+              <div
+                className={`${styles.label} ${inputStyles.subLabel} ${classNames?.label}`}
+              >
                 {OutLabel}
-                {onDelete && hideInput && (
-                  <ActionIcon
-                    onClick={() => onDelete(index)}
-                    color="red"
-                    variant="transparent"
-                    size="lg"
-                  >
-                    <Trash width={22} height={22} />
-                  </ActionIcon>
-                )}
                 <OpenTextInNewTab
                   text={form.values[field][index]['outputData']}
                 />

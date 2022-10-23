@@ -62,7 +62,7 @@ const Radio: FC<{
           <MantineRadio
             key={index}
             classNames={{
-              label: inputStyles.label2,
+              label: inputStyles.subLabel,
             }}
             {...radioProps}
             value={item.value}
