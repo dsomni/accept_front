@@ -1,6 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import styles from './tagSelector.module.css';
 import { sendRequest } from '@requests/request';
 import { ITag } from '@custom-types/data/ITag';
 import {
@@ -89,11 +88,7 @@ const TagSelector: FC<{
   );
 
   return (
-    <InputWrapper
-      className={styles.wrapper}
-      shrink={shrink}
-      {...form.getInputProps(field)}
-    >
+    <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
       {!loading && (
         <CustomTransferList
           defaultOptions={availableTags}

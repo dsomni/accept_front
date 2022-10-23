@@ -4,7 +4,8 @@ body {
   padding: 0 !important;
   --removed-scroll-width: 0 !important;
   font-size: 14px;
-  min-width: 1000px; /*400px*/
+  min-width: 1400px;
+  /*400px*/
   width: 100%;
 }
 
@@ -16,6 +17,7 @@ body {
   --neutral: #ffae00;
   --accent: #ff00d0;
 }
+
 :root {
   --dark1: #000;
   --dark2: #333;
@@ -24,6 +26,7 @@ body {
   --dark5: #ccc;
   --dark6: #f8f8f8;
 }
+
 :root {
   --font-size-huge: 2.5rem;
   --font-size-xxl: 2rem;
@@ -34,6 +37,7 @@ body {
   --font-size-xs: 0.8rem;
   --font-size-xxs: 0.6rem;
 }
+
 :root {
   --font-size-btn-l: 1.2rem;
   --font-size-btn-m: 1rem;

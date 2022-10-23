@@ -26,9 +26,6 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
         {...form.getInputProps('title')}
       />
       <CustomEditor
-        classNames={{
-          label: stepperStyles.label,
-        }}
         label={locale.task.form.description}
         form={form}
         name={'description'}
