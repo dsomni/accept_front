@@ -5,11 +5,13 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 .inputElem {
   font-size: var(--font-size-s);
   min-height: var(--spacer-xl);
   display: flex;
 }
+
 .selected {
   font-size: var(--font-size-s);
   min-height: var(--spacer-l);
@@ -18,6 +20,7 @@
 .selected span {
   overflow: visible;
 }
+
 .searchWrapper {
   display: flex;
   flex-direction: row;
@@ -26,17 +29,21 @@
   column-gap: var(--spacer-l);
   row-gap: var(--spacer-xs);
 }
+
 .columnSelect,
 .search {
   width: 25%;
   min-width: 350px;
 }
+
 .footer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-top: var(--spacer-m);
+  font-size: var(--font-size-m);
 }
+
 .pagesWrapper {
   display: flex;
   flex-direction: row;
@@ -44,17 +51,24 @@
   width: 100%;
   justify-content: space-between;
 }
+
 .pageNavigation {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .perPageWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: var(--spacer-xs);
 }
+
+.perPage {
+  white-space: nowrap;
+}
+
 .selectPerPage {
   width: var(--spacer-xxl);
 }
@@ -62,11 +76,7 @@
 .pageNavigationWrapper {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
-}
-
-.overall {
-  font-size: var(--font-size-m);
+  gap: var(--spacer-s);
 }
 
 .emptyMessage,
