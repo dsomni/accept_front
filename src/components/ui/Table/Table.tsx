@@ -3,7 +3,6 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import { useLocale } from '@hooks/useLocale';
 import { Input, Loader, MultiSelect } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
-
 import {
   FC,
   ReactNode,
