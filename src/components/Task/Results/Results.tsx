@@ -19,15 +19,17 @@ const refactorAttempt = (
       <div
         style={{
           color:
-            attempt.status.spec >= 2
+            attempt.status.spec == 2
               ? attempt.verdict?.verdict.spec == 0
                 ? 'var(--positive)'
                 : 'var(--negative)'
+              : attempt.status.spec == 3
+              ? 'var(--accent)'
               : 'black',
         }}
       >
-        {attempt.status.spec >= 2
-          ? (attempt.verdict?.verdict.shortText || '') +
+        {attempt.status.spec == 2
+          ? (attempt.verdict?.verdict.shortText || 'ER') +
             ' #' +
             ((attempt.verdict?.test || 0) + 1).toString()
           : locale.attempt.statuses[attempt.status.spec]}
@@ -36,6 +38,8 @@ const refactorAttempt = (
     value:
       attempt.status.spec == 2
         ? attempt.verdict?.verdict.spec
+        : attempt.status.spec == 3
+        ? attempt.status.spec - 20
         : attempt.status.spec - 10,
   },
   date: {

@@ -63,7 +63,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
     (spec: string) => {
       return () =>
         sendRequest<undefined, ITaskDisplay[]>(
-          `${type}/tasks/${spec}`,
+          `${type}/tasks_status/${spec}`,
           'GET',
           undefined,
           5000

@@ -34,7 +34,7 @@ const TasksBar: FC<{
             >
               <a
                 className={`${styles.taskStatus} ${
-                  task.status && task.status.spec != 2
+                  task.status && task.status.spec < 2
                     ? styles.testing
                     : !task.verdict
                     ? styles.null

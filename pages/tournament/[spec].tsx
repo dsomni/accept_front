@@ -151,6 +151,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     //   'public, s-maxage=10, stale-while-revalidate=59'
     // );
     const tournament = await response.json();
+
     return {
       props: {
         tournament,
