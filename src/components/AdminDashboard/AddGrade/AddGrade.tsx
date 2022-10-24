@@ -2,7 +2,7 @@ import { FC, memo, useCallback, useEffect, useMemo } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 import { IGroup } from '@custom-types/data/IGroup';
 import { useLocale } from '@hooks/useLocale';
-import { Button, LoadingOverlay, TextInput } from '@mantine/core';
+import { Button, LoadingOverlay } from '@mantine/core';
 import { UseFormReturnType, useForm } from '@mantine/form';
 import { UserSelector } from '@ui/selectors';
 import {
@@ -13,6 +13,7 @@ import { requestWithNotify } from '@utils/requestWithNotify';
 import styles from './addGrade.module.css';
 import { useRequest } from '@hooks/useRequest';
 import { IUser } from '@custom-types/data/IUser';
+import { TextInput } from '@ui/basics';
 
 const initialValues = {
   spec: '',
@@ -102,7 +103,6 @@ const AddGrade: FC<{}> = ({}) => {
       </div>
       <div className={styles.buttonWrapper}>
         <Button
-          color="var(--primary)"
           onClick={() => handleSubmit(form)}
           disabled={Object.keys(form.errors).length > 0}
         >

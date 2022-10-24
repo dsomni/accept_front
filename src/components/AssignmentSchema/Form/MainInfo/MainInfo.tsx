@@ -2,6 +2,8 @@ import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useMemo } from 'react';
 import { CustomEditor, NumberInput, TextInput } from '@ui/basics';
 import { TagSelector } from '@ui/selectors';
+import { useCallback } from 'react';
+import { ITag } from '@custom-types/data/ITag';
 
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
@@ -11,6 +13,11 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
       return form.values.tags;
     },
     [form.values.spec] // eslint-disable-line
+  );
+
+  const setUsed = useCallback(
+    (value: ITag[]) => form.setFieldValue('tags', value),
+    [form.setFieldValue] // eslint-disable-line
   );
 
   return (
@@ -27,7 +34,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
       />
       <TagSelector
         initialTags={initialTags}
-        setUsed={(value) => form.setFieldValue('tags', value)}
+        setUsed={setUsed}
         fetchURL={'assignment_tag/list'}
         addURL={'assignment_tag/add'}
         updateURL={'assignment_tag/edit'}

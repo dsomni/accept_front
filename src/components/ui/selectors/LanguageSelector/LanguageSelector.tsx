@@ -1,6 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
 
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import styles from './languageSelector.module.css';
 import { sendRequest } from '@requests/request';
 import { ILanguage } from '@custom-types/data/atomic';
@@ -19,10 +26,27 @@ const LanguageSelector: FC<{
   fetchURL: string;
 }> = ({ setUsed, classNames, shrink, initialLangs, fetchURL }) => {
   const { locale } = useLocale();
+  const [langs, setLangs] = useState<ILanguage[]>([]);
 
-  const [selectedLangs, setSelectedLangs] =
-    useState<Item[]>(initialLangs);
-  const [availableLangs, setAvailableLangs] = useState<Item[]>([]);
+  const [availableLangs, selectedLangs] = useMemo(() => {
+    let newAvailableLangs: Item[] = [];
+    let newSelectedLangs: Item[] = [];
+    let lang;
+    let selectedSpecs = initialLangs.map((item) => item.value);
+    for (let i = 0; i < langs.length; i++) {
+      lang = {
+        value: langs[i].spec.toString(),
+        label: langs[i].name,
+      };
+      if (selectedSpecs.includes(lang.value)) {
+        newSelectedLangs.push(lang);
+      } else {
+        newAvailableLangs.push(lang);
+      }
+    }
+    return [newAvailableLangs, newSelectedLangs];
+  }, [initialLangs, langs]);
+
   const [loading, setLoading] = useState(true);
 
   const refetch = useCallback(async () => {
@@ -34,27 +58,10 @@ const LanguageSelector: FC<{
       600000
     ).then((res) => {
       if (res.error) return;
-      let langs = res.response;
-      let newAvailableLangs: Item[] = [];
-      let newSelectedLangs: Item[] = [];
-      let lang;
-      let selectedSpecs = selectedLangs.map((item) => item.value);
-      for (let i = 0; i < langs.length; i++) {
-        lang = {
-          value: langs[i].spec.toString(),
-          label: langs[i].name,
-        };
-        if (selectedSpecs.includes(lang.value)) {
-          newSelectedLangs.push(lang);
-        } else {
-          newAvailableLangs.push(lang);
-        }
-      }
-      setSelectedLangs(newSelectedLangs);
-      setAvailableLangs(newAvailableLangs);
+      setLangs(res.response);
       setLoading(false);
     });
-  }, [fetchURL, selectedLangs]);
+  }, [fetchURL]);
 
   useEffect(() => {
     refetch();

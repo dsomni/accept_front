@@ -3,8 +3,8 @@ import { FC, memo, useCallback, useMemo } from 'react';
 import { TagSelector } from '@ui/selectors';
 import styles from './mainInfo.module.css';
 import { ITaskCheckType, ITaskType } from '@custom-types/data/atomic';
-import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { NumberInput, Radio, Switch, TextInput } from '@ui/basics';
+import { ITag } from '@custom-types/data/ITag';
 
 const MainInfo: FC<{
   form: any;
@@ -46,6 +46,11 @@ const MainInfo: FC<{
     [form]
   );
 
+  const setUsed = useCallback(
+    (value: ITag[]) => form.setFieldValue('tags', value),
+    [form.setFieldValue] // eslint-disable-line
+  );
+
   return (
     <>
       <TextInput
@@ -56,9 +61,7 @@ const MainInfo: FC<{
 
       <TagSelector
         initialTags={initialTags}
-        setUsed={(values: Item[]) => {
-          form.setFieldValue('tags', values);
-        }}
+        setUsed={setUsed}
         fetchURL={'tag/list'}
         addURL={'tag/add'}
         updateURL={'tag/edit'}
