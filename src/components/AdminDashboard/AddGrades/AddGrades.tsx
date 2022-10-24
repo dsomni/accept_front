@@ -1,7 +1,6 @@
 import { IGroup } from '@custom-types/data/IGroup';
 import { useLocale } from '@hooks/useLocale';
-import { ActionIcon } from '@mantine/core';
-import { Button, MultiSelect, NumberInput } from '@ui/basics';
+import { Button, Icon, MultiSelect, NumberInput } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { FC, memo, useCallback, useState } from 'react';
 import { Trash } from 'tabler-icons-react';
@@ -105,14 +104,9 @@ const AddGrades: FC<{}> = ({}) => {
               value={grade.letters}
               onChange={setLetters(index)}
             />
-            <ActionIcon
-              onClick={onDelete(index)}
-              color="red"
-              variant="transparent"
-              size="lg"
-            >
-              <Trash width={22} height={22} />
-            </ActionIcon>
+            <Icon onClick={onDelete(index)} size="xs">
+              <Trash color="var(--negative)" />
+            </Icon>
           </div>
         ))}
       </div>
