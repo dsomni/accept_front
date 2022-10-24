@@ -4,7 +4,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import styles from './selectField.module.css';
@@ -12,10 +11,8 @@ import { Item } from '../CustomTransferList';
 import { useLocale } from '@hooks/useLocale';
 import Fuse from 'fuse.js';
 import { TextInput } from '@ui/basics';
-import { useDebouncedValue } from '@mantine/hooks';
 import inputStyles from '@styles/ui/input.module.css';
-
-const RANGE_SIZE = 20;
+import useVirtual from 'react-cool-virtual';
 
 export const SelectField: FC<{
   title: string;
@@ -38,62 +35,8 @@ export const SelectField: FC<{
 }) => {
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
-  const scrollable = useRef<HTMLDivElement>(null!);
-  const element = useRef<HTMLDivElement>(null!);
 
-  const [lowIndexState, setLowIndexState] = useState(0);
-  const [lowIndex] = useDebouncedValue(lowIndexState, 10);
-  const [displayed, setDisplayed] = useState(
-    values.slice(
-      lowIndex,
-      Math.min(lowIndex + RANGE_SIZE, values.length)
-    )
-  );
   const [searched, setSearched] = useState(values);
-  const [elementHeight, setElementHeight] = useState(0);
-  const [postfixHeight, setPostfixHeight] = useState(0);
-
-  useEffect(() => {
-    if (element.current) {
-      setElementHeight(element.current.clientHeight);
-    }
-  }, [element]);
-
-  useEffect(() => {
-    setDisplayed(
-      searched.slice(
-        0,
-        Math.min(lowIndex + RANGE_SIZE, searched.length)
-      )
-    );
-    setPostfixHeight(
-      elementHeight * (searched.length - lowIndex - RANGE_SIZE)
-    );
-  }, [searched, lowIndex, elementHeight]);
-
-  const handleScroll = useCallback(
-    (e: Event) => {
-      if (e.target && elementHeight > 0) {
-        const top_offset = Math.floor(
-          // @ts-ignore-line
-          e.target.scrollTop / elementHeight
-        );
-        setLowIndexState(top_offset);
-      }
-    },
-    [elementHeight]
-  );
-
-  useEffect(() => {
-    const area = scrollable.current;
-
-    if (area) {
-      area.addEventListener('scroll', handleScroll);
-    }
-    return () => {
-      if (area) area.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
 
   const keys = useMemo(
     () => (searchKeys ? searchKeys : ['label']),
@@ -116,7 +59,6 @@ export const SelectField: FC<{
           fuse.search(value).map((result) => result.item)
         );
       }
-      setLowIndexState(0);
       return setSearched(values);
     },
     [fuse, values]
@@ -125,6 +67,14 @@ export const SelectField: FC<{
   useEffect(() => {
     search(searchText);
   }, [values.length, search, searchText]);
+
+  const { outerRef, innerRef, items } = useVirtual<
+    HTMLDivElement,
+    HTMLDivElement
+  >({
+    itemCount: searched.length,
+    overscanCount: 10,
+  });
 
   return (
     <div className={shrink ? inputStyles.shrink : ''}>
@@ -143,19 +93,18 @@ export const SelectField: FC<{
         {!!rightComponent && rightComponent()}
       </div>
       <div
-        key={values.length}
         className={styles.content}
-        ref={scrollable}
+        // key={searched.length}
+        ref={outerRef}
       >
-        {displayed.map((item, index) => (
-          <div ref={index == 0 ? element : null} key={index}>
-            {itemComponent(item, handleSelect)}
-          </div>
-        ))}
-        <div
-          className={styles.postfix}
-          style={{ height: postfixHeight }}
-        />
+        <div ref={innerRef}>
+          {items.map(({ index, measureRef }) => (
+            <div key={index} ref={measureRef}>
+              {index < searched.length &&
+                itemComponent(searched[index], handleSelect)}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

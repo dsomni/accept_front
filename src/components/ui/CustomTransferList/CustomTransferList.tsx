@@ -94,7 +94,6 @@ export const CustomTransferList: FC<{
     },
     [chosen, setUsed]
   );
-
   return (
     <div
       className={`${styles.wrapper} ${
