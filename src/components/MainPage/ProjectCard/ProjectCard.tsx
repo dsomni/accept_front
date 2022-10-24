@@ -1,6 +1,8 @@
+import { ICON_SIZES } from '@constants/Sizes';
 import { IProjectCard } from '@custom-types/ui/IProjectCard';
 import { useLocale } from '@hooks/useLocale';
-import { Button, Icon } from '@ui/basics';
+import { useWidth } from '@hooks/useWidth';
+import { Button } from '@ui/basics';
 
 import { FC } from 'react';
 import { ChevronRight } from 'tabler-icons-react';
@@ -12,6 +14,7 @@ export const ProjectCard: FC<{
 }> = ({ left, card }) => {
   const { locale } = useLocale();
   const position = left ? styles.left : styles.right;
+  const { width } = useWidth();
 
   return (
     <div className={`${styles.wrapper} ${position}`}>
@@ -34,9 +37,10 @@ export const ProjectCard: FC<{
             variant="outline"
             href={card.href}
             rightIcon={
-              <Icon color="var(--primary)">
-                <ChevronRight />
-              </Icon>
+              <ChevronRight
+                color="var(--primary)"
+                size={ICON_SIZES['md'][width]}
+              />
             }
           >
             {locale.projects.view}
