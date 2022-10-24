@@ -48,6 +48,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
           </Indicator>
         ),
         title: locale.profile.notification,
+        section: 'notifications',
       },
       {
         page: <AssignmentList />,

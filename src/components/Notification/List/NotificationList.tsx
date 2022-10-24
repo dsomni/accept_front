@@ -214,7 +214,7 @@ const NotificationList: FC<{}> = ({}) => {
               <div className={styles.title}>
                 {notification.title}{' '}
                 {!notification.viewed && (
-                  <Badge color="green">New</Badge>
+                  <Badge color="green">{locale.new}</Badge>
                 )}
               </div>
               <div className={styles.shortDescription}>

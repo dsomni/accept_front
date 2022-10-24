@@ -52,6 +52,7 @@ const en = {
     done: 'Copied code to clipboard',
   },
   newTab: 'Open in the new tab',
+  new: 'New',
   assignmentSchema,
   assignment,
   attempt,
