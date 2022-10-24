@@ -30,15 +30,15 @@ const listLinks: IHeaderLink[] = [
     href: '/profile/me?section=assignments',
   },
   {
-    text: (locale) => locale.mainHeaderLinks.listLinks.groups,
-    type: 'regular',
-    href: '/group/list',
-    permission: 'teacher',
-  },
-  {
     text: (locale) => locale.mainHeaderLinks.listLinks.schemas,
     type: 'regular',
     href: '/assignment_schema/list',
+    permission: 'teacher',
+  },
+  {
+    text: (locale) => locale.mainHeaderLinks.listLinks.groups,
+    type: 'regular',
+    href: '/group/list',
     permission: 'teacher',
   },
   {
