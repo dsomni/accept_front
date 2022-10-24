@@ -121,12 +121,13 @@ const NotificationList: FC<{}> = ({}) => {
     refetchNotifications,
   ]);
 
-  const handleOpenModal = useCallback((current: number) => {
-    return () => {
-      setCurrent(current);
+  const handleOpenModal = useCallback(
+    (index: number) => {
+      setCurrent(index + ON_PAGE * (activePage - 1));
       setOpenedModal(true);
-    };
-  }, []);
+    },
+    [activePage]
+  );
 
   useEffect(() => {
     const id = setInterval(refetchNotifications, 15000);
@@ -209,7 +210,7 @@ const NotificationList: FC<{}> = ({}) => {
             </div>
             <div
               className={styles.titleWrapper}
-              onClick={handleOpenModal(index)}
+              onClick={() => handleOpenModal(index)}
             >
               <div className={styles.title}>
                 {notification.title}{' '}
