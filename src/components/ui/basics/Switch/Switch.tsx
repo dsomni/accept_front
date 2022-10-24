@@ -18,6 +18,8 @@ const Switch: FC<Props> = ({ helperContent, shrink, ...props }) => {
       <MantineSwitch
         classNames={{
           input: styles.input,
+          root: styles.switchWrapper,
+          body: styles.switchBody,
         }}
         size={shrink ? 'sm' : 'md'}
         {...props}

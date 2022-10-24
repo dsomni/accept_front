@@ -9,3 +9,7 @@
   background-color: var(--primary);
   border-color: var(--primary);
 }
+
+.switchBody {
+  align-items: flex-end;
+}

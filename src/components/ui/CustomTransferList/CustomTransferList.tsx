@@ -57,10 +57,6 @@ const InnerTransferList: FC<InnerTransferListProps> = ({
   const [options] = useStore((store) => store['options']);
 
   useEffect(() => {
-    console.log(1);
-  }, [setUsed]);
-
-  useEffect(() => {
     setUsed(chosen);
   }, [chosen, setUsed]);
 
