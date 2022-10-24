@@ -12,6 +12,7 @@ export const group = {
   },
   modals: {
     delete: 'Delete group',
+    deletion: 'Group deletion',
     deleteConfidence:
       'Are you sure you want to permanently delete this group?',
   },

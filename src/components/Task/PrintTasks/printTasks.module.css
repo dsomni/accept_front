@@ -1,0 +1,14 @@
+@media print {
+  .pageWrapper {
+    break-after: always;
+  }
+
+  .tournamentInfo {
+    break-after: always;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 15mm 18mm;
+}

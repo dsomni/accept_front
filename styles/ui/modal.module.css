@@ -1,0 +1,17 @@
+.titleWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacer-xxs);
+}
+
+.title {
+  font-size: var(--font-size-l);
+  color: var(--secondary);
+}
+
+.verticalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+}

@@ -2,6 +2,9 @@ import { FC, memo, useEffect, useMemo, useState } from 'react';
 import Results from '@components/Dashboard/Results/Results';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
+import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
+import TaskList from './TaskList/TaskList';
+import CreateNotification from './CreateNotification/CreateNotification';
 import {
   AlignRight,
   BellPlus,
@@ -16,8 +19,6 @@ import { useLocale } from '@hooks/useLocale';
 import { IAssignmentDisplay } from '@custom-types/data/IAssignment';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
-import ParticipantsList from '@components/Dashboard/ParticipantsList/ParticipantsList';
-import TaskList from './TaskList/TaskList';
 import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
@@ -26,7 +27,6 @@ import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import { useInterval } from '@mantine/hooks';
-import CreateNotification from './CreateNotification/CreateNotification';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -58,7 +58,17 @@ const AssignmentDashboard: FC<{
     () => [
       {
         page: assignment && (
-          <TimeInfo assignment={assignment} refetch={refetch} />
+          <TimeInfo
+            type={'assignment'}
+            entity={assignment}
+            timeInfo={{
+              start: assignment.start,
+              end: assignment.end,
+              status: assignment.status.spec as 0 | 1 | 2,
+              infinite: assignment.infinite,
+            }}
+            refetch={refetch}
+          />
         ),
         icon: <Vocabulary color="var(--secondary)" />,
         title: locale.dashboard.assignment.mainInfo,
@@ -71,6 +81,8 @@ const AssignmentDashboard: FC<{
               !assignment.infinite && assignment.status.spec == 2
             }
             endDate={assignment.end}
+            type={'assignment'}
+            full
           />
         ),
         icon: <Table color="var(--secondary)" />,
@@ -80,20 +92,23 @@ const AssignmentDashboard: FC<{
       {
         page: assignment && (
           <AttemptsList
+            type={'assignment'}
             spec={assignment.spec}
             shouldNotRefetch={assignment.status.spec != 1}
+            isFinished={assignment.status.spec == 2}
+            endDate={assignment.end}
           />
         ),
         icon: <AlignRight color="var(--secondary)" />,
         title: locale.dashboard.assignment.attempts,
       },
       {
-        page: <ParticipantsList spec={spec} />,
+        page: <ParticipantsList type={'assignment'} spec={spec} />,
         icon: <Users color="var(--secondary)" />,
         title: locale.dashboard.assignment.participants,
       },
       {
-        page: <TaskList spec={spec} />,
+        page: <TaskList type={'assignment'} spec={spec} />,
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.assignment.tasks,
       },

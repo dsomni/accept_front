@@ -9,7 +9,6 @@ import CopyButton from '@ui/CopyButton/CopyButton';
 import { sendRequest } from '@requests/request';
 import { setter } from '@custom-types/ui/atomic';
 import { AlertCircle } from 'tabler-icons-react';
-import { Icon } from '@ui/basics';
 import TagList from '@ui/TagList/TagList';
 
 const Description: FC<{
@@ -57,9 +56,7 @@ const Description: FC<{
       />
       {languagesRestrictions && (
         <div className={styles.languagesRestrictions}>
-          <Icon size="sm">
-            <AlertCircle color={'var(--negative)'} />
-          </Icon>
+          <AlertCircle color={'var(--negative)'} />
 
           <div className={styles.alert}>
             {locale.task.description.languagesRestrictions}
@@ -86,42 +83,44 @@ const Description: FC<{
           />
         </div>
       </div>
-      <div className={styles.examplesLabel}>
-        {locale.task.description.examples.title}
+      <div className={styles.tablesWrapper}>
+        <div className={styles.examplesLabel}>
+          {locale.task.description.examples.title}
+        </div>
+        {task.examples.map((example, index) => (
+          <Table
+            key={index}
+            striped
+            verticalSpacing="md"
+            className={styles.table}
+          >
+            <tbody className={styles.tbody}>
+              <tr>
+                <td>
+                  <div className={styles.exampleHeader}>
+                    {locale.task.description.examples.input}
+                    <CopyButton toCopy={example.inputData} />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>{example.inputData}</td>
+              </tr>
+              <tr>
+                <td>
+                  <div className={styles.exampleHeader}>
+                    {locale.task.description.examples.output}
+                    <CopyButton toCopy={example.outputData || ''} />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>{example.outputData}</td>
+              </tr>
+            </tbody>
+          </Table>
+        ))}
       </div>
-      {task.examples.map((example, index) => (
-        <Table
-          key={index}
-          striped
-          verticalSpacing="md"
-          className={styles.table}
-        >
-          <tbody>
-            <tr>
-              <td>
-                <div className={styles.exampleHeader}>
-                  {locale.task.description.examples.input}
-                  <CopyButton toCopy={example.inputData} />
-                </div>
-              </td>
-            </tr>
-            <tr key={index}>
-              <td>{example.inputData}</td>
-            </tr>
-            <tr>
-              <td>
-                <div className={styles.exampleHeader}>
-                  {locale.task.description.examples.output}
-                  <CopyButton toCopy={example.outputData || ''} />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>{example.outputData}</td>
-            </tr>
-          </tbody>
-        </Table>
-      ))}
       {task.remark && (
         <div className={styles.remarkWrapper}>
           <div className={styles.remarkLabel}>

@@ -30,6 +30,7 @@ const ReadModal: FC<{
   const [current, setCurrent] = useState(
     defaultSelected ? defaultSelected : 0
   );
+
   const [viewed, setViewed] = useState<string[]>([]);
 
   useEffect(() => {
@@ -69,7 +70,6 @@ const ReadModal: FC<{
       setViewed([])
     );
     close();
-    setTimeout(() => setCurrent(0), 300);
   }, [close, locale, sendViewed, viewed]);
 
   return (

@@ -154,7 +154,7 @@ export const getStaticProps: GetStaticProps = async () => {
         assignment_schemas: response_json.schemas,
         groups: response_json.groups,
       },
-      revalidate: 3 * 60, //seconds
+      revalidate: 5 * 60, //seconds
     };
   }
   return {

@@ -4,4 +4,5 @@ export const list = {
   start: 'Start',
   end: 'End',
   status: 'Status',
+  participantsNumber: 'Participants',
 };

@@ -4,6 +4,7 @@ import {
   HoverCardProps,
   HoverCardTargetProps,
 } from '@mantine/core';
+import { IconSizes } from './icon';
 
 export type MyHelperProps = {
   hoverCardProps?: HoverCardProps;
@@ -12,4 +13,5 @@ export type MyHelperProps = {
   dropdownContent?: string | ReactNode;
   customIcon?: ReactNode;
   iconColor?: string;
+  size?: IconSizes;
 };

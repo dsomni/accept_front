@@ -18,3 +18,7 @@ export interface BaseSearch {
   sort_by: SortBy[];
   pager: Pager;
 }
+
+export interface DateSearch extends BaseSearch {
+  toDate?: Date;
+}

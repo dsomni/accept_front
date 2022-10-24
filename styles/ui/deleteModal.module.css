@@ -1,32 +1,18 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacer-s);
-  font-size: var(--font-size-s);
-}
-
-.modalTitle {
-  font-size: var(--font-size-l);
-  margin-right: 0;
-}
-
-.assignmentLink {
+.link {
   text-decoration: none;
   color: var(--secondary);
 }
-.assignmentLink:hover {
+.link:hover {
   color: var(--primary);
 }
 
-.assignmentList {
+.list {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-xs);
 }
-.notification {
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+
+.toListButton {
+  width: fit-content;
+  margin-left: auto;
 }

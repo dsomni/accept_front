@@ -14,4 +14,19 @@ export const tournament = {
     success: 'The tournament was deleted successfully',
     error: 'Error when deleting the tournament',
   },
+  registration: {
+    loading: 'Registering',
+    success: 'You were successfully registered',
+    error: 'Error during registration',
+  },
+  banUser: {
+    loading: 'Banning user',
+    success: 'User has been successfully banned',
+    error: 'Error during user banning',
+  },
+  unbanUser: {
+    loading: 'Unbanning user',
+    success: 'User has been successfully unbanned',
+    error: 'Error during user unbanning',
+  },
 };

@@ -1,4 +1,3 @@
-import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { INotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
 import {
@@ -13,7 +12,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -29,8 +27,6 @@ interface INotificationContext {
     onSuccess: () => void
   ) => void;
   loading: boolean;
-  openModal: () => void;
-  close: () => void;
   refetchNewNotifications: () => void;
   notifyAboutCreation: (spec: string) => void;
 }
@@ -42,7 +38,6 @@ const BackNotificationsContext = createContext<INotificationContext>(
 export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<INotification[]>(
     []
@@ -85,32 +80,27 @@ export const BackNotificationsProvider: FC<{
     });
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
-    const ws = new WebSocket(
-      `ws://${
-        process.env.API_ENDPOINT?.split('://')[1]
-      }/ws/notification/${user?.login}`
-    );
+  // useEffect(() => {
+  //   if (!user) return;
+  //   const ws = new WebSocket(
+  //     `ws://${
+  //       process.env.API_ENDPOINT?.split('://')[1]
+  //     }/ws/notification/${user?.login}`
+  //   );
 
-    ws.onmessage = (event) => {
-      const shouldRefetch = JSON.parse(event.data) as boolean;
-      if (shouldRefetch) {
-        fetchNotifications();
-      }
-    };
+  //   ws.onmessage = (event) => {
+  //     const shouldRefetch = JSON.parse(event.data) as boolean;
+  //     if (shouldRefetch) {
+  //       fetchNotifications();
+  //     }
+  //   };
 
-    setWebSocket(ws);
+  //   setWebSocket(ws);
 
-    return () => {
-      ws.close();
-    };
-  }, [fetchNotifications, user]);
-
-  const handleOpenModal = useCallback(() => {
-    fetchNotifications();
-    setOpened(true);
-  }, [fetchNotifications]);
+  //   return () => {
+  //     ws.close();
+  //   };
+  // }, [fetchNotifications, user]);
 
   const sendViewed = useCallback(
     (
@@ -141,8 +131,6 @@ export const BackNotificationsProvider: FC<{
       notifications,
       sendViewed,
       loading,
-      openModal: handleOpenModal,
-      close: () => setOpened(false),
       refetchNewNotifications: () => fetchNotifications,
       notifyAboutCreation: handleSend,
     }),
@@ -150,7 +138,6 @@ export const BackNotificationsProvider: FC<{
       notifications,
       sendViewed,
       loading,
-      handleOpenModal,
       fetchNotifications,
       handleSend,
     ]
@@ -158,11 +145,6 @@ export const BackNotificationsProvider: FC<{
 
   return (
     <BackNotificationsContext.Provider value={value}>
-      <ReadModal
-        opened={opened}
-        notifications={notifications}
-        close={value.close}
-      />
       {children}
     </BackNotificationsContext.Provider>
   );

@@ -22,11 +22,16 @@ import AssignmentList from '@components/Profile/AssignmentList/AssignmentList';
 import CreateNotification from '@components/Profile/CreateNotification/CreateNotification';
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
+import { useUser } from '@hooks/useUser';
+import { useRouter } from 'next/router';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const { amount } = useBackNotifications();
+  const router = useRouter();
 
   const { locale } = useLocale();
+
+  const { isTeacher } = useUser();
 
   const links: IMenuLink[] = useMemo(() => {
     let globalLinks = [
@@ -43,11 +48,13 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
           </Indicator>
         ),
         title: locale.profile.notification,
+        section: 'notifications',
       },
       {
         page: <AssignmentList />,
         icon: <Alarm color="var(--secondary)" />,
         title: locale.profile.assignments,
+        section: 'assignments',
       },
       {
         page: <AttemptListProfile />,
@@ -60,7 +67,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
         title: locale.profile.settings,
       },
     ];
-    if (user.role.accessLevel > 1) {
+    if (isTeacher) {
       globalLinks.splice(4, 0, {
         page: <CreateNotification />,
         icon: <BellPlus color="var(--secondary)" />,
@@ -68,11 +75,21 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       });
     }
     return globalLinks;
-  }, [user, locale, amount]);
+  }, [user, locale, amount, isTeacher]);
+
+  const initialStep = useMemo(() => {
+    let section = router.query.section as string;
+    if (!section) return 0;
+    let idx = links.findIndex(
+      (element) => element.section == section
+    );
+    return idx > 0 ? idx : 0;
+  }, [links, router.query.section]);
 
   return (
     <LeftMenu
       links={links}
+      initialStep={initialStep}
       topContent={
         <div className={styles.header}>
           <Avatar src={link(user.login)} size="lg" radius="lg" />

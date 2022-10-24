@@ -86,9 +86,6 @@ const AddGrade: FC<{}> = ({}) => {
     <div className={stepperStyles.wrapper}>
       <TextInput
         label={locale.group.name}
-        classNames={{
-          label: stepperStyles.label,
-        }}
         required
         {...form.getInputProps('name')}
       />

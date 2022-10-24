@@ -43,6 +43,7 @@ const Chat: FC<{
 
     return () => {
       ws.close();
+      setWebSocket(undefined);
     };
   }, [spec, user]);
 

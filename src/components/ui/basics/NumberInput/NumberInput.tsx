@@ -8,11 +8,20 @@ import { Helper } from '@ui/basics';
 
 interface Props extends NumberInputProps {
   helperContent?: string | ReactNode;
+  shrink?: boolean;
 }
 
-const NumberInput: FC<Props> = ({ helperContent, ...props }) => {
+const NumberInput: FC<Props> = ({
+  helperContent,
+  shrink,
+  ...props
+}) => {
   return (
-    <div className={inputStyles.wrapper}>
+    <div
+      className={`${inputStyles.wrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
       <div className={inputStyles.labelWrapper}>
         <div className={inputStyles.label}>
           {props.label}
@@ -22,7 +31,15 @@ const NumberInput: FC<Props> = ({ helperContent, ...props }) => {
         </div>
         {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
-      <MantineNumberInput size="lg" {...props} label={undefined} />
+      <MantineNumberInput
+        size={shrink ? 'sm' : 'md'}
+        {...props}
+        classNames={{
+          error: props.classNames?.error || inputStyles.error,
+          ...props.classNames,
+        }}
+        label={undefined}
+      />
     </div>
   );
 };

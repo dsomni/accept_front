@@ -3,19 +3,8 @@
   flex-direction: row;
   gap: var(--spacer-xs);
   align-items: center;
-  justify-content: center;
 }
 
-.labelWrapper {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacer-xxs);
-  align-items: flex-end;
-}
-
-.label {
-  font-size: var(--font-size-label-l);
-}
 .input:checked {
   background-color: var(--primary);
   border-color: var(--primary);

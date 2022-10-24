@@ -14,7 +14,7 @@ const projectLinks: IHeaderLink[] = [
   {
     text: (locale) => locale.projects.tournaments.title,
     type: 'regular',
-    href: '/tournaments',
+    href: '/tournament/list',
   },
 ];
 
@@ -23,6 +23,11 @@ const listLinks: IHeaderLink[] = [
     text: (locale) => locale.mainHeaderLinks.listLinks.tasks,
     type: 'regular',
     href: '/task/list',
+  },
+  {
+    text: (locale) => locale.mainHeaderLinks.listLinks.assignments,
+    type: 'regular',
+    href: '/profile/me?section=assignments',
   },
   {
     text: (locale) => locale.mainHeaderLinks.listLinks.groups,

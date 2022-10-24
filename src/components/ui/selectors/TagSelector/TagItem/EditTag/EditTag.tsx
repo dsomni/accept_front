@@ -1,19 +1,15 @@
 import { FC, memo, useCallback, useState } from 'react';
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Modal,
-  TextInput,
-} from '@mantine/core';
 import { Pencil } from 'tabler-icons-react';
-import styles from './editTag.module.css';
 import { useLocale } from '@hooks/useLocale';
 
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { ITag } from '@custom-types/data/ITag';
+import { Icon, TextInput } from '@ui/basics';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const EditTag: FC<{
   item: Item;
@@ -69,61 +65,43 @@ const EditTag: FC<{
   );
 
   return (
-    <div className={styles.wrapper}>
-      <ActionIcon
+    <>
+      <Icon
         onClick={() => setOpened(true)}
-        tabIndex={5}
         color="var(--primary)"
-        variant="transparent"
-        size="lg"
+        size="xs"
       >
-        <Pencil width={20} height={20} />
-      </ActionIcon>
-      <Modal
+        <Pencil />
+      </Icon>
+      <SimpleModal
         opened={opened}
-        centered
-        onClose={() => setOpened(false)}
-        size="md"
-        title={locale.ui.tagSelector.edit + ` '${item.label}'`}
-        classNames={{
-          title: styles.modalTitle,
-        }}
+        close={() => setOpened(false)}
+        title={locale.ui.tagSelector.edit}
       >
-        <div className={styles.form}>
+        <div className={modalStyles.verticalContent}>
           <TextInput
-            className={styles.input}
             autoFocus
             required
+            shrink
             label={locale.name}
-            size="md"
             onChange={(e: any) => setTitle(e.target.value)}
             onBlur={() => onBlur(title)}
             error={error}
             defaultValue={item.label}
           />
-          <Group
-            position="right"
-            spacing="lg"
-            className={styles.buttons}
-          >
-            <Button
-              variant="outline"
-              color="red"
-              onClick={() => setOpened(false)}
-            >
-              {locale.cancel}
-            </Button>
-            <Button
-              variant="outline"
-              color="green"
-              onClick={() => handleSubmit(title)}
-            >
-              {locale.save}
-            </Button>
-          </Group>
+          <SimpleButtonGroup
+            actionButton={{
+              label: locale.save,
+              onClick: () => handleSubmit(title),
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setOpened(false),
+            }}
+          />
         </div>
-      </Modal>
-    </div>
+      </SimpleModal>
+    </>
   );
 };
 

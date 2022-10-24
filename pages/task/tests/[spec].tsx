@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
@@ -13,6 +13,8 @@ import stepperStyles from '@styles/ui/stepper.module.css';
 import { useLocale } from '@hooks/useLocale';
 import ListItem from '@ui/ListItem/ListItem';
 import Title from '@ui/Title/Title';
+import SingularSticky from '@ui/Sticky/SingularSticky';
+import { Download } from 'tabler-icons-react';
 
 function TestsPage(props: { spec: string }) {
   const spec = props.spec;
@@ -43,6 +45,29 @@ function TestsPage(props: { spec: string }) {
     initialValues: { tests },
   });
 
+  const downloadTests = useCallback(async () => {
+    const { downloadZip } = await import('client-zip');
+    const files: { name: string; input: string }[] = [];
+    tests.forEach((test, index) => {
+      files.push({
+        name: `input${index}.txt`,
+        input: test.inputData,
+      });
+      files.push({
+        name: `output${index}.txt`,
+        input: test.outputData,
+      });
+    });
+    const blob = await downloadZip(files).blob();
+    const link = document.createElement('a');
+    const href = URL.createObjectURL(blob);
+    link.href = href;
+    link.download = `${spec}_tests.zip`;
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(href);
+  }, [tests, spec]);
+
   useEffect(() => {
     form.setFieldValue('tests', tests);
   }, [tests]); // eslint-disable-line
@@ -50,6 +75,11 @@ function TestsPage(props: { spec: string }) {
   return (
     <div className={stepperStyles.wrapper}>
       <Title title={locale.titles.task.tests} />
+      <SingularSticky
+        onClick={downloadTests}
+        color="var(--primary)"
+        icon={<Download />}
+      />
       {form.values.tests.map((test, index) => (
         <div key={index} className={stepperStyles.example}>
           <ListItem
@@ -96,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         spec: params.spec,
       },
-      revalidate: 24 * 60 * 60 * 1000,
+      revalidate: 24 * 60 * 60,
     };
   }
   return {

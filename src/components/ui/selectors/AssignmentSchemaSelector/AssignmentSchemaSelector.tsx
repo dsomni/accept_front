@@ -51,6 +51,7 @@ const AssignmentSchemaSelector: FC<{
     <Select
       label={locale.ui.schemasSelector.label}
       data={data}
+      searchable
       itemComponent={SelectItem}
       {...form.getInputProps(field)}
     />

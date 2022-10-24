@@ -4,24 +4,20 @@ body {
   padding: 0 !important;
   --removed-scroll-width: 0 !important;
   font-size: 14px;
-  min-width: 1000px; /*400px*/
+  min-width: 1400px;
+  /*400px*/
   width: 100%;
 }
 
 :root {
   --primary: #2ea3f2;
-  --primary-light: #e7f5ff;
   --secondary: #1c7ed6;
-  --secondary-light: #d0ebffa6;
   --positive: #04b504;
-  --positive-light: #65ba6579;
-  --positive-light2: #d3f4d348;
   --negative: #ff0000;
   --neutral: #ffae00;
-  --negative-light: #fe7d7d6a;
-  --negative-light2: #f6cfcf4a;
   --accent: #ff00d0;
 }
+
 :root {
   --dark1: #000;
   --dark2: #333;
@@ -30,6 +26,7 @@ body {
   --dark5: #ccc;
   --dark6: #f8f8f8;
 }
+
 :root {
   --font-size-huge: 2.5rem;
   --font-size-xxl: 2rem;
@@ -40,7 +37,9 @@ body {
   --font-size-xs: 0.8rem;
   --font-size-xxs: 0.6rem;
 }
+
 :root {
+  --font-size-btn-xl: 1.4rem;
   --font-size-btn-l: 1.2rem;
   --font-size-btn-m: 1rem;
   --font-size-btn-s: 0.8rem;
@@ -112,6 +111,13 @@ body {
   html,
   body {
     font-size: 20px;
+  }
+}
+
+@media print {
+  html,
+  body {
+    font-size: 22px;
   }
 }
 

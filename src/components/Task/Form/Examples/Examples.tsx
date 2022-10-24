@@ -6,7 +6,10 @@ import { Button, InputWrapper } from '@ui/basics';
 import { FC, memo, useCallback } from 'react';
 import stepperStyles from '@styles/ui/stepper.module.css';
 
-const Examples: FC<{ form: any }> = ({ form }) => {
+const Examples: FC<{ form: any; shrink?: boolean }> = ({
+  form,
+  shrink,
+}) => {
   const { locale } = useLocale();
 
   const onDeleteExample = useCallback(
@@ -36,18 +39,18 @@ const Examples: FC<{ form: any }> = ({ form }) => {
               form={form}
               index={index}
               onDelete={onDeleteExample}
+              shrink={shrink}
             />
           </div>
         ))}
       {form.errors.examples && (
         <InputWrapper
+          shrink={shrink}
           {...form.getInputProps('examples')}
           onChange={() => {}}
-          styles={{ error: { fontSize: 'var(--font-size-m)' } }}
         />
       )}
       <Button
-        size="lg"
         className={stepperStyles.addButton}
         variant="light"
         onClick={() => {

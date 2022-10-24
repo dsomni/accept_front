@@ -1,19 +1,49 @@
-import { FC, memo } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import {
   MultiSelect as MantineSelect,
   MultiSelectProps,
 } from '@mantine/core';
-import styles from './select.module.css';
+import { Helper } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
 
-const MultiSelect: FC<MultiSelectProps> = (props) => {
+interface Props extends MultiSelectProps {
+  helperContent?: string | ReactNode;
+  shrink?: boolean;
+}
+
+const MultiSelect: FC<Props> = ({
+  helperContent,
+  shrink,
+  ...props
+}) => {
   return (
-    <MantineSelect
-      classNames={{
-        value: styles.selectedMulti,
-        input: styles.inputElemMulti,
-      }}
-      {...props}
-    />
+    <div
+      className={`${inputStyles.wrapper} ${
+        shrink ? inputStyles.shrink : ''
+      }`}
+    >
+      <div className={inputStyles.labelWrapper}>
+        <div className={inputStyles.label}>
+          {props.label}
+          {props.required && (
+            <div className={inputStyles.labelRequired}>*</div>
+          )}
+        </div>
+        {helperContent && <Helper dropdownContent={helperContent} />}
+      </div>
+      <MantineSelect
+        size={shrink ? 'sm' : 'md'}
+        clearable={false}
+        {...props}
+        classNames={{
+          error: props.classNames?.error || inputStyles.error,
+          value: props.classNames?.value || inputStyles.selectValue,
+          input: props.classNames?.input || inputStyles.selectInput,
+          ...props.classNames,
+        }}
+        label={undefined}
+      />
+    </div>
   );
 };
 

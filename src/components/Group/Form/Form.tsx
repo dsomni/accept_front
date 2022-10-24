@@ -3,7 +3,7 @@ import { useLocale } from '@hooks/useLocale';
 import { FC, useCallback, useEffect, useMemo } from 'react';
 import styles from './form.module.css';
 import stepperStyles from '@styles/ui/stepper.module.css';
-import { IUser } from '@custom-types/data/IUser';
+import { IUserDisplay } from '@custom-types/data/IUser';
 import {
   Button,
   Helper,
@@ -18,7 +18,7 @@ import { UseFormReturnType, useForm } from '@mantine/form';
 
 const Form: FC<{
   buttonText: string;
-  users: IUser[];
+  users: IUserDisplay[];
   handleSubmit: callback<UseFormReturnType<any>>;
   initialValues: any;
 }> = ({ initialValues, handleSubmit, buttonText, users }) => {
@@ -30,10 +30,11 @@ const Form: FC<{
     validate: {
       name: (value) =>
         value.length < 3 ? locale.group.form.validation.name : null,
-      members: (value) =>
-        value.length < 2
+      members: (value) => {
+        value.length < 1
           ? locale.group.form.validation.members
-          : null,
+          : null;
+      },
     },
     validateInputOnBlur: true,
     validateInputOnChange: true,
@@ -55,9 +56,6 @@ const Form: FC<{
     <div className={stepperStyles.wrapper}>
       <TextInput
         label={locale.group.name}
-        classNames={{
-          label: stepperStyles.label,
-        }}
         required
         disabled={form.values.readonly}
         {...form.getInputProps('name')}

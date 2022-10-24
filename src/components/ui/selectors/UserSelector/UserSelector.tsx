@@ -5,18 +5,26 @@ import {
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './userSelector.module.css';
-import stepperStyles from '@styles/ui/stepper.module.css';
-import { IUser } from '@custom-types/data/IUser';
-import { InputWrapper, SegmentedControl } from '@ui/basics';
-import { ActionIcon } from '@mantine/core';
+import { IUserDisplay } from '@custom-types/data/IUser';
+import { Icon, InputWrapper, SegmentedControl } from '@ui/basics';
 import { Eye } from 'tabler-icons-react';
+import inputStyles from '@styles/ui/input.module.css';
 
 const UserSelector: FC<{
   setFieldValue: (_: string[]) => void;
   inputProps: any;
-  users: IUser[];
+  users: IUserDisplay[];
   initialUsers?: string[];
-}> = ({ setFieldValue, inputProps, users, initialUsers }) => {
+  classNames?: object;
+  shrink?: boolean;
+}> = ({
+  setFieldValue,
+  inputProps,
+  users,
+  initialUsers,
+  classNames,
+  shrink,
+}) => {
   const [availableUsers, setAvailableUsers] = useState<Item[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,41 +62,31 @@ const UserSelector: FC<{
   >('shortName');
 
   const itemComponent = useCallback(
-    (user: IUser, handleSelect: any) => {
+    (user: IUserDisplay, handleSelect: any) => {
       return (
         <div
-          className={styles.itemWrapper}
+          className={`${styles.itemWrapper} ${
+            shrink ? inputStyles.shrink : ''
+          }`}
           onClick={() => handleSelect(user)}
         >
-          <div className={styles.nameWrapper}>
-            <div className={styles.name}>{user[displayedField]}</div>
-
-            <div className={styles.groups}>
-              {user.groups.map((group, index) => (
-                <div key={index} className={styles.group}>
-                  {group.name +
-                    (index == user.groups.length - 1 ? '' : ', ')}
-                </div>
-              ))}
-            </div>
-          </div>
+          <div>{user[displayedField]}</div>
           <div className={styles.actions}>
-            <ActionIcon<'a'>
-              component="a"
+            <Icon
               href={`/profile/${user.login}`}
               target="_blank"
               tabIndex={5}
               color="var(--primary)"
               variant="transparent"
-              size="lg"
+              size="xs"
             >
-              <Eye width={20} height={20} />
-            </ActionIcon>
+              <Eye />
+            </Icon>
           </div>
         </div>
       );
     },
-    [displayedField]
+    [displayedField, shrink]
   );
 
   return (
@@ -111,14 +109,14 @@ const UserSelector: FC<{
       />
 
       {!loading && (
-        <InputWrapper {...inputProps}>
+        <InputWrapper shrink={shrink} {...inputProps}>
           <CustomTransferList
             defaultOptions={availableUsers}
             defaultChosen={selectedUsers}
             setUsed={(users: Item[]) =>
               setFieldValue(users.map((user) => user.login))
             }
-            classNames={{ label: stepperStyles.label }}
+            classNames={classNames ? classNames : {}}
             titles={[
               locale.ui.userSelector.unselected,
               locale.ui.userSelector.selected,

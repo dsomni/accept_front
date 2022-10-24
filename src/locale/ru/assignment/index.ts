@@ -6,5 +6,7 @@ export const assignment = {
   list,
   modals: {
     delete: 'Удалить урок',
+    deletion: 'Удаление урока',
   },
+  score: 'Очки',
 };

@@ -19,14 +19,14 @@ const refactorAttempt = (
       <div
         style={{
           color:
-            attempt.status.spec == 2
+            attempt.status.spec >= 2
               ? attempt.verdict?.verdict.spec == 0
                 ? 'var(--positive)'
                 : 'var(--negative)'
               : 'black',
         }}
       >
-        {attempt.status.spec == 2
+        {attempt.status.spec >= 2
           ? (attempt.verdict?.verdict.shortText || '') +
             ' #' +
             ((attempt.verdict?.test || 0) + 1).toString()

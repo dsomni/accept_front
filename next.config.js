@@ -18,6 +18,10 @@ module.exports = {
         source: '/profile',
         destination: `/profile/me`,
       },
+      {
+        source: '/edu',
+        destination: `/task/list`,
+      },
     ];
   },
   async redirects() {

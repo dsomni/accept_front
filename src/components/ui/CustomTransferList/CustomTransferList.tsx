@@ -1,5 +1,11 @@
 import { removeOneElement } from '@utils/removeOneElement';
-import { FC, ReactNode, useCallback, useState } from 'react';
+import {
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 import { pureCallback, setter } from '@custom-types/ui/atomic';
@@ -27,9 +33,10 @@ export const CustomTransferList: FC<{
   titles: [string, string];
   classNames: any;
   rightComponent?: pureCallback<ReactNode>;
-  itemComponent: (item: any, onSelect: any) => ReactNode;
+  itemComponent: (_: any, __: any) => ReactNode;
   shouldSortChosen?: boolean;
   searchKeys?: string[];
+  shrink?: boolean;
 }> = ({
   defaultOptions,
   defaultChosen,
@@ -40,6 +47,7 @@ export const CustomTransferList: FC<{
   itemComponent,
   shouldSortChosen,
   searchKeys,
+  shrink,
 }) => {
   const [chosen, setChosen] = useState(
     shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
@@ -47,6 +55,16 @@ export const CustomTransferList: FC<{
   const [options, setOptions] = useState(
     defaultOptions.sort(cmpItem)
   );
+
+  useEffect(() => {
+    setOptions(defaultOptions.sort(cmpItem));
+  }, [defaultOptions]);
+
+  useEffect(() => {
+    setChosen(
+      shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
+    );
+  }, [defaultChosen, defaultOptions, shouldSortChosen]);
 
   const handleSelectLeft = useCallback(
     (item: Item) => {
@@ -76,17 +94,17 @@ export const CustomTransferList: FC<{
     },
     [chosen, setUsed]
   );
-
   return (
     <div
       className={`${styles.wrapper} ${
         classNames?.customTransferListWrapper
           ? classNames.customTransferListWrapper
           : ''
-      }`}
+      }  ${shrink ? styles.shrink : ''}`}
     >
       <div className={styles.leftWrapper}>
         <SelectField
+          key={options.length}
           classNames={classNames}
           title={titles[0]}
           values={options}
@@ -94,16 +112,19 @@ export const CustomTransferList: FC<{
           rightComponent={rightComponent}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
+          shrink={shrink}
         />
       </div>
       <div className={styles.rightWrapper}>
         <SelectField
+          key={chosen.length}
           classNames={classNames}
           title={titles[1]}
           values={chosen}
           handleSelect={handleSelectRight}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
+          shrink={shrink}
         />
       </div>
     </div>

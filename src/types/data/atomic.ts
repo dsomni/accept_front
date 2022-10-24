@@ -51,6 +51,12 @@ export interface ITournamentStatus {
   spec: number;
   name: string;
 }
+
+export interface IAssessmentType {
+  spec: number;
+  name: string;
+}
+
 export interface IRole {
   // User < Student < Teacher < Admin
   spec: number;

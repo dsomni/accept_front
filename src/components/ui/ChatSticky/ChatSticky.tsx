@@ -1,20 +1,20 @@
-import { FC, memo, useState } from 'react';
-import styles from './chatSticky.module.css';
-import { Affix } from '@mantine/core';
-import { Icon, Indicator } from '@ui/basics';
-import Chat from '@components/Dashboard/Chat/Chat';
-import { MessageCircle2 } from 'tabler-icons-react';
-import { useClickOutside } from '@mantine/hooks';
+import { FC, memo } from 'react';
+// import styles from './chatSticky.module.css';
+// import { Affix } from '@mantine/core';
+// import { Icon, Indicator } from '@ui/basics';
+// import Chat from '@components/Dashboard/Chat/Chat';
+// import { MessageCircle2 } from 'tabler-icons-react';
+// import { useClickOutside } from '@mantine/hooks';
 
 const ChatSticky: FC<{ spec: string }> = ({ spec }) => {
-  const [showChat, setShowChat] = useState(false);
-  const [hasNew, setHasNew] = useState(false);
+  // const [showChat, setShowChat] = useState(false);
+  // const [hasNew, setHasNew] = useState(false);
 
-  const ref = useClickOutside(() => setShowChat(false));
+  // const ref = useClickOutside(() => setShowChat(false));
 
   return (
     <>
-      <Affix ref={ref} position={{ bottom: 0, right: '200px' }}>
+      {/* <Affix ref={ref} position={{ bottom: 0, right: '200px' }}>
         <Chat spec={spec} opened={showChat} setHasNew={setHasNew} />
         <Icon
           onClick={() => {
@@ -29,7 +29,7 @@ const ChatSticky: FC<{ spec: string }> = ({ spec }) => {
             <MessageCircle2 color="white" />
           </Indicator>
         </Icon>
-      </Affix>
+      </Affix> */}
     </>
   );
 };

@@ -3,22 +3,28 @@ import { steps } from './steps';
 export const form = {
   steps,
   title: 'Название',
+  author: 'Автор',
   description: 'Описание',
-  allowRegistrationAfterStart: {
-    title: 'Разрешить регистрацию после начала',
-  },
-  startDate: 'Дата начала',
-  endDate: 'Дата завершения',
-  freezeTableDate: 'Дата заморозки таблицы',
-  shouldFreezeTable: 'Замораживать таблицу',
-  admins: 'Модераторы',
-  selectedAdmins: 'Выбранные модераторы',
-  allowedLanguages: 'Разрешённые языки',
-  deniedLanguages: 'Запрещённые языки',
-  penalty: 'Штраф',
+  allowRegistrationAfterStart: 'Регистрация после начала',
+  shouldPenalizeAttempt: 'Штрафовать за попытки',
   assessmentType: {
     title: 'Тип оценивания',
-    forTest: 'По тестовая оценка',
-    forWhole: 'Оценка по полностью сданной задаче',
+    variants: [
+      'Потестовая оценка',
+      'Оценка по полностью сданной задаче',
+    ],
   },
+
+  calendar: 'Выберете дату начала и окончания',
+  startDate: 'Дата начала',
+  startTime: 'Время начала',
+  endDate: 'Дата завершения',
+  endTime: 'Время завершения',
+  freezeTableDate: 'Дата заморозки таблицы',
+  freezeTableTime: 'Время заморозки таблицы',
+
+  moderators: 'Модераторы',
+  selectedModerators: 'Выбранные модераторы',
+  taskOrdering: 'Порядок задач',
+  zeroTask: 'В турнире пока нет ни одной задачи',
 };

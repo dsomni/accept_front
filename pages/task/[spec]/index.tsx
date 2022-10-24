@@ -1,6 +1,12 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import TaskLayout from '@layouts/TaskLayout';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
@@ -21,8 +27,8 @@ import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
 import SendText from '@components/Task/SendText/SendText';
-import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import Timer from '@ui/Timer/Timer';
+import ChatSticky from '@ui/ChatSticky/ChatSticky';
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -38,34 +44,46 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   const router = useRouter();
 
-  const fetch_tasks_assignment = useCallback((spec: string) => {
-    return () =>
-      sendRequest<undefined, ITaskDisplay[]>(
-        `assignment/tasks/${spec}`,
-        'GET',
-        undefined,
-        1000
-      ).then((res) => {
-        if (!res.error) {
-          setTasks(res.response);
-        }
-      });
-  }, []);
+  const type = useMemo(
+    () =>
+      router.query.assignment
+        ? 'assignment'
+        : router.query.tournament
+        ? 'tournament'
+        : 'regular',
+    [router.query]
+  );
+
+  const spec = useMemo(
+    () => router.query.assignment || router.query.tournament,
+    [router.query]
+  );
+
+  const fetch_tasks = useCallback(
+    (spec: string) => {
+      return () =>
+        sendRequest<undefined, ITaskDisplay[]>(
+          `${type}/tasks/${spec}`,
+          'GET',
+          undefined,
+          5000
+        ).then((res) => {
+          if (!res.error) {
+            setTasks(res.response);
+          }
+        });
+    },
+    [type]
+  );
 
   useEffect(() => {
     let id: undefined | NodeJS.Timer = undefined;
-    if (
-      router.query.assignment &&
-      typeof router.query.assignment === 'string'
-    ) {
+    if (type !== 'regular' && typeof spec == 'string') {
       if (id) {
         clearInterval(id);
       }
-      fetch_tasks_assignment(router.query.assignment)();
-      id = setInterval(
-        fetch_tasks_assignment(router.query.assignment),
-        10000
-      );
+      fetch_tasks(spec)();
+      id = setInterval(fetch_tasks(spec), 10000);
     } else {
       setTasks([]);
     }
@@ -74,7 +92,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         clearInterval(id);
       }
     };
-  }, [router.query.assignment, fetch_tasks_assignment]);
+  }, [spec, type, fetch_tasks]);
 
   const actions: IStickyAction[] = (
     task.hint
@@ -126,14 +144,15 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   return (
     <>
-      {typeof router.query.assignment === 'string' && (
+      {type !== 'regular' && typeof spec === 'string' && (
         <>
           <TasksBar
             tasks={tasks}
-            assignment={router.query.assignment}
+            homeHref={`/${type}/${spec}`}
+            taskQuery={`${type}=${spec}`}
           />
-          <ChatSticky spec={router.query.assignment} />
-          <Timer spec={router.query.assignment} />
+          <ChatSticky spec={spec} />
+          <Timer url={`${type}/info/${spec}`} />
         </>
       )}
 

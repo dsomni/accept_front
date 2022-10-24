@@ -1,7 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import styles from './tagSelector.module.css';
 import { sendRequest } from '@requests/request';
 import { ITag } from '@custom-types/data/ITag';
 import {
@@ -17,6 +15,7 @@ const TagSelector: FC<{
   initialTags: Item[];
   setUsed: setter<any>;
   classNames?: object;
+  shrink?: boolean;
   fetchURL: string;
   addURL: string;
   updateURL: string;
@@ -26,6 +25,7 @@ const TagSelector: FC<{
 }> = ({
   setUsed,
   classNames,
+  shrink,
   initialTags,
   fetchURL,
   addURL,
@@ -80,17 +80,15 @@ const TagSelector: FC<{
           refetch={refetch}
           updateURL={updateURL}
           deleteURL={deleteURL}
+          shrink={shrink}
         />
       );
     },
-    [refetch, deleteURL, updateURL]
+    [refetch, updateURL, deleteURL, shrink]
   );
 
   return (
-    <InputWrapper
-      className={styles.wrapper}
-      {...form.getInputProps(field)}
-    >
+    <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
       {!loading && (
         <CustomTransferList
           defaultOptions={availableTags}
@@ -106,6 +104,7 @@ const TagSelector: FC<{
             <AddTag addURL={addURL} refetch={refetch} />
           )}
           shouldSortChosen={true}
+          shrink={shrink}
         />
       )}
     </InputWrapper>

@@ -1,5 +1,7 @@
 export const titles = {
   accept: 'Accept',
+  main: 'Главная',
+  about: 'О нас',
   task: {
     add: 'Добавление задачи',
     edit: 'Изменение задачи',
@@ -20,7 +22,8 @@ export const titles = {
   },
   dashboard: {
     admin: 'Панель управления администрации',
-    assignment: 'Панель управления уроком',
+    assignment: 'Управление уроком',
+    tournament: 'Управление турниром',
   },
   attempt: 'Попытка',
   assignment: {
@@ -33,5 +36,12 @@ export const titles = {
     edit: 'Изменение схемы урока',
     spec: 'Схема урока',
     list: 'Схемы уроков',
+  },
+  tournament: {
+    add: 'Добавление турнира',
+    edit: 'Изменение турнира',
+    spec: 'Турнир',
+    results: 'Результаты турнира',
+    list: 'Список турниров',
   },
 };

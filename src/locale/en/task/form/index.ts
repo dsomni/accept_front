@@ -24,10 +24,10 @@ export const form = {
   checker: 'Checker',
   hint: {
     title: 'Hint',
-    alarmType: 'Alarm type',
+    alarmType: 'Hint alarm type',
     hintAlarmTypes: ['Attempts', 'Timestamp (minutes)'],
     text: 'Hint text',
-    showAfter: 'Show after',
+    showAfter: 'Show hint after',
   },
   remark: 'Remark',
   tests: 'Tests',
