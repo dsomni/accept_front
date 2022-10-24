@@ -4,4 +4,5 @@ export interface IMenuLink {
   page: ReactNode;
   icon: ReactNode;
   title: string;
+  section?: string;
 }

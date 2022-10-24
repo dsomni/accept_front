@@ -25,6 +25,11 @@ const listLinks: IHeaderLink[] = [
     href: '/task/list',
   },
   {
+    text: (locale) => locale.mainHeaderLinks.listLinks.assignments,
+    type: 'regular',
+    href: '/profile/me?section=assignments',
+  },
+  {
     text: (locale) => locale.mainHeaderLinks.listLinks.groups,
     type: 'regular',
     href: '/group/list',

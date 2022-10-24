@@ -23,9 +23,11 @@ import CreateNotification from '@components/Profile/CreateNotification/CreateNot
 import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import { useUser } from '@hooks/useUser';
+import { useRouter } from 'next/router';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
   const { amount } = useBackNotifications();
+  const router = useRouter();
 
   const { locale } = useLocale();
 
@@ -51,6 +53,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
         page: <AssignmentList />,
         icon: <Alarm color="var(--secondary)" />,
         title: locale.profile.assignments,
+        section: 'assignments',
       },
       {
         page: <AttemptListProfile />,
@@ -73,9 +76,19 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
     return globalLinks;
   }, [user, locale, amount, isTeacher]);
 
+  const initialStep = useMemo(() => {
+    let section = router.query.section as string;
+    if (!section) return 0;
+    let idx = links.findIndex(
+      (element) => element.section == section
+    );
+    return idx > 0 ? idx : 0;
+  }, [links, router.query.section]);
+
   return (
     <LeftMenu
       links={links}
+      initialStep={initialStep}
       topContent={
         <div className={styles.header}>
           <Avatar src={link(user.login)} size="lg" radius="lg" />
