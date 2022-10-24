@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useMemo } from 'react';
 import {
   CustomTransferList,
   Item,
@@ -18,13 +18,9 @@ const RoleSelector: FC<{
   field: string;
   shrink?: boolean;
 }> = ({ form, roles, initialRoles, classNames, field, shrink }) => {
-  const [availableRole, setAvailableRole] = useState<Item[]>([]);
-  const [selectedRole, setSelectedRole] = useState<Item[]>([]);
   const { locale } = useLocale();
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true);
+  const [availableRole, selectedRole] = useMemo(() => {
     let newAvailableRole = [];
     let newSelectedRole = [];
 
@@ -36,9 +32,8 @@ const RoleSelector: FC<{
         newAvailableRole.push(role);
       }
     }
-    setAvailableRole(newAvailableRole);
-    setSelectedRole(newSelectedRole);
-    setLoading(false);
+
+    return [newAvailableRole, newSelectedRole];
   }, [roles, initialRoles]);
 
   const itemComponent = useCallback(
@@ -58,28 +53,30 @@ const RoleSelector: FC<{
     [shrink]
   );
 
+  const setUsed = useCallback(
+    (roles: Item[]) =>
+      form.setFieldValue(
+        field,
+        roles.map((role) => role.spec)
+      ),
+    [form.setFieldValue] // eslint-disable-line
+  );
+
   return (
     <div>
-      {!loading && (
-        <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
-          <CustomTransferList
-            defaultOptions={availableRole}
-            defaultChosen={selectedRole}
-            setUsed={(roles: Item[]) =>
-              form.setFieldValue(
-                field,
-                roles.map((role) => role.spec)
-              )
-            }
-            classNames={classNames || {}}
-            titles={[
-              locale.ui.roleSelector.unselected,
-              locale.ui.roleSelector.selected,
-            ]}
-            itemComponent={itemComponent}
-          />
-        </InputWrapper>
-      )}
+      <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
+        <CustomTransferList
+          defaultOptions={availableRole}
+          defaultChosen={selectedRole}
+          setUsed={setUsed}
+          classNames={classNames || {}}
+          titles={[
+            locale.ui.roleSelector.unselected,
+            locale.ui.roleSelector.selected,
+          ]}
+          itemComponent={itemComponent}
+        />
+      </InputWrapper>
     </div>
   );
 };

@@ -1,13 +1,6 @@
-import {
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, ReactNode, useMemo, useState } from 'react';
 import styles from './selectField.module.css';
-import { Item } from '../CustomTransferList';
+import { Item, useStore } from '../CustomTransferList';
 import { useLocale } from '@hooks/useLocale';
 import Fuse from 'fuse.js';
 import { TextInput } from '@ui/basics';
@@ -16,7 +9,7 @@ import useVirtual from 'react-cool-virtual';
 
 export const SelectField: FC<{
   title: string;
-  values: Item[];
+  field: 'options' | 'chosen';
   handleSelect: (_: Item) => void;
   rightComponent?: () => ReactNode;
   itemComponent: (_: any, __: any) => ReactNode;
@@ -25,7 +18,7 @@ export const SelectField: FC<{
   shrink?: boolean;
 }> = ({
   title,
-  values,
+  field,
   handleSelect,
   rightComponent,
   itemComponent,
@@ -36,7 +29,7 @@ export const SelectField: FC<{
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
 
-  const [searched, setSearched] = useState(values);
+  const [values] = useStore((store) => store[field]);
 
   const keys = useMemo(
     () => (searchKeys ? searchKeys : ['label']),
@@ -52,21 +45,13 @@ export const SelectField: FC<{
     [values, values.length] // eslint-disable-line
   );
 
-  const search = useCallback(
-    (value: string) => {
-      if (value !== '') {
-        return setSearched(() =>
-          fuse.search(value).map((result) => result.item)
-        );
-      }
-      return setSearched(values);
-    },
-    [fuse, values]
+  const searched: Item[] = useMemo(
+    () =>
+      searchText.length > 0
+        ? fuse.search(searchText).map((result) => result.item)
+        : values,
+    [fuse, searchText, values]
   );
-
-  useEffect(() => {
-    search(searchText);
-  }, [values.length, search, searchText]);
 
   const { outerRef, innerRef, items } = useVirtual<
     HTMLDivElement,
@@ -92,16 +77,14 @@ export const SelectField: FC<{
         </div>
         {!!rightComponent && rightComponent()}
       </div>
-      <div
-        className={styles.content}
-        // key={searched.length}
-        ref={outerRef}
-      >
+      <div className={styles.content} ref={outerRef}>
         <div ref={innerRef}>
           {items.map(({ index, measureRef }) => (
             <div key={index} ref={measureRef}>
               {index < searched.length &&
-                itemComponent(searched[index], handleSelect)}
+                itemComponent(searched[index], (item: any) => {
+                  handleSelect(item);
+                })}
             </div>
           ))}
         </div>

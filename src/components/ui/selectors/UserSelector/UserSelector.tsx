@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
 import {
   CustomTransferList,
   Item,
@@ -25,21 +25,18 @@ const UserSelector: FC<{
   classNames,
   shrink,
 }) => {
-  const [availableUsers, setAvailableUsers] = useState<Item[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-
   const { locale } = useLocale();
 
-  useEffect(() => {
-    setLoading(true);
+  const initialUsersInner = useMemo(() => initialUsers, []); //eslint-disable-line
+
+  const [availableUsers, selectedUsers] = useMemo(() => {
     let newAvailableUsers = [];
     let newSelectedUsers = [];
 
     for (let i = 0; i < users.length; i++) {
       if (
-        initialUsers &&
-        initialUsers.find((login) => login === users[i].login)
+        initialUsersInner &&
+        initialUsersInner.find((login) => login === users[i].login)
       ) {
         newSelectedUsers.push({
           ...users[i],
@@ -52,10 +49,8 @@ const UserSelector: FC<{
         });
       }
     }
-    setAvailableUsers(newAvailableUsers);
-    setSelectedUsers(newSelectedUsers);
-    setLoading(false);
-  }, [initialUsers, users]);
+    return [newAvailableUsers, newSelectedUsers];
+  }, [initialUsersInner, users]);
 
   const [displayedField, setDisplayedField] = useState<
     'shortName' | 'login'
@@ -89,6 +84,11 @@ const UserSelector: FC<{
     [displayedField, shrink]
   );
 
+  const setUsed = useCallback(
+    (users: Item[]) => setFieldValue(users.map((user) => user.login)),
+    [setFieldValue]
+  );
+
   return (
     <div>
       <SegmentedControl
@@ -107,25 +107,20 @@ const UserSelector: FC<{
           setDisplayedField(value as 'login' | 'shortName')
         }
       />
-
-      {!loading && (
-        <InputWrapper shrink={shrink} {...inputProps}>
-          <CustomTransferList
-            defaultOptions={availableUsers}
-            defaultChosen={selectedUsers}
-            setUsed={(users: Item[]) =>
-              setFieldValue(users.map((user) => user.login))
-            }
-            classNames={classNames ? classNames : {}}
-            titles={[
-              locale.ui.userSelector.unselected,
-              locale.ui.userSelector.selected,
-            ]}
-            itemComponent={itemComponent}
-            searchKeys={['login', 'name', 'shortName']}
-          />
-        </InputWrapper>
-      )}
+      <InputWrapper shrink={shrink} {...inputProps}>
+        <CustomTransferList
+          defaultOptions={availableUsers}
+          defaultChosen={selectedUsers}
+          setUsed={setUsed}
+          classNames={classNames ? classNames : {}}
+          titles={[
+            locale.ui.userSelector.unselected,
+            locale.ui.userSelector.selected,
+          ]}
+          itemComponent={itemComponent}
+          searchKeys={['login', 'name', 'shortName']}
+        />
+      </InputWrapper>
     </div>
   );
 };

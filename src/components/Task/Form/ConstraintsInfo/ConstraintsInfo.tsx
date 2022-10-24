@@ -37,7 +37,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
     (langs: Item[]) => {
       form.setFieldValue(`${option}Languages`, langs);
     },
-    [option, form]
+    [option, form.setFieldValue] // eslint-disable-line
   );
 
   const onOptionChange = useCallback(

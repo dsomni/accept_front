@@ -61,9 +61,8 @@ const Form: FC<{
     validate: {
       title: (value) =>
         value.length < 5 ? locale.task.form.validation.title : null,
-      tags: (value) => {
-        value.length < 1 ? locale.task.form.validation.tags : null;
-      },
+      tags: (value) =>
+        value.length < 1 ? locale.task.form.validation.tags : null,
       description: (value) =>
         value.length < 20
           ? locale.task.form.validation.description
@@ -127,7 +126,6 @@ const Form: FC<{
           : null,
     },
     validateInputOnBlur: true,
-    validateInputOnChange: ['tags'],
   });
 
   useEffect(() => {

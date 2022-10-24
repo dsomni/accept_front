@@ -1,5 +1,12 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { sendRequest } from '@requests/request';
 import { ITag } from '@custom-types/data/ITag';
 import {
@@ -36,36 +43,37 @@ const TagSelector: FC<{
 }) => {
   const { locale } = useLocale();
 
-  const [selectedTags, setSelectedTags] =
-    useState<Item[]>(initialTags);
-  const [availableTags, setAvailableTags] = useState<Item[]>([]);
+  const [tags, setTags] = useState<ITag[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedTags, availableTags] = useMemo(() => {
+    let newAvailableTags: Item[] = [];
+    let newSelectedTags: Item[] = [];
+    let tag;
+    let selectedSpecs = initialTags.map((item) => item.value);
+    for (let i = 0; i < tags.length; i++) {
+      tag = {
+        value: tags[i].spec,
+        label: tags[i].title,
+      };
+      if (selectedSpecs.includes(tag.value)) {
+        newSelectedTags.push(tag);
+      } else {
+        newAvailableTags.push(tag);
+      }
+    }
+    return [newSelectedTags, newAvailableTags];
+  }, [initialTags, tags]);
 
   const refetch = useCallback(async () => {
     setLoading(true);
     sendRequest<{}, ITag[]>(fetchURL, 'GET').then((res) => {
       if (res.error) return;
-      let tags = res.response;
-      let newAvailableTags: Item[] = [];
-      let newSelectedTags: Item[] = [];
-      let tag;
-      let selectedSpecs = selectedTags.map((item) => item.value);
-      for (let i = 0; i < tags.length; i++) {
-        tag = {
-          value: tags[i].spec,
-          label: tags[i].title,
-        };
-        if (selectedSpecs.includes(tag.value)) {
-          newSelectedTags.push(tag);
-        } else {
-          newAvailableTags.push(tag);
-        }
-      }
-      setSelectedTags(newSelectedTags);
-      setAvailableTags(newAvailableTags);
+      setTags(res.response);
+
       setLoading(false);
     });
-  }, [fetchURL, selectedTags]);
+  }, [setTags, fetchURL]);
 
   useEffect(() => {
     refetch();

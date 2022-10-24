@@ -1,14 +1,14 @@
 import { removeOneElement } from '@utils/removeOneElement';
-import {
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { FC, ReactNode, useCallback, useEffect } from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 import { pureCallback, setter } from '@custom-types/ui/atomic';
+import createFastContext from '@hooks/useStore';
+
+export const { Provider, useStore } = createFastContext({
+  options: [] as Item[],
+  chosen: [] as Item[],
+});
 
 export interface Item {
   label: string;
@@ -26,7 +26,7 @@ const cmpItem = (a: Item, b: Item) => {
   return -1;
 };
 
-export const CustomTransferList: FC<{
+interface InnerTransferListProps {
   defaultOptions: Item[];
   defaultChosen: Item[];
   setUsed: setter<Item[]>;
@@ -37,9 +37,13 @@ export const CustomTransferList: FC<{
   shouldSortChosen?: boolean;
   searchKeys?: string[];
   shrink?: boolean;
-}> = ({
-  defaultOptions,
+}
+
+interface CustomTransferListProps extends InnerTransferListProps {}
+
+const InnerTransferList: FC<InnerTransferListProps> = ({
   defaultChosen,
+  defaultOptions,
   setUsed,
   titles,
   classNames,
@@ -49,51 +53,51 @@ export const CustomTransferList: FC<{
   searchKeys,
   shrink,
 }) => {
-  const [chosen, setChosen] = useState(
-    shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
-  );
-  const [options, setOptions] = useState(
-    defaultOptions.sort(cmpItem)
-  );
+  const [chosen, set] = useStore((store) => store['chosen']);
+  const [options] = useStore((store) => store['options']);
 
   useEffect(() => {
-    setOptions(defaultOptions.sort(cmpItem));
-  }, [defaultOptions]);
+    console.log(1);
+  }, [setUsed]);
 
   useEffect(() => {
-    setChosen(
-      shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
-    );
-  }, [defaultChosen, defaultOptions, shouldSortChosen]);
+    setUsed(chosen);
+  }, [chosen, setUsed]);
+
+  useEffect(() => {
+    set({ options: defaultOptions.sort(cmpItem) });
+  }, [defaultOptions, set]);
+
+  useEffect(() => {
+    set({
+      chosen: shouldSortChosen
+        ? defaultChosen.sort(cmpItem)
+        : defaultChosen,
+    });
+  }, [defaultChosen, defaultOptions, set, shouldSortChosen]);
 
   const handleSelectLeft = useCallback(
     (item: Item) => {
-      setOptions((options) => {
-        return removeOneElement(options, item);
+      set({
+        options: removeOneElement(options, item),
+        chosen: shouldSortChosen
+          ? [...chosen, item].sort(cmpItem)
+          : [...chosen, item],
       });
-      setChosen((chosen) => {
-        chosen.push(item);
-        if (shouldSortChosen) return chosen.sort(cmpItem);
-        return chosen;
-      });
-
-      setUsed(chosen);
     },
-    [chosen, setUsed, shouldSortChosen]
+    [chosen, options, set, shouldSortChosen]
   );
+
   const handleSelectRight = useCallback(
     (item: Item) => {
-      setChosen((chosen) => {
-        return removeOneElement(chosen, item);
+      set({
+        options: [...options, item].sort(cmpItem),
+        chosen: removeOneElement(chosen, item),
       });
-      setOptions((options) => {
-        options.push(item);
-        return options.sort(cmpItem);
-      });
-      setUsed(chosen);
     },
-    [chosen, setUsed]
+    [chosen, options, set]
   );
+
   return (
     <div
       className={`${styles.wrapper} ${
@@ -104,10 +108,9 @@ export const CustomTransferList: FC<{
     >
       <div className={styles.leftWrapper}>
         <SelectField
-          key={options.length}
           classNames={classNames}
           title={titles[0]}
-          values={options}
+          field={'options'}
           handleSelect={handleSelectLeft}
           rightComponent={rightComponent}
           itemComponent={itemComponent}
@@ -117,10 +120,9 @@ export const CustomTransferList: FC<{
       </div>
       <div className={styles.rightWrapper}>
         <SelectField
-          key={chosen.length}
           classNames={classNames}
           title={titles[1]}
-          values={chosen}
+          field={'chosen'}
           handleSelect={handleSelectRight}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
@@ -128,5 +130,15 @@ export const CustomTransferList: FC<{
         />
       </div>
     </div>
+  );
+};
+
+export const CustomTransferList: FC<CustomTransferListProps> = ({
+  ...props
+}) => {
+  return (
+    <Provider>
+      <InnerTransferList {...props} />
+    </Provider>
   );
 };

@@ -4,6 +4,7 @@ import { CustomEditor, Radio, Switch, TextInput } from '@ui/basics';
 import { TagSelector } from '@ui/selectors';
 import styles from './mainInfo.module.css';
 import { IAssessmentType } from '@custom-types/data/atomic';
+import { ITag } from '@custom-types/data/ITag';
 
 const MainInfo: FC<{
   form: any;
@@ -37,6 +38,11 @@ const MainInfo: FC<{
     [form]
   );
 
+  const setUsed = useCallback(
+    (value: ITag[]) => form.setFieldValue('tags', value),
+    [form.setFieldValue] // eslint-disable-line
+  );
+
   return (
     <>
       <TextInput
@@ -52,7 +58,7 @@ const MainInfo: FC<{
       />
       <TagSelector
         initialTags={initialTags}
-        setUsed={(value) => form.setFieldValue('tags', value)}
+        setUsed={setUsed}
         fetchURL={'tournament_tag/list'}
         addURL={'tournament_tag/add'}
         updateURL={'tournament_tag/edit'}
