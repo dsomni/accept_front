@@ -1,10 +1,9 @@
+import { FC, ReactNode, memo, useMemo } from 'react';
 import { callback, setter } from '@custom-types/ui/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { Tabs } from '@ui/basics';
 import Title from '@ui/Title/Title';
-
-import { FC, ReactNode, memo, useMemo } from 'react';
 
 const TaskLayout: FC<{
   description: ReactNode;

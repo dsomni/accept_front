@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { ITableColumn } from '@custom-types/ui/ITable';
 
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
@@ -104,9 +104,11 @@ const Results: FC<{ spec: string; activeTab: string }> = ({
   spec,
   activeTab,
 }) => {
+  const url = useMemo(() => `task/attempts/${spec}`, [spec]);
   return (
     <AttemptList
-      url={`task/attempts/${spec}`}
+      key={url}
+      url={url}
       initialColumns={initialColumns}
       refactorAttempt={refactorAttempt}
       activeTab={activeTab === 'results'}
