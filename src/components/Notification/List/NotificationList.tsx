@@ -141,10 +141,19 @@ const NotificationList: FC<{}> = ({}) => {
     setTimeout(refetchNotifications, 500);
   }, [refetchNotifications]);
 
-  const total = useMemo(
-    () => Math.ceil(notifications.length / ON_PAGE),
-    []
+  const totalPages = useMemo(
+    () => Math.max(Math.ceil(notifications.length / ON_PAGE), 1),
+    [notifications.length]
   );
+
+  const shouldShowPagination = useMemo(
+    () => totalPages > 1,
+    [totalPages]
+  );
+
+  useEffect(() => {
+    setPage((activePage) => Math.min(activePage, totalPages));
+  }, [totalPages]);
 
   return (
     <div className={styles.wrapper}>
@@ -234,9 +243,9 @@ const NotificationList: FC<{}> = ({}) => {
           </div>
         ))}
       </div>
-      {total > ON_PAGE && (
+      {shouldShowPagination && (
         <Pagination
-          total={total}
+          total={totalPages}
           position="center"
           page={activePage}
           onChange={setPage}
