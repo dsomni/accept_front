@@ -8,11 +8,11 @@ const Users: FC<{ form: any; users: IUser[] }> = ({
   users,
 }) => {
   const setFieldValue = useCallback(
-    (users: string[]) => form.setFieldValue('members', users),
+    (users: string[]) => form.setFieldValue('logins', users),
     [] // eslint-disable-line
   );
   const initialProps = useMemo(() => {
-    form.getInputProps('members');
+    form.getInputProps('logins');
   }, []); // eslint-disable-line
   return (
     <div style={{ position: 'relative' }}>
