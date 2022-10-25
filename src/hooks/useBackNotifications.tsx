@@ -12,6 +12,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -22,13 +23,13 @@ interface INotificationContext {
   amount: number;
   notifications: INotification[];
   sendViewed: (
-    viewed: string[],
-    messages: { error: string; loading: string },
-    onSuccess: () => void
+    _: string[],
+    __: { error: string; loading: string },
+    ___: () => void
   ) => void;
   loading: boolean;
   refetchNewNotifications: () => void;
-  notifyAboutCreation: (spec: string) => void;
+  notifyAboutCreation: (_: string) => void;
 }
 
 const BackNotificationsContext = createContext<INotificationContext>(
@@ -80,27 +81,27 @@ export const BackNotificationsProvider: FC<{
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (!user) return;
-  //   const ws = new WebSocket(
-  //     `ws://${
-  //       process.env.API_ENDPOINT?.split('://')[1]
-  //     }/ws/notification/${user?.login}`
-  //   );
+  useEffect(() => {
+    if (!user) return;
+    const ws = new WebSocket(
+      `ws://${
+        process.env.API_ENDPOINT?.split('://')[1]
+      }/ws/notification/${user?.login}`
+    );
 
-  //   ws.onmessage = (event) => {
-  //     const shouldRefetch = JSON.parse(event.data) as boolean;
-  //     if (shouldRefetch) {
-  //       fetchNotifications();
-  //     }
-  //   };
+    ws.onmessage = (event) => {
+      const shouldRefetch = JSON.parse(event.data) as boolean;
+      if (shouldRefetch) {
+        fetchNotifications();
+      }
+    };
 
-  //   setWebSocket(ws);
+    setWebSocket(ws);
 
-  //   return () => {
-  //     ws.close();
-  //   };
-  // }, [fetchNotifications, user]);
+    return () => {
+      ws.close();
+    };
+  }, [fetchNotifications, user]);
 
   const sendViewed = useCallback(
     (
