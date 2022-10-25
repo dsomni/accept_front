@@ -17,6 +17,7 @@ import { Helper } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { AlertCircle } from 'tabler-icons-react';
 import { sendRequest } from '@requests/request';
+import { letterFromIndex } from '@utils/letterFromIndex';
 import PrintTasks from '@components/Task/PrintTasks/PrintTasks';
 
 const Description: FC<{
@@ -27,7 +28,6 @@ const Description: FC<{
   const [startDate, setStartDate] = useState('-');
   const [endDate, setEndDate] = useState('-');
   const [tasks, setTasks] = useState(tournament.tasks);
-
   const { user, isAdmin } = useUser();
 
   const [successfullyRegistered, setSuccessfullyRegistered] =
@@ -51,7 +51,12 @@ const Description: FC<{
         5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
-          setTasks(res.response);
+          setTasks(
+            res.response.map((task, index) => ({
+              ...task,
+              title: `${letterFromIndex(index)}. ${task.title}`,
+            }))
+          );
         }
       });
     }

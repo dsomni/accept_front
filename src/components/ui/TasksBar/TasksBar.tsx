@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { FC, memo } from 'react';
 import { Home } from 'tabler-icons-react';
 import styles from './tasksBar.module.css';
-
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+import { letterFromIndex } from '@utils/letterFromIndex';
 
 const TasksBar: FC<{
   tasks: ITaskDisplay[];
@@ -43,7 +42,7 @@ const TasksBar: FC<{
                     : styles.err
                 }`}
               >
-                {alphabet[index % 26]}
+                {letterFromIndex(index)}
               </a>
             </Link>
           ))}

@@ -4,6 +4,7 @@ import ComponentToPDF from '@ui/ComponentToPDF/ComponentToPDF';
 import { FC, ReactNode, memo, useEffect, useState } from 'react';
 import Description from '../Description/Description';
 import styles from './printTasks.module.css';
+import { letterFromIndex } from '@utils/letterFromIndex';
 
 const PrintTasks: FC<{
   tasks: string[];
@@ -19,7 +20,12 @@ const PrintTasks: FC<{
       task_specs
     ).then((res) => {
       if (!res.error) {
-        setTasks(res.response);
+        setTasks(
+          res.response.map((task, index) => ({
+            ...task,
+            title: `${letterFromIndex(index)}. ${task.title}`,
+          }))
+        );
       }
     });
   }, [task_specs]);
