@@ -15,11 +15,7 @@ import {
 import Title from '@ui/Title/Title';
 import { useRequest } from '@hooks/useRequest';
 
-function EditGroup(props: {
-  group: IGroup;
-  users: IUserDisplay[];
-  members: IUserDisplay[];
-}) {
+function EditGroup(props: { group: IGroup; members: string[] }) {
   const { data: users } = useRequest<{}, IUserDisplay[]>(
     'user/list-display',
     'GET',
@@ -38,7 +34,7 @@ function EditGroup(props: {
   const formValues = useMemo(
     () => ({
       ...group,
-      members: members.map((user) => user.login),
+      members,
     }),
     [group, members]
   );
