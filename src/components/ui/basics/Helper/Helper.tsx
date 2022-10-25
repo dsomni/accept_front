@@ -13,7 +13,6 @@ const Helper: FC<MyHelperProps> = ({
   customIcon,
   iconColor,
   size,
-  ...props
 }) => {
   return (
     <HoverCard
@@ -34,7 +33,19 @@ const Helper: FC<MyHelperProps> = ({
         </div>
       </HoverCard.Target>
       <HoverCard.Dropdown {...hoverCardDropdownProps}>
-        <div className={styles.contentWrapper}>{dropdownContent}</div>
+        <div className={styles.contentWrapper}>
+          {typeof dropdownContent == 'string' ? (
+            dropdownContent
+          ) : dropdownContent instanceof Array ? (
+            <div>
+              {dropdownContent.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
+          ) : (
+            dropdownContent || ''
+          )}
+        </div>
       </HoverCard.Dropdown>
     </HoverCard>
   );

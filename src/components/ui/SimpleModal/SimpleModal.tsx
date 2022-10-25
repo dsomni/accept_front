@@ -3,10 +3,11 @@ import { Modal } from '@mantine/core';
 import { FC, ReactNode, memo } from 'react';
 import modalStyles from '@styles/ui/modal.module.css';
 import { Helper } from '@ui/basics';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 const SimpleModal: FC<{
   title?: ReactNode;
-  helperContent?: ReactNode;
+  helperContent?: IDropdownContent;
   opened: boolean;
   close: pureCallback<void>;
   children: ReactNode;

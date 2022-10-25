@@ -1,13 +1,14 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import {
   TimeInput as MantineTimeInput,
   TimeInputProps,
 } from '@mantine/dates';
 import inputStyles from '@styles/ui/input.module.css';
 import Helper from '../Helper/Helper';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 interface Props extends TimeInputProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
 }
 
 const TimeInput: FC<Props> = ({ helperContent, ...props }) => {

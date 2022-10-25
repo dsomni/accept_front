@@ -1,13 +1,14 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import inputStyles from '@styles/ui/input.module.css';
 import {
   Textarea as MantineTextarea,
   TextareaProps,
 } from '@mantine/core';
 import { Helper } from '@ui/basics';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 interface Props extends TextareaProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
   shrink?: boolean;
 }
 

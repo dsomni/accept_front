@@ -26,13 +26,7 @@ const Origin: FC<{
             <div>{locale.notification.notification}</div>
             <Helper
               dropdownContent={
-                <div>
-                  {locale.helpers.notification.assignmentCreation.map(
-                    (p, idx) => (
-                      <p key={idx}>{p}</p>
-                    )
-                  )}
-                </div>
+                locale.helpers.notification.assignmentCreation
               }
             />
           </div>

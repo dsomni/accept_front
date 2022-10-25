@@ -1,4 +1,4 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import inputStyles from '@styles/ui/input.module.css';
 import { Helper } from '@ui/basics';
 import {
@@ -7,9 +7,10 @@ import {
 } from '@mantine/dates';
 import { useLocale } from '@hooks/useLocale';
 import 'dayjs/locale/ru';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 interface Props extends DatePickerProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
 }
 
 const DatePicker: FC<Props> = ({ helperContent, ...props }) => {

@@ -67,15 +67,7 @@ const Form: FC<{
             label={locale.group.readonly}
             {...form.getInputProps('readonly', { type: 'checkbox' })}
           />
-          <Helper
-            dropdownContent={
-              <div>
-                {locale.helpers.group.readOnly.map((p, idx) => (
-                  <p key={idx}>{p}</p>
-                ))}
-              </div>
-            }
-          />
+          <Helper dropdownContent={locale.helpers.group.readOnly} />
         </div>
       )}
       <InputWrapper {...form.getInputProps('members')}>

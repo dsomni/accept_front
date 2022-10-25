@@ -143,26 +143,12 @@ const Description: FC<{
               {locale.tournament.register}
             </div>
             <Helper
-              dropdownContent={
-                <div>
-                  {locale.helpers.tournament.registration.map(
-                    (p, idx) => (
-                      <p key={idx}>{p}</p>
-                    )
-                  )}
-                </div>
-              }
+              dropdownContent={locale.helpers.tournament.registration}
             />
             {!tournament.allowRegistrationAfterStart && (
               <Helper
                 dropdownContent={
-                  <div>
-                    {locale.helpers.tournament.registrationWarning.map(
-                      (p, idx) => (
-                        <p key={idx}>{p}</p>
-                      )
-                    )}
-                  </div>
+                  locale.helpers.tournament.registrationWarning
                 }
                 customIcon={<AlertCircle color={'var(--negative)'} />}
               />

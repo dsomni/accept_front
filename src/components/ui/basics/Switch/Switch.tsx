@@ -1,10 +1,11 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import { Switch as MantineSwitch, SwitchProps } from '@mantine/core';
 import styles from './switch.module.css';
 import { Helper } from '@ui/basics';
 import inputStyles from '@styles/ui/input.module.css';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 interface Props extends SwitchProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
   shrink?: boolean;
 }
 

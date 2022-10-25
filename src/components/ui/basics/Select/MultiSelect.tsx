@@ -1,13 +1,14 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import {
   MultiSelect as MantineSelect,
   MultiSelectProps,
 } from '@mantine/core';
 import { Helper } from '@ui/basics';
 import inputStyles from '@styles/ui/input.module.css';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 interface Props extends MultiSelectProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
   shrink?: boolean;
 }
 

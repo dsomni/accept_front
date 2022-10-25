@@ -1,13 +1,14 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import inputStyles from '@styles/ui/input.module.css';
 import {
   NumberInput as MantineNumberInput,
   NumberInputProps,
 } from '@mantine/core';
 import { Helper } from '@ui/basics';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 interface Props extends NumberInputProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
   shrink?: boolean;
 }
 

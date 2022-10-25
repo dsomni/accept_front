@@ -9,6 +9,7 @@ import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import { setter } from '@custom-types/ui/atomic';
 import { Helper } from '@ui/basics';
 import inputStyles from '@styles/ui/input.module.css';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 const Radio: FC<{
   label: ReactNode;
@@ -19,7 +20,7 @@ const Radio: FC<{
   onBlur?: () => void;
   groupProps?: RadioGroupProps;
   radioProps?: RadioProps;
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
   required?: boolean;
   shrink?: boolean;
 }> = ({

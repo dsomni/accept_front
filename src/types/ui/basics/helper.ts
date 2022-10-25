@@ -10,8 +10,10 @@ export type MyHelperProps = {
   hoverCardProps?: HoverCardProps;
   hoverCardDropdownProps?: Omit<HoverCardDropdownProps, 'children'>;
   hoverCardTargetProps?: HoverCardTargetProps;
-  dropdownContent?: string | ReactNode;
+  dropdownContent?: IDropdownContent;
   customIcon?: ReactNode;
   iconColor?: string;
   size?: IconSizes;
 };
+
+export type IDropdownContent = string | string[] | ReactNode;

@@ -1,13 +1,14 @@
-import { FC, ReactNode, memo } from 'react';
+import { FC, memo } from 'react';
 import {
   TextInput as MantineInput,
   TextInputProps,
 } from '@mantine/core';
 import { Helper } from '@ui/basics';
 import inputStyles from '@styles/ui/input.module.css';
+import { IDropdownContent } from '@custom-types/ui/basics/helper';
 
 interface Props extends TextInputProps {
-  helperContent?: string | ReactNode;
+  helperContent?: IDropdownContent;
   shrink?: boolean;
 }
 
