@@ -141,6 +141,11 @@ const NotificationList: FC<{}> = ({}) => {
     setTimeout(refetchNotifications, 500);
   }, [refetchNotifications]);
 
+  const total = useMemo(
+    () => Math.ceil(notifications.length / ON_PAGE),
+    []
+  );
+
   return (
     <div className={styles.wrapper}>
       <ReadModal
@@ -229,12 +234,14 @@ const NotificationList: FC<{}> = ({}) => {
           </div>
         ))}
       </div>
-      <Pagination
-        total={Math.ceil(notifications.length / ON_PAGE)}
-        position="center"
-        page={activePage}
-        onChange={setPage}
-      />
+      {total > ON_PAGE && (
+        <Pagination
+          total={total}
+          position="center"
+          page={activePage}
+          onChange={setPage}
+        />
+      )}
     </div>
   );
 };
