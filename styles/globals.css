@@ -64,6 +64,7 @@ body {
   --spacer-xxs: 0.3rem;
 }
 
+/* Custom Editor section start */
 .text-tiny {
   font-size: var(--font-size-xxs);
 }
@@ -79,6 +80,12 @@ body {
 .text-huge {
   font-size: var(--font-size-xl);
 }
+
+.image_resized img {
+  width: 100%;
+}
+
+/* Custom Editor section end */
 
 @media only screen and (min-width: 320px) {
   html,

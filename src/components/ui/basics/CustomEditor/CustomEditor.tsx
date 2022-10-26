@@ -9,11 +9,10 @@ import {
   useState,
 } from 'react';
 import { InputWrapper } from '@ui/basics';
-import { APIs } from '@constants/url';
 
 const editorConfiguration = {
   simpleUpload: {
-    uploadUrl: `${APIs.server}/api/image`,
+    uploadUrl: `/api/image`,
 
     withCredentials: true,
   },
