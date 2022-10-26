@@ -84,9 +84,7 @@ export const BackNotificationsProvider: FC<{
   useEffect(() => {
     if (!user) return;
     const ws = new WebSocket(
-      `ws://${
-        process.env.API_ENDPOINT?.split('://')[1]
-      }/ws/notification/${user?.login}`
+      `${process.env.WEBSOCKET_API}/ws/notification/${user?.login}`
     );
 
     ws.onmessage = (event) => {
