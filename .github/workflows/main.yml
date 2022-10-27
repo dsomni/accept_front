@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to DockerHub
+        run: echo ${{ secrets.docker_password }} | docker login --username ${{ secrets.docker_username }} --password-stdin
+      - name: Release
+        run: .CI/release.sh "accept-front" "release" "accept-front-docker" "master"
