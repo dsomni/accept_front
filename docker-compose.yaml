@@ -2,12 +2,9 @@ version: '3.7'
 
 services:
   prod:
-    image: accept-front-docker
+    image: ${IMAGE}
     restart: always
     container_name: accept-front-prod
-    network_mode: host
-    build:
-      context: ./
     networks:
       internet:
 
