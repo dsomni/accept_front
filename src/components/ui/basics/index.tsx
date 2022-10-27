@@ -20,6 +20,7 @@ import TimeInput from './TimeInput/TimeInput';
 import Indicator from './Indicator/Indicator';
 import Tabs from './Tabs/Tabs';
 import Tip from './Tip/Tip';
+import DatePicker from './DatePicker/DatePicker';
 
 export {
   Button,
@@ -44,4 +45,5 @@ export {
   Indicator,
   Tabs,
   Tip,
+  DatePicker,
 };

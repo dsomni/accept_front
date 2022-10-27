@@ -47,6 +47,10 @@ export interface IUserListBundle {
   roles: IRole[];
 }
 
+export interface IParticipantsListBundle extends IUserListBundle {
+  banned?: IUser[];
+}
+
 export interface IUserDisplay {
   login: string;
   role: IRole;

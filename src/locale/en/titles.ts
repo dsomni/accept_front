@@ -1,5 +1,7 @@
 export const titles = {
   accept: 'Accept',
+  main: 'Main',
+  about: 'ABout',
   task: {
     add: 'Add task',
     edit: 'Edit task',
@@ -21,6 +23,7 @@ export const titles = {
   dashboard: {
     admin: 'Admin dashboard',
     assignment: 'Assignment dashboard',
+    tournament: 'Tournament dashboard',
   },
   attempt: 'Attempt',
   assignment: {
@@ -29,9 +32,16 @@ export const titles = {
     spec: 'Assignment',
   },
   assignment_schema: {
-    add: 'Add assingment schema',
+    add: 'Add assignment schema',
     edit: 'Edit assignment schema',
     spec: 'Schema of',
     list: 'Assignment schemas',
+  },
+  tournament: {
+    add: 'Add tournament',
+    edit: 'Edit tournament',
+    spec: 'Tournament',
+    results: 'Results of tournament',
+    list: 'Tournament list',
   },
 };

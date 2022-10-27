@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, useEffect, useMemo } from 'react';
 import MainInfo from './MainInfo/MainInfo';
 import TaskAdding from './TaskAdding/TaskAdding';
 import Preview from './Preview/Preview';
@@ -33,6 +33,10 @@ const Form: FC<{
         value.length < 20
           ? locale.assignmentSchema.form.validation.description
           : null,
+      tags: (value) =>
+        value.length < 1
+          ? locale.assignmentSchema.form.validation.tags
+          : null,
       tasks: (value) =>
         value
           ? value.length === 0
@@ -51,6 +55,8 @@ const Form: FC<{
     form.setValues(initialValues);
   }, [initialValues]); //eslint-disable-line
 
+  const initialTasks = useMemo(() => form.values.tasks, []); //eslint-disable-line
+
   return (
     <>
       <Stepper
@@ -63,7 +69,7 @@ const Form: FC<{
           <TaskAdding
             key={'1'}
             form={form}
-            initialTasks={form.values.tasks}
+            initialTasks={initialTasks}
           />,
           <TaskOrdering key={'2'} form={form} />,
           <Preview key={'3'} form={form} />,

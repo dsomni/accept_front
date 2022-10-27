@@ -23,3 +23,38 @@
   font-size: var(--font-size-s);
   color: var(--negative);
 }
+
+.error {
+  font-size: var(--font-size-label-s);
+}
+
+.subLabel {
+  font-size: var(--font-size-label-s);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.selectInput {
+  display: flex;
+}
+
+.selectValue span {
+  overflow: visible;
+}
+
+.shrink .label {
+  font-size: var(--font-size-label-s);
+}
+
+.shrink .labelRequired {
+  font-size: var(--font-size-xs);
+}
+
+.shrink .error {
+  font-size: var(--font-size-label-xs);
+}
+
+.shrink .subLabel {
+  font-size: var(--font-size-label-xs);
+}

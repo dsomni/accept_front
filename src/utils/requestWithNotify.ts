@@ -43,7 +43,9 @@ export const requestWithNotify = <T, V>(
       errorNotification({
         id,
         title: locale.error,
-        message: res.detail.description[lang],
+        message:
+          (res.detail.description && res.detail.description[lang]) ||
+          '',
         autoClose: defaultAutoClose,
         ...params,
       });

@@ -4,14 +4,16 @@ import {
   Indicator as MantineIndicator,
 } from '@mantine/core';
 
+const size_px = 28;
+
 const Indicator: FC<IndicatorProps> = ({ children, ...props }) => {
   return (
     <MantineIndicator
-      size={24}
+      size={size_px}
       styles={{
         indicator: {
           backgroundColor: props.color || 'var(--accent)',
-          fontSize: 'var(--font-size-s)',
+          fontSize: `${size_px / 2}px`,
         },
       }}
       {...props}

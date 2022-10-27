@@ -191,6 +191,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         taskTypes: taskBundle.task_types,
         hintAlarmTypes: taskBundle.hint_alarm_types,
       },
+      revalidate: 60,
     };
   }
 

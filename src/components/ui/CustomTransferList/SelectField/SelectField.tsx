@@ -1,38 +1,36 @@
-import {
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, ReactNode, useMemo, useState } from 'react';
 import styles from './selectField.module.css';
-import { Item } from '../CustomTransferList';
-import { Text } from '@mantine/core';
+import { Item, useStore } from '../CustomTransferList';
 import { useLocale } from '@hooks/useLocale';
 import Fuse from 'fuse.js';
 import { TextInput } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
+import useVirtual from 'react-cool-virtual';
 
 export const SelectField: FC<{
   title: string;
-  values: Item[];
+  field: 'options' | 'chosen';
   handleSelect: (_: Item) => void;
   rightComponent?: () => ReactNode;
-  itemComponent: (item: any, onSelect: any) => ReactNode;
+  itemComponent: (_: any, __: any) => ReactNode;
   classNames: any;
   searchKeys?: string[];
+  shrink?: boolean;
 }> = ({
   title,
-  values,
+  field,
   handleSelect,
   rightComponent,
   itemComponent,
   classNames,
   searchKeys,
+  shrink,
 }) => {
-  const [displayed, setDisplayed] = useState(values);
   const { locale } = useLocale();
   const [searchText, setSearchText] = useState('');
+
+  const [values] = useStore((store) => store[field]);
+
   const keys = useMemo(
     () => (searchKeys ? searchKeys : ['label']),
     [searchKeys]
@@ -47,44 +45,50 @@ export const SelectField: FC<{
     [values, values.length] // eslint-disable-line
   );
 
-  const search = useCallback(
-    (value: string) => {
-      if (value !== '') {
-        return setDisplayed(
-          fuse.search(value).map((result) => result.item)
-        );
-      }
-      return setDisplayed(values);
-    },
-    [fuse, values]
+  const searched: Item[] = useMemo(
+    () =>
+      searchText.length > 0
+        ? fuse.search(searchText).map((result) => result.item)
+        : values,
+    [fuse, searchText, values]
   );
 
-  useEffect(() => {
-    search(searchText);
-  }, [values.length, search, searchText]);
+  const { outerRef, innerRef, items } = useVirtual<
+    HTMLDivElement,
+    HTMLDivElement
+  >({
+    itemCount: searched.length,
+    overscanCount: 10,
+  });
 
   return (
-    <>
-      <Text
-        size="lg"
-        className={styles.title + ' ' + classNames.label}
-      >
+    <div className={shrink ? inputStyles.shrink : ''}>
+      <div className={`${inputStyles.label} ${classNames.label}`}>
         {title}
-      </Text>
+      </div>
+
       <div className={styles.header}>
         <div className={styles.searchBar}>
           <TextInput
             placeholder={locale.form.search}
+            shrink={shrink}
             onChange={(e: any) => setSearchText(e.target.value)}
           />
         </div>
         {!!rightComponent && rightComponent()}
       </div>
-      <div className={styles.content}>
-        {displayed.map((item, index) => (
-          <div key={index}>{itemComponent(item, handleSelect)}</div>
-        ))}
+      <div className={styles.content} ref={outerRef}>
+        <div ref={innerRef}>
+          {items.map(({ index, measureRef }) => (
+            <div key={index} ref={measureRef}>
+              {index < searched.length &&
+                itemComponent(searched[index], (item: any) => {
+                  handleSelect(item);
+                })}
+            </div>
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 };

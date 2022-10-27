@@ -18,6 +18,12 @@ export interface IAttemptDisplay {
   author: string;
 }
 
+export interface IBanInfo {
+  reason: string;
+  requester: string;
+  date: Date;
+}
+
 export interface IAttempt {
   spec: string;
   language: ILanguage;
@@ -30,4 +36,5 @@ export interface IAttempt {
   verdict: ITestResultDisplay;
   task: ITaskBaseInfo;
   author: IUserDisplay;
+  banInfo?: IBanInfo;
 }

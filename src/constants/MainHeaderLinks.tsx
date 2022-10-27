@@ -14,7 +14,7 @@ const projectLinks: IHeaderLink[] = [
   {
     text: (locale) => locale.projects.tournaments.title,
     type: 'regular',
-    href: '/tournaments',
+    href: '/tournament/list',
   },
 ];
 
@@ -25,15 +25,20 @@ const listLinks: IHeaderLink[] = [
     href: '/task/list',
   },
   {
-    text: (locale) => locale.mainHeaderLinks.listLinks.groups,
+    text: (locale) => locale.mainHeaderLinks.listLinks.assignments,
     type: 'regular',
-    href: '/group/list',
-    permission: 'teacher',
+    href: '/profile/me?section=assignments',
   },
   {
     text: (locale) => locale.mainHeaderLinks.listLinks.schemas,
     type: 'regular',
     href: '/assignment_schema/list',
+    permission: 'teacher',
+  },
+  {
+    text: (locale) => locale.mainHeaderLinks.listLinks.groups,
+    type: 'regular',
+    href: '/group/list',
     permission: 'teacher',
   },
   {

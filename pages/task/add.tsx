@@ -1,7 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { UseFormReturnType } from '@mantine/form';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useUser } from '@hooks/useUser';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import Form from '@components/Task/Form/Form';
@@ -20,6 +26,7 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 import Title from '@ui/Title/Title';
+import { useRouter } from 'next/router';
 
 const initialValues = {
   spec: '',
@@ -60,6 +67,14 @@ function AddTask() {
   const [taskCheckTypes, setTaskCheckTypes] = useState<
     ITaskCheckType[]
   >([]);
+
+  const router = useRouter();
+
+  const tournament = useMemo(
+    () => router.query.tournament,
+    [router.query.tournament]
+  );
+
   const [hintAlarmTypes, setHintAlarmTypes] = useState<
     IHintAlarmType[]
   >([]);
@@ -102,7 +117,7 @@ function AddTask() {
       } = form.values;
       let body: any = {
         ...values,
-        author: user?.shortName || 'unknown',
+        author: user?.login || 'unknown',
         checkType: +form.values['checkType'],
         taskType: +form.values['taskType'],
         constraints: {
@@ -116,6 +131,7 @@ function AddTask() {
           (lang: Item) => lang.value
         ),
         tags: tags.map((tag: Item) => tag.value),
+        hidden: !!tournament,
       };
       if (!form.values.shouldRestrictLanguages) {
         body.allowedLanguages = [];
@@ -138,7 +154,7 @@ function AddTask() {
         };
       }
       requestWithNotify(
-        'task/add',
+        !tournament ? 'task/add' : `tournament/tasks/${tournament}`,
         'POST',
         locale.notify.task.create,
         lang,
@@ -146,7 +162,7 @@ function AddTask() {
         body
       );
     },
-    [locale, user, lang]
+    [locale, user, lang, tournament]
   );
 
   return (

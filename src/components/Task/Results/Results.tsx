@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { ITableColumn } from '@custom-types/ui/ITable';
 
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
@@ -23,11 +23,13 @@ const refactorAttempt = (
               ? attempt.verdict?.verdict.spec == 0
                 ? 'var(--positive)'
                 : 'var(--negative)'
+              : attempt.status.spec == 3
+              ? 'var(--accent)'
               : 'black',
         }}
       >
         {attempt.status.spec == 2
-          ? (attempt.verdict?.verdict.shortText || '') +
+          ? (attempt.verdict?.verdict.shortText || 'ER') +
             ' #' +
             ((attempt.verdict?.test || 0) + 1).toString()
           : locale.attempt.statuses[attempt.status.spec]}
@@ -36,6 +38,8 @@ const refactorAttempt = (
     value:
       attempt.status.spec == 2
         ? attempt.verdict?.verdict.spec
+        : attempt.status.spec == 3
+        ? attempt.status.spec - 20
         : attempt.status.spec - 10,
   },
   date: {
@@ -100,9 +104,11 @@ const Results: FC<{ spec: string; activeTab: string }> = ({
   spec,
   activeTab,
 }) => {
+  const url = useMemo(() => `task/attempts/${spec}`, [spec]);
   return (
     <AttemptList
-      url={`task/attempts/${spec}`}
+      key={url}
+      url={url}
       initialColumns={initialColumns}
       refactorAttempt={refactorAttempt}
       activeTab={activeTab === 'results'}

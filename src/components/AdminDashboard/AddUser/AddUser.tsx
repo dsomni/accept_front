@@ -102,6 +102,8 @@ const AddUser: FC<{}> = ({}) => {
     }
   }, [form.errors]);
 
+  const initialGroups = useMemo(() => [], []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.fields}>
@@ -152,7 +154,7 @@ const AddUser: FC<{}> = ({}) => {
                     styles.customTransferListWrapper,
                 }}
                 groups={groups}
-                initialGroups={[]}
+                initialGroups={initialGroups}
                 field="groups"
               />
             </div>

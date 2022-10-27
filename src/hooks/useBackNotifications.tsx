@@ -1,4 +1,3 @@
-import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { INotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
 import {
@@ -24,15 +23,13 @@ interface INotificationContext {
   amount: number;
   notifications: INotification[];
   sendViewed: (
-    viewed: string[],
-    messages: { error: string; loading: string },
-    onSuccess: () => void
+    _: string[],
+    __: { error: string; loading: string },
+    ___: () => void
   ) => void;
   loading: boolean;
-  openModal: () => void;
-  close: () => void;
   refetchNewNotifications: () => void;
-  notifyAboutCreation: (spec: string) => void;
+  notifyAboutCreation: (_: string) => void;
 }
 
 const BackNotificationsContext = createContext<INotificationContext>(
@@ -42,7 +39,6 @@ const BackNotificationsContext = createContext<INotificationContext>(
 export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<INotification[]>(
     []
@@ -88,9 +84,7 @@ export const BackNotificationsProvider: FC<{
   useEffect(() => {
     if (!user) return;
     const ws = new WebSocket(
-      `ws://${
-        process.env.API_ENDPOINT?.split('://')[1]
-      }/ws/notification/${user?.login}`
+      `${process.env.WEBSOCKET_API}/ws/notification/${user?.login}`
     );
 
     ws.onmessage = (event) => {
@@ -106,11 +100,6 @@ export const BackNotificationsProvider: FC<{
       ws.close();
     };
   }, [fetchNotifications, user]);
-
-  const handleOpenModal = useCallback(() => {
-    fetchNotifications();
-    setOpened(true);
-  }, [fetchNotifications]);
 
   const sendViewed = useCallback(
     (
@@ -141,8 +130,6 @@ export const BackNotificationsProvider: FC<{
       notifications,
       sendViewed,
       loading,
-      openModal: handleOpenModal,
-      close: () => setOpened(false),
       refetchNewNotifications: () => fetchNotifications,
       notifyAboutCreation: handleSend,
     }),
@@ -150,7 +137,6 @@ export const BackNotificationsProvider: FC<{
       notifications,
       sendViewed,
       loading,
-      handleOpenModal,
       fetchNotifications,
       handleSend,
     ]
@@ -158,11 +144,6 @@ export const BackNotificationsProvider: FC<{
 
   return (
     <BackNotificationsContext.Provider value={value}>
-      <ReadModal
-        opened={opened}
-        notifications={notifications}
-        close={value.close}
-      />
       {children}
     </BackNotificationsContext.Provider>
   );

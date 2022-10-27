@@ -17,12 +17,18 @@ import { ILocale } from '@custom-types/ui/ILocale';
 import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
 import { customTableSort } from '@utils/customTableSort';
-import { IUser, IUserListBundle } from '@custom-types/data/IUser';
+import {
+  IParticipantsListBundle,
+  IUser,
+} from '@custom-types/data/IUser';
 import { IGroup } from '@custom-types/data/IGroup';
 import { IRole } from '@custom-types/data/atomic';
 import { capitalize } from '@utils/capitalize';
 import { MultiSelect } from '@ui/basics';
 
+export interface IParticipant extends IUser {
+  banned: boolean;
+}
 interface Item<T = any> {
   value: T;
   display: string | ReactNode;
@@ -33,6 +39,7 @@ interface IUserDisplayList
   login: Item<string>;
   shortName: Item<string>;
   role: Item<IRole>;
+  banned: Item<boolean>;
 }
 
 const DEFAULT_ON_PAGE = 10;
@@ -41,7 +48,7 @@ const UsersList: FC<{
   url: string;
   classNames?: any;
   initialColumns: (_: ILocale) => ITableColumn[];
-  refactorUser: (_: IUser) => any;
+  refactorUser: (_: IParticipant) => IUserDisplayList;
   noDefault?: boolean;
   empty?: ReactNode;
   defaultRowsOnPage?: number;
@@ -76,13 +83,22 @@ const UsersList: FC<{
 
   const processData = useCallback(
     (
-      response: IUserListBundle
+      response: IParticipantsListBundle
     ): {
       users: IUserDisplayList[];
       groups: IGroup[];
       roles: IRole[];
     } => ({
-      users: response.users.map((item) => refactorUser(item)),
+      users: [
+        ...response.users.map((user) =>
+          refactorUser({ ...user, banned: false })
+        ),
+        ...(response.banned
+          ? response.banned.map((user) =>
+              refactorUser({ ...user, banned: true })
+            )
+          : []),
+      ],
       groups: response.groups,
       roles: response.roles,
     }),
@@ -91,7 +107,7 @@ const UsersList: FC<{
 
   const { data, loading } = useRequest<
     {},
-    IUserListBundle,
+    IParticipantsListBundle,
     {
       users: IUserDisplayList[];
       groups: IGroup[];

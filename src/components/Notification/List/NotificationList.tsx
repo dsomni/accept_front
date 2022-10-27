@@ -121,12 +121,13 @@ const NotificationList: FC<{}> = ({}) => {
     refetchNotifications,
   ]);
 
-  const handleOpenModal = useCallback((current: number) => {
-    return () => {
-      setCurrent(current);
+  const handleOpenModal = useCallback(
+    (index: number) => {
+      setCurrent(index + ON_PAGE * (activePage - 1));
       setOpenedModal(true);
-    };
-  }, []);
+    },
+    [activePage]
+  );
 
   useEffect(() => {
     const id = setInterval(refetchNotifications, 15000);
@@ -139,6 +140,20 @@ const NotificationList: FC<{}> = ({}) => {
     setOpenedModal(false);
     setTimeout(refetchNotifications, 500);
   }, [refetchNotifications]);
+
+  const totalPages = useMemo(
+    () => Math.max(Math.ceil(notifications.length / ON_PAGE), 1),
+    [notifications.length]
+  );
+
+  const shouldShowPagination = useMemo(
+    () => totalPages > 1,
+    [totalPages]
+  );
+
+  useEffect(() => {
+    setPage((activePage) => Math.min(activePage, totalPages));
+  }, [totalPages]);
 
   return (
     <div className={styles.wrapper}>
@@ -209,12 +224,12 @@ const NotificationList: FC<{}> = ({}) => {
             </div>
             <div
               className={styles.titleWrapper}
-              onClick={handleOpenModal(index)}
+              onClick={() => handleOpenModal(index)}
             >
               <div className={styles.title}>
                 {notification.title}{' '}
                 {!notification.viewed && (
-                  <Badge color="green">New</Badge>
+                  <Badge color="green">{locale.new}</Badge>
                 )}
               </div>
               <div className={styles.shortDescription}>
@@ -228,12 +243,14 @@ const NotificationList: FC<{}> = ({}) => {
           </div>
         ))}
       </div>
-      <Pagination
-        total={Math.ceil(notifications.length / ON_PAGE)}
-        position="center"
-        page={activePage}
-        onChange={setPage}
-      />
+      {shouldShowPagination && (
+        <Pagination
+          total={totalPages}
+          position="center"
+          page={activePage}
+          onChange={setPage}
+        />
+      )}
     </div>
   );
 };

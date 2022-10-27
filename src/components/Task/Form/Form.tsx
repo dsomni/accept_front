@@ -133,39 +133,37 @@ const Form: FC<{
   }, [initialValues]); //eslint-disable-line
 
   return (
-    <>
-      <Stepper
-        buttonLabel={buttonLabel}
-        form={form}
-        handleSubmit={() => handleSubmit(form)}
-        stepFields={stepFields}
-        pages={[
-          <MainInfo
-            key="0"
-            form={form}
-            taskTypes={taskTypes}
-            taskCheckTypes={taskCheckTypes}
-          />,
-          <ConstraintsInfo key="1" form={form} />,
-          <DescriptionInfo
-            key="2"
-            form={form}
-            hintAlarmTypes={hintAlarmTypes}
-          />,
-          <Examples key="3" form={form} />,
-          <>
-            {form.values.checkType === '0' ? (
-              <Tests key="4" form={form} />
-            ) : (
-              <Checker key="4" form={form} />
-            )}
-          </>,
-          <Preview key="5" form={form} />,
-        ]}
-        labels={locale.task.form.steps.labels}
-        descriptions={locale.task.form.steps.descriptions}
-      />
-    </>
+    <Stepper
+      buttonLabel={buttonLabel}
+      form={form}
+      handleSubmit={() => handleSubmit(form)}
+      stepFields={stepFields}
+      pages={[
+        <MainInfo
+          key="0"
+          form={form}
+          taskTypes={taskTypes}
+          taskCheckTypes={taskCheckTypes}
+        />,
+        <ConstraintsInfo key="1" form={form} />,
+        <DescriptionInfo
+          key="2"
+          form={form}
+          hintAlarmTypes={hintAlarmTypes}
+        />,
+        <Examples key="3" form={form} />,
+        <>
+          {form.values.checkType === '0' ? (
+            <Tests key="4" form={form} />
+          ) : (
+            <Checker key="4" form={form} />
+          )}
+        </>,
+        <Preview key="5" form={form} />,
+      ]}
+      labels={locale.task.form.steps.labels}
+      descriptions={locale.task.form.steps.descriptions}
+    />
   );
 };
 

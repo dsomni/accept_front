@@ -75,6 +75,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         assignment: await assignment.json(),
       },
+      revalidate: 5 * 10,
     };
   }
   return {

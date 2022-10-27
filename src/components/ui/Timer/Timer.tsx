@@ -6,19 +6,35 @@ import { useLocale } from '@hooks/useLocale';
 import { timerDate } from '@utils/datetime';
 import { useInterval } from '@mantine/hooks';
 import { useRequest } from '@hooks/useRequest';
-import { IAssignmentTimeInfo } from '@custom-types/data/IAssignment';
 
 const RED_TIME_S = 3600;
 
-const Timer: FC<{ spec: string }> = ({ spec }) => {
+interface BaseTimeInfo {
+  start: Date;
+  end: Date;
+  status: 0 | 1 | 2;
+  infinite?: boolean;
+}
+
+interface TimeInfo extends BaseTimeInfo {
+  infinite: boolean;
+}
+
+const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
   const [showTimer, setShowTimer] = useState(false);
   const { locale } = useLocale();
 
   const { data, loading, refetch } = useRequest<
     {},
-    IAssignmentTimeInfo
-  >(`assignment/info/${spec}`, 'GET');
-  const refetchTimer = useInterval(() => refetch(false), 3000);
+    BaseTimeInfo,
+    TimeInfo
+  >(url, 'GET', undefined, (data) => ({
+    start: data.start,
+    end: data.end,
+    infinite: data.infinite || false,
+    status: data.status,
+  }));
+  const refetchTimer = useInterval(() => refetch(false), 15000);
 
   const [days, setDays] = useState('00');
   const [hours, setHours] = useState('00');
@@ -27,10 +43,10 @@ const Timer: FC<{ spec: string }> = ({ spec }) => {
 
   const tick = useCallback(() => {
     let date = 0;
-    if (!loading && (data?.infinite || data?.status.spec == 2))
+    if (!loading && (data?.infinite || data?.status == 2))
       refetchTimer.stop();
     if (data && !data.infinite) {
-      switch (data.status.spec) {
+      switch (data.status) {
         case 0:
           date =
             new Date(data.start).getTime() - new Date().getTime();
@@ -96,16 +112,16 @@ const Timer: FC<{ spec: string }> = ({ spec }) => {
               className={
                 styles.before +
                 ' ' +
-                (data.status.spec === 2 ? styles.finished : '')
+                (data.status === 2 ? styles.finished : '')
               }
             >
-              {data.status.spec != 2
-                ? data.status.spec == 0
+              {data.status != 2
+                ? data.status == 0
                   ? locale.timer.beforeStart
                   : locale.timer.beforeEnd
                 : locale.timer.finished}
             </div>
-            {data.status.spec !== 2 && (
+            {data.status !== 2 && (
               <div className={styles.timer}>
                 <div className={styles.numberWrapper}>
                   <div className={styles.number}>{days}</div>

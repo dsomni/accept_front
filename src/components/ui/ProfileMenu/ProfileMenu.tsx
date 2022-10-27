@@ -23,7 +23,7 @@ const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
   const { user, signOut, accessLevel } = useUser();
 
-  const { amount, openModal } = useBackNotifications();
+  const { amount } = useBackNotifications();
 
   const handleSignOut = useCallback(() => {
     const id = newNotification({
@@ -72,7 +72,10 @@ const ProfileMenu: FC<{}> = ({}) => {
               <div>{locale.mainHeaderLinks.profileLinks.profile}</div>
             </Group>
           </Menu.Item>
-          <Menu.Item onClick={openModal}>
+          <Menu.Item
+            component="a"
+            href="/profile/me?section=notifications"
+          >
             <Group spacing="xs" className={styles.wrapper}>
               <Group className={styles.wrapper}>
                 <Indicator disabled={amount <= 0} size={6}>

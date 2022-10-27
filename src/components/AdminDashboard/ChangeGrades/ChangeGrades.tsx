@@ -2,7 +2,6 @@ import {
   Button,
   Dropzone,
   Helper,
-  Icon,
   SegmentedControl,
 } from '@ui/basics';
 import { FC, memo, useCallback, useState } from 'react';
@@ -242,27 +241,11 @@ const ChangeGrades: FC<{}> = ({}) => {
               </Button>
             )}
             <Helper
-              dropdownContent={
-                <div>
-                  {locale.helpers.grade.tableFormat.map((p, idx) => (
-                    <p key={idx}>{p}</p>
-                  ))}
-                </div>
-              }
+              dropdownContent={locale.helpers.grade.tableFormat}
             />
             <Helper
-              dropdownContent={
-                <div>
-                  {locale.helpers.grade.attention.map((p, idx) => (
-                    <p key={idx}>{p}</p>
-                  ))}
-                </div>
-              }
-              customIcon={
-                <Icon size="xs">
-                  <AlertCircle color={'var(--negative)'} />
-                </Icon>
-              }
+              dropdownContent={locale.helpers.grade.attention}
+              customIcon={<AlertCircle color={'var(--negative)'} />}
             />
           </>
         }
@@ -288,13 +271,7 @@ const ChangeGrades: FC<{}> = ({}) => {
               />
               <Helper
                 hoverCardProps={{ arrowSize: 15 }}
-                dropdownContent={
-                  <div>
-                    {locale.helpers.grade.errors.map((p, idx) => (
-                      <p key={idx}>{p}</p>
-                    ))}
-                  </div>
-                }
+                dropdownContent={locale.helpers.grade.errors}
               />
             </div>
           )}

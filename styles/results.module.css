@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+  margin: var(--spacer-m) var(--spacer-xl);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+}
+
+.resultsWrapper {
+  width: 90vw;
+}

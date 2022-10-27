@@ -19,7 +19,6 @@ export const TaskOrdering: FC<{
         setValues={(values) => form.setFieldValue('tasks', values)}
         classNames={{
           wrapper: styles.wrapperList,
-          label: stepperStyles.label,
           itemWrapper: styles.itemWrapper,
           dragButton: styles.dragButton,
         }}

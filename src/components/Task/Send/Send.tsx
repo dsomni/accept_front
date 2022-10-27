@@ -69,6 +69,9 @@ const Send: FC<{
           label={locale.language}
           onChange={onLangSelect}
           value={language}
+          classNames={{
+            root: styles.selectWrapper,
+          }}
           data={languages.map((lang) => ({
             label: capitalize(lang.name),
             value: lang.spec.toString(),
@@ -77,7 +80,6 @@ const Send: FC<{
 
         <Button
           variant="outline"
-          size="lg"
           onClick={handleSubmit}
           leftIcon={<SendPlane color={'var(--primary)'} />}
         >

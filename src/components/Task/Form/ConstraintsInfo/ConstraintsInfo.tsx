@@ -1,4 +1,4 @@
-import LanguageSelector from '@ui/LanguageSelector/LanguageSelector';
+import LanguageSelector from '@ui/selectors/LanguageSelector/LanguageSelector';
 import { FC, memo, useCallback, useMemo, useState } from 'react';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './constraintsInfo.module.css';
@@ -10,7 +10,6 @@ import {
   Switch,
 } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
-import stepperStyles from '@styles/ui/stepper.module.css';
 
 const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
   const initialAllowedLanguages = useMemo(
@@ -38,7 +37,7 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
     (langs: Item[]) => {
       form.setFieldValue(`${option}Languages`, langs);
     },
-    [option, form]
+    [option, form.setFieldValue] // eslint-disable-line
   );
 
   const onOptionChange = useCallback(
@@ -65,21 +64,19 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
 
   return (
     <>
-      <div style={{ width: 'fit-content' }}>
-        <Switch
-          label={locale.task.form.restrictLanguages}
-          helperContent={
-            <div>
-              {locale.helpers.task.restrictLanguages.map((p, idx) => (
-                <p key={idx}>{p}</p>
-              ))}
-            </div>
-          }
-          {...form.getInputProps('shouldRestrictLanguages', {
-            type: 'checkbox',
-          })}
-        />
-      </div>
+      <Switch
+        label={locale.task.form.restrictLanguages}
+        helperContent={
+          <div>
+            {locale.helpers.task.restrictLanguages.map((p, idx) => (
+              <p key={idx}>{p}</p>
+            ))}
+          </div>
+        }
+        {...form.getInputProps('shouldRestrictLanguages', {
+          type: 'checkbox',
+        })}
+      />
 
       <Box style={{ position: 'relative' }}>
         <div className={styles.languages}>
@@ -102,9 +99,6 @@ const ConstraintsInfo: FC<{ form: any }> = ({ form }) => {
             initialLangs={initialLanguage}
             setUsed={setLanguages}
             fetchURL={'language'}
-            classNames={{
-              label: stepperStyles.label,
-            }}
           />
         </div>
       </Box>

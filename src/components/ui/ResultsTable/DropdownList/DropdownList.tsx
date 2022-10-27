@@ -13,7 +13,7 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
             color:
               cell.best === '-'
                 ? 'var(--dark3)'
-                : cell.best === 'OK'
+                : cell.best.startsWith('OK') || +cell.best > 0
                 ? 'var(--positive)'
                 : 'var(--negative',
           }}
@@ -38,7 +38,7 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
                     ? 'var(--neutral)'
                     : cell.best.startsWith('OK')
                     ? 'var(--positive)'
-                    : 'var(--negative',
+                    : 'var(--negative)',
               }}
             >
               {cell.best}
@@ -48,20 +48,24 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
             <div className={styles.restWrapper}>
               {cell.rest.map((item, index) => (
                 <Menu.Item key={index}>
-                  <Link href={item.href} passHref>
-                    <a
-                      style={{
-                        textDecoration: 'none',
-                        color: item.text.startsWith('TS')
-                          ? 'var(--neutral)'
-                          : item.text.startsWith('OK')
-                          ? 'var(--positive)'
-                          : 'var(--negative',
-                      }}
-                    >
-                      {item.text}
-                    </a>
-                  </Link>
+                  {item.href ? (
+                    <Link href={item.href} passHref>
+                      <a
+                        style={{
+                          textDecoration: 'none',
+                          color: item.text.startsWith('TS')
+                            ? 'var(--neutral)'
+                            : item.text.startsWith('OK')
+                            ? 'var(--positive)'
+                            : 'var(--negative',
+                        }}
+                      >
+                        {item.text}
+                      </a>
+                    </Link>
+                  ) : (
+                    <>{item.text}</>
+                  )}
                 </Menu.Item>
               ))}
             </div>

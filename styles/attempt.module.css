@@ -1,0 +1,9 @@
+.wrapper {
+  width: 100%;
+}
+
+.notAllowed {
+  width: fit-content;
+  margin: var(--spacer-xl) auto;
+  font-size: var(--font-size-xl);
+}

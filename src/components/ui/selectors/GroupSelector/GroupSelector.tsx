@@ -1,13 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useMemo } from 'react';
 import {
   CustomTransferList,
   Item,
 } from '@ui/CustomTransferList/CustomTransferList';
 import styles from './groupSelector.module.css';
-import stepperStyles from '@styles/ui/stepper.module.css';
 import { IGroup } from '@custom-types/data/IGroup';
 import { InputWrapper } from '@ui/basics';
+import inputStyles from '@styles/ui/input.module.css';
 
 const GroupSelector: FC<{
   form: any;
@@ -15,14 +15,11 @@ const GroupSelector: FC<{
   initialGroups: string[];
   classNames?: any;
   field: string;
-}> = ({ form, groups, initialGroups, field, classNames }) => {
-  const [availableGroups, setAvailableGroups] = useState<Item[]>([]);
-  const [selectedGroups, setSelectedGroups] = useState<Item[]>([]);
+  shrink?: boolean;
+}> = ({ form, groups, initialGroups, field, classNames, shrink }) => {
   const { locale } = useLocale();
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true);
+  const [availableGroups, selectedGroups] = useMemo(() => {
     let newAvailableGroups = [];
     let newSelectedGroups = [];
 
@@ -34,16 +31,17 @@ const GroupSelector: FC<{
         newAvailableGroups.push(group);
       }
     }
-    setAvailableGroups(newAvailableGroups);
-    setSelectedGroups(newSelectedGroups);
-    setLoading(false);
+
+    return [newAvailableGroups, newSelectedGroups];
   }, [groups, initialGroups]);
 
   const itemComponent = useCallback(
     (group: IGroup, handleSelect: any) => {
       return (
         <div
-          className={styles.itemWrapper}
+          className={`${styles.itemWrapper} ${
+            shrink ? inputStyles.shrink : ''
+          }`}
           onClick={() => handleSelect(group)}
           style={{ cursor: 'pointer' }}
         >
@@ -51,31 +49,33 @@ const GroupSelector: FC<{
         </div>
       );
     },
-    []
+    [shrink]
+  );
+
+  const setUsed = useCallback(
+    (groups: Item[]) =>
+      form.setFieldValue(
+        field,
+        groups.map((group) => group.spec)
+      ),
+    [form.setFieldValue] // eslint-disable-line
   );
 
   return (
     <div>
-      {!loading && (
-        <InputWrapper {...form.getInputProps(field)}>
-          <CustomTransferList
-            defaultOptions={availableGroups}
-            defaultChosen={selectedGroups}
-            setUsed={(groups: Item[]) =>
-              form.setFieldValue(
-                field,
-                groups.map((group) => group.spec)
-              )
-            }
-            classNames={{ label: stepperStyles.label, ...classNames }}
-            titles={[
-              locale.ui.groupSelector.unselected,
-              locale.ui.groupSelector.selected,
-            ]}
-            itemComponent={itemComponent}
-          />
-        </InputWrapper>
-      )}
+      <InputWrapper shrink={shrink} {...form.getInputProps(field)}>
+        <CustomTransferList
+          defaultOptions={availableGroups}
+          defaultChosen={selectedGroups}
+          setUsed={setUsed}
+          classNames={{ ...classNames }}
+          titles={[
+            locale.ui.groupSelector.unselected,
+            locale.ui.groupSelector.selected,
+          ]}
+          itemComponent={itemComponent}
+        />
+      </InputWrapper>
     </div>
   );
 };

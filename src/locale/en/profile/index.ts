@@ -5,7 +5,8 @@ export const profile = {
   notification: 'Notifications',
   settings: 'Settings',
   attempts: 'Attempts',
-  createNotification: 'Create Notification',
+  createNotification: 'Create notification',
+  createAssignment: 'Create assignment',
   empty: {
     attempts: "You don't have any attempts",
     assignments: "You don't have any assignments",

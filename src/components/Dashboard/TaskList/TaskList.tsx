@@ -5,6 +5,7 @@ import { ILocale } from '@custom-types/ui/ILocale';
 import { default as TaskListUI } from '@ui/TaskList/TaskList';
 import styles from './taskList.module.css';
 import { ITaskDisplay } from '@custom-types/data/ITask';
+import { useLocale } from '@hooks/useLocale';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -75,7 +76,12 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   },
 ];
 
-const TaskList: FC<{ spec: string }> = ({ spec }) => {
+const TaskList: FC<{
+  type: 'assignment' | 'tournament';
+  spec: string;
+}> = ({ type, spec }) => {
+  const { locale } = useLocale();
+
   const refactorTask = useCallback(
     (task: ITaskDisplay): any => ({
       ...task,
@@ -122,7 +128,7 @@ const TaskList: FC<{ spec: string }> = ({ spec }) => {
           <div className={tableStyles.titleWrapper}>
             <a
               className={tableStyles.title}
-              href={`/task/${task.spec}?assignment=${spec}`}
+              href={`/task/${task.spec}?${type}=${spec}`}
             >
               {task.title}
             </a>
@@ -140,16 +146,16 @@ const TaskList: FC<{ spec: string }> = ({ spec }) => {
         ),
       },
     }),
-    [spec]
+    [spec, type]
   );
   return (
     <div className={styles.wrapper}>
       <TaskListUI
-        url={`assignment/bundle/tasks/${spec}`}
+        url={`${type}/bundle/tasks/${spec}`}
         refactorTask={refactorTask}
         initialColumns={initialColumns}
         noDefault
-        empty={<></>}
+        empty={<>{locale.ui.table.emptyMessage}</>}
         classNames={{
           wrapper: tableStyles.wrapper,
           table: tableStyles.table,

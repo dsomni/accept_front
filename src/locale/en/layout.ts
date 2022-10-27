@@ -12,9 +12,11 @@ export const mainHeaderLinks = {
   lists: 'Lists',
   listLinks: {
     tasks: 'Tasks',
+    assignments: 'My assignments',
     groups: 'Groups',
     schemas: 'Schemas',
     users: 'Users',
+    tournaments: 'Tournaments',
   },
 };
 

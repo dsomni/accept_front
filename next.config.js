@@ -1,11 +1,11 @@
-const { API_ENDPOINT } = process.env;
+const { API_ENDPOINT, WEBSOCKET_API } = process.env;
 
-console.log('Config', { API_ENDPOINT });
+console.log('Config', { API_ENDPOINT, WEBSOCKET_API });
 
 /** @type {import('next').NextConfig} */
 module.exports = {
   env: {
-    API_ENDPOINT,
+    WEBSOCKET_API,
   },
   reactStrictMode: false,
   async rewrites() {
@@ -17,6 +17,10 @@ module.exports = {
       {
         source: '/profile',
         destination: `/profile/me`,
+      },
+      {
+        source: '/edu',
+        destination: `/task/list`,
       },
     ];
   },

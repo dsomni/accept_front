@@ -8,7 +8,7 @@ import { RefreshDot } from 'tabler-icons-react';
 
 export interface ILabel {
   text: string;
-  href: string;
+  href?: string;
 }
 
 export interface IData {
@@ -34,16 +34,22 @@ const ResultsTable: FC<{
             </th>
             {columns.map((column, index) => (
               <th key={index}>
-                <Link href={column.href} passHref>
-                  <a
-                    style={{
-                      textDecoration: 'none',
-                      color: 'inherit',
-                    }}
-                  >
+                {column.href ? (
+                  <Link href={column.href} passHref>
+                    <a
+                      style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                      }}
+                    >
+                      {column.text}
+                    </a>
+                  </Link>
+                ) : (
+                  <div style={{ width: 'fit-content' }}>
                     {column.text}
-                  </a>
-                </Link>
+                  </div>
+                )}
               </th>
             ))}
           </tr>
@@ -52,16 +58,20 @@ const ResultsTable: FC<{
           {rows.map((row, index) => (
             <tr key={index}>
               <td className={styles.rowHeader}>
-                <Link href={row.href} passHref>
-                  <a
-                    style={{
-                      textDecoration: 'none',
-                      color: 'inherit',
-                    }}
-                  >
-                    {row.text}
-                  </a>
-                </Link>
+                {row.href ? (
+                  <Link href={row.href} passHref>
+                    <a
+                      style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                      }}
+                    >
+                      {row.text}
+                    </a>
+                  </Link>
+                ) : (
+                  <>{row.text}</>
+                )}
               </td>
               {data[index].map((cell, idx) => (
                 <td key={idx} style={{ cursor: 'pointer' }}>

@@ -1,5 +1,5 @@
 .hintWrapper {
   display: flex;
   flex-direction: column;
-  gap: 2vh;
+  gap: var(--spacer-m);
 }

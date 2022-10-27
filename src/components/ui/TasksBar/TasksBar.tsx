@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { FC, memo } from 'react';
 import { Home } from 'tabler-icons-react';
 import styles from './tasksBar.module.css';
-
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+import { letterFromIndex } from '@utils/letterFromIndex';
 
 const TasksBar: FC<{
   tasks: ITaskDisplay[];
-  assignment: string;
-}> = ({ tasks, assignment }) => {
+  homeHref: string;
+  taskQuery: string;
+}> = ({ tasks, homeHref, taskQuery }) => {
   return (
     <>
       {tasks.length > 0 && (
@@ -21,19 +21,19 @@ const TasksBar: FC<{
               backgroundColor: 'var(--primary)',
             }}
             component="a"
-            href={`/edu/assignment/${assignment}`}
+            href={homeHref}
           >
             <Home color="white" />
           </ActionIcon>
           {tasks.map((task, index) => (
             <Link
-              href={`/task/${task.spec}?assignment=${assignment}`}
+              href={`/task/${task.spec}?${taskQuery}`}
               key={index}
               passHref
             >
               <a
                 className={`${styles.taskStatus} ${
-                  task.status && task.status.spec != 2
+                  task.status && task.status.spec < 2
                     ? styles.testing
                     : !task.verdict
                     ? styles.null
@@ -42,7 +42,7 @@ const TasksBar: FC<{
                     : styles.err
                 }`}
               >
-                {alphabet[index % 26]}
+                {letterFromIndex(index)}
               </a>
             </Link>
           ))}

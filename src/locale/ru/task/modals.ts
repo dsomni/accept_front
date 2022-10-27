@@ -2,6 +2,7 @@ export const modals = {
   edit: 'Редактировать задачу',
   add: 'Добавить задачу',
   delete: 'Удалить задачу',
+  deletion: 'Удаление задачи',
   deleteConfidence:
     'Вы уверены, что хотите безвозвратно удалить эту задачу?',
   usedInAssignments:

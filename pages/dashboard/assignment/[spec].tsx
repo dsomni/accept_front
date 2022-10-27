@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const assignment = await response.json();
     return {
       props: { spec: assignment.spec },
-      revalidate: 10 * 60,
+      revalidate: 10 * 60 * 60,
     };
   }
   return {

@@ -1,14 +1,15 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
-import { Button } from '@ui/basics';
-import { openText } from '@utils/openText';
-import { ReactElement, useCallback } from 'react';
+import ComponentToPDF from '@ui/ComponentToPDF/ComponentToPDF';
+import { ReactElement } from 'react';
 
 function TestPage() {
-  const onClick = useCallback(() => {
-    openText('lol '.repeat(5000));
-  }, []);
-
-  return <Button onClick={onClick}>open text</Button>;
+  return (
+    <div>
+      <ComponentToPDF
+        component={(ref) => <div ref={ref}>123123</div>}
+      />
+    </div>
+  );
 }
 
 TestPage.getLayout = (page: ReactElement) => {

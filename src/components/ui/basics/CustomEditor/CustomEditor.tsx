@@ -9,11 +9,10 @@ import {
   useState,
 } from 'react';
 import { InputWrapper } from '@ui/basics';
-import { APIs } from '@constants/url';
 
 const editorConfiguration = {
   simpleUpload: {
-    uploadUrl: `${APIs.server}/api/image`,
+    uploadUrl: `/api/image`,
 
     withCredentials: true,
   },
@@ -23,9 +22,10 @@ const CustomEditor: FC<{
   name: string;
   label: string;
   form?: any;
-  classNames?: object;
+
   helperContent?: string | ReactNode;
-}> = ({ name, label, form, classNames, helperContent }) => {
+  shrink?: boolean;
+}> = ({ name, label, form, helperContent, shrink }) => {
   const { locale } = useLocale();
 
   const editorRef = useRef<any>();
@@ -47,10 +47,9 @@ const CustomEditor: FC<{
   return (
     <div>
       <InputWrapper
-        classNames={classNames}
         label={label}
-        size="lg"
         helperContent={helperContent}
+        shrink={shrink}
         {...form.getInputProps(name)}
       >
         {isLoaded ? (
@@ -66,7 +65,13 @@ const CustomEditor: FC<{
             onBlur={() => form.validateField(name)}
           />
         ) : (
-          <div style={{ fontSize: 'var(--font-size-m)' }}>
+          <div
+            style={{
+              fontSize: shrink
+                ? 'var(--font-size-xs)'
+                : 'var(--font-size-s)',
+            }}
+          >
             {locale.loading + '...'}
           </div>
         )}

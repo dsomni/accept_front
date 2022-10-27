@@ -2,7 +2,6 @@ import {
   Button,
   Dropzone,
   Helper,
-  Icon,
   SegmentedControl,
 } from '@ui/basics';
 import { FC, memo, useCallback, useState } from 'react';
@@ -315,29 +314,11 @@ const AddUsers: FC<{}> = ({}) => {
               </Button>
             )}
             <Helper
-              dropdownContent={
-                <div>
-                  {locale.helpers.student.tableFormat.map(
-                    (p, idx) => (
-                      <p key={idx}>{p}</p>
-                    )
-                  )}
-                </div>
-              }
+              dropdownContent={locale.helpers.student.tableFormat}
             />
             <Helper
-              dropdownContent={
-                <div>
-                  {locale.helpers.student.attention.map((p, idx) => (
-                    <p key={idx}>{p}</p>
-                  ))}
-                </div>
-              }
-              customIcon={
-                <Icon size="xs">
-                  <AlertCircle color={'var(--negative)'} />
-                </Icon>
-              }
+              dropdownContent={locale.helpers.student.attention}
+              customIcon={<AlertCircle color={'var(--negative)'} />}
             />
           </>
         }
@@ -363,13 +344,7 @@ const AddUsers: FC<{}> = ({}) => {
               />
               <Helper
                 hoverCardProps={{ arrowSize: 15 }}
-                dropdownContent={
-                  <div>
-                    {locale.helpers.student.errors.map((p, idx) => (
-                      <p key={idx}>{p}</p>
-                    ))}
-                  </div>
-                }
+                dropdownContent={locale.helpers.student.errors}
               />
             </div>
           )}

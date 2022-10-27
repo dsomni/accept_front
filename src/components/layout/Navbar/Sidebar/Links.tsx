@@ -48,7 +48,7 @@ export const Links: FC<{
                         >
                           <HeaderLink
                             link={link}
-                            propClass={styles.noHoverLink}
+                            additionalClass={styles.noHoverLink}
                           />
                         </div>
                       </div>
@@ -58,7 +58,7 @@ export const Links: FC<{
             ) : (
               <HeaderLink
                 link={link}
-                propClass={styles.noHoverLink}
+                additionalClass={styles.noHoverLink}
               />
             )}
           </div>

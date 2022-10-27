@@ -1,6 +1,13 @@
 import { useLocale } from '@hooks/useLocale';
 
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import styles from './taskSelector.module.css';
 import { sendRequest } from '@requests/request';
@@ -20,10 +27,27 @@ const TaskSelector: FC<{
 }> = ({ setUsed, classNames, initialTasks }) => {
   const { locale } = useLocale();
 
-  const [selectedTasks, setSelectedTasks] =
-    useState<Item[]>(initialTasks);
-  const [availableTasks, setAvailableTasks] = useState<Item[]>([]);
+  const [tasks, setTasks] = useState<ITaskDisplay[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedTasks, availableTasks] = useMemo(() => {
+    const selected = initialTasks.map((task) => task.value);
+    let newAvailableTasks: Item[] = [];
+    let newSelectedTasks: Item[] = [];
+
+    for (let i = 0; i < tasks.length; i++) {
+      const task = {
+        value: tasks[i].spec,
+        label: tasks[i].title,
+      };
+      if (!selected.includes(task.value)) {
+        newAvailableTasks.push(task);
+      } else {
+        newSelectedTasks.push(task);
+      }
+    }
+    return [newSelectedTasks, newAvailableTasks];
+  }, [initialTasks, tasks]);
 
   const refetch = useCallback(async () => {
     setLoading(true);
@@ -34,27 +58,10 @@ const TaskSelector: FC<{
       3000
     ).then((res) => {
       if (res.error) return;
-      const tasks = res.response;
-      const selected = selectedTasks.map((task) => task.value);
-      let newAvailableTasks: Item[] = [];
-      let newSelectedTasks: Item[] = [];
-
-      for (let i = 0; i < tasks.length; i++) {
-        const task = {
-          value: tasks[i].spec,
-          label: tasks[i].title,
-        };
-        if (!selected.includes(task.value)) {
-          newAvailableTasks.push(task);
-        } else {
-          newSelectedTasks.push(task);
-        }
-      }
-      setSelectedTasks(newSelectedTasks);
-      setAvailableTasks(newAvailableTasks);
+      setTasks(res.response);
       setLoading(false);
     });
-  }, [selectedTasks]);
+  }, []);
 
   useEffect(() => {
     refetch();

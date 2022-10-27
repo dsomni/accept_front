@@ -109,6 +109,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         assignment_schema: assignmentSchema,
       },
+      revalidate: 60,
     };
   }
 

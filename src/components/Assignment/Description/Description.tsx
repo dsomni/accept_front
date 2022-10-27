@@ -6,6 +6,7 @@ import { useLocale } from '@hooks/useLocale';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import { sendRequest } from '@requests/request';
 import PrimitiveTaskTable from '@ui/PrimitiveTaskTable/PrimitiveTaskTable';
+import { letterFromIndex } from '@utils/letterFromIndex';
 
 const Description: FC<{ assignment: IAssignment }> = ({
   assignment,
@@ -31,7 +32,12 @@ const Description: FC<{ assignment: IAssignment }> = ({
         5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
-          setTasks(res.response);
+          setTasks(
+            res.response.map((task, index) => ({
+              ...task,
+              title: `${letterFromIndex(index)}. ${task.title}`,
+            }))
+          );
         }
       });
     }

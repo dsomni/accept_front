@@ -42,6 +42,13 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
           {': '}
           <span>{locale.attempt.statuses[attempt.status.spec]}</span>
         </div>
+        {attempt.status.spec == 3 && attempt.banInfo && (
+          <div>
+            {locale.attempt.banReason}
+            {': '}
+            <span>{attempt.banInfo.reason}</span>
+          </div>
+        )}
         <div>
           {locale.attempt.constraints.time}
           {': '}

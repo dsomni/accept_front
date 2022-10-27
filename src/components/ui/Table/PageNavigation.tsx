@@ -1,6 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { ActionIcon } from '@mantine/core';
-import { Select } from '@ui/basics';
+import { Icon, Select } from '@ui/basics';
 
 import { FC, memo, useMemo } from 'react';
 import {
@@ -17,8 +16,8 @@ const PageNavigation: FC<{
   perPage: number;
   page: number;
   totalLength: number;
-  handlePerPageChange: (perPage: number) => void;
-  handlePageChange: (page: number) => void;
+  handlePerPageChange: (_: number) => void;
+  handlePageChange: (_: number) => void;
 }> = ({
   onPage,
   page,
@@ -37,7 +36,7 @@ const PageNavigation: FC<{
   return (
     <div className={styles.footer}>
       <div className={styles.pagesWrapper}>
-        <div className={styles.overall}>
+        <div>
           {locale.ui.table.overall} {totalLength}
         </div>
         {totalLength > 0 && (
@@ -67,56 +66,60 @@ const PageNavigation: FC<{
             </div>
 
             <div className={styles.pageNavigation}>
-              <ActionIcon
+              <Icon
                 style={{
                   backgroundColor: '#ffffff00',
                   border: 'none',
                 }}
+                size="xs"
                 disabled={page == 0}
                 onClick={() => handlePageChange(0)}
               >
                 <ArrowNarrowLeft />
-              </ActionIcon>
-              <ActionIcon
+              </Icon>
+              <Icon
                 style={{
                   backgroundColor: '#ffffff00',
                   border: 'none',
                 }}
                 disabled={page == 0}
+                size="xs"
                 onClick={() =>
                   handlePageChange(Math.max(page - 1, 0))
                 }
               >
                 <ChevronLeft />
-              </ActionIcon>
+              </Icon>
               <div>
                 {page * perPage + 1} -{' '}
                 {perPage
                   ? Math.min((page + 1) * perPage, totalLength)
                   : totalLength}
               </div>
-              <ActionIcon
+              <Icon
                 style={{
                   backgroundColor: '#ffffff00',
                   border: 'none',
                 }}
+                size="xs"
                 disabled={page == lastPage}
                 onClick={() =>
                   handlePageChange(Math.min(page + 1, lastPage))
                 }
               >
                 <ChevronRight />
-              </ActionIcon>
-              <ActionIcon
+              </Icon>
+              <Icon
                 style={{
                   backgroundColor: '#ffffff00',
                   border: 'none',
                 }}
+                size="xs"
                 disabled={page == lastPage}
                 onClick={() => handlePageChange(lastPage)}
               >
                 <ArrowNarrowRight />
-              </ActionIcon>
+              </Icon>
             </div>
           </div>
         )}

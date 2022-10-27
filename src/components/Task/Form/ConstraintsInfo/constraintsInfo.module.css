@@ -1,5 +1,5 @@
 .languages {
   display: flex;
   flex-direction: column;
-  gap: var(--spacer-m);
+  gap: var(--spacer-s);
 }

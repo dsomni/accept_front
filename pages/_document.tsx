@@ -1,3 +1,4 @@
+import { createGetInitialProps } from '@mantine/next';
 import Document, {
   Head,
   Html,
@@ -5,7 +6,10 @@ import Document, {
   NextScript,
 } from 'next/document';
 
+const getInitialProps = createGetInitialProps();
+
 class MyDocument extends Document {
+  static getInitialProps = getInitialProps;
   render() {
     return (
       <Html lang="ru">

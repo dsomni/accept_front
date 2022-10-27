@@ -1,11 +1,13 @@
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { useLocale } from '@hooks/useLocale';
-import { Group, Modal } from '@mantine/core';
 import { FC, memo, useCallback, useState } from 'react';
-import deleteModalStyles from '@styles/ui/deleteModal.module.css';
 import { setter } from '@custom-types/ui/atomic';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { Button } from '@ui/basics';
+import deleteModalStyles from '@styles/ui/deleteModal.module.css';
+import modalStyles from '@styles/ui/modal.module.css';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 
 const DeleteModal: FC<{
   active: boolean;
@@ -33,57 +35,43 @@ const DeleteModal: FC<{
 
   return (
     <>
-      <Modal
+      <SimpleModal
         opened={active}
-        centered
-        onClose={() => setActive(false)}
-        size="lg"
-        title={
-          locale.assignmentSchema.modals.delete +
-          ` '${assignment.title}'`
-        }
-        classNames={{
-          title: deleteModalStyles.modalTitle,
-        }}
+        close={() => setActive(false)}
+        hideCloseButton
+        title={locale.assignmentSchema.modals.deletion}
       >
-        <div className={deleteModalStyles.form}>
-          <div className={deleteModalStyles.question}>
-            {locale.task.modals.deleteConfidence}
+        <div className={modalStyles.verticalContent}>
+          <div>
+            {locale.assignmentSchema.modals.delete +
+              ` '${assignment.title}' ?`}
           </div>
-          <Group
-            position="right"
-            spacing="lg"
-            className={deleteModalStyles.buttons}
-          >
-            {!toList ? (
-              <>
-                <Button
-                  variant="outline"
-                  kind="positive"
-                  autoFocus
-                  onClick={() => setActive(false)}
-                >
-                  {locale.cancel}
-                </Button>
-                <Button
-                  variant="outline"
-                  kind="negative"
-                  onClick={() => handleDelete()}
-                >
-                  {locale.delete}
-                </Button>
-              </>
-            ) : (
-              <Button
-                variant="outline"
-                href="/edu/assignment_schema/list"
-              >
-                {locale.toList}
-              </Button>
-            )}
-          </Group>
+
+          {!toList ? (
+            <>
+              <SimpleButtonGroup
+                reversePositive
+                actionButton={{
+                  label: locale.delete,
+                  onClick: handleDelete,
+                }}
+                cancelButton={{
+                  label: locale.cancel,
+                  onClick: () => setActive(false),
+                }}
+              />
+            </>
+          ) : (
+            <Button
+              variant="outline"
+              href="/edu/assignment_schema/list"
+              targetWrapperClassName={deleteModalStyles.toListButton}
+            >
+              {locale.toList}
+            </Button>
+          )}
         </div>
-      </Modal>
+      </SimpleModal>
     </>
   );
 };

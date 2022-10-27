@@ -1,5 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
-import { FC, memo } from 'react';
+import { FC, ReactNode, memo } from 'react';
 import tableStyles from '@styles/ui/primitiveTable.module.css';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { ITag } from '@custom-types/data/ITag';
@@ -8,7 +8,8 @@ import { ITaskDisplay } from '@custom-types/data/ITask';
 const PrimitiveTaskTable: FC<{
   tasks: ITaskDisplay[];
   linkQuery?: string;
-}> = ({ tasks, linkQuery }) => {
+  empty?: ReactNode;
+}> = ({ tasks, linkQuery, empty }) => {
   const { locale } = useLocale();
 
   return (
@@ -20,6 +21,7 @@ const PrimitiveTaskTable: FC<{
       ]}
       columnSizes={[4, 1, 1]}
       rows={tasks}
+      empty={empty}
       rowComponent={(row: any) => {
         return (
           <>

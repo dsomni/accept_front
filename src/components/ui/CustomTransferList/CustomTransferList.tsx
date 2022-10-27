@@ -1,8 +1,14 @@
 import { removeOneElement } from '@utils/removeOneElement';
-import { FC, ReactNode, useCallback, useState } from 'react';
+import { FC, ReactNode, useCallback, useEffect } from 'react';
 import { SelectField } from './SelectField/SelectField';
 import styles from './customTransferList.module.css';
 import { pureCallback, setter } from '@custom-types/ui/atomic';
+import createFastContext from '@hooks/useStore';
+
+export const { Provider, useStore } = createFastContext({
+  options: [] as Item[],
+  chosen: [] as Item[],
+});
 
 export interface Item {
   label: string;
@@ -20,19 +26,24 @@ const cmpItem = (a: Item, b: Item) => {
   return -1;
 };
 
-export const CustomTransferList: FC<{
+interface InnerTransferListProps {
   defaultOptions: Item[];
   defaultChosen: Item[];
   setUsed: setter<Item[]>;
   titles: [string, string];
   classNames: any;
   rightComponent?: pureCallback<ReactNode>;
-  itemComponent: (item: any, onSelect: any) => ReactNode;
+  itemComponent: (_: any, __: any) => ReactNode;
   shouldSortChosen?: boolean;
   searchKeys?: string[];
-}> = ({
-  defaultOptions,
+  shrink?: boolean;
+}
+
+interface CustomTransferListProps extends InnerTransferListProps {}
+
+const InnerTransferList: FC<InnerTransferListProps> = ({
   defaultChosen,
+  defaultOptions,
   setUsed,
   titles,
   classNames,
@@ -40,41 +51,47 @@ export const CustomTransferList: FC<{
   itemComponent,
   shouldSortChosen,
   searchKeys,
+  shrink,
 }) => {
-  const [chosen, setChosen] = useState(
-    shouldSortChosen ? defaultChosen.sort(cmpItem) : defaultChosen
-  );
-  const [options, setOptions] = useState(
-    defaultOptions.sort(cmpItem)
-  );
+  const [chosen, set] = useStore((store) => store['chosen']);
+  const [options] = useStore((store) => store['options']);
+
+  useEffect(() => {
+    setUsed(chosen);
+  }, [chosen, setUsed]);
+
+  useEffect(() => {
+    set({ options: defaultOptions.sort(cmpItem) });
+  }, [defaultOptions, set]);
+
+  useEffect(() => {
+    set({
+      chosen: shouldSortChosen
+        ? defaultChosen.sort(cmpItem)
+        : defaultChosen,
+    });
+  }, [defaultChosen, defaultOptions, set, shouldSortChosen]);
 
   const handleSelectLeft = useCallback(
     (item: Item) => {
-      setOptions((options) => {
-        return removeOneElement(options, item);
+      set({
+        options: removeOneElement(options, item),
+        chosen: shouldSortChosen
+          ? [...chosen, item].sort(cmpItem)
+          : [...chosen, item],
       });
-      setChosen((chosen) => {
-        chosen.push(item);
-        if (shouldSortChosen) return chosen.sort(cmpItem);
-        return chosen;
-      });
-
-      setUsed(chosen);
     },
-    [chosen, setUsed, shouldSortChosen]
+    [chosen, options, set, shouldSortChosen]
   );
+
   const handleSelectRight = useCallback(
     (item: Item) => {
-      setChosen((chosen) => {
-        return removeOneElement(chosen, item);
+      set({
+        options: [...options, item].sort(cmpItem),
+        chosen: removeOneElement(chosen, item),
       });
-      setOptions((options) => {
-        options.push(item);
-        return options.sort(cmpItem);
-      });
-      setUsed(chosen);
     },
-    [chosen, setUsed]
+    [chosen, options, set]
   );
 
   return (
@@ -83,29 +100,41 @@ export const CustomTransferList: FC<{
         classNames?.customTransferListWrapper
           ? classNames.customTransferListWrapper
           : ''
-      }`}
+      }  ${shrink ? styles.shrink : ''}`}
     >
       <div className={styles.leftWrapper}>
         <SelectField
           classNames={classNames}
           title={titles[0]}
-          values={options}
+          field={'options'}
           handleSelect={handleSelectLeft}
           rightComponent={rightComponent}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
+          shrink={shrink}
         />
       </div>
       <div className={styles.rightWrapper}>
         <SelectField
           classNames={classNames}
           title={titles[1]}
-          values={chosen}
+          field={'chosen'}
           handleSelect={handleSelectRight}
           itemComponent={itemComponent}
           searchKeys={searchKeys}
+          shrink={shrink}
         />
       </div>
     </div>
+  );
+};
+
+export const CustomTransferList: FC<CustomTransferListProps> = ({
+  ...props
+}) => {
+  return (
+    <Provider>
+      <InnerTransferList {...props} />
+    </Provider>
   );
 };

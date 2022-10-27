@@ -3,11 +3,12 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 
 import tableStyles from '@styles/ui/customTable.module.css';
 import { ILocale } from '@custom-types/ui/ILocale';
-import { IUser } from '@custom-types/data/IUser';
 import { capitalize } from '@utils/capitalize';
-import UserList from '@ui/UserList/UserList';
+import UserList, { IParticipant } from '@ui/UserList/UserList';
 
 import styles from './participantsList.module.css';
+import { useLocale } from '@hooks/useLocale';
+import Link from 'next/link';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -61,18 +62,15 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
   },
 ];
 
-const refactorUser = (user: IUser): any => ({
+const refactorUser = (user: IParticipant): any => ({
   ...user,
   login: {
     value: user.login,
     display: (
       <div className={tableStyles.titleWrapper}>
-        <a
-          className={tableStyles.title}
-          href={`/profile/${user.login}`}
-        >
-          {user.login}
-        </a>
+        <Link href={`/profile/${user.login}`} passHref>
+          <a className={tableStyles.title}>{user.login}</a>
+        </Link>
         {user.groups.length > 0 && (
           <span className={tableStyles.tags}>
             {user.groups.map((group, idx) => (
@@ -105,15 +103,20 @@ const refactorUser = (user: IUser): any => ({
   },
 });
 
-const ParticipantsList: FC<{ spec: string }> = ({ spec }) => {
+const ParticipantsList: FC<{
+  type: 'assignment' | 'tournament';
+  spec: string;
+}> = ({ type, spec }) => {
+  const { locale } = useLocale();
+
   return (
     <div className={styles.wrapper}>
       <UserList
-        url={`assignment/participants/${spec}`}
-        refactorUser={refactorUser}
+        url={`${type}/participants/${spec}`}
+        refactorUser={(user) => refactorUser(user)}
         initialColumns={initialColumns}
         noDefault
-        empty={<></>}
+        empty={<>{locale.ui.table.emptyMessage}</>}
         classNames={{
           wrapper: tableStyles.wrapper,
           table: tableStyles.table,
