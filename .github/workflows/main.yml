@@ -1,14 +1,19 @@
+name: release
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: tag of a build image
+        required: true
 jobs:
   release:
-    name: Create Release
-    runs-on: ubuntu-latest
+    runs-on: web
     steps:
       - uses: actions/checkout@v2
       - name: Login to DockerHub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: INFO RELEASE
+        run: echo ${{ github.event.inputs.tag }}
       - name: Release
-        run: .CI/release.sh "accept-front" "release" "accept-front-docker" "master"
+    run: .CI/release.sh "accept-front" "release" "accept-front" ${{ github.event.inputs.tag }}
