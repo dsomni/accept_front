@@ -2,11 +2,10 @@ import Image from 'next/image';
 import { FC, ReactNode } from 'react';
 import { Center } from '@mantine/core';
 import logo from 'public/logo.svg';
-
 import styles from '@styles/layouts/login.module.css';
-
 import { useLocale } from '@hooks/useLocale';
-import Head from 'next/head';
+import Title from '@ui/Title/Title';
+
 export const LoginLayout: FC<{
   title: 'login' | 'registration';
   children: ReactNode;
@@ -15,11 +14,7 @@ export const LoginLayout: FC<{
 
   return (
     <div className={styles.pageWrapper}>
-      <Head>
-        <title>
-          {locale.auth[title]} | {locale.accept}
-        </title>
-      </Head>
+      <Title title={locale.auth[title]} />
       <Center className={styles.wrapper}>
         <div className={styles.contentWrapper}>
           <div className={styles.logoWrapper}>
