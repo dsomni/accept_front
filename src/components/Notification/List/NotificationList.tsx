@@ -9,8 +9,8 @@ import {
 } from 'react';
 import styles from './notificationList.module.css';
 import { INotification } from '@custom-types/data/notification';
-import { Badge, Checkbox, Pagination, Tooltip } from '@mantine/core';
-import { Icon } from '@ui/basics';
+import { Badge, Pagination, Tooltip } from '@mantine/core';
+import { Checkbox, Icon } from '@ui/basics';
 import { requestWithError } from '@utils/requestWithError';
 import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
@@ -176,6 +176,9 @@ const NotificationList: FC<{}> = ({}) => {
                 onChange={() => setSelected([])}
               />
             </Tooltip>
+            <div className={styles.lengthWrapper}>
+              {selected.length}
+            </div>
             <Icon
               size="xs"
               tooltipLabel={locale.notification.list.delete}
@@ -223,22 +226,26 @@ const NotificationList: FC<{}> = ({}) => {
               />
             </div>
             <div
-              className={styles.titleWrapper}
+              className={styles.notificationWrapper}
               onClick={() => handleOpenModal(index)}
             >
-              <div className={styles.title}>
-                {notification.title}{' '}
-                {!notification.viewed && (
-                  <Badge color="green">{locale.new}</Badge>
-                )}
+              <div className={styles.titleWrapper}>
+                <div className={styles.title}>
+                  {notification.title}{' '}
+                  {!notification.viewed && (
+                    <Badge color="green">{locale.new}</Badge>
+                  )}
+                </div>
+                <div className={styles.shortDescription}>
+                  {notification.shortDescription}
+                </div>
               </div>
-              <div className={styles.shortDescription}>
-                {notification.shortDescription}
+              <div className={styles.author}>
+                {notification.author}
               </div>
-            </div>
-            <div className={styles.author}>{notification.author}</div>
-            <div className={styles.date}>
-              {getLocalDate(notification.date)}
+              <div className={styles.date}>
+                {getLocalDate(notification.date)}
+              </div>
             </div>
           </div>
         ))}

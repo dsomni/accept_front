@@ -89,7 +89,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
   return (
     <LeftMenu
       links={links}
-      initialStep={initialStep}
+      initialStep={1}
       topContent={
         <div className={styles.header}>
           <Avatar src={link(user.login)} size="lg" radius="lg" />

@@ -21,9 +21,11 @@ import Indicator from './Indicator/Indicator';
 import Tabs from './Tabs/Tabs';
 import Tip from './Tip/Tip';
 import DatePicker from './DatePicker/DatePicker';
+import Checkbox from './Checkbox/Checkbox';
 
 export {
   Button,
+  Checkbox,
   CustomEditor,
   Dropzone,
   Helper,
