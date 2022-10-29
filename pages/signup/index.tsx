@@ -164,8 +164,8 @@ function SignUp() {
                 </div>
               }
               size="lg"
-              onBlur={onLoginBlur}
               {...form.getInputProps('login')}
+              onBlur={onLoginBlur}
             />
           </>,
           <>

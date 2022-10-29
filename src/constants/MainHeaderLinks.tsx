@@ -70,6 +70,6 @@ export const links: IHeaderLink[] = [
   {
     text: (locale) => locale.mainHeaderLinks.about,
     type: 'regular',
-    href: '/about',
+    href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
   },
 ];
