@@ -16,6 +16,7 @@ const Indicator: FC<IndicatorProps> = ({ children, ...props }) => {
           fontSize: `${size_px / 2}px`,
         },
       }}
+      overflowCount={99}
       {...props}
     >
       {children}

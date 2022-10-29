@@ -52,10 +52,7 @@ const ProfileMenu: FC<{}> = ({}) => {
       <Menu trigger="hover" zIndex={1000}>
         <Menu.Target>
           <div>
-            <Indicator
-              label={amount > 99 ? '99+' : amount}
-              disabled={amount <= 0}
-            >
+            <Indicator label={amount} disabled={amount <= 0}>
               <Avatar
                 radius="lg"
                 size="lg"
@@ -65,7 +62,9 @@ const ProfileMenu: FC<{}> = ({}) => {
           </div>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Label>{user?.shortName || ''}</Menu.Label>
+          <Menu.Label className={styles.label}>
+            {user?.shortName || ''}
+          </Menu.Label>
           <Menu.Item component="a" href="/profile/me">
             <Group spacing="xs" className={styles.wrapper}>
               <Robot color="var(--secondary)" size={20} />
