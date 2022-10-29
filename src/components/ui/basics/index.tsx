@@ -22,6 +22,7 @@ import Tabs from './Tabs/Tabs';
 import Tip from './Tip/Tip';
 import DatePicker from './DatePicker/DatePicker';
 import Checkbox from './Checkbox/Checkbox';
+import LoadingOverlay from './LoadingOverlay/LoadingOverlay';
 
 export {
   Button,
@@ -48,4 +49,5 @@ export {
   Tabs,
   Tip,
   DatePicker,
+  LoadingOverlay,
 };

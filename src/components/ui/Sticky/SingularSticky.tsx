@@ -24,7 +24,7 @@ const SingularSticky: FC<{
         bottom: position?.bottom || 20,
         right: position?.right || 20,
       }}
-      zIndex={200}
+      zIndex={199}
     >
       <ActionIcon
         component={props.onClick ? 'button' : 'a'}

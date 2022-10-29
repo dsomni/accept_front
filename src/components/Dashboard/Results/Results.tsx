@@ -2,8 +2,7 @@ import { FC, memo, useEffect, useState } from 'react';
 import ResultsTable from '@ui/ResultsTable/ResultsTable';
 import styles from './results.module.css';
 import { useRequest } from '@hooks/useRequest';
-import { LoadingOverlay } from '@mantine/core';
-import { SegmentedControl } from '@ui/basics';
+import { LoadingOverlay, SegmentedControl } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 import { IFullResults } from '@custom-types/data/IResults';
 

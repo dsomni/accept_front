@@ -3,9 +3,13 @@ import { IUser } from '@custom-types/data/IUser';
 import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
 import { useUser } from '@hooks/useUser';
-import { LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Button, Select, TextInput } from '@ui/basics';
+import {
+  Button,
+  LoadingOverlay,
+  Select,
+  TextInput,
+} from '@ui/basics';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { requestWithNotify } from '@utils/requestWithNotify';

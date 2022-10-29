@@ -16,8 +16,7 @@ import InnerTable from './InnerTable/InnerTable';
 import styles from './table.module.css';
 import { BaseSearch } from '@custom-types/data/request';
 import PageNavigation from './PageNavigation';
-import { LoadingOverlay } from '@mantine/core';
-import { MultiSelect, TextInput } from '@ui/basics';
+import { LoadingOverlay, MultiSelect, TextInput } from '@ui/basics';
 
 const Table: FC<{
   columns: ITableColumn[];

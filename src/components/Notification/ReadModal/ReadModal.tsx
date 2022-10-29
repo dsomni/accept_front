@@ -1,5 +1,5 @@
 import { INotification } from '@custom-types/data/notification';
-import { Button, Modal } from '@ui/basics';
+import { Button, LoadingOverlay, Modal } from '@ui/basics';
 import {
   FC,
   memo,
@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 import styles from './readModal.module.css';
-import { Group, LoadingOverlay } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';

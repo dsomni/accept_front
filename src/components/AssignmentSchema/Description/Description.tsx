@@ -6,9 +6,9 @@ import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { IAssignmentSchema } from '@custom-types/data/IAssignmentSchema';
 import { sendRequest } from '@requests/request';
 import TagList from '@ui/TagList/TagList';
-import { LoadingOverlay } from '@mantine/core';
 import tableStyles from '@styles/ui/primitiveTable.module.css';
 import { ITag } from '@custom-types/data/ITag';
+import { LoadingOverlay } from '@ui/basics';
 
 const Description: FC<{
   assignment: IAssignmentSchema;

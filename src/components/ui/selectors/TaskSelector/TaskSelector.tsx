@@ -18,7 +18,7 @@ import {
 } from '@ui/CustomTransferList/CustomTransferList';
 import { TaskItem } from './TaskItem/TaskItem';
 import { setter } from '@custom-types/ui/atomic';
-import { LoadingOverlay } from '@mantine/core';
+import { LoadingOverlay } from '@ui/basics';
 
 const TaskSelector: FC<{
   initialTasks: Item[];
