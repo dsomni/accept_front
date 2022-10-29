@@ -6,7 +6,7 @@ import Row from '../Row/Row';
 const InnerTable: FC<{
   columns: ITableColumn[];
   rows: any[];
-  sort: (key: string, order: -1 | 0 | 1) => void;
+  sort: (_: string, __: -1 | 0 | 1) => void;
   classNames: any;
 }> = ({ columns, classNames, rows, sort }) => {
   const keys = useMemo(

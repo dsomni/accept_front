@@ -114,7 +114,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: true,
-    size: 3,
+    size: 2,
   },
   {
     label: locale.assignment.list.start,
