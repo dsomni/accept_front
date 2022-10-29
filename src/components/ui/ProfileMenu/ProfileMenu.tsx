@@ -23,7 +23,7 @@ const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
   const { user, signOut, accessLevel } = useUser();
 
-  const { amount } = useBackNotifications();
+  const { new_amount } = useBackNotifications();
 
   const handleSignOut = useCallback(() => {
     const id = newNotification({
@@ -52,7 +52,7 @@ const ProfileMenu: FC<{}> = ({}) => {
       <Menu trigger="hover" zIndex={1000}>
         <Menu.Target>
           <div>
-            <Indicator label={amount} disabled={amount <= 0}>
+            <Indicator label={new_amount} disabled={new_amount <= 0}>
               <Avatar
                 radius="lg"
                 size="lg"
@@ -77,7 +77,7 @@ const ProfileMenu: FC<{}> = ({}) => {
           >
             <Group spacing="xs" className={styles.wrapper}>
               <Group className={styles.wrapper}>
-                <Indicator disabled={amount <= 0} size={6}>
+                <Indicator disabled={new_amount <= 0} size={6}>
                   <BellRinging color="var(--secondary)" size={20} />
                 </Indicator>
                 <div>

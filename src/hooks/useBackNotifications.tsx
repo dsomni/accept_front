@@ -20,7 +20,7 @@ import { useLocale } from './useLocale';
 import { useUser } from './useUser';
 
 interface INotificationContext {
-  amount: number;
+  new_amount: number;
   notifications: INotification[];
   sendViewed: (
     _: string[],
@@ -126,7 +126,9 @@ export const BackNotificationsProvider: FC<{
 
   const value: INotificationContext = useMemo(
     () => ({
-      amount: notifications.length,
+      new_amount: notifications.filter(
+        (notification) => notification.viewed == false
+      ).length,
       notifications,
       sendViewed,
       loading,
