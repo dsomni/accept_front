@@ -127,10 +127,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
       <div className={styles.main}>
         <TextInput
           label={locale.auth.labels.name}
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           {...main_form.getInputProps('name')}
         />
         <TextInput
@@ -138,29 +134,21 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
           classNames={{
             label: styles.label,
           }}
-          size="lg"
           {...main_form.getInputProps('surname')}
         />
         <TextInput
           label={locale.auth.labels.patronymic}
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           {...main_form.getInputProps('patronymic')}
         />
         <TextInput
           label={locale.auth.labels.email}
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           {...main_form.getInputProps('email')}
         />
         <div className={styles.button}>
           <Button
             disabled={!main_form.isValid()}
             onClick={handleMain}
+            variant="outline"
           >
             {locale.save}
           </Button>
@@ -170,9 +158,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
         <PasswordInput
           label={locale.auth.labels.password}
           placeholder={locale.auth.placeholders.password}
-          classNames={{
-            label: styles.label,
-          }}
           helperContent={
             <div>
               {locale.helpers.auth.password.map((p, idx) => (
@@ -180,7 +165,6 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
               ))}
             </div>
           }
-          size="lg"
           onBlur={() => {
             password_form.validateField('password');
             password_form.validateField('confirmPassword');
@@ -190,16 +174,12 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
         <PasswordInput
           label={locale.auth.labels.confirmPassword}
           placeholder={locale.auth.placeholders.password}
-          classNames={{
-            label: styles.label,
-          }}
-          size="lg"
           {...password_form.getInputProps('confirmPassword')}
         />
         <div className={styles.button}>
           <Button
             disabled={Object.keys(password_form.errors).length > 0}
-            type="button"
+            variant="outline"
             onClick={handlePassword}
           >
             {locale.save}
