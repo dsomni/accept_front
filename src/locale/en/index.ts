@@ -53,6 +53,7 @@ const en = {
   },
   newTab: 'Open in the new tab',
   new: 'New',
+  email: 'Email',
   assignmentSchema,
   assignment,
   attempt,
