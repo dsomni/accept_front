@@ -18,9 +18,8 @@ import { ITaskListBundle } from '@custom-types/data/bundle';
 import { useRequest } from '@hooks/useRequest';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { BaseSearch } from '@custom-types/data/request';
-import Fuse from 'fuse.js';
-import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
+import { MultiSelect } from '@ui/basics';
 
 interface Item {
   value: any;
@@ -116,8 +115,9 @@ const TaskList: FC<{
   );
 
   const applyFilters = useCallback(
-    (data: ITaskDisplayList[]) => {
+    async (data: ITaskDisplayList[]) => {
       var list = [...data];
+      const Fuse = (await import('fuse.js')).default;
       const fuse = new Fuse(list, {
         keys: searchParams.search_params.keys,
         findAllMatches: true,

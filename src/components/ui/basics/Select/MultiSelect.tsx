@@ -1,11 +1,13 @@
 import { FC, memo } from 'react';
-import {
-  MultiSelect as MantineSelect,
-  MultiSelectProps,
-} from '@mantine/core';
+import { MultiSelectProps } from '@mantine/core';
 import { Helper } from '@ui/basics';
 import inputStyles from '@styles/ui/input.module.css';
 import { IDropdownContent } from '@custom-types/ui/basics/helper';
+import dynamic from 'next/dynamic';
+
+const DynamicMultiSelect = dynamic<MultiSelectProps>(() =>
+  import('@mantine/core').then((res) => res.MultiSelect)
+);
 
 interface Props extends MultiSelectProps {
   helperContent?: IDropdownContent;
@@ -32,7 +34,7 @@ const MultiSelect: FC<Props> = ({
         </div>
         {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
-      <MantineSelect
+      <DynamicMultiSelect
         size={shrink ? 'sm' : 'md'}
         clearable={false}
         {...props}

@@ -10,9 +10,6 @@ import {
 import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
-import Description from '@components/Task/Description/Description';
-import Send from '@components/Task/Send/Send';
-import Results from '@components/Task/Results/Results';
 import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useRouter } from 'next/router';
@@ -26,9 +23,23 @@ import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
-import SendText from '@components/Task/SendText/SendText';
 import Timer from '@ui/Timer/Timer';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import dynamic from 'next/dynamic';
+import Description from '@components/Task/Description/Description';
+
+const DynamicSend = dynamic(
+  () => import('@components/Task/Send/Send'),
+  { ssr: false }
+);
+const DynamicSendText = dynamic(
+  () => import('@components/Task/SendText/SendText'),
+  { ssr: false }
+);
+const DynamicResults = dynamic(
+  () => import('@components/Task/Results/Results'),
+  { ssr: false }
+);
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -200,13 +211,13 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         send={(set) =>
           isUser &&
           (task.taskType.spec == 0 ? (
-            <Send
+            <DynamicSend
               spec={task.spec}
               setActiveTab={set}
               languages={languages}
             />
           ) : (
-            <SendText
+            <DynamicSendText
               spec={task.spec}
               testsNumber={task.testsNumber}
               setActiveTab={set}
@@ -215,7 +226,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         }
         results={(currentTab) =>
           isUser && (
-            <Results activeTab={currentTab} spec={task.spec} />
+            <DynamicResults activeTab={currentTab} spec={task.spec} />
           )
         }
       />

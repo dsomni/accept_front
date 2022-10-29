@@ -1,12 +1,17 @@
-import { ActionIcon, Affix, Transition } from '@mantine/core';
+import { ActionIcon, AffixProps, Transition } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import { FC, ReactNode, memo, useState } from 'react';
+import { FC, ReactNode, Ref, memo, useState } from 'react';
 import ActionButton from './ActionButton/ActionButton';
 import styles from './sticky.module.css';
 import { DotsVertical, X } from 'tabler-icons-react';
 import { setter } from '@custom-types/ui/atomic';
 import { STICKY_SIZES } from '@constants/Sizes';
 import { useWidth } from '@hooks/useWidth';
+import dynamic from 'next/dynamic';
+
+const DynamicAffix = dynamic<AffixProps & { ref: Ref<any> }>(() =>
+  import('@mantine/core').then((mod) => mod.Affix)
+);
 
 export interface IStickyAction {
   icon: ReactNode;
@@ -24,7 +29,7 @@ const Sticky: FC<{
   const ref = useClickOutside(() => setVisible(false));
   const { width } = useWidth();
   return (
-    <Affix
+    <DynamicAffix
       ref={ref}
       zIndex={199}
       position={{ bottom: 20, right: 20 }}
@@ -59,7 +64,7 @@ const Sticky: FC<{
           />
         )}
       </ActionIcon>
-    </Affix>
+    </DynamicAffix>
   );
 };
 

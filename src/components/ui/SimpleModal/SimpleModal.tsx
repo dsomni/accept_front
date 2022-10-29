@@ -1,9 +1,14 @@
 import { pureCallback } from '@custom-types/ui/atomic';
-import { Modal } from '@mantine/core';
 import { FC, ReactNode, memo } from 'react';
 import modalStyles from '@styles/ui/modal.module.css';
 import { Helper } from '@ui/basics';
 import { IDropdownContent } from '@custom-types/ui/basics/helper';
+import dynamic from 'next/dynamic';
+import { ModalProps } from '@mantine/core';
+
+const DynamicModal = dynamic<ModalProps>(() =>
+  import('@mantine/core').then((res) => res.Modal)
+);
 
 const SimpleModal: FC<{
   title?: ReactNode;
@@ -26,7 +31,7 @@ const SimpleModal: FC<{
 }) => {
   return (
     <div>
-      <Modal
+      <DynamicModal
         transition="fade"
         transitionDuration={450}
         transitionTimingFunction="ease"
@@ -46,7 +51,7 @@ const SimpleModal: FC<{
         zIndex={200}
       >
         <div>{children}</div>
-      </Modal>
+      </DynamicModal>
     </div>
   );
 };
