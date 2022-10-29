@@ -124,7 +124,7 @@ const AttemptListProfile: FC<{}> = ({}) => {
       initialColumns={initialColumns}
       refactorAttempt={refactorAttempt}
       empty={<>{locale.profile.empty.attempts}</>}
-      key={2}
+      key={4}
       noDefault
       classNames={{
         wrapper: tableStyles.wrapper,

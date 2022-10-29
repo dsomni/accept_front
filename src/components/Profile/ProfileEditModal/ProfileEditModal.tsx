@@ -4,12 +4,8 @@ import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
 import { useUser } from '@hooks/useUser';
 import { useForm } from '@mantine/form';
-import {
-  Button,
-  LoadingOverlay,
-  Select,
-  TextInput,
-} from '@ui/basics';
+import { LoadingOverlay, Select, TextInput } from '@ui/basics';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -68,7 +64,11 @@ const ProfileEditModal: FC<{ user: IUser }> = ({ user }) => {
         onClick={open}
       />
 
-      <SimpleModal opened={opened} close={close}>
+      <SimpleModal
+        opened={opened}
+        close={close}
+        title={locale.profile.editModal}
+      >
         <div className={styles.wrapper}>
           <div className={styles.fields}>
             <TextInput
@@ -102,7 +102,16 @@ const ProfileEditModal: FC<{ user: IUser }> = ({ user }) => {
               />
             </div>
           </div>
-          <Button onClick={handleSubmit}>{locale.edit}</Button>
+          <SimpleButtonGroup
+            actionButton={{
+              label: locale.edit,
+              onClick: handleSubmit,
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: close,
+            }}
+          />
         </div>
       </SimpleModal>
     </>
