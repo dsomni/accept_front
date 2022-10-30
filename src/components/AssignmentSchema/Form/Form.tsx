@@ -55,7 +55,10 @@ const Form: FC<{
     form.setValues(initialValues);
   }, [initialValues]); //eslint-disable-line
 
-  const initialTasks = useMemo(() => form.values.tasks, []); //eslint-disable-line
+  const initialTasks = useMemo(
+    () => form.values.tasks,
+    [form.values.tasks.length] //eslint-disable-line
+  );
 
   return (
     <>

@@ -42,7 +42,6 @@ const TagSelector: FC<{
   field,
 }) => {
   const { locale } = useLocale();
-
   const [tags, setTags] = useState<ITag[]>([]);
   const [loading, setLoading] = useState(true);
 

@@ -12,7 +12,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
     () => {
       return form.values.tags;
     },
-    [form.values.spec] // eslint-disable-line
+    [form.values.tags.length] // eslint-disable-line
   );
 
   const setUsed = useCallback(

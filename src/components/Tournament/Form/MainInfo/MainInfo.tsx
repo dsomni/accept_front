@@ -4,7 +4,7 @@ import { CustomEditor, Radio, Switch, TextInput } from '@ui/basics';
 import { TagSelector } from '@ui/selectors';
 import styles from './mainInfo.module.css';
 import { IAssessmentType } from '@custom-types/data/atomic';
-import { ITag } from '@custom-types/data/ITag';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
 const MainInfo: FC<{
   form: any;
@@ -16,7 +16,7 @@ const MainInfo: FC<{
     () => {
       return form.values.tags;
     },
-    [form.values.spec] // eslint-disable-line
+    [form.values.tags.length] // eslint-disable-line
   );
 
   const assessmentTypeItems = useMemo(
@@ -39,7 +39,7 @@ const MainInfo: FC<{
   );
 
   const setUsed = useCallback(
-    (value: ITag[]) => form.setFieldValue('tags', value),
+    (value: Item[]) => form.setFieldValue('tags', value),
     [form.setFieldValue] // eslint-disable-line
   );
 
