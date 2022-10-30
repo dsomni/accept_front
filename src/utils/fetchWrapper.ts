@@ -1,6 +1,6 @@
 import { getApiUrl } from '@utils/getServerUrl';
-import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { createTokenCookie } from '@utils/createTokenCookie';
 
 interface FetchWrapperProps {
   req: NextApiRequest;
@@ -29,7 +29,7 @@ export const fetchWrapper = async (props: FetchWrapperProps) => {
         : JSON.stringify(req.body),
     headers: {
       'content-type': 'application/json',
-      ...(req.headers as { [key: string]: string }),
+      cookie: req.headers.cookie,
     } as { [key: string]: string },
   };
   let response = await fetch(fetch_url, fetch_data);
@@ -39,22 +39,19 @@ export const fetchWrapper = async (props: FetchWrapperProps) => {
       const refresh_response = await fetch(refresh_url, {
         method: 'POST',
         credentials: 'include',
-        headers: req.headers as { [key: string]: string },
+        headers: { cookie: req.headers.cookie } as {
+          [key: string]: string;
+        },
       });
 
       if (refresh_response.status === 200) {
         const refresh_data = await refresh_response.json();
 
         res.setHeader('Set-Cookie', [
-          serialize(
+          createTokenCookie(
             'access_token_cookie',
             refresh_data['new_access_token'],
-            {
-              secure: process.env.NODE_ENV !== 'development',
-              maxAge: refresh_data['new_access_token_max_age'],
-              sameSite: 'strict',
-              path: '/',
-            }
+            refresh_data['new_access_token_max_age']
           ),
         ]);
 

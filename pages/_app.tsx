@@ -10,7 +10,7 @@ import { ReactElement, ReactNode } from 'react';
 import { MantineProvider } from '@mantine/core';
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (_: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
