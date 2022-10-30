@@ -6,7 +6,7 @@ export const form = {
   validation,
   startTime: 'Start time',
   author: 'Author',
-  starter: 'Starter',
+  creator: 'Creator',
   infinite: 'Infinite',
   endTime: 'End time',
   frozeTime: 'Table froze time',

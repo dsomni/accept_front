@@ -60,7 +60,11 @@ const TournamentDashboard: FC<{
         page: tournament && (
           <TimeInfo
             type={'tournament'}
-            entity={{ ...tournament, starter: tournament.author }}
+            entity={{
+              title: tournament.title,
+              spec: tournament.spec,
+              creator: tournament.author,
+            }}
             timeInfo={{
               start: tournament.start,
               end: tournament.end,

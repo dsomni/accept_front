@@ -65,7 +65,7 @@ const INCREASE_TIME: ITimeChangeButton[] = [
 interface BaseEntity {
   spec: string;
   title: string;
-  starter: string;
+  creator: string;
 }
 
 const TimeInfo: FC<{
@@ -149,9 +149,9 @@ const TimeInfo: FC<{
             </div>
           </div>
           <div className={styles.starter}>
-            {locale.assignment.form.starter}
+            {locale.assignment.form.creator}
             {': '}
-            {entity.starter}
+            {entity.creator}
           </div>
         </div>
         <div className={styles.time}>

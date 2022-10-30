@@ -60,7 +60,11 @@ const AssignmentDashboard: FC<{
         page: assignment && (
           <TimeInfo
             type={'assignment'}
-            entity={assignment}
+            entity={{
+              title: assignment.title,
+              spec: assignment.spec,
+              creator: assignment.starter,
+            }}
             timeInfo={{
               start: assignment.start,
               end: assignment.end,
