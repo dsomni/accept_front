@@ -10,7 +10,8 @@ const TasksBar: FC<{
   tasks: ITaskDisplay[];
   homeHref: string;
   taskQuery: string;
-}> = ({ tasks, homeHref, taskQuery }) => {
+  currentTask: string;
+}> = ({ tasks, homeHref, taskQuery, currentTask }) => {
   return (
     <>
       {tasks.length > 0 && (
@@ -40,7 +41,7 @@ const TasksBar: FC<{
                     : task.verdict.shortText == 'OK'
                     ? styles.ok
                     : styles.err
-                }`}
+                } ${currentTask == task.spec ? styles.current : ''}`}
               >
                 {letterFromIndex(index)}
               </a>

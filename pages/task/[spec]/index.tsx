@@ -66,7 +66,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
     [router.query]
   );
 
-  const spec = useMemo(
+  const querySpec = useMemo(
     () => router.query.assignment || router.query.tournament,
     [router.query]
   );
@@ -90,12 +90,12 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   useEffect(() => {
     let id: undefined | NodeJS.Timer = undefined;
-    if (type !== 'regular' && typeof spec == 'string') {
+    if (type !== 'regular' && typeof querySpec == 'string') {
       if (id) {
         clearInterval(id);
       }
-      fetch_tasks(spec)();
-      id = setInterval(fetch_tasks(spec), 10000);
+      fetch_tasks(querySpec)();
+      id = setInterval(fetch_tasks(querySpec), 5000);
     } else {
       setTasks([]);
     }
@@ -104,7 +104,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         clearInterval(id);
       }
     };
-  }, [spec, type, fetch_tasks]);
+  }, [querySpec, type, fetch_tasks]);
 
   const actions: IStickyAction[] = (
     task.hint
@@ -167,15 +167,16 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           content={task.description.replace(/<[^>]*>/g, '')}
         />
       </Head>
-      {type !== 'regular' && typeof spec === 'string' && (
+      {type !== 'regular' && typeof querySpec === 'string' && (
         <>
           <TasksBar
+            currentTask={task.spec}
             tasks={tasks}
-            homeHref={`/${type}/${spec}`}
-            taskQuery={`${type}=${spec}`}
+            homeHref={`/${type}/${querySpec}`}
+            taskQuery={`${type}=${querySpec}`}
           />
-          <ChatSticky spec={spec} />
-          <Timer url={`${type}/info/${spec}`} />
+          <ChatSticky spec={querySpec} />
+          <Timer url={`${type}/info/${querySpec}`} />
         </>
       )}
 
