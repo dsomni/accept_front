@@ -93,7 +93,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 3,
+    size: 2,
   },
   {
     label: locale.tournament.list.start,
@@ -110,7 +110,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 4,
+    size: 3,
   },
   {
     label: locale.tournament.list.end,
@@ -127,7 +127,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 4,
+    size: 3,
   },
   {
     label: locale.tournament.list.participantsNumber,
