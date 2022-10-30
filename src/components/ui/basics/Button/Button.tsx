@@ -49,7 +49,7 @@ const Button: FC<MyButtonProps> = ({
                 label: styles.label,
                 root: styles.root,
               }}
-              component={props.onClick ? 'button' : 'a'}
+              component={props.href ? 'a' : 'button'}
               {...props}
             />
           </div>

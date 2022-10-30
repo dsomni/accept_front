@@ -28,9 +28,7 @@ export const HeaderLink: FC<{
               label: dropdownLink.text(locale),
             }))}
         >
-          <Button kind="header" onClick={() => {}}>
-            {link.text(locale)}
-          </Button>
+          <Button kind="header">{link.text(locale)}</Button>
         </Dropdown>
       ) : (
         (!link.permission ||
