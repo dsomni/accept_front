@@ -40,6 +40,7 @@ const Dates: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
               ...form.getInputProps('startDate'),
               onBlur: () => {
                 form.validateField('startDate');
+                form.validateField('endDate');
                 form.validateField('dates');
                 form.validateField('frozeDate');
               },

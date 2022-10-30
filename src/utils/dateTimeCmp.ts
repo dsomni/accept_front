@@ -11,5 +11,12 @@ export const dateTimeCmp = (
 };
 
 const concatDateWithTime = (date: Date, time: Date) =>
-  Math.floor(date.getTime() / 1000 / 60 / 60 / 24) +
-  (Math.floor(time.getTime() / 1000 / 60) % (24 * 60));
+  new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    time.getHours(),
+    time.getMinutes(),
+    0,
+    0
+  ).getTime();
