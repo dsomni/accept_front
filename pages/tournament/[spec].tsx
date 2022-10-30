@@ -146,10 +146,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   });
 
   if (response.status === 200) {
-    // res.setHeader(
-    //   'Cache-Control',
-    //   'public, s-maxage=10, stale-while-revalidate=59'
-    // );
     const tournament = await response.json();
 
     return {
