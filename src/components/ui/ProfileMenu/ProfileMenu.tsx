@@ -57,6 +57,7 @@ const ProfileMenu: FC<{}> = ({}) => {
                 radius="lg"
                 size="lg"
                 src={user ? link(user.login) : undefined}
+                alt={'Users avatar'}
               />
             </Indicator>
           </div>

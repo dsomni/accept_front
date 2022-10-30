@@ -27,6 +27,7 @@ import Timer from '@ui/Timer/Timer';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import dynamic from 'next/dynamic';
 import Description from '@components/Task/Description/Description';
+import Head from 'next/head';
 
 const DynamicSend = dynamic(
   () => import('@components/Task/Send/Send'),
@@ -155,6 +156,17 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   return (
     <>
+      <Head>
+        <meta property="og:title" content={task.title} />
+        <meta
+          property="og:description"
+          content={task.description.replace(/<[^>]*>/g, '')}
+        />
+        <meta
+          property="description"
+          content={task.description.replace(/<[^>]*>/g, '')}
+        />
+      </Head>
       {type !== 'regular' && typeof spec === 'string' && (
         <>
           <TasksBar
