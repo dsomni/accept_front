@@ -44,10 +44,10 @@ const Description: FC<{
   useEffect(() => {
     let cleanUp = false;
     if (tournament.tasks.length && !isPreview) {
-      sendRequest<undefined, ITaskDisplay[]>(
-        `tournament/tasks/${tournament.spec}`,
-        'GET',
-        undefined,
+      sendRequest<string[], ITaskDisplay[]>(
+        `task/list-specs`,
+        'POST',
+        tournament.tasks.map((task: any) => task.value || task.spec),
         5000
       ).then((res) => {
         if (!cleanUp && !res.error) {
