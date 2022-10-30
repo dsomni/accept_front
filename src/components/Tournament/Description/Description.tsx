@@ -41,6 +41,19 @@ const Description: FC<{
     [isAdmin, tournament.author, tournament.moderators, user?.login]
   );
 
+  const registered = useMemo(
+    () =>
+      special ||
+      successfullyRegistered ||
+      tournament.participants.includes(user?.login || ''),
+    [user?.login, special, tournament, successfullyRegistered]
+  );
+
+  const banned = useMemo(
+    () => !!user && tournament.banned.includes(user.login),
+    [user, tournament.banned]
+  );
+
   useEffect(() => {
     let cleanUp = false;
     if (tournament.tasks.length && !isPreview) {
@@ -64,14 +77,6 @@ const Description: FC<{
       cleanUp = true;
     };
   }, [tournament.spec, tournament.tasks, isPreview]);
-
-  const registered = useMemo(
-    () =>
-      special ||
-      successfullyRegistered ||
-      tournament.participants.includes(user?.login || ''),
-    [user?.login, special, tournament, successfullyRegistered]
-  );
 
   const handleRegistration = useCallback(() => {
     requestWithNotify<{}, boolean>(
@@ -131,7 +136,12 @@ const Description: FC<{
         className={styles.description}
         dangerouslySetInnerHTML={{ __html: tournament.description }}
       />
-      {!registered &&
+      {banned ? (
+        <div className={styles.bannedWrapper}>
+          {locale.tournament.banned}!
+        </div>
+      ) : (
+        !registered &&
         !(tournament.status.spec === 2) &&
         (tournament.status.spec === 0 ||
           tournament.allowRegistrationAfterStart) && (
@@ -154,7 +164,8 @@ const Description: FC<{
               />
             )}
           </div>
-        )}
+        )
+      )}
       <div className={styles.tasksWrapper}>
         <PrimitiveTaskTable
           tasks={tasks}
