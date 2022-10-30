@@ -1,13 +1,8 @@
-import { ActionIcon, AffixProps } from '@mantine/core';
+import { ActionIcon, Affix } from '@mantine/core';
 import { FC, ReactNode, memo } from 'react';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
-import dynamic from 'next/dynamic';
-
-const DynamicAffix = dynamic<AffixProps>(() =>
-  import('@mantine/core').then((mod) => mod.Affix)
-);
 
 type positions = {
   bottom: number;
@@ -25,7 +20,7 @@ const SingularSticky: FC<{
   const { width } = useWidth();
   return (
     <>
-      <DynamicAffix
+      <Affix
         position={{
           bottom: position?.bottom || 20,
           right: position?.right || 20,
@@ -43,7 +38,7 @@ const SingularSticky: FC<{
         >
           {icon}
         </ActionIcon>
-      </DynamicAffix>
+      </Affix>
     </>
   );
 };
