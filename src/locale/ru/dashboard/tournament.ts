@@ -2,6 +2,7 @@ export const tournament = {
   mainInfo: 'Главная',
   results: 'Таблица результатов',
   attempts: 'Попытки',
+  bannedAttempts: 'Забаненные попытки',
   participants: 'Участники',
   tasks: 'Задачи',
   createNotification: 'Создать уведомление',

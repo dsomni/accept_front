@@ -154,7 +154,15 @@ const AttemptList: FC<{
   isFinished: boolean;
   endDate: Date;
   type: 'assignment' | 'tournament';
-}> = ({ spec, shouldNotRefetch, isFinished, endDate, type }) => {
+  banned?: boolean;
+}> = ({
+  spec,
+  shouldNotRefetch,
+  isFinished,
+  endDate,
+  type,
+  banned,
+}) => {
   const { locale } = useLocale();
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
@@ -186,7 +194,7 @@ const AttemptList: FC<{
         />
       )}
       <AttemptListUI
-        url={`${type}/attempts/${spec}`}
+        url={`${type}/attempts${banned ? '-banned' : ''}/${spec}`}
         activeTab
         initialColumns={initialColumns}
         refactorAttempt={refactor}

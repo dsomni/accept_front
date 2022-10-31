@@ -1,6 +1,7 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
 import {
   AlignRight,
+  Ban,
   BellPlus,
   Pencil,
   Puzzle,
@@ -93,6 +94,7 @@ const TournamentDashboard: FC<{
       {
         page: tournament && (
           <AttemptsList
+            key={'all'}
             type={'tournament'}
             spec={tournament.spec}
             shouldNotRefetch={tournament.status.spec != 1}
@@ -127,6 +129,21 @@ const TournamentDashboard: FC<{
         ),
         icon: <BellPlus color="var(--secondary)" />,
         title: locale.dashboard.tournament.createNotification,
+      },
+      {
+        page: tournament && (
+          <AttemptsList
+            key={'banned'}
+            type={'tournament'}
+            banned
+            spec={tournament.spec}
+            shouldNotRefetch={tournament.status.spec != 1}
+            isFinished={tournament.status.spec == 2}
+            endDate={tournament.end}
+          />
+        ),
+        icon: <Ban color="var(--secondary)" />,
+        title: locale.dashboard.tournament.bannedAttempts,
       },
     ],
     [tournament, locale, refetch, spec]
