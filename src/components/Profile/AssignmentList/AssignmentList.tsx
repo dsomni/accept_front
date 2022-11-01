@@ -97,7 +97,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 5,
   },
   {
     label: locale.assignment.list.author,
