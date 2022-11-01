@@ -123,7 +123,7 @@ const UsersList: FC<{
     sort_by: [],
     search_params: {
       search: '',
-      keys: ['login.value', 'shortName.value'],
+      keys: ['login.value', 'shortName.value', 'name'],
     },
   });
 
