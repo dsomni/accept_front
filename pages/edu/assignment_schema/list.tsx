@@ -73,7 +73,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 3,
   },
   {
     label: locale.assignmentSchema.list.taskNumber,
@@ -89,7 +89,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 3,
+    size: 2,
   },
 ];
 
@@ -266,7 +266,7 @@ function AssignmentList() {
         searchParams={searchParams}
         withSearch
         additionalSearch={
-          <div>
+          <div style={{ minWidth: '350px' }}>
             <MultiSelect
               searchable
               data={searchTags}
