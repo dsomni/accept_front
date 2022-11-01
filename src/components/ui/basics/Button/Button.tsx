@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect, useRef } from 'react';
 import { HoverCard, Button as MantineButton } from '@mantine/core';
 import styles from './button.module.css';
 import { MyButtonProps } from '@custom-types/ui/basics/button';
@@ -16,6 +16,12 @@ const Button: FC<MyButtonProps> = ({
   shrink,
   ...props
 }) => {
+  const button = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (button.current) button.current.style.visibility = 'visible';
+  }, []);
+
   return (
     <HoverCard
       withArrow
@@ -31,7 +37,8 @@ const Button: FC<MyButtonProps> = ({
       >
         <HoverCard.Target {...hoverCardTargetProps}>
           <div
-            style={buttonWrapperStyle}
+            ref={button}
+            style={{ ...buttonWrapperStyle, visibility: 'hidden' }}
             className={
               `${styles.buttonWrapper} ${
                 shrink ? styles.shrink : ''
