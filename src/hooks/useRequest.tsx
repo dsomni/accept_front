@@ -7,7 +7,7 @@ interface IRequestData<Answer> {
   loading: boolean;
   error: boolean;
   detail: object;
-  refetch: (shouldSetLoading?: boolean) => any;
+  refetch: (_shouldSetLoading?: boolean) => any;
 }
 
 export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(

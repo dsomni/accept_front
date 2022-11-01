@@ -6,7 +6,7 @@ import { FC, memo } from 'react';
 // import { MessageCircle2 } from 'tabler-icons-react';
 // import { useClickOutside } from '@mantine/hooks';
 
-const ChatSticky: FC<{ spec: string }> = ({ spec }) => {
+const ChatSticky: FC<{ spec: string }> = ({}) => {
   // const [showChat, setShowChat] = useState(false);
   // const [hasNew, setHasNew] = useState(false);
 

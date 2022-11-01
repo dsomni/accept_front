@@ -1,8 +1,8 @@
 import { ILocale } from './ILocale';
 
 export interface IProjectCard {
-  title: (locale: ILocale) => string;
-  description: (locale: ILocale) => string;
+  title: (_locale: ILocale) => string;
+  description: (_locale: ILocale) => string;
   image: string;
   href: string;
 }
