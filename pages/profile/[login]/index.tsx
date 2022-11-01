@@ -9,7 +9,7 @@ import { useUser } from '@hooks/useUser';
 import ProfileEditModal from '@components/Profile/ProfileEditModal/ProfileEditModal';
 import Title from '@ui/Title/Title';
 
-function MyProfile(props: { user: IUser }) {
+function UserProfile(props: { user: IUser }) {
   const { isAdmin, accessLevel } = useUser();
   return (
     <div className={styles.wrapper}>
@@ -22,11 +22,11 @@ function MyProfile(props: { user: IUser }) {
   );
 }
 
-MyProfile.getLayout = (page: ReactNode) => {
+UserProfile.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default MyProfile;
+export default UserProfile;
 
 const API_URL = getApiUrl();
 
@@ -42,7 +42,9 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     };
 
-  const login = req.url.slice(req.url.lastIndexOf('/') + 1);
+  const login = req.url
+    .slice(req.url.lastIndexOf('/') + 1)
+    .split('.')[0];
 
   const response = await fetch(
     `${API_URL}/api/bundle/profile/${login}`,
