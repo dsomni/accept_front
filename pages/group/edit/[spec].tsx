@@ -55,7 +55,7 @@ function EditGroup(props: { group: IGroup; members: string[] }) {
         'POST',
         locale.notify.group.edit,
         lang,
-        (response: IGroup) => response.spec,
+        (spec: string) => spec,
         {
           group: {
             spec: form.values.spec,

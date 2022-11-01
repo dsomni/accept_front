@@ -5,22 +5,10 @@ export default async function EditGroup(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const editResponse = await fetchWrapper({
+  await fetchWrapper({
     req: req,
     res: res,
-    url: 'api/group',
+    url: `api/group`,
     method: 'PUT',
-    customBody: req.body.group,
-    notWriteToRes: true,
   });
-
-  if (editResponse.status == 200) {
-    await fetchWrapper({
-      req: req,
-      res: res,
-      url: `api/group-users/${req.body.group.spec}`,
-      method: 'POST',
-      customBody: req.body.members,
-    });
-  }
 }
