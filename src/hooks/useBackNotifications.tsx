@@ -47,7 +47,16 @@ export const BackNotificationsProvider: FC<{
   const { lang } = useLocale();
   const { user } = useUser();
 
-  const [webSocket, setWebSocket] = useState<WebSocket>();
+  // const [webSocket, setWebSocket] = useState<WebSocket>();
+  const webSocket = useMemo(
+    () =>
+      typeof window !== 'undefined' && user?.login
+        ? new WebSocket(
+            `${process.env.WEBSOCKET_API}/ws/notification/${user?.login}`
+          )
+        : undefined,
+    [user?.login]
+  );
 
   const handleSend = useCallback(
     (spec: string) => {
@@ -82,24 +91,17 @@ export const BackNotificationsProvider: FC<{
   }, []);
 
   useEffect(() => {
-    if (!user) return;
-    const ws = new WebSocket(
-      `${process.env.WEBSOCKET_API}/ws/notification/${user?.login}`
-    );
-
-    ws.onmessage = (event) => {
+    if (!webSocket) return;
+    webSocket.onmessage = (event) => {
       const shouldRefetch = JSON.parse(event.data) as boolean;
       if (shouldRefetch) {
         fetchNotifications();
       }
     };
-
-    setWebSocket(ws);
-
     return () => {
-      ws.close();
+      webSocket.close();
     };
-  }, [fetchNotifications, user]);
+  }, [webSocket, fetchNotifications]);
 
   const sendViewed = useCallback(
     (
