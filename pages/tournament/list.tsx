@@ -341,7 +341,7 @@ function TournamentList() {
         searchParams={searchParams}
         withSearch
         additionalSearch={
-          <div>
+          <div style={{ maxWidth: '300px' }}>
             <MultiSelect
               searchable
               data={searchTags}

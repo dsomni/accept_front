@@ -238,6 +238,7 @@ const UsersList: FC<{
               display: 'flex',
               flexDirection: 'row',
               gap: 'var(--spacer-l)',
+              width: '100%',
             }}
           >
             <MultiSelect

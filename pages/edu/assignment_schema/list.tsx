@@ -266,7 +266,7 @@ function AssignmentList() {
         searchParams={searchParams}
         withSearch
         additionalSearch={
-          <div style={{ minWidth: '350px' }}>
+          <div style={{ maxWidth: '300px' }}>
             <MultiSelect
               searchable
               data={searchTags}
