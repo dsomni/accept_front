@@ -35,3 +35,23 @@
   font-size: var(--font-size-s);
   padding: var(--spacer-xs) var(--spacer-s);
 }
+
+.tableWrapper {
+  white-space: pre-wrap;
+  max-height: 60vh;
+  overflow: scroll;
+}
+
+.tableWrapper table thead {
+  background-color: white;
+  position: sticky;
+  top: 0;
+}
+
+.tableWrapper table thead tr {
+  padding-bottom: var(--spacer-xxs);
+}
+
+.tableWrapper::-webkit-scrollbar {
+  width: 2px;
+}

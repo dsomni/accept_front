@@ -1,8 +1,7 @@
 import { IAttempt } from '@custom-types/data/IAttempt';
-import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { getLocalDate } from '@utils/datetime';
 import Link from 'next/link';
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useMemo, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import tableStyles from '@styles/ui/customTable.module.css';
 
@@ -15,6 +14,37 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
   useEffect(() => {
     setIsBrowser(true);
   }, []);
+
+  const rows = useMemo(
+    () =>
+      attempt.results.map((row) => ({
+        ...row,
+        index: row.test + 1,
+      })),
+    [attempt.results]
+  );
+
+  const columnSizes = [1, 2];
+  const columns = [locale.attempt.test, locale.attempt.result];
+  const gridTemplate = useMemo(() => {
+    let total = 0;
+    if (!columnSizes || columnSizes.length < columns.length) {
+      total = columns.length;
+      return {
+        gridTemplateColumns:
+          columns.map((_) => 100 / total).join('% ') + '%',
+      };
+    }
+    for (let i = 0; i < columns.length; i++) {
+      total += columnSizes[i];
+    }
+    return {
+      gridTemplateColumns:
+        columns
+          .map((_, idx) => (columnSizes[idx] / total) * 100)
+          .join('% ') + '%',
+    };
+  }, [columnSizes, columns]);
 
   return (
     <div className={styles.infoWrapper}>
@@ -71,23 +101,28 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
         </div>
       </div>
       <div className={styles.right}>
-        <div style={{ whiteSpace: 'pre-wrap' }}>
-          <PrimitiveTable
-            columnSizes={[1, 2]}
-            columns={[locale.attempt.test, locale.attempt.result]}
-            rows={attempt.results.map((row) => ({
-              ...row,
-              index: row.test + 1,
-            }))}
-            classNames={{
-              column: styles.column,
-              row: tableStyles.row,
-              table: tableStyles.table,
-              even: tableStyles.even,
-            }}
-            rowComponent={(row: any) => {
-              return (
-                <>
+        <div className={styles.tableWrapper}>
+          <table className={tableStyles.table}>
+            <thead>
+              <tr className={tableStyles.row} style={gridTemplate}>
+                {columns.map((column, index) => (
+                  <th key={index} className={styles.column}>
+                    {column}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr
+                  key={index}
+                  className={
+                    tableStyles.row +
+                    ' ' +
+                    (index % 2 === 0 ? tableStyles.even : '')
+                  }
+                  style={gridTemplate}
+                >
                   <td
                     className={`${tableStyles.cell} ${styles.cell}`}
                   >
@@ -105,10 +140,10 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
                   >
                     {row.verdict?.shortText || '-'}
                   </td>
-                </>
-              );
-            }}
-          />
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
