@@ -13,6 +13,7 @@
   text-decoration: none;
   text-align: left;
   font-size: 1.15em;
+  height: 100%;
   color: var(--primary);
 }
 
@@ -47,4 +48,10 @@
   flex-wrap: wrap;
   text-align: right;
   color: grey;
+}
+
+.cell {
+  padding-right: var(--spacer-m);
+  word-wrap: break-word;
+  font-size: var(--font-size-s);
 }
