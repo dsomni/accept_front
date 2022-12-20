@@ -22,7 +22,8 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
     },
     validate: {
       email: (value: any) =>
-        (value || value.length > 0) &&
+        value &&
+        value.length > 0 &&
         !value.toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
           ? locale.auth.errors.email
           : null,
