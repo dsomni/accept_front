@@ -24,8 +24,11 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
     [attempt.results]
   );
 
-  const columnSizes = [1, 2];
-  const columns = [locale.attempt.test, locale.attempt.result];
+  const columnSizes = useMemo(() => [1, 2], []);
+  const columns = useMemo(
+    () => [locale.attempt.test, locale.attempt.result],
+    [locale.attempt.result, locale.attempt.test]
+  );
   const gridTemplate = useMemo(() => {
     let total = 0;
     if (!columnSizes || columnSizes.length < columns.length) {
@@ -102,48 +105,50 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
       </div>
       <div className={styles.right}>
         <div className={styles.tableWrapper}>
-          <table className={tableStyles.table}>
-            <thead>
-              <tr className={tableStyles.row} style={gridTemplate}>
-                {columns.map((column, index) => (
-                  <th key={index} className={styles.column}>
-                    {column}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, index) => (
-                <tr
-                  key={index}
-                  className={
-                    tableStyles.row +
-                    ' ' +
-                    (index % 2 === 0 ? tableStyles.even : '')
-                  }
-                  style={gridTemplate}
-                >
-                  <td
-                    className={`${tableStyles.cell} ${styles.cell}`}
-                  >
-                    {row.index}
-                  </td>
-                  <td
-                    className={`${tableStyles.cell} ${styles.cell}`}
-                    style={{
-                      color: row.verdict
-                        ? row.verdict.spec === 0
-                          ? 'var(--positive)'
-                          : 'var(--negative)'
-                        : 'black',
-                    }}
-                  >
-                    {row.verdict?.shortText || '-'}
-                  </td>
+          {rows.length > 0 && (
+            <table className={tableStyles.table}>
+              <thead>
+                <tr className={tableStyles.row} style={gridTemplate}>
+                  {columns.map((column, index) => (
+                    <th key={index} className={styles.column}>
+                      {column}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.map((row, index) => (
+                  <tr
+                    key={index}
+                    className={
+                      tableStyles.row +
+                      ' ' +
+                      (index % 2 === 0 ? tableStyles.even : '')
+                    }
+                    style={gridTemplate}
+                  >
+                    <td
+                      className={`${tableStyles.cell} ${styles.cell}`}
+                    >
+                      {row.index}
+                    </td>
+                    <td
+                      className={`${tableStyles.cell} ${styles.cell}`}
+                      style={{
+                        color: row.verdict
+                          ? row.verdict.spec === 0
+                            ? 'var(--positive)'
+                            : 'var(--negative)'
+                          : 'black',
+                      }}
+                    >
+                      {row.verdict?.shortText || '-'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>
