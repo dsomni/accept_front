@@ -38,7 +38,9 @@ const LeftMenu: FC<{
           ))}
         </Navbar.Section>
       </Navbar>
-      <div className={styles.pageWrapper}>{links[current].page}</div>
+      <div className={styles.pageWrapper}>
+        {links[current]?.page || links[0]?.page || ''}
+      </div>
     </div>
   );
 };

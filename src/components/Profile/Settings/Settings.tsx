@@ -18,7 +18,7 @@ const Settings: FC<{ user: IUser }> = ({ user }) => {
       name: user.name,
       surname: user.surname,
       patronymic: user.patronymic,
-      email: user.email,
+      email: user.email || '',
     },
     validate: {
       email: (value: any) =>
