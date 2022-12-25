@@ -19,6 +19,8 @@ import {
 import { useLocale } from './useLocale';
 import { useUser } from './useUser';
 
+import io from 'socket.io-client';
+
 interface INotificationContext {
   new_amount: number;
   notifications: INotification[];
@@ -39,32 +41,57 @@ const BackNotificationsContext = createContext<INotificationContext>(
 export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
+  const { lang } = useLocale();
+  const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<INotification[]>(
     []
   );
 
-  const { lang } = useLocale();
-  const { user } = useUser();
-
-  // const [webSocket, setWebSocket] = useState<WebSocket>();
-  const webSocket = useMemo(
+  const socket = useMemo(
     () =>
       typeof window !== 'undefined' && user?.login
-        ? new WebSocket(
-            `${process.env.WEBSOCKET_API}/ws/notification/${user?.login}`
-          )
+        ? io(`${process.env.WEBSOCKET_API}`, {
+            path: `/ws/notification`,
+            autoConnect: false,
+          })
         : undefined,
     [user?.login]
   );
 
+  const [isConnected, setIsConnected] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    if (!socket) return;
+    if (!isRegistered) {
+      socket.connect();
+      socket.emit('register', user?.login || '');
+    }
+    socket.on('register_response', () => setIsRegistered(true));
+    socket.on('connect', () => setIsConnected(true));
+    socket.on('disconnect', () => setIsConnected(false));
+    socket.on('notification', (response) => {
+      const shouldRefetch = JSON.parse(response) as boolean;
+      if (shouldRefetch) fetchNotifications();
+    });
+
+    // Clean-up
+    return () => {
+      socket.removeAllListeners('connect');
+      socket.removeAllListeners('disconnect');
+      socket.removeAllListeners('notification');
+      socket.removeAllListeners('register_response');
+    };
+  }, [socket]); // eslint-disable-line
+
   const handleSend = useCallback(
     (spec: string) => {
-      if (webSocket && webSocket.readyState === 1) {
-        webSocket.send(spec);
+      if (socket && isConnected) {
+        socket.emit('new_notification', spec);
       }
     },
-    [webSocket]
+    [socket, isConnected]
   );
 
   const fetchNotifications = useCallback(() => {
@@ -89,19 +116,6 @@ export const BackNotificationsProvider: FC<{
       setLoading(false);
     });
   }, []);
-
-  useEffect(() => {
-    if (!webSocket) return;
-    webSocket.onmessage = (event) => {
-      const shouldRefetch = JSON.parse(event.data) as boolean;
-      if (shouldRefetch) {
-        fetchNotifications();
-      }
-    };
-    return () => {
-      webSocket.close();
-    };
-  }, [webSocket, fetchNotifications]);
 
   const sendViewed = useCallback(
     (
