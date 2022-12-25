@@ -25,11 +25,14 @@ export default MyProfile;
 
 const API_URL = getApiUrl();
 
-export const getServerSideProps: GetServerSideProps = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
   const response = await fetch(`${API_URL}/api/bundle/profile`, {
-    headers: context.req.headers as { [key: string]: string },
+    headers: {
+      cookie: req.headers.cookie,
+    } as { [key: string]: string },
   });
 
   if (response.status === 200) {

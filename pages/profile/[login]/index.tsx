@@ -49,7 +49,9 @@ export const getServerSideProps: GetServerSideProps = async (
   const response = await fetch(
     `${API_URL}/api/bundle/profile/${login}`,
     {
-      headers: req.headers as { [key: string]: string },
+      headers: {
+        cookie: req.headers.cookie,
+      } as { [key: string]: string },
     }
   );
 
