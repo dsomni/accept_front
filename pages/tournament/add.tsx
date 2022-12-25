@@ -60,6 +60,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
 
       shouldPenalizeAttempt: true,
       allowRegistrationAfterStart: false,
+      banned: [],
     }),
     [user?.login]
   );
@@ -99,6 +100,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
           form.values.frozeResultsDate,
           form.values.frozeResultsTime
         ),
+        banned: form.values.banned,
       };
 
       requestWithNotify<ITournamentAdd, string>(
