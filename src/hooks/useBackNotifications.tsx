@@ -59,18 +59,15 @@ export const BackNotificationsProvider: FC<{
     [user?.login]
   );
 
-  const [isConnected, setIsConnected] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
-
   useEffect(() => {
     if (!socket) return;
-    if (!isRegistered) {
+    socket.connect();
+    socket.on('connect', () =>
+      socket.emit('register', user?.login || '')
+    );
+    socket.on('disconnect', () => {
       socket.connect();
-      socket.emit('register', user?.login || '');
-    }
-    socket.on('register_response', () => setIsRegistered(true));
-    socket.on('connect', () => setIsConnected(true));
-    socket.on('disconnect', () => setIsConnected(false));
+    });
     socket.on('notification', (response) => {
       const shouldRefetch = JSON.parse(response) as boolean;
       if (shouldRefetch) fetchNotifications();
@@ -81,17 +78,16 @@ export const BackNotificationsProvider: FC<{
       socket.removeAllListeners('connect');
       socket.removeAllListeners('disconnect');
       socket.removeAllListeners('notification');
-      socket.removeAllListeners('register_response');
     };
   }, [socket]); // eslint-disable-line
 
   const handleSend = useCallback(
     (spec: string) => {
-      if (socket && isConnected) {
+      if (socket?.connected) {
         socket.emit('new_notification', spec);
       }
     },
-    [socket, isConnected]
+    [socket]
   );
 
   const fetchNotifications = useCallback(() => {
