@@ -39,6 +39,10 @@
   margin-bottom: var(--spacer-xl);
 }
 
+.wrapper * {
+  z-index: 100;
+}
+
 .pageWrapper {
   width: 100%;
   margin-top: var(--spacer-l);
