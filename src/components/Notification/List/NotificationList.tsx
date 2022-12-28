@@ -168,13 +168,15 @@ const NotificationList: FC<{}> = ({}) => {
         {selected.length !== 0 ? (
           <>
             <Tooltip label={locale.notification.list.unselect}>
-              <Checkbox
-                checked={selected.length > 0}
-                indeterminate={
-                  selected.length !== notifications.length
-                }
-                onChange={() => setSelected([])}
-              />
+              <div>
+                <Checkbox
+                  checked={selected.length > 0}
+                  indeterminate={
+                    selected.length !== notifications.length
+                  }
+                  onChange={() => setSelected([])}
+                />
+              </div>
             </Tooltip>
             <div className={styles.lengthWrapper}>
               {selected.length}
@@ -197,12 +199,14 @@ const NotificationList: FC<{}> = ({}) => {
           </>
         ) : (
           <Tooltip label={locale.notification.list.selectAll}>
-            <Checkbox
-              checked={false}
-              onChange={() =>
-                setSelected(notifications.map((elem) => elem.spec))
-              }
-            />
+            <div>
+              <Checkbox
+                checked={false}
+                onChange={() =>
+                  setSelected(notifications.map((elem) => elem.spec))
+                }
+              />
+            </div>
           </Tooltip>
         )}
       </div>
