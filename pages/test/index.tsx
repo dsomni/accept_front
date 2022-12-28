@@ -2,7 +2,7 @@ import { DefaultLayout } from '@layouts/DefaultLayout';
 import { ReactElement } from 'react';
 
 function TestPage() {
-  return <div></div>;
+  return <div>Тестовая страница😳😳😳😳😳😳</div>;
 }
 
 TestPage.getLayout = (page: ReactElement) => {
