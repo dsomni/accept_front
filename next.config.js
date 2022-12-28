@@ -36,6 +36,11 @@ module.exports = {
         destination: '/edu/assignment/:slug*',
         permanent: false,
       },
+      {
+        source: '/api/image',
+        destination: `${API_ENDPOINT}/api/image`,
+        permanent: false,
+      },
     ];
   },
 };
