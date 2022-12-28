@@ -12,7 +12,12 @@ const LeftMenu: FC<{
 
   return (
     <div className={styles.wrapper}>
-      <Navbar p="xs" width={{ base: 300 }} withBorder={false}>
+      <Navbar
+        p="xs"
+        width={{ base: 300 }}
+        withBorder={false}
+        zIndex={10}
+      >
         {topContent && <Navbar.Section>{topContent}</Navbar.Section>}
         <Navbar.Section grow mt="md">
           {links.map((element, idx) => (
