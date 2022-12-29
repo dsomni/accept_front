@@ -66,7 +66,7 @@ export const BackNotificationsProvider: FC<{
       socket.emit('register', user?.login || '')
     );
     socket.on('disconnect', () => {
-      socket.connect();
+      // socket.connect();
     });
     socket.on('notification', (response) => {
       const shouldRefetch = JSON.parse(response) as boolean;
