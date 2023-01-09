@@ -93,6 +93,11 @@
   color: var(--dark1);
 }
 
+.link:hover {
+  text-decoration: none;
+  color: var(--primary);
+}
+
 .title:hover {
   color: initial;
 }
