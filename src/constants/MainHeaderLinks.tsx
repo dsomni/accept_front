@@ -7,14 +7,14 @@ const projectLinks: IHeaderLink[] = [
     href: '/edu',
   },
   {
-    text: (locale) => locale.projects.courses.title,
-    type: 'regular',
-    href: '/courses',
-  },
-  {
     text: (locale) => locale.projects.tournaments.title,
     type: 'regular',
     href: '/tournament/list',
+  },
+  {
+    text: (locale) => locale.projects.courses.title,
+    type: 'regular',
+    href: '/courses',
   },
 ];
 
