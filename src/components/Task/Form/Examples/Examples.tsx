@@ -34,8 +34,8 @@ const Examples: FC<{ form: any; shrink?: boolean }> = ({
             <ListItem
               field="examples"
               label={locale.task.form.example + ' #' + (index + 1)}
-              InLabel={locale.task.form.inputExample}
-              OutLabel={locale.task.form.outputExample}
+              inLabel={locale.task.form.inputExample}
+              outLabel={locale.task.form.outputExample}
               form={form}
               index={index}
               onDelete={onDeleteExample}

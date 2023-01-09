@@ -153,8 +153,8 @@ const Tests: FC<{
                 <ListItem
                   field="tests"
                   label={locale.task.form.test + ' #' + (index + 1)}
-                  InLabel={locale.task.form.inputTest}
-                  OutLabel={locale.task.form.outputTest}
+                  inLabel={locale.task.form.inputTest}
+                  outLabel={locale.task.form.outputTest}
                   form={form}
                   hideInput={hideInput || form.values.taskType == '1'}
                   hideOutput={hideOutput}
