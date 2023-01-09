@@ -101,6 +101,10 @@
   align-items: center;
 }
 
+.exampleData {
+  white-space: pre-wrap;
+}
+
 @media screen and (max-width: 480px) {
   .wrapper {
     padding: var(--spacer-xs) var(--spacer-s);
