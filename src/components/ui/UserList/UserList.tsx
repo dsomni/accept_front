@@ -201,6 +201,16 @@ const UsersList: FC<{
     }
   }, [data, applyFilters]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <div>
       <Table
@@ -244,13 +254,19 @@ const UsersList: FC<{
             <MultiSelect
               searchable
               data={searchGroups}
-              onChange={setCurrentGroups}
+              onChange={(value) => {
+                resetPage();
+                setCurrentGroups(value);
+              }}
               placeholder={locale.placeholders.selectGroups}
             />
             <MultiSelect
               searchable
               data={searchRoles}
-              onChange={setCurrentRoles}
+              onChange={(value) => {
+                resetPage();
+                setCurrentRoles(value);
+              }}
               placeholder={locale.placeholders.selectRoles}
             />
           </div>

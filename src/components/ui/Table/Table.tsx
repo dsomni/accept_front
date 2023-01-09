@@ -56,8 +56,17 @@ const Table: FC<{
   const totalLength = total;
 
   const [localRows, setLocalRows] = useState<any[]>(rows);
-  const [page, setPage] = useState(0);
-  const [perPage, setPerPage] = useState(defaultOnPage);
+  const page = useMemo(
+    () =>
+      Math.floor(
+        searchParams.pager.skip / (searchParams.pager.limit || 1)
+      ),
+    [searchParams.pager.limit, searchParams.pager.skip]
+  );
+  const perPage = useMemo(
+    () => searchParams.pager.limit,
+    [searchParams.pager.limit]
+  );
   const [search, setSearch] = useState('');
   const [localColumns, setLocalColumns] = useState(
     columns.filter((column) => !column.hidden)
@@ -65,7 +74,6 @@ const Table: FC<{
 
   const handlePageChange = useCallback(
     (value: number) => {
-      setPage(value);
       setSearchParams((searchParams: BaseSearch) => ({
         ...searchParams,
         pager: {
@@ -74,12 +82,11 @@ const Table: FC<{
         },
       }));
     },
-    [perPage, setSearchParams, setPage]
+    [perPage, setSearchParams]
   );
 
   const handlePerPageChange = useCallback(
     (value: number) => {
-      setPerPage(value);
       setSearchParams((searchParams: BaseSearch) => ({
         ...searchParams,
         pager: {
@@ -88,7 +95,7 @@ const Table: FC<{
         },
       }));
     },
-    [setSearchParams, setPerPage]
+    [setSearchParams]
   );
 
   useEffect(() => {
@@ -108,14 +115,8 @@ const Table: FC<{
 
         return localColumns;
       });
-      setPerPage(searchParams.pager.limit);
-      setPage(
-        Math.floor(
-          searchParams.pager.skip / (searchParams.pager.limit || 1)
-        )
-      );
     }
-  }, [searchParams, rows]);
+  }, [searchParams, rows, totalLength]);
 
   useEffect(() => {
     setLocalColumns((localColumns) => {
@@ -197,6 +198,7 @@ const Table: FC<{
           ...searchParams.search_params,
           search: value,
         },
+        pager: { ...searchParams.pager, skip: 0 },
       }));
     },
     [setSearchParams]

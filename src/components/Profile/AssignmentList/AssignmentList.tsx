@@ -388,6 +388,16 @@ function AssignmentList() {
     }
   }, [data, applyFilters]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <>
       <div style={{ position: 'relative' }}>

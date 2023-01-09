@@ -163,6 +163,16 @@ const TaskList: FC<{
     }
   }, [applyFilters, data]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <div>
       <Table
@@ -199,7 +209,10 @@ const TaskList: FC<{
             <MultiSelect
               searchable
               data={searchTags}
-              onChange={setCurrentTags}
+              onChange={(value) => {
+                resetPage();
+                setCurrentTags(value);
+              }}
               placeholder={locale.placeholders.selectTags}
             />
           </div>

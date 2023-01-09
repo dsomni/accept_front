@@ -313,6 +313,16 @@ function TournamentList() {
     }
   }, [data, applyFilters]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <div>
       <Title title={locale.titles.tournament.list} />
@@ -345,7 +355,10 @@ function TournamentList() {
             <MultiSelect
               searchable
               data={searchTags}
-              onChange={setCurrentTags}
+              onChange={(value) => {
+                resetPage();
+                setCurrentTags(value);
+              }}
               placeholder={locale.placeholders.selectTags}
             />
           </div>
