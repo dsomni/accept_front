@@ -104,7 +104,9 @@ const Description: FC<{
                 </td>
               </tr>
               <tr>
-                <td>{example.inputData}</td>
+                <td className={styles.exampleData}>
+                  {example.inputData}
+                </td>
               </tr>
               <tr>
                 <td>
@@ -115,7 +117,9 @@ const Description: FC<{
                 </td>
               </tr>
               <tr>
-                <td>{example.outputData}</td>
+                <td className={styles.exampleData}>
+                  {example.outputData}
+                </td>
               </tr>
             </tbody>
           </Table>
