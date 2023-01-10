@@ -28,8 +28,8 @@ const ProfileInfo: FC<{ user: IUser }> = ({ user }) => {
         <div className={styles.text}>
           <div className={styles.nameWrapper}>
             <div className={styles.fullName}>
-              <span className={styles.name}>{user.name}</span>
               <span className={styles.name}>{user.surname}</span>
+              <span className={styles.name}>{user.name}</span>
               {user.patronymic.length > 0 && (
                 <span className={styles.name}>{user.patronymic}</span>
               )}
