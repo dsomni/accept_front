@@ -15,7 +15,7 @@ import {
   ITournamentAdd,
   ITournamentAddBundle,
 } from '@custom-types/data/ITournament';
-import { concatDateTime } from '@utils/datetime';
+import { UTCDate, concatDateTime } from '@utils/datetime';
 import Form from '@components/Tournament/Form/Form';
 import { useRequest } from '@hooks/useRequest';
 import { IUserDisplay } from '@custom-types/data/IUser';
@@ -91,14 +91,17 @@ function TournamentAdd(props: ITournamentAddBundle) {
         shouldPenalizeAttempt: form.values.shouldPenalizeAttempt,
         allowRegistrationAfterStart:
           form.values.allowRegistrationAfterStart,
-        start: concatDateTime(
-          form.values.startDate,
-          form.values.startTime
+        start: UTCDate(
+          concatDateTime(form.values.startDate, form.values.startTime)
         ),
-        end: concatDateTime(form.values.endDate, form.values.endTime),
-        frozeResults: concatDateTime(
-          form.values.frozeResultsDate,
-          form.values.frozeResultsTime
+        end: UTCDate(
+          concatDateTime(form.values.endDate, form.values.endTime)
+        ),
+        frozeResults: UTCDate(
+          concatDateTime(
+            form.values.frozeResultsDate,
+            form.values.frozeResultsTime
+          )
         ),
         banned: form.values.banned,
       };
