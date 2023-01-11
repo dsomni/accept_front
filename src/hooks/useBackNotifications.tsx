@@ -52,8 +52,8 @@ export const BackNotificationsProvider: FC<{
     () =>
       typeof window !== 'undefined' && user?.login
         ? io(`${process.env.WEBSOCKET_API}`, {
-            path: `/ws/notification`,
-            autoConnect: false,
+            path: `/ws/notification/`,
+            transports: ['polling'],
           })
         : undefined,
     [user?.login]
