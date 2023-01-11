@@ -111,7 +111,7 @@ function Tournament(props: { tournament: ITournament }) {
       )}
       {(special ||
         tournament.participants.includes(user?.login || '')) && (
-        <ChatSticky spec={tournament.spec} />
+        <ChatSticky spec={tournament.spec} host={user?.login || ''} />
       )}
       <Timer url={`tournament/info/${tournament.spec}`} />
       <Description tournament={tournament} />

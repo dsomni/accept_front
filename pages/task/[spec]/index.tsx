@@ -175,7 +175,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             homeHref={`/${type}/${querySpec}`}
             taskQuery={`${type}=${querySpec}`}
           />
-          <ChatSticky spec={querySpec} />
+          <ChatSticky spec={querySpec} host={''} />
           <Timer url={`${type}/info/${querySpec}`} />
         </>
       )}

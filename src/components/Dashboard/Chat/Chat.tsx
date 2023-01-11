@@ -5,79 +5,105 @@ import {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { Send } from 'tabler-icons-react';
 import styles from './chat.module.css';
-import { IMessage } from '@custom-types/data/IMessage';
+import { IChatMessage } from '@custom-types/data/IMessage';
 import { Textarea } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
 import { setter } from '@custom-types/ui/atomic';
+import io from 'socket.io-client';
+import { sendRequest } from '@requests/request';
 
 const Chat: FC<{
-  spec: string;
   opened: boolean;
   setHasNew: setter<boolean>;
-}> = ({ spec, opened, setHasNew }) => {
-  const [messages, setMessages] = useState<IMessage[]>([]);
-  const [webSocket, setWebSocket] = useState<WebSocket>();
+  isMessageMine: (_: IChatMessage) => boolean;
+  wsURL: string;
+  entity: string;
+  host: string;
+}> = ({ opened, setHasNew, wsURL, entity, host, isMessageMine }) => {
+  const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [message, setMessage] = useState('');
   const { user } = useUser();
-  const messagesDiv = useRef<HTMLDivElement>(null!);
-  const [justSend, setJustSend] = useState(true);
   const textArea = useRef<HTMLTextAreaElement>(null);
 
   const { locale } = useLocale();
 
-  useEffect(() => {
-    if (!user) return;
-    const ws = new WebSocket(
-      `ws://${
-        process.env.API_ENDPOINT?.split('://')[1]
-      }/ws/chat/${spec}/${user?.login}`
-    );
+  const socket = useMemo(
+    () =>
+      typeof window !== 'undefined' && user?.login
+        ? io(`${process.env.WEBSOCKET_API}`, {
+            path: wsURL,
+            autoConnect: false,
+          })
+        : undefined,
+    [user?.login, wsURL]
+  );
 
-    setWebSocket(ws);
-
-    return () => {
-      ws.close();
-      setWebSocket(undefined);
-    };
-  }, [spec, user]);
-
-  useEffect(() => {
-    if (webSocket) {
-      webSocket.onmessage = (event) => {
-        if (!opened) {
-          setHasNew(true);
-        }
-        setMessages((messages) => {
-          return [...messages, JSON.parse(event.data)];
-        });
-        setTimeout(() => {
-          if (justSend && messagesDiv.current) {
-            messagesDiv.current.scrollTop =
-              messagesDiv.current.scrollHeight;
-            setJustSend(false);
-          }
-        }, 100);
-      };
-    }
-  }, [justSend, webSocket, setHasNew, opened]);
+  const fetchMessages = useCallback(() => {
+    sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
+      entity,
+      host,
+    }).then((res) => {
+      if (!res.error) {
+        setMessages((messages) => [...messages, ...res.response]);
+      }
+    });
+  }, [entity, host]);
 
   const handleSend = useCallback(() => {
-    if (
-      webSocket &&
-      webSocket.readyState === 1 &&
-      message.trim().length > 0
-    ) {
-      webSocket.send(message.trim());
-    }
-    setJustSend(true);
-    setMessage('');
-  }, [webSocket, message]);
+    console.log(message);
+    sendRequest<{}, IChatMessage>('chat', 'POST', {
+      entity,
+      host,
+      content: message,
+    }).then((res) => {
+      if (!res.error) {
+        setMessages((messages) => [...messages, res.response]);
+      }
+    });
+  }, [entity, host, message]);
+
+  useEffect(() => {
+    sendRequest<{}, IChatMessage[]>('chat/all', 'POST', {
+      entity,
+      host,
+    }).then((res) => {
+      if (!res.error) {
+        setMessages(res.response);
+      }
+    });
+  }, [entity, host]);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.connect();
+    socket.on('connect', () =>
+      socket.emit('register', entity, host, user?.login)
+    );
+    socket.on('disconnect', () => {
+      // socket.connect();
+    });
+    socket.on('new_messages', (response) => {
+      const shouldRefetch = JSON.parse(response) as boolean;
+      if (shouldRefetch) {
+        fetchMessages();
+        if (!opened) setHasNew(true);
+      }
+    });
+
+    // Clean-up
+    return () => {
+      socket.removeAllListeners('connect');
+      socket.removeAllListeners('disconnect');
+      socket.removeAllListeners('notification');
+    };
+  }, [socket]); // eslint-disable-line
 
   useEffect(() => {
     const handleClick = (event: KeyboardEvent) => {
@@ -100,18 +126,16 @@ const Chat: FC<{
       className={styles.wrapper}
       style={{ visibility: opened ? 'visible' : 'hidden' }}
     >
-      <div ref={messagesDiv} className={styles.messages}>
+      <div className={styles.messages}>
         {messages.map((message, index) => (
           <div
             className={`${styles.messageWrapper} ${
-              message.user.login === user?.login ? styles.own : ''
+              isMessageMine(message) ? styles.own : ''
             }`}
             key={index}
           >
             <div className={styles.message}>
-              <div className={styles.user}>
-                {message.user.shortName}
-              </div>
+              <div className={styles.user}>{message.author}</div>
 
               <div className={styles.content}>{message.content}</div>
               <div className={styles.date}>

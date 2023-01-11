@@ -191,7 +191,7 @@ const TournamentDashboard: FC<{
           <Sticky actions={actions} />
         </>
       )}
-      <ChatSticky spec={spec} />
+      <ChatSticky spec={spec} host={''} />
       <LeftMenu links={links} />
     </>
   );

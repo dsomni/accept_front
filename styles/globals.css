@@ -29,6 +29,10 @@ body {
 }
 
 :root {
+  --chat-message-color: #d7efff;
+}
+
+:root {
   --font-size-huge: 2.5rem;
   --font-size-xxl: 2rem;
   --font-size-xl: 1.7rem;
