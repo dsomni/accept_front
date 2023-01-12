@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 70vh;
+}
+
+.hostList {
+  border-top: darkgray 1px solid;
+  border-bottom: darkgray 1px solid;
+  width: 30%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.hostList::-webkit-scrollbar {
+  width: 2px;
+}
+
+.currentHost {
+  background-color: var(--current-host-color);
+}
+
+.hostWrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  cursor: pointer;
+  align-items: center;
+  gap: var(--spacer-s);
+  padding: var(--spacer-xs) var(--spacer-s);
+  border-bottom: 1px solid darkgray;
+}
+
+.chat {
+  border: darkgray 1px solid;
+  width: 70%;
+  height: 100%;
+}
+
+.chatWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

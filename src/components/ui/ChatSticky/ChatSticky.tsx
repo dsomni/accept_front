@@ -2,7 +2,7 @@ import { FC, memo, useState } from 'react';
 import styles from './chatSticky.module.css';
 import { Affix } from '@mantine/core';
 import { Icon, Indicator } from '@ui/basics';
-import Chat from '@components/Dashboard/Chat/Chat';
+import Chat from '@ui/Chat/Chat';
 import { MessageCircle2 } from 'tabler-icons-react';
 import { useClickOutside } from '@mantine/hooks';
 
@@ -18,14 +18,16 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
   return (
     <>
       <Affix ref={ref} position={{ bottom: 0, right: '200px' }}>
-        <Chat
-          entity={spec}
-          host={host}
-          wsURL={'/ws/chat'}
-          opened={showChat}
-          setHasNew={setHasNew}
-          isMessageMine={() => true}
-        />
+        <div style={{ visibility: showChat ? 'visible' : 'hidden' }}>
+          <Chat
+            entity={spec}
+            host={host}
+            wsURL={'/ws/chat'}
+            setHasNew={setHasNew}
+            isMessageMine={() => true}
+            wrapperStyles={styles.chatWrapper}
+          />
+        </div>
         <Icon
           onClick={() => {
             setShowChat((value) => !value);

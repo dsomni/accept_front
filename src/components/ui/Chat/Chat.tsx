@@ -1,5 +1,5 @@
 import { useUser } from '@hooks/useUser';
-import { Icon } from '@ui/basics';
+import { Icon, LoadingOverlay } from '@ui/basics';
 import {
   FC,
   memo,
@@ -20,18 +20,26 @@ import io from 'socket.io-client';
 import { sendRequest } from '@requests/request';
 
 const Chat: FC<{
-  opened: boolean;
   setHasNew: setter<boolean>;
   isMessageMine: (_: IChatMessage) => boolean;
   wsURL: string;
   entity: string;
   host: string;
-}> = ({ opened, setHasNew, wsURL, entity, host, isMessageMine }) => {
+  wrapperStyles: any;
+}> = ({
+  setHasNew,
+  wsURL,
+  entity,
+  host,
+  isMessageMine,
+  wrapperStyles,
+}) => {
   const { locale } = useLocale();
   const { user } = useUser();
 
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [message, setMessage] = useState('');
+  const [initialLoad, setInitialLoad] = useState(true);
 
   const textArea = useRef<HTMLTextAreaElement>(null);
   const messagesDiv = useRef<HTMLDivElement>(null!);
@@ -81,15 +89,25 @@ const Chat: FC<{
   }, [entity, host, message, appendMessages]);
 
   useEffect(() => {
+    setInitialLoad(true);
     sendRequest<{}, IChatMessage[]>('chat/all', 'POST', {
       entity,
       host,
     }).then((res) => {
       if (!res.error) {
-        appendMessages(res.response);
+        setMessages(res.response);
+        setTimeout(() => {
+          if (messagesDiv.current) {
+            messagesDiv.current.style.scrollBehavior = 'auto';
+            messagesDiv.current.scrollTop =
+              messagesDiv.current.scrollHeight;
+            messagesDiv.current.style.scrollBehavior = 'smooth';
+          }
+          setInitialLoad(false);
+        }, 100);
       }
     });
-  }, [entity, host, appendMessages]);
+  }, [entity, host]);
 
   useEffect(() => {
     if (!socket) return;
@@ -104,7 +122,7 @@ const Chat: FC<{
       const shouldRefetch = JSON.parse(response) as boolean;
       if (shouldRefetch) {
         fetchMessages();
-        if (!opened) setHasNew(true);
+        // if (!opened) setHasNew(true);
       }
     });
 
@@ -133,11 +151,9 @@ const Chat: FC<{
   }, [textArea, handleSend]);
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{ visibility: opened ? 'visible' : 'hidden' }}
-    >
+    <div className={wrapperStyles}>
       <div ref={messagesDiv} className={styles.messages}>
+        <LoadingOverlay visible={initialLoad} />
         {messages.map((message, index) => (
           <div
             className={`${styles.messageWrapper} ${
