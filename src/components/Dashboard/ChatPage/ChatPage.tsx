@@ -61,10 +61,10 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
             host={currentHost}
             setHasNew={() => {}}
             isMessageMine={(message: IChatMessage) => {
-              return message.author === currentHost;
+              return !(message.author === currentHost);
             }}
             wrapperStyles={styles.chatWrapper}
-            wsURL={''}
+            wsURL={'/ws/chat'}
           />
         )}
       </div>

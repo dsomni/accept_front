@@ -49,7 +49,7 @@ const Chat: FC<{
       typeof window !== 'undefined' && user?.login
         ? io(`${process.env.WEBSOCKET_API}`, {
             path: wsURL,
-            autoConnect: false,
+            transports: ['polling'],
           })
         : undefined,
     [user?.login, wsURL]
@@ -130,7 +130,7 @@ const Chat: FC<{
     return () => {
       socket.removeAllListeners('connect');
       socket.removeAllListeners('disconnect');
-      socket.removeAllListeners('notification');
+      socket.removeAllListeners('new_messages');
     };
   }, [socket]); // eslint-disable-line
 

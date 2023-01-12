@@ -5,6 +5,8 @@ import { Icon, Indicator } from '@ui/basics';
 import Chat from '@ui/Chat/Chat';
 import { MessageCircle2 } from 'tabler-icons-react';
 import { useClickOutside } from '@mantine/hooks';
+import { IChatMessage } from '@custom-types/data/IMessage';
+import { useUser } from '@hooks/useUser';
 
 const ChatSticky: FC<{ spec: string; host: string }> = ({
   spec,
@@ -12,6 +14,7 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
 }) => {
   const [showChat, setShowChat] = useState(false);
   const [hasNew, setHasNew] = useState(false);
+  const { user } = useUser();
 
   const ref = useClickOutside(() => setShowChat(false));
 
@@ -24,7 +27,9 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
             host={host}
             wsURL={'/ws/chat'}
             setHasNew={setHasNew}
-            isMessageMine={() => true}
+            isMessageMine={(message: IChatMessage) =>
+              !!user && message.author == user?.login
+            }
             wrapperStyles={styles.chatWrapper}
           />
         </div>
