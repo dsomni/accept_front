@@ -27,12 +27,14 @@ const Chat: FC<{
   entity: string;
   host: string;
 }> = ({ opened, setHasNew, wsURL, entity, host, isMessageMine }) => {
+  const { locale } = useLocale();
+  const { user } = useUser();
+
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [message, setMessage] = useState('');
-  const { user } = useUser();
-  const textArea = useRef<HTMLTextAreaElement>(null);
 
-  const { locale } = useLocale();
+  const textArea = useRef<HTMLTextAreaElement>(null);
+  const messagesDiv = useRef<HTMLDivElement>(null!);
 
   const socket = useMemo(
     () =>
@@ -45,29 +47,36 @@ const Chat: FC<{
     [user?.login, wsURL]
   );
 
+  const appendMessages = useCallback((messages: IChatMessage[]) => {
+    setMessages((oldMessages) => [...oldMessages, ...messages]);
+    setTimeout(() => {
+      messagesDiv.current.scrollTop =
+        messagesDiv.current.scrollHeight;
+    }, 100);
+  }, []);
+
   const fetchMessages = useCallback(() => {
     sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
       entity,
       host,
     }).then((res) => {
       if (!res.error) {
-        setMessages((messages) => [...messages, ...res.response]);
+        appendMessages(res.response);
       }
     });
-  }, [entity, host]);
+  }, [entity, host, appendMessages]);
 
   const handleSend = useCallback(() => {
-    console.log(message);
     sendRequest<{}, IChatMessage>('chat', 'POST', {
       entity,
       host,
       content: message,
     }).then((res) => {
       if (!res.error) {
-        setMessages((messages) => [...messages, res.response]);
+        appendMessages([res.response]);
       }
     });
-  }, [entity, host, message]);
+  }, [entity, host, message, appendMessages]);
 
   useEffect(() => {
     sendRequest<{}, IChatMessage[]>('chat/all', 'POST', {
@@ -75,10 +84,10 @@ const Chat: FC<{
       host,
     }).then((res) => {
       if (!res.error) {
-        setMessages(res.response);
+        appendMessages(res.response);
       }
     });
-  }, [entity, host]);
+  }, [entity, host, appendMessages]);
 
   useEffect(() => {
     if (!socket) return;
