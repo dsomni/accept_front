@@ -29,6 +29,7 @@
   padding-bottom: var(--spacer-s);
   border-bottom: solid var(--dark4) 2px;
   gap: var(--spacer-s);
+  scroll-behavior: smooth;
 }
 
 .messages::-webkit-scrollbar {

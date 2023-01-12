@@ -50,8 +50,9 @@ const Chat: FC<{
   const appendMessages = useCallback((messages: IChatMessage[]) => {
     setMessages((oldMessages) => [...oldMessages, ...messages]);
     setTimeout(() => {
-      messagesDiv.current.scrollTop =
-        messagesDiv.current.scrollHeight;
+      if (messagesDiv.current)
+        messagesDiv.current.scrollTop =
+          messagesDiv.current.scrollHeight;
     }, 100);
   }, []);
 
@@ -74,6 +75,7 @@ const Chat: FC<{
     }).then((res) => {
       if (!res.error) {
         appendMessages([res.response]);
+        setMessage('');
       }
     });
   }, [entity, host, message, appendMessages]);
@@ -135,7 +137,7 @@ const Chat: FC<{
       className={styles.wrapper}
       style={{ visibility: opened ? 'visible' : 'hidden' }}
     >
-      <div className={styles.messages}>
+      <div ref={messagesDiv} className={styles.messages}>
         {messages.map((message, index) => (
           <div
             className={`${styles.messageWrapper} ${
