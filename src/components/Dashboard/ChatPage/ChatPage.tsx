@@ -6,9 +6,10 @@ import { link } from '@constants/Avatar';
 import { Avatar } from '@mantine/core';
 import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
+import { Indicator } from '@ui/basics';
 
 const ChatPage: FC<{ entity: string }> = ({ entity }) => {
-  const [hosts, setHosts] = useState<IUserDisplay[]>([]);
+  const [hosts, setHosts] = useState<[IUserDisplay, number][]>([]);
   const [currentHost, setCurrentHost] = useState<string | undefined>(
     undefined
   );
@@ -24,7 +25,7 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
       'GET'
     ).then((res) => {
       if (!res.error && !cleanUp) {
-        setHosts(res.response);
+        setHosts(res.response.map((user) => [user, 0]));
       }
     });
     return () => {
@@ -38,18 +39,20 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
         {hosts.map((host, index) => (
           <div
             className={`${styles.hostWrapper} ${
-              host.login == currentHost ? styles.currentHost : ''
+              host[0].login == currentHost ? styles.currentHost : ''
             }`}
             key={index}
-            onClick={() => setCurrentHost(host.login)}
+            onClick={() => setCurrentHost(host[0].login)}
           >
-            <Avatar
-              radius="md"
-              size="md"
-              src={link(host.login)}
-              alt={'Users avatar'}
-            />
-            <div className={styles.hostName}>{host.shortName}</div>
+            <Indicator label={host[1]} disabled={host[1] == 0}>
+              <Avatar
+                radius="md"
+                size="md"
+                src={link(host[0].login)}
+                alt={'Users avatar'}
+              />
+            </Indicator>
+            <div className={styles.hostName}>{host[0].shortName}</div>
           </div>
         ))}
       </div>
