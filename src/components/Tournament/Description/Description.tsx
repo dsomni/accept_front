@@ -86,7 +86,10 @@ const Description: FC<{
       lang,
       () => '',
       undefined,
-      () => setSuccessfullyRegistered(true)
+      () => {
+        location.reload();
+        setSuccessfullyRegistered(true);
+      }
     );
   }, [locale, lang, tournament.spec]);
 
