@@ -28,20 +28,25 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
     undefined
   );
 
-  const fetchHosts = useCallback((hosts: string[]) => {
-    // fetch users display by logins
-    return new Promise<IUserDisplay[]>((resolve) => {
-      sendRequest<{}, IUserDisplay[]>(
-        `/user/display`,
-        'POST',
-        hosts
-      ).then((res) => {
-        if (!res.error) {
-          resolve(res.response);
+  const fetchHosts = useCallback(
+    (hosts: string[]) => {
+      // fetch users display by logins
+      return new Promise<{ user: IUserDisplay; amount: number }[]>(
+        (resolve) => {
+          sendRequest<{}, { user: IUserDisplay; amount: number }[]>(
+            `/hosts`,
+            'POST',
+            { logins: hosts, entity }
+          ).then((res) => {
+            if (!res.error) {
+              resolve(res.response);
+            }
+          });
         }
-      });
-    });
-  }, []);
+      );
+    },
+    [entity]
+  );
 
   const socket = useMemo(
     () =>
@@ -67,7 +72,7 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
     } else {
       fetchHosts([newHost]).then((res) => {
         setHosts((old_hosts) => {
-          old_hosts.push([res[0], 1]);
+          old_hosts.push([res[0].user, res[0].amount]);
           return [...old_hosts];
         });
       });
@@ -92,7 +97,10 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
       const hosts = JSON.parse(response) as string[];
       fetchHosts(hosts).then((res) =>
         setHosts(
-          res.map((item) => [item, 0] as [IUserDisplay, number])
+          res.map(
+            (item) =>
+              [item.user, item.amount] as [IUserDisplay, number]
+          )
         )
       );
     });
@@ -157,6 +165,7 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
             }}
             wrapperStyles={styles.chatWrapper}
             wsURL={'/ws/chat'}
+            moderator={true}
           />
         )}
       </div>

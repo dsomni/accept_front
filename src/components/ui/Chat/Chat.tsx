@@ -26,13 +26,15 @@ const Chat: FC<{
   entity: string;
   host: string;
   wrapperStyles: any;
+  moderator?: boolean;
 }> = ({
-  setHasNew,
+  // setHasNew,
   wsURL,
   entity,
   host,
   isMessageMine,
   wrapperStyles,
+  moderator,
 }) => {
   const { locale } = useLocale();
   const { user } = useUser();
@@ -93,6 +95,7 @@ const Chat: FC<{
     sendRequest<{}, IChatMessage[]>('chat/all', 'POST', {
       entity,
       host,
+      moderator: !!moderator,
     }).then((res) => {
       if (!res.error) {
         setMessages(res.response);
@@ -107,7 +110,7 @@ const Chat: FC<{
         }, 100);
       }
     });
-  }, [entity, host]);
+  }, [entity, host, moderator]);
 
   useEffect(() => {
     if (!socket) return;
