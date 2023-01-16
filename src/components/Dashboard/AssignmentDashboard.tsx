@@ -8,6 +8,7 @@ import CreateNotification from './CreateNotification/CreateNotification';
 import {
   AlignRight,
   BellPlus,
+  Messages,
   Pencil,
   Puzzle,
   Table,
@@ -25,8 +26,8 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
 import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
-import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import { useInterval } from '@mantine/hooks';
+import ChatPage from './ChatPage/ChatPage';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -76,6 +77,11 @@ const AssignmentDashboard: FC<{
         ),
         icon: <Vocabulary color="var(--secondary)" />,
         title: locale.dashboard.assignment.mainInfo,
+      },
+      {
+        page: <ChatPage entity={spec} />,
+        icon: <Messages color="var(--secondary)" />,
+        title: locale.dashboard.tournament.chat,
       },
       {
         page: assignment && (
@@ -171,7 +177,6 @@ const AssignmentDashboard: FC<{
           <Sticky actions={actions} />
         </>
       )}
-      <ChatSticky spec={spec} host={''} />
       <LeftMenu links={links} />
     </>
   );

@@ -23,7 +23,7 @@ function Assignment(props: { assignment: IAssignment }) {
   const [activeModal, setActiveModal] = useState(false);
   const { locale } = useLocale();
 
-  const { isTeacher } = useUser();
+  const { user, isTeacher } = useUser();
   const { width } = useWidth();
 
   const actions = [
@@ -75,7 +75,9 @@ function Assignment(props: { assignment: IAssignment }) {
         }
       />
       {isTeacher && <Sticky actions={actions} />}
-      <ChatSticky spec={assignment.spec} host={''} />
+      {user && (
+        <ChatSticky spec={assignment.spec} host={user.login} />
+      )}
       <Timer url={`assignment/info/${assignment.spec}`} />
       <Description assignment={assignment} />
     </>
