@@ -3,12 +3,14 @@ import styles from '@styles/error.module.css';
 import { useLocale } from '@hooks/useLocale';
 
 import Link from 'next/link';
+import Title from '@ui/Title/Title';
 
 const Error: NextPage<{ statusCode?: number }> = ({ statusCode }) => {
   const { locale } = useLocale();
 
   return (
     <div className={styles.wrapper}>
+      <Title title={statusCode?.toString() || locale.error} />
       <div className={styles.statusCode}>{statusCode}</div>
       <div className={styles.description}>
         {locale.errorPage.description}

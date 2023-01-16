@@ -11,7 +11,7 @@ export const group = {
   },
   delete: {
     loading: 'Удаляем группу',
-    success: 'Группа успешно удалён',
+    success: 'Группа успешно удалена',
     error: 'Ошибка при удалении группы',
   },
   validation: {

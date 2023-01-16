@@ -1,7 +1,15 @@
 import { NextPage } from 'next';
 import Todo from '@components/Todo/Todo';
+import Title from '@ui/Title/Title';
+import { useLocale } from '@hooks/useLocale';
 
 const About: NextPage = () => {
-  return <Todo />;
+  const { locale } = useLocale();
+  return (
+    <>
+      <Title title={locale.titles.courses} />
+      <Todo />
+    </>
+  );
 };
 export default About;

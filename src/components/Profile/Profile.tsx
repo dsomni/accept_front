@@ -26,7 +26,7 @@ import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 
 const Profile: FC<{ user: IUser }> = ({ user }) => {
-  const { amount } = useBackNotifications();
+  const { new_amount } = useBackNotifications();
   const router = useRouter();
 
   const { locale } = useLocale();
@@ -43,7 +43,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       {
         page: <NotificationList />,
         icon: (
-          <Indicator disabled={amount <= 0} size={8}>
+          <Indicator disabled={new_amount <= 0} size={8}>
             <BellRinging color="var(--secondary)" />
           </Indicator>
         ),
@@ -75,7 +75,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
       });
     }
     return globalLinks;
-  }, [user, locale, amount, isTeacher]);
+  }, [user, locale, new_amount, isTeacher]);
 
   const initialStep = useMemo(() => {
     let section = router.query.section as string;

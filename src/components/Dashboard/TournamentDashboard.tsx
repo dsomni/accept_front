@@ -1,7 +1,9 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
 import {
   AlignRight,
+  Ban,
   BellPlus,
+  Messages,
   Pencil,
   Puzzle,
   Table,
@@ -19,7 +21,6 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
 import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
-import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import { useInterval } from '@mantine/hooks';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import TaskList from './TaskList/TaskList';
@@ -27,6 +28,7 @@ import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import CreateNotification from './CreateNotification/CreateNotification';
 import Results from './Results/Results';
 import ParticipantsListWithBan from './ParticipantsList/ParticipantsListWithBan';
+import ChatPage from './ChatPage/ChatPage';
 
 const TournamentDashboard: FC<{
   spec: string;
@@ -60,7 +62,11 @@ const TournamentDashboard: FC<{
         page: tournament && (
           <TimeInfo
             type={'tournament'}
-            entity={{ ...tournament, starter: tournament.author }}
+            entity={{
+              title: tournament.title,
+              spec: tournament.spec,
+              creator: tournament.author,
+            }}
             timeInfo={{
               start: tournament.start,
               end: tournament.end,
@@ -72,6 +78,11 @@ const TournamentDashboard: FC<{
         ),
         icon: <Vocabulary color="var(--secondary)" />,
         title: locale.dashboard.tournament.mainInfo,
+      },
+      {
+        page: <ChatPage entity={spec} />,
+        icon: <Messages color="var(--secondary)" />,
+        title: locale.dashboard.tournament.chat,
       },
       {
         page: tournament && (
@@ -89,6 +100,7 @@ const TournamentDashboard: FC<{
       {
         page: tournament && (
           <AttemptsList
+            key={'all'}
             type={'tournament'}
             spec={tournament.spec}
             shouldNotRefetch={tournament.status.spec != 1}
@@ -111,6 +123,7 @@ const TournamentDashboard: FC<{
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.tournament.tasks,
       },
+
       {
         page: tournament && (
           <CreateNotification
@@ -123,6 +136,21 @@ const TournamentDashboard: FC<{
         ),
         icon: <BellPlus color="var(--secondary)" />,
         title: locale.dashboard.tournament.createNotification,
+      },
+      {
+        page: tournament && (
+          <AttemptsList
+            key={'banned'}
+            type={'tournament'}
+            banned
+            spec={tournament.spec}
+            shouldNotRefetch={tournament.status.spec != 1}
+            isFinished={tournament.status.spec == 2}
+            endDate={tournament.end}
+          />
+        ),
+        icon: <Ban color="var(--secondary)" />,
+        title: locale.dashboard.tournament.bannedAttempts,
       },
     ],
     [tournament, locale, refetch, spec]
@@ -170,7 +198,6 @@ const TournamentDashboard: FC<{
           <Sticky actions={actions} />
         </>
       )}
-      <ChatSticky spec={spec} />
       <LeftMenu links={links} />
     </>
   );

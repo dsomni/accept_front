@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { env } from 'process';
-import { serialize } from 'cookie';
+import { createTokenCookie } from '@utils/createTokenCookie';
 
 const url = env.API_ENDPOINT + '/api/refresh';
 
@@ -11,17 +11,18 @@ export default async function refresh(
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: req.headers as { [key: string]: string },
+      headers: { cookie: req.headers.cookie } as {
+        [key: string]: string;
+      },
     });
     if (response.status === 200) {
       const data = await response.json();
       res.setHeader('Set-Cookie', [
-        serialize('access_token_cookie', data['new_access_token'], {
-          secure: process.env.NODE_ENV !== 'development',
-          maxAge: data['new_access_token_max_age'],
-          sameSite: 'strict',
-          path: '/',
-        }),
+        createTokenCookie(
+          'access_token_cookie',
+          data['new_access_token'],
+          data['new_access_token_max_age']
+        ),
       ]);
       return res.status(200).json(data);
     }

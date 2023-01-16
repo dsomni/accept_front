@@ -1,7 +1,7 @@
 import { ITask } from '@custom-types/data/ITask';
 import { sendRequest } from '@requests/request';
 import ComponentToPDF from '@ui/ComponentToPDF/ComponentToPDF';
-import { FC, ReactNode, memo, useEffect, useState } from 'react';
+import { FC, ReactNode, memo, useCallback, useState } from 'react';
 import Description from '../Description/Description';
 import styles from './printTasks.module.css';
 import { letterFromIndex } from '@utils/letterFromIndex';
@@ -13,25 +13,29 @@ const PrintTasks: FC<{
 }> = ({ tasks: task_specs, title, description }) => {
   const [tasks, setTasks] = useState<ITask[]>([]);
 
-  useEffect(() => {
-    sendRequest<string[], ITask[]>(
-      'task/tasks',
-      'POST',
-      task_specs
-    ).then((res) => {
-      if (!res.error) {
-        setTasks(
-          res.response.map((task, index) => ({
-            ...task,
-            title: `${letterFromIndex(index)}. ${task.title}`,
-          }))
-        );
-      }
-    });
-  }, [task_specs]);
+  const beforeHandlePrint = useCallback(
+    async () =>
+      await sendRequest<string[], ITask[]>(
+        'task/tasks',
+        'POST',
+        task_specs,
+        60000
+      ).then((res) => {
+        if (!res.error) {
+          setTasks(
+            res.response.map((task, index) => ({
+              ...task,
+              title: `${letterFromIndex(index)}. ${task.title}`,
+            }))
+          );
+        }
+      }),
+    [task_specs]
+  );
 
   return (
     <ComponentToPDF
+      title={typeof title == 'string' ? title : undefined}
       component={(ref) => (
         <div ref={ref}>
           <div className={styles.tournamentInfo}>
@@ -40,11 +44,16 @@ const PrintTasks: FC<{
           </div>
           {tasks.map((task, index) => (
             <div className={styles.pageWrapper} key={index}>
-              <Description task={task} setShowHint={() => false} />
+              <Description
+                task={task}
+                setShowHint={() => false}
+                preview
+              />
             </div>
           ))}
         </div>
       )}
+      beforeHandlePrint={beforeHandlePrint}
     />
   );
 };

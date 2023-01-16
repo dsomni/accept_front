@@ -11,4 +11,5 @@ export const profile = {
     attempts: 'У вас нет ни одной попытки',
     assignments: 'Вам не задано ни одного урока',
   },
+  editModal: 'Изменить пользователя',
 };

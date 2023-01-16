@@ -40,8 +40,10 @@ const RangeCalendar: FC<Props> = ({
   const onChange = useCallback(
     (values: [Date | null, Date | null]) => {
       setValue(values);
-      if (values[0]) setStart(values[0]);
-      if (values[1]) setEnd(values[1]);
+      if (!!values[0] && !!values[1]) {
+        setStart(values[0]);
+        setEnd(values[1]);
+      }
     },
     [setStart, setEnd]
   );

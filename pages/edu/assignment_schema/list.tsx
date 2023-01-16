@@ -73,7 +73,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 3,
   },
   {
     label: locale.assignmentSchema.list.taskNumber,
@@ -89,7 +89,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 3,
+    size: 2,
   },
 ];
 
@@ -238,6 +238,16 @@ function AssignmentList() {
     }
   }, [data, applyFilters]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <div>
       <Title title={locale.titles.assignment_schema.list} />
@@ -266,11 +276,14 @@ function AssignmentList() {
         searchParams={searchParams}
         withSearch
         additionalSearch={
-          <div>
+          <div style={{ maxWidth: '300px' }}>
             <MultiSelect
               searchable
               data={searchTags}
-              onChange={setCurrentTags}
+              onChange={(value) => {
+                resetPage();
+                setCurrentTags(value);
+              }}
               placeholder={locale.placeholders.selectTags}
             />
           </div>

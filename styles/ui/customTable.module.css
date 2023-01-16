@@ -28,6 +28,7 @@
 .cell {
   padding: var(--spacer-m);
   border-bottom: solid 1px #3a3a3a;
+  word-wrap: break-word;
 }
 
 .headerCell {
@@ -54,6 +55,7 @@
   row-gap: var(--spacer-xs);
   padding-right: 5%;
   flex-wrap: wrap;
+  overflow-wrap: anywhere;
 }
 
 .title {
@@ -89,6 +91,11 @@
 .link {
   text-decoration: none;
   color: var(--dark1);
+}
+
+.link:hover {
+  text-decoration: none;
+  color: var(--primary);
 }
 
 .title:hover {

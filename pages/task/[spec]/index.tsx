@@ -10,9 +10,6 @@ import {
 import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
-import Description from '@components/Task/Description/Description';
-import Send from '@components/Task/Send/Send';
-import Results from '@components/Task/Results/Results';
 import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
 import { useRouter } from 'next/router';
@@ -26,9 +23,24 @@ import { useWidth } from '@hooks/useWidth';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { sendRequest } from '@requests/request';
 import TasksBar from '@ui/TasksBar/TasksBar';
-import SendText from '@components/Task/SendText/SendText';
 import Timer from '@ui/Timer/Timer';
 import ChatSticky from '@ui/ChatSticky/ChatSticky';
+import dynamic from 'next/dynamic';
+import Description from '@components/Task/Description/Description';
+import Head from 'next/head';
+
+const DynamicSend = dynamic(
+  () => import('@components/Task/Send/Send'),
+  { ssr: false }
+);
+const DynamicSendText = dynamic(
+  () => import('@components/Task/SendText/SendText'),
+  { ssr: false }
+);
+const DynamicResults = dynamic(
+  () => import('@components/Task/Results/Results'),
+  { ssr: false }
+);
 
 function Task(props: { task: ITask; languages: ILanguage[] }) {
   const task = props.task;
@@ -39,7 +51,8 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   const [tasks, setTasks] = useState<ITaskDisplay[]>([]);
 
   const { locale } = useLocale();
-  const { isTeacher, isUser } = useUser();
+  const { isTeacher, isUser, user } = useUser();
+
   const { width } = useWidth();
 
   const router = useRouter();
@@ -53,8 +66,11 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         : 'regular',
     [router.query]
   );
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
-  const spec = useMemo(
+  const querySpec = useMemo(
     () => router.query.assignment || router.query.tournament,
     [router.query]
   );
@@ -78,12 +94,12 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   useEffect(() => {
     let id: undefined | NodeJS.Timer = undefined;
-    if (type !== 'regular' && typeof spec == 'string') {
+    if (type !== 'regular' && typeof querySpec == 'string') {
       if (id) {
         clearInterval(id);
       }
-      fetch_tasks(spec)();
-      id = setInterval(fetch_tasks(spec), 10000);
+      fetch_tasks(querySpec)();
+      id = setInterval(fetch_tasks(querySpec), 5000);
     } else {
       setTasks([]);
     }
@@ -92,7 +108,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         clearInterval(id);
       }
     };
-  }, [spec, type, fetch_tasks]);
+  }, [querySpec, type, fetch_tasks]);
 
   const actions: IStickyAction[] = (
     task.hint
@@ -144,15 +160,27 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   return (
     <>
-      {type !== 'regular' && typeof spec === 'string' && (
+      <Head>
+        <meta property="og:title" content={task.title} />
+        <meta
+          property="og:description"
+          content={task.description.replace(/<[^>]*>/g, '')}
+        />
+        <meta
+          property="description"
+          content={task.description.replace(/<[^>]*>/g, '')}
+        />
+      </Head>
+      {type !== 'regular' && typeof querySpec === 'string' && (
         <>
           <TasksBar
+            currentTask={task.spec}
             tasks={tasks}
-            homeHref={`/${type}/${spec}`}
-            taskQuery={`${type}=${spec}`}
+            homeHref={`/${type}/${querySpec}`}
+            taskQuery={`${type}=${querySpec}`}
           />
-          <ChatSticky spec={spec} />
-          <Timer url={`${type}/info/${spec}`} />
+          {user && <ChatSticky spec={querySpec} host={user.login} />}
+          <Timer url={`${type}/info/${querySpec}`} />
         </>
       )}
 
@@ -200,13 +228,13 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         send={(set) =>
           isUser &&
           (task.taskType.spec == 0 ? (
-            <Send
+            <DynamicSend
               spec={task.spec}
               setActiveTab={set}
               languages={languages}
             />
           ) : (
-            <SendText
+            <DynamicSendText
               spec={task.spec}
               testsNumber={task.testsNumber}
               setActiveTab={set}
@@ -215,7 +243,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         }
         results={(currentTab) =>
           isUser && (
-            <Results activeTab={currentTab} spec={task.spec} />
+            <DynamicResults activeTab={currentTab} spec={task.spec} />
           )
         }
       />

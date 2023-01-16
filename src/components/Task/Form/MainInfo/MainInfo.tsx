@@ -16,7 +16,7 @@ const MainInfo: FC<{
     () => {
       return form.values.tags;
     },
-    [form.values.spec] // eslint-disable-line
+    [form.values.tags.length] // eslint-disable-line
   );
 
   const taskCheckTypeItems = useMemo(

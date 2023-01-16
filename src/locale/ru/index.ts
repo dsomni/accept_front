@@ -23,6 +23,7 @@ import { student } from './student';
 import { grade } from './grade';
 import { titles } from './titles';
 import { todo } from './todo';
+import { user } from './user';
 
 const ru = {
   accept: 'Accept',
@@ -53,8 +54,10 @@ const ru = {
   },
   newTab: 'Открыть в новой вкладке',
   new: 'New',
+  email: 'Почта',
   assignmentSchema,
   assignment,
+  user,
   attempt,
   dashboard,
   group,

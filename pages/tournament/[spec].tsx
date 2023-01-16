@@ -109,10 +109,10 @@ function Tournament(props: { tournament: ITournament }) {
           />
         )
       )}
-      {(special ||
-        tournament.participants.includes(user?.login || '')) && (
-        <ChatSticky spec={tournament.spec} />
-      )}
+      {user &&
+        (special || tournament.participants.includes(user.login)) && (
+          <ChatSticky spec={tournament.spec} host={user.login} />
+        )}
       <Timer url={`tournament/info/${tournament.spec}`} />
       <Description tournament={tournament} />
     </>
@@ -142,14 +142,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   const spec = query.spec;
 
   const response = await fetch(`${API_URL}/api/tournament/${spec}`, {
-    headers: req.headers as { [key: string]: string },
+    headers: {
+      cookie: req.headers.cookie,
+    } as { [key: string]: string },
   });
 
   if (response.status === 200) {
-    // res.setHeader(
-    //   'Cache-Control',
-    //   'public, s-maxage=10, stale-while-revalidate=59'
-    // );
     const tournament = await response.json();
 
     return {

@@ -123,7 +123,7 @@ const UsersList: FC<{
     sort_by: [],
     search_params: {
       search: '',
-      keys: ['login.value', 'shortName.value'],
+      keys: ['login.value', 'shortName.value', 'name'],
     },
   });
 
@@ -201,6 +201,16 @@ const UsersList: FC<{
     }
   }, [data, applyFilters]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <div>
       <Table
@@ -238,18 +248,25 @@ const UsersList: FC<{
               display: 'flex',
               flexDirection: 'row',
               gap: 'var(--spacer-l)',
+              width: '100%',
             }}
           >
             <MultiSelect
               searchable
               data={searchGroups}
-              onChange={setCurrentGroups}
+              onChange={(value) => {
+                resetPage();
+                setCurrentGroups(value);
+              }}
               placeholder={locale.placeholders.selectGroups}
             />
             <MultiSelect
               searchable
               data={searchRoles}
-              onChange={setCurrentRoles}
+              onChange={(value) => {
+                resetPage();
+                setCurrentRoles(value);
+              }}
               placeholder={locale.placeholders.selectRoles}
             />
           </div>

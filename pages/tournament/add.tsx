@@ -15,10 +15,11 @@ import {
   ITournamentAdd,
   ITournamentAddBundle,
 } from '@custom-types/data/ITournament';
-import { concatDateTime } from '@utils/datetime';
+import { UTCDate, concatDateTime } from '@utils/datetime';
 import Form from '@components/Tournament/Form/Form';
 import { useRequest } from '@hooks/useRequest';
 import { IUserDisplay } from '@custom-types/data/IUser';
+import { Item } from '@ui/CustomTransferList/CustomTransferList';
 
 function TournamentAdd(props: ITournamentAddBundle) {
   const { locale, lang } = useLocale();
@@ -39,10 +40,10 @@ function TournamentAdd(props: ITournamentAddBundle) {
     () => ({
       spec: '',
       author: user?.login || '',
-      title: 'Новый турнир',
-      description: 'Это новый турнир блаблабла',
+      title: '',
+      description: '',
       tasks: [],
-      tags: [],
+      tags: [] as Item[],
       status: 0,
 
       startDate: new Date(),
@@ -59,6 +60,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
 
       shouldPenalizeAttempt: true,
       allowRegistrationAfterStart: false,
+      banned: [],
     }),
     [user?.login]
   );
@@ -81,7 +83,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
         title: form.values.title,
         description: form.values.description,
         tasks: form.values.tasks,
-        tags: form.values.tags,
+        tags: form.values.tags.map((item) => item.value),
         status: 0,
         participants: form.values.participants,
         moderators: form.values.moderators,
@@ -89,15 +91,19 @@ function TournamentAdd(props: ITournamentAddBundle) {
         shouldPenalizeAttempt: form.values.shouldPenalizeAttempt,
         allowRegistrationAfterStart:
           form.values.allowRegistrationAfterStart,
-        start: concatDateTime(
-          form.values.startDate,
-          form.values.startTime
+        start: UTCDate(
+          concatDateTime(form.values.startDate, form.values.startTime)
         ),
-        end: concatDateTime(form.values.endDate, form.values.endTime),
-        frozeResults: concatDateTime(
-          form.values.frozeResultsDate,
-          form.values.frozeResultsTime
+        end: UTCDate(
+          concatDateTime(form.values.endDate, form.values.endTime)
         ),
+        frozeResults: UTCDate(
+          concatDateTime(
+            form.values.frozeResultsDate,
+            form.values.frozeResultsTime
+          )
+        ),
+        banned: form.values.banned,
       };
 
       requestWithNotify<ITournamentAdd, string>(

@@ -85,8 +85,8 @@ function TestsPage(props: { spec: string }) {
           <ListItem
             field="tests"
             label={locale.task.form.test + ' #' + (index + 1)}
-            InLabel={locale.task.form.inputTest}
-            OutLabel={locale.task.form.outputTest}
+            inLabel={locale.task.form.inputTest}
+            outLabel={locale.task.form.outputTest}
             form={form}
             hideInput={taskType && taskType.spec == 1}
             hideOutput={taskCheckType && taskCheckType.spec == 1}

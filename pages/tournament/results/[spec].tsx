@@ -62,7 +62,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   const spec = query.spec;
 
   const response = await fetch(`${API_URL}/api/tournament/${spec}`, {
-    headers: req.headers as { [key: string]: string },
+    headers: {
+      cookie: req.headers.cookie,
+    } as { [key: string]: string },
   });
 
   if (response.status === 200) {

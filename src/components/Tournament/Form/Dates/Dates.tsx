@@ -40,7 +40,9 @@ const Dates: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
               ...form.getInputProps('startDate'),
               onBlur: () => {
                 form.validateField('startDate');
+                form.validateField('endDate');
                 form.validateField('dates');
+                form.validateField('frozeDate');
               },
               label: locale.tournament.form.calendar,
             }}
@@ -52,6 +54,7 @@ const Dates: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
               onBlur={() => {
                 form.validateField('startTime');
                 form.validateField('dates');
+                form.validateField('frozeDate');
               }}
             />
             <TimeInput
@@ -60,28 +63,31 @@ const Dates: FC<{ form: UseFormReturnType<any> }> = ({ form }) => {
               onBlur={() => {
                 form.validateField('endTime');
                 form.validateField('dates');
+                form.validateField('frozeDate');
               }}
             />
           </div>
         </div>
       </InputWrapper>
 
-      <div className={styles.freezeTable}>
-        <DatePicker
-          label={locale.tournament.form.freezeTableDate}
-          minDate={form.values.startDate}
-          maxDate={form.values.endDate}
-          {...form.getInputProps('frozeResultsDate')}
-        />
-        <TimeInput
-          label={locale.tournament.form.freezeTableTime}
-          {...form.getInputProps('frozeResultsTime')}
-          onBlur={() => {
-            form.validateField('frozeResultsDate');
-            form.validateField('dates');
-          }}
-        />
-      </div>
+      <InputWrapper {...form.getInputProps('frozeDate')}>
+        <div className={styles.freezeTable}>
+          <DatePicker
+            label={locale.tournament.form.freezeTableDate}
+            minDate={form.values.startDate}
+            maxDate={form.values.endDate}
+            {...form.getInputProps('frozeResultsDate')}
+          />
+          <TimeInput
+            label={locale.tournament.form.freezeTableTime}
+            {...form.getInputProps('frozeResultsTime')}
+            onBlur={() => {
+              form.validateField('frozeResultsDate');
+              form.validateField('frozeDate');
+            }}
+          />
+        </div>
+      </InputWrapper>
     </>
   );
 };

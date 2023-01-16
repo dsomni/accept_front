@@ -10,7 +10,9 @@ export default async function whoami(
   try {
     const headers = req.headers;
     const response = await fetch(url, {
-      headers: headers as { [key: string]: string },
+      headers: { cookie: headers.cookie } as {
+        [key: string]: string;
+      },
     });
     if (response.status === 200) {
       const data = await response.json();

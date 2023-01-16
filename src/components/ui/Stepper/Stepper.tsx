@@ -96,6 +96,7 @@ const Stepper: FC<{
   return (
     <>
       <MantineStepper
+        size="sm"
         className={
           customWrapper
             ? undefined

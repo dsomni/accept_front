@@ -5,7 +5,7 @@ export const form = {
   steps,
   validation,
   infinite: 'Бесконечный',
-  starter: 'Учитель',
+  creator: 'Создатель',
   author: 'Автор',
   startTime: 'Время начала',
   endTime: 'Время окончания',

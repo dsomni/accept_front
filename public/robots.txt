@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /api/
+Disallow: /attempt/
+Disallow: /dashboard/
+Disallow: /group/
+Disallow: /edu/assignment_schema/
+Disallow: /profile/
+Disallow: /signin/
+Disallow: /signout/
+Disallow: /task/tests/
+Disallow: /task/edit/
+Disallow: /tournament/results/
+Disallow: /user/

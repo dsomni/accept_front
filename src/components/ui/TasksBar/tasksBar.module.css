@@ -12,6 +12,7 @@
   transition: height 0.3s;
   cursor: pointer;
 }
+
 .wrapper:hover {
   height: var(--spacer-xl);
 }
@@ -46,6 +47,10 @@
 .err {
   color: white;
   background-color: var(--negative);
+}
+
+.current {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 700px) {

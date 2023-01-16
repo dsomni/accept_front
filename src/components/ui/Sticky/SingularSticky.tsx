@@ -19,25 +19,27 @@ const SingularSticky: FC<{
 }> = ({ icon, position, color, classNames, ...props }) => {
   const { width } = useWidth();
   return (
-    <Affix
-      position={{
-        bottom: position?.bottom || 20,
-        right: position?.right || 20,
-      }}
-      zIndex={200}
-    >
-      <ActionIcon
-        component={props.onClick ? 'button' : 'a'}
-        variant="filled"
-        radius={60}
-        size={STICKY_SIZES[width]}
-        className={classNames?.button}
-        style={{ backgroundColor: color || 'var(--positive)' }}
-        {...props}
+    <>
+      <Affix
+        position={{
+          bottom: position?.bottom || 20,
+          right: position?.right || 20,
+        }}
+        zIndex={199}
       >
-        {icon}
-      </ActionIcon>
-    </Affix>
+        <ActionIcon
+          component={props.onClick ? 'button' : 'a'}
+          variant="filled"
+          radius={60}
+          size={STICKY_SIZES[width]}
+          className={classNames?.button}
+          style={{ backgroundColor: color || 'var(--positive)' }}
+          {...props}
+        >
+          {icon}
+        </ActionIcon>
+      </Affix>
+    </>
   );
 };
 

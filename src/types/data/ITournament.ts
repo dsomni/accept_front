@@ -25,6 +25,7 @@ export interface ITournament
   participants: string[];
   allowRegistrationAfterStart: boolean;
   frozeResults: Date;
+  banned: string[];
 }
 
 export interface ITournamentListBundle {
@@ -47,7 +48,7 @@ export interface ITournamentEditBundle {
 export interface ITournamentAdd
   extends Omit<
     ITournament,
-    'tasks' | 'status' | 'tags' | 'participantsNumber'
+    'tasks' | 'status' | 'tags' | 'participantsNumber' | 'banned'
   > {
   tasks: string[];
   tags: string[];

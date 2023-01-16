@@ -56,7 +56,7 @@ const Description: FC<{ assignment: IAssignment }> = ({
               {locale.assignment.form.author}: {assignment.author}
             </div>
             <div className={styles.starter}>
-              {locale.assignment.form.starter}: {assignment.starter}
+              {locale.assignment.form.creator}: {assignment.starter}
             </div>
           </div>
           {assignment.infinite ? (

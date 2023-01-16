@@ -14,7 +14,7 @@ const editorConfiguration = {
   simpleUpload: {
     uploadUrl: `/api/image`,
 
-    withCredentials: true,
+    withCredentials: false,
   },
 };
 

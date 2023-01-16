@@ -7,14 +7,14 @@ const projectLinks: IHeaderLink[] = [
     href: '/edu',
   },
   {
-    text: (locale) => locale.projects.courses.title,
-    type: 'regular',
-    href: '/courses',
-  },
-  {
     text: (locale) => locale.projects.tournaments.title,
     type: 'regular',
     href: '/tournament/list',
+  },
+  {
+    text: (locale) => locale.projects.courses.title,
+    type: 'regular',
+    href: '/courses',
   },
 ];
 
@@ -70,6 +70,6 @@ export const links: IHeaderLink[] = [
   {
     text: (locale) => locale.mainHeaderLinks.about,
     type: 'regular',
-    href: '/about',
+    href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
   },
 ];

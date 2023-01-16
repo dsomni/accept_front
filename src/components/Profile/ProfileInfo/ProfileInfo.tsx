@@ -28,8 +28,8 @@ const ProfileInfo: FC<{ user: IUser }> = ({ user }) => {
         <div className={styles.text}>
           <div className={styles.nameWrapper}>
             <div className={styles.fullName}>
-              <span className={styles.name}>{user.name}</span>
               <span className={styles.name}>{user.surname}</span>
+              <span className={styles.name}>{user.name}</span>
               {user.patronymic.length > 0 && (
                 <span className={styles.name}>{user.patronymic}</span>
               )}
@@ -50,7 +50,9 @@ const ProfileInfo: FC<{ user: IUser }> = ({ user }) => {
       </div>
       <div className={styles.restInfo}>
         {user.email && (
-          <div className={styles.email}>Email: {user.email}</div>
+          <div
+            className={styles.email}
+          >{`${locale.email}: ${user.email}`}</div>
         )}
         {user.groups.length > 0 && (
           <div className={styles.groupSection}>

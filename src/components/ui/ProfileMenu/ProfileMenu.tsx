@@ -23,7 +23,7 @@ const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
   const { user, signOut, accessLevel } = useUser();
 
-  const { amount } = useBackNotifications();
+  const { new_amount } = useBackNotifications();
 
   const handleSignOut = useCallback(() => {
     const id = newNotification({
@@ -52,20 +52,20 @@ const ProfileMenu: FC<{}> = ({}) => {
       <Menu trigger="hover" zIndex={1000}>
         <Menu.Target>
           <div>
-            <Indicator
-              label={amount > 99 ? '99+' : amount}
-              disabled={amount <= 0}
-            >
+            <Indicator label={new_amount} disabled={new_amount <= 0}>
               <Avatar
                 radius="lg"
                 size="lg"
                 src={user ? link(user.login) : undefined}
+                alt={'Users avatar'}
               />
             </Indicator>
           </div>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Label>{user?.shortName || ''}</Menu.Label>
+          <Menu.Label className={styles.label}>
+            {user?.shortName || ''}
+          </Menu.Label>
           <Menu.Item component="a" href="/profile/me">
             <Group spacing="xs" className={styles.wrapper}>
               <Robot color="var(--secondary)" size={20} />
@@ -78,7 +78,7 @@ const ProfileMenu: FC<{}> = ({}) => {
           >
             <Group spacing="xs" className={styles.wrapper}>
               <Group className={styles.wrapper}>
-                <Indicator disabled={amount <= 0} size={6}>
+                <Indicator disabled={new_amount <= 0} size={6}>
                   <BellRinging color="var(--secondary)" size={20} />
                 </Indicator>
                 <div>

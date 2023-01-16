@@ -19,8 +19,10 @@ import {
 import { useLocale } from './useLocale';
 import { useUser } from './useUser';
 
+import io from 'socket.io-client';
+
 interface INotificationContext {
-  amount: number;
+  new_amount: number;
   notifications: INotification[];
   sendViewed: (
     _: string[],
@@ -39,23 +41,53 @@ const BackNotificationsContext = createContext<INotificationContext>(
 export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
+  const { lang } = useLocale();
+  const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<INotification[]>(
     []
   );
 
-  const { lang } = useLocale();
-  const { user } = useUser();
+  const socket = useMemo(
+    () =>
+      typeof window !== 'undefined' && user?.login
+        ? io(`${process.env.WEBSOCKET_API}`, {
+            path: `/ws/notification/`,
+            transports: ['polling'],
+          })
+        : undefined,
+    [user?.login]
+  );
 
-  const [webSocket, setWebSocket] = useState<WebSocket>();
+  useEffect(() => {
+    if (!socket) return;
+    socket.connect();
+    socket.on('connect', () =>
+      socket.emit('register', user?.login || '')
+    );
+    socket.on('disconnect', () => {
+      // socket.connect();
+    });
+    socket.on('notification', (response) => {
+      const shouldRefetch = JSON.parse(response) as boolean;
+      if (shouldRefetch) fetchNotifications();
+    });
+
+    // Clean-up
+    return () => {
+      socket.removeAllListeners('connect');
+      socket.removeAllListeners('disconnect');
+      socket.removeAllListeners('notification');
+    };
+  }, [socket]); // eslint-disable-line
 
   const handleSend = useCallback(
     (spec: string) => {
-      if (webSocket && webSocket.readyState === 1) {
-        webSocket.send(spec);
+      if (socket?.connected) {
+        socket.emit('new_notification', spec);
       }
     },
-    [webSocket]
+    [socket]
   );
 
   const fetchNotifications = useCallback(() => {
@@ -80,26 +112,6 @@ export const BackNotificationsProvider: FC<{
       setLoading(false);
     });
   }, []);
-
-  useEffect(() => {
-    if (!user) return;
-    const ws = new WebSocket(
-      `${process.env.WEBSOCKET_API}/ws/notification/${user?.login}`
-    );
-
-    ws.onmessage = (event) => {
-      const shouldRefetch = JSON.parse(event.data) as boolean;
-      if (shouldRefetch) {
-        fetchNotifications();
-      }
-    };
-
-    setWebSocket(ws);
-
-    return () => {
-      ws.close();
-    };
-  }, [fetchNotifications, user]);
 
   const sendViewed = useCallback(
     (
@@ -126,7 +138,9 @@ export const BackNotificationsProvider: FC<{
 
   const value: INotificationContext = useMemo(
     () => ({
-      amount: notifications.length,
+      new_amount: notifications.filter(
+        (notification) => notification.viewed == false
+      ).length,
       notifications,
       sendViewed,
       loading,

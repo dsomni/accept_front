@@ -8,8 +8,8 @@ import { Icon, TextArea } from '@ui/basics';
 
 const ListItem: FC<{
   label: string;
-  InLabel: string;
-  OutLabel: string;
+  inLabel: string;
+  outLabel: string;
   form: any;
   index: number;
   field: string;
@@ -23,12 +23,12 @@ const ListItem: FC<{
   shrink?: boolean;
 }> = ({
   label,
-  InLabel,
+  inLabel,
   hideInput,
   hideOutput,
   maxRows,
   minRows,
-  OutLabel,
+  outLabel,
   index,
   onDelete,
   form,
@@ -64,7 +64,7 @@ const ListItem: FC<{
               <div
                 className={`${styles.label} ${inputStyles.subLabel} ${classNames?.label}`}
               >
-                {InLabel}
+                {inLabel}
                 <OpenTextInNewTab
                   text={form.values[field][index]['inputData']}
                 />
@@ -94,7 +94,7 @@ const ListItem: FC<{
               <div
                 className={`${styles.label} ${inputStyles.subLabel} ${classNames?.label}`}
               >
-                {OutLabel}
+                {outLabel}
                 <OpenTextInNewTab
                   text={form.values[field][index]['outputData']}
                 />

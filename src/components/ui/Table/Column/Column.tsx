@@ -26,7 +26,7 @@ const getCurrentOrder = (
 
 const Column: FC<{
   column: ITableColumn;
-  onSort: (key: string, order: -1 | 0 | 1) => void;
+  onSort: (_: string, __: -1 | 0 | 1) => void;
   classNames: any;
 }> = ({ column, onSort, classNames }) => {
   const [currentOrder, setCurrentOrder] = useState(

@@ -2,3 +2,8 @@
   flex-wrap: nowrap;
   gap: var(--spacer-xs);
 }
+
+.label {
+  font-size: var(--font-size-xs);
+  color: var(--dark3);
+}

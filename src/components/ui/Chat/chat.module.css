@@ -1,23 +1,5 @@
-.wrapper {
-  position: absolute;
-  z-index: 100;
-  bottom: 0;
-  right: 80px;
-  height: 60vh;
-  width: 25vw;
-  min-width: 300px;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffffcc;
-  outline: 2px var(--dark4) solid;
-  border-bottom: 0;
-  border-radius: 10px 10px 0 0;
-  font-size: var(--font-size-s);
-  padding-top: var(--spacer-xxs);
-}
-
 .messages {
+  position: relative;
   display: flex;
   padding: 0 var(--spacer-xxs);
   flex-direction: column;
@@ -46,13 +28,13 @@
 .message {
   min-width: 200px;
   border-radius: inherit;
-  background-color: var(--primary-light);
+  background-color: var(--chat-message-color);
   padding: var(--spacer-xs) var(--spacer-s) var(--spacer-xxs)
     var(--spacer-s);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacer-xs);
+  gap: var(--spacer-xxs);
 }
 
 .own {
@@ -96,25 +78,23 @@
 .own {
   border-radius: 10px 10px 0 10px;
 }
-:not(.own).messageWrapper:after {
-  content: '';
 
+.messageWrapper:after {
+  content: '';
   width: 0;
   height: 0;
   position: absolute;
-  left: 0;
-  border-top: 7px solid var(--primary-light);
+  border-top: 7px solid var(--chat-message-color);
+}
+
+:not(.own).messageWrapper:after {
   border-right: 15px solid transparent;
+  left: 0;
 }
 
 .own.messageWrapper:after {
-  content: '';
-  width: 0;
-  height: 0;
-  right: 0;
-  position: absolute;
-  border-top: 7px solid var(--primary-light);
   border-left: 15px solid transparent;
+  right: 0;
 }
 
 .textInput {

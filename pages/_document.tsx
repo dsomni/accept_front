@@ -1,15 +1,29 @@
-import { createGetInitialProps } from '@mantine/next';
+import { ServerStyles, createStylesServer } from '@mantine/next';
 import Document, {
+  DocumentContext,
   Head,
   Html,
   Main,
   NextScript,
 } from 'next/document';
 
-const getInitialProps = createGetInitialProps();
+const stylesServer = createStylesServer();
 
 class MyDocument extends Document {
-  static getInitialProps = getInitialProps;
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return {
+      ...initialProps,
+      styles: [
+        initialProps.styles,
+        <ServerStyles
+          html={initialProps.html}
+          server={stylesServer}
+          key="styles"
+        />,
+      ],
+    };
+  }
   render() {
     return (
       <Html lang="ru">

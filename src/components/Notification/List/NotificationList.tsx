@@ -9,8 +9,8 @@ import {
 } from 'react';
 import styles from './notificationList.module.css';
 import { INotification } from '@custom-types/data/notification';
-import { Badge, Checkbox, Pagination, Tooltip } from '@mantine/core';
-import { Icon } from '@ui/basics';
+import { Badge, Pagination, Tooltip } from '@mantine/core';
+import { Checkbox, Icon } from '@ui/basics';
 import { requestWithError } from '@utils/requestWithError';
 import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
@@ -18,6 +18,7 @@ import { getLocalDate } from '@utils/datetime';
 import { MailOpened, Trash } from 'tabler-icons-react';
 import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { useBackNotifications } from '@hooks/useBackNotifications';
+import { shrinkText } from '@utils/shrinkText';
 
 const ON_PAGE = 10;
 
@@ -168,14 +169,19 @@ const NotificationList: FC<{}> = ({}) => {
         {selected.length !== 0 ? (
           <>
             <Tooltip label={locale.notification.list.unselect}>
-              <Checkbox
-                checked={selected.length > 0}
-                indeterminate={
-                  selected.length !== notifications.length
-                }
-                onChange={() => setSelected([])}
-              />
+              <div>
+                <Checkbox
+                  checked={selected.length > 0}
+                  indeterminate={
+                    selected.length !== notifications.length
+                  }
+                  onChange={() => setSelected([])}
+                />
+              </div>
             </Tooltip>
+            <div className={styles.lengthWrapper}>
+              {selected.length}
+            </div>
             <Icon
               size="xs"
               tooltipLabel={locale.notification.list.delete}
@@ -194,12 +200,14 @@ const NotificationList: FC<{}> = ({}) => {
           </>
         ) : (
           <Tooltip label={locale.notification.list.selectAll}>
-            <Checkbox
-              checked={false}
-              onChange={() =>
-                setSelected(notifications.map((elem) => elem.spec))
-              }
-            />
+            <div>
+              <Checkbox
+                checked={false}
+                onChange={() =>
+                  setSelected(notifications.map((elem) => elem.spec))
+                }
+              />
+            </div>
           </Tooltip>
         )}
       </div>
@@ -223,22 +231,26 @@ const NotificationList: FC<{}> = ({}) => {
               />
             </div>
             <div
-              className={styles.titleWrapper}
+              className={styles.notificationWrapper}
               onClick={() => handleOpenModal(index)}
             >
-              <div className={styles.title}>
-                {notification.title}{' '}
-                {!notification.viewed && (
-                  <Badge color="green">{locale.new}</Badge>
-                )}
+              <div className={styles.titleWrapper}>
+                <div className={styles.title}>
+                  {shrinkText(notification.title, 48)}{' '}
+                  {!notification.viewed && (
+                    <Badge color="green">{locale.new}</Badge>
+                  )}
+                </div>
+                <div className={styles.shortDescription}>
+                  {shrinkText(notification.shortDescription, 80)}
+                </div>
               </div>
-              <div className={styles.shortDescription}>
-                {notification.shortDescription}
+              <div className={styles.author}>
+                {shrinkText(notification.author, 12)}
               </div>
-            </div>
-            <div className={styles.author}>{notification.author}</div>
-            <div className={styles.date}>
-              {getLocalDate(notification.date)}
+              <div className={styles.date}>
+                {getLocalDate(notification.date)}
+              </div>
             </div>
           </div>
         ))}

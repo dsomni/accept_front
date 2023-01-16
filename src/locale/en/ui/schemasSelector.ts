@@ -1,3 +1,3 @@
 export const schemasSelector = {
-  label: 'Assignment schemas',
+  label: 'Assignment schema',
 };

@@ -4,7 +4,7 @@ import { useRequest } from '@hooks/useRequest';
 import { IRole } from '@custom-types/data/atomic';
 import { IGroup } from '@custom-types/data/IGroup';
 import { IUser } from '@custom-types/data/IUser';
-import { LoadingOverlay } from '@mantine/core';
+import { LoadingOverlay } from '@ui/basics';
 
 const CrateNotification: FC<{}> = ({}) => {
   const { data, loading } = useRequest<

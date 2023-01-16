@@ -74,7 +74,7 @@ const refactorAttempt = (
     display: (
       <div className={tableStyles.titleWrapper}>
         <a
-          className={tableStyles.title}
+          className={tableStyles.link}
           href={`/profile/${attempt.author}`}
         >
           {attempt.author}
@@ -100,7 +100,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: false,
     hidable: false,
     hidden: false,
-    size: 4,
+    size: 3,
   },
   {
     label: locale.attempt.author,
@@ -122,7 +122,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: false,
     hidable: false,
     hidden: false,
-    size: 5,
+    size: 6,
   },
   {
     label: locale.attempt.language,
@@ -144,7 +144,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 3,
+    size: 2,
   },
 ];
 
@@ -154,7 +154,15 @@ const AttemptList: FC<{
   isFinished: boolean;
   endDate: Date;
   type: 'assignment' | 'tournament';
-}> = ({ spec, shouldNotRefetch, isFinished, endDate, type }) => {
+  banned?: boolean;
+}> = ({
+  spec,
+  shouldNotRefetch,
+  isFinished,
+  endDate,
+  type,
+  banned,
+}) => {
   const { locale } = useLocale();
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
@@ -186,7 +194,7 @@ const AttemptList: FC<{
         />
       )}
       <AttemptListUI
-        url={`${type}/attempts/${spec}`}
+        url={`${type}/attempts${banned ? '-banned' : ''}/${spec}`}
         activeTab
         initialColumns={initialColumns}
         refactorAttempt={refactor}

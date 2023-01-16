@@ -6,7 +6,7 @@ export const attempt = {
   verdict: 'Вердикт',
   status: 'Статус',
   banReason: 'Причина бана',
-  author: 'Пользователь',
+  author: 'Автор',
   notAllowed: 'Доступ ограничен',
   constraints: {
     time: 'Ограничение по времени',

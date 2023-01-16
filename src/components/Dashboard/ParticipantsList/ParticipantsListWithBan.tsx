@@ -131,6 +131,7 @@ const refactorUser = (
               <Button
                 variant="outline"
                 kind="negative"
+                shrink
                 onClick={() => handleBan(user.login, spec, true)}
               >
                 {locale.ban}
@@ -139,6 +140,7 @@ const refactorUser = (
               <Button
                 variant="outline"
                 kind="positive"
+                shrink
                 onClick={() => handleBan(user.login, spec, false)}
               >
                 {locale.unban}

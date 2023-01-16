@@ -93,7 +93,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 3,
+    size: 2,
   },
   {
     label: locale.tournament.list.start,
@@ -110,7 +110,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 4,
+    size: 3,
   },
   {
     label: locale.tournament.list.end,
@@ -127,7 +127,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 4,
+    size: 3,
   },
   {
     label: locale.tournament.list.participantsNumber,
@@ -313,6 +313,16 @@ function TournamentList() {
     }
   }, [data, applyFilters]);
 
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
+
   return (
     <div>
       <Title title={locale.titles.tournament.list} />
@@ -341,11 +351,14 @@ function TournamentList() {
         searchParams={searchParams}
         withSearch
         additionalSearch={
-          <div>
+          <div style={{ maxWidth: '300px' }}>
             <MultiSelect
               searchable
               data={searchTags}
-              onChange={setCurrentTags}
+              onChange={(value) => {
+                resetPage();
+                setCurrentTags(value);
+              }}
               placeholder={locale.placeholders.selectTags}
             />
           </div>

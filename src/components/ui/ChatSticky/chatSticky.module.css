@@ -1,3 +1,22 @@
+.chatWrapper {
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  right: 100px;
+  height: 60vh;
+  width: 25vw;
+  min-width: 300px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffffdd;
+  outline: 2px var(--dark4) solid;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  font-size: var(--font-size-s);
+  padding-top: var(--spacer-xxs);
+}
+
 .iconWrapper {
   width: 4rem;
   height: 2.5rem;

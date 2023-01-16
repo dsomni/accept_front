@@ -6,27 +6,29 @@ import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import { IUser } from '@custom-types/data/IUser';
 import styles from '@styles/profile/login.module.css';
 import { useUser } from '@hooks/useUser';
-import ProfileEditModal from '@components/Profile/ProfileEditModal/ProfileEditModal';
 import Title from '@ui/Title/Title';
+import ProfileSticky from '@components/Profile/ProfileSticky/ProfileSticky';
 
-function MyProfile(props: { user: IUser }) {
+function UserProfile(props: { user: IUser }) {
   const { isAdmin, accessLevel } = useUser();
   return (
     <div className={styles.wrapper}>
       <Title title={props.user.shortName} />
       {isAdmin && accessLevel >= props.user.role.accessLevel && (
-        <ProfileEditModal {...props} />
+        <>
+          <ProfileSticky {...props} />
+        </>
       )}
       <ProfileInfo {...props} />
     </div>
   );
 }
 
-MyProfile.getLayout = (page: ReactNode) => {
+UserProfile.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default MyProfile;
+export default UserProfile;
 
 const API_URL = getApiUrl();
 
@@ -42,12 +44,16 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     };
 
-  const login = req.url.slice(req.url.lastIndexOf('/') + 1);
+  const login = req.url
+    .slice(req.url.lastIndexOf('/') + 1)
+    .split('.')[0];
 
   const response = await fetch(
     `${API_URL}/api/bundle/profile/${login}`,
     {
-      headers: req.headers as { [key: string]: string },
+      headers: {
+        cookie: req.headers.cookie,
+      } as { [key: string]: string },
     }
   );
 

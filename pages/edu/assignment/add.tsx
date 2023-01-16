@@ -14,7 +14,7 @@ import {
 } from '@utils/notificationFunctions';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { useUser } from '@hooks/useUser';
-import { concatDateTime } from '@utils/datetime';
+import { UTCDate, concatDateTime } from '@utils/datetime';
 import { UseFormReturnType } from '@mantine/form/lib/types';
 import { useRouter } from 'next/router';
 import { INewNotification } from '@custom-types/data/notification';
@@ -80,11 +80,12 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         starter: user?.login || 'System',
         status: form.values.status,
         infinite: form.values.infinite,
-        start: concatDateTime(
-          form.values.startDate,
-          form.values.startTime
+        start: UTCDate(
+          concatDateTime(form.values.startDate, form.values.startTime)
         ),
-        end: concatDateTime(form.values.endDate, form.values.endTime),
+        end: UTCDate(
+          concatDateTime(form.values.endDate, form.values.endTime)
+        ),
         groups: form.values.groups,
       };
 

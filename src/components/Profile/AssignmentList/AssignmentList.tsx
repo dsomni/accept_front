@@ -56,9 +56,9 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     key: 'state',
     sortable: true,
     sortFunction: (a: any, b: any) =>
-      a.state.value.spec > b.state.value.spec
+      a.infinite || a.state.value > b.state.value
         ? 1
-        : a.state.value.spec == b.state.value.spec
+        : a.state.value == b.state.value
         ? 0
         : -1,
     sorted: 0,
@@ -97,24 +97,23 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 5,
   },
   {
     label: locale.assignment.list.author,
     key: 'author',
     sortable: true,
-    sortFunction: (a: any, b: any) => {
-      return a.author.value > b.author.value
+    sortFunction: (a: any, b: any) =>
+      a.author.value > b.author.value
         ? 1
         : a.author.value == b.author.value
         ? 0
-        : -1;
-    },
+        : -1,
     sorted: 0,
     allowMiddleState: true,
     hidable: true,
     hidden: true,
-    size: 3,
+    size: 2,
   },
   {
     label: locale.assignment.list.start,
@@ -138,7 +137,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     key: 'end',
     sortable: true,
     sortFunction: (a: any, b: any) => {
-      return a.end.value > b.end.value
+      return a.infinite || a.end.value > b.end.value
         ? 1
         : a.end.value == b.end.value
         ? 0
@@ -195,7 +194,7 @@ const processData = (
     (assignment: IAssignmentDisplay): any => ({
       ...assignment,
       state: {
-        value: assignment.status,
+        value: assignment.status.spec,
         display: getAssignmentIcon(assignment),
       },
       title: {
@@ -388,6 +387,16 @@ function AssignmentList() {
       setGroups(data.groups);
     }
   }, [data, applyFilters]);
+
+  const resetPage = useCallback(() => {
+    setSearchParams((searchParams: BaseSearch) => ({
+      ...searchParams,
+      pager: {
+        ...searchParams.pager,
+        skip: 0,
+      },
+    }));
+  }, []);
 
   return (
     <>

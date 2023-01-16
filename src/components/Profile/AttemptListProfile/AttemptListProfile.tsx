@@ -78,7 +78,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: false,
     hidable: false,
     hidden: false,
-    size: 4,
+    size: 2,
   },
   {
     label: locale.attempt.task,
@@ -100,7 +100,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 3,
+    size: 2,
   },
   {
     label: locale.attempt.result,
@@ -111,7 +111,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 3,
+    size: 2,
   },
 ];
 
@@ -124,7 +124,7 @@ const AttemptListProfile: FC<{}> = ({}) => {
       initialColumns={initialColumns}
       refactorAttempt={refactorAttempt}
       empty={<>{locale.profile.empty.attempts}</>}
-      key={2}
+      key={4}
       noDefault
       classNames={{
         wrapper: tableStyles.wrapper,

@@ -110,7 +110,7 @@ const DeleteModal: FC<{
           ) : (
             <Button
               variant="outline"
-              href="/tasks/list"
+              href="/task/list"
               targetWrapperClassName={deleteModalStyles.toListButton}
             >
               {locale.toList}

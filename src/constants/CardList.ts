@@ -8,15 +8,15 @@ export const cardList: IProjectCard[] = [
     href: '/task/list',
   },
   {
-    title: (locale) => locale.projects.courses.title,
-    description: (locale) => locale.projects.courses.description,
-    image: 'media/code1.jpg',
-    href: '/courses',
-  },
-  {
     title: (locale) => locale.projects.tournaments.title,
     description: (locale) => locale.projects.tournaments.description,
     image: 'media/code2.jpg',
     href: '/tournament/list',
+  },
+  {
+    title: (locale) => locale.projects.courses.title,
+    description: (locale) => locale.projects.courses.description,
+    image: 'media/code1.jpg',
+    href: '/courses',
   },
 ];

@@ -11,4 +11,5 @@ export const profile = {
     attempts: "You don't have any attempts",
     assignments: "You don't have any assignments",
   },
+  editModal: 'Edit User',
 };

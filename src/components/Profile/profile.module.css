@@ -10,9 +10,11 @@
   display: flex;
   flex-direction: column;
 }
+
 .shortName {
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-m);
 }
+
 .login {
   color: var(--dark4);
 }

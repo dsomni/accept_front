@@ -11,7 +11,8 @@
 .rightWrapper {
   display: flex;
   flex-direction: column;
-  min-width: 400px;
+  min-width: 200px;
+  width: 45%;
 }
 
 .wrapper.shrink {

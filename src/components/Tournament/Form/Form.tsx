@@ -11,6 +11,7 @@ import TaskOrdering from './TaskOrdering/TaskOrdering';
 import Moderators from './Moderators/Moderators';
 import Preview from './Preview/Preview';
 import { concatDateTime } from '@utils/datetime';
+import { dateTimeCmp } from '@utils/dateTimeCmp';
 
 const stepFields: string[][] = [
   [
@@ -26,8 +27,10 @@ const stepFields: string[][] = [
     'startTime',
     'endDate',
     'endTime',
+    'dates',
     'frozeResultsDate',
     'frozeResultsTime',
+    'frozeDate',
   ],
   [], // task ordering
   ['moderators'],
@@ -55,6 +58,51 @@ const Form: FC<{
 
   const form = useForm({
     initialValues,
+    validate: {
+      title: (value) =>
+        value.length < 5
+          ? locale.tournament.form.validation.title
+          : null,
+      description: (value) =>
+        value.length < 20
+          ? locale.tournament.form.validation.description
+          : null,
+      startDate: (value, values) =>
+        !values.startDate
+          ? locale.tournament.form.validation.startDate
+          : !values.endDate
+          ? locale.tournament.form.validation.endDate
+          : null,
+      dates: (value, values) =>
+        !!values.startDate &&
+        !!values.endDate &&
+        dateTimeCmp(
+          values.startDate,
+          values.startTime,
+          values.endDate,
+          values.endTime
+        ) >= 0
+          ? locale.tournament.form.validation.date
+          : null,
+      frozeDate: (value, values) =>
+        !!values.startDate &&
+        !!values.endDate &&
+        dateTimeCmp(
+          values.frozeResultsDate,
+          values.frozeResultsTime,
+          values.startDate,
+          values.startTime
+        ) == -1
+          ? locale.tournament.form.validation.frozeDateStart
+          : dateTimeCmp(
+              values.frozeResultsDate,
+              values.frozeResultsTime,
+              values.endDate,
+              values.endTime
+            ) == 1
+          ? locale.tournament.form.validation.frozeDateEnd
+          : null,
+    },
     validateInputOnBlur: true,
   });
 

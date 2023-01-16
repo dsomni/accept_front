@@ -44,4 +44,5 @@ export const titles = {
     results: 'Results of tournament',
     list: 'Tournament list',
   },
+  courses: 'Courses',
 };
