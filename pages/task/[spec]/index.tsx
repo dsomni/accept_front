@@ -51,7 +51,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   const [tasks, setTasks] = useState<ITaskDisplay[]>([]);
 
   const { locale } = useLocale();
-  const { isTeacher, isUser } = useUser();
+  const { isTeacher, isUser, user } = useUser();
   const { width } = useWidth();
 
   const router = useRouter();
@@ -175,7 +175,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
             homeHref={`/${type}/${querySpec}`}
             taskQuery={`${type}=${querySpec}`}
           />
-          <ChatSticky spec={querySpec} />
+          {user && <ChatSticky spec={querySpec} host={user.login} />}
           <Timer url={`${type}/info/${querySpec}`} />
         </>
       )}

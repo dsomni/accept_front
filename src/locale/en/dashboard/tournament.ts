@@ -5,6 +5,7 @@ export const tournament = {
   bannedAttempts: 'Banned attempts',
   participants: 'Participants',
   tasks: 'Tasks',
+  chat: 'Chat',
   createNotification: 'Create notification',
   timeInfo: {
     enterManually: 'Enter manually',

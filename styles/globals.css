@@ -29,6 +29,11 @@ body {
 }
 
 :root {
+  --chat-message-color: #d7efff;
+  --current-host-color: #d0edffa6;
+}
+
+:root {
   --font-size-huge: 2.5rem;
   --font-size-xxl: 2rem;
   --font-size-xl: 1.7rem;

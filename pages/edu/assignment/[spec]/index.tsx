@@ -75,7 +75,7 @@ function Assignment(props: { assignment: IAssignment }) {
         }
       />
       {isTeacher && <Sticky actions={actions} />}
-      <ChatSticky spec={assignment.spec} />
+      <ChatSticky spec={assignment.spec} host={''} />
       <Timer url={`assignment/info/${assignment.spec}`} />
       <Description assignment={assignment} />
     </>

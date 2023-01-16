@@ -18,6 +18,7 @@ import { getLocalDate } from '@utils/datetime';
 import { MailOpened, Trash } from 'tabler-icons-react';
 import ReadModal from '@components/Notification/ReadModal/ReadModal';
 import { useBackNotifications } from '@hooks/useBackNotifications';
+import { shrinkText } from '@utils/shrinkText';
 
 const ON_PAGE = 10;
 
@@ -235,17 +236,17 @@ const NotificationList: FC<{}> = ({}) => {
             >
               <div className={styles.titleWrapper}>
                 <div className={styles.title}>
-                  {notification.title}{' '}
+                  {shrinkText(notification.title, 48)}{' '}
                   {!notification.viewed && (
                     <Badge color="green">{locale.new}</Badge>
                   )}
                 </div>
                 <div className={styles.shortDescription}>
-                  {notification.shortDescription}
+                  {shrinkText(notification.shortDescription, 80)}
                 </div>
               </div>
               <div className={styles.author}>
-                {notification.author}
+                {shrinkText(notification.author, 12)}
               </div>
               <div className={styles.date}>
                 {getLocalDate(notification.date)}

@@ -171,7 +171,7 @@ const AssignmentDashboard: FC<{
           <Sticky actions={actions} />
         </>
       )}
-      <ChatSticky spec={spec} />
+      <ChatSticky spec={spec} host={''} />
       <LeftMenu links={links} />
     </>
   );

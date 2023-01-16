@@ -3,6 +3,7 @@ import {
   AlignRight,
   Ban,
   BellPlus,
+  Messages,
   Pencil,
   Puzzle,
   Table,
@@ -20,7 +21,6 @@ import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
 import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
-import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import { useInterval } from '@mantine/hooks';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import TaskList from './TaskList/TaskList';
@@ -28,6 +28,7 @@ import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
 import CreateNotification from './CreateNotification/CreateNotification';
 import Results from './Results/Results';
 import ParticipantsListWithBan from './ParticipantsList/ParticipantsListWithBan';
+import ChatPage from './ChatPage/ChatPage';
 
 const TournamentDashboard: FC<{
   spec: string;
@@ -79,6 +80,11 @@ const TournamentDashboard: FC<{
         title: locale.dashboard.tournament.mainInfo,
       },
       {
+        page: <ChatPage entity={spec} />,
+        icon: <Messages color="var(--secondary)" />,
+        title: locale.dashboard.tournament.chat,
+      },
+      {
         page: tournament && (
           <Results
             spec={spec}
@@ -117,6 +123,7 @@ const TournamentDashboard: FC<{
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.tournament.tasks,
       },
+
       {
         page: tournament && (
           <CreateNotification
@@ -191,8 +198,7 @@ const TournamentDashboard: FC<{
           <Sticky actions={actions} />
         </>
       )}
-      <ChatSticky spec={spec} />
-      <LeftMenu links={links} />
+      <LeftMenu links={links} initialStep={1} />
     </>
   );
 };
