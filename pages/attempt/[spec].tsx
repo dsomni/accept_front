@@ -16,9 +16,10 @@ import BanModal from '@components/Attempt/BanModals/BanModal';
 import UnbanModal from '@components/Attempt/BanModals/UnbanModal';
 import { useRequest } from '@hooks/useRequest';
 
-function Assignment(props: { attempt: IAttempt; author: string }) {
+function Attempt(props: { attempt: IAttempt; author: string }) {
   const attempt = props.attempt;
   const author = props.author;
+  ``;
   const { user, isTeacher } = useUser();
   const { locale } = useLocale();
 
@@ -80,11 +81,11 @@ function Assignment(props: { attempt: IAttempt; author: string }) {
   );
 }
 
-Assignment.getLayout = (page: ReactNode) => {
+Attempt.getLayout = (page: ReactNode) => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export default Assignment;
+export default Attempt;
 
 const API_URL = getApiUrl();
 

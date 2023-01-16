@@ -33,6 +33,7 @@
 
 .cell {
   font-size: var(--font-size-s);
+  min-width: var(--spacer-xxl);
   padding: var(--spacer-xs) var(--spacer-s);
 }
 
