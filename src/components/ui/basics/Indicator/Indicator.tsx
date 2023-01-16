@@ -4,20 +4,36 @@ import {
   Indicator as MantineIndicator,
 } from '@mantine/core';
 
-const size_px = 28;
+const SIZES: {
+  [key: string]: { size_px: number; font_size: number };
+} = {
+  sm: { size_px: 20, font_size: 10 },
+  md: { size_px: 28, font_size: 14 },
+};
 
-const Indicator: FC<IndicatorProps> = ({ children, ...props }) => {
+interface CustomIndicatorProps extends IndicatorProps {
+  scale?: keyof typeof SIZES;
+}
+
+const Indicator: FC<CustomIndicatorProps> = ({
+  children,
+  label,
+  scale = 'md',
+  ...props
+}) => {
+  const { size_px, font_size } = SIZES[scale];
   return (
     <MantineIndicator
       size={size_px}
       styles={{
         indicator: {
           backgroundColor: props.color || 'var(--accent)',
-          fontSize: `${size_px / 2}px`,
+          fontSize: `${font_size}px`,
         },
       }}
       overflowCount={99}
       {...props}
+      label={label && label.toString()}
     >
       {children}
     </MantineIndicator>

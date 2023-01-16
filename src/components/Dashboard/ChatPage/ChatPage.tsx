@@ -128,7 +128,12 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
               });
             }}
           >
-            <Indicator label={host[1]} disabled={host[1] == 0}>
+            <Indicator
+              offset={2}
+              label={host[1]}
+              disabled={host[1] == 0}
+              scale="sm"
+            >
               <Avatar
                 radius="md"
                 size="md"
