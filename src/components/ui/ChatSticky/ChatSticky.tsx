@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import styles from './chatSticky.module.css';
 import { Affix } from '@mantine/core';
 import { Icon, Indicator } from '@ui/basics';
@@ -18,6 +18,10 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
 
   const ref = useClickOutside(() => setShowChat(false));
 
+  const indicateNew = useCallback(() => {
+    if (!showChat) setHasNew(true);
+  }, [showChat]);
+
   return (
     <>
       <Affix ref={ref} position={{ bottom: 0, right: '200px' }}>
@@ -26,7 +30,8 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
             entity={spec}
             host={host}
             wsURL={'/ws/chat'}
-            setHasNew={setHasNew}
+            indicateNew={indicateNew}
+            opened={showChat}
             isMessageMine={(message: IChatMessage) =>
               !!user && message.author == user?.login
             }

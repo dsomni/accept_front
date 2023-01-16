@@ -159,7 +159,7 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
             key={currentHost}
             entity={entity}
             host={currentHost}
-            setHasNew={() => {}}
+            opened={true}
             isMessageMine={(message: IChatMessage) => {
               return !(message.author === currentHost);
             }}

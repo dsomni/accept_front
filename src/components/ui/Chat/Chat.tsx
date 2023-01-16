@@ -15,12 +15,12 @@ import { IChatMessage } from '@custom-types/data/IMessage';
 import { Textarea } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
-import { setter } from '@custom-types/ui/atomic';
 import io from 'socket.io-client';
 import { sendRequest } from '@requests/request';
 
 const Chat: FC<{
-  setHasNew: setter<boolean>;
+  indicateNew?: () => void;
+  opened: boolean;
   isMessageMine: (_: IChatMessage) => boolean;
   wsURL: string;
   entity: string;
@@ -28,7 +28,8 @@ const Chat: FC<{
   wrapperStyles: any;
   moderator?: boolean;
 }> = ({
-  // setHasNew,
+  indicateNew,
+  opened,
   wsURL,
   entity,
   host,
@@ -45,6 +46,8 @@ const Chat: FC<{
 
   const textArea = useRef<HTMLTextAreaElement>(null);
   const messagesDiv = useRef<HTMLDivElement>(null!);
+  const [firstFetchDone, setFirstFetchDone] = useState(false);
+  const [newMessages, setNewMessages] = useState<string[]>([]);
 
   const socket = useMemo(
     () =>
@@ -59,6 +62,10 @@ const Chat: FC<{
 
   const appendMessages = useCallback((messages: IChatMessage[]) => {
     setMessages((oldMessages) => [...oldMessages, ...messages]);
+    setNewMessages((oldMessages) => [
+      ...oldMessages,
+      ...messages.map((item) => item.spec),
+    ]);
     setTimeout(() => {
       if (messagesDiv.current)
         messagesDiv.current.scrollTop =
@@ -67,20 +74,25 @@ const Chat: FC<{
   }, []);
 
   const fetchMessages = useCallback(() => {
+    setInitialLoad(true);
     sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
       entity,
       host,
+      moderator,
     }).then((res) => {
       if (!res.error) {
         appendMessages(res.response);
       }
+      setInitialLoad(false);
     });
-  }, [entity, host, appendMessages]);
+  }, [entity, host, moderator, appendMessages]);
 
   const handleSend = useCallback(() => {
+    if (message.trim() === '') return;
     sendRequest<{}, IChatMessage>('chat', 'POST', {
       entity,
       host,
+      moderator,
       content: message,
     }).then((res) => {
       if (!res.error) {
@@ -88,9 +100,20 @@ const Chat: FC<{
         setMessage('');
       }
     });
-  }, [entity, host, message, appendMessages]);
+  }, [entity, host, moderator, message, appendMessages]);
 
   useEffect(() => {
+    if (opened)
+      sendRequest<{}, boolean>('/chat/viewed', 'POST', {
+        specs: newMessages,
+        entity,
+        moderator,
+      });
+  }, [opened, newMessages, entity, moderator]);
+
+  useEffect(() => {
+    if (firstFetchDone || !opened) return;
+    setFirstFetchDone(true);
     setInitialLoad(true);
     sendRequest<{}, IChatMessage[]>('chat/all', 'POST', {
       entity,
@@ -110,13 +133,13 @@ const Chat: FC<{
         }, 100);
       }
     });
-  }, [entity, host, moderator]);
+  }, [entity, host, moderator, opened, firstFetchDone]);
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !user) return;
     socket.connect();
     socket.on('connect', () =>
-      socket.emit('register', entity, host, user?.login)
+      socket.emit('register', entity, host, user?.login, moderator)
     );
     socket.on('disconnect', () => {
       // socket.connect();
@@ -125,7 +148,7 @@ const Chat: FC<{
       const shouldRefetch = JSON.parse(response) as boolean;
       if (shouldRefetch) {
         fetchMessages();
-        // if (!opened) setHasNew(true);
+        if (indicateNew) indicateNew();
       }
     });
 
@@ -135,7 +158,15 @@ const Chat: FC<{
       socket.removeAllListeners('disconnect');
       socket.removeAllListeners('new_messages');
     };
-  }, [socket]); // eslint-disable-line
+  }, [
+    socket,
+    fetchMessages,
+    entity,
+    host,
+    indicateNew,
+    moderator,
+    user,
+  ]);
 
   useEffect(() => {
     const handleClick = (event: KeyboardEvent) => {
