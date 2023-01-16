@@ -6,8 +6,8 @@ import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import { IUser } from '@custom-types/data/IUser';
 import styles from '@styles/profile/login.module.css';
 import { useUser } from '@hooks/useUser';
-import ProfileEditModal from '@components/Profile/ProfileEditModal/ProfileEditModal';
 import Title from '@ui/Title/Title';
+import ProfileSticky from '@components/Profile/ProfileSticky/ProfileSticky';
 
 function UserProfile(props: { user: IUser }) {
   const { isAdmin, accessLevel } = useUser();
@@ -15,7 +15,9 @@ function UserProfile(props: { user: IUser }) {
     <div className={styles.wrapper}>
       <Title title={props.user.shortName} />
       {isAdmin && accessLevel >= props.user.role.accessLevel && (
-        <ProfileEditModal {...props} />
+        <>
+          <ProfileSticky {...props} />
+        </>
       )}
       <ProfileInfo {...props} />
     </div>

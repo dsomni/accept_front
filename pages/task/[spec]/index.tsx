@@ -52,6 +52,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
 
   const { locale } = useLocale();
   const { isTeacher, isUser, user } = useUser();
+
   const { width } = useWidth();
 
   const router = useRouter();
@@ -65,6 +66,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         : 'regular',
     [router.query]
   );
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const querySpec = useMemo(
     () => router.query.assignment || router.query.tournament,

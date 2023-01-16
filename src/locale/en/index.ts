@@ -23,6 +23,7 @@ import { student } from './student';
 import { grade } from './grade';
 import { titles } from './titles';
 import { todo } from './todo';
+import { user } from './user';
 
 const en = {
   accept: 'Accept',
@@ -56,6 +57,7 @@ const en = {
   email: 'Email',
   assignmentSchema,
   assignment,
+  user,
   attempt,
   auth,
   date,
