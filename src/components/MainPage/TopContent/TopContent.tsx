@@ -23,7 +23,7 @@ const TopContent: FC = () => {
         </div>
         <div className={styles.info}>
           <div className={styles.title}>{locale.accept}</div>
-          <div className={styles.version}>{'v. ' + version}</div>
+          <div className={styles.version}>{'v' + version}</div>
         </div>
       </div>
     </div>
