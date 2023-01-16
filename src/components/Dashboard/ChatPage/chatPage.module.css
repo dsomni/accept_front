@@ -11,6 +11,7 @@
   width: 30%;
   height: 100%;
   overflow: scroll;
+  padding-bottom: var(--spacer-s);
 }
 
 .hostList::-webkit-scrollbar {
@@ -29,11 +30,23 @@
   align-items: center;
   gap: var(--spacer-s);
   padding: var(--spacer-xs) var(--spacer-s);
+  position: relative;
+}
+
+.hostWrapper::before {
+  position: absolute;
+  content: '';
+  right: 20%;
+  bottom: 0;
+  height: 1px;
+  width: 60%;
   border-bottom: 1px solid darkgray;
 }
 
 .chat {
-  border: darkgray 1px solid;
+  border-left: darkgray 1px solid;
+  border-top: darkgray 1px solid;
+  border-bottom: darkgray 1px solid;
   width: 70%;
   height: 100%;
 }

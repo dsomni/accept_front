@@ -78,7 +78,7 @@ const Chat: FC<{
     sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
       entity,
       host,
-      moderator,
+      moderator: !!moderator,
     }).then((res) => {
       if (!res.error) {
         appendMessages(res.response);
@@ -92,7 +92,7 @@ const Chat: FC<{
     sendRequest<{}, IChatMessage>('chat', 'POST', {
       entity,
       host,
-      moderator,
+      moderator: !!moderator,
       content: message,
     }).then((res) => {
       if (!res.error) {
@@ -103,12 +103,12 @@ const Chat: FC<{
   }, [entity, host, moderator, message, appendMessages]);
 
   useEffect(() => {
-    if (opened)
+    if (opened && newMessages.length > 0)
       sendRequest<{}, boolean>('/chat/viewed', 'POST', {
         specs: newMessages,
         entity,
-        moderator,
-      });
+        moderator: !!moderator,
+      }).then(() => setNewMessages([]));
   }, [opened, newMessages, entity, moderator]);
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const Chat: FC<{
     if (!socket || !user) return;
     socket.connect();
     socket.on('connect', () =>
-      socket.emit('register', entity, host, user?.login, moderator)
+      socket.emit('register', entity, host, user?.login, !!moderator)
     );
     socket.on('disconnect', () => {
       // socket.connect();
@@ -157,6 +157,7 @@ const Chat: FC<{
       socket.removeAllListeners('connect');
       socket.removeAllListeners('disconnect');
       socket.removeAllListeners('new_messages');
+      socket.disconnect();
     };
   }, [
     socket,

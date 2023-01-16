@@ -61,19 +61,22 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
 
   useEffect(() => {
     if (!newHost) return;
-    if (newHost === currentHost) return;
+    if (newHost === currentHost) {
+      setNewHost(undefined);
+      return;
+    }
     const index = hosts.findIndex((item) => item[0].login == newHost);
     if (index >= 0) {
       setHosts((old_hosts) => {
         old_hosts[index][1] += 1;
-        return [...old_hosts];
+        return [...old_hosts.sort((a, b) => b[1] - a[1])];
       });
       setNewHost(undefined);
     } else {
       fetchHosts([newHost]).then((res) => {
         setHosts((old_hosts) => {
           old_hosts.push([res[0].user, res[0].amount]);
-          return [...old_hosts];
+          return [...old_hosts.sort((a, b) => b[1] - a[1])];
         });
       });
       setNewHost(undefined);
@@ -97,10 +100,12 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
       const hosts = JSON.parse(response) as string[];
       fetchHosts(hosts).then((res) =>
         setHosts(
-          res.map(
-            (item) =>
-              [item.user, item.amount] as [IUserDisplay, number]
-          )
+          res
+            .map(
+              (item) =>
+                [item.user, item.amount] as [IUserDisplay, number]
+            )
+            .sort((a, b) => b[1] - a[1])
         )
       );
     });
