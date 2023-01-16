@@ -20,13 +20,14 @@ const ProfileDeleteModal: FC<{
 
   const handleSubmit = useCallback(() => {
     requestWithNotify(
-      `profile/delete/${user.login}`,
+      `user/delete/${user.login}`,
       'DELETE',
-      locale.notify.profile.main,
+      locale.notify.user.delete,
       lang,
       () => '',
       undefined,
-      () => setToList(true)
+      () => setToList(true),
+      { autoClose: 8000 }
     );
   }, [locale, lang, user.login]);
 
@@ -34,22 +35,23 @@ const ProfileDeleteModal: FC<{
     <SimpleModal
       opened={opened}
       close={close}
-      title={locale.profile.editModal}
+      title={locale.user.modals.deletion}
     >
       <div className={styles.wrapper}>
         <div className={styles.text}>
-          {'Удалить пользователя '} {user.login}
+          {`${locale.user.modals.delete} '${user.login}' ?`}
         </div>
         {!toList ? (
           <SimpleButtonGroup
             actionButton={{
-              label: locale.edit,
+              label: locale.delete,
               onClick: handleSubmit,
             }}
             cancelButton={{
               label: locale.cancel,
               onClick: close,
             }}
+            reversePositive
           />
         ) : (
           <Button

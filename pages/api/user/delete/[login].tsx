@@ -8,7 +8,7 @@ export default async function DeleteUserByLogin(
   await fetchWrapper({
     req: req,
     res: res,
-    url: `api/profile/delete/${req.query.login}`,
+    url: `api/user/${req.query.login}`,
     method: 'DELETE',
   });
 }
