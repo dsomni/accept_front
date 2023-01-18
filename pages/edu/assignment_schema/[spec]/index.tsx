@@ -9,6 +9,7 @@ import { Pencil, Trash } from 'tabler-icons-react';
 import DeleteModal from '@components/AssignmentSchema/DeleteModal/DeleteModal';
 import { useLocale } from '@hooks/useLocale';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
   const assignment = props.assignment;
@@ -75,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         assignment: await assignment.json(),
       },
-      revalidate: 5 * 10,
+      revalidate: REVALIDATION_TIME.assignment_schema.page,
     };
   }
   return {

@@ -14,6 +14,7 @@ import {
 } from '@utils/notificationFunctions';
 import Title from '@ui/Title/Title';
 import { useRequest } from '@hooks/useRequest';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function EditGroup(props: { group: IGroup; members: string[] }) {
   const { data: users } = useRequest<{}, IUserDisplay[]>(
@@ -112,7 +113,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         group: groupBundle.group,
         members: groupBundle.members,
       },
-      revalidate: 60,
+      revalidate: REVALIDATION_TIME.group.edit,
     };
   }
   return {

@@ -17,6 +17,7 @@ import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import Timer from '@ui/Timer/Timer';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
@@ -110,7 +111,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         assignment,
       },
-      revalidate: 10 * 60,
+      revalidate: REVALIDATION_TIME.assignment.page,
     };
   }
   return {

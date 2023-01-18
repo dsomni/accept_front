@@ -21,6 +21,7 @@ import { INewNotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function AssignmentAdd(props: IAssignmentAddBundle) {
   const { locale, lang } = useLocale();
@@ -155,7 +156,7 @@ export const getStaticProps: GetStaticProps = async () => {
         assignment_schemas: response_json.schemas,
         groups: response_json.groups,
       },
-      revalidate: 10, //seconds
+      revalidate: REVALIDATION_TIME.assignment.add,
     };
   }
   return {

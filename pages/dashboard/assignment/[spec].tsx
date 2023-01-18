@@ -5,6 +5,7 @@ import { getApiUrl } from '@utils/getServerUrl';
 import AssignmentDashboard from '@components/Dashboard/AssignmentDashboard';
 import { useLocale } from '@hooks/useLocale';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function AssignmentDashboardPage(props: { spec: string }) {
   const { locale } = useLocale();
@@ -37,10 +38,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     `${API_URL}/api/assignment/${params.spec}`
   );
   if (response.status === 200) {
-    const assignment = await response.json();
     return {
-      props: { spec: assignment.spec },
-      revalidate: 10 * 60 * 60,
+      props: { spec: params.spec },
+      revalidate: REVALIDATION_TIME.dashboard.assignment,
     };
   }
   return {

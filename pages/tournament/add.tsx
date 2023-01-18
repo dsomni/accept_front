@@ -20,6 +20,7 @@ import Form from '@components/Tournament/Form/Form';
 import { useRequest } from '@hooks/useRequest';
 import { IUserDisplay } from '@custom-types/data/IUser';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function TournamentAdd(props: ITournamentAddBundle) {
   const { locale, lang } = useLocale();
@@ -151,7 +152,7 @@ export const getStaticProps: GetStaticProps = async () => {
         assessmentTypes: response_json.assessment_types,
         tags: response_json.tags,
       },
-      revalidate: 60, //seconds
+      revalidate: REVALIDATION_TIME.tournament.add,
     };
   }
   return {
