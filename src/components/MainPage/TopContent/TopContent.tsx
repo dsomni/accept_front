@@ -3,7 +3,7 @@ import { useLocale } from '@hooks/useLocale';
 import styles from './topContent.module.css';
 
 import packageInfo from 'package.json';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 const version = packageInfo.version;
 
@@ -16,8 +16,8 @@ const TopContent: FC = () => {
         <div className={styles.logoWrapper}>
           <Image
             src={'/logo.svg'}
-            width="140px"
-            height="140px"
+            width="140"
+            height="140"
             alt="logo"
           ></Image>
         </div>

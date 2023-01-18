@@ -7,8 +7,6 @@ module.exports = {
   env: {
     WEBSOCKET_API,
   },
-  swcMinify: true,
-  reactStrictMode: false,
   async rewrites() {
     return [
       {

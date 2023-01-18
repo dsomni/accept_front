@@ -15,10 +15,8 @@ const Error: NextPage = () => {
       <div className={styles.description}>
         {locale.errorPage.description}
       </div>
-      <Link href="/">
-        <a className={styles.return}>
-          {locale.errorPage.returnToMain}
-        </a>
+      <Link href="/" className={styles.return}>
+        {locale.errorPage.returnToMain}
       </Link>
     </div>
   );
