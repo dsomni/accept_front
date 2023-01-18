@@ -151,7 +151,7 @@ export const getStaticProps: GetStaticProps = async () => {
         assessmentTypes: response_json.assessment_types,
         tags: response_json.tags,
       },
-      revalidate: 5 * 60, //seconds
+      revalidate: 60, //seconds
     };
   }
   return {
