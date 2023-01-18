@@ -15,6 +15,7 @@ import ListItem from '@ui/ListItem/ListItem';
 import Title from '@ui/Title/Title';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { Download } from 'tabler-icons-react';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function TestsPage(props: { spec: string }) {
   const spec = props.spec;
@@ -126,7 +127,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         spec: params.spec,
       },
-      revalidate: 24 * 60 * 60,
+      revalidate: REVALIDATION_TIME.task.tests,
     };
   }
   return {

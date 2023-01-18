@@ -20,6 +20,7 @@ import {
   timezoneDate,
 } from '@utils/datetime';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function AssignmentEdit(props: IAssignmentEditBundle) {
   const { locale, lang } = useLocale();
@@ -116,7 +117,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         groups: response_json.groups,
         assignment: response_json.assignment,
       },
-      revalidate: 5 * 60, //seconds
+      revalidate: REVALIDATION_TIME.assignment.edit,
     };
   }
   return {

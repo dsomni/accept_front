@@ -22,6 +22,7 @@ import {
 import Form from '@components/Tournament/Form/Form';
 import { useRequest } from '@hooks/useRequest';
 import { IUserDisplay } from '@custom-types/data/IUser';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function TournamentEdit(props: ITournamentEditBundle) {
   const { locale, lang } = useLocale();
@@ -150,7 +151,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         assessmentTypes: response_json.assessment_types,
         tags: response_json.tags,
       },
-      revalidate: 60, //seconds
+      revalidate: REVALIDATION_TIME.tournament.edit,
     };
   }
   return {
