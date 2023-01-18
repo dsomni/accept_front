@@ -68,12 +68,8 @@ const refactorUser = (user: IParticipant): any => ({
     value: user.login,
     display: (
       <div className={tableStyles.titleWrapper}>
-        <Link
-          href={`/profile/${user.login}`}
-          passHref
-          className={tableStyles.title}
-        >
-          {user.login}
+        <Link href={`/profile/${user.login}`} passHref>
+          <a className={tableStyles.title}>{user.login}</a>
         </Link>
         {user.groups.length > 0 && (
           <span className={tableStyles.tags}>

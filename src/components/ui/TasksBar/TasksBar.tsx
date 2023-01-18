@@ -31,17 +31,20 @@ const TasksBar: FC<{
               href={`/task/${task.spec}?${taskQuery}`}
               key={index}
               passHref
-              className={`${styles.taskStatus} ${
-                task.status && task.status.spec < 2
-                  ? styles.testing
-                  : !task.verdict
-                  ? styles.null
-                  : task.verdict.shortText == 'OK'
-                  ? styles.ok
-                  : styles.err
-              } ${currentTask == task.spec ? styles.current : ''}`}
             >
-              {letterFromIndex(index)}
+              <a
+                className={`${styles.taskStatus} ${
+                  task.status && task.status.spec < 2
+                    ? styles.testing
+                    : !task.verdict
+                    ? styles.null
+                    : task.verdict.shortText == 'OK'
+                    ? styles.ok
+                    : styles.err
+                } ${currentTask == task.spec ? styles.current : ''}`}
+              >
+                {letterFromIndex(index)}
+              </a>
             </Link>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { FC, ReactNode } from 'react';
 import { Center } from '@mantine/core';
 import logo from 'public/logo.svg';

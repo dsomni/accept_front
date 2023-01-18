@@ -35,15 +35,15 @@ const ResultsTable: FC<{
             {columns.map((column, index) => (
               <th key={index}>
                 {column.href ? (
-                  <Link
-                    href={column.href}
-                    passHref
-                    style={{
-                      textDecoration: 'none',
-                      color: 'inherit',
-                    }}
-                  >
-                    {column.text}
+                  <Link href={column.href} passHref>
+                    <a
+                      style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                      }}
+                    >
+                      {column.text}
+                    </a>
                   </Link>
                 ) : (
                   <div style={{ width: 'fit-content' }}>
@@ -59,15 +59,15 @@ const ResultsTable: FC<{
             <tr key={index}>
               <td className={styles.rowHeader}>
                 {row.href ? (
-                  <Link
-                    href={row.href}
-                    passHref
-                    style={{
-                      textDecoration: 'none',
-                      color: 'inherit',
-                    }}
-                  >
-                    {row.text}
+                  <Link href={row.href} passHref>
+                    <a
+                      style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                      }}
+                    >
+                      {row.text}
+                    </a>
                   </Link>
                 ) : (
                   <>{row.text}</>
