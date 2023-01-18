@@ -141,7 +141,7 @@ const TimeInfo: FC<{
         <div className={styles.main}>
           <div className={styles.title}>
             <Link href={`/${type}/${entity.spec}`} passHref>
-              {entity.title}
+              <a>{entity.title}</a>
             </Link>
             <div className={styles.status}>
               {locale.assignment.form.status.text}:{' '}

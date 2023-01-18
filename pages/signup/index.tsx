@@ -233,19 +233,20 @@ function SignUp() {
           <span className={styles.footerText}>
             {locale.auth.footer.hasAccount}
           </span>
-          <Link
-            href={`/signin?referrer=${router.query.referrer}`}
-            className={styles.footerLink}
-          >
-            {locale.auth.footer.login}
+          <Link href={`/signin?referrer=${router.query.referrer}`}>
+            <a className={styles.footerLink}>
+              {locale.auth.footer.login}
+            </a>
           </Link>
         </div>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
             {locale.auth.footer.returnTo}
           </span>
-          <Link href="/" className={styles.footerLink}>
-            {locale.auth.footer.mainPage}
+          <Link href="/">
+            <a className={styles.footerLink}>
+              {locale.auth.footer.mainPage}
+            </a>
           </Link>
         </div>
       </div>
