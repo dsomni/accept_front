@@ -3,10 +3,10 @@
   justify-content: space-between;
   display: flex;
   flex-direction: row;
+  cursor: pointer;
   width: 100%;
   user-select: none;
 }
-
 .nameWrapper {
   display: flex;
   justify-content: space-between;
@@ -16,7 +16,6 @@
 .name {
   font-size: var(--font-size-m);
 }
-
 .groups {
   margin-right: var(--spacer-xs);
   display: flex;
@@ -34,13 +33,6 @@
 }
 
 .actions {
-  width: 10%;
-  display: flex;
-  align-items: flex-end;
+  width: fit-content;
   margin-right: var(--spacer-xs);
-}
-
-.item {
-  cursor: pointer;
-  width: 90%;
 }

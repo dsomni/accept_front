@@ -66,6 +66,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
         : 'regular',
     [router.query]
   );
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const querySpec = useMemo(
     () => router.query.assignment || router.query.tournament,

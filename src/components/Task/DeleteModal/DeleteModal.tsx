@@ -81,12 +81,13 @@ const DeleteModal: FC<{
               <div className={deleteModalStyles.list}>
                 {assignments.map((assignment, index) => (
                   <div key={index}>
-                    <Link
-                      href={`/edu/assignment/${assignment.spec}`}
-                      className={deleteModalStyles.link}
-                      target="_blank"
-                    >
-                      {assignment.title}
+                    <Link href={`/edu/assignment/${assignment.spec}`}>
+                      <a
+                        className={deleteModalStyles.link}
+                        target="_blank"
+                      >
+                        {assignment.title}
+                      </a>
                     </Link>
                   </div>
                 ))}

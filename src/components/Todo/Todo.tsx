@@ -13,8 +13,10 @@ const Todo: FC<{}> = () => {
       <div className={styles.description}>
         {locale.todo.description}
       </div>
-      <Link href="/" className={styles.return}>
-        {locale.errorPage.returnToMain}
+      <Link href="/">
+        <a className={styles.return}>
+          {locale.errorPage.returnToMain}
+        </a>
       </Link>
     </div>
   );
