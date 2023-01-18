@@ -1,6 +1,6 @@
 export const codeArea = {
-  selectFiles: 'Выберете файлы',
-  selectFile: 'Выберете файл',
+  selectFiles: 'Выберите файлы',
+  selectFile: 'Выберите файл',
   dragFiles: 'Перетащите файлы сюда',
   dragFile: 'Перетащите файл сюда',
   notification: {
