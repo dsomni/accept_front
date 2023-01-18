@@ -23,7 +23,7 @@ const DeleteModal: FC<{
       spec: assignment.spec,
     };
     requestWithNotify(
-      '/assignment_schema/delete',
+      'assignment_schema/delete',
       'POST',
       locale.notify.assignmentSchema.delete,
       lang,

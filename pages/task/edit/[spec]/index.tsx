@@ -136,7 +136,7 @@ function EditTask(props: {
         };
       }
       requestWithNotify(
-        `task/edit/`,
+        `task/edit`,
         'POST',
         locale.notify.task.edit,
         lang,
