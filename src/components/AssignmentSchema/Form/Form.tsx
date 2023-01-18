@@ -44,7 +44,7 @@ const Form: FC<{
             : null
           : locale.assignmentSchema.form.validation.tasks,
       defaultDuration: (value) =>
-        value <= 5
+        value < 5
           ? locale.assignmentSchema.form.validation.defaultDuration
           : null,
     },
