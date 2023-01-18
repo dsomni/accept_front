@@ -63,9 +63,13 @@ const UserSelector: FC<{
           className={`${styles.itemWrapper} ${
             shrink ? inputStyles.shrink : ''
           }`}
-          onClick={() => handleSelect(user)}
         >
-          <div>{user[displayedField]}</div>
+          <div
+            className={styles.item}
+            onClick={() => handleSelect(user)}
+          >
+            {user[displayedField]}
+          </div>
           <div className={styles.actions}>
             <Icon
               href={`/profile/${user.login}`}
