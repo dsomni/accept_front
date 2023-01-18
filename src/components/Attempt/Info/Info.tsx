@@ -55,14 +55,22 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
         <div>{isBrowser && getLocalDate(attempt.date)}</div>
         <div>
           {locale.attempt.task}{' '}
-          <Link href={`/task/${attempt.task.spec}`} passHref>
-            <a className={styles.link}>{attempt.task.title}</a>
+          <Link
+            href={`/task/${attempt.task.spec}`}
+            passHref
+            className={styles.link}
+          >
+            {attempt.task.title}
           </Link>
         </div>
         <div>
           {locale.attempt.author}{' '}
-          <Link href={`/profile/${attempt.author.login}`} passHref>
-            <a className={styles.link}>{attempt.author.shortName}</a>
+          <Link
+            href={`/profile/${attempt.author.login}`}
+            passHref
+            className={styles.link}
+          >
+            {attempt.author.shortName}
           </Link>
         </div>
         <div>

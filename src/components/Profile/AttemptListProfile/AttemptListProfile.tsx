@@ -55,8 +55,12 @@ const refactorAttempt = (
   },
   task: {
     display: (
-      <Link href={`/task/${attempt.task.spec}`} passHref>
-        <a className={styles.taskLink}>{attempt.task.title}</a>
+      <Link
+        href={`/task/${attempt.task.spec}`}
+        passHref
+        className={styles.taskLink}
+      >
+        {attempt.task.title}
       </Link>
     ),
     value: attempt.task,

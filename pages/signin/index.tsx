@@ -101,20 +101,19 @@ function SignIn() {
           <span className={styles.footerText}>
             {locale.auth.footer.noAccount}
           </span>
-          <Link href={`/signup?referrer=${router.query.referrer}`}>
-            <a className={styles.footerLink}>
-              {locale.auth.footer.register}
-            </a>
+          <Link
+            href={`/signup?referrer=${router.query.referrer}`}
+            className={styles.footerLink}
+          >
+            {locale.auth.footer.register}
           </Link>
         </div>
         <div className={styles.footerLine}>
           <span className={styles.footerText}>
             {locale.auth.footer.returnTo}
           </span>
-          <Link href="/">
-            <a className={styles.footerLink}>
-              {locale.auth.footer.mainPage}
-            </a>
+          <Link href="/" className={styles.footerLink}>
+            {locale.auth.footer.mainPage}
           </Link>
         </div>
       </div>
