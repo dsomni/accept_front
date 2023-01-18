@@ -1,5 +1,5 @@
-import {steps} from './steps';
-import {validation} from './validation';
+import { steps } from './steps';
+import { validation } from './validation';
 
 export const form = {
   steps,
@@ -8,7 +8,7 @@ export const form = {
   description: 'Описание',
   defaultDuration: 'Длительность по умолчанию (мин.)',
   taskOrdering: {
-    title: 'Выберете порядок задач',
+    title: 'Выберите порядок задач',
   },
   taskSelector: {
     available: 'Все задачи',

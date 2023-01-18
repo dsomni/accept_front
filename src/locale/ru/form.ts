@@ -9,10 +9,10 @@ export const form = {
 export const placeholders = {
   code: 'Вставьте ваш код сюда',
   search: 'Поиск',
-  showColumns: 'Выберете поля',
-  selectTags: 'Выберете теги',
-  selectGroups: 'Выберете группы',
-  selectRoles: 'Выберете роли',
+  showColumns: 'Выберите поля',
+  selectTags: 'Выберите теги',
+  selectGroups: 'Выберите группы',
+  selectRoles: 'Выберите роли',
   title: 'Введите название',
   chat: 'Введите сообщение',
 };
