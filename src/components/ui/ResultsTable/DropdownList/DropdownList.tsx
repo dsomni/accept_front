@@ -49,19 +49,19 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
               {cell.rest.map((item, index) => (
                 <Menu.Item key={index}>
                   {item.href ? (
-                    <Link href={item.href} passHref>
-                      <a
-                        style={{
-                          textDecoration: 'none',
-                          color: item.text.startsWith('TS')
-                            ? 'var(--neutral)'
-                            : item.text.startsWith('OK')
-                            ? 'var(--positive)'
-                            : 'var(--negative',
-                        }}
-                      >
-                        {item.text}
-                      </a>
+                    <Link
+                      href={item.href}
+                      passHref
+                      style={{
+                        textDecoration: 'none',
+                        color: item.text.startsWith('TS')
+                          ? 'var(--neutral)'
+                          : item.text.startsWith('OK')
+                          ? 'var(--positive)'
+                          : 'var(--negative',
+                      }}
+                    >
+                      {item.text}
                     </Link>
                   ) : (
                     <>{item.text}</>

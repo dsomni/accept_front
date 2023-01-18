@@ -31,6 +31,7 @@ const removeSpec = (pathname: string): string => {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/static') ||
@@ -43,7 +44,11 @@ export async function middleware(request: NextRequest) {
   if (isProtected(route)) {
     const access = protectedRoutesInfo[route];
 
-    const access_token = request.cookies.get('access_token_cookie');
+    const access_token = request.cookies.get(
+      'access_token_cookie'
+      //@ts-ignore
+    )?.value;
+
     const headers = access_token
       ? { Cookie: `access_token_cookie=${access_token}` }
       : undefined;

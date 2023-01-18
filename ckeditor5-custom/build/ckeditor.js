@@ -32648,12 +32648,10 @@
         }
         _setupDropMarker() {
           const t = this.editor;
-          t.conversion
-            .for('editingDowncast')
-            .markerToHighlight({
-              model: 'drop-target',
-              view: { classes: ['ck-clipboard-drop-target-range'] },
-            });
+          t.conversion.for('editingDowncast').markerToHighlight({
+            model: 'drop-target',
+            view: { classes: ['ck-clipboard-drop-target-range'] },
+          });
           t.conversion.for('editingDowncast').markerToElement({
             model: 'drop-target',
             view: (e, { writer: n }) => {
@@ -35826,21 +35824,17 @@
             columns: 5,
           });
           t.data.addStyleProcessorRules(By);
-          t.conversion
-            .for('upcast')
-            .elementToAttribute({
-              view: {
-                name: 'span',
-                styles: { 'background-color': /[\s\S]+/ },
-              },
-              model: { key: hB, value: fB('background-color') },
-            });
-          t.conversion
-            .for('downcast')
-            .attributeToElement({
-              model: hB,
-              view: gB('background-color'),
-            });
+          t.conversion.for('upcast').elementToAttribute({
+            view: {
+              name: 'span',
+              styles: { 'background-color': /[\s\S]+/ },
+            },
+            model: { key: hB, value: fB('background-color') },
+          });
+          t.conversion.for('downcast').attributeToElement({
+            model: hB,
+            view: gB('background-color'),
+          });
           t.commands.add(hB, new kB(t));
           t.model.schema.extend('$text', { allowAttributes: hB });
           t.model.schema.setAttributeProperties(hB, {
@@ -35988,24 +35982,20 @@
             ],
             columns: 5,
           });
-          t.conversion
-            .for('upcast')
-            .elementToAttribute({
-              view: { name: 'span', styles: { color: /[\s\S]+/ } },
-              model: { key: dB, value: fB('color') },
-            });
-          t.conversion
-            .for('upcast')
-            .elementToAttribute({
-              view: {
-                name: 'font',
-                attributes: { color: /^#?\w+$/ },
-              },
-              model: {
-                key: dB,
-                value: (t) => t.getAttribute('color'),
-              },
-            });
+          t.conversion.for('upcast').elementToAttribute({
+            view: { name: 'span', styles: { color: /[\s\S]+/ } },
+            model: { key: dB, value: fB('color') },
+          });
+          t.conversion.for('upcast').elementToAttribute({
+            view: {
+              name: 'font',
+              attributes: { color: /^#?\w+$/ },
+            },
+            model: {
+              key: dB,
+              value: (t) => t.getAttribute('color'),
+            },
+          });
           t.conversion
             .for('downcast')
             .attributeToElement({ model: dB, view: gB('color') });
@@ -36197,15 +36187,13 @@
               );
             },
           });
-          e.conversion
-            .for('upcast')
-            .elementToAttribute({
-              model: {
-                key: cB,
-                value: (t) => t.getStyle('font-size'),
-              },
-              view: { name: 'span', styles: { 'font-size': /.*/ } },
-            });
+          e.conversion.for('upcast').elementToAttribute({
+            model: {
+              key: cB,
+              value: (t) => t.getStyle('font-size'),
+            },
+            view: { name: 'span', styles: { 'font-size': /.*/ } },
+          });
         }
         _prepareCompatibilityConverter() {
           const t = this.editor;
@@ -38839,18 +38827,16 @@
               }
             })
           );
-          e.conversion
-            .for('upcast')
-            .attributeToAttribute({
-              view: {
-                name: t === 'imageBlock' ? 'figure' : 'img',
-                styles: { width: /.+/ },
-              },
-              model: {
-                key: 'width',
-                value: (t) => t.getStyle('width'),
-              },
-            });
+          e.conversion.for('upcast').attributeToAttribute({
+            view: {
+              name: t === 'imageBlock' ? 'figure' : 'img',
+              styles: { width: /.+/ },
+            },
+            model: {
+              key: 'width',
+              value: (t) => t.getStyle('width'),
+            },
+          });
         }
       }
       const KI = {
@@ -40261,21 +40247,17 @@
           t.conversion
             .for('dataDowncast')
             .attributeToElement({ model: 'linkHref', view: bT });
-          t.conversion
-            .for('editingDowncast')
-            .attributeToElement({
-              model: 'linkHref',
-              view: (t, e) => bT(wT(t), e),
-            });
-          t.conversion
-            .for('upcast')
-            .elementToAttribute({
-              view: { name: 'a', attributes: { href: true } },
-              model: {
-                key: 'linkHref',
-                value: (t) => t.getAttribute('href'),
-              },
-            });
+          t.conversion.for('editingDowncast').attributeToElement({
+            model: 'linkHref',
+            view: (t, e) => bT(wT(t), e),
+          });
+          t.conversion.for('upcast').elementToAttribute({
+            view: { name: 'a', attributes: { href: true } },
+            model: {
+              key: 'linkHref',
+              value: (t) => t.getAttribute('href'),
+            },
+          });
           t.commands.add('link', new nz(t));
           t.commands.add('unlink', new iz(t));
           const e = vT(t.t, AT(t.config.get('link.decorators')));
@@ -40348,12 +40330,10 @@
                 }
               },
             });
-            e.conversion
-              .for('upcast')
-              .elementToAttribute({
-                view: { name: 'a', ...t._createPattern() },
-                model: { key: t.id },
-              });
+            e.conversion.for('upcast').elementToAttribute({
+              view: { name: 'a', ...t._createPattern() },
+              model: { key: t.id },
+            });
           });
         }
         _enableLinkOpen() {
@@ -40877,24 +40857,20 @@
           this._balloon = t.plugins.get(lC);
           this._createToolbarLinkButton();
           this._enableUserBalloonInteractions();
-          t.conversion
-            .for('editingDowncast')
-            .markerToHighlight({
-              model: Bz,
-              view: { classes: ['ck-fake-link-selection'] },
-            });
-          t.conversion
-            .for('editingDowncast')
-            .markerToElement({
-              model: Bz,
-              view: {
-                name: 'span',
-                classes: [
-                  'ck-fake-link-selection',
-                  'ck-fake-link-selection_collapsed',
-                ],
-              },
-            });
+          t.conversion.for('editingDowncast').markerToHighlight({
+            model: Bz,
+            view: { classes: ['ck-fake-link-selection'] },
+          });
+          t.conversion.for('editingDowncast').markerToElement({
+            model: Bz,
+            view: {
+              name: 'span',
+              classes: [
+                'ck-fake-link-selection',
+                'ck-fake-link-selection_collapsed',
+              ],
+            },
+          });
         }
         destroy() {
           super.destroy();
