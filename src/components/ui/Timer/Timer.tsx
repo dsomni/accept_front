@@ -3,7 +3,7 @@ import styles from './timer.module.css';
 import { Icon } from '@ui/basics';
 import { Alarm } from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
-import { timerDate } from '@utils/datetime';
+import { timerDate, timezoneDate } from '@utils/datetime';
 import { useInterval } from '@mantine/hooks';
 import { useRequest } from '@hooks/useRequest';
 
@@ -49,10 +49,13 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
       switch (data.status) {
         case 0:
           date =
-            new Date(data.start).getTime() - new Date().getTime();
+            timezoneDate(new Date(data.start)).getTime() -
+            new Date().getTime();
           break;
         case 1:
-          date = new Date(data.end).getTime() - new Date().getTime();
+          date =
+            timezoneDate(new Date(data.end)).getTime() -
+            new Date().getTime();
           break;
         default:
           date = 0;
