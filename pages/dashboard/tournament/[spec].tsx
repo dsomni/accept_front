@@ -5,6 +5,7 @@ import { getApiUrl } from '@utils/getServerUrl';
 import TournamentDashboard from '@components/Dashboard/TournamentDashboard';
 import { useLocale } from '@hooks/useLocale';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function TournamentDashboardPage(props: { spec: string }) {
   const { locale } = useLocale();
@@ -40,7 +41,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const tournament = await response.json();
     return {
       props: { spec: tournament.spec },
-      revalidate: 10 * 60 * 60,
+      revalidate: REVALIDATION_TIME.dashboard.tournament,
     };
   }
   return {

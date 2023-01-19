@@ -15,6 +15,7 @@ import TextAnswer from '@components/Attempt/TextAnswer/TextAnswer';
 import BanModal from '@components/Attempt/BanModals/BanModal';
 import UnbanModal from '@components/Attempt/BanModals/UnbanModal';
 import { useRequest } from '@hooks/useRequest';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function Attempt(props: { attempt: IAttempt; author: string }) {
   const attempt = props.attempt;
@@ -108,7 +109,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         attempt: res.attempt,
         author: res.author,
       },
-      revalidate: res.attempt.status.spec === 2 ? 10 * 60 * 60 : 20,
+      revalidate:
+        res.attempt.status.spec === 2
+          ? REVALIDATION_TIME.attempt.finished
+          : REVALIDATION_TIME.attempt.testing,
     };
   }
   return {

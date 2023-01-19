@@ -28,6 +28,7 @@ import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import dynamic from 'next/dynamic';
 import Description from '@components/Task/Description/Description';
 import Head from 'next/head';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 const DynamicSend = dynamic(
   () => import('@components/Task/Send/Send'),
@@ -278,7 +279,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         task: response_json.task,
         languages: response_json.languages,
       },
-      revalidate: 10 * 60,
+      revalidate: REVALIDATION_TIME.task.page,
     };
   }
   return {

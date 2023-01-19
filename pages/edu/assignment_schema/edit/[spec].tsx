@@ -14,6 +14,7 @@ import {
   newNotification,
 } from '@utils/notificationFunctions';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function EditAssignmentSchema({
   assignment_schema,
@@ -109,7 +110,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         assignment_schema: assignmentSchema,
       },
-      revalidate: 60,
+      revalidate: REVALIDATION_TIME.assignment_schema.edit,
     };
   }
 

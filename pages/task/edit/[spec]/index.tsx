@@ -23,6 +23,7 @@ import {
 import { UseFormReturnType } from '@mantine/form';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import Title from '@ui/Title/Title';
+import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function EditTask(props: {
   task: ITaskEdit;
@@ -136,7 +137,7 @@ function EditTask(props: {
         };
       }
       requestWithNotify(
-        `task/edit/`,
+        `task/edit`,
         'POST',
         locale.notify.task.edit,
         lang,
@@ -191,7 +192,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         taskTypes: taskBundle.task_types,
         hintAlarmTypes: taskBundle.hint_alarm_types,
       },
-      revalidate: 60,
+      revalidate: REVALIDATION_TIME.task.edit,
     };
   }
 
