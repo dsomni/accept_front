@@ -12,7 +12,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
   const [openedHint, setOpenedHint] = useState(false);
   const { width } = useWidth();
   return (
-    <>
+    <div style={{ zoom: '80%' }}>
       {form.values.hasHint && (
         <SimpleModal
           title={locale.task.form.hint.title}
@@ -48,7 +48,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
           onClick={() => setOpenedHint(true)}
         />
       )}
-    </>
+    </div>
   );
 };
 
