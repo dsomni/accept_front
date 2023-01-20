@@ -1,0 +1,13 @@
+.wrapper {
+  width: 80%;
+  margin: var(--spacer-l) auto var(--spacer-xxl) auto;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  color: var(--primary);
+}
