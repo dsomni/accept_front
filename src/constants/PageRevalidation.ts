@@ -31,4 +31,7 @@ export const REVALIDATION_TIME = {
     assignment: 10 * 60 * 60,
     tournament: 10 * 60 * 60,
   },
+  rating: {
+    page: 10,
+  },
 }; // in seconds
