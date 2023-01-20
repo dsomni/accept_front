@@ -77,7 +77,7 @@ export const getServerSideProps: GetServerSideProps = async (
   return {
     redirect: {
       permanent: false,
-      destination: '/Not-Found',
+      destination: '/404',
     },
   };
 };

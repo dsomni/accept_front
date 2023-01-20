@@ -7,7 +7,7 @@ const About: NextPage = () => {
   const { locale } = useLocale();
   return (
     <>
-      <Title title={locale.titles.courses} />
+      <Title title={locale.titles.about} />
       <Todo />
     </>
   );

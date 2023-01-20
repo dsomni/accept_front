@@ -133,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     redirect: {
       permanent: false,
-      destination: '/Not-Found',
+      destination: '/404',
     },
   };
 };
