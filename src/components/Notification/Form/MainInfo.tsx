@@ -3,10 +3,14 @@ import { Switch, TextInput } from '@ui/basics';
 import { FC, memo, useState } from 'react';
 import { useUser } from '@hooks/useUser';
 
+const SYSTEM_AUTHOR = 'System';
+
 const MainInfo: FC<{ form: any }> = ({ form }) => {
   const { locale } = useLocale();
 
-  const [asSystem, setAsSystem] = useState(false);
+  const [asSystem, setAsSystem] = useState(
+    form.values.author == SYSTEM_AUTHOR
+  );
   const { isAdmin } = useUser();
 
   return (
@@ -34,7 +38,7 @@ const MainInfo: FC<{ form: any }> = ({ form }) => {
           styles={{}}
           checked={asSystem}
           onChange={(event) => {
-            form.setFieldValue('author', 'System'),
+            form.setFieldValue('author', SYSTEM_AUTHOR),
               setAsSystem(event.currentTarget.checked);
           }}
         />
