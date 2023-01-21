@@ -43,7 +43,7 @@ function Rating(props: { users: IRatingInfo[] }) {
             {user.user.shortName}
           </Link>
         </td>
-        <td>{user.rating}</td>
+        <td>{user.score}</td>
       </>
     ),
     []
@@ -77,56 +77,6 @@ export default Rating;
 
 const API_URL = getApiUrl();
 
-const generateUsers = (amount: number): IRatingInfo[] => {
-  const names = [
-    'Иван',
-    'Василий',
-    'Станислав',
-    'Дмитрий',
-    'Александр',
-    'Алексей',
-  ];
-  const surnames = [
-    'Иванов',
-    'Петров',
-    'Сидоров',
-    'Симонов',
-    'Висяков',
-    'Сидяков',
-    'Лежаков',
-  ];
-  const patronymics = [
-    'Иванович',
-    'Васильевич',
-    'Петрович',
-    'Станиславович',
-    'Александрович',
-    'Владимирович',
-  ];
-  const rand_from_arr = (arr: any[]) =>
-    arr[Math.floor(Math.random() * arr.length)];
-  const random_name = () =>
-    `${rand_from_arr(surnames)} ${rand_from_arr(names)[0]}.${
-      rand_from_arr(patronymics)[0]
-    }.`;
-  const ans = [] as IRatingInfo[];
-  for (let i = 0; i < 100; i++) {
-    ans.push({
-      user: {
-        login: (Math.random() + 1).toString(36).substring(7),
-        shortName: random_name(),
-        role: {
-          spec: 1,
-          name: 'student',
-          accessLevel: 2,
-        },
-      } as IUserDisplay,
-      rating: Math.floor(Math.random() * 1000),
-    });
-  }
-  return ans;
-};
-
 // This value is considered fresh for ten seconds (s-maxage=10).
 // If a request is repeated within the next 10 seconds, the previously
 // cached value will still be fresh. If the request is repeated before REVALIDATION_TIME.rating seconds,
@@ -138,18 +88,17 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
 }) => {
-  const response = await fetch(`${API_URL}/api/rating`);
-  // if (response.status === 200) {
-  if (true) {
+  const response = await fetch(`${API_URL}/api/rating/100`);
+  if (response.status === 200) {
     res.setHeader(
       'Cache-Control',
       `public, s-maxage=10, stale-while-revalidate=${REVALIDATION_TIME.rating}`
     );
-    // const response_json = await response.json();
-    const response_json = generateUsers(100);
+    const response_json = await response.json();
+    console.log(response_json.map((item: any) => item.user));
     return {
       props: {
-        users: response_json.sort((a, b) => b.rating - a.rating),
+        users: response_json,
       },
     };
   }
