@@ -40,11 +40,10 @@ const SendText: FC<{
       lang,
       (_: {}) => '',
       body,
-      () => {
-        setActiveTab('results');
-      },
+      () => {},
       { autoClose: 5000 }
     );
+    setActiveTab('results');
   }, [form, spec, locale.notify.attempt.send, lang, setActiveTab]);
 
   return (

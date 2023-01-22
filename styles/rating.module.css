@@ -11,3 +11,12 @@
 .link:hover {
   color: var(--primary);
 }
+
+.info {
+  margin-bottom: var(--spacer-m);
+  font-size: var(--font-size-l);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--spacer-xs);
+}
