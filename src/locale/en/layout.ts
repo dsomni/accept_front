@@ -13,6 +13,7 @@ export const mainHeaderLinks = {
   listLinks: {
     tasks: 'Tasks',
     assignments: 'My assignments',
+    rating: 'Rating',
     groups: 'Groups',
     schemas: 'Schemas',
     users: 'Users',

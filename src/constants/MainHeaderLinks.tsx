@@ -29,6 +29,7 @@ const listLinks: IHeaderLink[] = [
     type: 'regular',
     href: '/profile/me?section=assignments',
   },
+
   {
     text: (locale) => locale.mainHeaderLinks.listLinks.schemas,
     type: 'regular',
@@ -46,6 +47,11 @@ const listLinks: IHeaderLink[] = [
     type: 'regular',
     href: '/user/list',
     permission: 'teacher',
+  },
+  {
+    text: (locale) => locale.mainHeaderLinks.listLinks.rating,
+    type: 'regular',
+    href: '/rating',
   },
 ];
 

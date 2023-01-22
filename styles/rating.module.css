@@ -1,0 +1,22 @@
+.wrapper {
+  width: 80%;
+  margin: var(--spacer-l) auto var(--spacer-xxl) auto;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  color: var(--primary);
+}
+
+.info {
+  margin-bottom: var(--spacer-m);
+  font-size: var(--font-size-l);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--spacer-xs);
+}

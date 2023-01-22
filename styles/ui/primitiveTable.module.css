@@ -50,8 +50,9 @@
   color: grey;
 }
 
-.cell {
+.table tr td {
   padding-right: var(--spacer-m);
   word-wrap: break-word;
   font-size: var(--font-size-s);
+  word-break: break-all;
 }

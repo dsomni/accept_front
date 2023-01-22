@@ -2,6 +2,7 @@ export const titles = {
   accept: 'Accept',
   main: 'Главная',
   about: 'О нас',
+  rating: 'Рейтинг',
   task: {
     add: 'Добавление задачи',
     edit: 'Изменение задачи',

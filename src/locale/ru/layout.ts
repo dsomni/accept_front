@@ -13,6 +13,7 @@ export const mainHeaderLinks = {
   listLinks: {
     tasks: 'Задачи',
     assignments: 'Мои уроки',
+    rating: 'Рейтинг',
     groups: 'Группы',
     schemas: 'Схемы уроков',
     users: 'Пользователи',

@@ -24,6 +24,7 @@ import { grade } from './grade';
 import { titles } from './titles';
 import { todo } from './todo';
 import { user } from './user';
+import { rating } from './rating';
 
 const ru = {
   accept: 'Accept',
@@ -84,6 +85,7 @@ const ru = {
   grade,
   titles,
   todo,
+  rating,
 };
 
 export default ru;
