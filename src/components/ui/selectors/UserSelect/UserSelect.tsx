@@ -26,11 +26,23 @@ const UserSelect: FC<{
   nothingFound: string;
   users: IUserDisplay[];
   select: (_: IUserDisplay) => void;
-}> = ({ label, placeholder, users, select, nothingFound }) => {
+  onChange: () => any;
+}> = ({
+  label,
+  placeholder,
+  users,
+  select,
+  nothingFound,
+  onChange,
+}) => {
   const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-    ({ image, label, role, value, ...others }: ItemProps, ref) => (
+    ({ image, label, value, ...others }: ItemProps, ref) => (
       <div className={styles.item} ref={ref}>
-        <div {...others}>
+        <div
+          onMouseDown={others.onMouseDown}
+          onMouseEnter={others.onMouseEnter}
+          className={styles.left}
+        >
           <Avatar
             radius="md"
             size="md"
@@ -40,12 +52,12 @@ const UserSelect: FC<{
           <div>
             <Text size="sm">{label}</Text>
             <Text size="xs" opacity={0.65}>
-              {role}
+              {value}
             </Text>
           </div>
         </div>
         <div className={styles.itemIcon}>
-          <Link passHref href={`/profile/${value}`} legacyBehavior>
+          <Link href={`/profile/${value}`}>
             <Eye color={'var(--primary)'} />
           </Link>
         </div>
@@ -100,6 +112,7 @@ const UserSelect: FC<{
             .toLowerCase()
             .includes(value.toLowerCase().trim())
         }
+        onSelect={() => onChange()}
       />
     </>
   );

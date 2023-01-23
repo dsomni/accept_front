@@ -13,18 +13,16 @@ import { link } from '@constants/Avatar';
 import { Avatar } from '@mantine/core';
 import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
-import { Button, Indicator } from '@ui/basics';
+import { Indicator } from '@ui/basics';
 import { useUser } from '@hooks/useUser';
 import { io } from 'socket.io-client';
-import SimpleModal from '@ui/SimpleModal/SimpleModal';
-import MemberSelector from './MemberSelector/MemberSelector';
+import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
 
 const ChatPage: FC<{
   entity: string;
   type: 'tournament' | 'assignment';
 }> = ({ entity, type }) => {
   const { user } = useUser();
-  const [startChatModal, setStartChatModal] = useState(true);
 
   const [hosts, setHosts] = useState<[IUserDisplay, number][]>([]);
   const [newHost, setNewHost] = useState<string | undefined>(
@@ -134,17 +132,6 @@ const ChatPage: FC<{
     <div className={styles.wrapper}>
       <div className={styles.hostList}>
         <div className={styles.hosts}>
-          <SimpleModal
-            opened={startChatModal}
-            close={() => setStartChatModal(false)}
-          >
-            <MemberSelector
-              entity={entity}
-              type={type}
-              opened={startChatModal}
-              exclude={hostLogins}
-            />
-          </SimpleModal>
           {hosts.map((host, index) => (
             <div
               className={`${styles.hostWrapper} ${
@@ -183,13 +170,11 @@ const ChatPage: FC<{
             </div>
           ))}
         </div>
-        <Button
-          className={styles.addHostButton}
-          variant="light"
-          onClick={() => setStartChatModal(true)}
-        >
-          +
-        </Button>
+        <InitiateChatModal
+          entity={entity}
+          type={type}
+          exclude={hostLogins}
+        />
       </div>
       {currentHost !== undefined && (
         <div className={styles.chat}>

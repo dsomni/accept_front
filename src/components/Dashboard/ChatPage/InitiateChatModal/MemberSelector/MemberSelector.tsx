@@ -1,5 +1,4 @@
 import { FC, memo, useEffect, useState } from 'react';
-import styles from './MemberSelector.module.css';
 import { IUserDisplay } from '@custom-types/data/IUser';
 import { sendRequest } from '@requests/request';
 import { UserSelect } from '@ui/selectors';
@@ -10,7 +9,9 @@ const MemberSelector: FC<{
   type: 'tournament' | 'assignment';
   opened: boolean;
   exclude: string[];
-}> = ({ entity, type, opened, exclude }) => {
+  select: (_: IUserDisplay) => void;
+  onChange: () => any;
+}> = ({ entity, type, opened, exclude, select, onChange }) => {
   const { locale } = useLocale();
   const [users, setUsers] = useState<IUserDisplay[]>([]);
 
@@ -29,15 +30,15 @@ const MemberSelector: FC<{
 
   return (
     <>
-      <div className={styles.placeholder}>{}</div>
       <UserSelect
-        label={locale.dashboard.chat.userModal.label}
-        placeholder={locale.dashboard.chat.userModal.placeholder}
-        nothingFound={locale.dashboard.chat.userModal.nothingFound}
+        label={locale.dashboard.chat.userModal.user.label}
+        placeholder={locale.dashboard.chat.userModal.user.placeholder}
+        nothingFound={
+          locale.dashboard.chat.userModal.user.nothingFound
+        }
         users={users}
-        select={(user: IUserDisplay) => {
-          console.log(user);
-        }}
+        select={select}
+        onChange={onChange}
       />
     </>
   );

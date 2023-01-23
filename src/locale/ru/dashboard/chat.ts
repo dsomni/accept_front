@@ -1,7 +1,18 @@
 export const chat = {
   userModal: {
-    label: 'Участник',
-    placeholder: 'Выберите участника',
-    nothingFound: 'Никто не найден',
+    title: 'Начать чат',
+    user: {
+      label: 'Участник',
+      placeholder: 'Выберите участника',
+      nothingFound: 'Никто не найден',
+    },
+    message: {
+      label: 'Сообщение',
+      placeholder: 'Введите сообщение',
+    },
+    validation: {
+      user: 'Пользователь не выбран',
+      message: 'Необходимо ввести сообщение',
+    },
   },
 };

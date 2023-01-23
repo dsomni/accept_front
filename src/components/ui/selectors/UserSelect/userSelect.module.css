@@ -12,7 +12,10 @@
   margin: var(--spacer-xs) var(--spacer-s);
 }
 
-.itemIcon {
-  width: fit-content;
-  padding: 0 var(--spacer-m);
+.left {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-s);
+  align-items: center;
 }
