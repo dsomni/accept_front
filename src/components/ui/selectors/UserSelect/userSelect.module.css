@@ -1,0 +1,18 @@
+.itemIcon {
+  width: fit-content;
+  padding: 0 var(--spacer-m);
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  align-items: center;
+  cursor: pointer;
+  margin: var(--spacer-xs) var(--spacer-s);
+}
+
+.itemIcon {
+  width: fit-content;
+  padding: 0 var(--spacer-m);
+}

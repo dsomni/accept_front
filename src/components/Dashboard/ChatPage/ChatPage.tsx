@@ -13,12 +13,18 @@ import { link } from '@constants/Avatar';
 import { Avatar } from '@mantine/core';
 import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
-import { Indicator } from '@ui/basics';
+import { Button, Indicator } from '@ui/basics';
 import { useUser } from '@hooks/useUser';
 import { io } from 'socket.io-client';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import MemberSelector from './MemberSelector/MemberSelector';
 
-const ChatPage: FC<{ entity: string }> = ({ entity }) => {
+const ChatPage: FC<{
+  entity: string;
+  type: 'tournament' | 'assignment';
+}> = ({ entity, type }) => {
   const { user } = useUser();
+  const [startChatModal, setStartChatModal] = useState(true);
 
   const [hosts, setHosts] = useState<[IUserDisplay, number][]>([]);
   const [newHost, setNewHost] = useState<string | undefined>(
@@ -26,6 +32,11 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
   );
   const [currentHost, setCurrentHost] = useState<string | undefined>(
     undefined
+  );
+
+  const hostLogins = useMemo(
+    () => hosts.map((item) => item[0].login),
+    [hosts]
   );
 
   const fetchHosts = useCallback(
@@ -122,44 +133,66 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.hostList}>
-        {hosts.map((host, index) => (
-          <div
-            className={`${styles.hostWrapper} ${
-              host[0].login == currentHost ? styles.currentHost : ''
-            }`}
-            key={index}
-            onClick={() => {
-              setCurrentHost(host[0].login);
-              setHosts((old_hosts) => {
-                const index = hosts.findIndex(
-                  (item) => item[0].login == host[0].login
-                );
-                if (index >= 0) {
-                  old_hosts[index][1] = 0;
-                }
-                return [...old_hosts];
-              });
-            }}
+        <div className={styles.hosts}>
+          <SimpleModal
+            opened={startChatModal}
+            close={() => setStartChatModal(false)}
           >
-            <Indicator
-              offset={2}
-              label={host[1]}
-              disabled={host[1] == 0}
-              scale="sm"
+            <MemberSelector
+              entity={entity}
+              type={type}
+              opened={startChatModal}
+              exclude={hostLogins}
+            />
+          </SimpleModal>
+          {hosts.map((host, index) => (
+            <div
+              className={`${styles.hostWrapper} ${
+                host[0].login == currentHost ? styles.currentHost : ''
+              }`}
+              key={index}
+              onClick={() => {
+                setCurrentHost(host[0].login);
+                setHosts((old_hosts) => {
+                  const index = hosts.findIndex(
+                    (item) => item[0].login == host[0].login
+                  );
+                  if (index >= 0) {
+                    old_hosts[index][1] = 0;
+                  }
+                  return [...old_hosts];
+                });
+              }}
             >
-              <Avatar
-                radius="md"
-                size="md"
-                src={link(host[0].login)}
-                alt={'Users avatar'}
-              />
-            </Indicator>
-            <div className={styles.hostName}>{host[0].shortName}</div>
-          </div>
-        ))}
+              <Indicator
+                offset={2}
+                label={host[1]}
+                disabled={host[1] == 0}
+                scale="sm"
+              >
+                <Avatar
+                  radius="md"
+                  size="md"
+                  src={link(host[0].login)}
+                  alt={'Users avatar'}
+                />
+              </Indicator>
+              <div className={styles.hostName}>
+                {host[0].shortName}
+              </div>
+            </div>
+          ))}
+        </div>
+        <Button
+          className={styles.addHostButton}
+          variant="light"
+          onClick={() => setStartChatModal(true)}
+        >
+          +
+        </Button>
       </div>
-      <div className={styles.chat}>
-        {currentHost !== undefined && (
+      {currentHost !== undefined && (
+        <div className={styles.chat}>
           <Chat
             key={currentHost}
             entity={entity}
@@ -172,8 +205,8 @@ const ChatPage: FC<{ entity: string }> = ({ entity }) => {
             wsURL={'/ws/chat'}
             moderator={true}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
