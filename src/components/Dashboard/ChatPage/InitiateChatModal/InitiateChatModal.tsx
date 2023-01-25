@@ -15,9 +15,10 @@ const InitiateChatModal: FC<{
   exclude: string[];
   entity: string;
   type: 'tournament' | 'assignment';
-}> = ({ exclude, entity, type }) => {
+  small?: boolean;
+}> = ({ exclude, entity, type, small }) => {
   const { locale, lang } = useLocale();
-  const [startChatModal, setStartChatModal] = useState(true);
+  const [startChatModal, setStartChatModal] = useState(false);
   const close = useCallback(() => setStartChatModal(false), []);
 
   const form = useForm({
@@ -54,7 +55,9 @@ const InitiateChatModal: FC<{
   return (
     <>
       <Button
-        className={styles.addHostButton}
+        className={
+          small ? styles.addHostButtonSmall : styles.addHostButton
+        }
         variant="light"
         onClick={() => setStartChatModal(true)}
       >

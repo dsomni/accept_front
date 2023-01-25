@@ -15,4 +15,5 @@ export const chat = {
       message: 'Message is empty',
     },
   },
+  emptyMessage: 'There are no dialogues yet. To start one press',
 };

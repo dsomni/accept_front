@@ -64,3 +64,16 @@
   display: flex;
   flex-direction: column;
 }
+
+.emptyMessageWrapper {
+  margin: var(--spacer-xxl) auto;
+  width: fit-content;
+  font-size: var(--font-size-m);
+}
+
+.emptyMessage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacer-xs);
+}

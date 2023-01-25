@@ -17,12 +17,14 @@ import { Indicator } from '@ui/basics';
 import { useUser } from '@hooks/useUser';
 import { io } from 'socket.io-client';
 import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
+import { useLocale } from '@hooks/useLocale';
 
 const ChatPage: FC<{
   entity: string;
   type: 'tournament' | 'assignment';
 }> = ({ entity, type }) => {
   const { user } = useUser();
+  const { locale } = useLocale();
 
   const [hosts, setHosts] = useState<[IUserDisplay, number][]>([]);
   const [newHost, setNewHost] = useState<string | undefined>(
@@ -130,52 +132,68 @@ const ChatPage: FC<{
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.hostList}>
-        <div className={styles.hosts}>
-          {hosts.map((host, index) => (
-            <div
-              className={`${styles.hostWrapper} ${
-                host[0].login == currentHost ? styles.currentHost : ''
-              }`}
-              key={index}
-              onClick={() => {
-                setCurrentHost(host[0].login);
-                setHosts((old_hosts) => {
-                  const index = hosts.findIndex(
-                    (item) => item[0].login == host[0].login
-                  );
-                  if (index >= 0) {
-                    old_hosts[index][1] = 0;
-                  }
-                  return [...old_hosts];
-                });
-              }}
-            >
-              <Indicator
-                offset={2}
-                label={host[1]}
-                disabled={host[1] == 0}
-                scale="sm"
-              >
-                <Avatar
-                  radius="md"
-                  size="md"
-                  src={link(host[0].login)}
-                  alt={'Users avatar'}
-                />
-              </Indicator>
-              <div className={styles.hostName}>
-                {host[0].shortName}
-              </div>
-            </div>
-          ))}
+      {hosts.length == 0 ? (
+        <div className={styles.emptyMessageWrapper}>
+          <div className={styles.emptyMessage}>
+            <div>{locale.dashboard.chat.emptyMessage}</div>
+            <InitiateChatModal
+              entity={entity}
+              type={type}
+              exclude={hostLogins}
+              small
+            />
+          </div>
         </div>
-        <InitiateChatModal
-          entity={entity}
-          type={type}
-          exclude={hostLogins}
-        />
-      </div>
+      ) : (
+        <div className={styles.hostList}>
+          <div className={styles.hosts}>
+            {hosts.map((host, index) => (
+              <div
+                className={`${styles.hostWrapper} ${
+                  host[0].login == currentHost
+                    ? styles.currentHost
+                    : ''
+                }`}
+                key={index}
+                onClick={() => {
+                  setCurrentHost(host[0].login);
+                  setHosts((old_hosts) => {
+                    const index = hosts.findIndex(
+                      (item) => item[0].login == host[0].login
+                    );
+                    if (index >= 0) {
+                      old_hosts[index][1] = 0;
+                    }
+                    return [...old_hosts];
+                  });
+                }}
+              >
+                <Indicator
+                  offset={2}
+                  label={host[1]}
+                  disabled={host[1] == 0}
+                  scale="sm"
+                >
+                  <Avatar
+                    radius="md"
+                    size="md"
+                    src={link(host[0].login)}
+                    alt={'Users avatar'}
+                  />
+                </Indicator>
+                <div className={styles.hostName}>
+                  {host[0].shortName}
+                </div>
+              </div>
+            ))}
+          </div>
+          <InitiateChatModal
+            entity={entity}
+            type={type}
+            exclude={hostLogins}
+          />
+        </div>
+      )}
       {currentHost !== undefined && (
         <div className={styles.chat}>
           <Chat
