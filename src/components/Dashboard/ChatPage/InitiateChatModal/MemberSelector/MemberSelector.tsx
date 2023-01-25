@@ -9,9 +9,11 @@ const MemberSelector: FC<{
   type: 'tournament' | 'assignment';
   opened: boolean;
   exclude: string[];
-  select: (_: IUserDisplay) => void;
-  onChange: () => any;
-}> = ({ entity, type, opened, exclude, select, onChange }) => {
+  form: any;
+  field: string;
+  // select: (_: IUserDisplay) => void;
+  // onChange: () => any;
+}> = ({ entity, type, opened, exclude, form, field }) => {
   const { locale } = useLocale();
   const [users, setUsers] = useState<IUserDisplay[]>([]);
 
@@ -37,8 +39,10 @@ const MemberSelector: FC<{
           locale.dashboard.chat.userModal.user.nothingFound
         }
         users={users}
-        select={select}
-        onChange={onChange}
+        select={(user: IUserDisplay) => {
+          form.setFieldValue('user', user.login.trim());
+        }}
+        additionalProps={form.getInputProps(field)}
       />
     </>
   );

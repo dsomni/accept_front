@@ -26,14 +26,15 @@ const UserSelect: FC<{
   nothingFound: string;
   users: IUserDisplay[];
   select: (_: IUserDisplay) => void;
-  onChange: () => any;
+  // onChange: () => any;
+  additionalProps: any;
 }> = ({
   label,
   placeholder,
   users,
-  select,
   nothingFound,
-  onChange,
+  select,
+  additionalProps,
 }) => {
   const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
     ({ image, label, value, ...others }: ItemProps, ref) => (
@@ -102,7 +103,6 @@ const UserSelect: FC<{
         placeholder={placeholder}
         clearable
         maxDropdownHeight={400}
-        onChange={onSelect}
         nothingFound={nothingFound}
         filter={(value, item) =>
           item.label
@@ -112,7 +112,8 @@ const UserSelect: FC<{
             .toLowerCase()
             .includes(value.toLowerCase().trim())
         }
-        onSelect={() => onChange()}
+        {...additionalProps}
+        onSelect={onSelect}
       />
     </>
   );

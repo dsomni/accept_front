@@ -2,18 +2,21 @@ import { useLocale } from '@hooks/useLocale';
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import { FC, memo, useCallback, useState } from 'react';
 import MemberSelector from './MemberSelector/MemberSelector';
-import { IUserDisplay } from '@custom-types/data/IUser';
 import styles from './initiateChatModal.module.css';
 import { Button, TextArea } from '@ui/basics';
 import { useForm } from '@mantine/form';
 import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 const InitiateChatModal: FC<{
   exclude: string[];
   entity: string;
   type: 'tournament' | 'assignment';
 }> = ({ exclude, entity, type }) => {
-  const { locale } = useLocale();
+  const { locale, lang } = useLocale();
   const [startChatModal, setStartChatModal] = useState(true);
   const close = useCallback(() => setStartChatModal(false), []);
 
@@ -35,6 +38,19 @@ const InitiateChatModal: FC<{
     validateInputOnChange: true,
   });
 
+  const handleSubmit = useCallback(() => {
+    console.log(form.values);
+    if (form.validate().hasErrors) {
+      const id = newNotification({});
+      errorNotification({
+        id,
+        title: locale.notify.group.validation.error,
+        autoClose: 5000,
+      });
+      return;
+    }
+  }, [form, locale.notify.group.validation.error]);
+
   return (
     <>
       <Button
@@ -55,22 +71,20 @@ const InitiateChatModal: FC<{
             type={type}
             opened={startChatModal}
             exclude={exclude}
-            select={(user: IUserDisplay) => {
-              form.setFieldValue('user', user.login.trim());
-            }}
-            onChange={() => form.validateField('user')}
+            form={form}
+            field={'user'}
           />
           <TextArea
             label={locale.dashboard.chat.userModal.message.label}
             placeholder={
               locale.dashboard.chat.userModal.message.placeholder
             }
-            {...form.getInputProps('text')}
+            {...form.getInputProps('message')}
           />
           <SimpleButtonGroup
             actionButton={{
               label: locale.attempt.ban.action,
-              onClick: () => console.log(form.values),
+              onClick: handleSubmit,
               props: {
                 disabled: !form.isValid(),
               },
