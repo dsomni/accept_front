@@ -10,14 +10,17 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import { sendRequest } from '@requests/request';
+import { callback } from '@custom-types/ui/atomic';
 
 const InitiateChatModal: FC<{
   exclude: string[];
   entity: string;
   type: 'tournament' | 'assignment';
+  onSuccess: callback<string>;
   small?: boolean;
-}> = ({ exclude, entity, type, small }) => {
-  const { locale, lang } = useLocale();
+}> = ({ exclude, entity, type, onSuccess, small }) => {
+  const { locale } = useLocale();
   const [startChatModal, setStartChatModal] = useState(false);
   const close = useCallback(() => setStartChatModal(false), []);
 
@@ -40,17 +43,34 @@ const InitiateChatModal: FC<{
   });
 
   const handleSubmit = useCallback(() => {
-    console.log(form.values);
     if (form.validate().hasErrors) {
       const id = newNotification({});
       errorNotification({
         id,
-        title: locale.notify.group.validation.error,
+        title: locale.validationError,
         autoClose: 5000,
       });
       return;
     }
-  }, [form, locale.notify.group.validation.error]);
+    sendRequest('chat', 'POST', {
+      entity,
+      host: form.values.user,
+      moderator: true,
+      content: form.values.message,
+    }).then((response) => {
+      if (!response.error) {
+        onSuccess(form.values.user);
+        setStartChatModal(false);
+      } else {
+        const id = newNotification({});
+        errorNotification({
+          id,
+          title: locale.error,
+          autoClose: 5000,
+        });
+      }
+    });
+  }, [entity, form, locale, onSuccess]);
 
   return (
     <>
@@ -64,7 +84,7 @@ const InitiateChatModal: FC<{
         +
       </Button>
       <SimpleModal
-        title={locale.dashboard.chat.userModal.title}
+        title={locale.dashboard.chat.userModal.send}
         opened={startChatModal}
         close={close}
       >
@@ -86,7 +106,7 @@ const InitiateChatModal: FC<{
           />
           <SimpleButtonGroup
             actionButton={{
-              label: locale.attempt.ban.action,
+              label: locale.dashboard.chat.userModal.send,
               onClick: handleSubmit,
               props: {
                 disabled: !form.isValid(),

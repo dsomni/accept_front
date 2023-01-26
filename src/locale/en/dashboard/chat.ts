@@ -14,6 +14,7 @@ export const chat = {
       user: 'Select user',
       message: 'Message is empty',
     },
+    send: 'Send',
   },
   emptyMessage: 'There are no dialogues yet. To start one press',
 };

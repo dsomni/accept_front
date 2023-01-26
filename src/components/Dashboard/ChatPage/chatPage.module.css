@@ -3,6 +3,7 @@
   flex-direction: row;
   width: 80%;
   height: 70vh;
+  position: relative;
 }
 
 .hostList {

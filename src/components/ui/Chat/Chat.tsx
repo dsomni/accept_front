@@ -1,5 +1,5 @@
 import { useUser } from '@hooks/useUser';
-import { Icon, LoadingOverlay } from '@ui/basics';
+import { Icon } from '@ui/basics';
 import {
   FC,
   memo,
@@ -42,7 +42,7 @@ const Chat: FC<{
 
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [message, setMessage] = useState('');
-  const [initialLoad, setInitialLoad] = useState(true);
+  const [socketConnected, setSocketConnected] = useState(false);
 
   const textArea = useRef<HTMLTextAreaElement>(null);
   const messagesDiv = useRef<HTMLDivElement>(null!);
@@ -74,7 +74,7 @@ const Chat: FC<{
   }, []);
 
   const fetchMessages = useCallback(() => {
-    setInitialLoad(true);
+    if (!opened) return;
     sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
       entity,
       host,
@@ -83,9 +83,8 @@ const Chat: FC<{
       if (!res.error) {
         appendMessages(res.response);
       }
-      setInitialLoad(false);
     });
-  }, [entity, host, moderator, appendMessages]);
+  }, [entity, host, moderator, opened, appendMessages]);
 
   const handleSend = useCallback(() => {
     if (message.trim() === '') return;
@@ -114,7 +113,6 @@ const Chat: FC<{
   useEffect(() => {
     if (firstFetchDone || !opened) return;
     setFirstFetchDone(true);
-    setInitialLoad(true);
     sendRequest<{}, IChatMessage[]>('chat/all', 'POST', {
       entity,
       host,
@@ -129,7 +127,6 @@ const Chat: FC<{
               messagesDiv.current.scrollHeight;
             messagesDiv.current.style.scrollBehavior = 'smooth';
           }
-          setInitialLoad(false);
         }, 100);
       }
     });
@@ -138,12 +135,23 @@ const Chat: FC<{
   useEffect(() => {
     if (!socket || !user) return;
     socket.connect();
-    socket.on('connect', () =>
-      socket.emit('register', entity, host, user?.login, !!moderator)
-    );
-    socket.on('disconnect', () => {
-      // socket.connect();
+    socket.on('connect', () => {
+      setSocketConnected(true);
+      socket.emit('register', entity, host, user?.login, !!moderator);
     });
+    socket.on('disconnect', () => {
+      setSocketConnected(false);
+    });
+    // Clean-up
+    return () => {
+      socket.removeAllListeners('connect');
+      socket.removeAllListeners('disconnect');
+      socket.disconnect();
+    };
+  }, [socket, user]); // eslint-disable-line
+
+  useEffect(() => {
+    if (!socket || !socketConnected) return;
     socket.on('new_messages', (response) => {
       const shouldRefetch = JSON.parse(response) as boolean;
       if (shouldRefetch) {
@@ -152,22 +160,10 @@ const Chat: FC<{
       }
     });
 
-    // Clean-up
     return () => {
-      socket.removeAllListeners('connect');
-      socket.removeAllListeners('disconnect');
       socket.removeAllListeners('new_messages');
-      socket.disconnect();
     };
-  }, [
-    socket,
-    fetchMessages,
-    entity,
-    host,
-    indicateNew,
-    moderator,
-    user,
-  ]);
+  }, [socket, socketConnected, indicateNew, fetchMessages]);
 
   useEffect(() => {
     const handleClick = (event: KeyboardEvent) => {
@@ -188,7 +184,6 @@ const Chat: FC<{
   return (
     <div className={wrapperStyles}>
       <div ref={messagesDiv} className={styles.messages}>
-        <LoadingOverlay visible={initialLoad} />
         {messages.map((message, index) => (
           <div
             className={`${styles.messageWrapper} ${
