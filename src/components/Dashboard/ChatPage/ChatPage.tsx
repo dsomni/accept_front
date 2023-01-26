@@ -15,9 +15,9 @@ import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
 import { Indicator, LoadingOverlay } from '@ui/basics';
 import { useUser } from '@hooks/useUser';
-import { io } from 'socket.io-client';
 import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
 import { useLocale } from '@hooks/useLocale';
+import { createSocket } from '@utils/createSocket';
 
 const ChatPage: FC<{
   entity: string;
@@ -61,13 +61,7 @@ const ChatPage: FC<{
   );
 
   const socket = useMemo(
-    () =>
-      typeof window !== 'undefined' && user?.login
-        ? io(`${process.env.WEBSOCKET_API}`, {
-            path: '/ws/host',
-            transports: ['polling'],
-          })
-        : undefined,
+    () => createSocket('/ws/host', user?.login),
     [user?.login]
   );
 
@@ -106,7 +100,6 @@ const ChatPage: FC<{
     if (!socket) return;
     socket.connect();
     socket.on('connect', () => {
-      // console.log('connected', new Date());
       socket.emit('register', entity, user?.login);
     });
     socket.on('new_message_from', (response) => {
@@ -114,7 +107,6 @@ const ChatPage: FC<{
       setNewHost(host);
     });
     socket.on('register_response', (response) => {
-      // console.log('register_response', new Date());
       const hosts = JSON.parse(response) as string[];
       setInitialLoad(true);
       fetchHosts(hosts).then((res) => {

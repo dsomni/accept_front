@@ -15,8 +15,8 @@ import { IChatMessage } from '@custom-types/data/IMessage';
 import { Textarea } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
-import io from 'socket.io-client';
 import { sendRequest } from '@requests/request';
+import { createSocket } from '@utils/createSocket';
 
 const Chat: FC<{
   indicateNew?: () => void;
@@ -50,13 +50,7 @@ const Chat: FC<{
   const [newMessages, setNewMessages] = useState<string[]>([]);
 
   const socket = useMemo(
-    () =>
-      typeof window !== 'undefined' && user?.login
-        ? io(`${process.env.WEBSOCKET_API}`, {
-            path: wsURL,
-            transports: ['polling'],
-          })
-        : undefined,
+    () => createSocket(wsURL, user?.login),
     [user?.login, wsURL]
   );
 
@@ -74,7 +68,6 @@ const Chat: FC<{
   }, []);
 
   const fetchMessages = useCallback(() => {
-    if (!opened) return;
     sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
       entity,
       host,
@@ -84,7 +77,7 @@ const Chat: FC<{
         appendMessages(res.response);
       }
     });
-  }, [entity, host, moderator, opened, appendMessages]);
+  }, [entity, host, moderator, appendMessages]);
 
   const handleSend = useCallback(() => {
     if (message.trim() === '') return;
