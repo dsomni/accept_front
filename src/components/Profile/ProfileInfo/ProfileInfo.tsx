@@ -49,11 +49,6 @@ const ProfileInfo: FC<{ user: IUser }> = ({ user }) => {
         </div>
       </div>
       <div className={styles.restInfo}>
-        {user.email && (
-          <div
-            className={styles.email}
-          >{`${locale.email}: ${user.email}`}</div>
-        )}
         {user.groups.length > 0 && (
           <div className={styles.groupSection}>
             <div className={styles.groupTitle}>
