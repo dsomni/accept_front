@@ -29,27 +29,19 @@ const AddUser: FC<{}> = ({}) => {
     },
     validate: {
       login: (value) =>
-        value.length < 5
-          ? locale.auth.errors.login.len
-          : !value.match(/^[^_]+[a-zA-Z\d_]+$/)
+        !value.match(/^[^_]+[a-zA-Z\d_]+$/)
           ? locale.auth.errors.login.symbols
           : null,
       password: (value) =>
-        value.length < 5
-          ? locale.auth.errors.password.len
-          : !value.match(/^[a-zA-Z\d\.]+$/)
+        !value.match(/^[a-zA-Z\d\.]+$/)
           ? locale.auth.errors.password.symbols
           : null,
       name: (value) =>
-        value.length < 2
-          ? locale.auth.errors.name.short
-          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
+        !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
           ? locale.auth.errors.name.invalid
           : null,
       surname: (value) =>
-        value.length < 2
-          ? locale.auth.errors.surname.short
-          : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
+        !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
           ? locale.auth.errors.surname.invalid
           : null,
       patronymic: (value) =>
