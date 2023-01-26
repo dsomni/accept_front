@@ -47,7 +47,7 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
             <BellRinging color="var(--secondary)" />
           </Indicator>
         ),
-        title: locale.profile.notification.title,
+        title: locale.profile.notification,
         section: 'notifications',
       },
       {

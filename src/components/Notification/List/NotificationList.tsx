@@ -273,7 +273,7 @@ const NotificationList: FC<{}> = ({}) => {
         </>
       ) : (
         <div className={styles.emptyMessage}>
-          {locale.profile.notification.empty}
+          {locale.profile.empty.notification}
         </div>
       )}
     </div>
