@@ -1,5 +1,6 @@
 import { INotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
+import { createSocket } from '@utils/createSocket';
 import {
   infoNotification,
   newNotification,
@@ -18,8 +19,6 @@ import {
 } from 'react';
 import { useLocale } from './useLocale';
 import { useUser } from './useUser';
-
-import io from 'socket.io-client';
 
 interface INotificationContext {
   new_amount: number;
@@ -49,13 +48,7 @@ export const BackNotificationsProvider: FC<{
   );
 
   const socket = useMemo(
-    () =>
-      typeof window !== 'undefined' && user?.login
-        ? io(`${process.env.WEBSOCKET_API}`, {
-            path: `/ws/notification/`,
-            transports: ['polling'],
-          })
-        : undefined,
+    () => createSocket('/ws/notification/', user?.login),
     [user?.login]
   );
 

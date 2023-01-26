@@ -26,17 +26,19 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
     <>
       <Affix ref={ref} position={{ bottom: 0, right: '200px' }}>
         <div style={{ visibility: showChat ? 'visible' : 'hidden' }}>
-          <Chat
-            entity={spec}
-            host={host}
-            wsURL={'/ws/chat'}
-            indicateNew={indicateNew}
-            opened={showChat}
-            isMessageMine={(message: IChatMessage) =>
-              !!user && message.author == user?.login
-            }
-            wrapperStyles={styles.chatWrapper}
-          />
+          {window && (
+            <Chat
+              entity={spec}
+              host={host}
+              wsURL={'/ws/chat'}
+              indicateNew={indicateNew}
+              opened={showChat}
+              isMessageMine={(message: IChatMessage) =>
+                !!user && message.author == user?.login
+              }
+              wrapperStyles={styles.chatWrapper}
+            />
+          )}
         </div>
         <Icon
           onClick={() => {

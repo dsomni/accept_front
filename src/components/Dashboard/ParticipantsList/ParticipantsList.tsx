@@ -116,7 +116,7 @@ const ParticipantsList: FC<{
   return (
     <div className={styles.wrapper}>
       <UserList
-        url={`${type}/participants/${spec}`}
+        url={`${type}/bundle-participants/${spec}`}
         refactorUser={(user) => refactorUser(user)}
         initialColumns={initialColumns}
         noDefault

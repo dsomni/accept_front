@@ -1,0 +1,21 @@
+.itemIcon {
+  width: fit-content;
+  padding: 0 var(--spacer-m);
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  align-items: center;
+  cursor: pointer;
+  margin: var(--spacer-xs) var(--spacer-s);
+}
+
+.left {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-s);
+  align-items: center;
+}
