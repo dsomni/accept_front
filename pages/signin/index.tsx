@@ -1,5 +1,10 @@
+import {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { LoginLayout } from '@layouts/LoginLayout';
-import { ReactElement, useCallback, useState } from 'react';
 import { useLocale } from '@hooks/useLocale';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
@@ -32,6 +37,7 @@ function SignIn() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [toSignIn, setToSignIn] = useState(false);
 
   const handleSignIn = useCallback(
     (values: { login: string; password: string }) => {
@@ -61,6 +67,26 @@ function SignIn() {
     },
     [form, locale, signIn, router]
   );
+
+  useEffect(() => {
+    if (!toSignIn) return;
+    handleSignIn(form.values);
+    setToSignIn(false);
+  }, [toSignIn, handleSignIn, form.values]);
+
+  const processKeydown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      setToSignIn(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!window) return;
+    window.addEventListener('keydown', processKeydown);
+    return () => {
+      window.removeEventListener('keydown', processKeydown);
+    };
+  }, [processKeydown]);
 
   return (
     <>
