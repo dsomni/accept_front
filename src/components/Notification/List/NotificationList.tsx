@@ -10,7 +10,7 @@ import {
 import styles from './notificationList.module.css';
 import { INotification } from '@custom-types/data/notification';
 import { Badge, Pagination, Tooltip } from '@mantine/core';
-import { Checkbox, Icon } from '@ui/basics';
+import { Checkbox, Icon, LoadingOverlay } from '@ui/basics';
 import { requestWithError } from '@utils/requestWithError';
 import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
@@ -54,7 +54,7 @@ const NotificationList: FC<{}> = ({}) => {
     [setNotifications]
   );
 
-  const { refetch: refetchNotifications } = useRequest<
+  const { refetch: refetchNotifications, loading } = useRequest<
     {},
     INotification[],
     void
@@ -158,110 +158,123 @@ const NotificationList: FC<{}> = ({}) => {
 
   return (
     <div className={styles.wrapper}>
-      <ReadModal
-        opened={openedModal}
-        defaultSelected={current}
-        notifications={notifications}
-        notLoading
-        close={handleCloseModal}
-      />
-      <div className={styles.utils}>
-        {selected.length !== 0 ? (
-          <>
-            <Tooltip label={locale.notification.list.unselect}>
-              <div>
-                <Checkbox
-                  checked={selected.length > 0}
-                  indeterminate={
-                    selected.length !== notifications.length
-                  }
-                  onChange={() => setSelected([])}
-                />
-              </div>
-            </Tooltip>
-            <div className={styles.lengthWrapper}>
-              {selected.length}
-            </div>
-            <Icon
-              size="xs"
-              tooltipLabel={locale.notification.list.delete}
-              onClick={handleDelete}
-            >
-              <Trash />
-            </Icon>
+      <LoadingOverlay visible={loading} />
+      {loading ? (
+        <></>
+      ) : notifications.length > 0 ? (
+        <>
+          <ReadModal
+            opened={openedModal}
+            defaultSelected={current}
+            notifications={notifications}
+            notLoading
+            close={handleCloseModal}
+          />
+          <div className={styles.utils}>
+            {selected.length !== 0 ? (
+              <>
+                <Tooltip label={locale.notification.list.unselect}>
+                  <div>
+                    <Checkbox
+                      checked={selected.length > 0}
+                      indeterminate={
+                        selected.length !== notifications.length
+                      }
+                      onChange={() => setSelected([])}
+                    />
+                  </div>
+                </Tooltip>
+                <div className={styles.lengthWrapper}>
+                  {selected.length}
+                </div>
+                <Icon
+                  size="xs"
+                  tooltipLabel={locale.notification.list.delete}
+                  onClick={handleDelete}
+                >
+                  <Trash />
+                </Icon>
 
-            <Icon
-              size="xs"
-              tooltipLabel={locale.notification.list.viewed}
-              onClick={handleView}
-            >
-              <MailOpened />
-            </Icon>
-          </>
-        ) : (
-          <Tooltip label={locale.notification.list.selectAll}>
-            <div>
-              <Checkbox
-                checked={false}
-                onChange={() =>
-                  setSelected(notifications.map((elem) => elem.spec))
-                }
-              />
-            </div>
-          </Tooltip>
-        )}
-      </div>
-      <div
-        className={styles.notifications}
-        style={{ minHeight: `${55 * ON_PAGE}px` }}
-      >
-        {displayedNotifications.map((notification, index) => (
-          <div
-            key={index}
-            className={
-              styles.notification +
-              ' ' +
-              (!notification.viewed ? styles.new : '')
-            }
-          >
-            <div className={styles.checkboxWrapper}>
-              <Checkbox
-                checked={selected.includes(notification.spec)}
-                onChange={onCheckboxCheck(notification)}
-              />
-            </div>
-            <div
-              className={styles.notificationWrapper}
-              onClick={() => handleOpenModal(index)}
-            >
-              <div className={styles.titleWrapper}>
-                <div className={styles.title}>
-                  {shrinkText(notification.title, 48)}{' '}
-                  {!notification.viewed && (
-                    <Badge color="green">{locale.new}</Badge>
-                  )}
+                <Icon
+                  size="xs"
+                  tooltipLabel={locale.notification.list.viewed}
+                  onClick={handleView}
+                >
+                  <MailOpened />
+                </Icon>
+              </>
+            ) : (
+              <Tooltip label={locale.notification.list.selectAll}>
+                <div>
+                  <Checkbox
+                    checked={false}
+                    onChange={() =>
+                      setSelected(
+                        notifications.map((elem) => elem.spec)
+                      )
+                    }
+                  />
                 </div>
-                <div className={styles.shortDescription}>
-                  {shrinkText(notification.shortDescription, 80)}
-                </div>
-              </div>
-              <div className={styles.author}>
-                {shrinkText(notification.author, 12)}
-              </div>
-              <div className={styles.date}>
-                {getLocalDate(notification.date)}
-              </div>
-            </div>
+              </Tooltip>
+            )}
           </div>
-        ))}
-      </div>
-      {shouldShowPagination && (
-        <Pagination
-          total={totalPages}
-          position="center"
-          page={activePage}
-          onChange={setPage}
-        />
+          <div
+            className={styles.notifications}
+            style={{ minHeight: `${55 * ON_PAGE}px` }}
+          >
+            {displayedNotifications.map((notification, index) => (
+              <div
+                key={index}
+                className={
+                  styles.notification +
+                  ' ' +
+                  (!notification.viewed ? styles.new : '')
+                }
+              >
+                <div className={styles.checkboxWrapper}>
+                  <Checkbox
+                    checked={selected.includes(notification.spec)}
+                    onChange={onCheckboxCheck(notification)}
+                  />
+                </div>
+                <div
+                  className={styles.notificationWrapper}
+                  onClick={() => handleOpenModal(index)}
+                >
+                  <div className={styles.titleWrapper}>
+                    <div className={styles.title}>
+                      {shrinkText(notification.title, 48)}{' '}
+                      {!notification.viewed && (
+                        <Badge color="green">{locale.new}</Badge>
+                      )}
+                    </div>
+                    <div className={styles.shortDescription}>
+                      {shrinkText(notification.shortDescription, 80)}
+                    </div>
+                  </div>
+                  <div className={styles.author}>
+                    {shrinkText(notification.author, 12)}
+                  </div>
+                  <div className={styles.date}>
+                    {getLocalDate(notification.date)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {shouldShowPagination && (
+            <Pagination
+              total={totalPages}
+              position="center"
+              page={activePage}
+              onChange={setPage}
+            />
+          )}
+        </>
+      ) : (
+        <div className={styles.emptyMessage}>
+          {locale.profile.notification.empty}
+        </div>
       )}
     </div>
   );

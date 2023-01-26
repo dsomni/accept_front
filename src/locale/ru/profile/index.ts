@@ -3,7 +3,7 @@ export const profile = {
   profile: 'Профиль',
   attempts: 'Попытки',
   assignments: 'Мои уроки',
-  notification: 'Уведомления',
+  notification: { title: 'Уведомления', empty: 'Нет уведомлений' },
   settings: 'Настройки',
   createNotification: 'Создать уведомление',
   createAssignment: 'Создать урок',

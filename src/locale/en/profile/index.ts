@@ -2,7 +2,10 @@ export const profile = {
   groups: 'Groups',
   profile: 'Profile',
   assignments: 'My Assignments',
-  notification: 'Notifications',
+  notification: {
+    title: 'Notifications',
+    empty: 'There are zero notifications',
+  },
   settings: 'Settings',
   attempts: 'Attempts',
   createNotification: 'Create notification',
