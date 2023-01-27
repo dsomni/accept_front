@@ -26,3 +26,13 @@
 .login {
   color: var(--dark4);
 }
+
+.avatarWrapper {
+  position: relative;
+}
+
+.medal {
+  position: absolute;
+  bottom: -17px;
+  right: -17px;
+}

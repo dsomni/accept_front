@@ -3,6 +3,7 @@ import { Avatar, Badge } from '@mantine/core';
 import { link } from '@constants/Avatar';
 import { FC, memo } from 'react';
 import styles from './mainInfo.module.css';
+import { Medal2 } from 'tabler-icons-react';
 
 const getRoleColor = (accessLevel: number) => {
   switch (accessLevel) {
@@ -17,10 +18,36 @@ const getRoleColor = (accessLevel: number) => {
   }
 };
 
-const MainInfo: FC<{ user: IUser }> = ({ user }) => {
+const getRatingColor = (rating: number) => {
+  switch (rating) {
+    case 1:
+      return '#FFD700';
+    case 2:
+      return '#C0C0C0';
+    case 3:
+      return '#CD7f32';
+    default:
+      return '';
+  }
+};
+
+const MainInfo: FC<{ user: IUser; place?: number }> = ({
+  user,
+  place,
+}) => {
   return (
     <div className={styles.main}>
-      <Avatar src={link(user.login)} size="xl" radius="lg" />
+      <div className={styles.avatarWrapper}>
+        <Avatar src={link(user.login)} size="xl" radius="lg" />
+        {place && place < 4 && (
+          <Medal2
+            strokeWidth={0.8}
+            size={'45px'}
+            fill={getRatingColor(place)}
+            className={styles.medal}
+          />
+        )}
+      </div>
       <div className={styles.text}>
         <div className={styles.nameWrapper}>
           <div className={styles.fullName}>
