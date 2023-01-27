@@ -14,7 +14,7 @@ const TaskInfo: FC<ITaskInfo> = ({
       complexity_distribution.map(
         (item) =>
           ({
-            label: `${item.start}%-${item.end}%`,
+            label: `${item.start}% - ${item.end}%`,
             amount: item.amount,
           } as IPlotData)
       ),
@@ -23,7 +23,7 @@ const TaskInfo: FC<ITaskInfo> = ({
   return (
     <div>
       <BarPlot
-        title={'Сложность'}
+        title={'Сложность задачи'}
         total={total}
         data={complexity_data}
       />
