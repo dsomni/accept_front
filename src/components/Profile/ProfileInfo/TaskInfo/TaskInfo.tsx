@@ -23,14 +23,16 @@ const TaskInfo: FC<ITaskInfo> = ({
 
   const verdict_data = useMemo(
     () =>
-      verdict_distribution.map(
-        (item) =>
-          ({
-            label: item.name,
-            amount: item.amount,
-            color: item.name === 'OK' ? '#00FF55' : '#FF2222',
-          } as IPieData)
-      ),
+      verdict_distribution
+        .sort((a, b) => b.amount - a.amount)
+        .map(
+          (item) =>
+            ({
+              label: item.name,
+              amount: item.amount,
+              color: item.name === 'OK' ? '#00FF55' : '#FF2222',
+            } as IPieData)
+        ),
     [verdict_distribution]
   );
 
@@ -40,7 +42,7 @@ const TaskInfo: FC<ITaskInfo> = ({
         title={'Сложность решенных задач'}
         data={complexity_data}
       />
-      <PiePlot title={'Вердикты задач'} data={verdict_data} />
+      <PiePlot title={'Вердикты сданных задач'} data={verdict_data} />
     </div>
   );
 };
