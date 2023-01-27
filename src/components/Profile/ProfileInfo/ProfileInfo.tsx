@@ -18,8 +18,8 @@ const ProfileInfo: FC<IFullProfileBundle> = ({
       <MainInfo user={user} />
       <RatingInfo {...rating_info} />
       <GroupsInfo user={user} />
-      <TaskInfo {...task_info} />
-      <AttemptInfo {...attempt_info} />
+      {task_info.total > 0 && <TaskInfo {...task_info} />}
+      {attempt_info.total > 0 && <AttemptInfo {...attempt_info} />}
     </div>
   );
 };

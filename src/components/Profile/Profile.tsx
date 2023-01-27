@@ -87,7 +87,15 @@ const Profile: FC<IFullProfileBundle> = ({
       });
     }
     return globalLinks;
-  }, [user, locale, new_amount, isTeacher]);
+  }, [
+    user,
+    attempt_info,
+    task_info,
+    rating_info,
+    locale,
+    new_amount,
+    isTeacher,
+  ]);
 
   const initialStep = useMemo(() => {
     let section = router.query.section as string;
