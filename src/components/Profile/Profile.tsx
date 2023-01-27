@@ -1,5 +1,4 @@
 import { FC, memo, useMemo } from 'react';
-import { IUser } from '@custom-types/data/IUser';
 import { Avatar } from '@mantine/core';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
 import AttemptListProfile from '@components/Profile/AttemptListProfile/AttemptListProfile';
@@ -24,8 +23,14 @@ import LeftMenu from '@ui/LeftMenu/LeftMenu';
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
+import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 
-const Profile: FC<{ user: IUser }> = ({ user }) => {
+const Profile: FC<IFullProfileBundle> = ({
+  user,
+  attempt_info,
+  task_info,
+  rating_info,
+}) => {
   const { new_amount } = useBackNotifications();
   const router = useRouter();
 
@@ -36,7 +41,14 @@ const Profile: FC<{ user: IUser }> = ({ user }) => {
   const links: IMenuLink[] = useMemo(() => {
     let globalLinks = [
       {
-        page: <ProfileInfo user={user} />,
+        page: (
+          <ProfileInfo
+            user={user}
+            attempt_info={attempt_info}
+            task_info={task_info}
+            rating_info={rating_info}
+          />
+        ),
         icon: <Robot color="var(--secondary)" />,
         title: locale.profile.profile,
       },

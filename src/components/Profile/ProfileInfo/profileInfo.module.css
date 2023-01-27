@@ -1,43 +1,5 @@
-.main {
+.wrapper {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: var(--spacer-l) 0 var(--spacer-xl) 0;
+  flex-direction: column;
   gap: var(--spacer-l);
-}
-
-.text {
-  font-size: var(--font-size-l);
-}
-
-.fullName {
-  font-size: var(--font-size-xl);
-  display: flex;
-  gap: var(--spacer-xs);
-  flex-direction: row;
-}
-
-.nameWrapper {
-  display: flex;
-  gap: var(--spacer-s);
-  align-items: center;
-}
-
-.login {
-  color: var(--dark4);
-}
-
-.groupSection {
-  margin-top: var(--spacer-s);
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacer-xs);
-  align-items: flex-start;
-}
-
-.groupList {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: var(--spacer-s);
 }

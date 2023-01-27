@@ -3,14 +3,15 @@ import { getApiUrl } from '@utils/getServerUrl';
 import { GetServerSideProps } from 'next';
 import { ReactNode } from 'react';
 import ProfileInfo from '@components/Profile/ProfileInfo/ProfileInfo';
-import { IUser } from '@custom-types/data/IUser';
 import styles from '@styles/profile/login.module.css';
 import { useUser } from '@hooks/useUser';
 import Title from '@ui/Title/Title';
 import ProfileSticky from '@components/Profile/ProfileSticky/ProfileSticky';
+import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 
-function UserProfile(props: { user: IUser }) {
+function UserProfile(props: IFullProfileBundle) {
   const { isAdmin, accessLevel } = useUser();
+  console.log(props);
   return (
     <div className={styles.wrapper}>
       <Title title={props.user.shortName} />
@@ -71,6 +72,9 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
       props: {
         user: profileData.user,
+        attempt_info: profileData.attempt_info,
+        task_info: profileData.task_info,
+        rating_info: profileData.rating_info,
       },
     };
   }

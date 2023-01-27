@@ -1,0 +1,32 @@
+.wrapper {
+}
+
+.wrapper svg {
+  width: 100%;
+  aspect-ratio: 3/1;
+}
+
+.title {
+  font-size: var(--font-size-l);
+  width: 100%;
+  text-align: center;
+}
+
+.labels {
+  font-size: 5px;
+}
+
+@keyframes scaleFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.bar {
+  fill: var(--secondary);
+  animation: 2s linear 0s 1 scaleFromBottom;
+}
