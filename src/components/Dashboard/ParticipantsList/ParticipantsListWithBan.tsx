@@ -185,7 +185,7 @@ const ParticipantsListWithBan: FC<{
     <div className={styles.wrapper}>
       <UserList
         key={+refetch}
-        url={`${type}/participants/${spec}`}
+        url={`${type}/bundle-participants/${spec}`}
         refactorUser={(user) =>
           refactorUser(locale, type, user, spec, handleBan)
         }

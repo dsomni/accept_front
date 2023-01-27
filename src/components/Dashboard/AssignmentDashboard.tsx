@@ -79,7 +79,7 @@ const AssignmentDashboard: FC<{
         title: locale.dashboard.assignment.mainInfo,
       },
       {
-        page: <ChatPage entity={spec} />,
+        page: <ChatPage entity={spec} type="assignment" />,
         icon: <Messages color="var(--secondary)" />,
         title: locale.dashboard.tournament.chat,
       },

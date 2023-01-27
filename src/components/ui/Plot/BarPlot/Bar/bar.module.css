@@ -1,0 +1,26 @@
+@keyframes scaleFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.labels {
+  font-size: 6px;
+}
+
+.bar {
+  opacity: 0.75;
+  animation: 1s linear 0s 1 scaleFromBottom;
+}
+
+.bar:hover {
+  opacity: 0.9;
+}
+
+.wrapper {
+  cursor: pointer;
+}

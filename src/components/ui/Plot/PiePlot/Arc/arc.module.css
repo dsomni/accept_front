@@ -1,0 +1,8 @@
+.arc {
+  opacity: 0.85;
+  transition: all 0.3s linear;
+}
+
+.arc:hover {
+  opacity: 0.95;
+}

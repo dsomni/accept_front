@@ -1,0 +1,20 @@
+.addHostButton {
+  width: 100%;
+  padding: var(--spacer-xs) 0;
+}
+
+.addHostButton span {
+  font-size: var(--font-size-xl);
+  line-height: var(--font-size-xl);
+}
+
+.addHostButtonSmall span {
+  font-size: var(--font-size-xl);
+  line-height: var(--font-size-xl);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+}

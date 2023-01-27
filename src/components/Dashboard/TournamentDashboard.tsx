@@ -80,7 +80,7 @@ const TournamentDashboard: FC<{
         title: locale.dashboard.tournament.mainInfo,
       },
       {
-        page: <ChatPage entity={spec} />,
+        page: <ChatPage entity={spec} type="tournament" />,
         icon: <Messages color="var(--secondary)" />,
         title: locale.dashboard.tournament.chat,
       },

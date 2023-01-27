@@ -24,6 +24,7 @@ import { grade } from './grade';
 import { titles } from './titles';
 import { todo } from './todo';
 import { user } from './user';
+import { rating } from './rating';
 
 const en = {
   accept: 'Accept',
@@ -55,6 +56,7 @@ const en = {
   newTab: 'Open in the new tab',
   new: 'New',
   email: 'Email',
+  total: 'Total',
   assignmentSchema,
   assignment,
   user,
@@ -84,6 +86,7 @@ const en = {
   grade,
   titles,
   todo,
+  rating,
 };
 
 export default en;

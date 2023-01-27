@@ -1,4 +1,7 @@
+import { info } from './info';
+
 export const profile = {
+  info,
   groups: 'Groups',
   profile: 'Profile',
   assignments: 'My Assignments',
@@ -10,6 +13,7 @@ export const profile = {
   empty: {
     attempts: "You don't have any attempts",
     assignments: "You don't have any assignments",
+    notification: "You don't have any notifications",
   },
   editModal: 'Edit User',
 };

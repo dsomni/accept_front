@@ -1,4 +1,7 @@
+import { info } from './info';
+
 export const profile = {
+  info,
   groups: 'Группы',
   profile: 'Профиль',
   attempts: 'Попытки',
@@ -9,7 +12,8 @@ export const profile = {
   createAssignment: 'Создать урок',
   empty: {
     attempts: 'У вас нет ни одной попытки',
-    assignments: 'Вам не задано ни одного урока',
+    assignments: 'У вас нет ни одного урока',
+    notification: 'У вас нет уведомлений',
   },
   editModal: 'Изменить пользователя',
 };
