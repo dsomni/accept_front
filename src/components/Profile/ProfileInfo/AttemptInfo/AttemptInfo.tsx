@@ -1,30 +1,30 @@
-import { getColor } from '@constants/Colors';
-import { ITaskInfo } from '@custom-types/data/IProfileInfo';
-import { IPlotData } from '@custom-types/ui/IPlot';
-import { useLocale } from '@hooks/useLocale';
-import { BarPiePlot } from '@ui/Plot';
 import { FC, memo, useMemo } from 'react';
+import { getColor } from '@constants/Colors';
+import { IAttemptInfo } from '@custom-types/data/IProfileInfo';
+import { BarPiePlot } from '@ui/Plot';
+import { IPlotData } from '@custom-types/ui/IPlot';
+import styles from './attemptInfo.module.css';
+import { useLocale } from '@hooks/useLocale';
 import DefaultCentralText from '@ui/Plot/PiePlot/DefaultCentralText/DefaultCentralText';
-import styles from './taskInfo.module.css';
 
-const TaskInfo: FC<ITaskInfo> = ({
+const AttemptInfo: FC<IAttemptInfo> = ({
   total,
+  language_distribution,
   verdict_distribution,
-  complexity_distribution,
 }) => {
   const { locale } = useLocale();
 
-  const complexity_data = useMemo(
+  const language_data = useMemo(
     () =>
-      complexity_distribution.map(
+      language_distribution.map(
         (item, index) =>
           ({
-            label: `${item.start}-${item.end}%`,
+            label: item.name,
             amount: item.amount,
-            color: getColor(index, 0), // 'var(--secondary)',
+            color: getColor(index, 4),
           } as IPlotData)
       ),
-    [complexity_distribution]
+    [language_distribution]
   );
 
   const verdict_data = useMemo(
@@ -43,9 +43,21 @@ const TaskInfo: FC<ITaskInfo> = ({
   return (
     <div className={styles.wrapper}>
       <BarPiePlot
-        title={locale.profile.info.task.complexity}
-        data={complexity_data}
-        centralLabel={(props) => <DefaultCentralText {...props} />}
+        title={locale.profile.info.attempt.languages}
+        data={language_data}
+        centralLabel={(centerText: IPlotData) => (
+          <div className={styles.langWrapper}>
+            <div
+              className={styles.langName}
+              style={{ color: centerText.color }}
+            >
+              {centerText.label}
+            </div>
+            <div className={styles.langAmount}>
+              {centerText.amount}
+            </div>
+          </div>
+        )}
         defaultText={{
           color: '',
           label: locale.total,
@@ -53,7 +65,7 @@ const TaskInfo: FC<ITaskInfo> = ({
         }}
       />
       <BarPiePlot
-        title={locale.profile.info.task.verdicts}
+        title={locale.profile.info.attempt.verdicts}
         data={verdict_data}
         centralLabel={(props) => <DefaultCentralText {...props} />}
         defaultText={{
@@ -66,4 +78,4 @@ const TaskInfo: FC<ITaskInfo> = ({
   );
 };
 
-export default memo(TaskInfo);
+export default memo(AttemptInfo);

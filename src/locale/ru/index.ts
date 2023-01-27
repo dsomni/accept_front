@@ -56,6 +56,7 @@ const ru = {
   newTab: 'Открыть в новой вкладке',
   new: 'New',
   email: 'Почта',
+  total: 'Всего',
   assignmentSchema,
   assignment,
   user,

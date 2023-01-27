@@ -56,6 +56,7 @@ const en = {
   newTab: 'Open in the new tab',
   new: 'New',
   email: 'Email',
+  total: 'Total',
   assignmentSchema,
   assignment,
   user,

@@ -1,0 +1,19 @@
+.langWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.langName {
+  text-align: center;
+  font-size: 7px;
+}
+
+.langAmount {
+  text-align: center;
+  font-size: 6px;
+  color: gray;
+}

@@ -1,0 +1,21 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.name {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2px;
+  font-size: 8px;
+}
+
+.amount {
+  width: 100%;
+  text-align: center;
+  font-size: 6px;
+  color: gray;
+}

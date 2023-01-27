@@ -5,6 +5,7 @@ import MainInfo from './MainInfo/MainInfo';
 import GroupsInfo from './GroupsInfo/GroupsInfo';
 import RatingInfo from './RatingInfo/RatingInfo';
 import TaskInfo from './TaskInfo/TaskInfo';
+import AttemptInfo from './AttemptInfo/AttemptInfo';
 
 const ProfileInfo: FC<IFullProfileBundle> = ({
   user,
@@ -18,6 +19,7 @@ const ProfileInfo: FC<IFullProfileBundle> = ({
       <RatingInfo {...rating_info} />
       <GroupsInfo user={user} />
       <TaskInfo {...task_info} />
+      <AttemptInfo {...attempt_info} />
     </div>
   );
 };

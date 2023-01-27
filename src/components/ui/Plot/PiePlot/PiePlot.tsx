@@ -18,7 +18,10 @@ const PiePlot: FC<{
   );
 
   const processedData = useMemo(
-    () => data.filter((item) => item.amount > 0),
+    () =>
+      data
+        .filter((item) => item.amount > 0)
+        .sort((a, b) => b.amount - a.amount),
     [data]
   );
 
