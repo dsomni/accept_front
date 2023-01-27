@@ -41,10 +41,11 @@ function Rating(props: { users: IRatingInfo[] }) {
         </td>
         <td>
           <Link
-            className={styles.link}
             href={`/profile/${user.user.login}`}
+            legacyBehavior
+            passHref
           >
-            {user.user.login}
+            <a className={styles.link}>{user.user.login}</a>
           </Link>
         </td>
         <td>{user.user.shortName}</td>
