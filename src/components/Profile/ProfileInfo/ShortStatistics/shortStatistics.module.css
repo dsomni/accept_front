@@ -1,0 +1,35 @@
+.wrapper {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-s);
+  margin-bottom: var(--spacer-l);
+}
+
+.attemptInfo {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-m);
+}
+
+.attemptInfo div {
+  border-radius: 30px;
+  width: 300px;
+  padding: 0 var(--spacer-l) 0 0;
+}
+
+.ratingInfo {
+  gap: var(--spacer-m);
+  display: flex;
+  flex-direction: row;
+}
+
+.ratingInfo div {
+  border-radius: 30px;
+  width: 300px;
+  padding: 0 var(--spacer-l) 0 0;
+}
+
+.value {
+  color: var(--primary);
+}

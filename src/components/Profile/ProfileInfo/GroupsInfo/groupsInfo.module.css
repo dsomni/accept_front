@@ -1,0 +1,18 @@
+.wrapper {
+  max-width: 800px;
+}
+
+.groupSection {
+  margin-top: var(--spacer-s);
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xs);
+  align-items: flex-start;
+}
+
+.groupList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacer-s);
+}

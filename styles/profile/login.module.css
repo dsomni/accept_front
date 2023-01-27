@@ -1,5 +1,4 @@
 .wrapper {
-  max-width: 800px;
   margin: var(--spacer-s) var(--spacer-m) var(--spacer-m)
     var(--spacer-xxl);
 }

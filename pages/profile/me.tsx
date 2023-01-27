@@ -3,11 +3,11 @@ import { getApiUrl } from '@utils/getServerUrl';
 import { GetServerSideProps } from 'next';
 import { ReactNode } from 'react';
 import Profile from '@components/Profile/Profile';
-import { IUser } from '@custom-types/data/IUser';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
+import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 
-function MyProfile(props: { user: IUser }) {
+function MyProfile(props: IFullProfileBundle) {
   const { locale } = useLocale();
   return (
     <>
@@ -27,7 +27,6 @@ const API_URL = getApiUrl();
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
-  query,
 }) => {
   const response = await fetch(`${API_URL}/api/bundle/profile`, {
     headers: {
@@ -40,6 +39,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
       props: {
         user: profileData.user,
+        attempt_info: profileData.attempt_info,
+        task_info: profileData.task_info,
+        rating_info: profileData.rating_info,
       },
     };
   }

@@ -1,4 +1,7 @@
+import { info } from './info';
+
 export const profile = {
+  info,
   groups: 'Группы',
   profile: 'Профиль',
   attempts: 'Попытки',
