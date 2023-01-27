@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
+}
+
 .centerWrapper {
   height: 100%;
   display: flex;
