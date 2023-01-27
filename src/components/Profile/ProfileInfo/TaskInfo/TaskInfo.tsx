@@ -1,6 +1,6 @@
 import { ITaskInfo } from '@custom-types/data/IProfileInfo';
-import { IPieData, IPlotData } from '@custom-types/ui/IPlot';
-import { BarPlot, PiePlot } from '@ui/Plot';
+import { IPieData } from '@custom-types/ui/IPlot';
+import { BarPiePlot } from '@ui/Plot';
 import { FC, memo, useMemo } from 'react';
 import styles from './taskInfo.module.css';
 
@@ -14,9 +14,10 @@ const TaskInfo: FC<ITaskInfo> = ({
       complexity_distribution.map(
         (item) =>
           ({
-            label: `${item.start}% - ${item.end}%`,
+            label: `${item.start}-${item.end}%`,
             amount: item.amount,
-          } as IPlotData)
+            color: 'var(--secondary)',
+          } as IPieData)
       ),
     [complexity_distribution]
   );
@@ -38,11 +39,43 @@ const TaskInfo: FC<ITaskInfo> = ({
 
   return (
     <div className={styles.wrapper}>
-      <BarPlot
+      <BarPiePlot
         title={'Сложность решенных задач'}
         data={complexity_data}
+        centralLabel={(centerText: IPieData) => (
+          <div className={styles.centerWrapper}>
+            <div className={styles.complexityName}>
+              {centerText.label}
+            </div>
+            <div className={styles.complexityAmount}>
+              {centerText.amount}
+            </div>
+          </div>
+        )}
+        defaultText={{
+          color: '',
+          label: 'Всего',
+          amount: total,
+        }}
       />
-      <PiePlot title={'Вердикты сданных задач'} data={verdict_data} />
+      <BarPiePlot
+        title={'Вердикты сданных задач'}
+        data={verdict_data}
+        centralLabel={(centerText: IPieData) => (
+          <div className={styles.centerWrapper}>
+            <div
+              className={styles.verdictName}
+              style={{ color: centerText.color }}
+            >
+              {centerText.label}
+            </div>
+            <div className={styles.verdictAmount}>
+              {centerText.amount}
+            </div>
+          </div>
+        )}
+        defaultText={{ label: 'Всего', amount: total, color: '' }}
+      />
     </div>
   );
 };

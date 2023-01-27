@@ -1,3 +1,7 @@
+.wrapper {
+  max-width: 800px;
+}
+
 .groupSection {
   margin-top: var(--spacer-s);
   display: flex;

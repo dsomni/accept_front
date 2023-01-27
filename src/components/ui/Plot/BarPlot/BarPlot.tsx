@@ -8,7 +8,7 @@ const PADDING = 0.1; // percent
 const ROW_LINES = 10;
 
 const BarPlot: FC<{
-  title: string;
+  title?: string;
   data: IPlotData[];
 }> = ({ title, data }) => {
   const [toolTipLabel, setToolTipLabel] = useState<
@@ -29,17 +29,17 @@ const BarPlot: FC<{
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>{title}</div>
+      {title && <div className={styles.title}>{title}</div>}
       <PlotTooltip label={toolTipLabel} />
-      <svg viewBox="0 0 330 110">
+      <svg viewBox="0 0 330 166">
         <g>
-          {new Array(ROW_LINES + 1).fill(0).map((_, index) => (
+          {new Array(ROW_LINES).fill(0).map((_, index) => (
             <line
               key={index}
               x1="20"
               x2="320"
-              y1={index * (100 / ROW_LINES)}
-              y2={index * (100 / ROW_LINES)}
+              y1={index * (150 / ROW_LINES)}
+              y2={index * (150 / ROW_LINES)}
               stroke="black"
               strokeWidth={0.2}
               opacity="0.2"
@@ -51,7 +51,7 @@ const BarPlot: FC<{
             x1="20"
             x2="20"
             y1={0}
-            y2={100}
+            y2={155}
             stroke="black"
             strokeWidth={0.2}
             opacity="0.2"
@@ -60,7 +60,7 @@ const BarPlot: FC<{
             x1="320"
             x2="320"
             y1={0}
-            y2={100}
+            y2={155}
             stroke="black"
             strokeWidth={0.2}
             opacity="0.2"
@@ -70,7 +70,7 @@ const BarPlot: FC<{
               key={index}
               className={styles.labels}
               x={15}
-              y={index * (100 / ROW_LINES)}
+              y={index * (155 / ROW_LINES)}
               textAnchor="end"
             >
               {Math.round(upperBound / ROW_LINES) *
@@ -85,7 +85,7 @@ const BarPlot: FC<{
             amount={amount}
             index={index}
             width={width}
-            height={100 * (amount / upperBound)}
+            height={155 * (amount / upperBound)}
             length={data.length}
             padding={padding}
             setTooltipLabel={setToolTipLabel}

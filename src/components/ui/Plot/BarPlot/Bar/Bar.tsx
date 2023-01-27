@@ -40,20 +40,20 @@ const Bar: FC<{
           className={styles.bar}
           x={20 + index * width + padding * (index + 1)}
           width={width}
-          y={100 - height}
+          y={155 - height}
           height={2 + height}
         />
         <rect
           x={20 + index * (300 / length)}
           width={300 / length}
-          y={100}
+          y={155}
           height={10}
           fill="white"
         />
         <text
           className={styles.labels}
           x={20 + width * index + padding * (index + 1) + width / 2}
-          y={105}
+          y={162}
           textAnchor="middle"
         >
           {label}

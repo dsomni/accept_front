@@ -5,11 +5,14 @@ import styles from './piePlot.module.css';
 
 const INNER_RADIUS = 25;
 const OUTER_RADIUS = 50;
+const INCREASE_RATIO = 1.1;
 
-const PiePlot: FC<{ title: string; data: IPieData[] }> = ({
-  title,
-  data,
-}) => {
+const PiePlot: FC<{
+  title?: string;
+  data: IPieData[];
+  centralLabel: FC<IPieData>;
+  defaultText: IPieData;
+}> = ({ title, data, centralLabel, defaultText }) => {
   const [centerText, setCenterText] = useState<IPieData | undefined>(
     undefined
   );
@@ -38,9 +41,17 @@ const PiePlot: FC<{ title: string; data: IPieData[] }> = ({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>{title}</div>
-      <svg viewBox="0 0 100 100">
-        <g transform="translate(50, 50)">
+      {title && <div className={styles.title}>{title}</div>}
+      <svg
+        viewBox={`0 0 ${100 * INCREASE_RATIO} ${
+          100 * INCREASE_RATIO
+        }`}
+      >
+        <g
+          transform={`translate(${50 * INCREASE_RATIO}, ${
+            50 * INCREASE_RATIO
+          })`}
+        >
           {processedData.map((item, index) => (
             <Arc
               key={index}
@@ -52,28 +63,19 @@ const PiePlot: FC<{ title: string; data: IPieData[] }> = ({
               inner_radius={INNER_RADIUS}
               outer_radius={OUTER_RADIUS}
               setCenterText={setCenterText}
+              increase_ratio={INCREASE_RATIO}
             />
           ))}
-          {centerText && (
-            <foreignObject
-              x={-INNER_RADIUS * Math.sin(Math.PI / 4)}
-              y={-INNER_RADIUS * Math.sin(Math.PI / 4)}
-              width={2 * INNER_RADIUS * Math.sin(Math.PI / 4)}
-              height={2 * INNER_RADIUS * Math.sin(Math.PI / 4)}
-            >
-              <div className={styles.centerWrapper}>
-                <div
-                  className={styles.centerName}
-                  style={{ color: centerText.color }}
-                >
-                  {centerText.label}
-                </div>
-                <div className={styles.centerAmount}>
-                  {centerText.amount}
-                </div>
-              </div>
-            </foreignObject>
-          )}
+          <foreignObject
+            x={-INNER_RADIUS * Math.sin(Math.PI / 4)}
+            y={-INNER_RADIUS * Math.sin(Math.PI / 4)}
+            width={2 * INNER_RADIUS * Math.sin(Math.PI / 4)}
+            height={2 * INNER_RADIUS * Math.sin(Math.PI / 4)}
+          >
+            {centerText
+              ? centralLabel(centerText)
+              : centralLabel(defaultText)}
+          </foreignObject>
         </g>
       </svg>
     </div>

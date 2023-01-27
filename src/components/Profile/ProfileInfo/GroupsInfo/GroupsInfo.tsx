@@ -7,7 +7,7 @@ import styles from './groupsInfo.module.css';
 const GroupsInfo: FC<{ user: IUser }> = ({ user }) => {
   const { locale } = useLocale();
   return (
-    <div className={styles.restInfo}>
+    <div className={styles.wrapper}>
       {user.groups.length > 0 && (
         <div className={styles.groupSection}>
           <div className={styles.groupTitle}>
