@@ -11,7 +11,6 @@ import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 
 function UserProfile(props: IFullProfileBundle) {
   const { isAdmin, accessLevel } = useUser();
-  console.log(props);
   return (
     <div className={styles.wrapper}>
       <Title title={props.user.shortName} />

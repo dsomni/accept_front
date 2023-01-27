@@ -9,11 +9,8 @@ const ROW_LINES = 10;
 
 const BarPlot: FC<{
   title: string;
-  total: number;
   data: IPlotData[];
-}> = ({ title, total, data }) => {
-  console.log(total, data);
-
+}> = ({ title, data }) => {
   const [toolTipLabel, setToolTipLabel] = useState<
     string | undefined
   >(undefined);

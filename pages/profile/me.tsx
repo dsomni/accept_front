@@ -9,7 +9,6 @@ import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 
 function MyProfile(props: IFullProfileBundle) {
   const { locale } = useLocale();
-  console.log(props);
   return (
     <>
       <Title title={locale.titles.profile.me} />

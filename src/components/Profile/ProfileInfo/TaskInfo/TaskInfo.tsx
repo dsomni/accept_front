@@ -1,12 +1,12 @@
 import { ITaskInfo } from '@custom-types/data/IProfileInfo';
-import { IPlotData } from '@custom-types/ui/IPlot';
-import { BarPlot } from '@ui/Plot';
+import { IPieData, IPlotData } from '@custom-types/ui/IPlot';
+import { BarPlot, PiePlot } from '@ui/Plot';
 import { FC, memo, useMemo } from 'react';
-// import styles from "./taskInfo.module.css"
+import styles from './taskInfo.module.css';
 
 const TaskInfo: FC<ITaskInfo> = ({
   total,
-  verdict_destribution,
+  verdict_distribution,
   complexity_distribution,
 }) => {
   const complexity_data = useMemo(
@@ -20,13 +20,27 @@ const TaskInfo: FC<ITaskInfo> = ({
       ),
     [complexity_distribution]
   );
+
+  const verdict_data = useMemo(
+    () =>
+      verdict_distribution.map(
+        (item) =>
+          ({
+            label: item.name,
+            amount: item.amount,
+            color: item.name === 'OK' ? '#00FF55' : '#FF2222',
+          } as IPieData)
+      ),
+    [verdict_distribution]
+  );
+
   return (
-    <div>
+    <div className={styles.wrapper}>
       <BarPlot
-        title={'Сложность задачи'}
-        total={total}
+        title={'Сложность решенных задач'}
         data={complexity_data}
       />
+      <PiePlot title={'Вердикты задач'} data={verdict_data} />
     </div>
   );
 };

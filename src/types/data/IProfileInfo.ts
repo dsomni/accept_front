@@ -23,7 +23,7 @@ export interface IAttemptInfo {
 
 export interface ITaskInfo {
   total: number;
-  verdict_destribution: IBaseInfo[];
+  verdict_distribution: IBaseInfo[];
   complexity_distribution: IComplexity[];
 }
 

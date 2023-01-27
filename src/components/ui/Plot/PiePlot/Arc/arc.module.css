@@ -1,0 +1,7 @@
+.arc {
+  opacity: 0.85;
+}
+
+.arc:hover {
+  opacity: 0.95;
+}
