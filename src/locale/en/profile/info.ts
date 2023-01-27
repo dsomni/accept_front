@@ -7,4 +7,10 @@ export const info = {
     languages: 'Languages of sent attempts',
     verdicts: 'Verdicts of sent attempts',
   },
+  shortStatistics: {
+    allAttempts: 'Total attempts',
+    okAttempts: 'Successful attempts',
+    totalScore: 'Total score',
+    ratingPlace: 'Rating place',
+  },
 };

@@ -3,9 +3,9 @@ import styles from './profileInfo.module.css';
 import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 import MainInfo from './MainInfo/MainInfo';
 import GroupsInfo from './GroupsInfo/GroupsInfo';
-import RatingInfo from './RatingInfo/RatingInfo';
 import TaskInfo from './TaskInfo/TaskInfo';
 import AttemptInfo from './AttemptInfo/AttemptInfo';
+import ShortStatistics from './ShortStatistics/ShortStatistics';
 
 const ProfileInfo: FC<IFullProfileBundle> = ({
   user,
@@ -16,8 +16,11 @@ const ProfileInfo: FC<IFullProfileBundle> = ({
   return (
     <div className={styles.wrapper}>
       <MainInfo user={user} />
-      <RatingInfo {...rating_info} />
       <GroupsInfo user={user} />
+      <ShortStatistics
+        ratingInfo={rating_info}
+        attemptInfo={attempt_info}
+      />
       {task_info.total > 0 && <TaskInfo {...task_info} />}
       {attempt_info.total > 0 && <AttemptInfo {...attempt_info} />}
     </div>
