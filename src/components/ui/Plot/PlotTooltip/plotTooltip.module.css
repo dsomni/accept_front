@@ -1,0 +1,8 @@
+.wrapper {
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 0px #00000066;
+  padding: var(--spacer-xxs) var(--spacer-xs);
+}

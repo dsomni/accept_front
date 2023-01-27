@@ -1,0 +1,29 @@
+@keyframes scaleFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.labels {
+  font-size: 5px;
+}
+
+.bar {
+  opacity: 0.75;
+  fill: var(--secondary);
+  animation: 1s linear 0s 1 scaleFromBottom;
+}
+
+.bar:hover {
+  opacity: 0.9;
+  /* stroke: black; */
+  /* stroke-width: 0.5px; */
+}
+
+.wrapper {
+  cursor: pointer;
+}
