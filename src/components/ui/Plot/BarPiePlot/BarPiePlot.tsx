@@ -1,4 +1,4 @@
-import { IPieData } from '@custom-types/ui/IPlot';
+import { IPlotData } from '@custom-types/ui/IPlot';
 import { FC, memo } from 'react';
 import BarPlot from '../BarPlot/BarPlot';
 import PiePlot from '../PiePlot/PiePlot';
@@ -6,9 +6,9 @@ import styles from './barPiePlot.module.css';
 
 const BarPiePlot: FC<{
   title: string;
-  data: IPieData[];
-  centralLabel: FC<IPieData>;
-  defaultText: IPieData;
+  data: IPlotData[];
+  centralLabel: FC<IPlotData>;
+  defaultText: IPlotData;
 }> = ({ title, data, centralLabel, defaultText }) => {
   return (
     <div className={styles.wrapper}>

@@ -14,14 +14,11 @@
 
 .bar {
   opacity: 0.75;
-  fill: var(--secondary);
   animation: 1s linear 0s 1 scaleFromBottom;
 }
 
 .bar:hover {
   opacity: 0.9;
-  /* stroke: black; */
-  /* stroke-width: 0.5px; */
 }
 
 .wrapper {

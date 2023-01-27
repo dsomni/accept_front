@@ -1,5 +1,6 @@
+import { getColor } from '@constants/Colors';
 import { ITaskInfo } from '@custom-types/data/IProfileInfo';
-import { IPieData } from '@custom-types/ui/IPlot';
+import { IPlotData } from '@custom-types/ui/IPlot';
 import { BarPiePlot } from '@ui/Plot';
 import { FC, memo, useMemo } from 'react';
 import styles from './taskInfo.module.css';
@@ -12,12 +13,12 @@ const TaskInfo: FC<ITaskInfo> = ({
   const complexity_data = useMemo(
     () =>
       complexity_distribution.map(
-        (item) =>
+        (item, index) =>
           ({
             label: `${item.start}-${item.end}%`,
             amount: item.amount,
-            color: 'var(--secondary)',
-          } as IPieData)
+            color: getColor(index, 0), // 'var(--secondary)',
+          } as IPlotData)
       ),
     [complexity_distribution]
   );
@@ -32,7 +33,7 @@ const TaskInfo: FC<ITaskInfo> = ({
               label: item.name,
               amount: item.amount,
               color: item.name === 'OK' ? '#00FF55' : '#FF2222',
-            } as IPieData)
+            } as IPlotData)
         ),
     [verdict_distribution]
   );
@@ -42,7 +43,7 @@ const TaskInfo: FC<ITaskInfo> = ({
       <BarPiePlot
         title={'Сложность решенных задач'}
         data={complexity_data}
-        centralLabel={(centerText: IPieData) => (
+        centralLabel={(centerText: IPlotData) => (
           <div className={styles.centerWrapper}>
             <div className={styles.complexityName}>
               {centerText.label}
@@ -61,7 +62,7 @@ const TaskInfo: FC<ITaskInfo> = ({
       <BarPiePlot
         title={'Вердикты сданных задач'}
         data={verdict_data}
-        centralLabel={(centerText: IPieData) => (
+        centralLabel={(centerText: IPlotData) => (
           <div className={styles.centerWrapper}>
             <div
               className={styles.verdictName}

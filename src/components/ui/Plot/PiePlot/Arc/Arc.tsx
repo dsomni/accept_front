@@ -1,4 +1,4 @@
-import { IPieData } from '@custom-types/ui/IPlot';
+import { IPlotData } from '@custom-types/ui/IPlot';
 import { FC, memo, useCallback, useState } from 'react';
 import styles from './arc.module.css';
 
@@ -11,7 +11,7 @@ const Arc: FC<{
   inner_radius: number;
   outer_radius: number;
   increase_ratio: number;
-  setCenterText: (_: IPieData | undefined) => void;
+  setCenterText: (_: IPlotData | undefined) => void;
 }> = ({
   label,
   color,

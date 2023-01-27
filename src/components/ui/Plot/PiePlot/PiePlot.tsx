@@ -1,4 +1,4 @@
-import { IPieData } from '@custom-types/ui/IPlot';
+import { IPlotData } from '@custom-types/ui/IPlot';
 import { FC, memo, useMemo, useState } from 'react';
 import Arc from './Arc/Arc';
 import styles from './piePlot.module.css';
@@ -9,11 +9,11 @@ const INCREASE_RATIO = 1.1;
 
 const PiePlot: FC<{
   title?: string;
-  data: IPieData[];
-  centralLabel: FC<IPieData>;
-  defaultText: IPieData;
+  data: IPlotData[];
+  centralLabel: FC<IPlotData>;
+  defaultText: IPlotData;
 }> = ({ title, data, centralLabel, defaultText }) => {
-  const [centerText, setCenterText] = useState<IPieData | undefined>(
+  const [centerText, setCenterText] = useState<IPlotData | undefined>(
     undefined
   );
 

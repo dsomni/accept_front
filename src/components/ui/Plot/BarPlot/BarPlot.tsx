@@ -78,14 +78,13 @@ const BarPlot: FC<{
             </text>
           ))}
         </g>
-        {data.map(({ label, amount }, index) => (
+        {data.map((item, index) => (
           <Bar
             key={index}
-            label={label}
-            amount={amount}
+            data={item}
             index={index}
             width={width}
-            height={155 * (amount / upperBound)}
+            height={155 * (item.amount / upperBound)}
             length={data.length}
             padding={padding}
             setTooltipLabel={setToolTipLabel}

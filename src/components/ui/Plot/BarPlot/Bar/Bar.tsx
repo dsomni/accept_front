@@ -1,10 +1,10 @@
+import { IPlotData } from '@custom-types/ui/IPlot';
 import { FC, memo, useCallback } from 'react';
 import styles from './bar.module.css';
 
 const Bar: FC<{
   index: number;
-  label: string;
-  amount: number;
+  data: IPlotData;
   width: number;
   height: number;
   length: number;
@@ -12,8 +12,7 @@ const Bar: FC<{
   setTooltipLabel: (_: string | undefined) => void;
 }> = ({
   index,
-  label,
-  amount,
+  data,
   width,
   height,
   length,
@@ -21,8 +20,8 @@ const Bar: FC<{
   setTooltipLabel,
 }) => {
   const onEnter = useCallback(
-    () => setTooltipLabel(amount.toString()),
-    [setTooltipLabel, amount]
+    () => setTooltipLabel(data.amount.toString()),
+    [setTooltipLabel, data.amount]
   );
   const onLeave = useCallback(
     () => setTooltipLabel(undefined),
@@ -42,6 +41,7 @@ const Bar: FC<{
           width={width}
           y={155 - height}
           height={2 + height}
+          fill={data.color}
         />
         <rect
           x={20 + index * (300 / length)}
@@ -56,7 +56,7 @@ const Bar: FC<{
           y={162}
           textAnchor="middle"
         >
-          {label}
+          {data.label}
         </text>
       </g>
     </>
