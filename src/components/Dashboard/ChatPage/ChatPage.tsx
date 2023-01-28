@@ -96,6 +96,29 @@ const ChatPage: FC<{
     }
   }, [hosts, newHost, currentHost, fetchNewHost]);
 
+  const fetchInitialHosts = useCallback(() => {
+    sendRequest<undefined, { user: IUserDisplay; amount: number }[]>(
+      `/hosts/all/${entity}`,
+      'GET'
+    ).then((res) => {
+      if (!res.error)
+        setHosts(
+          res.response
+            .map(
+              (item) =>
+                [item.user, item.amount] as [IUserDisplay, number]
+            )
+            .sort((a, b) => b[1] - a[1])
+        );
+      setInitialLoad(false);
+    });
+  }, [entity]);
+
+  useEffect(() => {
+    setInitialLoad(true);
+    fetchInitialHosts();
+  }, [fetchInitialHosts]);
+
   useEffect(() => {
     if (!socket) return;
     socket.connect();
@@ -106,22 +129,6 @@ const ChatPage: FC<{
       const host = JSON.parse(response) as string;
       setNewHost(host);
     });
-    socket.on('register_response', (response) => {
-      const hosts = JSON.parse(response) as string[];
-      setInitialLoad(true);
-      fetchHosts(hosts).then((res) => {
-        setHosts(
-          res
-            .map(
-              (item) =>
-                [item.user, item.amount] as [IUserDisplay, number]
-            )
-            .sort((a, b) => b[1] - a[1])
-        );
-        setInitialLoad(false);
-      });
-    });
-
     // Clean-up
     return () => {
       socket.removeAllListeners('connect');
