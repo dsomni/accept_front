@@ -76,8 +76,8 @@ const oldHistory: HistoryItem[] = [
     version: 1,
   },
   {
-    title: 'Новые языки в чекере',
-    content: 'Компиляторы для Java, C++ и Pypy',
+    title: 'Чекер',
+    content: 'Новые опции: Java, C++ и Pypy',
     date: '31.03.2021',
     type: 'update',
     version: 1,
