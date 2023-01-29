@@ -5,7 +5,7 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding: var(--spacer-xxl) var(--spacer-xxl);
+  padding: var(--spacer-huge) var(--spacer-huge);
   border: 1px dashed var(--primary);
 }
 

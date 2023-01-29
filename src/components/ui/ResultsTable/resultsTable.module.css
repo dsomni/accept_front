@@ -1,7 +1,7 @@
 .table td {
   white-space: nowrap;
   height: 50px;
-  min-width: var(--spacer-xxl);
+  min-width: var(--spacer-huge);
 }
 
 .table {

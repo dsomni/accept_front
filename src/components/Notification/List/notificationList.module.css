@@ -92,7 +92,7 @@
 }
 
 .emptyMessage {
-  margin: var(--spacer-xxl) auto;
+  margin: var(--spacer-huge) auto;
   width: fit-content;
   font-size: var(--font-size-l);
 }

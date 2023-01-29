@@ -13,7 +13,7 @@ function IndexPage() {
     <>
       <Title title={locale.titles.main} />
       <TopContent />
-      <div style={{ marginBottom: 'var(--spacer-xxl)' }}>
+      <div style={{ marginBottom: 'var(--spacer-huge)' }}>
         {cardList.map((card, index) => {
           return (
             <ProjectCard

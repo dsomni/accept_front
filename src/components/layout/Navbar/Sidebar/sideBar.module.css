@@ -2,6 +2,7 @@
   margin: 2em 1em;
   position: absolute;
 }
+
 .logoWrapper {
   padding: var(--spacer-s);
   display: flex;
@@ -9,12 +10,13 @@
   align-items: center;
   justify-content: center;
 }
+
 .linkWrapper {
   font-size: var(--font-size-l);
   line-height: 2em;
   letter-spacing: 3px;
-  padding-left: var(--spacer-xxl);
-  padding-top: var(--spacer-xxl);
+  padding-left: var(--spacer-huge);
+  padding-top: var(--spacer-huge);
 }
 
 .linkDiv {
@@ -29,11 +31,13 @@
 .collapse {
   margin: 0;
 }
+
 .drawerContent {
   background-color: white;
   width: 100%;
   padding-bottom: 2em;
 }
+
 .noHoverLink:hover {
   background-color: unset;
 }

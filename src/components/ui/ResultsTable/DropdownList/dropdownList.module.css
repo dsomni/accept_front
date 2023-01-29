@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   max-height: 100px;
-  width: var(--spacer-xxl);
+  width: var(--spacer-huge);
   overflow-y: scroll;
   cursor: pointer;
 }

@@ -1,0 +1,13 @@
+.wrapper {
+  width: 100%;
+}
+
+.history {
+  width: 60%;
+  margin: auto;
+}
+
+.timeline {
+  width: fit-content;
+  margin: var(--spacer-xl) auto;
+}

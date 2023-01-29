@@ -1,0 +1,16 @@
+.itemBody {
+  margin-left: var(--spacer-xs);
+  min-height: var(--spacer-huge);
+}
+
+.itemTitle {
+  padding: var(--spacer-xs) 0 var(--spacer-xxs) 0;
+  font-size: var(--font-size-m);
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xs);
+  max-width: var(--spacer-xxhuge);
+}
