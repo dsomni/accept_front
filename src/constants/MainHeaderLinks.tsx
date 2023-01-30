@@ -1,4 +1,4 @@
-import IHeaderLink from '@custom-types/ui/IHeaderLink';
+import { IHeaderLink } from '@custom-types/ui/IHeaderLink';
 
 const projectLinks: IHeaderLink[] = [
   {

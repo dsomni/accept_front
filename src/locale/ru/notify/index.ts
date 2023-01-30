@@ -10,6 +10,7 @@ import { tournament } from './tournament';
 import { tournament_task } from './tournament_task';
 import { students } from './students';
 import { user } from './user';
+import { feedback } from './feedback';
 
 export const notify = {
   errors: {
@@ -27,4 +28,5 @@ export const notify = {
   profile,
   students,
   user,
+  feedback,
 };

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import IHeaderLink from '@custom-types/ui/IHeaderLink';
+import { IHeaderLink } from '@custom-types/ui/IHeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import Dropdown from './Dropdown';
 import { accessLevels } from '@constants/protectedRoutes';

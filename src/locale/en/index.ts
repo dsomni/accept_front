@@ -25,6 +25,7 @@ import { titles } from './titles';
 import { todo } from './todo';
 import { user } from './user';
 import { rating } from './rating';
+import { feedback } from './feedback';
 
 const en = {
   accept: 'Accept',
@@ -57,6 +58,7 @@ const en = {
   new: 'New',
   email: 'Email',
   total: 'Total',
+  send: 'Send',
   assignmentSchema,
   assignment,
   user,
@@ -87,6 +89,7 @@ const en = {
   titles,
   todo,
   rating,
+  feedback,
 };
 
 export default en;

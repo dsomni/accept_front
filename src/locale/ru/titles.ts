@@ -46,4 +46,5 @@ export const titles = {
     list: 'Список турниров',
   },
   courses: 'Курсы',
+  feedback: 'Обратная связь',
 };

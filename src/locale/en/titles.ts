@@ -46,4 +46,5 @@ export const titles = {
     list: 'Tournament list',
   },
   courses: 'Courses',
+  feedback: 'Feedback',
 };

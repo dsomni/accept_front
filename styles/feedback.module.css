@@ -1,0 +1,22 @@
+.wrapper {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+}
+
+.title {
+  font-size: var(--font-size-l);
+  margin: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-m);
+}
+
+.buttonWrapper {
+  margin: auto;
+}
