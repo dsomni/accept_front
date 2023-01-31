@@ -17,7 +17,7 @@ const DeleteModal: FC<{
   setActive: callback<boolean, void>;
   task: ITaskDisplay;
 }> = ({ active, setActive, task }) => {
-  const [assignments, setAssignments] = useState<
+  const [assignment_schemas, setAssignment_schemas] = useState<
     IAssignmentSchemaDisplay[]
   >([]);
   const { locale, lang } = useLocale();
@@ -34,7 +34,7 @@ const DeleteModal: FC<{
       60000
     ).then((res) => {
       if (!res.error && !cleanUp) {
-        setAssignments(res.response);
+        setAssignment_schemas(res.response);
       }
     });
 
@@ -71,25 +71,27 @@ const DeleteModal: FC<{
           <div>
             {locale.task.modals.delete + ` '${task.title}' ?`}
           </div>
-          {assignments.length > 0 && (
+          {assignment_schemas.length > 0 && (
             <div>
               <div>
                 {locale.task.modals.usedInAssignments +
-                  ` (${assignments.length}):`}
+                  ` (${assignment_schemas.length}):`}
               </div>
               <br />
               <div className={deleteModalStyles.list}>
-                {assignments.map((assignment, index) => (
-                  <div key={index}>
-                    <Link
-                      href={`/edu/assignment/${assignment.spec}`}
-                      className={deleteModalStyles.link}
-                      target="_blank"
-                    >
-                      {assignment.title}
-                    </Link>
-                  </div>
-                ))}
+                {assignment_schemas.map(
+                  (assignment_schema, index) => (
+                    <div key={index}>
+                      <Link
+                        href={`/edu/assignment_schema/${assignment_schema.spec}`}
+                        className={deleteModalStyles.link}
+                        target="_blank"
+                      >
+                        {assignment_schema.title}
+                      </Link>
+                    </div>
+                  )
+                )}
               </div>
             </div>
           )}
