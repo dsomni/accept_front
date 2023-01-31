@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import IHeaderLink from '@custom-types/ui/IHeaderLink';
+import { IHeaderLink } from '@custom-types/ui/IHeaderLink';
 import { Group } from '@mantine/core';
 
 import SignIn from '@components/layout/Navbar/SignIn/SignIn';

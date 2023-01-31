@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import IHeaderLink from '@custom-types/ui/IHeaderLink';
+import { IHeaderLink } from '@custom-types/ui/IHeaderLink';
 import { HeaderLink } from '../Header/Links/HeaderLink';
 import { useLocale } from '@hooks/useLocale';
 import styles from './sideBar.module.css';

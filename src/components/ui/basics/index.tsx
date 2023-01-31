@@ -23,6 +23,7 @@ import Tip from './Tip/Tip';
 import DatePicker from './DatePicker/DatePicker';
 import Checkbox from './Checkbox/Checkbox';
 import LoadingOverlay from './LoadingOverlay/LoadingOverlay';
+import Timeline from './Timeline/Timeline';
 
 export {
   Button,
@@ -50,4 +51,5 @@ export {
   Tip,
   DatePicker,
   LoadingOverlay,
+  Timeline,
 };

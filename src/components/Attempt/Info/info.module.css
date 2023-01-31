@@ -1,5 +1,5 @@
 .infoWrapper {
-  margin: var(--spacer-l) var(--spacer-xxl) var(--spacer-xxl)
+  margin: var(--spacer-l) var(--spacer-huge) var(--spacer-huge)
     var(--spacer-xl);
   display: flex;
   flex-direction: row;
@@ -33,7 +33,7 @@
 
 .cell {
   font-size: var(--font-size-s);
-  min-width: var(--spacer-xxl);
+  min-width: var(--spacer-huge);
   padding: var(--spacer-xs) var(--spacer-s);
 }
 

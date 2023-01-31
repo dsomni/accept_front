@@ -11,13 +11,9 @@ import { useBackNotifications } from '@hooks/useBackNotifications';
 import { link } from '@constants/Avatar';
 import { Indicator } from '@ui/basics';
 import styles from './profileMenu.module.css';
-import {
-  BellRinging,
-  Crown,
-  Logout,
-  Robot,
-} from 'tabler-icons-react';
+import { Logout } from 'tabler-icons-react';
 import { accessLevels } from '@constants/protectedRoutes';
+import { menuLinks } from '@constants/ProfileMenuLinks';
 
 const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
@@ -66,37 +62,20 @@ const ProfileMenu: FC<{}> = ({}) => {
           <Menu.Label className={styles.label}>
             {user?.shortName || ''}
           </Menu.Label>
-          <Menu.Item component="a" href="/profile/me">
-            <Group spacing="xs" className={styles.wrapper}>
-              <Robot color="var(--secondary)" size={20} />
-              <div>{locale.mainHeaderLinks.profileLinks.profile}</div>
-            </Group>
-          </Menu.Item>
-          <Menu.Item
-            component="a"
-            href="/profile/me?section=notifications"
-          >
-            <Group spacing="xs" className={styles.wrapper}>
-              <Group className={styles.wrapper}>
-                <Indicator disabled={new_amount <= 0} size={6}>
-                  <BellRinging color="var(--secondary)" size={20} />
-                </Indicator>
-                <div>
-                  {locale.mainHeaderLinks.profileLinks.notifications}
-                </div>
-              </Group>
-            </Group>
-          </Menu.Item>
-          {accessLevel >= accessLevels.admin && (
-            <Menu.Item component="a" href="/dashboard/admin">
-              <Group spacing="xs" className={styles.wrapper}>
-                <Crown color="var(--secondary)" size={20} />
-                <div>
-                  {locale.mainHeaderLinks.profileLinks.adminDashboard}
-                </div>
-              </Group>
-            </Menu.Item>
-          )}
+          {menuLinks
+            .filter(
+              (item) =>
+                !item.permission ||
+                accessLevel >= accessLevels[item.permission]
+            )
+            .map((item, index) => (
+              <Menu.Item component="a" href={item.href} key={index}>
+                <Group spacing="xs" className={styles.wrapper}>
+                  {item.icon}
+                  <div>{item.text(locale)}</div>
+                </Group>
+              </Menu.Item>
+            ))}
           <Menu.Item onClick={handleSignOut}>
             <Group spacing="xs" className={styles.wrapper}>
               <Group className={styles.wrapper}>

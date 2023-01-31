@@ -22,9 +22,12 @@ function Accept({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <MantineProvider
+      withCSSVariables
       theme={{
         colors: {
           white: ['#ffffff'],
+          'old-accept': ['#87ceeb'],
+          future: ['#f880fe'],
         },
       }}
     >

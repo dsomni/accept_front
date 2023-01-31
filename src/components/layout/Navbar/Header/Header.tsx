@@ -1,6 +1,6 @@
 import Logo from '../Logo/Logo';
 import Links from './Links/Links';
-import IHeaderLink from '@custom-types/ui/IHeaderLink';
+import { IHeaderLink } from '@custom-types/ui/IHeaderLink';
 import { FC, memo } from 'react';
 import styles from './header.module.css';
 
