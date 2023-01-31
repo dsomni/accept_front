@@ -16,7 +16,8 @@ import {
 import { useUser } from '@hooks/useUser';
 import { UTCDate } from '@utils/datetime';
 import { requestWithNotify } from '@utils/requestWithNotify';
-
+import ContactCard from '@ui/ContactCard/ContactCard';
+import { cardContent } from '@constants/ContactCards';
 export function Feedback() {
   const { locale, lang } = useLocale();
 
@@ -61,7 +62,6 @@ export function Feedback() {
       author: user?.login || 'Anonymous',
       date: UTCDate(new Date()),
     };
-    console.log(message);
     requestWithNotify<IFeedbackMessage, boolean>(
       'feedback/add',
       'POST',
@@ -76,28 +76,44 @@ export function Feedback() {
     <>
       <Title title={locale.titles.about} />
       <div className={styles.wrapper}>
-        <div className={styles.title}>Обратная связь</div>
-        <div className={styles.text}>
-          Мы благодарны за каждый отзыв, сообщение о баге и тп
+        <div className={styles.section}>
+          <div className={styles.title}>
+            {locale.feedback.contacts.title}
+          </div>
+          <div className={styles.cards}>
+            {cardContent(locale).map((card, index) => (
+              <ContactCard key={index} card={card} />
+            ))}
+          </div>
         </div>
-        <div className={styles.form}>
-          <Select
-            label={locale.feedback.form.subject}
-            data={feedbackSubjects.map((item) => ({
-              label: locale.feedback.subjects[item],
-              value: item,
-            }))}
-            {...form.getInputProps('subject')}
-          />
-          <CustomEditor
-            label={locale.feedback.form.message}
-            form={form}
-            name={'message'}
-          />
-          <div className={styles.buttonWrapper}>
-            <Button disabled={!form.isValid()} onClick={handleSubmit}>
-              {locale.send}
-            </Button>
+        <div
+          className={`${styles.section} ${styles.feedbackWrapper}`}
+        >
+          <div className={styles.title}>
+            {locale.feedback.feedback.title}
+          </div>
+          <div className={styles.form}>
+            <Select
+              label={locale.feedback.form.subject}
+              data={feedbackSubjects.map((item) => ({
+                label: locale.feedback.subjects[item],
+                value: item,
+              }))}
+              {...form.getInputProps('subject')}
+            />
+            <CustomEditor
+              label={locale.feedback.form.message}
+              form={form}
+              name={'message'}
+            />
+            <div className={styles.buttonWrapper}>
+              <Button
+                disabled={!form.isValid()}
+                onClick={handleSubmit}
+              >
+                {locale.send}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

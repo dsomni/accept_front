@@ -156,3 +156,7 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: var(--dark3);
 }
+
+.ck-editor__editable {
+  max-height: 400px;
+}

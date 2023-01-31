@@ -1,4 +1,11 @@
 export const feedback = {
+  contacts: {
+    title: 'Контакты',
+    text: 'Почта: admin@жопа.fun',
+  },
+  feedback: {
+    title: 'Обратная связь',
+  },
   subjects: {
     bug: 'Баг',
     report: 'Ошибка',
