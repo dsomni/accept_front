@@ -129,6 +129,7 @@ const Tests: FC<{
       <Dropzone
         onDrop={onDrop}
         title={locale.ui.codeArea.dragFiles}
+        helperContent={locale.ui.codeArea.filesRestrictions}
         description={''}
         showButton
         plural
