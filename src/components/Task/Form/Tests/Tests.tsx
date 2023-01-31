@@ -132,6 +132,7 @@ const Tests: FC<{
         description={''}
         showButton
         plural
+        maxSize={100000 * 2} // amount of symbols * average utf-8 symbol size
         buttonProps={{
           style: {
             width: '100%',

@@ -20,6 +20,7 @@ export const validation = {
     number: 'Task must include at least 1 test',
     empty: 'Task can not have empty tests',
     text: 'Text task can have only one test',
+    tooLarge: 'The total size of tests should not exceed 2 Mb',
   },
   hintContent: 'You add hint, but hint content is empty',
   checkerCode: 'You used checker, but forget to add checker`s code',
