@@ -202,14 +202,14 @@ const newHistory: HistoryItem[] = [
   {
     title: 'О нас',
     content: 'Страница "О нас" и форма обратной связи',
-    date: 'Февраль 2023',
-    type: 'soon',
+    date: '31.01.2023',
+    type: 'new',
     version: 2,
   },
   {
     title: 'Пользовательские настройки',
     content: 'Настройки приватности профиля, интерфейса',
-    date: '--',
+    date: 'Март 2023',
     type: 'soon',
     version: 2,
   },
