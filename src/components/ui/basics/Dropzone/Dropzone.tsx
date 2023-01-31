@@ -175,17 +175,18 @@ const Dropzone: FC<{
               ? locale.ui.codeArea.selectFiles
               : locale.ui.codeArea.selectFile}
           </Button>
-          <Helper
-            dropdownContent={
-              <div>
-                {helperContent &&
-                  helperContent.map((p, index) => (
+          {helperContent && (
+            <Helper
+              dropdownContent={
+                <div>
+                  {helperContent.map((p, index) => (
                     <p key={index}>{p}</p>
                   ))}
-              </div>
-            }
-            customIcon={<AlertCircle color={'var(--negative)'} />}
-          />
+                </div>
+              }
+              customIcon={<AlertCircle color={'var(--negative)'} />}
+            />
+          )}
           {additionalButtons}
         </div>
       )}

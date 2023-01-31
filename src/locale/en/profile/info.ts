@@ -1,11 +1,11 @@
 export const info = {
   task: {
-    complexity: 'Complexity of solved tasks',
-    verdicts: 'Verdicts of sent tasks',
+    complexity: 'Complexity tasks',
+    verdicts: 'Verdicts tasks',
   },
   attempt: {
-    languages: 'Languages of sent attempts',
-    verdicts: 'Verdicts of sent attempts',
+    languages: 'Languages attempts',
+    verdicts: 'Verdicts attempts',
   },
   shortStatistics: {
     allAttempts: 'Total attempts',
