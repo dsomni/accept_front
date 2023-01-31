@@ -33,6 +33,7 @@ const Dropzone: FC<{
   additionalButtons?: ReactNode;
   accept?: string[];
   maxSize?: number;
+  helperContent?: string[];
 
   showButton?: boolean;
   buttonProps?: MyButtonProps;
@@ -45,6 +46,8 @@ const Dropzone: FC<{
   description,
   maxSize,
   additionalButtons,
+  helperContent,
+
   showButton,
   buttonProps,
 }) => {
@@ -172,18 +175,18 @@ const Dropzone: FC<{
               ? locale.ui.codeArea.selectFiles
               : locale.ui.codeArea.selectFile}
           </Button>
-          <Helper
-            dropdownContent={
-              <div>
-                {locale.ui.codeArea.filesRestrictions.map(
-                  (p, index) => (
+          {helperContent && (
+            <Helper
+              dropdownContent={
+                <div>
+                  {helperContent.map((p, index) => (
                     <p key={index}>{p}</p>
-                  )
-                )}
-              </div>
-            }
-            customIcon={<AlertCircle color={'var(--negative)'} />}
-          />
+                  ))}
+                </div>
+              }
+              customIcon={<AlertCircle color={'var(--negative)'} />}
+            />
+          )}
           {additionalButtons}
         </div>
       )}
