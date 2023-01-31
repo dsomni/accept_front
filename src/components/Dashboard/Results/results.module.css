@@ -8,6 +8,6 @@
 }
 
 .empty {
-  margin: var(--spacer-xxl) auto;
+  margin: var(--spacer-huge) auto;
   font-size: var(--font-size-l);
 }

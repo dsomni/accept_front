@@ -1,5 +1,4 @@
 import { useLocale } from '@hooks/useLocale';
-
 import {
   FC,
   ReactNode,

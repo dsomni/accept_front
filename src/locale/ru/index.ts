@@ -25,6 +25,8 @@ import { titles } from './titles';
 import { todo } from './todo';
 import { user } from './user';
 import { rating } from './rating';
+import { feedback } from './feedback';
+import { contacts } from './contacts';
 
 const ru = {
   accept: 'Accept',
@@ -57,6 +59,7 @@ const ru = {
   new: 'New',
   email: 'Почта',
   total: 'Всего',
+  send: 'Отправить',
   assignmentSchema,
   assignment,
   user,
@@ -87,6 +90,8 @@ const ru = {
   titles,
   todo,
   rating,
+  feedback,
+  contacts,
 };
 
 export default ru;

@@ -9,11 +9,20 @@ import {
 } from 'react';
 import { Group, Text } from '@mantine/core';
 import { Dropzone as MantineDropzone } from '@mantine/dropzone';
-import { CircleX, FileUpload, Photo } from 'tabler-icons-react';
+import {
+  AlertCircle,
+  CircleX,
+  FileUpload,
+  Photo,
+} from 'tabler-icons-react';
 import { useLocale } from '@hooks/useLocale';
-import { Button } from '@ui/basics';
+import { Button, Helper } from '@ui/basics';
 import { MyButtonProps } from '@custom-types/ui/basics/button';
 import styles from './dropzone.module.css';
+import {
+  errorNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
 const Dropzone: FC<{
   children: ReactNode;
@@ -23,6 +32,7 @@ const Dropzone: FC<{
   plural?: boolean;
   additionalButtons?: ReactNode;
   accept?: string[];
+  maxSize?: number;
 
   showButton?: boolean;
   buttonProps?: MyButtonProps;
@@ -33,6 +43,7 @@ const Dropzone: FC<{
   accept,
   title,
   description,
+  maxSize,
   additionalButtons,
   showButton,
   buttonProps,
@@ -69,6 +80,7 @@ const Dropzone: FC<{
         openRef={openRef}
         disabled={false}
         accept={accept}
+        maxSize={maxSize}
         onDrop={(files) => {
           dragEnd();
           onDrop(files);
@@ -82,7 +94,25 @@ const Dropzone: FC<{
           zIndex: 5,
           visibility: drag > 0 ? 'visible' : 'hidden',
         }}
-        onReject={(_) => dragEnd()}
+        onReject={(e) => {
+          dragEnd();
+          e.forEach((item) => {
+            const id = newNotification({});
+            const errorCode = item.errors[0]
+              .code as keyof typeof locale.ui.dropzone.errors;
+            const filename = item.file?.name || '';
+            errorNotification({
+              id,
+              title: locale.ui.dropzone.errors[errorCode].title,
+              message:
+                locale.ui.dropzone.errors[errorCode].message(
+                  filename
+                ),
+              autoClose: 5000,
+            });
+          });
+          console.log(e);
+        }}
       >
         <Group
           position="center"
@@ -142,6 +172,18 @@ const Dropzone: FC<{
               ? locale.ui.codeArea.selectFiles
               : locale.ui.codeArea.selectFile}
           </Button>
+          <Helper
+            dropdownContent={
+              <div>
+                {locale.ui.codeArea.filesRestrictions.map(
+                  (p, index) => (
+                    <p key={index}>{p}</p>
+                  )
+                )}
+              </div>
+            }
+            customIcon={<AlertCircle color={'var(--negative)'} />}
+          />
           {additionalButtons}
         </div>
       )}

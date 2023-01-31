@@ -1,0 +1,9 @@
+.dateWrapper {
+  color: gray;
+  font-size: var(--font-size-xs);
+}
+
+.contentWrapper {
+  color: gray;
+  font-size: var(--font-size-xs);
+}

@@ -7,7 +7,7 @@ export const createSocket = (
   return typeof window !== 'undefined' && login
     ? io(`${process.env.WEBSOCKET_API}`, {
         path: path,
-        // transports: ['polling'],
+        transports: ['polling'],
       })
     : undefined;
 };

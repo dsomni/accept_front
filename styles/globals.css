@@ -59,9 +59,10 @@ body {
 }
 
 :root {
-  --spacer-xhuge: 24rem;
-  --spacer-huge: 12rem;
-  --spacer-xxl: 6rem;
+  --spacer-xxhuge: 24rem;
+  --spacer-xhuge: 12rem;
+  --spacer-huge: 6rem;
+  --spacer-xxl: 4.5rem;
   --spacer-xl: 3rem;
   --spacer-l: 2rem;
   --spacer-m: 1.5rem;
@@ -154,4 +155,8 @@ body {
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--dark3);
+}
+
+.ck-editor__editable {
+  max-height: 400px;
 }

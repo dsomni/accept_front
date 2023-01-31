@@ -1,6 +1,6 @@
 .wrapper {
   width: 80%;
-  margin: var(--spacer-l) auto var(--spacer-xxl) auto;
+  margin: var(--spacer-l) auto var(--spacer-huge) auto;
 }
 
 .link {

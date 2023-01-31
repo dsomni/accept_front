@@ -1,15 +1,21 @@
-import { NextPage } from 'next';
-import Todo from '@components/Todo/Todo';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
+import About from '@components/About/About';
+import { DefaultLayout } from '@layouts/DefaultLayout';
+import { ReactElement } from 'react';
 
-const About: NextPage = () => {
+function AboutPage() {
   const { locale } = useLocale();
   return (
     <>
       <Title title={locale.titles.about} />
-      <Todo />
+      <About />
     </>
   );
+}
+
+AboutPage.getLayout = (page: ReactElement) => {
+  return <DefaultLayout>{page}</DefaultLayout>;
 };
-export default About;
+
+export default AboutPage;

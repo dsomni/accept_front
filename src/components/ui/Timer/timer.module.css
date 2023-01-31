@@ -13,7 +13,7 @@
 }
 
 .wrapper.show {
-  width: calc(var(--spacer-xhuge) + var(--spacer-l));
+  width: calc(var(--spacer-xxhuge) + var(--spacer-l));
 }
 
 .iconRoot:hover {
@@ -33,7 +33,7 @@
 
 .timerWrapper {
   height: calc(1.3 * var(--spacer-xl));
-  width: var(--spacer-xhuge);
+  width: var(--spacer-xxhuge);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

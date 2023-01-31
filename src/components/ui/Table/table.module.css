@@ -55,7 +55,7 @@
 }
 
 .selectPerPage {
-  width: var(--spacer-xxl);
+  width: var(--spacer-huge);
 }
 
 .pageNavigationWrapper {
@@ -66,6 +66,6 @@
 
 .emptyMessage,
 .nothingFoundMessage {
-  margin: var(--spacer-xxl) auto;
+  margin: var(--spacer-huge) auto;
   width: fit-content;
 }
