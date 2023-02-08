@@ -1,0 +1,97 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.utils {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacer-s);
+  padding: 0 var(--spacer-m);
+  margin: var(--spacer-s) 0;
+  height: 30px;
+}
+
+.utils:first-child {
+  margin-right: var(--spacer-l);
+}
+
+.messages {
+  border-top: 1px solid var(--dark5);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacer-m);
+}
+
+.lengthWrapper {
+  width: var(--spacer-l);
+}
+
+.message {
+  width: 100%;
+  border-bottom: 1px solid var(--dark5);
+  display: flex;
+  flex-direction: row;
+  padding: var(--spacer-xxs) var(--spacer-m);
+  background-color: #00000009;
+  user-select: none;
+}
+
+.message:hover {
+  background-color: var(--primary-light);
+}
+
+.messageWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.checkboxWrapper {
+  margin: auto var(--spacer-l) auto 0;
+}
+
+.titleWrapper {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  width: 100%;
+  font-size: var(--font-size-m);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-xxs);
+}
+
+.subject {
+  width: 100%;
+  font-size: var(--font-size-xs);
+  color: var(--dark2);
+}
+
+.author {
+  width: 10%;
+  font-size: var(--font-size-s);
+  margin: auto var(--spacer-xs);
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  width: 15%;
+}
+
+.emptyMessage {
+  margin: var(--spacer-huge) auto;
+  width: fit-content;
+  font-size: var(--font-size-l);
+}
