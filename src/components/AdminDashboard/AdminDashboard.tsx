@@ -11,7 +11,6 @@ import {
 } from 'tabler-icons-react';
 import AddUsers from './AddUsers/AddUsers';
 import AddUser from './AddUser/AddUser';
-import styles from './adminDashboard.module.css';
 import AddGrade from './AddGrade/AddGrade';
 import ChangeGrades from './ChangeGrades/ChangeGrades';
 import AddGrades from './AddGrades/AddGrades';
@@ -49,11 +48,7 @@ const AdminDashboard: FC<{}> = ({}) => {
     ],
     [locale]
   );
-  return (
-    <div className={styles.lol}>
-      <LeftMenu links={links} />
-    </div>
-  );
+  return <LeftMenu links={links} />;
 };
 
 export default memo(AdminDashboard);

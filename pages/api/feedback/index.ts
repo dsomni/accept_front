@@ -1,7 +1,7 @@
 import { fetchWrapper } from '@utils/fetchWrapper';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function AddFeedback(
+export default async function GetFeedback(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -9,6 +9,5 @@ export default async function AddFeedback(
     req: req,
     res: res,
     url: `api/feedback`,
-    method: 'POST',
   });
 }

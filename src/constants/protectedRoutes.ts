@@ -58,4 +58,6 @@ export const protectedRoutesInfo: {
     checkAccess(pathname, headers, accessLevels.teacher),
   '/dashboard/admin': (pathname, headers) =>
     checkAccess(pathname, headers, accessLevels.admin),
+  '/dashboard/developer': (pathname, headers) =>
+    checkAccess(pathname, headers, accessLevels.developer),
 };
