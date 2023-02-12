@@ -13,13 +13,15 @@ import { useLocale } from '@hooks/useLocale';
 import { useRequest } from '@hooks/useRequest';
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { shrinkText } from '@utils/shrinkText';
-import MessageList, {
-  IListAction,
-  IListMessage,
-} from '@ui/MessageList/MessageList';
+
 import styles from './notificationList.module.css';
 import { MailOpened, Trash } from 'tabler-icons-react';
 import { setter } from '@custom-types/ui/atomic';
+import {
+  IListAction,
+  IListMessage,
+} from '@custom-types/ui/IListMessage';
+import MessageList from '@ui/MessageList/MessageList';
 
 const NotificationList: FC<{}> = ({}) => {
   const { locale, lang } = useLocale();
@@ -83,6 +85,17 @@ const NotificationList: FC<{}> = ({}) => {
     ]
   );
 
+  const handleViewed = useCallback(
+    (selected: string[]) => {
+      sendViewed(
+        selected,
+        locale.notification.list.requestViewed,
+        () => {}
+      );
+    },
+    [locale.notification.list.requestViewed, sendViewed]
+  );
+
   useEffect(() => {
     const id = setInterval(refetchNotifications, 15000);
     return () => {
@@ -131,10 +144,7 @@ const NotificationList: FC<{}> = ({}) => {
       messageTitle={(notification: IListMessage) => {
         return (
           <>
-            {
-              //@ts-ignore
-              shrinkText(notification.title, 48)
-            }
+            {shrinkText(notification.title, 48)}
             {
               //@ts-ignore
               !notification.viewed && (
@@ -151,6 +161,7 @@ const NotificationList: FC<{}> = ({}) => {
       refetch={refetchNotifications}
       emptyMessage={locale.profile.empty.notification}
       loading={loading}
+      handleViewed={handleViewed}
     />
   );
 };

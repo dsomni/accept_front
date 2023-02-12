@@ -15,22 +15,13 @@ import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
 import { shrinkText } from '@utils/shrinkText';
 import { pureCallback, setter } from '@custom-types/ui/atomic';
+import {
+  IListAction,
+  IListMessage,
+} from '@custom-types/ui/IListMessage';
+import ReadModal from '@components/Notification/ReadModal/ReadModal';
 
 const ON_PAGE = 10;
-
-export interface IListMessage {
-  spec: string;
-  author: string;
-  subject: string;
-  message: string;
-  date: Date;
-}
-
-export interface IListAction {
-  icon: ReactNode;
-  tooltipLabel: string;
-  onClick: (_: string[], __: setter<string[]>) => void;
-}
 
 const MessageList: FC<{
   messages: IListMessage[];
@@ -40,6 +31,7 @@ const MessageList: FC<{
   rowClassName: (_: IListMessage) => string;
   refetch: pureCallback;
   emptyMessage: string;
+  handleViewed: setter<string[]>;
 }> = ({
   messages,
   loading,
@@ -48,6 +40,7 @@ const MessageList: FC<{
   rowClassName,
   refetch,
   emptyMessage,
+  handleViewed,
 }) => {
   const [openedModal, setOpenedModal] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -93,10 +86,14 @@ const MessageList: FC<{
     [activePage]
   );
 
-  const handleCloseModal = useCallback(() => {
-    setOpenedModal(false);
-    setTimeout(refetch, 500);
-  }, [refetch]);
+  const handleCloseModal = useCallback(
+    (viewed: string[]) => {
+      handleViewed(viewed);
+      setOpenedModal(false);
+      setTimeout(refetch, 500);
+    },
+    [handleViewed, refetch]
+  );
 
   const totalPages = useMemo(
     () => Math.max(Math.ceil(messages.length / ON_PAGE), 1),
@@ -119,13 +116,14 @@ const MessageList: FC<{
         <></>
       ) : messages.length > 0 ? (
         <>
-          {/* <ReadModal
+          <ReadModal
             opened={openedModal}
             defaultSelected={current}
             messages={messages}
             notLoading
             close={handleCloseModal}
-          /> */}
+            loading={loading}
+          />
           <div className={styles.utils}>
             {selected.length !== 0 ? (
               <>

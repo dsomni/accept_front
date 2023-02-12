@@ -20,6 +20,10 @@ body {
 }
 
 :root {
+  --primary-light: #63bdf823;
+}
+
+:root {
   --dark1: #000;
   --dark2: #333;
   --dark3: #666;

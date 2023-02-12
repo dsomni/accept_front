@@ -1,4 +1,3 @@
-import { INotification } from '@custom-types/data/notification';
 import { Button, LoadingOverlay, Modal } from '@ui/basics';
 import {
   FC,
@@ -10,50 +9,49 @@ import {
 } from 'react';
 import styles from './readModal.module.css';
 import { Group } from '@mantine/core';
-import { useBackNotifications } from '@hooks/useBackNotifications';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
+import { IListMessage } from '@custom-types/ui/IListMessage';
 
 const ReadModal: FC<{
   opened: boolean;
-  notifications: INotification[];
+  messages: IListMessage[];
   defaultSelected?: number;
   notLoading?: boolean;
-  close: () => void;
+  close: (_: string[]) => void;
+  loading: boolean;
 }> = ({
   opened,
-  notifications,
+  messages,
   defaultSelected,
   notLoading,
   close,
+  loading,
 }) => {
+  const { locale } = useLocale();
   const [current, setCurrent] = useState(
     defaultSelected ? defaultSelected : 0
   );
 
-  const [viewed, setViewed] = useState<string[]>([]);
+  const [_, setViewed] = useState<string[]>([]);
 
   useEffect(() => {
     setCurrent(defaultSelected || 0);
     setViewed([]);
   }, [defaultSelected]);
 
-  const { locale } = useLocale();
-
-  const { sendViewed, loading } = useBackNotifications();
-
-  const notification = useMemo(
-    () => notifications[current],
-    [notifications, current]
+  const message = useMemo(
+    () => messages[current],
+    [messages, current]
   );
 
   useEffect(() => {
-    if (notifications[current])
+    if (messages[current])
       setViewed((viewed) => {
-        viewed.push(notifications[current].spec);
+        viewed.push(messages[current].spec);
         return viewed;
       });
-  }, [notifications, current, setViewed]);
+  }, [messages, current, setViewed]);
 
   const prevOne = useCallback(() => {
     setCurrent((current) => (current > 0 ? current - 1 : current));
@@ -61,16 +59,16 @@ const ReadModal: FC<{
 
   const nextOne = useCallback(() => {
     setCurrent((current) =>
-      current < notifications.length - 1 ? current + 1 : current
+      current < messages.length - 1 ? current + 1 : current
     );
-  }, [notifications]);
+  }, [messages]);
 
   const handleClose = useCallback(() => {
-    sendViewed(viewed, locale.notification.list.requestViewed, () =>
-      setViewed([])
-    );
-    close();
-  }, [close, locale, sendViewed, viewed]);
+    setViewed((viewed) => {
+      close(viewed);
+      return [];
+    });
+  }, [close]);
 
   return (
     <div>
@@ -87,20 +85,19 @@ const ReadModal: FC<{
         }}
         title={
           <>
-            {notification ? (
+            {message ? (
               <div>
                 <div className={styles.title}>
-                  {notification.title}
+                  {message.title}
                   <span className={styles.paging}>
-                    {current + 1}/{notifications.length}
+                    {current + 1}/{messages.length}
                   </span>
                 </div>
                 <div className={styles.author}>
-                  {locale.notification.form.author}:{' '}
-                  {notification.author}
+                  {locale.notification.form.author}: {message.author}
                 </div>
                 <div className={styles.date}>
-                  {getLocalDate(notification.date)}
+                  {getLocalDate(message.date)}
                 </div>
               </div>
             ) : (
@@ -115,11 +112,11 @@ const ReadModal: FC<{
         withCloseButton={false}
       >
         <LoadingOverlay visible={!notLoading && loading} />
-        {notification && (
+        {message && (
           <>
             <div
               dangerouslySetInnerHTML={{
-                __html: notification.description,
+                __html: message.message,
               }}
             />
           </>
@@ -130,7 +127,7 @@ const ReadModal: FC<{
               {locale.form.back}
             </Button>
           )}
-          {!(current >= notifications.length - 1) && (
+          {!(current >= messages.length - 1) && (
             <Button onClick={nextOne} variant="light">
               {locale.form.next}
             </Button>
