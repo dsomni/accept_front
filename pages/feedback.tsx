@@ -8,7 +8,7 @@ import {
   feedbackSubjects,
 } from '@custom-types/data/IFeedbackMessage';
 import { useLocale } from '@hooks/useLocale';
-import { Button, CustomEditor, Select } from '@ui/basics';
+import { Button, CustomEditor, Select, TextInput } from '@ui/basics';
 import {
   errorNotification,
   newNotification,
@@ -28,6 +28,7 @@ export function Feedback() {
       spec: '',
       author: '',
       message: '',
+      title: '',
       subject: 'bug',
       date: new Date(),
       reviewed: false,
@@ -40,6 +41,10 @@ export function Feedback() {
       message: (value) =>
         value.length < 5
           ? locale.feedback.form.validation.message
+          : null,
+      title: (value) =>
+        value.length < 5
+          ? locale.feedback.form.validation.title
           : null,
     },
     validateInputOnBlur: true,
@@ -100,6 +105,12 @@ export function Feedback() {
                 value: item,
               }))}
               {...form.getInputProps('subject')}
+            />
+            <TextInput
+              label={locale.feedback.form.title}
+              form={form}
+              name={'title'}
+              {...form.getInputProps('title')}
             />
             <CustomEditor
               label={locale.feedback.form.message}

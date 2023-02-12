@@ -109,7 +109,7 @@ const FeedbackList: FC<{}> = ({}) => {
           ({
             ...item,
             message: item.message,
-            title: item.subject,
+            title: item.title,
           } as IListMessage)
       ),
     [feedbacks]

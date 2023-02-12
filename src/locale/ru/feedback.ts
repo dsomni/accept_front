@@ -15,9 +15,11 @@ export const feedback = {
   form: {
     subject: 'Тема',
     message: 'Сообщение',
+    title: 'Заголовок',
     validation: {
       subject: 'Выберете тему',
       message: 'Сообщение не должно быть короче 5 символов',
+      title: 'Заголовок не должен быть короче 5 символов',
     },
   },
   list: {
