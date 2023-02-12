@@ -9,7 +9,7 @@ function DeveloperDashboardPage() {
 
   return (
     <>
-      <Title title={locale.titles.dashboard.admin} />
+      <Title title={locale.titles.dashboard.developer} />
       <DeveloperDashboard />
     </>
   );

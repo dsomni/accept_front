@@ -20,4 +20,14 @@ export const feedback = {
       message: 'Сообщение не должно быть короче 5 символов',
     },
   },
+  list: {
+    requestDelete: {
+      loading: 'Загрузка',
+      error: 'Ошибка при удалении',
+    },
+    requestViewed: {
+      loading: 'Загрузка',
+      error: 'Ошибка при отмечании просмотренным',
+    },
+  },
 };

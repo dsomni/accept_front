@@ -21,4 +21,14 @@ export const feedback = {
       message: 'Message should not be shorter than 5 characters',
     },
   },
+  list: {
+    requestDelete: {
+      loading: 'Loading',
+      error: 'Error while deleting',
+    },
+    requestViewed: {
+      loading: 'Loading',
+      error: 'Error on marking viewed',
+    },
+  },
 };
