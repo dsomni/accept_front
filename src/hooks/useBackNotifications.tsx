@@ -120,8 +120,8 @@ export const BackNotificationsProvider: FC<{
           lang,
           Array.from(new Set(viewed)),
           () => {
-            onSuccess();
             setTimeout(fetchNotifications, 500);
+            onSuccess();
           }
         );
       }
@@ -137,7 +137,7 @@ export const BackNotificationsProvider: FC<{
       notifications,
       sendViewed,
       loading,
-      refetchNewNotifications: () => fetchNotifications,
+      refetchNewNotifications: fetchNotifications,
       notifyAboutCreation: handleSend,
     }),
     [

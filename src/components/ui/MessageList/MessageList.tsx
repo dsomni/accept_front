@@ -19,7 +19,7 @@ import {
   IListAction,
   IListMessage,
 } from '@custom-types/ui/IListMessage';
-import ReadModal from '@components/Notification/ReadModal/ReadModal';
+import ReadModal from './ReadModal/ReadModal';
 
 const ON_PAGE = 10;
 

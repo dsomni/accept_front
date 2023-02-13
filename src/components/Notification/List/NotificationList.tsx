@@ -73,16 +73,10 @@ const NotificationList: FC<{}> = ({}) => {
         locale.notification.list.requestViewed,
         () => {
           setSelected([]);
-          setTimeout(refetchNotifications, 500);
-          setSelected([]);
         }
       );
     },
-    [
-      locale.notification.list.requestViewed,
-      refetchNotifications,
-      sendViewed,
-    ]
+    [locale, sendViewed]
   );
 
   const handleViewed = useCallback(
