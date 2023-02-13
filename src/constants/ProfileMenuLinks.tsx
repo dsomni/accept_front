@@ -1,6 +1,6 @@
 import { IProfileMenuLink } from '@custom-types/ui/IHeaderLink';
+import NotificationIcon from '@ui/NotificationIcon/NotificationIcon';
 import {
-  BellRinging,
   Crown,
   GlassFull,
   MailOpened,
@@ -16,7 +16,7 @@ export const menuLinks: IProfileMenuLink[] = [
   {
     text: (locale) =>
       locale.mainHeaderLinks.profileLinks.notifications,
-    icon: <BellRinging color="var(--secondary)" size={20} />,
+    icon: <NotificationIcon />,
     href: '/profile/me?section=notifications',
   },
   {
