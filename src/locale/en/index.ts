@@ -27,6 +27,7 @@ import { user } from './user';
 import { rating } from './rating';
 import { feedback } from './feedback';
 import { contacts } from './contacts';
+import { executor } from './executor';
 
 const en = {
   accept: 'Accept',
@@ -92,6 +93,7 @@ const en = {
   rating,
   feedback,
   contacts,
+  executor,
 };
 
 export default en;

@@ -12,6 +12,19 @@ export interface IPureResponse {
   detail: any;
 }
 
+const processServerError = (e: any) => {
+  console.log(e);
+  return {
+    error: true,
+    detail: {
+      description: {
+        ru: 'Ошибка на стороне сервера',
+        en: 'Server side error',
+      },
+    },
+  };
+};
+
 export const sendRequest = <ISend, IReceive>(
   path: string,
   method: availableMethods,
@@ -54,19 +67,13 @@ export const sendRequest = <ISend, IReceive>(
         : null;
       return res as unknown as IResponse<IReceive>;
     })
-    .catch(
-      (_) =>
-        ({
-          error: true,
-          response: {},
-          detail: {
-            description: {
-              ru: 'Ошибка на стороне клиента',
-              en: 'Client side error',
-            },
-          },
-        } as IResponse<IReceive>)
-    );
+    .catch((e) => {
+      console.log(e);
+      return {
+        response: {},
+        ...processServerError(e),
+      } as IResponse<IReceive>;
+    });
 };
 
 export const isSuccessful = <ISend>(
@@ -90,15 +97,7 @@ export const isSuccessful = <ISend>(
             .json()
             .then((res) => ({ error: true, detail: res.detail }))
     )
-    .catch((_) => ({
-      error: true,
-      detail: {
-        description: {
-          ru: 'Ошибка на стороне клиента',
-          en: 'Client side error',
-        },
-      },
-    }));
+    .catch(processServerError);
 };
 
 const CheckStorage = <IReceive>(

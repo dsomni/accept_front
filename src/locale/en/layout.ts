@@ -7,6 +7,7 @@ export const mainHeaderLinks = {
     profile: 'Profile',
     notifications: 'Notifications',
     adminDashboard: 'Admin panel',
+    developerDashboard: 'Dev panel',
     feedback: 'Feedback',
   },
   projects: 'Projects',

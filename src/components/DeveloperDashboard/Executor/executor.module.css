@@ -1,0 +1,14 @@
+.wrapper {
+  width: 80%;
+}
+
+.formWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-l);
+}
+
+.responseWrapper {
+  margin-top: var(--spacer-xl);
+}
