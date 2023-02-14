@@ -11,6 +11,7 @@ import { tournament_task } from './tournament_task';
 import { students } from './students';
 import { user } from './user';
 import { feedback } from './feedback';
+import { executor } from './executor';
 
 export const notify = {
   errors: {
@@ -29,4 +30,5 @@ export const notify = {
   students,
   user,
   feedback,
+  executor,
 };
