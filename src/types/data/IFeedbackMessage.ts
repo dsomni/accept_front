@@ -13,4 +13,5 @@ export interface IFeedbackMessage {
   message: string;
   reviewed: boolean;
   date: Date;
+  title: string;
 }

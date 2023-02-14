@@ -22,6 +22,7 @@ export const titles = {
     edit: 'Edit group',
   },
   dashboard: {
+    developer: 'Developer dashboard',
     admin: 'Admin dashboard',
     assignment: 'Assignment dashboard',
     tournament: 'Tournament dashboard',

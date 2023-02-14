@@ -1,7 +1,7 @@
 import { fetchWrapper } from '@utils/fetchWrapper';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function AddGroup(
+export default async function AddFeedback(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

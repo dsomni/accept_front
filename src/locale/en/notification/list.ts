@@ -1,6 +1,8 @@
 export const list = {
   delete: 'Delete',
   viewed: 'Viewed',
+  edit: 'Edit',
+
   selectAll: 'Select all',
   unselect: 'Unselect all',
   requestDelete: {
