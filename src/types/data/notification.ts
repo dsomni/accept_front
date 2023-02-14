@@ -9,6 +9,11 @@ export interface INotification {
   sent: boolean;
 }
 
+export interface INotificationWithRefs
+  extends Omit<INotification, 'viewed' | 'sent'> {
+  references: number;
+}
+
 export interface INewNotification {
   spec: string;
   title: string;

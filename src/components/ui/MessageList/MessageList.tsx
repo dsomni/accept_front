@@ -145,6 +145,11 @@ const MessageList: FC<{
                 {actions.map((action, index) => (
                   <Icon
                     key={index}
+                    disabled={
+                      action.disabled
+                        ? action.disabled(selected)
+                        : false
+                    }
                     size="xs"
                     tooltipLabel={action.tooltipLabel}
                     onClick={() =>
