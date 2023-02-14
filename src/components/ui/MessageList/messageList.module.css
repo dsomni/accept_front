@@ -38,12 +38,12 @@
   display: flex;
   flex-direction: row;
   padding: var(--spacer-xxs) var(--spacer-m);
-  background-color: #00000009;
+  background-color: #fff;
   user-select: none;
 }
 
 .message:hover {
-  background-color: var(--primary-light);
+  background-color: var(--primary-light) !important;
 }
 
 .messageWrapper {

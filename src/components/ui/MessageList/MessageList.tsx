@@ -180,9 +180,9 @@ const MessageList: FC<{
             {displayedMessages.map((message, index) => (
               <div
                 key={index}
-                className={`${styles.message} ${rowClassName(
-                  message
-                )}`}
+                className={`${rowClassName(message)} ${
+                  styles.message
+                }`}
               >
                 <div className={styles.checkboxWrapper}>
                   <Checkbox

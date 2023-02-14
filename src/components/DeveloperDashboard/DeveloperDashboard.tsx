@@ -27,7 +27,7 @@ const DeveloperDashboard: FC<{}> = ({}) => {
   );
   return (
     <>
-      <LeftMenu links={links} initialStep={1} />
+      <LeftMenu links={links} />
     </>
   );
 };

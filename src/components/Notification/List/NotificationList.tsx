@@ -150,7 +150,7 @@ const NotificationList: FC<{}> = ({}) => {
       }}
       rowClassName={(notification: IListMessage) =>
         //@ts-ignore
-        !notification.viewed ? styles.new : ''
+        notification.viewed ? styles.old : ''
       }
       refetch={refetchNotifications}
       emptyMessage={locale.profile.empty.notification}

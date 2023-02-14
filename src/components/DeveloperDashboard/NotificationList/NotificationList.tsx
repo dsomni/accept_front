@@ -12,7 +12,6 @@ import { useLocale } from '@hooks/useLocale';
 import { Pencil, Trash } from 'tabler-icons-react';
 import { setter } from '@custom-types/ui/atomic';
 import { requestWithError } from '@utils/requestWithError';
-import styles from './notificationList.module.css';
 import EditModal from './EditModal/EditModal';
 
 const NotificationList: FC<{}> = ({}) => {
@@ -123,7 +122,7 @@ const NotificationList: FC<{}> = ({}) => {
         messages={messages}
         refetch={() => refetch(false)}
         handleViewed={() => {}}
-        rowClassName={(_: IListMessage) => styles.row}
+        rowClassName={(_: IListMessage) => ''}
       />
     </>
   );

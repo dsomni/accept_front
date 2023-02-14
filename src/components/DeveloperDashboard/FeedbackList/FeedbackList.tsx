@@ -155,7 +155,7 @@ const FeedbackList: FC<{}> = ({}) => {
       }}
       rowClassName={(feedback: IListMessage) =>
         //@ts-ignore
-        !feedback.reviewed ? styles.new : ''
+        feedback.reviewed ? styles.old : ''
       }
       refetch={refetchFeedback}
       emptyMessage={locale.profile.empty.notification}
