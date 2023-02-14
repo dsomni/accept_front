@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { setter } from './atomic';
+import { callback, setter } from './atomic';
 
 export interface IListMessage {
   spec: string;
@@ -14,4 +14,5 @@ export interface IListAction {
   icon: ReactNode;
   tooltipLabel: string;
   onClick: (_: string[], __: setter<string[]>) => void;
+  disabled?: callback<string[], boolean>;
 }

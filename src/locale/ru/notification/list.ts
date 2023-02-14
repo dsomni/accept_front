@@ -1,6 +1,7 @@
 export const list = {
   delete: 'Удалить',
   viewed: 'Прочитано',
+  edit: 'Изменить',
   selectAll: 'Выбрать все',
   unselect: 'Отменить выделение',
   requestDelete: {

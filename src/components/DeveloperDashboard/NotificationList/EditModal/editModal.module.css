@@ -1,0 +1,6 @@
+.content {
+  margin: 0 var(--spacer-xl) var(--spacer-s) var(--spacer-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xl);
+}

@@ -73,16 +73,10 @@ const NotificationList: FC<{}> = ({}) => {
         locale.notification.list.requestViewed,
         () => {
           setSelected([]);
-          setTimeout(refetchNotifications, 500);
-          setSelected([]);
         }
       );
     },
-    [
-      locale.notification.list.requestViewed,
-      refetchNotifications,
-      sendViewed,
-    ]
+    [locale, sendViewed]
   );
 
   const handleViewed = useCallback(
@@ -156,7 +150,7 @@ const NotificationList: FC<{}> = ({}) => {
       }}
       rowClassName={(notification: IListMessage) =>
         //@ts-ignore
-        !notification.viewed ? styles.new : ''
+        notification.viewed ? styles.old : ''
       }
       refetch={refetchNotifications}
       emptyMessage={locale.profile.empty.notification}

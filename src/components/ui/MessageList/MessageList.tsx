@@ -19,7 +19,7 @@ import {
   IListAction,
   IListMessage,
 } from '@custom-types/ui/IListMessage';
-import ReadModal from '@components/Notification/ReadModal/ReadModal';
+import ReadModal from './ReadModal/ReadModal';
 
 const ON_PAGE = 10;
 
@@ -145,6 +145,11 @@ const MessageList: FC<{
                 {actions.map((action, index) => (
                   <Icon
                     key={index}
+                    disabled={
+                      action.disabled
+                        ? action.disabled(selected)
+                        : false
+                    }
                     size="xs"
                     tooltipLabel={action.tooltipLabel}
                     onClick={() =>
@@ -175,9 +180,9 @@ const MessageList: FC<{
             {displayedMessages.map((message, index) => (
               <div
                 key={index}
-                className={`${styles.message} ${rowClassName(
-                  message
-                )}`}
+                className={`${rowClassName(message)} ${
+                  styles.message
+                }`}
               >
                 <div className={styles.checkboxWrapper}>
                   <Checkbox
