@@ -19,9 +19,13 @@ import {
   errorNotification,
   newNotification,
 } from '@utils/notificationFunctions';
+import SimpleModal from '@ui/SimpleModal/SimpleModal';
+import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
+import modalStyles from '@styles/ui/modal.module.css';
 
 const Executor: FC<{}> = ({}) => {
   const [response, setResponse] = useState('');
+  const [openedConfirmModal, setOpenedConfirmModal] = useState(false);
 
   const { locale, lang } = useLocale();
 
@@ -67,9 +71,6 @@ const Executor: FC<{}> = ({}) => {
   });
 
   const handleSend = useCallback(() => {
-    if (!form.isValid()) {
-      return;
-    }
     let body: IExecutor;
     try {
       body = {
@@ -91,8 +92,6 @@ const Executor: FC<{}> = ({}) => {
       });
       return;
     }
-    console.log(body);
-
     requestWithError<IExecutor, any>(
       'executor',
       'POST',
@@ -103,10 +102,46 @@ const Executor: FC<{}> = ({}) => {
         setResponse(JSON.stringify(response, null, 4));
       }
     );
+    setOpenedConfirmModal(false);
   }, [form, locale, lang]);
+
+  const handleSendClick = useCallback(() => {
+    if (!form.isValid()) {
+      return;
+    }
+    if (form.values.action == 'find') {
+      handleSend();
+    } else {
+      setOpenedConfirmModal(true);
+    }
+  }, [form, handleSend]);
 
   return (
     <div className={styles.wrapper}>
+      <SimpleModal
+        opened={openedConfirmModal}
+        close={() => setOpenedConfirmModal(false)}
+        title={locale.executor.modals.execute.title}
+      >
+        <div className={modalStyles.verticalContent}>
+          <div>{locale.executor.modals.execute.message}</div>
+          <div className={styles.deleteWarning}>
+            {locale.executor.modals.execute.warning}
+          </div>
+
+          <SimpleButtonGroup
+            reversePositive
+            actionButton={{
+              label: locale.send,
+              onClick: handleSend,
+            }}
+            cancelButton={{
+              label: locale.cancel,
+              onClick: () => setOpenedConfirmModal(false),
+            }}
+          />
+        </div>
+      </SimpleModal>
       <div className={styles.formWrapper}>
         <LoadingOverlay visible={loading} />
         <Select
@@ -144,7 +179,7 @@ const Executor: FC<{}> = ({}) => {
           label={locale.executor.form.spec_field}
           {...form.getInputProps('spec_field')}
         />
-        <Button disabled={!form.isValid()} onClick={handleSend}>
+        <Button disabled={!form.isValid()} onClick={handleSendClick}>
           {locale.send}
         </Button>
       </div>
