@@ -1,10 +1,14 @@
 .wrapper {
-  width: 60%;
+  width: 70%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xl);
+  align-items: center;
 }
 
 .title {
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-xl);
 
   text-align: center;
   margin-bottom: var(--spacer-m);
@@ -21,4 +25,8 @@
 
 .timeline {
   margin: var(--spacer-xl) 0;
+}
+
+.aboutWrapper {
+  width: 90%;
 }

@@ -12,3 +12,7 @@
 .responseWrapper {
   margin-top: var(--spacer-xl);
 }
+
+.deleteWarning {
+  color: red;
+}

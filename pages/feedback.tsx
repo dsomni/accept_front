@@ -16,8 +16,7 @@ import {
 import { useUser } from '@hooks/useUser';
 import { UTCDate } from '@utils/datetime';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import ContactCard from '@ui/ContactCard/ContactCard';
-import { cardContent } from '@constants/ContactCards';
+import Contacts from '@ui/Contacts/Contacts';
 export function Feedback() {
   const { locale, lang } = useLocale();
 
@@ -81,16 +80,7 @@ export function Feedback() {
     <>
       <Title title={locale.titles.about} />
       <div className={styles.wrapper}>
-        <div className={styles.section}>
-          <div className={styles.title}>
-            {locale.feedback.contacts.title}
-          </div>
-          <div className={styles.cards}>
-            {cardContent(locale).map((card, index) => (
-              <ContactCard key={index} card={card} />
-            ))}
-          </div>
-        </div>
+        <Contacts />
         <div
           className={`${styles.section} ${styles.feedbackWrapper}`}
         >
