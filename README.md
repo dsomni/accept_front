@@ -1,20 +1,21 @@
-# ACCEPT II
+# ACCEPT frontend
 
 ## Before Start
 
-Do not forget to fill up .env files
+Do not forget to fill up .env files.
 
 - API_ENDPOINT for server-side communication with backend
 - WEBSOCKET_API for client-side communication with backend sockets
 
-## Docker build commands
+Check .templates files for more information.
 
-docker build -t accept-front-docker .
+## Before release
 
-docker compose up --build
+- Update version in `package.json`
+- Update history in `src/constants/History.tsx`
+- Make sure that you have the actual version of the backend: it is important for building stage
+- Make sure your can properly build frontend
 
-## Docker run commands
+## On adding new route
 
-docker run -p 3000:3000 accept-front-docker
-
-docker compose up
+Update the `src/constants/protectedRoutes` if necessary
