@@ -112,11 +112,13 @@ const Executor: FC<{}> = ({}) => {
         <Select
           data={data?.collections || []}
           label={locale.executor.form.collection}
+          searchable
           {...form.getInputProps('collection')}
         />
         <Select
           data={data?.actions || []}
           label={locale.executor.form.action}
+          searchable
           {...form.getInputProps('action')}
         />
         <TextArea
