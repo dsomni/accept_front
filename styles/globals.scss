@@ -5,25 +5,37 @@ body {
   --removed-scroll-width: 0 !important;
   --table-scroll-height: 10px;
   font-size: 14px;
-  min-width: 1024px;
   /*400px*/
   width: 100%;
 }
 
-:root {
-  --phone-upper-boundary: 600px;
-  --tablet-portrait-upper-boundary: 900px;
-  --tablet-landscape-upper-boundary: 1200px;
-  --desktop-upper-boundary: 1800px;
-}
+@mixin for-size($range) {
+  $phone-upper-boundary: 600px;
+  $tablet-portrait-upper-boundary: 900px;
+  $tablet-landscape-upper-boundary: 1200px;
+  $desktop-upper-boundary: 1800px;
 
-:root {
-  --phone-max-width: calc(var(--phone-upper-boundary) -1);
-  --tablet-portrait-min-width: var(--phone-upper-boundary);
-  --tablet-landscape-min-width: var(
-    --tablet-landscape-upper-boundary
-  );
-  --desktop-min-width: var(--desktop-upper-boundary);
+  @if $range == phone-only {
+    @media (max-width: #{$phone-upper-boundary - 1}) {
+      @content;
+    }
+  } @else if $range == tablet-portrait-up {
+    @media (min-width: $phone-upper-boundary) {
+      @content;
+    }
+  } @else if $range == tablet-landscape-up {
+    @media (min-width: $tablet-portrait-upper-boundary) {
+      @content;
+    }
+  } @else if $range == desktop-up {
+    @media (min-width: $tablet-landscape-upper-boundary) {
+      @content;
+    }
+  } @else if $range == big-desktop-up {
+    @media (min-width: $desktop-upper-boundary) {
+      @content;
+    }
+  }
 }
 
 :root {
@@ -91,7 +103,7 @@ body {
   --spacer-xxs: 0.3rem;
 }
 
-/* Custom Editor section start */
+/* Custom Editor section starts */
 .text-tiny {
   font-size: var(--font-size-xxs);
 }
@@ -110,6 +122,24 @@ body {
 
 .image_resized img {
   width: 100%;
+}
+
+/* Custom Editor section ends */
+
+html,
+body {
+  @include for-size(phone-only) {
+    font-size: 12px;
+  }
+  @include for-size(tablet-portrait-up) {
+    font-size: 14px;
+  }
+  @include for-size(desktop-up) {
+    font-size: 16px;
+  }
+  @include for-size(big-desktop-up) {
+    font-size: 18px;
+  }
 }
 
 @media print {

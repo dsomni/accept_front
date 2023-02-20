@@ -3,7 +3,7 @@ import { LocaleProvider } from '@hooks/useLocale';
 import { UserProvider } from '@hooks/useUser';
 import { WidthProvider } from '@hooks/useWidth';
 import { NotificationsProvider } from '@mantine/notifications';
-import '@styles/globals.css';
+import '@styles/globals.scss';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { ReactElement, ReactNode } from 'react';
