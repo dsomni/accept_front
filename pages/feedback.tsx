@@ -78,7 +78,7 @@ export function Feedback() {
 
   return (
     <>
-      <Title title={locale.titles.about} />
+      <Title title={locale.titles.feedback} />
       <div className={styles.wrapper}>
         <Contacts />
         <div
