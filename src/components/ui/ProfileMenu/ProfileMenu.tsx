@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useMemo } from 'react';
 import { Avatar, Group, Menu } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useLocale } from '@hooks/useLocale';
@@ -14,6 +14,7 @@ import styles from './profileMenu.module.css';
 import { Logout } from 'tabler-icons-react';
 import { accessLevels } from '@constants/protectedRoutes';
 import { menuLinks } from '@constants/ProfileMenuLinks';
+import { useWidth } from '@hooks/useWidth';
 
 const ProfileMenu: FC<{}> = ({}) => {
   const { locale } = useLocale();
@@ -43,9 +44,21 @@ const ProfileMenu: FC<{}> = ({}) => {
     });
   }, [locale, signOut]);
 
+  const { width } = useWidth();
+
+  const applyMobileStyles = useMemo(
+    () => width == 'phone-only' || width == 'tablet-portrait-up',
+    []
+  );
+
   return (
     <>
-      <Menu trigger="hover" zIndex={1000}>
+      <Menu
+        trigger={applyMobileStyles ? 'click' : 'hover'}
+        zIndex={1000}
+        position={applyMobileStyles ? 'bottom-end' : undefined}
+        offset={applyMobileStyles ? 12 : undefined}
+      >
         <Menu.Target>
           <div>
             <Indicator label={new_amount} disabled={new_amount <= 0}>

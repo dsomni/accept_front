@@ -4,10 +4,8 @@ export type pureCallback<T = any> = () => T;
 export type setter<T = callback> = (_: T) => void;
 
 export type IWidth =
-  | '320'
-  | '480'
-  | '768'
-  | '1024'
-  | '1280'
-  | '1440'
-  | '1920';
+  | 'phone-only'
+  | 'tablet-portrait-up'
+  | 'tablet-landscape-up'
+  | 'desktop-up'
+  | 'big-desktop-up';

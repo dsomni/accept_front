@@ -1,43 +1,7 @@
-.burger {
-  margin: 2em 1em;
-  position: absolute;
-}
-
-.logoWrapper {
-  padding: var(--spacer-s);
+.wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-}
-
-.linkWrapper {
-  font-size: var(--font-size-l);
-  line-height: 2em;
-  letter-spacing: 3px;
-  padding-left: var(--spacer-huge);
-  padding-top: var(--spacer-huge);
-}
-
-.linkDiv {
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit !important;
-  font-size: var(--font-size-l);
-  user-select: none;
-}
-
-.collapse {
-  margin: 0;
-}
-
-.drawerContent {
-  background-color: white;
-  width: 100%;
-  padding-bottom: 2em;
-}
-
-.noHoverLink:hover {
-  background-color: unset;
+  justify-content: space-between;
+  padding: var(--spacer-s) var(--spacer-m);
 }

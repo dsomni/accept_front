@@ -5,12 +5,14 @@ import { useLocale } from '@hooks/useLocale';
 import Link from 'next/link';
 import styles from './logo.module.css';
 
-const Logo: FC = () => {
+const Logo: FC<{ hideText?: boolean }> = ({ hideText }) => {
   const { locale } = useLocale();
   return (
     <Link href="/" passHref className={styles.logoWrapper}>
       <Image src={logo} width={64} height={64} alt="Accept" />
-      <div className={styles.name}>{locale.accept}</div>
+      {!hideText && (
+        <div className={styles.name}>{locale.accept}</div>
+      )}
     </Link>
   );
 };

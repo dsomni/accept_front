@@ -24,6 +24,8 @@ import DatePicker from './DatePicker/DatePicker';
 import Checkbox from './Checkbox/Checkbox';
 import LoadingOverlay from './LoadingOverlay/LoadingOverlay';
 import Timeline from './Timeline/Timeline';
+import Burger from './Burger/Burger';
+import Drawer from './Drawer/Drawer';
 
 export {
   Button,
@@ -52,4 +54,6 @@ export {
   DatePicker,
   LoadingOverlay,
   Timeline,
+  Burger,
+  Drawer,
 };
