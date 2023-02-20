@@ -1,12 +1,4 @@
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { sendRequest } from '@requests/request';
+import { FC, memo, useCallback, useMemo } from 'react';
 import { IFeedbackMessage } from '@custom-types/data/IFeedbackMessage';
 import MessageList from '@ui/MessageList/MessageList';
 import {
@@ -20,37 +12,25 @@ import { MailOpened, Trash } from 'tabler-icons-react';
 import { requestWithError } from '@utils/requestWithError';
 import { setter } from '@custom-types/ui/atomic';
 import styles from './feedbackList.module.css';
+import { useRequest } from '@hooks/useRequest';
 
 const FeedbackList: FC<{}> = ({}) => {
   const { locale, lang } = useLocale();
-  const [feedbacks, setFeedbacks] = useState<IFeedbackMessage[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let cleanUp = false;
-    setLoading(true);
-    sendRequest<{}, IFeedbackMessage[]>('feedback', 'GET').then(
-      (res) => {
-        if (!res.error && !cleanUp) {
-          setFeedbacks(res.response);
-        }
-        setLoading(false);
-      }
-    );
-    return () => {
-      cleanUp = true;
-    };
-  }, []);
+  const processFeedbackMessages = useCallback(
+    (messages: IFeedbackMessage[]) => {
+      return messages.sort(
+        (a, b) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+    },
+    []
+  );
 
-  const refetchFeedback = useCallback(() => {
-    sendRequest<{}, IFeedbackMessage[]>('feedback', 'GET').then(
-      (res) => {
-        if (!res.error) {
-          setFeedbacks(res.response);
-        }
-      }
-    );
-  }, []);
+  const { data, loading, refetch } = useRequest<
+    {},
+    IFeedbackMessage[]
+  >('feedback', 'GET', undefined, processFeedbackMessages);
 
   const handleDelete = useCallback(
     (selected: string[], setSelected: setter<string[]>) => {
@@ -61,12 +41,12 @@ const FeedbackList: FC<{}> = ({}) => {
         lang,
         selected,
         () => {
-          setTimeout(refetchFeedback, 200);
+          setTimeout(refetch, 200);
           setSelected([]);
         }
       );
     },
-    [locale, lang, refetchFeedback]
+    [locale, lang, refetch]
   );
 
   const sendViewed = useCallback(
@@ -86,33 +66,35 @@ const FeedbackList: FC<{}> = ({}) => {
   const handleView = useCallback(
     (selected: string[], setSelected: setter<string[]>) => {
       sendViewed(selected, () => {
-        setTimeout(refetchFeedback, 200);
+        setTimeout(refetch, 200);
         setSelected([]);
       });
     },
-    [refetchFeedback, sendViewed]
+    [refetch, sendViewed]
   );
 
   const handleViewed = useCallback(
     (viewed: string[]) => {
       sendViewed(viewed, () => {
-        setTimeout(refetchFeedback, 200);
+        setTimeout(refetch, 200);
       });
     },
-    [sendViewed, refetchFeedback]
+    [sendViewed, refetch]
   );
 
   const messages = useMemo(
     () =>
-      feedbacks.map(
-        (item) =>
-          ({
-            ...item,
-            message: item.message,
-            title: item.title,
-          } as IListMessage)
-      ),
-    [feedbacks]
+      data
+        ? data.map(
+            (item) =>
+              ({
+                ...item,
+                message: item.message,
+                title: item.title,
+              } as IListMessage)
+          )
+        : [],
+    [data]
   );
 
   const actions: IListAction[] = useMemo(
@@ -157,7 +139,7 @@ const FeedbackList: FC<{}> = ({}) => {
         //@ts-ignore
         feedback.reviewed ? styles.old : ''
       }
-      refetch={refetchFeedback}
+      refetch={refetch}
       emptyMessage={locale.profile.empty.notification}
       loading={loading}
       handleViewed={handleViewed}
