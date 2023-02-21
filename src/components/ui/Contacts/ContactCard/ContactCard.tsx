@@ -1,9 +1,11 @@
 import { IContactCard } from '@custom-types/ui/IContactCard';
 import { FC, memo } from 'react';
 import Link from 'next/link';
-import styles from './contactCard.module.css';
+import styles from './contactCard.module.scss';
+import { useWidth } from '@hooks/useWidth';
 
 const ContactCard: FC<{ card: IContactCard }> = ({ card }) => {
+  const { phoneOnly } = useWidth();
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.cardTitle}>{card.title}</div>
@@ -17,10 +19,14 @@ const ContactCard: FC<{ card: IContactCard }> = ({ card }) => {
               {contact.icon}
               {contact.href ? (
                 <Link href={contact.href} passHref legacyBehavior>
-                  <a className={styles.link}>{contact.text}</a>
+                  <a className={styles.link}>
+                    {contact.text(phoneOnly)}
+                  </a>
                 </Link>
               ) : (
-                <div className={styles.link}>{contact.text}</div>
+                <div className={styles.link}>
+                  {contact.text(phoneOnly)}
+                </div>
               )}
             </div>
           ))}

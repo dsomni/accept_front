@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -11,7 +13,12 @@
 
 .cards {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+
+  @include for-size(tablet-landscape-up) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   grid-column-gap: var(--spacer-l);
   grid-row-gap: var(--spacer-m);
 }

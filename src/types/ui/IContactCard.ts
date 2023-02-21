@@ -2,7 +2,8 @@ import { ReactNode } from 'react';
 
 export interface IContact {
   icon: ReactNode;
-  text: string;
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  text: (shrink: boolean) => string;
   href?: string;
 }
 

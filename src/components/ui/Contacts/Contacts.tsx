@@ -1,7 +1,7 @@
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo } from 'react';
 import ContactCard from './ContactCard/ContactCard';
-import styles from './contacts.module.css';
+import styles from './contacts.module.scss';
 import { cardContent } from '@constants/ContactCards';
 
 const Contacts: FC<{}> = ({}) => {

@@ -18,8 +18,9 @@ export const cardContent: (_: ILocale) => IContactCard[] = (
     contacts: [
       {
         icon: <Mail size={iconSize} />,
-        text: 'bluecrane.accept@gmail.com',
-        href: 'mailto:bluecrane.accept@gmail.com',
+        text: (shrink: boolean) =>
+          shrink ? 'Email' : 'ts.accept@gmail.com',
+        href: 'mailto:ts.accept@gmail.com',
       },
     ],
   },
@@ -29,17 +30,17 @@ export const cardContent: (_: ILocale) => IContactCard[] = (
     contacts: [
       {
         icon: <BrandVk size={iconSize} />,
-        text: 'VK',
+        text: (_: boolean) => 'VK',
         href: 'https://vk.com/dsomni',
       },
       {
         icon: <BrandTelegram size={iconSize} />,
-        text: 'Telegram',
+        text: (_: boolean) => 'Telegram',
         href: 'https://t.me/flip_floppa',
       },
       {
         icon: <BrandTelegram size={iconSize} />,
-        text: 'Telegram',
+        text: (_: boolean) => 'Telegram',
         href: 'https://t.me/Melaveeta',
       },
     ],
@@ -50,11 +51,11 @@ export const cardContent: (_: ILocale) => IContactCard[] = (
     contacts: [
       {
         icon: <CurrencyRubel size={iconSize} />,
-        text: '5536913884507415',
+        text: (_: boolean) => '5536913884507415',
       },
       {
         icon: <CurrencyRubel size={iconSize} />,
-        text: '2200700169032637',
+        text: (_: boolean) => '2200700169032637',
       },
     ],
   },

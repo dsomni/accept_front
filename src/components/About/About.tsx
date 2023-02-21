@@ -1,13 +1,15 @@
 import ProjectHistory from '@components/ProjectHistory/ProjectHistory';
 import Contacts from '@ui/Contacts/Contacts';
 import { FC, memo } from 'react';
-import styles from './about.module.css';
+import styles from './about.module.scss';
 
 const About: FC<{}> = ({}) => {
   return (
     <>
       <div className={styles.wrapper}>
-        <Contacts />
+        <div className={styles.contactsWrapper}>
+          <Contacts />
+        </div>
         <div className={styles.aboutWrapper}>
           <div className={styles.title}>О нас</div>
           <div className={styles.history}>
