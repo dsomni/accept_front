@@ -40,7 +40,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
   const initialValues = useMemo(
     () => ({
       spec: '',
-      author: user?.login || '',
+      author: user?.shortName || 'unknown',
       title: '',
       description: '',
       tasks: [],
@@ -63,7 +63,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
       allowRegistrationAfterStart: false,
       banned: [],
     }),
-    [user?.login]
+    [user?.shortName]
   );
 
   const handleSubmit = useCallback(
@@ -80,7 +80,7 @@ function TournamentAdd(props: ITournamentAddBundle) {
 
       const tournament = {
         spec: '',
-        author: user?.login || '',
+        author: user?.shortName || 'unknown',
         title: form.values.title,
         description: form.values.description,
         tasks: form.values.tasks,

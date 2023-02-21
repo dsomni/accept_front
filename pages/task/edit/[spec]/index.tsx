@@ -101,7 +101,7 @@ function EditTask(props: {
       } = form.values;
       let body: any = {
         ...values,
-        author: user?.login || 'unknown',
+        author: user?.shortName || 'unknown',
         checkType: +form.values['checkType'],
         taskType: +form.values['taskType'],
         constraints: {

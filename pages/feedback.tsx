@@ -63,7 +63,7 @@ export function Feedback() {
     const message: IFeedbackMessage = {
       ...form.values,
       spec: '',
-      author: user?.login || 'Anonymous',
+      author: user?.login || 'anonymous',
       date: UTCDate(new Date()),
     };
     requestWithNotify<IFeedbackMessage, boolean>(
