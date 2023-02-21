@@ -6,11 +6,11 @@ import styles from './navbar.module.css';
 import { useWidth } from '@hooks/useWidth';
 
 const Navbar: FC = () => {
-  const { width } = useWidth();
+  const { tabletLandscapeUp } = useWidth();
 
   return (
     <div className={styles.wrapper}>
-      {width == 'tablet-landscape-up' ? (
+      {tabletLandscapeUp ? (
         <Header links={links} />
       ) : (
         <Sidebar links={links} />

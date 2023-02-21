@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useMemo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { Avatar, Group, Menu } from '@mantine/core';
 import { useUser } from '@hooks/useUser';
 import { useLocale } from '@hooks/useLocale';
@@ -44,20 +44,15 @@ const ProfileMenu: FC<{}> = ({}) => {
     });
   }, [locale, signOut]);
 
-  const { width } = useWidth();
-
-  const applyMobileStyles = useMemo(
-    () => width == 'phone-only' || width == 'tablet-portrait-up',
-    []
-  );
+  const { tabletLandscapeUp } = useWidth();
 
   return (
     <>
       <Menu
-        trigger={applyMobileStyles ? 'click' : 'hover'}
+        trigger={tabletLandscapeUp ? 'hover' : 'click'}
         zIndex={1000}
-        position={applyMobileStyles ? 'bottom-end' : undefined}
-        offset={applyMobileStyles ? 12 : undefined}
+        position={tabletLandscapeUp ? undefined : 'bottom-end'}
+        offset={tabletLandscapeUp ? undefined : 12}
       >
         <Menu.Target>
           <div>

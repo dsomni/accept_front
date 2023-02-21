@@ -11,6 +11,11 @@ import {
 
 export interface IWidthContext {
   width: IWidth;
+  phoneOnly: boolean;
+  tabletPortraitUp: boolean;
+  tabletLandscapeUp: boolean;
+  desktopUp: boolean;
+  bigDesktopUp: boolean;
 }
 
 const WidthContext = createContext<IWidthContext>(null!);
@@ -20,6 +25,7 @@ export const WidthProvider: FC<{ children: ReactNode }> = ({
 }) => {
   const [width, setWidth] = useState<IWidth>('phone-only');
 
+  const phoneOnly = useMediaQuery('(max-width: 599px)');
   const tabletPortraitUp = useMediaQuery('(min-width: 600px)');
   const tabletLandscapeUp = useMediaQuery('(min-width: 900px)');
   const desktopUp = useMediaQuery('(min-width: 1200px)');
@@ -40,7 +46,17 @@ export const WidthProvider: FC<{ children: ReactNode }> = ({
   }, [bigDesktopUp, desktopUp, tabletLandscapeUp, tabletPortraitUp]);
 
   return (
-    <WidthContext.Provider value={{ width }}>
+    <WidthContext.Provider
+      value={{
+        width,
+        phoneOnly,
+        tabletPortraitUp,
+        tabletLandscapeUp,
+
+        desktopUp,
+        bigDesktopUp,
+      }}
+    >
       {children}
     </WidthContext.Provider>
   );
