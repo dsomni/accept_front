@@ -152,7 +152,7 @@ const Executor: FC<{}> = ({}) => {
       <div className={styles.formWrapper}>
         <LoadingOverlay visible={loading} />
         <Select
-          data={data?.collections || []}
+          data={data?.collections.sort() || []}
           label={locale.executor.form.collection}
           searchable
           {...form.getInputProps('collection')}
