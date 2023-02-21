@@ -10,7 +10,7 @@ import {
 import { useBackNotifications } from '@hooks/useBackNotifications';
 import { link } from '@constants/Avatar';
 import { Indicator } from '@ui/basics';
-import styles from './profileMenu.module.css';
+import styles from './profileMenu.module.scss';
 import { Logout } from 'tabler-icons-react';
 import { accessLevels } from '@constants/protectedRoutes';
 import { menuLinks } from '@constants/ProfileMenuLinks';
