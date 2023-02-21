@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .pageWrapper {
   background: url('/media/code.jpg') no-repeat center center fixed;
   background-size: cover;
@@ -18,19 +20,21 @@
   justify-content: flex-start;
   gap: var(--spacer-xs);
 }
+
 .contentWrapper {
   background-color: #fffffff3;
-  /* min-width: 30%; */
-  min-width: max(500px, 30%);
+  min-width: clamp(30%, 100%, 500px);
   min-height: 450px;
   display: flex;
   flex-direction: column;
   gap: var(--spacer-l);
-  padding: var(--spacer-xl);
   border-radius: var(--spacer-xxs);
+  padding: var(--spacer-xl);
+  @include for-size(phone-only) {
+    padding: var(--spacer-l);
+  }
 }
 
 .title {
   font-size: var(--font-size-xxl);
-  line-height: var(--spacer-s);
 }

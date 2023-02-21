@@ -19,6 +19,7 @@ import {
 } from 'tabler-icons-react';
 import { PasswordInput, TextInput } from '@ui/basics';
 import Stepper from '@ui/Stepper/Stepper';
+import { useWidth } from '@hooks/useWidth';
 
 const stepFields = [
   ['login'],
@@ -29,6 +30,7 @@ const stepFields = [
 function SignUp() {
   const { locale, lang } = useLocale();
   const router = useRouter();
+  const { phoneOnly } = useWidth();
 
   const form = useForm({
     initialValues: {
@@ -139,7 +141,9 @@ function SignUp() {
           <AlignJustified key="2" />,
         ]}
         descriptions={['', '', '']}
-        labels={locale.auth.steps.labels}
+        labels={locale.auth.steps.labels.map((item) =>
+          !phoneOnly ? item : ''
+        )}
         pages={[
           <>
             <TextInput

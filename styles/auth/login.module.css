@@ -7,6 +7,7 @@
 .label {
   font-size: var(--font-size-l);
 }
+
 .enterButton {
   background-color: var(--primary);
   font-size: var(--font-size-l);
@@ -15,14 +16,17 @@
   font-weight: 100;
   line-height: normal;
 }
+
 .footer {
   display: flex;
   flex-direction: column;
   gap: var(--spacer-s);
 }
+
 .footerLine {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: var(--spacer-xxs);
   font-size: var(--font-size-m);
 }

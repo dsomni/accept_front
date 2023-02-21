@@ -2,7 +2,7 @@ import Image from 'next/legacy/image';
 import { FC, ReactNode } from 'react';
 import { Center } from '@mantine/core';
 import logo from 'public/logo.svg';
-import styles from '@styles/layouts/login.module.css';
+import styles from '@styles/layouts/login.module.scss';
 import { useLocale } from '@hooks/useLocale';
 import Title from '@ui/Title/Title';
 
@@ -25,7 +25,7 @@ export const LoginLayout: FC<{
               alt="Logo image"
             />
             <div className={styles.title}>
-              {locale.accept} | {locale.auth[title]}
+              {`${locale.accept} | ${locale.auth[title]}`}
             </div>
           </div>
           {children}

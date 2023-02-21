@@ -101,7 +101,7 @@ body {
 html,
 body {
   @include for-size(phone-only) {
-    font-size: 12px;
+    font-size: 15px;
   }
   @include for-size(tablet-portrait-up) {
     font-size: 14px;
