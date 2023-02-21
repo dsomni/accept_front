@@ -1,7 +1,7 @@
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import Title from '@ui/Title/Title';
 import { ReactElement, useCallback } from 'react';
-import styles from '@styles/feedback.module.css';
+import styles from '@styles/feedback.module.scss';
 import { useForm } from '@mantine/form';
 import {
   IFeedbackMessage,
@@ -17,10 +17,12 @@ import { useUser } from '@hooks/useUser';
 import { UTCDate } from '@utils/datetime';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import Contacts from '@ui/Contacts/Contacts';
+import { useWidth } from '@hooks/useWidth';
 export function Feedback() {
   const { locale, lang } = useLocale();
 
   const { user } = useUser();
+  const { tabletLandscapeUp } = useWidth();
 
   const form = useForm({
     initialValues: {
@@ -80,7 +82,7 @@ export function Feedback() {
     <>
       <Title title={locale.titles.feedback} />
       <div className={styles.wrapper}>
-        <Contacts />
+        {tabletLandscapeUp && <Contacts />}
         <div
           className={`${styles.section} ${styles.feedbackWrapper}`}
         >

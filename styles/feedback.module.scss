@@ -1,9 +1,24 @@
+@import 'mixins';
+
 .wrapper {
-  width: 70%;
-  margin: 0 auto var(--spacer-huge) auto;
+  width: 85%;
+  margin: var(--spacer-xl) auto 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--spacer-xl);
+
+  @include for-size(tablet-landscape-up) {
+    margin: var(--spacer-m) auto var(--spacer-huge) auto;
+  }
+
+  @include for-size(big-desktop-up) {
+    margin: var(--spacer-m) auto var(--spacer-xhuge) auto;
+  }
+
+  @include for-size(phone-only) {
+    margin: var(--spacer-m) 0;
+    width: 100%;
+  }
 }
 
 .section {
@@ -23,13 +38,6 @@
 .title {
   font-size: var(--font-size-xl);
   margin: auto;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap: var(--spacer-l);
-  grid-row-gap: var(--spacer-m);
 }
 
 .form {
