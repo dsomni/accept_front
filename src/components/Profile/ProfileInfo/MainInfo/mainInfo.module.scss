@@ -1,0 +1,59 @@
+@import 'mixins';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: var(--spacer-s);
+
+  @include for-size(tablet-landscape-up) {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacer-l);
+  }
+}
+
+.text {
+  font-size: var(--font-size-l);
+}
+
+.fullName {
+  display: flex;
+  gap: var(--spacer-xs);
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  font-size: var(--font-size-l);
+  @include for-size(tablet-landscape-up) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.nameWrapper {
+  display: flex;
+  column-gap: var(--spacer-s);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.login {
+  @include for-size(tablet-landscape-up) {
+    color: var(--dark4);
+  }
+}
+
+.avatarWrapper {
+  position: relative;
+}
+
+.medal {
+  position: absolute;
+  bottom: -17px;
+  right: -17px;
+}
+
+.mobileTopWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-m);
+}

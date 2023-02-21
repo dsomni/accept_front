@@ -1,6 +1,8 @@
 export const errors = {
   login: {
     len: 'Login shorter than 5 symbols',
+    maxLen: 'Login is too long',
+
     symbols: 'Login includes invalid symbols',
     used: 'Login is already used',
     exists: 'Enter login',

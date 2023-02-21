@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import styles from './profileInfo.module.css';
+import styles from './profileInfo.module.scss';
 import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
 import MainInfo from './MainInfo/MainInfo';
 import GroupsInfo from './GroupsInfo/GroupsInfo';
@@ -16,7 +16,7 @@ const ProfileInfo: FC<IFullProfileBundle> = ({
   return (
     <div className={styles.wrapper}>
       <MainInfo user={user} place={rating_info.place} />
-      <GroupsInfo user={user} />
+      {user.groups.length > 0 && <GroupsInfo user={user} />}
       <ShortStatistics
         ratingInfo={rating_info}
         attemptInfo={attempt_info}

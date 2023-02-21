@@ -4,7 +4,7 @@ import {
 } from '@custom-types/data/IProfileInfo';
 import { useLocale } from '@hooks/useLocale';
 import { FC, memo, useMemo } from 'react';
-import styles from './shortStatistics.module.css';
+import styles from './shortStatistics.module.scss';
 
 const ShortStatistics: FC<{
   ratingInfo: IRatingInfo;
@@ -23,36 +23,24 @@ const ShortStatistics: FC<{
   return (
     <div className={styles.wrapper}>
       <div className={styles.attemptInfo}>
-        <div className={styles.total}>
-          <span>
-            {locale.profile.info.shortStatistics.allAttempts}
-          </span>
-          {' - '}
-          <span className={styles.value}>{attemptInfo.total}</span>
-        </div>
-        <div className={styles.successfulTotal}>
-          <span>
-            {locale.profile.info.shortStatistics.okAttempts}
-          </span>
-          {' - '}
-          <span className={styles.value}>{okAttempts}</span>
-        </div>
+        <span>{locale.profile.info.shortStatistics.allAttempts}</span>
+        {' - '}
+        <span className={styles.value}>{attemptInfo.total}</span>
       </div>
-      <div className={styles.ratingInfo}>
-        <div>
-          <span>
-            {locale.profile.info.shortStatistics.totalScore}
-          </span>
-          {' - '}
-          <span className={styles.value}>{ratingInfo.score}</span>
-        </div>
-        <div>
-          <span>
-            {locale.profile.info.shortStatistics.ratingPlace}
-          </span>
-          {' - '}
-          <span className={styles.value}>{ratingInfo.place}</span>
-        </div>
+      <div className={styles.successfulTotal}>
+        <span>{locale.profile.info.shortStatistics.okAttempts}</span>
+        {' - '}
+        <span className={styles.value}>{okAttempts}</span>
+      </div>
+      <div>
+        <span>{locale.profile.info.shortStatistics.totalScore}</span>
+        {' - '}
+        <span className={styles.value}>{ratingInfo.score}</span>
+      </div>
+      <div>
+        <span>{locale.profile.info.shortStatistics.ratingPlace}</span>
+        {' - '}
+        <span className={styles.value}>{ratingInfo.place}</span>
       </div>
     </div>
   );

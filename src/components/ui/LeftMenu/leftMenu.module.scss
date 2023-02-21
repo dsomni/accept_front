@@ -16,7 +16,11 @@
 .button {
   display: block;
   width: 100%;
-  padding: var(--spacer-xs) var(--spacer-s);
+  padding: var(--spacer-xs) var(--spacer-xs);
+
+  @include for-size(tablet-landscape-up) {
+    padding: var(--spacer-xs) var(--spacer-s);
+  }
 }
 
 .button:hover {
@@ -57,9 +61,13 @@
 .wrapper {
   display: flex;
   flex-direction: row;
-  gap: var(--spacer-m);
+  gap: var(--spacer-s);
   flex-wrap: nowrap;
   margin-bottom: var(--spacer-xl);
+
+  @include for-size(tablet-landscape-up) {
+    gap: var(--spacer-m);
+  }
 }
 
 .pageWrapper {

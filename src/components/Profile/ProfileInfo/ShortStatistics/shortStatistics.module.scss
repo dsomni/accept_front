@@ -1,0 +1,19 @@
+@import 'mixins';
+
+.wrapper {
+  // max-width: 300px;
+  display: grid;
+  gap: var(--spacer-s);
+  column-gap: var(--spacer-xs);
+
+  grid-template-columns: 1fr 1fr;
+  max-width: 500px;
+  @include for-size(phone-only) {
+    grid-template-columns: 1fr;
+    row-gap: var(--spacer-xs);
+  }
+}
+
+.value {
+  color: var(--primary);
+}

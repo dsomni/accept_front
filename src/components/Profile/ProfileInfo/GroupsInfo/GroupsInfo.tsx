@@ -8,21 +8,17 @@ const GroupsInfo: FC<{ user: IUser }> = ({ user }) => {
   const { locale } = useLocale();
   return (
     <div className={styles.wrapper}>
-      {user.groups.length > 0 && (
-        <div className={styles.groupSection}>
-          <div className={styles.groupTitle}>
-            {' '}
-            {`${locale.profile.groups}:`}
-          </div>
-          <div className={styles.groupList}>
-            {user.groups.map((group, index) => (
-              <Badge key={index} size="lg">
-                {group.name}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      )}
+      <div className={styles.groupSection}>
+        <span className={styles.groupTitle}>
+          {' '}
+          {`${locale.profile.groups}:`}
+        </span>
+        {user.groups.map((group, index) => (
+          <Badge key={index} size="lg">
+            {group.name}
+          </Badge>
+        ))}
+      </div>
     </div>
   );
 };

@@ -44,6 +44,8 @@ function SignUp() {
       login: (value) =>
         value.length < 5
           ? locale.auth.errors.login.len
+          : value.length > 24
+          ? locale.auth.errors.login.maxLen
           : !value.match(/^[a-zA-Z][a-zA-Z_]+$/)
           ? locale.auth.errors.login.symbols
           : null,
