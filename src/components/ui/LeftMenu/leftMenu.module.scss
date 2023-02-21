@@ -1,3 +1,18 @@
+@import 'mixins';
+
+.navbar {
+  width: unset;
+  height: fit-content;
+  position: sticky;
+  top: 0;
+
+  @include for-size(tablet-landscape-up) {
+    width: 300px;
+    position: unset;
+    top: unset;
+  }
+}
+
 .button {
   display: block;
   width: 100%;
@@ -10,9 +25,13 @@
 
 .line {
   height: var(--spacer-m);
-  width: 4px;
   border-radius: 50px;
   background-color: transparent;
+
+  width: 3px;
+  @include for-size(tablet-landscape-up) {
+    width: 4px;
+  }
 }
 
 .activeButton {
@@ -27,8 +46,12 @@
 .groupWrapper {
   display: flex;
   flex-direction: row;
-  gap: var(--spacer-m);
   flex-wrap: nowrap;
+  gap: var(--spacer-xxs);
+
+  @include for-size(tablet-landscape-up) {
+    gap: var(--spacer-m);
+  }
 }
 
 .wrapper {

@@ -1,13 +1,14 @@
 import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import { Group, Navbar, UnstyledButton } from '@mantine/core';
 import { FC, ReactNode, memo, useState } from 'react';
-import styles from './leftMenu.module.css';
+import styles from './leftMenu.module.scss';
 
 const LeftMenu: FC<{
   links: IMenuLink[];
   initialStep?: number;
   topContent?: ReactNode;
-}> = ({ links, initialStep, topContent }) => {
+  hideTitles?: boolean;
+}> = ({ links, initialStep, topContent, hideTitles }) => {
   const [current, setCurrent] = useState(initialStep || 0);
 
   return (
@@ -17,6 +18,7 @@ const LeftMenu: FC<{
         width={{ base: 300 }}
         withBorder={false}
         zIndex={10}
+        classNames={{ root: styles.navbar }}
       >
         {topContent && <Navbar.Section>{topContent}</Navbar.Section>}
         <Navbar.Section grow mt="md">
@@ -36,7 +38,7 @@ const LeftMenu: FC<{
                 ></div>
                 <Group className={styles.groupWrapper}>
                   {element.icon}
-                  <div>{element.title}</div>
+                  {!hideTitles && <div>{element.title}</div>}
                 </Group>
               </Group>
             </UnstyledButton>

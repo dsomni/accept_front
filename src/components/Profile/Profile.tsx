@@ -24,6 +24,7 @@ import { IMenuLink } from '@custom-types/ui/IMenuLink';
 import { useUser } from '@hooks/useUser';
 import { useRouter } from 'next/router';
 import { IFullProfileBundle } from '@custom-types/data/IProfileInfo';
+import { useWidth } from '@hooks/useWidth';
 
 const Profile: FC<IFullProfileBundle> = ({
   user,
@@ -37,6 +38,8 @@ const Profile: FC<IFullProfileBundle> = ({
   const { locale } = useLocale();
 
   const { isTeacher } = useUser();
+
+  const { tabletLandscapeUp } = useWidth();
 
   const links: IMenuLink[] = useMemo(() => {
     let globalLinks = [
@@ -110,14 +113,17 @@ const Profile: FC<IFullProfileBundle> = ({
     <LeftMenu
       links={links}
       initialStep={initialStep}
+      hideTitles={!tabletLandscapeUp}
       topContent={
-        <div className={styles.header}>
-          <Avatar src={link(user.login)} size="lg" radius="lg" />
-          <div className={styles.shortInfo}>
-            <div className={styles.shortName}>{user.shortName}</div>
-            <div className={styles.login}>{user.login}</div>
+        tabletLandscapeUp && (
+          <div className={styles.header}>
+            <Avatar src={link(user.login)} size="lg" radius="lg" />
+            <div className={styles.shortInfo}>
+              <div className={styles.shortName}>{user.shortName}</div>
+              <div className={styles.login}>{user.login}</div>
+            </div>
           </div>
-        </div>
+        )
       }
     />
   );
