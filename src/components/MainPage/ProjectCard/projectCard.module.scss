@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .wrapper {
   width: 100%;
 }
@@ -53,10 +55,12 @@
 
   display: flex;
   align-items: flex-end;
-
-  background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
+
+  @include for-size(tablet-portrait-up) {
+    background-attachment: fixed;
+  }
 }
 
 .button {

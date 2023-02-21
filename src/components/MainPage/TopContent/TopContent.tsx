@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { useLocale } from '@hooks/useLocale';
-import styles from './topContent.module.css';
+import styles from './topContent.module.scss';
 
 import packageInfo from 'package.json';
 import Image from 'next/legacy/image';

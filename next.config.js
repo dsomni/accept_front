@@ -1,9 +1,13 @@
 const { API_ENDPOINT, WEBSOCKET_API } = process.env;
+const path = require('path');
 
 console.log('Config', { API_ENDPOINT, WEBSOCKET_API });
 
 /** @type {import('next').NextConfig} */
 module.exports = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+  },
   env: {
     WEBSOCKET_API,
   },

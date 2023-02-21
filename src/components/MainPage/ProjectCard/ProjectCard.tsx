@@ -6,7 +6,7 @@ import { Button } from '@ui/basics';
 
 import { FC } from 'react';
 import { ChevronRight } from 'tabler-icons-react';
-import styles from './projectCard.module.css';
+import styles from './projectCard.module.scss';
 
 export const ProjectCard: FC<{
   left: boolean;
