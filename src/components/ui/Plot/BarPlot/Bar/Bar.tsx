@@ -1,7 +1,6 @@
 import { IPlotData } from '@custom-types/ui/IPlot';
 import { FC, memo, useCallback } from 'react';
 import {
-  GRID_LABELS_HEIGHT,
   GRID_NUMBERS_WIDTH,
   LABELS_FONT_SIZE,
   PLOT_AREA_HEIGHT,

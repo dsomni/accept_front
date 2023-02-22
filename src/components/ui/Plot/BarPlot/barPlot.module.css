@@ -1,10 +1,5 @@
-.wrapper {
-  /* width: 80% */
-}
-
 .wrapper svg {
-  width: 100%;
-  aspect-ratio: 2/1;
+  border: 1px solid black;
 }
 
 .title {
@@ -12,8 +7,4 @@
   width: 100%;
   text-align: center;
   margin-bottom: var(--spacer-s);
-}
-
-.labels {
-  font-size: 6px;
 }

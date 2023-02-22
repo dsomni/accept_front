@@ -14,13 +14,15 @@ const Test: FC<{}> = ({}) => {
   return (
     <div
       style={{
-        width: '500px',
-        height: '500px',
         filter: 'brightness(25%)',
       }}
     >
-      <BarPlot title="Horizontal" data={plotData} />
-      <BarPlot title="Vertical" data={plotData} vertical />
+      <div style={{ width: '500px' }}>
+        <BarPlot title="Horizontal" data={plotData} />
+      </div>
+      <div style={{ width: '250px' }}>
+        <BarPlot title="Vertical" data={plotData} vertical />
+      </div>
     </div>
   );
 };

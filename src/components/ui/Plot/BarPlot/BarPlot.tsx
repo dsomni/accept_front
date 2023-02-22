@@ -50,67 +50,91 @@ const BarPlot: FC<{
     <div className={styles.wrapper}>
       {title && <div className={styles.title}>{title}</div>}
       <PlotTooltip label={toolTipLabel} />
-      <svg viewBox={`0 0 ${TOTAL_WIDTH} ${TOTAL_HEIGHT}`}>
-        <g>
-          {new Array(GRID_LINES_NUMBER).fill(0).map((_, index) => (
+      <svg
+        style={{
+          width: '100%',
+          aspectRatio: !vertical ? '2/1' : '1/2',
+        }}
+        viewBox={`0 0 ${!vertical ? TOTAL_WIDTH : TOTAL_HEIGHT} ${
+          !vertical ? TOTAL_HEIGHT : TOTAL_WIDTH
+        }`}
+      >
+        <g
+          transform={
+            vertical
+              ? `translate(0, -${TOTAL_HEIGHT}) rotate(90, 0, ${TOTAL_HEIGHT})`
+              : ''
+          }
+        >
+          <g>
+            {new Array(GRID_LINES_NUMBER).fill(0).map((_, index) => (
+              <line
+                key={index}
+                x1={GRID_NUMBERS_WIDTH}
+                x2={TOTAL_WIDTH}
+                y1={index * GRID_LINE_HEIGHT}
+                y2={index * GRID_LINE_HEIGHT}
+                stroke="black"
+                strokeWidth={GRID_LINE_STROKE_WIDTH}
+                opacity={GRID_LINE_OPACITY}
+              />
+            ))}
+          </g>
+          <g>
             <line
-              key={index}
               x1={GRID_NUMBERS_WIDTH}
-              x2={TOTAL_WIDTH}
-              y1={index * GRID_LINE_HEIGHT}
-              y2={index * GRID_LINE_HEIGHT}
+              x2={GRID_NUMBERS_WIDTH}
+              y1={0}
+              y2={PLOT_AREA_HEIGHT}
               stroke="black"
               strokeWidth={GRID_LINE_STROKE_WIDTH}
               opacity={GRID_LINE_OPACITY}
             />
+            <line
+              x1={TOTAL_WIDTH}
+              x2={TOTAL_WIDTH}
+              y1={0}
+              y2={PLOT_AREA_HEIGHT}
+              stroke="black"
+              strokeWidth={GRID_LINE_STROKE_WIDTH}
+              opacity={GRID_LINE_OPACITY}
+            />
+            {new Array(GRID_LINES_NUMBER + 1)
+              .fill(0)
+              .map((_, index) => (
+                <text
+                  key={index}
+                  style={{ fontSize: `${LABELS_FONT_SIZE}px` }}
+                  x={15}
+                  y={index * GRID_LINE_LEBEL_HEIGHT}
+                  textAnchor="end"
+                >
+                  {Math.round(upperBound / GRID_LINES_NUMBER) *
+                    (GRID_LINES_NUMBER - index)}
+                </text>
+              ))}
+          </g>
+        </g>
+        <g
+          transform={
+            vertical
+              ? `translate(0, -${TOTAL_HEIGHT}) rotate(90, 0, ${TOTAL_HEIGHT})`
+              : ''
+          }
+        >
+          {data.map((item, index) => (
+            <Bar
+              key={index}
+              data={item}
+              index={index}
+              width={bar_width}
+              height={PLOT_AREA_HEIGHT * (item.amount / upperBound)}
+              length={data.length}
+              padding={bar_padding}
+              setTooltipLabel={setToolTipLabel}
+            />
           ))}
         </g>
-        <g>
-          <line
-            x1={GRID_NUMBERS_WIDTH}
-            x2={GRID_NUMBERS_WIDTH}
-            y1={0}
-            y2={PLOT_AREA_HEIGHT}
-            stroke="black"
-            strokeWidth={GRID_LINE_STROKE_WIDTH}
-            opacity={GRID_LINE_OPACITY}
-          />
-          <line
-            x1={TOTAL_WIDTH}
-            x2={TOTAL_WIDTH}
-            y1={0}
-            y2={PLOT_AREA_HEIGHT}
-            stroke="black"
-            strokeWidth={GRID_LINE_STROKE_WIDTH}
-            opacity={GRID_LINE_OPACITY}
-          />
-          {new Array(GRID_LINES_NUMBER + 1)
-            .fill(0)
-            .map((_, index) => (
-              <text
-                key={index}
-                style={{ fontSize: `${LABELS_FONT_SIZE}px` }}
-                x={15}
-                y={index * GRID_LINE_LEBEL_HEIGHT}
-                textAnchor="end"
-              >
-                {Math.round(upperBound / GRID_LINES_NUMBER) *
-                  (GRID_LINES_NUMBER - index)}
-              </text>
-            ))}
-        </g>
-        {data.map((item, index) => (
-          <Bar
-            key={index}
-            data={item}
-            index={index}
-            width={bar_width}
-            height={PLOT_AREA_HEIGHT * (item.amount / upperBound)}
-            length={data.length}
-            padding={bar_padding}
-            setTooltipLabel={setToolTipLabel}
-          />
-        ))}
       </svg>
     </div>
   );
