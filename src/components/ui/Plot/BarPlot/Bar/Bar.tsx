@@ -1,5 +1,12 @@
 import { IPlotData } from '@custom-types/ui/IPlot';
 import { FC, memo, useCallback } from 'react';
+import {
+  GRID_LABELS_HEIGHT,
+  GRID_NUMBERS_WIDTH,
+  LABELS_FONT_SIZE,
+  PLOT_AREA_HEIGHT,
+  PLOT_AREA_WIDTH,
+} from '../BarPlot';
 import styles from './bar.module.css';
 
 const Bar: FC<{
@@ -37,23 +44,32 @@ const Bar: FC<{
       >
         <rect
           className={styles.bar}
-          x={20 + index * width + padding * (index + 1)}
+          x={
+            GRID_NUMBERS_WIDTH + index * width + padding * (index + 1)
+          }
           width={width}
-          y={155 - height}
+          y={PLOT_AREA_HEIGHT - height}
           height={2 + height}
           fill={data.color}
         />
         <rect
-          x={20 + index * (300 / length)}
-          width={300 / length}
-          y={155}
-          height={10}
+          x={GRID_NUMBERS_WIDTH + index * (PLOT_AREA_WIDTH / length)}
+          width={PLOT_AREA_WIDTH / length}
+          y={PLOT_AREA_HEIGHT}
+          height={LABELS_FONT_SIZE * 2}
           fill="white"
         />
         <text
           className={styles.labels}
-          x={20 + width * index + padding * (index + 1) + width / 2}
-          y={162}
+          x={
+            GRID_NUMBERS_WIDTH +
+            width * index +
+            padding * (index + 1) +
+            width / 2
+          }
+          y={
+            PLOT_AREA_HEIGHT + LABELS_FONT_SIZE + LABELS_FONT_SIZE / 2
+          }
           textAnchor="middle"
         >
           {data.label}

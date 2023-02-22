@@ -4,26 +4,45 @@ import PlotTooltip from '../PlotTooltip/PlotTooltip';
 import Bar from './Bar/Bar';
 import styles from './barPlot.module.css';
 
-const PADDING = 0.1; // percent
-const ROW_LINES = 10;
+export const PADDING = 0.1; // percent
+export const PLOT_AREA_WIDTH = 300;
+export const PLOT_AREA_HEIGHT = 150;
+
+export const LABELS_FONT_SIZE = 6;
+
+export const GRID_LINES_NUMBER = 10;
+export const GRID_LINE_STROKE_WIDTH = 0.5; //0.2
+export const GRID_LINE_OPACITY = 1; // 0.2
+export const GRID_LINE_HEIGHT = PLOT_AREA_HEIGHT / GRID_LINES_NUMBER;
+export const GRID_LABELS_HEIGHT =
+  PLOT_AREA_HEIGHT + LABELS_FONT_SIZE / 2;
+export const GRID_LINE_LEBEL_HEIGHT =
+  GRID_LABELS_HEIGHT / GRID_LINES_NUMBER;
+export const GRID_NUMBERS_WIDTH = 20;
+
+export const TOTAL_HEIGHT = PLOT_AREA_HEIGHT + 2 * LABELS_FONT_SIZE;
+export const TOTAL_WIDTH = PLOT_AREA_WIDTH + GRID_NUMBERS_WIDTH;
 
 const BarPlot: FC<{
   title?: string;
   data: IPlotData[];
-}> = ({ title, data }) => {
+  vertical?: boolean;
+}> = ({ title, data, vertical }) => {
   const [toolTipLabel, setToolTipLabel] = useState<
     string | undefined
   >(undefined);
 
-  const padding = (300 / (data.length + 1)) * PADDING;
-  const width = (300 - padding * (data.length + 1)) / data.length;
+  const bar_padding = (PLOT_AREA_WIDTH / (data.length + 1)) * PADDING;
+  const bar_width =
+    (PLOT_AREA_WIDTH - bar_padding * (data.length + 1)) / data.length;
 
   const upperBound = useMemo(
     () =>
       Math.round(
-        Math.max(...data.map((item) => item.amount)) / ROW_LINES +
+        Math.max(...data.map((item) => item.amount)) /
+          GRID_LINES_NUMBER +
           0.75
-      ) * ROW_LINES,
+      ) * GRID_LINES_NUMBER,
     [data]
   );
 
@@ -31,62 +50,64 @@ const BarPlot: FC<{
     <div className={styles.wrapper}>
       {title && <div className={styles.title}>{title}</div>}
       <PlotTooltip label={toolTipLabel} />
-      <svg viewBox="0 0 330 166">
+      <svg viewBox={`0 0 ${TOTAL_WIDTH} ${TOTAL_HEIGHT}`}>
         <g>
-          {new Array(ROW_LINES).fill(0).map((_, index) => (
+          {new Array(GRID_LINES_NUMBER).fill(0).map((_, index) => (
             <line
               key={index}
-              x1="20"
-              x2="320"
-              y1={index * (150 / ROW_LINES)}
-              y2={index * (150 / ROW_LINES)}
+              x1={GRID_NUMBERS_WIDTH}
+              x2={TOTAL_WIDTH}
+              y1={index * GRID_LINE_HEIGHT}
+              y2={index * GRID_LINE_HEIGHT}
               stroke="black"
-              strokeWidth={0.2}
-              opacity="0.2"
+              strokeWidth={GRID_LINE_STROKE_WIDTH}
+              opacity={GRID_LINE_OPACITY}
             />
           ))}
         </g>
         <g>
           <line
-            x1="20"
-            x2="20"
+            x1={GRID_NUMBERS_WIDTH}
+            x2={GRID_NUMBERS_WIDTH}
             y1={0}
-            y2={155}
+            y2={PLOT_AREA_HEIGHT}
             stroke="black"
-            strokeWidth={0.2}
-            opacity="0.2"
+            strokeWidth={GRID_LINE_STROKE_WIDTH}
+            opacity={GRID_LINE_OPACITY}
           />
           <line
-            x1="320"
-            x2="320"
+            x1={TOTAL_WIDTH}
+            x2={TOTAL_WIDTH}
             y1={0}
-            y2={155}
+            y2={PLOT_AREA_HEIGHT}
             stroke="black"
-            strokeWidth={0.2}
-            opacity="0.2"
+            strokeWidth={GRID_LINE_STROKE_WIDTH}
+            opacity={GRID_LINE_OPACITY}
           />
-          {new Array(ROW_LINES + 1).fill(0).map((_, index) => (
-            <text
-              key={index}
-              className={styles.labels}
-              x={15}
-              y={index * (155 / ROW_LINES)}
-              textAnchor="end"
-            >
-              {Math.round(upperBound / ROW_LINES) *
-                (ROW_LINES - index)}
-            </text>
-          ))}
+          {new Array(GRID_LINES_NUMBER + 1)
+            .fill(0)
+            .map((_, index) => (
+              <text
+                key={index}
+                style={{ fontSize: `${LABELS_FONT_SIZE}px` }}
+                x={15}
+                y={index * GRID_LINE_LEBEL_HEIGHT}
+                textAnchor="end"
+              >
+                {Math.round(upperBound / GRID_LINES_NUMBER) *
+                  (GRID_LINES_NUMBER - index)}
+              </text>
+            ))}
         </g>
         {data.map((item, index) => (
           <Bar
             key={index}
             data={item}
             index={index}
-            width={width}
-            height={155 * (item.amount / upperBound)}
+            width={bar_width}
+            height={PLOT_AREA_HEIGHT * (item.amount / upperBound)}
             length={data.length}
-            padding={padding}
+            padding={bar_padding}
             setTooltipLabel={setToolTipLabel}
           />
         ))}
