@@ -29,7 +29,7 @@ const AddUser: FC<{}> = ({}) => {
     },
     validate: {
       login: (value) =>
-        !value.match(/^[^_]+[a-zA-Z\d_]+$/)
+        !value.match(/^[a-zA-Z\d]+[a-zA-Z\d_]+$/)
           ? locale.auth.errors.login.symbols
           : null,
       password: (value) =>

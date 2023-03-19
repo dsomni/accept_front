@@ -21,6 +21,7 @@ const Helper: FC<MyHelperProps> = ({
       arrowSize={5}
       transition={'scale'}
       transitionDuration={300}
+      withinPortal
       {...hoverCardProps}
     >
       <HoverCard.Target {...hoverCardTargetProps}>
