@@ -1,7 +1,7 @@
 {
   "name": "accept_front",
   "private": true,
-  "version": "2.1.3",
+  "version": "2.1.4",
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
