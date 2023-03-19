@@ -5,6 +5,7 @@ import { useRequest } from '@hooks/useRequest';
 import { LoadingOverlay, SegmentedControl } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
 import { IFullResults } from '@custom-types/data/IResults';
+import { letterFromIndex } from '@utils/letterFromIndex';
 
 const Results: FC<{
   spec: string;
@@ -14,6 +15,7 @@ const Results: FC<{
   full: boolean;
 }> = ({ spec, isFinished, endDate, type, full }) => {
   const { locale } = useLocale();
+
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
   );
@@ -58,8 +60,8 @@ const Results: FC<{
         <ResultsTable
           refetch={refetch}
           columns={[
-            ...data.tasks.map((task) => ({
-              text: task.title,
+            ...data.tasks.map((task, index) => ({
+              text: letterFromIndex(index),
               href: `/task/${task.spec}?${type}=${spec}`,
             })),
             {

@@ -78,7 +78,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
       const assignment = {
         spec: '',
         origin: form.values.origin,
-        starter: user?.login || 'System',
+        starter: user?.shortName || 'unknown',
         status: form.values.status,
         infinite: form.values.infinite,
         start: UTCDate(
@@ -106,7 +106,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         logins: [],
         groups: form.values.groups,
         roles: [],
-        author: user?.login || '',
+        author: user?.shortName || 'unknown',
         broadcast: false,
       };
 
@@ -120,7 +120,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         }
       });
     },
-    [lang, locale, notifyAboutCreation, user?.login]
+    [lang, locale, notifyAboutCreation, user?.shortName]
   );
 
   return (

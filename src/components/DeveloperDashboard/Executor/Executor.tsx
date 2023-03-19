@@ -22,6 +22,7 @@ import {
 import SimpleModal from '@ui/SimpleModal/SimpleModal';
 import SimpleButtonGroup from '@ui/SimpleButtonGroup/SimpleButtonGroup';
 import modalStyles from '@styles/ui/modal.module.css';
+import { isJSON } from '@utils/isJSON';
 
 const Executor: FC<{}> = ({}) => {
   const [response, setResponse] = useState('');
@@ -55,16 +56,22 @@ const Executor: FC<{}> = ({}) => {
       query: (value) =>
         value.length < 2
           ? locale.executor.form.validation.query
+          : !isJSON(value)
+          ? locale.jsonValidationError
           : null,
       body: (value) =>
         value.length < 4
           ? locale.executor.form.validation.body.len
           : value[0] != '[' || value[value.length - 1] != ']'
           ? locale.executor.form.validation.body.array
+          : !isJSON(value)
+          ? locale.jsonValidationError
           : null,
       params: (value) =>
         value.length < 2
           ? locale.executor.form.validation.params
+          : !isJSON(value)
+          ? locale.jsonValidationError
           : null,
     },
     validateInputOnBlur: true,
@@ -145,7 +152,7 @@ const Executor: FC<{}> = ({}) => {
       <div className={styles.formWrapper}>
         <LoadingOverlay visible={loading} />
         <Select
-          data={data?.collections || []}
+          data={data?.collections.sort() || []}
           label={locale.executor.form.collection}
           searchable
           {...form.getInputProps('collection')}

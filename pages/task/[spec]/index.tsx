@@ -269,6 +269,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const response = await fetch(
     `${API_URL}/api/bundle/task-page/${params.spec}`
   );
+
   if (response.status === 200) {
     const response_json = await response.json();
     return {

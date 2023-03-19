@@ -42,7 +42,7 @@ function SignUp() {
       login: (value) =>
         value.length < 5
           ? locale.auth.errors.login.len
-          : !value.match(/^[^_]+[a-zA-Z_]+$/)
+          : !value.match(/^[a-zA-Z][a-zA-Z_]+$/)
           ? locale.auth.errors.login.symbols
           : null,
       password: (value) =>
@@ -67,12 +67,6 @@ function SignUp() {
           : !value.match(/^[a-zA-Zа-яА-ЯЁё -]+$/)
           ? locale.auth.errors.name.invalid
           : null,
-      // name: (value) =>
-      //   value.length > 50
-      //     ? locale.auth.errors.name.len
-      //     : value.split(' ').length < 2
-      //     ? locale.auth.errors.name.surname
-      //     : null,
     },
     validateInputOnBlur: true,
   });

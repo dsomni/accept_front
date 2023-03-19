@@ -51,6 +51,7 @@ const ru = {
   unban: 'Разбанить',
   toList: 'К списку',
   validationError: 'Ошибка валидации',
+  jsonValidationError: 'Некорректный Json',
   yourProfile: 'Ваш профиль',
   copy: {
     label: 'Копировать',

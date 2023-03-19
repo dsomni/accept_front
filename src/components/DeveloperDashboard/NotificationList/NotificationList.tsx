@@ -1,4 +1,11 @@
-import { FC, memo, useCallback, useMemo, useState } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useRequest } from '@hooks/useRequest';
 import MessageList from '@ui/MessageList/MessageList';
 import {
@@ -9,20 +16,63 @@ import { shrinkText } from '@utils/shrinkText';
 import { INotificationWithRefs } from '@custom-types/data/notification';
 import { Badge } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
-import { Pencil, Trash } from 'tabler-icons-react';
+import { Pencil, Search, Trash } from 'tabler-icons-react';
 import { setter } from '@custom-types/ui/atomic';
 import { requestWithError } from '@utils/requestWithError';
 import EditModal from './EditModal/EditModal';
+import { TextInput } from '@ui/basics';
+import styles from './notificationList.module.css';
 
 const NotificationList: FC<{}> = ({}) => {
   const { locale, lang } = useLocale();
+  const [search, setSearch] = useState('');
+  const [displayedNotifications, setDisplayedNotifications] =
+    useState<INotificationWithRefs[]>([]);
+
+  const processNotifications = useCallback(
+    (notifications: INotificationWithRefs[]) => {
+      return notifications.sort(
+        (a, b) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+    },
+    []
+  );
+
   const { data, loading, refetch } = useRequest<
     {},
     INotificationWithRefs[]
-  >('notification/dev/all', 'GET');
+  >('notification/dev/all', 'GET', undefined, processNotifications);
+
+  const handleSearch = useCallback(
+    async (value: string) => {
+      setSearch(value);
+      if (!!!data) return;
+      var list = [...data];
+      const Fuse = (await import('fuse.js')).default;
+      const fuse = new Fuse(list, {
+        keys: ['title'],
+        findAllMatches: true,
+      });
+
+      const searched =
+        value == ''
+          ? list
+          : fuse.search(value).map((result) => result.item);
+      setDisplayedNotifications(searched);
+    },
+    [data]
+  );
+
+  useEffect(() => {
+    if (data) {
+      handleSearch('');
+    }
+  }, [handleSearch, data]);
+
   const messages = useMemo(
     () =>
-      (data || []).map(
+      (displayedNotifications || []).map(
         (item) =>
           ({
             ...item,
@@ -34,7 +84,7 @@ const NotificationList: FC<{}> = ({}) => {
             title: item.title,
           } as IListMessage)
       ),
-    [data]
+    [displayedNotifications]
   );
   const [openedModal, setOpenedModal] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
@@ -90,41 +140,52 @@ const NotificationList: FC<{}> = ({}) => {
   );
 
   return (
-    <>
-      {data && data[editIndex] && (
-        <EditModal
-          key={editIndex}
-          notification={data[editIndex]}
-          opened={openedModal}
-          close={(needRefetch: boolean) => {
-            setOpenedModal(false);
-            if (needRefetch) {
-              refetch();
-            }
-          }}
-        />
-      )}
-      <MessageList
-        actions={actions}
-        emptyMessage={locale.profile.empty.notification}
-        loading={loading}
-        messageTitle={(message: IListMessage) => {
-          return (
-            <>
-              {shrinkText(message.title, 48)}
-              {
-                //@ts-ignore
-                <Badge color="green">{message.references}</Badge>
-              }
-            </>
-          );
+    <div>
+      <TextInput
+        icon={<Search />}
+        classNames={{
+          input: styles.search,
         }}
-        messages={messages}
-        refetch={() => refetch(false)}
-        handleViewed={() => {}}
-        rowClassName={(_: IListMessage) => ''}
+        onChange={(e: any) => handleSearch(e.target.value)}
+        placeholder={locale.placeholders.search}
+        value={search}
       />
-    </>
+      <div>
+        {data && data[editIndex] && (
+          <EditModal
+            key={editIndex}
+            notification={data[editIndex]}
+            opened={openedModal}
+            close={(needRefetch: boolean) => {
+              setOpenedModal(false);
+              if (needRefetch) {
+                refetch();
+              }
+            }}
+          />
+        )}
+        <MessageList
+          actions={actions}
+          emptyMessage={locale.profile.empty.notification}
+          loading={loading}
+          messageTitle={(message: IListMessage) => {
+            return (
+              <>
+                {shrinkText(message.title, 48)}
+                {
+                  //@ts-ignore
+                  <Badge color="green">{message.references}</Badge>
+                }
+              </>
+            );
+          }}
+          messages={messages}
+          refetch={() => refetch(false)}
+          handleViewed={() => {}}
+          rowClassName={(_: IListMessage) => ''}
+        />
+      </div>
+    </div>
   );
 };
 
