@@ -103,6 +103,8 @@
 
 .exampleData {
   white-space: pre-wrap;
+
+  font-family: 'Red Hat Mono', monospace !important;
 }
 
 @media screen and (max-width: 480px) {
