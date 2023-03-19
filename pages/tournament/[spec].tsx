@@ -97,7 +97,8 @@ function Tournament(props: { tournament: ITournament }) {
       {special ? (
         <Sticky actions={actions} />
       ) : (
-        tournament.participants.includes(user?.login || '') && (
+        tournament.participants.includes(user?.login || '') &&
+        tournament.status.spec != 0 && (
           <SingularSticky
             icon={
               <ReportAnalytics

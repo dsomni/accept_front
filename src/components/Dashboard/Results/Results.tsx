@@ -15,6 +15,7 @@ const Results: FC<{
   full: boolean;
 }> = ({ spec, isFinished, endDate, type, full }) => {
   const { locale } = useLocale();
+
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
   );
