@@ -6,13 +6,20 @@ import {
 } from '@mantine/core';
 import { Helper } from '@ui/basics';
 import { IDropdownContent } from '@custom-types/ui/basics/helper';
+import styles from './textArea.module.css';
 
 interface Props extends TextareaProps {
   helperContent?: IDropdownContent;
   shrink?: boolean;
+  monospace?: boolean;
 }
 
-const TextArea: FC<Props> = ({ helperContent, shrink, ...props }) => {
+const TextArea: FC<Props> = ({
+  helperContent,
+  shrink,
+  monospace,
+  ...props
+}) => {
   return (
     <div
       className={`${inputStyles.wrapper} ${
@@ -31,6 +38,12 @@ const TextArea: FC<Props> = ({ helperContent, shrink, ...props }) => {
       <MantineTextarea
         size={shrink ? 'md' : 'lg'}
         {...props}
+        classNames={{
+          ...props.classNames,
+          input:
+            props?.classNames?.input +
+            (monospace ? ' ' + styles.monospace : ''),
+        }}
         label={undefined}
       />
     </div>

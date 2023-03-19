@@ -154,7 +154,7 @@ const AttemptList: FC<{
   shouldNotRefetch: boolean;
   isFinished: boolean;
   endDate: Date;
-  type: 'assignment' | 'tournament';
+  type: 'assignment' | 'tournament' | 'current';
   banned?: boolean;
 }> = ({
   spec,
@@ -195,7 +195,11 @@ const AttemptList: FC<{
         />
       )}
       <AttemptListUI
-        url={`${type}/attempts${banned ? '-banned' : ''}/${spec}`}
+        url={
+          type == 'current'
+            ? 'attempt/current-list'
+            : `${type}/attempts${banned ? '-banned' : ''}/${spec}`
+        }
         activeTab
         initialColumns={initialColumns}
         refactorAttempt={refactor}

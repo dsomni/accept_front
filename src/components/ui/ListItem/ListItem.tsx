@@ -59,6 +59,7 @@ const ListItem: FC<{
       <div className={styles.example}>
         {!hideInput && (
           <TextArea
+            monospace
             autosize
             label={
               <div
@@ -89,6 +90,7 @@ const ListItem: FC<{
         )}
         {!hideOutput && (
           <TextArea
+            monospace
             autosize
             label={
               <div
