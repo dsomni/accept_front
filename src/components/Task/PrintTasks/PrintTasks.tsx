@@ -16,7 +16,7 @@ const PrintTasks: FC<{
   const beforeHandlePrint = useCallback(
     async () =>
       await sendRequest<string[], ITask[]>(
-        'task/tasks',
+        'task/ordered-tasks',
         'POST',
         task_specs,
         60000
