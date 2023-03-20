@@ -1,0 +1,18 @@
+.register {
+  text-decoration: none;
+  color: var(--primary);
+  font-size: var(--font-size-l);
+  cursor: pointer;
+}
+
+.registrationWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-xs);
+  align-items: flex-end;
+  margin: var(--spacer-l) 0;
+}
+
+.undoWarning {
+  color: var(--negative);
+}

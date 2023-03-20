@@ -19,6 +19,11 @@ export const tournament = {
     success: 'You were successfully registered',
     error: 'Error during registration',
   },
+  refusal: {
+    loading: 'Refusing registration',
+    success: 'You successfully refused the registration',
+    error: 'Error during registration refusal',
+  },
   banUser: {
     loading: 'Banning user',
     success: 'User has been successfully banned',

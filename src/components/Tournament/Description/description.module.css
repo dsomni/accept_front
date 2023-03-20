@@ -39,23 +39,8 @@
   position: relative;
 }
 
-.registrationWrapper {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacer-s);
-  align-items: center;
-  margin: var(--spacer-l) 0;
-}
-
 .bannedWrapper {
   color: red;
   margin: var(--spacer-l) 0;
   font-size: var(--font-size-l);
-}
-
-.register {
-  text-decoration: none;
-  color: var(--primary);
-  font-size: var(--font-size-l);
-  cursor: pointer;
 }
