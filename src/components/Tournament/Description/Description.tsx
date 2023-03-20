@@ -13,7 +13,7 @@ import { getLocalDate } from '@utils/datetime';
 import { useLocale } from '@hooks/useLocale';
 import PrimitiveTaskTable from '@ui/PrimitiveTaskTable/PrimitiveTaskTable';
 import { useUser } from '@hooks/useUser';
-import { Helper } from '@ui/basics';
+import { Helper, Overlay } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
 import { AlertCircle } from 'tabler-icons-react';
 import { sendRequest } from '@requests/request';
@@ -169,7 +169,9 @@ const Description: FC<{
           </div>
         )
       )}
+
       <div className={styles.tasksWrapper}>
+        {!registered && <Overlay />}
         <PrimitiveTaskTable
           tasks={tasks}
           linkQuery={`tournament=${tournament.spec}`}
