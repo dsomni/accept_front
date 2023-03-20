@@ -106,7 +106,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         logins: [],
         groups: form.values.groups,
         roles: [],
-        author: user?.shortName || 'unknown',
+        author: user?.login || '',
         broadcast: false,
       };
 
