@@ -15,4 +15,6 @@ export const steps = {
     'Tests or checker',
     'Preview',
   ],
+  emptyStep:
+    'Congratulations! For the given configuration there is no need to fill up this step: you can skip it and move further!',
 };
