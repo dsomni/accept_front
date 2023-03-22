@@ -1,5 +1,6 @@
 import { FC, memo, useEffect, useMemo, useState } from 'react';
 import {
+  AddressBook,
   AlignRight,
   Ban,
   BellPlus,
@@ -29,6 +30,7 @@ import CreateNotification from './CreateNotification/CreateNotification';
 import Results from './Results/Results';
 import ParticipantsListWithBan from './ParticipantsList/ParticipantsListWithBan';
 import ChatPage from './ChatPage/ChatPage';
+import RegistrationManagement from './RegistrationManagement/RegistrationManagement';
 
 const TournamentDashboard: FC<{
   spec: string;
@@ -123,7 +125,11 @@ const TournamentDashboard: FC<{
         icon: <Puzzle color="var(--secondary)" />,
         title: locale.dashboard.tournament.tasks,
       },
-
+      {
+        page: <RegistrationManagement spec={spec} />,
+        icon: <AddressBook color="var(--secondary)" />,
+        title: locale.dashboard.tournament.registrationManagement,
+      },
       {
         page: tournament && (
           <CreateNotification

@@ -5,6 +5,8 @@ export const tournament = {
   bannedAttempts: 'Banned attempts',
   participants: 'Participants',
   tasks: 'Tasks',
+  registrationManagement: 'Registration management',
+
   chat: 'Chat',
   createNotification: 'Create notification',
   timeInfo: {
@@ -14,5 +16,9 @@ export const tournament = {
   toDate: {
     actual: 'Actual',
     end: 'To the end',
+  },
+  registrationManagementSelector: {
+    participants: 'Participants',
+    users: 'Users',
   },
 };

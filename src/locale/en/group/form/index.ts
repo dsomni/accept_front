@@ -1,7 +1,7 @@
 import { validation } from './validation';
 
 export const form = {
-  login: 'Логин',
-  shortName: 'Имя',
+  login: 'Login',
+  shortName: 'Name',
   validation,
 };
