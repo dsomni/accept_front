@@ -212,6 +212,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
       )}
       {isTeacher && <Sticky actions={actions} />}
       <TaskLayout
+        key={task.spec}
         title={`${locale.titles.task.spec} ${task.title}`}
         description={
           <Description
