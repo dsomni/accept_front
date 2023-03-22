@@ -15,9 +15,6 @@ const Moderators: FC<{ form: any; users: IUserDisplay[] }> = ({
   const initialProps = useMemo(() => {
     form.getInputProps('moderators');
   }, []); // eslint-disable-line
-
-  // const {data} = useRequest()
-
   return (
     <>
       <InputWrapper {...form.getInputProps('moderators')}>

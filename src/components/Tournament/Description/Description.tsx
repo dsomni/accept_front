@@ -121,7 +121,7 @@ const Description: FC<{
           {locale.tournament.banned}!
         </div>
       ) : (
-        !(tournament.status.spec === 2) && (
+        !(tournament.status.spec === 2 || isPreview || special) && (
           <RegistrationButton
             spec={tournament.spec}
             status={tournament.status.spec}
