@@ -15,7 +15,7 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
                 ? 'var(--dark3)'
                 : cell.best.startsWith('OK') || +cell.best > 0
                 ? 'var(--positive)'
-                : 'var(--negative',
+                : 'var(--negative)',
           }}
         >
           {cell.best}
