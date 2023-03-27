@@ -11,3 +11,9 @@
   margin: var(--spacer-huge) auto;
   font-size: var(--font-size-l);
 }
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-m);
+}

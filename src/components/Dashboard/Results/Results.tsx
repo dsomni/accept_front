@@ -2,13 +2,21 @@ import { FC, memo, useEffect, useMemo, useState } from 'react';
 import ResultsTable from '@ui/ResultsTable/ResultsTable';
 import styles from './results.module.css';
 import { useRequest } from '@hooks/useRequest';
-import { LoadingOverlay, SegmentedControl } from '@ui/basics';
+import { LoadingOverlay, SegmentedControl, Tip } from '@ui/basics';
 import { useLocale } from '@hooks/useLocale';
-import {
-  IFullResults,
-  IUserResult,
-} from '@custom-types/data/IResults';
+import { IFullResults } from '@custom-types/data/IResults';
 import { letterFromIndex } from '@utils/letterFromIndex';
+import Link from 'next/link';
+
+const getColor = (score: number) => {
+  return score === 100 ? 'var(--positive)' : 'var(--negative)';
+};
+
+const getScoreColor = (score: number | undefined) => {
+  return !score || score === 0
+    ? 'var(--negative)'
+    : 'var(--positive)';
+};
 
 const Results: FC<{
   spec: string;
@@ -21,6 +29,10 @@ const Results: FC<{
 
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
+  );
+
+  const [displayMode, setDisplayMode] = useState<'verdict' | 'score'>(
+    'score'
   );
 
   const { data, loading, refetch } = useRequest<
@@ -41,20 +53,44 @@ const Results: FC<{
     let rows = data.user_results.map((user_result) =>
       user_result.results
         .map((cell) => ({
-          best: cell.best?.verdict
-            ? `${cell.best.verdict.shortText} #${cell.best.verdictTest}`
-            : '-',
+          best: (
+            <div style={{ color: getScoreColor(cell.best?.score) }}>
+              {cell.best
+                ? displayMode == 'score'
+                  ? cell.best.score.toString()
+                  : `${cell.best.verdict.shortText} #${cell.best.verdictTest}`
+                : '-'}
+            </div>
+          ),
           rest: full
-            ? cell.attempts.reverse().map((attempt) => ({
-                text: attempt.verdict
-                  ? `${attempt.verdict.shortText} #${attempt.verdictTest}`
-                  : '?',
-                href: `/attempt/${attempt.attempt}`,
-              }))
+            ? cell.attempts.reverse().map((attempt, index) => (
+                <Link
+                  key={index}
+                  href={`/attempt/${attempt.attempt}`}
+                  style={{
+                    textDecoration: 'none',
+                    color: getColor(attempt.score),
+                  }}
+                >
+                  {attempt.verdict
+                    ? displayMode == 'score'
+                      ? attempt.score.toString()
+                      : `${attempt.verdict.shortText} #${attempt.verdictTest}`
+                    : '?'}
+                </Link>
+              ))
             : [],
         }))
         .concat({
-          best: user_result.score.toString(),
+          best: (
+            <div
+              style={{
+                color: getScoreColor(user_result.score),
+              }}
+            >
+              {user_result.score.toString()}
+            </div>
+          ),
           rest: [],
         })
     );
@@ -62,7 +98,7 @@ const Results: FC<{
     let streak = 1;
     let last_score = -1;
     rows[0] = rows[0].concat({
-      best: current.toString(),
+      best: <>{current.toString()}</>,
       rest: [],
     });
     last_score = data.user_results[0].score;
@@ -71,7 +107,7 @@ const Results: FC<{
       if (current_score == last_score) {
         streak += 1;
         rows[i] = rows[i].concat({
-          best: current.toString(),
+          best: <>{current.toString()}</>,
           rest: [],
         });
         continue;
@@ -80,33 +116,52 @@ const Results: FC<{
       streak = 1;
       last_score = current_score;
       rows[i] = rows[i].concat({
-        best: current.toString(),
+        best: <>{current.toString()}</>,
         rest: [],
       });
     }
     return rows;
-  }, [data]);
+  }, [data, displayMode, full]);
 
   return (
     <div className={styles.wrapper}>
-      {full && isFinished && (
+      <div className={styles.controls}>
+        {full && isFinished && (
+          <SegmentedControl
+            data={[
+              {
+                label: locale.dashboard.assignment.toDate.end,
+                value: 'end',
+              },
+              {
+                label: locale.dashboard.assignment.toDate.actual,
+                value: 'actual',
+              },
+            ]}
+            value={fetchDate}
+            onChange={(value) =>
+              setFetchDate(value as 'actual' | 'end')
+            }
+          />
+        )}
         <SegmentedControl
           data={[
             {
-              label: locale.dashboard.assignment.toDate.end,
-              value: 'end',
+              label: locale.assignment.score,
+              value: 'score',
             },
             {
-              label: locale.dashboard.assignment.toDate.actual,
-              value: 'actual',
+              label: locale.assignment.verdicts,
+              value: 'verdict',
             },
           ]}
-          value={fetchDate}
+          value={displayMode}
           onChange={(value) =>
-            setFetchDate(value as 'actual' | 'end')
+            setDisplayMode(value as 'verdict' | 'score')
           }
         />
-      )}
+      </div>
+
       <LoadingOverlay visible={loading} />
       {data &&
       data.user_results.length > 0 &&
@@ -114,23 +169,36 @@ const Results: FC<{
         <ResultsTable
           refetch={refetch}
           columns={[
-            ...data.tasks.map((task, index) => ({
-              text: letterFromIndex(index),
-              href: `/task/${task.spec}?${type}=${spec}`,
-            })),
-            {
-              text: locale.assignment.score,
-              href: undefined,
-            },
-            {
-              text: '#',
-              href: undefined,
-            },
+            ...data.tasks.map((task, index) => (
+              <Link
+                key={index}
+                href={`/task/${task.spec}?${type}=${spec}`}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                {letterFromIndex(index)}
+              </Link>
+            )),
           ]}
-          rows={data.user_results.map((user_result) => ({
-            text: user_result.user.shortName,
-            href: `/profile/${user_result.user.login}`,
-          }))}
+          fixedRightColumns={[
+            <>{locale.assignment.score}</>,
+            <>{locale.assignment.place}</>,
+          ]}
+          rows={data.user_results.map((user_result, index) => (
+            <Tip label={user_result.user.login} key={index}>
+              <Link
+                href={`/profile/${user_result.user.login}`}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                {user_result.user.shortName}
+              </Link>
+            </Tip>
+          ))}
           data={table_data}
         />
       ) : (

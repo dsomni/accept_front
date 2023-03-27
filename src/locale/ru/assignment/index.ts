@@ -9,4 +9,6 @@ export const assignment = {
     deletion: 'Удаление урока',
   },
   score: 'Очки',
+  place: 'Место',
+  verdicts: 'Вердикты',
 };
