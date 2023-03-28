@@ -13,7 +13,8 @@ const TOURNAMENT_URL = 'api/tournament-has-rights';
 export const protectedRoutesInfo: {
   [key: string]: (
     _: string,
-    __: { Cookie: string } | undefined
+    __: { Cookie: string } | undefined,
+    ___?: URLSearchParams
   ) => Promise<string | boolean>;
 } = {
   '/dashboard/assignment': (pathname, headers) =>
@@ -46,8 +47,13 @@ export const protectedRoutesInfo: {
     checkAccess(pathname, headers, accessLevels.teacher),
   '/notification/add': (pathname, headers) =>
     checkAccess(pathname, headers, accessLevels.teacher),
-  '/task/add': (pathname, headers) =>
-    checkAccess(pathname, headers, accessLevels.teacher),
+  '/task/add': (pathname, headers, searchParams) => {
+    const query = searchParams?.get('tournament');
+    if (!query)
+      return checkAccess(pathname, headers, accessLevels.teacher);
+
+    return checkPermission(TOURNAMENT_URL, pathname, headers, query);
+  },
   '/task/edit': (pathname, headers) =>
     checkAccess(pathname, headers, accessLevels.teacher),
   '/task/tests': (pathname, headers) =>
