@@ -25,9 +25,8 @@ const UserSelect: FC<{
   placeholder: string;
   nothingFound: string;
   users: IUserDisplay[];
-  select: (_: IUserDisplay) => void;
-  // onChange: () => any;
-  additionalProps: any;
+  select: (_: IUserDisplay | undefined) => void;
+  additionalProps?: any;
 }> = ({
   label,
   placeholder,
@@ -82,11 +81,15 @@ const UserSelect: FC<{
   );
 
   const onSelect = useCallback(
-    (login: string) => {
+    (login: string | null) => {
+      if (!login) {
+        select(undefined);
+        return;
+      }
       const userIndex = users.findIndex(
         (item) => item.login === login
       );
-      if (userIndex > 0) {
+      if (userIndex >= 0) {
         select(users[userIndex]);
       }
     },
@@ -113,7 +116,11 @@ const UserSelect: FC<{
             .includes(value.toLowerCase().trim())
         }
         {...additionalProps}
-        onSelect={onSelect}
+        // onSelect={(event) => onSelect(event.currentTarget.value)}
+        onChange={(login) => {
+          onSelect(login);
+          additionalProps?.onChange(login);
+        }}
       />
     </>
   );

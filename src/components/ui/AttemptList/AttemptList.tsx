@@ -15,7 +15,10 @@ import { IAttemptDisplay } from '@custom-types/data/IAttempt';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { useUser } from '@hooks/useUser';
 import { useRequest } from '@hooks/useRequest';
-import { BaseSearch, DateSearch } from '@custom-types/data/request';
+import {
+  BaseSearch,
+  UserTaskSearch,
+} from '@custom-types/data/request';
 import {
   errorNotification,
   newNotification,
@@ -39,6 +42,8 @@ const AttemptsList: FC<{
   classNames?: any;
   initialColumns: (_: ILocale) => ITableColumn[];
   refactorAttempt: (_: IAttemptDisplay, __: ILocale) => any;
+  userSearch?: string[];
+  taskSearch?: string[];
   toDate?: Date;
   noDefault?: boolean;
   empty?: ReactNode;
@@ -50,6 +55,8 @@ const AttemptsList: FC<{
   classNames,
   initialColumns,
   refactorAttempt,
+  userSearch,
+  taskSearch,
   toDate,
   noDefault,
   empty,
@@ -115,13 +122,13 @@ const AttemptsList: FC<{
   );
 
   const { data, loading, refetch } = useRequest<
-    DateSearch,
+    UserTaskSearch,
     PagerResponse,
     TableData
   >(
     url,
     'POST',
-    { ...searchParams, toDate },
+    { ...searchParams, toDate, users: userSearch, tasks: taskSearch },
     processData,
     undefined,
     onError

@@ -22,3 +22,8 @@ export interface BaseSearch {
 export interface DateSearch extends BaseSearch {
   toDate?: Date;
 }
+
+export interface UserTaskSearch extends DateSearch {
+  users?: string[];
+  tasks?: string[];
+}

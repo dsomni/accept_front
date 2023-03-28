@@ -9,6 +9,11 @@ import { getLocalDate } from '@utils/datetime';
 import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
 import { SegmentedControl } from '@ui/basics';
+import { useRequest } from '@hooks/useRequest';
+import { ITasksUsersBundle } from '@custom-types/data/bundle';
+import { TaskSelect, UserSelect } from '@ui/selectors';
+import { IUserDisplay } from '@custom-types/data/IUser';
+import { ITaskBaseInfo } from '@custom-types/data/ITask';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
@@ -165,6 +170,9 @@ const AttemptList: FC<{
   banned,
 }) => {
   const { locale } = useLocale();
+  const [userSearch, setUserSearch] = useState<string[]>([]);
+  const [taskSearch, setTaskSearch] = useState<string[]>([]);
+
   const [fetchDate, setFetchDate] = useState<'actual' | 'end'>(
     isFinished ? 'end' : 'actual'
   );
@@ -172,6 +180,12 @@ const AttemptList: FC<{
     (attempt: IAttemptDisplay, locale: ILocale) =>
       refactorAttempt(attempt, locale, type),
     [type]
+  );
+
+  const { data } = useRequest<{}, ITasksUsersBundle>(
+    `${type}/bundle/tasks-users/${spec}`,
+    'GET',
+    undefined
   );
 
   return (
@@ -194,7 +208,34 @@ const AttemptList: FC<{
           }
         />
       )}
+      <div className={styles.selectors}>
+        <UserSelect
+          label={locale.dashboard.attemptsList.user.label}
+          placeholder={locale.dashboard.attemptsList.user.placeholder}
+          nothingFound={
+            locale.dashboard.attemptsList.user.nothingFound
+          }
+          users={data?.users || []}
+          select={(user: IUserDisplay | undefined) => {
+            if (user) setUserSearch([user.login]);
+            else setUserSearch([]);
+          }}
+        />
+        <TaskSelect
+          label={locale.dashboard.attemptsList.task.label}
+          placeholder={locale.dashboard.attemptsList.task.placeholder}
+          nothingFound={
+            locale.dashboard.attemptsList.task.nothingFound
+          }
+          tasks={data?.tasks || []}
+          select={(task: ITaskBaseInfo | undefined) => {
+            if (task) setTaskSearch([task.spec]);
+            else setTaskSearch([]);
+          }}
+        />
+      </div>
       <AttemptListUI
+        key={userSearch.toString() + taskSearch.toString()}
         url={
           type == 'current'
             ? 'attempt/current-list'
@@ -215,6 +256,8 @@ const AttemptList: FC<{
           even: tableStyles.even,
           odd: tableStyles.odd,
         }}
+        userSearch={userSearch}
+        taskSearch={taskSearch}
       />
     </div>
   );
