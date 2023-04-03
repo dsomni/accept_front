@@ -12,12 +12,13 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
 import { useLocale } from './useLocale';
 import { getRandomIntInRange } from '@utils/random';
+import { useUser } from './useUser';
+import { useRefetch } from './useRefetch';
 
 interface INotificationContext {
   new_amount: number;
@@ -39,15 +40,15 @@ export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { lang } = useLocale();
-  const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<INotification[]>(
     []
   );
+  const { user } = useUser();
   const updateIntervalSeconds = getRandomIntInRange(11, 13);
 
   const fetchNotifications = useCallback(() => {
-    setLoading(true);
-    sendRequest<undefined, INotification[]>(
+    if (!!!user) return new Promise(() => {});
+    return sendRequest<undefined, INotification[]>(
       'notification/new',
       'GET'
     ).then((res) => {
@@ -64,22 +65,13 @@ export const BackNotificationsProvider: FC<{
           }
         });
       }
-      setLoading(false);
     });
-  }, []);
+  }, [user]);
 
-  useEffect(() => {
-    fetchNotifications();
-  }, []); // eslint-disable-line
-
-  useEffect(() => {
-    const id = setInterval(
-      fetchNotifications,
-      updateIntervalSeconds * 1000
-    );
-
-    return () => clearInterval(id);
-  }, [updateIntervalSeconds, fetchNotifications]);
+  const { loading } = useRefetch(
+    fetchNotifications,
+    updateIntervalSeconds
+  );
 
   const sendViewed = useCallback(
     (

@@ -30,7 +30,6 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
             <Chat
               entity={spec}
               host={host}
-              wsURL={'/ws/chat'}
               indicateNew={indicateNew}
               opened={showChat}
               isMessageMine={(message: IChatMessage) =>
@@ -49,7 +48,16 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
           className={styles.iconRoot}
           wrapperClassName={styles.iconWrapper}
         >
-          <Indicator inline disabled={!hasNew} size={7} color="white">
+          <Indicator
+            inline
+            disabled={!hasNew}
+            size={10}
+            offset={-1}
+            zIndex={100}
+            classNames={{
+              indicator: styles.indicator,
+            }}
+          >
             <MessageCircle2 color="white" />
           </Indicator>
         </Icon>
