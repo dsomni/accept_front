@@ -70,6 +70,9 @@ export const BackNotificationsProvider: FC<{
 
   useEffect(() => {
     fetchNotifications();
+  }, []); // eslint-disable-line
+
+  useEffect(() => {
     const id = setInterval(
       fetchNotifications,
       updateIntervalSeconds * 1000
