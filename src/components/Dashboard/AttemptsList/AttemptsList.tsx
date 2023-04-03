@@ -18,7 +18,8 @@ import { ITaskBaseInfo } from '@custom-types/data/ITask';
 const refactorAttempt = (
   attempt: IAttemptDisplay,
   locale: ILocale,
-  type: string
+  type: string,
+  spec: string
 ): any => ({
   ...attempt,
   result: {
@@ -67,7 +68,7 @@ const refactorAttempt = (
   task: {
     display: (
       <Link
-        href={`/task/${attempt.task.spec}?${type}=${attempt.task.spec}`}
+        href={`/task/${attempt.task.spec}?${type}=${spec}`}
         passHref
         className={styles.taskLink}
       >
@@ -178,8 +179,8 @@ const AttemptList: FC<{
   );
   const refactor = useCallback(
     (attempt: IAttemptDisplay, locale: ILocale) =>
-      refactorAttempt(attempt, locale, type),
-    [type]
+      refactorAttempt(attempt, locale, type, spec),
+    [type, spec]
   );
 
   const { data } = useRequest<{}, ITasksUsersBundle>(
