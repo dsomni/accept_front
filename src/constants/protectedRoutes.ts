@@ -54,10 +54,21 @@ export const protectedRoutesInfo: {
 
     return checkPermission(TOURNAMENT_URL, pathname, headers, query);
   },
-  '/task/edit': (pathname, headers) =>
-    checkAccess(pathname, headers, accessLevels.teacher),
-  '/task/tests': (pathname, headers) =>
-    checkAccess(pathname, headers, accessLevels.teacher),
+  '/task/edit': (pathname, headers, searchParams) => {
+    const query = searchParams?.get('tournament');
+    if (!query)
+      return checkAccess(pathname, headers, accessLevels.teacher);
+
+    return checkPermission(TOURNAMENT_URL, pathname, headers, query);
+  },
+
+  '/task/tests': (pathname, headers, searchParams) => {
+    const query = searchParams?.get('tournament');
+    if (!query)
+      return checkAccess(pathname, headers, accessLevels.teacher);
+
+    return checkPermission(TOURNAMENT_URL, pathname, headers, query);
+  },
   '/user/list': (pathname, headers) =>
     checkAccess(pathname, headers, accessLevels.teacher),
   '/group/list': (pathname, headers) =>

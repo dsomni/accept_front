@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import { ITask, ITaskDisplay } from '@custom-types/data/ITask';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Task/DeleteModal/DeleteModal';
@@ -28,7 +28,6 @@ import ChatSticky from '@ui/ChatSticky/ChatSticky';
 import dynamic from 'next/dynamic';
 import Description from '@components/Task/Description/Description';
 import Head from 'next/head';
-import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 const DynamicSend = dynamic(
   () => import('@components/Task/Send/Send'),
@@ -43,9 +42,14 @@ const DynamicResults = dynamic(
   { ssr: false }
 );
 
-function Task(props: { task: ITask; languages: ILanguage[] }) {
+function Task(props: {
+  task: ITask;
+  languages: ILanguage[];
+  has_rights: boolean;
+}) {
   const task = props.task;
   const languages = props.languages;
+  const has_rights = props.has_rights;
   const [activeModal, setActiveModal] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [openedHint, setOpenedHint] = useState(false);
@@ -126,7 +130,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
   ).concat([
     {
       color: 'blue',
-      href: `/task/tests/${task.spec}`,
+      href: `/task/tests/${task.spec}${
+        type ? `?${type}=${querySpec}` : ''
+      }`,
       icon: (
         <Notes
           width={STICKY_SIZES[width] / 3}
@@ -136,7 +142,9 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
     },
     {
       color: 'green',
-      href: `/task/edit/${task.spec}`,
+      href: `/task/edit/${task.spec}${
+        type ? `?${type}=${querySpec}` : ''
+      }`,
       icon: (
         <Pencil
           width={STICKY_SIZES[width] / 3}
@@ -210,7 +218,7 @@ function Task(props: { task: ITask; languages: ILanguage[] }) {
           onClick={() => setOpenedHint(true)}
         />
       )}
-      {isTeacher && <Sticky actions={actions} />}
+      {has_rights && <Sticky actions={actions} />}
       <TaskLayout
         key={task.spec}
         title={`${locale.titles.task.spec} ${task.title}`}
@@ -258,27 +266,37 @@ export default Task;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  if (!query.spec) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
+        destination: '/404',
       },
     };
   }
-  const response = await fetch(
-    `${API_URL}/api/bundle/task-page/${params.spec}`
-  );
+  const spec = query.spec;
 
+  const response = await fetch(
+    `${API_URL}/api/bundle/task-page/${spec}`,
+    {
+      headers: {
+        cookie: req.headers.cookie,
+      } as { [key: string]: string },
+    }
+  );
   if (response.status === 200) {
     const response_json = await response.json();
+
     return {
       props: {
         task: response_json.task,
         languages: response_json.languages,
+        has_rights: response_json.has_rights,
       },
-      revalidate: REVALIDATION_TIME.task.page,
     };
   }
   return {
@@ -286,12 +304,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       permanent: false,
       destination: '/404',
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };

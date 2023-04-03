@@ -8,9 +8,8 @@ import { useUser } from '@hooks/useUser';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 
 import { getApiUrl } from '@utils/getServerUrl';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { ITaskEditBundle } from '@custom-types/data/bundle';
 import {
   IHintAlarmType,
   ITaskCheckType,
@@ -23,7 +22,6 @@ import {
 import { UseFormReturnType } from '@mantine/form';
 import { Item } from '@ui/CustomTransferList/CustomTransferList';
 import Title from '@ui/Title/Title';
-import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function EditTask(props: {
   task: ITaskEdit;
@@ -169,21 +167,31 @@ export default EditTask;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  if (!query.spec) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
+        destination: '/404',
       },
     };
   }
-  const taskBundleResponse = await fetch(
-    `${API_URL}/api/bundle/task-edit/${params.spec}`
+  const spec = query.spec;
+
+  const response = await fetch(
+    `${API_URL}/api/bundle/task-edit/${spec}`,
+    {
+      headers: {
+        cookie: req.headers.cookie,
+      } as { [key: string]: string },
+    }
   );
-  if (taskBundleResponse.status === 200) {
-    const taskBundle: ITaskEditBundle =
-      await taskBundleResponse.json();
+
+  if (response.status === 200) {
+    const taskBundle = await response.json();
     return {
       props: {
         task: taskBundle.task,
@@ -191,21 +199,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         taskTypes: taskBundle.task_types,
         hintAlarmTypes: taskBundle.hint_alarm_types,
       },
-      revalidate: REVALIDATION_TIME.task.edit,
     };
   }
-
   return {
     redirect: {
       permanent: false,
       destination: '/404',
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };
