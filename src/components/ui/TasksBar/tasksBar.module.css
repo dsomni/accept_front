@@ -3,8 +3,9 @@
   z-index: 100;
   bottom: 0;
   left: 0;
+
   width: 30vw;
-  height: var(--spacer-xs);
+  height: var(--spacer-s);
 
   display: flex;
   flex-direction: row;
@@ -50,7 +51,22 @@
 }
 
 .current {
-  text-decoration: underline;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid black;
+  border-bottom: none;
+}
+
+.current::after {
+  content: '';
+  height: 3px;
+  width: 40%;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.null.current::after {
+  background-color: black;
 }
 
 @media screen and (max-width: 700px) {
