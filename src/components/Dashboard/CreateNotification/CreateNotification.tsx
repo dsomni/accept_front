@@ -7,7 +7,6 @@ import { INewNotification } from '@custom-types/data/notification';
 
 import { useUser } from '@hooks/useUser';
 import { Group } from '@mantine/core';
-import { useBackNotifications } from '@hooks/useBackNotifications';
 import { requestWithNotify } from '@utils/requestWithNotify';
 
 const CreateNotification: FC<{
@@ -16,7 +15,6 @@ const CreateNotification: FC<{
 }> = ({ groups = [], logins = [] }) => {
   const { locale, lang } = useLocale();
   const { user } = useUser();
-  const { notifyAboutCreation } = useBackNotifications();
 
   const form = useForm({
     initialValues: {
@@ -55,18 +53,9 @@ const CreateNotification: FC<{
       locale.notify.notification.create,
       lang,
       (_: string) => '',
-      notification,
-      notifyAboutCreation
+      notification
     );
-  }, [
-    form.values,
-    groups,
-    logins,
-    user?.login,
-    locale,
-    lang,
-    notifyAboutCreation,
-  ]);
+  }, [form.values, groups, logins, user?.login, locale, lang]);
 
   return (
     <>

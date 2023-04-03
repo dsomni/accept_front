@@ -19,7 +19,6 @@ import { UseFormReturnType } from '@mantine/form/lib/types';
 import { useRouter } from 'next/router';
 import { INewNotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
-import { useBackNotifications } from '@hooks/useBackNotifications';
 import Title from '@ui/Title/Title';
 import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
@@ -27,7 +26,6 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
   const { locale, lang } = useLocale();
   const { user } = useUser();
   const router = useRouter();
-  const { notifyAboutCreation } = useBackNotifications();
 
   const [initialValues, setInitialValues] = useState({
     origin: '',
@@ -114,13 +112,9 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         'notification/add',
         'POST',
         notification
-      ).then((res) => {
-        if (!res.error) {
-          notifyAboutCreation(res.response);
-        }
-      });
+      );
     },
-    [lang, locale, notifyAboutCreation, user?.shortName]
+    [lang, locale, user?.login, user?.shortName]
   );
 
   return (
