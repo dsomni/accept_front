@@ -2,9 +2,6 @@ import Form from '@components/Task/Form/Form';
 import { useLocale } from '@hooks/useLocale';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { ITaskDisplay, ITaskEdit } from '@custom-types/data/ITask';
-
-import { useUser } from '@hooks/useUser';
-
 import { DefaultLayout } from '@layouts/DefaultLayout';
 
 import { getApiUrl } from '@utils/getServerUrl';
@@ -28,9 +25,10 @@ function EditTask(props: {
   taskTypes: ITaskType[];
   taskCheckTypes: ITaskCheckType[];
   hintAlarmTypes: IHintAlarmType[];
+  tournament: string | null;
+  assignment: string | null;
 }) {
   const { locale, lang } = useLocale();
-  const { user } = useUser();
   const { task, taskTypes, taskCheckTypes, hintAlarmTypes } = props;
 
   const formValues = useMemo(
@@ -97,7 +95,7 @@ function EditTask(props: {
         tags,
         ...values
       } = form.values;
-      let body: any = {
+      let task: any = {
         ...values,
         checkType: +form.values['checkType'],
         taskType: +form.values['taskType'],
@@ -114,25 +112,40 @@ function EditTask(props: {
         tags: tags.map((tag: Item) => tag.value),
       };
       if (!form.values.shouldRestrictLanguages) {
-        body.allowedLanguages = [];
-        body.forbiddenLanguages = [];
+        task.allowedLanguages = [];
+        task.forbiddenLanguages = [];
       }
       if (form.values['checkType'] === '1') {
-        body.checker = {
+        task.checker = {
           sourceCode: checkerCode,
           language: +checkerLang,
         };
       }
       if (form.values['remark'].trim() === '') {
-        body.remark = undefined;
+        task.remark = undefined;
       }
       if (form.values['hasHint']) {
-        body.hint = {
+        task.hint = {
           content: hintContent,
           alarmType: +hintAlarmType,
           alarm: hintAlarm,
         };
       }
+      const body = {
+        task,
+        base_type:
+          props.tournament != ''
+            ? 'tournament'
+            : props.assignment != ''
+            ? 'assignment'
+            : 'basic',
+        base_spec:
+          props.tournament != ''
+            ? props.tournament
+            : props.assignment != ''
+            ? props.assignment
+            : '',
+      };
       requestWithNotify(
         `task/edit`,
         'POST',
@@ -142,7 +155,13 @@ function EditTask(props: {
         body
       );
     },
-    [user?.login, locale, lang]
+    [
+      props.tournament,
+      props.assignment,
+      locale.notify.task.edit,
+      locale.validationError,
+      lang,
+    ]
   );
   return (
     <>
@@ -180,12 +199,23 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
   const spec = query.spec;
+  const tournament = query.tournament;
+  const assignment = query.assignment;
+
+  const body = tournament
+    ? { base_type: 'tournament', base_spec: tournament }
+    : assignment
+    ? { base_type: 'assignment', base_spec: assignment }
+    : { base_type: 'basic', base_spec: '' };
 
   const response = await fetch(
     `${API_URL}/api/bundle/task-edit/${spec}`,
     {
+      method: 'POST',
+      body: JSON.stringify(body),
       headers: {
         cookie: req.headers.cookie,
+        'content-type': 'application/json',
       } as { [key: string]: string },
     }
   );
@@ -198,6 +228,8 @@ export const getServerSideProps: GetServerSideProps = async ({
         taskCheckTypes: taskBundle.task_check_types,
         taskTypes: taskBundle.task_types,
         hintAlarmTypes: taskBundle.hint_alarm_types,
+        tournament: tournament || '',
+        assignment: tournament || '',
       },
     };
   }

@@ -279,12 +279,23 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
   const spec = query.spec;
+  const tournament = query.tournament;
+  const assignment = query.assignment;
+
+  const body = tournament
+    ? { base_type: 'tournament', base_spec: tournament }
+    : assignment
+    ? { base_type: 'assignment', base_spec: assignment }
+    : { base_type: 'basic', base_spec: '' };
 
   const response = await fetch(
     `${API_URL}/api/bundle/task-page/${spec}`,
     {
+      method: 'POST',
+      body: JSON.stringify(body),
       headers: {
         cookie: req.headers.cookie,
+        'content-type': 'application/json',
       } as { [key: string]: string },
     }
   );

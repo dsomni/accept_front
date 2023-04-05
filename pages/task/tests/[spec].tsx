@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
 import {
@@ -15,9 +15,12 @@ import ListItem from '@ui/ListItem/ListItem';
 import Title from '@ui/Title/Title';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { Download } from 'tabler-icons-react';
-import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
-function TestsPage(props: { spec: string }) {
+function TestsPage(props: {
+  spec: string;
+  tournament: string;
+  assignment: string;
+}) {
   const spec = props.spec;
   const [tests, setTests] = useState<ITest[]>([]);
   const [taskType, setTaskType] = useState<ITaskType>();
@@ -26,21 +29,30 @@ function TestsPage(props: { spec: string }) {
   const { locale } = useLocale();
 
   useEffect(() => {
+    const body =
+      props.tournament != ''
+        ? { base_type: 'tournament', base_spec: props.tournament }
+        : props.assignment != ''
+        ? { base_type: 'assignment', base_spec: props.assignment }
+        : { base_type: 'basic', base_spec: '' };
     sendRequest<
-      undefined,
+      {
+        base_type: string;
+        base_spec: string;
+      },
       {
         tests: ITest[];
         task_type: ITaskType;
         task_check_type: ITaskCheckType;
       }
-    >(`task/tests/${spec}`, 'GET').then((res) => {
+    >(`task/tests/${spec}`, 'POST', body).then((res) => {
       if (!res.error) {
         setTests(res.response.tests);
         setTaskType(res.response.task_type);
         setTaskCheckType(res.response.task_check_type);
       }
     });
-  }, [spec]);
+  }, [props.assignment, props.tournament, spec]);
 
   const form = useForm({
     initialValues: { tests },
@@ -110,24 +122,34 @@ export default TestsPage;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  if (!query.spec) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
+        destination: '/404',
       },
     };
   }
-  const response = await fetch(
-    `${API_URL}/api/task/exists/${params.spec}`
-  );
+  const spec = query.spec;
+  const tournament = query.tournament;
+  const assignment = query.assignment;
+
+  const response = await fetch(`${API_URL}/api/task/exists/${spec}`, {
+    headers: {
+      cookie: req.headers.cookie,
+    } as { [key: string]: string },
+  });
   if (response.status === 200) {
     return {
       props: {
-        spec: params.spec,
+        spec,
+        tournament: tournament || '',
+        assignment: assignment || '',
       },
-      revalidate: REVALIDATION_TIME.task.tests,
     };
   }
   return {
@@ -135,12 +157,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       permanent: false,
       destination: '/404',
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };
