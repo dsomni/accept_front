@@ -8,11 +8,15 @@ import { IFullResults } from '@custom-types/data/IResults';
 import { letterFromIndex } from '@utils/letterFromIndex';
 import Link from 'next/link';
 
-const getColor = (score: number) => {
-  return score === 100 ? 'var(--positive)' : 'var(--negative)';
+const getScoreColor = (score: number | undefined) => {
+  return !score
+    ? '#000'
+    : score === 100
+    ? 'var(--positive)'
+    : 'var(--negative)';
 };
 
-const getScoreColor = (score: number | undefined) => {
+const getTotalScoreColor = (score: number | undefined) => {
   return !score || score === 0
     ? 'var(--negative)'
     : 'var(--positive)';
@@ -69,7 +73,7 @@ const Results: FC<{
                   href={`/attempt/${attempt.attempt}`}
                   style={{
                     textDecoration: 'none',
-                    color: getColor(attempt.score),
+                    color: getScoreColor(attempt.score),
                   }}
                 >
                   {attempt.verdict
@@ -85,7 +89,7 @@ const Results: FC<{
           best: (
             <div
               style={{
-                color: getScoreColor(user_result.score),
+                color: getTotalScoreColor(user_result.score),
               }}
             >
               {user_result.score.toString()}
