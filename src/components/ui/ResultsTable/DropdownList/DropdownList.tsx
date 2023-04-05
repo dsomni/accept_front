@@ -6,7 +6,7 @@ import { Menu } from '@mantine/core';
 const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
   return (
     <>
-      {cell.rest.length <= 1 ? (
+      {cell.rest.length <= 0 ? (
         <div>{cell.best}</div>
       ) : (
         <Menu
