@@ -3,7 +3,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useForm } from '@mantine/form';
 import { Button, TextArea } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useEffect } from 'react';
 import { Send as SendPlane } from 'tabler-icons-react';
 import styles from './sendText.module.css';
 
@@ -22,6 +22,10 @@ const SendText: FC<{
       answers: (value) => !value.find((item) => item.length > 0),
     },
   });
+
+  const resetAnswers = useCallback(() => {
+    form.setFieldValue('answers', Array(testsNumber).fill(''));
+  }, [form, testsNumber]);
 
   const handleSubmit = useCallback(() => {
     if (!form.isValid()) {
@@ -43,8 +47,20 @@ const SendText: FC<{
       () => {},
       { autoClose: 5000 }
     );
+    resetAnswers();
     setActiveTab('results');
-  }, [form, spec, locale.notify.attempt.send, lang, setActiveTab]);
+  }, [
+    form,
+    spec,
+    locale.notify.attempt.send,
+    lang,
+    resetAnswers,
+    setActiveTab,
+  ]);
+
+  useEffect(() => {
+    console.log(form.values.answers);
+  }, [form.values.answers]);
 
   return (
     <div className={styles.wrapper}>
@@ -83,15 +99,10 @@ const SendText: FC<{
                 {`${locale.task.answer} #${index + 1}`}
               </div>
               <TextArea
-                onChange={(e) =>
-                  form.setFieldValue(
-                    `answers.${index}`,
-                    e.target.value
-                  )
-                }
                 autosize
                 maxRows={10}
                 minRows={3}
+                {...form.getInputProps(`answers.${index}`)}
               />
             </div>
           ))}

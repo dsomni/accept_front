@@ -156,7 +156,11 @@ const Form: FC<{
           taskTypes={taskTypes}
           taskCheckTypes={taskCheckTypes}
         />,
-        <ConstraintsInfo key="1" form={form} />,
+        form.values.taskType == 0 ? (
+          <ConstraintsInfo key="1" form={form} />
+        ) : (
+          <>{locale.task.form.steps.emptyStep}</>
+        ),
         <DescriptionInfo
           key="2"
           form={form}

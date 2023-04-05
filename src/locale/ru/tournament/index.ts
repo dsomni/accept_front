@@ -7,6 +7,7 @@ export const tournament = {
   addTasks: 'Добавьте задачи',
   needRegistration: 'Требуется регистрация',
   register: 'Зарегистрироваться',
+  refuse: 'Отменить регистрацию',
   banned: 'Вы забанены',
   form,
   list,

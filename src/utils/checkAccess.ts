@@ -31,10 +31,13 @@ const getSpec = (pathname: string): string => {
 export const checkPermission = async (
   url: string,
   pathname: string,
-  headers: { Cookie: string } | undefined
+  headers: { Cookie: string } | undefined,
+  spec?: string
 ): Promise<boolean | string> => {
-  const spec = getSpec(pathname);
-  return await requestAccess(`${url}${spec}`, pathname, headers);
+  if (spec)
+    return await requestAccess(`${url}/${spec}`, pathname, headers);
+  const pathSpec = getSpec(pathname);
+  return await requestAccess(`${url}${pathSpec}`, pathname, headers);
 };
 
 export const checkAccess = async (

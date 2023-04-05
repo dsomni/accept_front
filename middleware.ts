@@ -53,7 +53,11 @@ export async function middleware(request: NextRequest) {
       ? { Cookie: `access_token_cookie=${access_token}` }
       : undefined;
 
-    const accepted = await access(pathname, headers);
+    const accepted = await access(
+      pathname,
+      headers,
+      request.nextUrl.searchParams
+    );
     if (typeof accepted != 'boolean') {
       return NextResponse.redirect(request.nextUrl.origin + accepted);
     }

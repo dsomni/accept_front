@@ -6,8 +6,8 @@ import {
 } from './atomic';
 import { IGroup } from './IGroup';
 import { ITag } from './ITag';
-import { ITaskDisplay, ITaskEdit } from './ITask';
-import { IUser } from './IUser';
+import { ITaskBaseInfo, ITaskDisplay, ITaskEdit } from './ITask';
+import { IUser, IUserDisplay } from './IUser';
 
 export interface ITaskListBundle {
   tasks: ITaskDisplay[];
@@ -31,4 +31,9 @@ export interface INotificationAddBundle {
   users: IUser[];
   roles: IRole[];
   groups: IGroup[];
+}
+
+export interface ITasksUsersBundle {
+  tasks: ITaskBaseInfo[];
+  users: IUserDisplay[];
 }

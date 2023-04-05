@@ -1,4 +1,3 @@
-import { useUser } from '@hooks/useUser';
 import { Icon } from '@ui/basics';
 import {
   FC,
@@ -16,13 +15,14 @@ import { Textarea } from '@mantine/core';
 import { useLocale } from '@hooks/useLocale';
 import { getLocalDate } from '@utils/datetime';
 import { sendRequest } from '@requests/request';
-import { createSocket } from '@utils/createSocket';
+
+import { useRefetch } from '@hooks/useRefetch';
+import { getRandomIntInRange } from '@utils/random';
 
 const Chat: FC<{
   indicateNew?: () => void;
   opened: boolean;
   isMessageMine: (_: IChatMessage) => boolean;
-  wsURL: string;
   entity: string;
   host: string;
   wrapperStyles: any;
@@ -30,7 +30,6 @@ const Chat: FC<{
 }> = ({
   indicateNew,
   opened,
-  wsURL,
   entity,
   host,
   isMessageMine,
@@ -38,24 +37,33 @@ const Chat: FC<{
   moderator,
 }) => {
   const { locale } = useLocale();
-  const { user } = useUser();
-
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [message, setMessage] = useState('');
-  const [socketConnected, setSocketConnected] = useState(false);
 
   const textArea = useRef<HTMLTextAreaElement>(null);
   const messagesDiv = useRef<HTMLDivElement>(null!);
   const [firstFetchDone, setFirstFetchDone] = useState(false);
   const [newMessages, setNewMessages] = useState<string[]>([]);
 
-  const socket = useMemo(
-    () => createSocket(wsURL, user?.login),
-    [user?.login, wsURL]
+  const refetchIntervalSeconds = useMemo(
+    () =>
+      opened
+        ? getRandomIntInRange(5, 8)
+        : getRandomIntInRange(12, 17),
+    [opened]
   );
 
   const appendMessages = useCallback((messages: IChatMessage[]) => {
-    setMessages((oldMessages) => [...oldMessages, ...messages]);
+    setMessages((oldMessages) => {
+      if (oldMessages.length == 0) return messages;
+      if (messages.length == 0) return oldMessages;
+      if (
+        oldMessages[oldMessages.length - 1].spec ==
+        messages[messages.length - 1].spec
+      )
+        return oldMessages;
+      return [...oldMessages, ...messages];
+    });
     setNewMessages((oldMessages) => [
       ...oldMessages,
       ...messages.map((item) => item.spec),
@@ -68,16 +76,17 @@ const Chat: FC<{
   }, []);
 
   const fetchMessages = useCallback(() => {
-    sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
+    return sendRequest<{}, IChatMessage[]>('chat/new', 'POST', {
       entity,
       host,
       moderator: !!moderator,
     }).then((res) => {
       if (!res.error) {
         appendMessages(res.response);
+        if (indicateNew && res.response.length > 0) indicateNew();
       }
     });
-  }, [entity, host, moderator, appendMessages]);
+  }, [entity, host, moderator, appendMessages, indicateNew]);
 
   const handleSend = useCallback(() => {
     if (message.trim() === '') return;
@@ -125,38 +134,7 @@ const Chat: FC<{
     });
   }, [entity, host, moderator, opened, firstFetchDone]);
 
-  useEffect(() => {
-    if (!socket || !user) return;
-    socket.connect();
-    socket.on('connect', () => {
-      setSocketConnected(true);
-      socket.emit('register', entity, host, user?.login, !!moderator);
-    });
-    socket.on('disconnect', () => {
-      setSocketConnected(false);
-    });
-    // Clean-up
-    return () => {
-      socket.removeAllListeners('connect');
-      socket.removeAllListeners('disconnect');
-      socket.disconnect();
-    };
-  }, [socket, user]); // eslint-disable-line
-
-  useEffect(() => {
-    if (!socket || !socketConnected) return;
-    socket.on('new_messages', (response) => {
-      const shouldRefetch = JSON.parse(response) as boolean;
-      if (shouldRefetch) {
-        fetchMessages();
-        if (indicateNew) indicateNew();
-      }
-    });
-
-    return () => {
-      socket.removeAllListeners('new_messages');
-    };
-  }, [socket, socketConnected, indicateNew, fetchMessages]);
+  useRefetch(fetchMessages, refetchIntervalSeconds);
 
   useEffect(() => {
     const handleClick = (event: KeyboardEvent) => {

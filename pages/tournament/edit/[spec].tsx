@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { getApiUrl } from '@utils/getServerUrl';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { useLocale } from '@hooks/useLocale';
@@ -22,7 +22,6 @@ import {
 import Form from '@components/Tournament/Form/Form';
 import { useRequest } from '@hooks/useRequest';
 import { IUserDisplay } from '@custom-types/data/IUser';
-import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function TournamentEdit(props: ITournamentEditBundle) {
   const { locale, lang } = useLocale();
@@ -131,18 +130,29 @@ export default TournamentEdit;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  if (!query.spec) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
+        destination: '/404',
       },
     };
   }
+  const spec = query.spec;
+
   const response = await fetch(
-    `${API_URL}/api/bundle/tournament-edit/${params.spec}`
+    `${API_URL}/api/bundle/tournament-edit/${spec}`,
+    {
+      headers: {
+        cookie: req.headers.cookie,
+      } as { [key: string]: string },
+    }
   );
+
   if (response.status === 200) {
     const response_json = await response.json();
     return {
@@ -151,7 +161,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         assessmentTypes: response_json.assessment_types,
         tags: response_json.tags,
       },
-      revalidate: REVALIDATION_TIME.tournament.edit,
     };
   }
   return {
@@ -159,12 +168,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       permanent: false,
       destination: '/404',
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };

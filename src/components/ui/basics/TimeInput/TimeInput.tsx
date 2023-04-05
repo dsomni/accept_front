@@ -23,7 +23,12 @@ const TimeInput: FC<Props> = ({ helperContent, ...props }) => {
         </div>
         {helperContent && <Helper dropdownContent={helperContent} />}
       </div>
-      <MantineTimeInput size="lg" {...props} label={undefined} />
+      <MantineTimeInput
+        size="lg"
+        withSeconds
+        {...props}
+        label={undefined}
+      />
     </div>
   );
 };

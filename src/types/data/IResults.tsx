@@ -9,6 +9,7 @@ export interface IResult {
   verdictTest: number;
   passedTests: number;
   percentTests: number;
+  score: number;
 }
 
 export interface ITableResults {

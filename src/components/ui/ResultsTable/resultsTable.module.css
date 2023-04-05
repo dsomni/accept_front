@@ -1,10 +1,16 @@
-.table td {
+.wrapperTable table td {
   white-space: nowrap;
   height: 50px;
   min-width: var(--spacer-huge);
 }
 
-.table {
+.wrapperTable {
+  border-collapse: collapse;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapperTable table {
   border-collapse: collapse;
   width: 100%;
   height: 100%;
@@ -21,49 +27,52 @@
   max-height: 70vh;
 }
 
-.table tr:nth-child(odd) td:first-of-type,
-.table tr:nth-child(odd),
-.table tr:nth-child(odd) td:last-of-type {
+.wrapperTable table tr:nth-child(odd) td:first-of-type,
+.wrapperTable table tr:nth-child(odd),
+.wrapperTable table tr:nth-child(odd) td:last-of-type {
   background-color: var(--dark6);
 }
 
-.table thead th {
+.wrapperTable table thead th {
   background: white;
   position: sticky;
   top: 0;
-  z-index: 1;
-  padding: 0 var(--spacer-s) var(--spacer-s) 0;
   width: max-content;
   text-align: left;
-  margin-bottom: -1px;
+  /* margin-bottom: -1px; */
   box-shadow: inset 0 -1px black;
 }
 
-.table thead th:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 2;
+.wrapperTable > tr > td > table > thead > tr > th,
+.wrapperTable > tr > td > table > tbody > tr > td {
+  height: 50px;
+  padding-right: var(--spacer-s);
+  padding-left: var(--spacer-xs);
 }
 
-.table thead th:last-child {
-  position: sticky;
-  padding-left: var(--spacer-s);
-  right: 0;
-  z-index: 2;
+.leftTable,
+.rightTable > thead > th {
+  z-index: 5;
 }
 
-.table tbody tr td:first-of-type {
+.wrapperTable > tr > td:first-of-type {
   background: white;
   position: sticky;
+  z-index: 5;
   left: 0;
   padding-right: var(--spacer-s);
   padding-left: var(--spacer-xs);
 }
 
-.table tbody tr td:last-of-type {
+.wrapperTable > tr > td:last-of-type {
   background: white;
   position: sticky;
+  z-index: 5;
   right: 0;
   padding-right: var(--spacer-s);
   padding-left: var(--spacer-xs);
+}
+
+.wrapperTable > tr > td {
+  padding: 0 !important;
 }

@@ -90,12 +90,12 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
           className={
             styles.wrapper + ' ' + (showTimer ? styles.show : '')
           }
+          onClick={() => {
+            setShowTimer((value) => !value);
+          }}
         >
           <Icon
-            onClick={() => {
-              setShowTimer((value) => !value);
-            }}
-            size={'xs'}
+            size={'sm'}
             className={styles.iconRoot}
             wrapperClassName={styles.iconWrapper}
           >

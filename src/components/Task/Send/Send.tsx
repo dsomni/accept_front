@@ -1,5 +1,12 @@
 import { Button, Select } from '@ui/basics';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useLocale } from '@hooks/useLocale';
 import CodeArea from '@ui/CodeArea/CodeArea';
 import { requestWithNotify } from '@utils/requestWithNotify';
@@ -52,6 +59,7 @@ const Send: FC<{
       () => {},
       { autoClose: 5000 }
     );
+    setCode('');
     setActiveTab('results');
   }, [language, code, spec, locale, lang, setActiveTab]);
 
@@ -61,6 +69,8 @@ const Send: FC<{
     },
     [setLanguage]
   );
+
+  const isValid = useMemo(() => code.length > 0, [code]);
 
   return (
     <div className={styles.wrapper}>
@@ -81,7 +91,12 @@ const Send: FC<{
         <Button
           variant="outline"
           onClick={handleSubmit}
-          leftIcon={<SendPlane color={'var(--primary)'} />}
+          disabled={!isValid}
+          leftIcon={
+            <SendPlane
+              color={!isValid ? 'black' : 'var(--primary)'}
+            />
+          }
         >
           {locale.task.submit}
         </Button>
