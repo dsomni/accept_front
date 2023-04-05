@@ -1,6 +1,5 @@
 import { INotification } from '@custom-types/data/notification';
 import { sendRequest } from '@requests/request';
-import { createSocket } from '@utils/createSocket';
 import {
   infoNotification,
   newNotification,
@@ -13,12 +12,13 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
 import { useLocale } from './useLocale';
+import { getRandomIntInRange } from '@utils/random';
 import { useUser } from './useUser';
+import { useRefetch } from './useRefetch';
 
 interface INotificationContext {
   new_amount: number;
@@ -30,7 +30,6 @@ interface INotificationContext {
   ) => void;
   loading: boolean;
   refetchNewNotifications: () => void;
-  notifyAboutCreation: (_: string) => void;
 }
 
 const BackNotificationsContext = createContext<INotificationContext>(
@@ -41,51 +40,15 @@ export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { lang } = useLocale();
-  const { user } = useUser();
-  const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<INotification[]>(
     []
   );
-
-  const socket = useMemo(
-    () => createSocket('/ws/notification/', user?.login),
-    [user?.login]
-  );
-
-  useEffect(() => {
-    if (!socket) return;
-    socket.connect();
-    socket.on('connect', () =>
-      socket.emit('register', user?.login || '')
-    );
-    socket.on('disconnect', () => {
-      // socket.connect();
-    });
-    socket.on('notification', (response) => {
-      const shouldRefetch = JSON.parse(response) as boolean;
-      if (shouldRefetch) fetchNotifications();
-    });
-
-    // Clean-up
-    return () => {
-      socket.removeAllListeners('connect');
-      socket.removeAllListeners('disconnect');
-      socket.removeAllListeners('notification');
-    };
-  }, [socket]); // eslint-disable-line
-
-  const handleSend = useCallback(
-    (spec: string) => {
-      if (socket?.connected) {
-        socket.emit('new_notification', spec);
-      }
-    },
-    [socket]
-  );
+  const { user } = useUser();
+  const updateIntervalSeconds = getRandomIntInRange(11, 13);
 
   const fetchNotifications = useCallback(() => {
-    setLoading(true);
-    sendRequest<undefined, INotification[]>(
+    if (!!!user) return new Promise(() => {});
+    return sendRequest<undefined, INotification[]>(
       'notification/new',
       'GET'
     ).then((res) => {
@@ -102,9 +65,13 @@ export const BackNotificationsProvider: FC<{
           }
         });
       }
-      setLoading(false);
     });
-  }, []);
+  }, [user]);
+
+  const { loading } = useRefetch(
+    fetchNotifications,
+    updateIntervalSeconds
+  );
 
   const sendViewed = useCallback(
     (
@@ -138,15 +105,8 @@ export const BackNotificationsProvider: FC<{
       sendViewed,
       loading,
       refetchNewNotifications: fetchNotifications,
-      notifyAboutCreation: handleSend,
     }),
-    [
-      notifications,
-      sendViewed,
-      loading,
-      fetchNotifications,
-      handleSend,
-    ]
+    [notifications, sendViewed, loading, fetchNotifications]
   );
 
   return (

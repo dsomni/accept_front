@@ -1,106 +1,38 @@
 import { IUserDisplay } from '@custom-types/data/IUser';
 import { sendRequest } from '@requests/request';
-import {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
 import styles from './chatPage.module.css';
 import { link } from '@constants/Avatar';
 import { Avatar } from '@mantine/core';
 import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
 import { Indicator, LoadingOverlay } from '@ui/basics';
-import { useUser } from '@hooks/useUser';
 import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
 import { useLocale } from '@hooks/useLocale';
-import { createSocket } from '@utils/createSocket';
+import { useRefetch } from '@hooks/useRefetch';
+import { getRandomIntInRange } from '@utils/random';
 
 const ChatPage: FC<{
   entity: string;
   type: 'tournament' | 'assignment';
 }> = ({ entity, type }) => {
-  const { user } = useUser();
   const { locale } = useLocale();
   const [hosts, setHosts] = useState<[IUserDisplay, number][]>([]);
-  const [initialLoad, setInitialLoad] = useState(true);
-
-  const [newHost, setNewHost] = useState<string | undefined>(
-    undefined
-  );
   const [currentHost, setCurrentHost] = useState<string | undefined>(
     undefined
   );
+  const refetchIntervalSeconds = getRandomIntInRange(23, 27);
 
   const hostLogins = useMemo(
     () => hosts.map((item) => item[0].login),
     [hosts]
   );
 
-  const fetchHosts = useCallback(
-    (hosts: string[]) => {
-      // fetch users display by logins
-      return new Promise<{ user: IUserDisplay; amount: number }[]>(
-        (resolve) => {
-          sendRequest<{}, { user: IUserDisplay; amount: number }[]>(
-            `/hosts`,
-            'POST',
-            { logins: hosts, entity }
-          ).then((res) => {
-            if (!res.error) {
-              resolve(res.response);
-            }
-          });
-        }
-      );
-    },
-    [entity]
-  );
-
-  const socket = useMemo(
-    () => createSocket('/ws/host', user?.login),
-    [user?.login]
-  );
-
-  const fetchNewHost = useCallback(
-    (newHost: string) => {
-      fetchHosts([newHost]).then((res) => {
-        setHosts((old_hosts) => {
-          old_hosts.push([res[0].user, res[0].amount]);
-          return [...old_hosts.sort((a, b) => b[1] - a[1])];
-        });
-      });
-    },
-    [fetchHosts]
-  );
-
-  useEffect(() => {
-    if (!newHost) return;
-    if (newHost === currentHost) {
-      setNewHost(undefined);
-      return;
-    }
-    const index = hosts.findIndex((item) => item[0].login == newHost);
-    if (index >= 0) {
-      setHosts((old_hosts) => {
-        old_hosts[index][1] += 1;
-        return [...old_hosts.sort((a, b) => b[1] - a[1])];
-      });
-      setNewHost(undefined);
-    } else {
-      fetchNewHost(newHost);
-      setNewHost(undefined);
-    }
-  }, [hosts, newHost, currentHost, fetchNewHost]);
-
   const fetchInitialHosts = useCallback(() => {
-    sendRequest<undefined, { user: IUserDisplay; amount: number }[]>(
-      `/hosts/all/${entity}`,
-      'GET'
-    ).then((res) => {
+    return sendRequest<
+      undefined,
+      { user: IUserDisplay; amount: number }[]
+    >(`/hosts/all/${entity}`, 'GET').then((res) => {
       if (!res.error)
         setHosts(
           res.response
@@ -110,32 +42,15 @@ const ChatPage: FC<{
             )
             .sort((a, b) => b[1] - a[1])
         );
-      setInitialLoad(false);
     });
   }, [entity]);
 
-  useEffect(() => {
-    setInitialLoad(true);
-    fetchInitialHosts();
-  }, [fetchInitialHosts]);
+  const { updatesCounter } = useRefetch(
+    fetchInitialHosts,
+    refetchIntervalSeconds
+  );
 
-  useEffect(() => {
-    if (!socket) return;
-    socket.connect();
-    socket.on('connect', () => {
-      socket.emit('register', entity, user?.login);
-    });
-    socket.on('new_message_from', (response) => {
-      const host = JSON.parse(response) as string;
-      setNewHost(host);
-    });
-    // Clean-up
-    return () => {
-      socket.removeAllListeners('connect');
-      socket.removeAllListeners('new_host');
-      socket.removeAllListeners('register_response');
-    };
-  }, [socket]); // eslint-disable-line
+  const initialLoad = updatesCounter == 0;
 
   return (
     <div className={styles.wrapper}>
@@ -152,7 +67,7 @@ const ChatPage: FC<{
                   entity={entity}
                   type={type}
                   exclude={hostLogins}
-                  onSuccess={fetchNewHost}
+                  onSuccess={fetchInitialHosts}
                   small
                 />
               </div>
@@ -204,7 +119,7 @@ const ChatPage: FC<{
                 entity={entity}
                 type={type}
                 exclude={hostLogins}
-                onSuccess={fetchNewHost}
+                onSuccess={fetchInitialHosts}
               />
             </div>
           )}
@@ -219,7 +134,6 @@ const ChatPage: FC<{
                   return !(message.author === currentHost);
                 }}
                 wrapperStyles={styles.chatWrapper}
-                wsURL={'/ws/chat'}
                 moderator={true}
               />
             </div>

@@ -41,7 +41,7 @@ function AddAssignmentSchema() {
       }
       let body: any = {
         ...form.values,
-        author: user?.shortName || 'unknown',
+        author: user?.login || '',
         tasks: form.values['tasks'].map((task: Item) => task.value),
         defaultDuration: form.values.defaultDuration * 60 * 1000, // from minutes to milliseconds
         tags: form.values['tags'].map((tag: Item) => tag.value),

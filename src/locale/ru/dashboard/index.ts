@@ -3,6 +3,7 @@ import { tournament } from './tournament';
 import { admin } from './admin';
 import { chat } from './chat';
 import { developer } from './developer';
+import { attemptsList } from './attemptsList';
 
 export const dashboard = {
   assignment,
@@ -10,4 +11,5 @@ export const dashboard = {
   tournament,
   chat,
   developer,
+  attemptsList,
 };

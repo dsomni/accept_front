@@ -5,6 +5,7 @@ export const tournament = {
   bannedAttempts: 'Забаненные попытки',
   participants: 'Участники',
   tasks: 'Задачи',
+  registrationManagement: 'Управление регистрацией',
   chat: 'Чат',
   createNotification: 'Создать уведомление',
   timeInfo: {
@@ -14,5 +15,9 @@ export const tournament = {
   toDate: {
     actual: 'Текущие',
     end: 'По окончании',
+  },
+  registrationManagementSelector: {
+    participants: 'Участники',
+    users: 'Пользователи',
   },
 };

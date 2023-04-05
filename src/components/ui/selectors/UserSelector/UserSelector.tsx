@@ -1,4 +1,5 @@
 import { useLocale } from '@hooks/useLocale';
+import { ILocale } from '@custom-types/ui/ILocale';
 import { FC, memo, useCallback, useMemo, useState } from 'react';
 import {
   CustomTransferList,
@@ -12,18 +13,23 @@ import inputStyles from '@styles/ui/input.module.css';
 
 const UserSelector: FC<{
   setFieldValue: (_: string[]) => void;
-  inputProps: any;
+  inputProps?: any;
   users: IUserDisplay[];
   initialUsers?: string[];
   classNames?: object;
   shrink?: boolean;
+  titles?: (_: ILocale) => [string, string];
 }> = ({
   setFieldValue,
-  inputProps,
+  inputProps = {},
   users,
   initialUsers,
   classNames,
   shrink,
+  titles = (locale: ILocale) => [
+    locale.ui.userSelector.unselected,
+    locale.ui.userSelector.selected,
+  ],
 }) => {
   const { locale } = useLocale();
 
@@ -117,10 +123,7 @@ const UserSelector: FC<{
           defaultChosen={selectedUsers}
           setUsed={setUsed}
           classNames={classNames ? classNames : {}}
-          titles={[
-            locale.ui.userSelector.unselected,
-            locale.ui.userSelector.selected,
-          ]}
+          titles={titles(locale)}
           itemComponent={itemComponent}
           searchKeys={['login', 'name', 'shortName']}
         />

@@ -1,7 +1,7 @@
 .wrapper {
   position: fixed;
   right: 0;
-  width: var(--spacer-l);
+  width: var(--spacer-xl);
   z-index: 150;
   top: 10rem;
   display: inline-flex;
@@ -10,6 +10,7 @@
   border-radius: 10px 0 0 10px;
   background-color: #ffffffcc;
   padding: var(--spacer-xs) var(--spacer-s) var(--spacer-xs) 0;
+  cursor: pointer;
 }
 
 .wrapper.show {
@@ -21,14 +22,14 @@
 }
 
 .iconRoot {
-  width: var(--spacer-l);
+  width: var(--spacer-xl);
 }
 
 .iconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--spacer-l);
+  width: var(--spacer-xl);
 }
 
 .timerWrapper {

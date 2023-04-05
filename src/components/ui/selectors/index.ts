@@ -1,4 +1,5 @@
 import TaskSelector from './TaskSelector/TaskSelector';
+import TaskSelect from './TaskSelect/TaskSelect';
 import UserSelector from './UserSelector/UserSelector';
 import UserSelect from './UserSelect/UserSelect';
 import TagSelector from './TagSelector/TagSelector';
@@ -9,6 +10,7 @@ import AssignmentSchemaSelector from './AssignmentSchemaSelector/AssignmentSchem
 
 export {
   TaskSelector,
+  TaskSelect,
   UserSelector,
   UserSelect,
   TagSelector,
