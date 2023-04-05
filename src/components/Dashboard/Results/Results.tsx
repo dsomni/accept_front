@@ -9,7 +9,7 @@ import { letterFromIndex } from '@utils/letterFromIndex';
 import Link from 'next/link';
 
 const getScoreColor = (score: number | undefined) => {
-  return !score
+  return score === undefined
     ? '#000'
     : score === 100
     ? 'var(--positive)'
