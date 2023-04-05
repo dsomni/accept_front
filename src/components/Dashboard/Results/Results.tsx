@@ -49,7 +49,7 @@ const Results: FC<{
   }, [fetchDate]); // eslint-disable-line
 
   const table_data = useMemo(() => {
-    if (!data) return [];
+    if (!data || data.user_results.length == 0) return [];
     let rows = data.user_results.map((user_result) =>
       user_result.results
         .map((cell) => ({
