@@ -76,7 +76,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
       const assignment = {
         spec: '',
         origin: form.values.origin,
-        starter: user?.shortName || 'unknown',
+        starter: user?.login || '',
         status: form.values.status,
         infinite: form.values.infinite,
         start: UTCDate(
@@ -114,7 +114,7 @@ function AssignmentAdd(props: IAssignmentAddBundle) {
         notification
       );
     },
-    [lang, locale, user?.login, user?.shortName]
+    [lang, locale, user?.login]
   );
 
   return (
