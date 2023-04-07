@@ -31,7 +31,7 @@ const Profile: FC<IFullProfileBundle> = ({
   task_info,
   rating_info,
 }) => {
-  const { new_amount } = useBackNotifications();
+  const { unviewed } = useBackNotifications();
   const router = useRouter();
 
   const { locale } = useLocale();
@@ -55,7 +55,7 @@ const Profile: FC<IFullProfileBundle> = ({
       {
         page: <NotificationList />,
         icon: (
-          <Indicator disabled={new_amount <= 0} size={8}>
+          <Indicator disabled={unviewed <= 0} size={8}>
             <BellRinging color="var(--secondary)" />
           </Indicator>
         ),
@@ -93,7 +93,7 @@ const Profile: FC<IFullProfileBundle> = ({
     task_info,
     rating_info,
     locale,
-    new_amount,
+    unviewed,
     isTeacher,
   ]);
 

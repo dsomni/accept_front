@@ -22,8 +22,7 @@ import { useUser } from './useUser';
 import { useRefetch } from './useRefetch';
 
 interface INotificationContext {
-  new_amount: number;
-  notifications: INotification[];
+  unviewed: number;
   sendViewed: (
     _: string[],
     __: { error: string; loading: string },
@@ -41,30 +40,35 @@ export const BackNotificationsProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { lang } = useLocale();
-  const [notifications, setNotifications] = useState<INotification[]>(
-    []
-  );
+  const [unviewed, setUnviewed] = useState<number>(0);
   const { user } = useUser();
   const updateIntervalSeconds = getRandomIntInRange(11, 13);
 
   const fetchNotifications = useCallback(() => {
     if (!!!user) return new Promise(() => {});
-    return sendRequest<undefined, INotification[]>(
-      'notification/new',
-      'GET'
-    ).then((res) => {
+    return sendRequest<
+      undefined,
+      { unviewed: number; hasNew: boolean }
+    >('notification/new-info', 'GET').then((res) => {
       if (!res.error) {
-        setNotifications(res.response);
-        res.response.map((notification) => {
-          if (!notification.sent) {
-            const id = newNotification({});
-            infoNotification({
-              id,
-              title: notification.title,
-              message: notification.shortDescription,
-            });
-          }
-        });
+        setUnviewed(res.response.unviewed);
+        if (res.response.hasNew) {
+          sendRequest<undefined, INotification[]>(
+            'notification/new',
+            'GET'
+          ).then((res) => {
+            if (!res.error) {
+              res.response.map((notification) => {
+                const id = newNotification({});
+                infoNotification({
+                  id,
+                  title: notification.title,
+                  message: notification.shortDescription,
+                });
+              });
+            }
+          });
+        }
       }
     });
   }, [user]);
@@ -104,15 +108,12 @@ export const BackNotificationsProvider: FC<{
 
   const value: INotificationContext = useMemo(
     () => ({
-      new_amount: notifications.filter(
-        (notification) => notification.viewed == false
-      ).length,
-      notifications,
+      unviewed,
       sendViewed,
       loading,
       refetchNewNotifications: fetchNotifications,
     }),
-    [notifications, sendViewed, loading, fetchNotifications]
+    [unviewed, sendViewed, loading, fetchNotifications]
   );
 
   return (
