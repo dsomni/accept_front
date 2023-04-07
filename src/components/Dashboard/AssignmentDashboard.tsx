@@ -85,7 +85,7 @@ const AssignmentDashboard: FC<{
       {
         page: <ChatPage entity={spec} type="assignment" />,
         icon: (
-          <Indicator size={10} disabled={!hasNewMessages}>
+          <Indicator size={10} disabled={!hasNewMessages} blink>
             <Messages color="var(--secondary)" />
           </Indicator>
         ),
@@ -140,7 +140,7 @@ const AssignmentDashboard: FC<{
         title: locale.dashboard.assignment.createNotification,
       },
     ],
-    [assignment, locale, refetch, spec]
+    [assignment, hasNewMessages, locale, refetch, spec]
   );
 
   const [activeModal, setActiveModal] = useState(false);

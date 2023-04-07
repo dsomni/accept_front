@@ -88,7 +88,7 @@ const TournamentDashboard: FC<{
       {
         page: <ChatPage entity={spec} type="tournament" />,
         icon: (
-          <Indicator size={10} disabled={!hasNewMessages}>
+          <Indicator size={10} disabled={!hasNewMessages} blink>
             <Messages color="var(--secondary)" />{' '}
           </Indicator>
         ),

@@ -43,7 +43,6 @@ export const ChatHostsProvider: FC<{
     ).then((res) => {
       if (!res.error) {
         let sorted = res.response.sort((a, b) => b.amount - a.amount);
-        console.log(sorted.length > 0 ? sorted[0].amount > 0 : false);
         setHasNewMessages(
           sorted.length > 0 ? sorted[0].amount > 0 : false
         );
