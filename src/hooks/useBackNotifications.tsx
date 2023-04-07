@@ -12,6 +12,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -67,6 +68,11 @@ export const BackNotificationsProvider: FC<{
       }
     });
   }, [user]);
+
+  useEffect(() => {
+    if (!!!user) return;
+    fetchNotifications();
+  }, [user]); //eslint-disable-line
 
   const { loading } = useRefetch(
     fetchNotifications,
