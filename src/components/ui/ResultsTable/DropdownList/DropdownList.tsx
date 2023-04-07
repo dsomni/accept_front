@@ -11,7 +11,7 @@ const DropdownList: FC<{ cell: IData }> = ({ cell }) => {
       ) : (
         <Menu
           shadow="md"
-          openDelay={500}
+          openDelay={400}
           trigger="hover"
           position="bottom-start"
         >
