@@ -6,13 +6,22 @@ import AssignmentDashboard from '@components/Dashboard/AssignmentDashboard';
 import { useLocale } from '@hooks/useLocale';
 import Title from '@ui/Title/Title';
 import { REVALIDATION_TIME } from '@constants/PageRevalidation';
+import { ChatHostsProvider } from '@hooks/useChatHosts';
+import { getRandomIntInRange } from '@utils/random';
 
 function AssignmentDashboardPage(props: { spec: string }) {
   const { locale } = useLocale();
+  const refetchIntervalSeconds = getRandomIntInRange(15, 20);
+
   return (
     <>
       <Title title={locale.titles.dashboard.assignment} />
-      <AssignmentDashboard spec={props.spec} />;
+      <ChatHostsProvider
+        entity={props.spec}
+        updateIntervalSeconds={refetchIntervalSeconds}
+      >
+        <AssignmentDashboard spec={props.spec} />
+      </ChatHostsProvider>
     </>
   );
 }

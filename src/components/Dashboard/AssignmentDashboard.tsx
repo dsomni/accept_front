@@ -28,6 +28,8 @@ import Sticky from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import { useInterval } from '@mantine/hooks';
 import ChatPage from './ChatPage/ChatPage';
+import { Indicator } from '@ui/basics';
+import { useChatHosts } from '@hooks/useChatHosts';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -45,6 +47,8 @@ const AssignmentDashboard: FC<{
     () => refetch(false),
     60 * 1000
   );
+
+  const { hasNewMessages } = useChatHosts();
 
   useEffect(() => {
     refetchAssignment.start();
@@ -80,7 +84,11 @@ const AssignmentDashboard: FC<{
       },
       {
         page: <ChatPage entity={spec} type="assignment" />,
-        icon: <Messages color="var(--secondary)" />,
+        icon: (
+          <Indicator size={10} disabled={!hasNewMessages}>
+            <Messages color="var(--secondary)" />
+          </Indicator>
+        ),
         title: locale.dashboard.tournament.chat,
       },
       {
