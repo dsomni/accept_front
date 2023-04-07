@@ -19,7 +19,8 @@ const SendText: FC<{
       answers: Array(testsNumber).fill(''),
     },
     validate: {
-      answers: (value) => !value.find((item) => item.length > 0),
+      answers: (value) =>
+        !value.find((item) => item.trim().length > 0),
     },
   });
 
