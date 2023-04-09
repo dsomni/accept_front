@@ -29,6 +29,13 @@
   padding-bottom: var(--spacer-xxs);
 }
 
+.nothingFound {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding-top: var(--spacer-m);
+}
+
 .hosts::-webkit-scrollbar {
   width: 2px;
 }

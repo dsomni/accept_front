@@ -51,16 +51,13 @@ const ChatPage: FC<{
   const handleSearch = useCallback(
     (search: string) => {
       if (hosts.length == 0) return;
+      if (search.length == 0) return setSearchedHosts(hosts);
       const fuse = new Fuse(hosts, {
         keys: ['user.login', 'user.shortName'],
         findAllMatches: true,
       });
       const searched = fuse.search(search).map((item) => item.item);
-      if (searched.length == 0) {
-        setSearchedHosts(hosts);
-      } else {
-        setSearchedHosts(searched);
-      }
+      setSearchedHosts(searched);
     },
     [hosts]
   );
@@ -94,36 +91,42 @@ const ChatPage: FC<{
                 placeholder={locale.dashboard.chat.search.placeholder}
               />
               <div className={styles.hostList}>
-                <div className={styles.hosts}>
-                  {searchedHosts.map((host, index) => (
-                    <div
-                      className={`${styles.hostWrapper} ${
-                        host.user.login == currentHost
-                          ? styles.currentHost
-                          : ''
-                      }`}
-                      key={index}
-                      onClick={handleHostSelection(host)}
-                    >
-                      <Indicator
-                        offset={2}
-                        label={host.amount}
-                        disabled={host.amount == 0}
-                        scale="sm"
+                {searchedHosts.length > 0 ? (
+                  <div className={styles.hosts}>
+                    {searchedHosts.map((host, index) => (
+                      <div
+                        className={`${styles.hostWrapper} ${
+                          host.user.login == currentHost
+                            ? styles.currentHost
+                            : ''
+                        }`}
+                        key={index}
+                        onClick={handleHostSelection(host)}
                       >
-                        <Avatar
-                          radius="md"
-                          size="md"
-                          src={link(host.user.login)}
-                          alt={'Users avatar'}
-                        />
-                      </Indicator>
-                      <div className={styles.hostName}>
-                        {host.user.shortName}
+                        <Indicator
+                          offset={2}
+                          label={host.amount}
+                          disabled={host.amount == 0}
+                          scale="sm"
+                        >
+                          <Avatar
+                            radius="md"
+                            size="md"
+                            src={link(host.user.login)}
+                            alt={'Users avatar'}
+                          />
+                        </Indicator>
+                        <div className={styles.hostName}>
+                          {host.user.shortName}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className={styles.nothingFound}>
+                    {locale.dashboard.chat.search.nothingFound}
+                  </div>
+                )}
                 <InitiateChatModal
                   entity={entity}
                   type={type}
