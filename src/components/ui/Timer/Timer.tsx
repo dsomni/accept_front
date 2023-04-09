@@ -1,4 +1,11 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import styles from './timer.module.css';
 import { Icon } from '@ui/basics';
 import { Alarm } from 'tabler-icons-react';
@@ -6,8 +13,13 @@ import { useLocale } from '@hooks/useLocale';
 import { timerDate, timezoneDate } from '@utils/datetime';
 import { useInterval } from '@mantine/hooks';
 import { useRequest } from '@hooks/useRequest';
+import { IResponse } from '@requests/request';
+import {
+  infoNotification,
+  newNotification,
+} from '@utils/notificationFunctions';
 
-const RED_TIME_S = 3600;
+const RED_TIME_S = 900;
 
 interface BaseTimeInfo {
   start: Date;
@@ -36,7 +48,7 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
   }));
   const refetchTimer = useInterval(() => refetch(false), 15000);
 
-  const [days, setDays] = useState('00');
+  const [days, setDays] = useState('01');
   const [hours, setHours] = useState('00');
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
@@ -60,13 +72,35 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
         default:
           date = 0;
       }
+
+      if (data.status != 2 && date <= 0) {
+        refetch(false).then((res: IResponse<TimeInfo>) => {
+          if (!res.error) {
+            if (res.response.status == 2) {
+              const id = newNotification({});
+              infoNotification({
+                id,
+                title: locale.notify.tournament.timer.finished,
+                autoClose: 5000,
+              });
+            } else if (res.response.status == 1 && data.status == 0) {
+              const id = newNotification({});
+              infoNotification({
+                id,
+                title: locale.notify.tournament.timer.started,
+                autoClose: 5000,
+              });
+            }
+          }
+        });
+      }
     }
-    const time = timerDate(date);
+    const time = timerDate(Math.max(0, date));
     setSeconds(time.seconds);
     setMinutes(time.minutes);
     setHours(time.hours);
     setDays(time.days + time.months * 30 + time.years * 365);
-  }, [data, loading, refetchTimer]);
+  }, [loading, data, refetchTimer, refetch, locale]);
 
   const interval = useInterval(tick, 1000);
 
@@ -83,12 +117,36 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
     };
   }, [tick]); // eslint-disable-line
 
+  const almostDone = useMemo(
+    () =>
+      (!data || data?.status == 1) &&
+      +hours == 0 &&
+      +days == 0 &&
+      +minutes * 60 + +seconds < RED_TIME_S,
+    [data, days, hours, minutes, seconds]
+  );
+
+  const almostStarted = useMemo(
+    () =>
+      (!data || data?.status == 0) &&
+      +hours == 0 &&
+      +days == 0 &&
+      +minutes * 60 + +seconds < RED_TIME_S,
+    [data, days, hours, minutes, seconds]
+  );
+
   return (
     <>
       {!loading && data && !data.infinite && (
         <div
           className={
-            styles.wrapper + ' ' + (showTimer ? styles.show : '')
+            styles.wrapper +
+            ' ' +
+            (showTimer ? styles.show : '') +
+            ' ' +
+            (almostDone ? styles.almostDone : '') +
+            ' ' +
+            (almostStarted ? styles.almostStarted : '')
           }
           onClick={() => {
             setShowTimer((value) => !value);
@@ -97,15 +155,20 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
           <Icon
             size={'sm'}
             className={styles.iconRoot}
-            wrapperClassName={styles.iconWrapper}
+            wrapperClassName={
+              styles.iconWrapper +
+              ' ' +
+              (almostDone || almostStarted
+                ? styles.almostDoneIcon
+                : '')
+            }
           >
             <Alarm
               color={
-                !data &&
-                +hours == 0 &&
-                +days == 0 &&
-                +minutes * 60 + +seconds < RED_TIME_S
+                almostDone
                   ? 'var(--negative)'
+                  : almostStarted
+                  ? 'var(--positive)'
                   : 'var(--primary)'
               }
             />

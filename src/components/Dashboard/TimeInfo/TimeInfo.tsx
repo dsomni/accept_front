@@ -102,14 +102,17 @@ const TimeInfo: FC<{
       default:
         date = 0;
     }
-    const time = timerDate(date);
+    if (timeInfo.status !== 2 && date <= 0) {
+      refetch();
+    }
+    const time = timerDate(Math.max(0, date));
     setSeconds(time.seconds);
     setMinutes(time.minutes);
     setHours(time.hours);
     setDays(time.days);
     setMonths(time.months);
     setYears(time.years);
-  }, [timeInfo]);
+  }, [refetch, timeInfo]);
 
   const interval = useInterval(tick, 1000);
 

@@ -76,7 +76,7 @@ const AssignmentDashboard: FC<{
               status: assignment.status.spec as 0 | 1 | 2,
               infinite: assignment.infinite,
             }}
-            refetch={refetch}
+            refetch={() => refetch(false)}
           />
         ),
         icon: <Vocabulary color="var(--secondary)" />,

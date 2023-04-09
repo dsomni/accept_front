@@ -79,7 +79,7 @@ const TournamentDashboard: FC<{
               froze: tournament.frozeResults,
               status: tournament.status.spec as 0 | 1 | 2,
             }}
-            refetch={refetch}
+            refetch={() => refetch(false)}
           />
         ),
         icon: <Vocabulary color="var(--secondary)" />,
