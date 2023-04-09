@@ -18,6 +18,8 @@ const Dropdown: FC<{ items: Item[]; children: ReactNode }> = ({
       offset={8}
       trigger="hover"
       zIndex={1000}
+      openDelay={200}
+      closeDelay={200}
     >
       <Menu.Target>
         <div>{children}</div>

@@ -1,0 +1,18 @@
+.blink {
+  background-color: var(--accent);
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0% {
+    background-color: var(--accent);
+  }
+
+  50% {
+    background-color: #ffffff00;
+  }
+
+  100% {
+    background-color: var(--accent);
+  }
+}

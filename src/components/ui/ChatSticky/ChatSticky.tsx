@@ -54,9 +54,7 @@ const ChatSticky: FC<{ spec: string; host: string }> = ({
             size={10}
             offset={-1}
             zIndex={100}
-            classNames={{
-              indicator: styles.indicator,
-            }}
+            blink
           >
             <MessageCircle2 color="white" />
           </Indicator>

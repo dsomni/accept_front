@@ -1,5 +1,5 @@
-import { IUserDisplay } from '@custom-types/data/IUser';
-import { sendRequest } from '@requests/request';
+// import { IUserDisplay } from '@custom-types/data/IUser';
+// import { sendRequest } from '@requests/request';
 import { FC, memo, useCallback, useMemo, useState } from 'react';
 import styles from './chatPage.module.css';
 import { link } from '@constants/Avatar';
@@ -9,45 +9,39 @@ import { IChatMessage } from '@custom-types/data/IMessage';
 import { Indicator, LoadingOverlay } from '@ui/basics';
 import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
 import { useLocale } from '@hooks/useLocale';
-import { useRefetch } from '@hooks/useRefetch';
-import { getRandomIntInRange } from '@utils/random';
+import { IHostData, useChatHosts } from '@hooks/useChatHosts';
+// import { useRefetch } from '@hooks/useRefetch';
+// import { getRandomIntInRange } from '@utils/random';
 
 const ChatPage: FC<{
   entity: string;
   type: 'tournament' | 'assignment';
 }> = ({ entity, type }) => {
   const { locale } = useLocale();
-  const [hosts, setHosts] = useState<[IUserDisplay, number][]>([]);
   const [currentHost, setCurrentHost] = useState<string | undefined>(
     undefined
   );
-  const refetchIntervalSeconds = getRandomIntInRange(23, 27);
+
+  const {
+    hosts,
+    updatesCounter,
+    refetch: fetchInitialHosts,
+    selectHost,
+  } = useChatHosts();
 
   const hostLogins = useMemo(
-    () => hosts.map((item) => item[0].login),
+    () => hosts.map((item) => item.user.login),
     [hosts]
   );
 
-  const fetchInitialHosts = useCallback(() => {
-    return sendRequest<
-      undefined,
-      { user: IUserDisplay; amount: number }[]
-    >(`/hosts/all/${entity}`, 'GET').then((res) => {
-      if (!res.error)
-        setHosts(
-          res.response
-            .map(
-              (item) =>
-                [item.user, item.amount] as [IUserDisplay, number]
-            )
-            .sort((a, b) => b[1] - a[1])
-        );
-    });
-  }, [entity]);
-
-  const { updatesCounter } = useRefetch(
-    fetchInitialHosts,
-    refetchIntervalSeconds
+  const handleHostSelection = useCallback(
+    (host: IHostData) => {
+      return () => {
+        setCurrentHost(host.user.login);
+        selectHost(host.user.login);
+      };
+    },
+    [selectHost]
   );
 
   const initialLoad = updatesCounter == 0;
@@ -78,39 +72,28 @@ const ChatPage: FC<{
                 {hosts.map((host, index) => (
                   <div
                     className={`${styles.hostWrapper} ${
-                      host[0].login == currentHost
+                      host.user.login == currentHost
                         ? styles.currentHost
                         : ''
                     }`}
                     key={index}
-                    onClick={() => {
-                      setCurrentHost(host[0].login);
-                      setHosts((old_hosts) => {
-                        const index = hosts.findIndex(
-                          (item) => item[0].login == host[0].login
-                        );
-                        if (index >= 0) {
-                          old_hosts[index][1] = 0;
-                        }
-                        return [...old_hosts];
-                      });
-                    }}
+                    onClick={handleHostSelection(host)}
                   >
                     <Indicator
                       offset={2}
-                      label={host[1]}
-                      disabled={host[1] == 0}
+                      label={host.amount}
+                      disabled={host.amount == 0}
                       scale="sm"
                     >
                       <Avatar
                         radius="md"
                         size="md"
-                        src={link(host[0].login)}
+                        src={link(host.user.login)}
                         alt={'Users avatar'}
                       />
                     </Indicator>
                     <div className={styles.hostName}>
-                      {host[0].shortName}
+                      {host.user.shortName}
                     </div>
                   </div>
                 ))}

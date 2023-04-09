@@ -46,7 +46,7 @@ const Send: FC<{
     const body = {
       task: spec,
       language: Number(language),
-      programText: code,
+      programText: code.trim(),
       textAnswers: [],
     };
     requestWithNotify(
@@ -70,7 +70,7 @@ const Send: FC<{
     [setLanguage]
   );
 
-  const isValid = useMemo(() => code.length > 0, [code]);
+  const isValid = useMemo(() => code.trim().length > 0, [code]);
 
   return (
     <div className={styles.wrapper}>
