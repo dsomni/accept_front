@@ -33,11 +33,8 @@ interface TimeInfo extends BaseTimeInfo {
 }
 
 const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
-  // const [showTimer, setShowTimer] = useState(false);
-  const [showTimer, setShowTimer] = useState(true);
+  const [showTimer, setShowTimer] = useState(false);
   const { locale } = useLocale();
-
-  // const [end, setEnd] = useState<Date>(new Date());
 
   const { data, loading, refetch } = useRequest<
     {},
@@ -50,7 +47,6 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
     status: data.status,
   }));
   const refetchTimer = useInterval(() => refetch(false), 15000);
-  // const refetchTimer = useInterval(() => {}, 15000);
 
   const [days, setDays] = useState('01');
   const [hours, setHours] = useState('00');
@@ -155,7 +151,6 @@ const Timer: FC<{ url: string }> = ({ url }: { url: string }) => {
           onClick={() => {
             setShowTimer((value) => !value);
           }}
-          // onClick={nullDate}
         >
           <Icon
             size={'sm'}
