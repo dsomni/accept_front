@@ -6,9 +6,10 @@ import { link } from '@constants/Avatar';
 import { Avatar } from '@mantine/core';
 import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
-import { Indicator, LoadingOverlay } from '@ui/basics';
+import { Indicator, LoadingOverlay, TextInput } from '@ui/basics';
 import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
 import { useLocale } from '@hooks/useLocale';
+import Fuse from 'fuse.js';
 import { IHostData, useChatHosts } from '@hooks/useChatHosts';
 // import { useRefetch } from '@hooks/useRefetch';
 // import { getRandomIntInRange } from '@utils/random';
@@ -29,6 +30,9 @@ const ChatPage: FC<{
     selectHost,
   } = useChatHosts();
 
+  const [searchedHosts, setSearchedHosts] =
+    useState<IHostData[]>(hosts);
+
   const hostLogins = useMemo(
     () => hosts.map((item) => item.user.login),
     [hosts]
@@ -42,6 +46,23 @@ const ChatPage: FC<{
       };
     },
     [selectHost]
+  );
+
+  const handleSearch = useCallback(
+    (search: string) => {
+      if (hosts.length == 0) return;
+      const fuse = new Fuse(hosts, {
+        keys: ['user.login', 'user.shortName'],
+        findAllMatches: true,
+      });
+      const searched = fuse.search(search).map((item) => item.item);
+      if (searched.length == 0) {
+        setSearchedHosts(hosts);
+      } else {
+        setSearchedHosts(searched);
+      }
+    },
+    [hosts]
   );
 
   const initialLoad = updatesCounter == 0;
@@ -67,43 +88,49 @@ const ChatPage: FC<{
               </div>
             </div>
           ) : (
-            <div className={styles.hostList}>
-              <div className={styles.hosts}>
-                {hosts.map((host, index) => (
-                  <div
-                    className={`${styles.hostWrapper} ${
-                      host.user.login == currentHost
-                        ? styles.currentHost
-                        : ''
-                    }`}
-                    key={index}
-                    onClick={handleHostSelection(host)}
-                  >
-                    <Indicator
-                      offset={2}
-                      label={host.amount}
-                      disabled={host.amount == 0}
-                      scale="sm"
-                    >
-                      <Avatar
-                        radius="md"
-                        size="md"
-                        src={link(host.user.login)}
-                        alt={'Users avatar'}
-                      />
-                    </Indicator>
-                    <div className={styles.hostName}>
-                      {host.user.shortName}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <InitiateChatModal
-                entity={entity}
-                type={type}
-                exclude={hostLogins}
-                onSuccess={fetchInitialHosts}
+            <div className={styles.hostsWrapper}>
+              <TextInput
+                onChange={(e) => handleSearch(e.target.value)}
+                placeholder={locale.dashboard.chat.search.placeholder}
               />
+              <div className={styles.hostList}>
+                <div className={styles.hosts}>
+                  {searchedHosts.map((host, index) => (
+                    <div
+                      className={`${styles.hostWrapper} ${
+                        host.user.login == currentHost
+                          ? styles.currentHost
+                          : ''
+                      }`}
+                      key={index}
+                      onClick={handleHostSelection(host)}
+                    >
+                      <Indicator
+                        offset={2}
+                        label={host.amount}
+                        disabled={host.amount == 0}
+                        scale="sm"
+                      >
+                        <Avatar
+                          radius="md"
+                          size="md"
+                          src={link(host.user.login)}
+                          alt={'Users avatar'}
+                        />
+                      </Indicator>
+                      <div className={styles.hostName}>
+                        {host.user.shortName}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <InitiateChatModal
+                  entity={entity}
+                  type={type}
+                  exclude={hostLogins}
+                  onSuccess={fetchInitialHosts}
+                />
+              </div>
             </div>
           )}
           {currentHost !== undefined && window && (

@@ -6,8 +6,13 @@
   position: relative;
 }
 
-.hostList {
+.hostsWrapper {
   width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hostList {
   height: 100%;
   border-top: darkgray 1px solid;
   border-bottom: darkgray 1px solid;

@@ -19,4 +19,7 @@ export const chat = {
   },
   emptyMessage:
     'Пока нет ни одного диалога. Чтобы начать диалог нажмите',
+  search: {
+    placeholder: 'Введите логин или имя',
+  },
 };

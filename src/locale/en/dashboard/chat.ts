@@ -17,4 +17,7 @@ export const chat = {
     send: 'Send',
   },
   emptyMessage: 'There are no dialogues yet. To start one press',
+  search: {
+    placeholder: 'Enter login or name',
+  },
 };
