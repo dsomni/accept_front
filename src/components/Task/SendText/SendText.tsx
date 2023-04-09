@@ -3,7 +3,7 @@ import { useLocale } from '@hooks/useLocale';
 import { useForm } from '@mantine/form';
 import { Button, TextArea } from '@ui/basics';
 import { requestWithNotify } from '@utils/requestWithNotify';
-import { FC, memo, useCallback, useEffect } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { Send as SendPlane } from 'tabler-icons-react';
 import styles from './sendText.module.css';
 
@@ -58,10 +58,6 @@ const SendText: FC<{
     resetAnswers,
     setActiveTab,
   ]);
-
-  useEffect(() => {
-    console.log(form.values.answers);
-  }, [form.values.answers]);
 
   return (
     <div className={styles.wrapper}>
