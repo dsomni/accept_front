@@ -39,8 +39,9 @@ const MemberSelector: FC<{
           locale.dashboard.chat.userModal.user.nothingFound
         }
         users={users}
-        select={(user: IUserDisplay | undefined) => {
-          if (user) form.setFieldValue('user', user.login.trim());
+        select={(users: IUserDisplay[] | undefined) => {
+          if (users)
+            form.setFieldValue('user', users[0].login.trim());
         }}
         additionalProps={form.getInputProps(field)}
       />
