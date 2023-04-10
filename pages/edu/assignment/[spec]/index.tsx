@@ -18,6 +18,7 @@ import Timer from '@ui/Timer/Timer';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
 import { REVALIDATION_TIME } from '@constants/PageRevalidation';
+import { IStickyAction } from '@ui/Sticky/Sticky';
 
 function Assignment(props: { assignment: IAssignment }) {
   const assignment = props.assignment;
@@ -27,7 +28,7 @@ function Assignment(props: { assignment: IAssignment }) {
   const { user, isTeacher } = useUser();
   const { width } = useWidth();
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'grape',
       icon: (
@@ -37,6 +38,7 @@ function Assignment(props: { assignment: IAssignment }) {
         />
       ),
       href: `/dashboard/assignment/${assignment.spec}`,
+      description: locale.tip.sticky.assignment.dashboard,
     },
     {
       color: 'green',
@@ -47,6 +49,7 @@ function Assignment(props: { assignment: IAssignment }) {
         />
       ),
       href: `/edu/assignment/edit/${assignment.spec}`,
+      description: locale.tip.sticky.assignment.edit,
     },
     {
       color: 'red',
@@ -57,6 +60,7 @@ function Assignment(props: { assignment: IAssignment }) {
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.assignment.delete,
     },
   ];
 

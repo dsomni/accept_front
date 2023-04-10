@@ -144,6 +144,7 @@ function TaskListPage() {
         <SingularSticky
           href={`/task/add`}
           icon={<Plus height={25} width={25} />}
+          description={locale.tip.sticky.task.add}
         />
       )}
     </div>

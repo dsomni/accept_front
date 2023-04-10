@@ -45,6 +45,7 @@ const BanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
         icon={<HeartBroken width={32} height={32} />}
         color="red"
         onClick={() => setOpened(true)}
+        description={locale.tip.sticky.attempt.ban}
       />
       <SimpleModal
         title={locale.attempt.ban.title}

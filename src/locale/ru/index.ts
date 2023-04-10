@@ -28,6 +28,7 @@ import { rating } from './rating';
 import { feedback } from './feedback';
 import { contacts } from './contacts';
 import { executor } from './executor';
+import { tip } from './tip';
 
 const ru = {
   accept: 'Accept',
@@ -95,6 +96,7 @@ const ru = {
   feedback,
   contacts,
   executor,
+  tip,
 };
 
 export default ru;

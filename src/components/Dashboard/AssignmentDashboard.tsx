@@ -24,7 +24,7 @@ import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import { useInterval } from '@mantine/hooks';
 import ChatPage from './ChatPage/ChatPage';
@@ -148,7 +148,7 @@ const AssignmentDashboard: FC<{
   const { isTeacher } = useUser();
   const { width } = useWidth();
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'green',
       icon: (
@@ -158,6 +158,7 @@ const AssignmentDashboard: FC<{
         />
       ),
       href: `/edu/assignment/edit/${spec}`,
+      description: locale.tip.sticky.assignment.edit,
     },
     {
       color: 'red',
@@ -168,6 +169,7 @@ const AssignmentDashboard: FC<{
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.assignment.delete,
     },
   ];
 

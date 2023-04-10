@@ -32,6 +32,7 @@ const UnbanModal: FC<{ attempt: IAttempt }> = ({ attempt }) => {
         icon={<HeartPlus width={32} height={32} />}
         color="green"
         onClick={() => setOpened(true)}
+        description={locale.tip.sticky.attempt.unban}
       />
       <SimpleModal
         title={locale.attempt.unban.title}

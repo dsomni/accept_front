@@ -3,6 +3,8 @@ import { FC, ReactNode, memo } from 'react';
 import { pureCallback } from '@custom-types/ui/atomic';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
+import { Tip } from '@ui/basics';
+import styles from './sticky.module.css';
 
 type positions = {
   bottom: number;
@@ -15,8 +17,16 @@ const SingularSticky: FC<{
   onClick?: pureCallback;
   href?: string;
   position?: positions;
+  description: string;
   classNames?: any;
-}> = ({ icon, position, color, classNames, ...props }) => {
+}> = ({
+  icon,
+  position,
+  color,
+  description,
+  classNames,
+  ...props
+}) => {
   const { width } = useWidth();
   return (
     <>
@@ -27,17 +37,25 @@ const SingularSticky: FC<{
         }}
         zIndex={199}
       >
-        <ActionIcon
-          component={props.onClick ? 'button' : 'a'}
-          variant="filled"
-          radius={60}
-          size={STICKY_SIZES[width]}
-          className={classNames?.button}
-          style={{ backgroundColor: color || 'var(--positive)' }}
-          {...props}
+        <Tip
+          label={
+            <div className={styles.description}>{description}</div>
+          }
+          position="left"
+          openDelay={500}
         >
-          {icon}
-        </ActionIcon>
+          <ActionIcon
+            component={props.onClick ? 'button' : 'a'}
+            variant="filled"
+            radius={60}
+            size={STICKY_SIZES[width]}
+            className={classNames?.button}
+            style={{ backgroundColor: color || 'var(--positive)' }}
+            {...props}
+          >
+            {icon}
+          </ActionIcon>
+        </Tip>
       </Affix>
     </>
   );

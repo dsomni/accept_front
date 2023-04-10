@@ -1,18 +1,20 @@
 import { STICKY_SIZES } from '@constants/Sizes';
 import { IUser } from '@custom-types/data/IUser';
 import { useWidth } from '@hooks/useWidth';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import { FC, memo, useState } from 'react';
 import { Pencil, Trash } from 'tabler-icons-react';
 import ProfileDeleteModal from '../ProfileDeleteModal/ProfileDeleteModal';
 import ProfileEditModal from '../ProfileEditModal/ProfileEditModal';
+import { useLocale } from '@hooks/useLocale';
 
 const ProfileSticky: FC<{ user: IUser }> = ({ user }) => {
   const { width } = useWidth();
   const [activeEditModal, setActiveEditModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+  const { locale } = useLocale();
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'green',
       icon: (
@@ -22,6 +24,7 @@ const ProfileSticky: FC<{ user: IUser }> = ({ user }) => {
         />
       ),
       onClick: () => setActiveEditModal(true),
+      description: locale.tip.sticky.user.edit,
     },
     {
       color: 'red',
@@ -32,6 +35,7 @@ const ProfileSticky: FC<{ user: IUser }> = ({ user }) => {
         />
       ),
       onClick: () => setActiveDeleteModal(true),
+      description: locale.tip.sticky.user.delete,
     },
   ];
 
