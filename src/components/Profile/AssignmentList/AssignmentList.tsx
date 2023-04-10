@@ -10,7 +10,13 @@ import {
 } from 'react';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { useLocale } from '@hooks/useLocale';
-import { Clock, Infinity, Lock, Plus, Run } from 'tabler-icons-react';
+import {
+  Clock,
+  Confetti,
+  Infinity,
+  Plus,
+  Run,
+} from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 
 import { BaseSearch } from '@custom-types/data/request';
@@ -30,6 +36,7 @@ import { IGroup } from '@custom-types/data/IGroup';
 import { colorGenerator } from '@utils/consistentColorGenerator';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { useUser } from '@hooks/useUser';
+import { Tip } from '@ui/basics';
 
 interface Item {
   value: any;
@@ -168,18 +175,35 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 ];
 
 const getAssignmentIcon = (
-  assignment: IAssignmentDisplay
+  assignment: IAssignmentDisplay,
+  locale: ILocale
 ): ReactNode => {
-  if (assignment.status.spec === 0) {
-    return <Clock color="orange" />;
-  }
   if (assignment.infinite) {
-    return <Infinity color="purple" />;
+    return (
+      <Tip position="bottom" label={locale.tip.status.infinite}>
+        <Infinity color="purple" />
+      </Tip>
+    );
+  }
+  if (assignment.status.spec === 0) {
+    return (
+      <Tip position="bottom" label={locale.tip.status.pending}>
+        <Clock color="orange" />
+      </Tip>
+    );
   }
   if (assignment.status.spec === 1) {
-    return <Run color="var(--positive)" />;
+    return (
+      <Tip position="bottom" label={locale.tip.status.running}>
+        <Run color="var(--positive)" />
+      </Tip>
+    );
   }
-  return <Lock color="black" />;
+  return (
+    <Tip position="bottom" label={locale.tip.status.finished}>
+      <Confetti color="black" />
+    </Tip>
+  );
 };
 
 const processData = (
@@ -195,7 +219,7 @@ const processData = (
       ...assignment,
       state: {
         value: assignment.status.spec,
-        display: getAssignmentIcon(assignment),
+        display: getAssignmentIcon(assignment, locale),
       },
       title: {
         value: assignment.title,

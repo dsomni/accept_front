@@ -39,6 +39,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
       />
       {form.values.hasHint && (
         <SingularSticky
+          color="var(--accent)"
           icon={
             <Eye
               width={STICKY_SIZES[width] / 3}
