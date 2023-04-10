@@ -8,32 +8,18 @@ import { getLocalDate } from '@utils/datetime';
 import tableStyles from '@styles/ui/customTable.module.css';
 
 import AttemptList from '@ui/AttemptList/AttemptList';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
-const refactorAttempt = (
-  attempt: IAttemptDisplay,
-  locale: ILocale
-): any => ({
+const refactorAttempt = (attempt: IAttemptDisplay): any => ({
   ...attempt,
   result: {
     display: (
-      <div
-        style={{
-          color:
-            attempt.status.spec == 2
-              ? attempt.verdict?.verdict.spec == 0
-                ? 'var(--positive)'
-                : 'var(--negative)'
-              : attempt.status.spec == 3
-              ? 'var(--accent)'
-              : 'black',
-        }}
-      >
-        {attempt.status.spec == 2
-          ? (attempt.verdict?.verdict.shortText || 'ER') +
-            ' #' +
-            ((attempt.verdict?.test || 0) + 1).toString()
-          : locale.attempt.statuses[attempt.status.spec]}
-      </div>
+      <VerdictWrapper
+        status={attempt.status}
+        verdict={attempt.verdict?.verdict}
+        test={attempt.verdict?.test}
+        full
+      />
     ),
     value:
       attempt.status.spec == 2

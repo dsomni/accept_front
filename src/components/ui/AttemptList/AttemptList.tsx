@@ -41,7 +41,7 @@ const AttemptsList: FC<{
   activeTab: boolean;
   classNames?: any;
   initialColumns: (_: ILocale) => ITableColumn[];
-  refactorAttempt: (_: IAttemptDisplay, __: ILocale) => any;
+  refactorAttempt: (_: IAttemptDisplay) => any;
   userSearch?: string[];
   taskSearch?: string[];
   toDate?: Date;
@@ -95,12 +95,10 @@ const AttemptsList: FC<{
 
   const processData = useCallback(
     (response: PagerResponse): TableData => ({
-      data: response.data.map((item) =>
-        refactorAttempt(item, locale)
-      ),
+      data: response.data.map((item) => refactorAttempt(item)),
       total: response.total,
     }),
-    [locale, refactorAttempt]
+    [refactorAttempt]
   );
 
   const onError = useCallback(

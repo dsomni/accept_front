@@ -6,6 +6,7 @@ import { useLocale } from '@hooks/useLocale';
 import tableStyles from '@styles/ui/customTable.module.css';
 
 import styles from './info.module.css';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
 const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
   const { locale } = useLocale();
@@ -142,15 +143,8 @@ const Info: FC<{ attempt: IAttempt }> = ({ attempt }) => {
                     </td>
                     <td
                       className={`${tableStyles.cell} ${styles.cell}`}
-                      style={{
-                        color: row.verdict
-                          ? row.verdict.spec === 0
-                            ? 'var(--positive)'
-                            : 'var(--negative)'
-                          : 'black',
-                      }}
                     >
-                      {row.verdict?.shortText || '-'}
+                      <VerdictWrapper verdict={row.verdict} full />
                     </td>
                   </tr>
                 ))}

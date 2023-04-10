@@ -51,7 +51,7 @@ const en = {
   unban: 'Unban',
   toList: 'To list',
   validationError: 'Validation error',
-  jsonValidationError: 'Invalid Json',
+  jsonValidationError: 'Invalid JSON',
   yourProfile: 'Your Profile',
   copy: {
     label: 'Copy code to clipboard',
