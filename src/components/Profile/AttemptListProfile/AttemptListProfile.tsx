@@ -8,34 +8,23 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import { getLocalDate } from '@utils/datetime';
 import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
-const refactorAttempt = (
-  attempt: IAttemptDisplay,
-  locale: ILocale
-): any => ({
+const refactorAttempt = (attempt: IAttemptDisplay): any => ({
   ...attempt,
   result: {
     display: (
-      <div
-        style={{
-          color:
-            attempt.status.spec >= 2
-              ? attempt.verdict?.verdict.spec == 0
-                ? 'var(--positive)'
-                : 'var(--negative)'
-              : 'black',
-        }}
-      >
-        {attempt.status.spec >= 2
-          ? (attempt.verdict?.verdict.shortText || 'ER') +
-            ' #' +
-            (attempt.verdict?.test || 0 + 1).toString()
-          : locale.attempt.statuses[attempt.status.spec]}
-      </div>
+      <VerdictWrapper
+        status={attempt.status}
+        verdict={attempt.verdict?.verdict}
+        test={attempt.verdict?.test}
+      />
     ),
     value:
       attempt.status.spec == 2
         ? attempt.verdict?.verdict.spec
+        : attempt.status.spec == 3
+        ? attempt.status.spec - 20
         : attempt.status.spec - 10,
   },
   date: {
