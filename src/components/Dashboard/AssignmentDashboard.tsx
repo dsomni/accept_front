@@ -24,10 +24,12 @@ import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Assignment/DeleteModal/DeleteModal';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import { useInterval } from '@mantine/hooks';
 import ChatPage from './ChatPage/ChatPage';
+import { Indicator } from '@ui/basics';
+import { useChatHosts } from '@hooks/useChatHosts';
 
 const AssignmentDashboard: FC<{
   spec: string;
@@ -45,6 +47,8 @@ const AssignmentDashboard: FC<{
     () => refetch(false),
     60 * 1000
   );
+
+  const { hasNewMessages } = useChatHosts();
 
   useEffect(() => {
     refetchAssignment.start();
@@ -72,7 +76,7 @@ const AssignmentDashboard: FC<{
               status: assignment.status.spec as 0 | 1 | 2,
               infinite: assignment.infinite,
             }}
-            refetch={refetch}
+            refetch={() => refetch(false)}
           />
         ),
         icon: <Vocabulary color="var(--secondary)" />,
@@ -80,7 +84,11 @@ const AssignmentDashboard: FC<{
       },
       {
         page: <ChatPage entity={spec} type="assignment" />,
-        icon: <Messages color="var(--secondary)" />,
+        icon: (
+          <Indicator size={10} disabled={!hasNewMessages} blink>
+            <Messages color="var(--secondary)" />
+          </Indicator>
+        ),
         title: locale.dashboard.tournament.chat,
       },
       {
@@ -132,7 +140,7 @@ const AssignmentDashboard: FC<{
         title: locale.dashboard.assignment.createNotification,
       },
     ],
-    [assignment, locale, refetch, spec]
+    [assignment, hasNewMessages, locale, refetch, spec]
   );
 
   const [activeModal, setActiveModal] = useState(false);
@@ -140,7 +148,7 @@ const AssignmentDashboard: FC<{
   const { isTeacher } = useUser();
   const { width } = useWidth();
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'green',
       icon: (
@@ -150,6 +158,7 @@ const AssignmentDashboard: FC<{
         />
       ),
       href: `/edu/assignment/edit/${spec}`,
+      description: locale.tip.sticky.assignment.edit,
     },
     {
       color: 'red',
@@ -160,6 +169,7 @@ const AssignmentDashboard: FC<{
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.assignment.delete,
     },
   ];
 

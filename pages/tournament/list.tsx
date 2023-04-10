@@ -14,7 +14,7 @@ import {
   ITournamentDisplay,
   ITournamentListBundle,
 } from '@custom-types/data/ITournament';
-import { Clock, Lock, Plus, Run } from 'tabler-icons-react';
+import { Clock, Confetti, Plus, Run } from 'tabler-icons-react';
 import { ITag } from '@custom-types/data/ITag';
 import SingularSticky from '@ui/Sticky/SingularSticky';
 import { BaseSearch } from '@custom-types/data/request';
@@ -26,6 +26,7 @@ import { MultiSelect } from '@ui/basics';
 import { customTableSort } from '@utils/customTableSort';
 import Title from '@ui/Title/Title';
 import { getLocalDate } from '@utils/datetime';
+import { Tip } from '@ui/basics';
 
 interface Item {
   value: any;
@@ -149,19 +150,33 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 ];
 
 const getTournamentIcon = (
-  tournament: ITournamentDisplay
+  tournament: ITournamentDisplay,
+  locale: ILocale
 ): ReactNode => {
   if (tournament.status.spec === 0) {
-    return <Clock color="orange" />;
+    return (
+      <Tip position="bottom" label={locale.tip.status.pending}>
+        <Clock color="orange" />
+      </Tip>
+    );
   }
   if (tournament.status.spec === 1) {
-    return <Run color="var(--positive)" />;
+    return (
+      <Tip position="bottom" label={locale.tip.status.running}>
+        <Run color="var(--positive)" />
+      </Tip>
+    );
   }
-  return <Lock color="black" />;
+  return (
+    <Tip position="bottom" label={locale.tip.status.finished}>
+      <Confetti color="black" />
+    </Tip>
+  );
 };
 
 const processData = (
-  data: ITournamentListBundle
+  data: ITournamentListBundle,
+  locale: ILocale
 ): {
   tournaments: ITournamentDisplayList[];
   tags: ITag[];
@@ -175,7 +190,7 @@ const processData = (
       },
       status: {
         value: tournament.status.spec,
-        display: <>{getTournamentIcon(tournament)}</>,
+        display: <>{getTournamentIcon(tournament, locale)}</>,
       },
       start: {
         value: tournament.start,
@@ -262,7 +277,15 @@ function TournamentList() {
       tournaments: ITournamentDisplayList[];
       tags: ITag[];
     }
-  >('tournament/list', 'GET', undefined, processData);
+  >(
+    'tournament/list',
+    'GET',
+    undefined,
+    (() => {
+      return (data: ITournamentListBundle) =>
+        processData(data, locale);
+    })()
+  );
 
   const applyFilters = useCallback(
     (data: ITournamentDisplayList[]) => {
@@ -367,6 +390,7 @@ function TournamentList() {
       <SingularSticky
         href={`/tournament/add`}
         icon={<Plus height={25} width={25} />}
+        description={locale.tip.sticky.tournament.add}
       />
     </div>
   );

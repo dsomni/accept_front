@@ -4,6 +4,7 @@ import tableStyles from '@styles/ui/primitiveTable.module.css';
 import PrimitiveTable from '@ui/PrimitiveTable/PrimitiveTable';
 import { ITag } from '@custom-types/data/ITag';
 import { ITaskDisplay } from '@custom-types/data/ITask';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
 const PrimitiveTaskTable: FC<{
   tasks: ITaskDisplay[];
@@ -46,17 +47,8 @@ const PrimitiveTaskTable: FC<{
               )}
             </td>
             <td className={tableStyles.cell}>{row.author}</td>
-            <td
-              className={tableStyles.cell}
-              style={{
-                color: row.verdict
-                  ? row.verdict.spec === 0
-                    ? 'var(--positive)'
-                    : 'var(--negative)'
-                  : 'black',
-              }}
-            >
-              {row.verdict?.shortText || '-'}
+            <td className={tableStyles.cell}>
+              <VerdictWrapper verdict={row.verdict} />
             </td>
           </>
         );

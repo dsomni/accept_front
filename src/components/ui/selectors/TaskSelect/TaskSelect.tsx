@@ -1,82 +1,29 @@
-import React, { FC, memo, useCallback, useMemo } from 'react';
-import { Select } from '@ui/basics';
+import React, { FC, memo } from 'react';
 import { ITaskBaseInfo } from '@custom-types/data/ITask';
+import TaskMultiSelect from './TaskMultiSelect';
+import TaskSingleSelect from './TaskSingleSelect';
 
-interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface TaskItemProps
+  extends React.ComponentPropsWithoutRef<'div'> {
   image: string;
   label: string;
   role: string;
   value: string;
 }
 
-const TaskSelect: FC<{
+export interface TaskSelectProps {
   label: string;
   placeholder: string;
   nothingFound: string;
   tasks: ITaskBaseInfo[];
-  select: (_: ITaskBaseInfo | undefined) => void;
+  select: (_: ITaskBaseInfo[] | undefined) => void;
   additionalProps?: any;
-}> = ({
-  label,
-  placeholder,
-  tasks,
-  nothingFound,
-  select,
-  additionalProps,
-}) => {
-  const data = useMemo(
-    () =>
-      tasks.map(
-        (item) =>
-          ({
-            label: item.title,
-            value: item.spec,
-          } as ItemProps)
-      ),
-    [tasks]
-  );
+  multiple?: boolean;
+}
 
-  const onSelect = useCallback(
-    (spec: string | null) => {
-      if (!spec) {
-        select(undefined);
-        return;
-      }
-      const taskIndex = tasks.findIndex((item) => item.spec === spec);
-      if (taskIndex >= 0) {
-        select(tasks[taskIndex]);
-      }
-    },
-    [select, tasks]
-  );
-
-  return (
-    <>
-      <Select
-        searchable
-        data={data}
-        label={label}
-        placeholder={placeholder}
-        clearable
-        maxDropdownHeight={400}
-        nothingFound={nothingFound}
-        filter={(value, item) =>
-          item.label
-            ?.toLowerCase()
-            .includes(value.toLowerCase().trim()) ||
-          item.value
-            .toLowerCase()
-            .includes(value.toLowerCase().trim())
-        }
-        {...additionalProps}
-        // onSelect={(event) => onSelect(event.currentTarget.value)}
-        onChange={(spec) => {
-          onSelect(spec);
-          additionalProps?.onChange(spec);
-        }}
-      />
-    </>
-  );
+const TaskSelect: FC<TaskSelectProps> = ({ multiple, ...props }) => {
+  if (multiple) return <TaskMultiSelect {...props} />;
+  return <TaskSingleSelect {...props} />;
 };
 
 export default memo(TaskSelect);

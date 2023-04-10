@@ -13,6 +13,7 @@ export interface IStickyAction {
   color: string;
   onClick?: setter<any>;
   href?: string;
+  description: string;
 }
 
 const Sticky: FC<{

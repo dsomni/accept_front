@@ -6,8 +6,13 @@
   position: relative;
 }
 
-.hostList {
+.hostsWrapper {
   width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hostList {
   height: 100%;
   border-top: darkgray 1px solid;
   border-bottom: darkgray 1px solid;
@@ -24,6 +29,13 @@
   padding-bottom: var(--spacer-xxs);
 }
 
+.nothingFound {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding-top: var(--spacer-m);
+}
+
 .hosts::-webkit-scrollbar {
   width: 2px;
 }
@@ -36,11 +48,19 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  cursor: pointer;
   align-items: center;
   gap: var(--spacer-s);
   padding: var(--spacer-xs) var(--spacer-s);
   position: relative;
+}
+
+.clickableUser {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-s);
+  cursor: pointer;
+  align-items: center;
 }
 
 .hostWrapper::before {

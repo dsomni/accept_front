@@ -28,6 +28,7 @@ import { rating } from './rating';
 import { feedback } from './feedback';
 import { contacts } from './contacts';
 import { executor } from './executor';
+import { tip } from './tip';
 
 const en = {
   accept: 'Accept',
@@ -51,7 +52,7 @@ const en = {
   unban: 'Unban',
   toList: 'To list',
   validationError: 'Validation error',
-  jsonValidationError: 'Invalid Json',
+  jsonValidationError: 'Invalid JSON',
   yourProfile: 'Your Profile',
   copy: {
     label: 'Copy code to clipboard',
@@ -95,6 +96,7 @@ const en = {
   feedback,
   contacts,
   executor,
+  tip,
 };
 
 export default en;

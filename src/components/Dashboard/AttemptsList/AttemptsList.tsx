@@ -14,34 +14,21 @@ import { ITasksUsersBundle } from '@custom-types/data/bundle';
 import { TaskSelect, UserSelect } from '@ui/selectors';
 import { IUserDisplay } from '@custom-types/data/IUser';
 import { ITaskBaseInfo } from '@custom-types/data/ITask';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
 const refactorAttempt = (
   attempt: IAttemptDisplay,
-  locale: ILocale,
   type: string,
   spec: string
 ): any => ({
   ...attempt,
   result: {
     display: (
-      <div
-        style={{
-          color:
-            attempt.status.spec == 2
-              ? attempt.verdict?.verdict.spec == 0
-                ? 'var(--positive)'
-                : 'var(--negative)'
-              : attempt.status.spec == 3
-              ? 'var(--accent)'
-              : 'black',
-        }}
-      >
-        {attempt.status.spec == 2
-          ? (attempt.verdict?.verdict.shortText || 'ER') +
-            ' #' +
-            ((attempt.verdict?.test || 0) + 1).toString()
-          : locale.attempt.statuses[attempt.status.spec]}
-      </div>
+      <VerdictWrapper
+        status={attempt.status}
+        verdict={attempt.verdict?.verdict}
+        test={attempt.verdict?.test}
+      />
     ),
     value:
       attempt.status.spec == 2
@@ -178,8 +165,8 @@ const AttemptList: FC<{
     isFinished ? 'end' : 'actual'
   );
   const refactor = useCallback(
-    (attempt: IAttemptDisplay, locale: ILocale) =>
-      refactorAttempt(attempt, locale, type, spec),
+    (attempt: IAttemptDisplay) =>
+      refactorAttempt(attempt, type, spec),
     [type, spec]
   );
 
@@ -217,10 +204,11 @@ const AttemptList: FC<{
             locale.dashboard.attemptsList.user.nothingFound
           }
           users={data?.users || []}
-          select={(user: IUserDisplay | undefined) => {
-            if (user) setUserSearch([user.login]);
+          select={(users: IUserDisplay[] | undefined) => {
+            if (users) setUserSearch(users.map((user) => user.login));
             else setUserSearch([]);
           }}
+          multiple
         />
         <TaskSelect
           label={locale.dashboard.attemptsList.task.label}
@@ -229,10 +217,11 @@ const AttemptList: FC<{
             locale.dashboard.attemptsList.task.nothingFound
           }
           tasks={data?.tasks || []}
-          select={(task: ITaskBaseInfo | undefined) => {
-            if (task) setTaskSearch([task.spec]);
+          select={(tasks: ITaskBaseInfo[] | undefined) => {
+            if (tasks) setTaskSearch(tasks.map((task) => task.spec));
             else setTaskSearch([]);
           }}
+          multiple
         />
       </div>
       <AttemptListUI

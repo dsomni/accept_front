@@ -3,6 +3,7 @@ import {
   IndicatorProps,
   Indicator as MantineIndicator,
 } from '@mantine/core';
+import styles from './indicator.module.css';
 
 const SIZES: {
   [key: string]: { size_px: number; font_size: number };
@@ -13,12 +14,14 @@ const SIZES: {
 
 interface CustomIndicatorProps extends IndicatorProps {
   scale?: keyof typeof SIZES;
+  blink?: boolean;
 }
 
 const Indicator: FC<CustomIndicatorProps> = ({
   children,
   label,
   scale = 'md',
+  blink,
   ...props
 }) => {
   const { size_px, font_size } = SIZES[scale];
@@ -31,6 +34,7 @@ const Indicator: FC<CustomIndicatorProps> = ({
           fontSize: `${font_size}px`,
         },
       }}
+      classNames={{ indicator: blink ? styles.blink : '' }}
       overflowCount={99}
       {...props}
       label={label && label.toString()}

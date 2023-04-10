@@ -8,9 +8,9 @@ const NotificationIcon: FC<{
   indicatorSize?: number;
   color?: string;
 }> = ({ iconSize, indicatorSize, color }) => {
-  const { new_amount } = useBackNotifications();
+  const { unviewed } = useBackNotifications();
   return (
-    <Indicator size={indicatorSize || 7} disabled={new_amount <= 0}>
+    <Indicator size={indicatorSize || 7} disabled={unviewed <= 0}>
       <BellRinging
         color={color || 'var(--secondary)'}
         size={iconSize || 20}

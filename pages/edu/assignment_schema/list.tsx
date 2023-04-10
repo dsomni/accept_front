@@ -292,6 +292,7 @@ function AssignmentList() {
       <SingularSticky
         href={`/edu/assignment_schema/add`}
         icon={<Plus height={25} width={25} />}
+        description={locale.tip.sticky.assignmentSchema.add}
       />
     </div>
   );

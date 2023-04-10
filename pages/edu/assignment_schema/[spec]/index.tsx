@@ -32,8 +32,8 @@ function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
           {
             color: 'green',
             href: `/edu/assignment_schema/edit/${assignment.spec}`,
-
             icon: <Pencil height={20} width={20} />,
+            description: locale.tip.sticky.assignmentSchema.edit,
           },
           {
             color: 'red',
@@ -41,6 +41,7 @@ function AssignmentSchema(props: { assignment: IAssignmentSchema }) {
               setOpenModal(true);
             },
             icon: <Trash height={20} width={20} />,
+            description: locale.tip.sticky.assignmentSchema.delete,
           },
         ]}
       />

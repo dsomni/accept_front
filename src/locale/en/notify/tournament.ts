@@ -34,4 +34,8 @@ export const tournament = {
     success: 'User has been successfully unbanned',
     error: 'Error during user unbanning',
   },
+  timer: {
+    started: 'Tournament just started!',
+    finished: 'Tournament just finished!',
+  },
 };

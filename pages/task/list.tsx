@@ -10,6 +10,7 @@ import { Plus } from 'tabler-icons-react';
 import { useUser } from '@hooks/useUser';
 import Title from '@ui/Title/Title';
 import { useLocale } from '@hooks/useLocale';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -87,19 +88,7 @@ const refactorTask = (task: ITaskDisplay): any => ({
   },
   verdict: {
     value: task.verdict,
-    display: (
-      <span
-        style={{
-          color: !task.verdict
-            ? 'black'
-            : task.verdict.spec == 0
-            ? 'var(--positive)'
-            : 'var(--negative)',
-        }}
-      >
-        {task.verdict?.shortText || '-'}
-      </span>
-    ),
+    display: <VerdictWrapper verdict={task.verdict} />,
   },
   complexity: {
     value: task.complexity,
@@ -155,6 +144,7 @@ function TaskListPage() {
         <SingularSticky
           href={`/task/add`}
           icon={<Plus height={25} width={25} />}
+          description={locale.tip.sticky.task.add}
         />
       )}
     </div>

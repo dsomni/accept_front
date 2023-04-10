@@ -17,6 +17,14 @@
   width: calc(var(--spacer-xxhuge) + var(--spacer-l));
 }
 
+.wrapper.almostDone {
+  border: 1px solid var(--negative);
+}
+
+.wrapper.almostStarted {
+  border: 1px solid var(--positive);
+}
+
 .iconRoot:hover {
   background-color: initial;
 }
@@ -39,6 +47,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  /* position: relative; */
 }
 
 .before {
@@ -71,4 +80,30 @@
 
 .numberTitle {
   font-size: var(--font-size-xs);
+}
+
+.almostDoneIcon svg {
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(-15deg);
+  }
+
+  50% {
+    transform: rotate(0);
+  }
+
+  75% {
+    transform: rotate(15deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
 }

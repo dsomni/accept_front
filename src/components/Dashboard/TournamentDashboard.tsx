@@ -20,9 +20,10 @@ import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import { useInterval } from '@mantine/hooks';
+import { Indicator } from '@ui/basics';
 import TimeInfo from '@components/Dashboard/TimeInfo/TimeInfo';
 import TaskList from './TaskList/TaskList';
 import AttemptsList from '@components/Dashboard/AttemptsList/AttemptsList';
@@ -31,6 +32,7 @@ import Results from './Results/Results';
 import ParticipantsListWithBan from './ParticipantsList/ParticipantsListWithBan';
 import ChatPage from './ChatPage/ChatPage';
 import RegistrationManagement from './RegistrationManagement/RegistrationManagement';
+import { useChatHosts } from '@hooks/useChatHosts';
 
 const TournamentDashboard: FC<{
   spec: string;
@@ -58,6 +60,8 @@ const TournamentDashboard: FC<{
     if (data) setTournament(data);
   }, [data]);
 
+  const { hasNewMessages } = useChatHosts();
+
   const links: IMenuLink[] = useMemo(
     () => [
       {
@@ -75,7 +79,7 @@ const TournamentDashboard: FC<{
               froze: tournament.frozeResults,
               status: tournament.status.spec as 0 | 1 | 2,
             }}
-            refetch={refetch}
+            refetch={() => refetch(false)}
           />
         ),
         icon: <Vocabulary color="var(--secondary)" />,
@@ -83,7 +87,11 @@ const TournamentDashboard: FC<{
       },
       {
         page: <ChatPage entity={spec} type="tournament" />,
-        icon: <Messages color="var(--secondary)" />,
+        icon: (
+          <Indicator size={10} disabled={!hasNewMessages} blink>
+            <Messages color="var(--secondary)" />{' '}
+          </Indicator>
+        ),
         title: locale.dashboard.tournament.chat,
       },
       {
@@ -159,7 +167,7 @@ const TournamentDashboard: FC<{
         title: locale.dashboard.tournament.bannedAttempts,
       },
     ],
-    [tournament, locale, refetch, spec]
+    [tournament, hasNewMessages, locale, refetch, spec]
   );
 
   const [activeModal, setActiveModal] = useState(false);
@@ -167,7 +175,7 @@ const TournamentDashboard: FC<{
   const { isTeacher } = useUser();
   const { width } = useWidth();
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'green',
       icon: (
@@ -177,6 +185,7 @@ const TournamentDashboard: FC<{
         />
       ),
       href: `/tournament/edit/${spec}`,
+      description: locale.tip.sticky.tournament.edit,
     },
     {
       color: 'red',
@@ -187,6 +196,7 @@ const TournamentDashboard: FC<{
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.tournament.delete,
     },
   ];
 

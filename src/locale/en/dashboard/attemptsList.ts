@@ -1,12 +1,12 @@
 export const attemptsList = {
   task: {
-    label: 'Task',
-    placeholder: 'Select the task',
+    label: 'Tasks',
+    placeholder: 'Select tasks',
     nothingFound: 'Task list is empty',
   },
   user: {
-    label: 'USer',
-    placeholder: 'Select the user',
+    label: 'Users',
+    placeholder: 'Select users',
     nothingFound: 'User list is empty',
   },
 };

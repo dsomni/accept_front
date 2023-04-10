@@ -6,6 +6,7 @@ import { default as TaskListUI } from '@ui/TaskList/TaskList';
 import styles from './taskList.module.css';
 import { ITaskDisplay } from '@custom-types/data/ITask';
 import { useLocale } from '@hooks/useLocale';
+import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -91,19 +92,7 @@ const TaskList: FC<{
       },
       verdict: {
         value: task.verdict,
-        display: (
-          <span
-            style={{
-              color: !task.verdict
-                ? 'black'
-                : task.verdict.spec == 0
-                ? 'var(--positive)'
-                : 'var(--negative)',
-            }}
-          >
-            {task.verdict?.shortText || '-'}
-          </span>
-        ),
+        display: <VerdictWrapper verdict={task.verdict} />,
       },
       complexity: {
         value: task.complexity,

@@ -6,7 +6,7 @@
     "source.fixAll.eslint": true,
     "source.fixAll.format": true
   },
-  "cSpell.words": ["dropzone", "Tabler"],
+  "cSpell.words": ["dropzone", "Tabler", "Unban"],
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   }

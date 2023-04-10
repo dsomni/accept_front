@@ -6,3 +6,15 @@
   overflow-y: scroll;
   cursor: pointer;
 }
+
+.restWrapper > button > div > a {
+  display: block;
+}
+
+.restWrapper > button > div {
+  padding: var(--spacer-xs);
+}
+
+.restWrapper > button {
+  padding: 0;
+}

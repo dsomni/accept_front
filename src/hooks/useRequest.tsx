@@ -35,7 +35,7 @@ export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(
       setError(false);
       setDetail('');
 
-      sendRequest<Body, ReqAnswer>(
+      return sendRequest<Body, ReqAnswer>(
         url,
         method || 'GET',
         body,
@@ -52,6 +52,7 @@ export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(
           }
           if (shouldSetLoading) setLoading(false);
         }
+        return res;
       });
 
       return () => {
@@ -61,7 +62,9 @@ export function useRequest<Body, ReqAnswer, Answer = ReqAnswer>(
     [body, method, onError, onSuccess, process, revalidate, url]
   );
 
-  useEffect(() => refetch(true), []); //eslint-disable-line
+  useEffect(() => {
+    refetch(true);
+  }, []); //eslint-disable-line
 
   return { data, loading, error, detail, refetch };
 }

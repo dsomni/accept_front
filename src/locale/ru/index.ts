@@ -28,6 +28,7 @@ import { rating } from './rating';
 import { feedback } from './feedback';
 import { contacts } from './contacts';
 import { executor } from './executor';
+import { tip } from './tip';
 
 const ru = {
   accept: 'Accept',
@@ -51,7 +52,7 @@ const ru = {
   unban: 'Разбанить',
   toList: 'К списку',
   validationError: 'Ошибка валидации',
-  jsonValidationError: 'Некорректный Json',
+  jsonValidationError: 'Некорректный JSON',
   yourProfile: 'Ваш профиль',
   copy: {
     label: 'Копировать',
@@ -95,6 +96,7 @@ const ru = {
   feedback,
   contacts,
   executor,
+  tip,
 };
 
 export default ru;
