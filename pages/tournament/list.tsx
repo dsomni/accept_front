@@ -367,6 +367,7 @@ function TournamentList() {
       <SingularSticky
         href={`/tournament/add`}
         icon={<Plus height={25} width={25} />}
+        description={locale.tip.sticky.tournament.add}
       />
     </div>
   );

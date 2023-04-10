@@ -92,6 +92,7 @@ function TestsPage(props: {
         onClick={downloadTests}
         color="var(--primary)"
         icon={<Download />}
+        description={locale.tip.sticky.tests.download}
       />
       {form.values.tests.map((test, index) => (
         <div key={index} className={stepperStyles.example}>

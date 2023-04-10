@@ -439,6 +439,7 @@ function AssignmentList() {
           color={'var(--positive)'}
           href={'/edu/assignment/add'}
           icon={<Plus height={20} width={20} />}
+          description={locale.tip.sticky.assignment.add}
         />
       )}
     </>

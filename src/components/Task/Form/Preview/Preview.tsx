@@ -46,6 +46,7 @@ const Preview: FC<{ form: any }> = ({ form }) => {
             />
           }
           onClick={() => setOpenedHint(true)}
+          description={locale.tip.sticky.task.hint}
         />
       )}
     </div>

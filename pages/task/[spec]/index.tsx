@@ -124,6 +124,7 @@ function Task(props: {
               />
             ),
             onClick: () => setOpenedHint(true),
+            description: locale.tip.sticky.task.hint,
           },
         ] as IStickyAction[])
       : []
@@ -139,6 +140,7 @@ function Task(props: {
           height={STICKY_SIZES[width] / 3}
         />
       ),
+      description: locale.tip.sticky.task.tests,
     },
     {
       color: 'green',
@@ -151,6 +153,7 @@ function Task(props: {
           height={STICKY_SIZES[width] / 3}
         />
       ),
+      description: locale.tip.sticky.task.edit,
     },
     {
       color: 'red',
@@ -161,6 +164,7 @@ function Task(props: {
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.task.delete,
     },
   ]);
 
@@ -216,6 +220,7 @@ function Task(props: {
             />
           }
           onClick={() => setOpenedHint(true)}
+          description={locale.tip.sticky.task.hint}
         />
       )}
       {has_rights && <Sticky actions={actions} />}

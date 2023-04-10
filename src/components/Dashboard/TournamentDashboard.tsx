@@ -20,7 +20,7 @@ import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { STICKY_SIZES } from '@constants/Sizes';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import { useRequest } from '@hooks/useRequest';
 import { useInterval } from '@mantine/hooks';
 import { Indicator } from '@ui/basics';
@@ -175,7 +175,7 @@ const TournamentDashboard: FC<{
   const { isTeacher } = useUser();
   const { width } = useWidth();
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'green',
       icon: (
@@ -185,6 +185,7 @@ const TournamentDashboard: FC<{
         />
       ),
       href: `/tournament/edit/${spec}`,
+      description: locale.tip.sticky.tournament.edit,
     },
     {
       color: 'red',
@@ -195,6 +196,7 @@ const TournamentDashboard: FC<{
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.tournament.delete,
     },
   ];
 

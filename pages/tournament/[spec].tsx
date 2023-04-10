@@ -4,7 +4,7 @@ import { useUser } from '@hooks/useUser';
 import { useWidth } from '@hooks/useWidth';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
-import Sticky from '@ui/Sticky/Sticky';
+import Sticky, { IStickyAction } from '@ui/Sticky/Sticky';
 import DeleteModal from '@components/Tournament/DeleteModal/DeleteModal';
 import Description from '@components/Tournament/Description/Description';
 import {
@@ -38,7 +38,7 @@ function Tournament(props: { tournament: ITournament }) {
     [isAdmin, tournament.author, tournament.moderators, user?.login]
   );
 
-  const actions = [
+  const actions: IStickyAction[] = [
     {
       color: 'grape',
       icon: (
@@ -48,6 +48,7 @@ function Tournament(props: { tournament: ITournament }) {
         />
       ),
       href: `/dashboard/tournament/${tournament.spec}`,
+      description: locale.tip.sticky.tournament.add,
     },
     {
       color: 'green',
@@ -58,6 +59,7 @@ function Tournament(props: { tournament: ITournament }) {
         />
       ),
       href: `/task/add?tournament=${tournament.spec}`,
+      description: locale.tip.sticky.task.add,
     },
     {
       color: 'green',
@@ -68,6 +70,7 @@ function Tournament(props: { tournament: ITournament }) {
         />
       ),
       href: `/tournament/edit/${tournament.spec}`,
+      description: locale.tip.sticky.tournament.edit,
     },
 
     {
@@ -79,6 +82,7 @@ function Tournament(props: { tournament: ITournament }) {
         />
       ),
       onClick: () => setActiveModal(true),
+      description: locale.tip.sticky.tournament.delete,
     },
   ];
 
@@ -107,6 +111,7 @@ function Tournament(props: { tournament: ITournament }) {
               />
             }
             href={`/tournament/results/${tournament.spec}`}
+            description={locale.tip.sticky.tournament.results}
           />
         )
       )}

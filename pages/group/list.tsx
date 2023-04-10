@@ -118,6 +118,7 @@ function TaskListPage() {
           color="var(--positive)"
           href={`/group/add`}
           icon={<Plus height={25} width={25} />}
+          description={locale.tip.sticky.group.add}
         />
       )}
     </div>
