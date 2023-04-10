@@ -68,11 +68,12 @@ const Chat: FC<{
       ...oldMessages,
       ...messages.map((item) => item.spec),
     ]);
-    setTimeout(() => {
-      if (messagesDiv.current)
-        messagesDiv.current.scrollTop =
-          messagesDiv.current.scrollHeight;
-    }, 100);
+    if (messages.length > 0)
+      setTimeout(() => {
+        if (messagesDiv.current)
+          messagesDiv.current.scrollTop =
+            messagesDiv.current.scrollHeight;
+      }, 100);
   }, []);
 
   const fetchMessages = useCallback(() => {

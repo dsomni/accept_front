@@ -1,12 +1,12 @@
 export const attemptsList = {
   task: {
-    label: 'Задача',
-    placeholder: 'Выберите задачу',
+    label: 'Задачи',
+    placeholder: 'Выберите задачи',
     nothingFound: 'Список задач пуст',
   },
   user: {
-    label: 'Участник',
-    placeholder: 'Выберите участника',
+    label: 'Участники',
+    placeholder: 'Выберите участников',
     nothingFound: 'Список участников пуст',
   },
 };

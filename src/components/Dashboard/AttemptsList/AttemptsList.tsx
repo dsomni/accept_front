@@ -217,10 +217,11 @@ const AttemptList: FC<{
             locale.dashboard.attemptsList.user.nothingFound
           }
           users={data?.users || []}
-          select={(user: IUserDisplay | undefined) => {
-            if (user) setUserSearch([user.login]);
+          select={(users: IUserDisplay[] | undefined) => {
+            if (users) setUserSearch(users.map((user) => user.login));
             else setUserSearch([]);
           }}
+          multiple
         />
         <TaskSelect
           label={locale.dashboard.attemptsList.task.label}
@@ -229,10 +230,11 @@ const AttemptList: FC<{
             locale.dashboard.attemptsList.task.nothingFound
           }
           tasks={data?.tasks || []}
-          select={(task: ITaskBaseInfo | undefined) => {
-            if (task) setTaskSearch([task.spec]);
+          select={(tasks: ITaskBaseInfo[] | undefined) => {
+            if (tasks) setTaskSearch(tasks.map((task) => task.spec));
             else setTaskSearch([]);
           }}
+          multiple
         />
       </div>
       <AttemptListUI
