@@ -48,11 +48,19 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  cursor: pointer;
   align-items: center;
   gap: var(--spacer-s);
   padding: var(--spacer-xs) var(--spacer-s);
   position: relative;
+}
+
+.clickableUser {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer-s);
+  cursor: pointer;
+  align-items: center;
 }
 
 .hostWrapper::before {

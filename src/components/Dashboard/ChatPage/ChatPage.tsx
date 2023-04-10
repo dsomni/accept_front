@@ -11,12 +11,17 @@ import { link } from '@constants/Avatar';
 import { Avatar } from '@mantine/core';
 import Chat from '@ui/Chat/Chat';
 import { IChatMessage } from '@custom-types/data/IMessage';
-import { Indicator, LoadingOverlay, TextInput } from '@ui/basics';
+import {
+  Icon,
+  Indicator,
+  LoadingOverlay,
+  TextInput,
+} from '@ui/basics';
 import InitiateChatModal from './InitiateChatModal/InitiateChatModal';
 import { useLocale } from '@hooks/useLocale';
 import Fuse from 'fuse.js';
 import { IHostData, useChatHosts } from '@hooks/useChatHosts';
-import { Search } from 'tabler-icons-react';
+import { Eye, Search } from 'tabler-icons-react';
 const ChatPage: FC<{
   entity: string;
   type: 'tournament' | 'assignment';
@@ -115,24 +120,38 @@ const ChatPage: FC<{
                             : ''
                         }`}
                         key={index}
-                        onClick={handleHostSelection(host)}
                       >
-                        <Indicator
-                          offset={2}
-                          label={host.amount}
-                          disabled={host.amount == 0}
-                          scale="sm"
+                        <div
+                          className={styles.clickableUser}
+                          onClick={handleHostSelection(host)}
                         >
-                          <Avatar
-                            radius="md"
-                            size="md"
-                            src={link(host.user.login)}
-                            alt={'Users avatar'}
-                          />
-                        </Indicator>
-                        <div className={styles.hostName}>
-                          {host.user.shortName}
+                          <Indicator
+                            offset={2}
+                            label={host.amount}
+                            disabled={host.amount == 0}
+                            scale="sm"
+                          >
+                            <Avatar
+                              radius="md"
+                              size="md"
+                              src={link(host.user.login)}
+                              alt={'Users avatar'}
+                            />
+                          </Indicator>
+                          <div className={styles.hostName}>
+                            {host.user.shortName}
+                          </div>
                         </div>
+                        <Icon
+                          href={`/profile/${host.user.login}`}
+                          target="_blank"
+                          tabIndex={5}
+                          color="var(--primary)"
+                          variant="transparent"
+                          size="xs"
+                        >
+                          <Eye />
+                        </Icon>
                       </div>
                     ))}
                   </div>
