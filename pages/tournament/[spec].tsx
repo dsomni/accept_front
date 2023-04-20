@@ -48,7 +48,7 @@ function Tournament(props: { tournament: ITournament }) {
         />
       ),
       href: `/dashboard/tournament/${tournament.spec}`,
-      description: locale.tip.sticky.tournament.add,
+      description: locale.tip.sticky.tournament.dashboard,
     },
     {
       color: 'green',
