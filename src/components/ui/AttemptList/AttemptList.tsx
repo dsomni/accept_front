@@ -36,7 +36,7 @@ interface TableData {
   total: number;
 }
 
-const AttemptsList: FC<{
+const AttemptList: FC<{
   url: string;
   activeTab: boolean;
   classNames?: any;
@@ -187,4 +187,4 @@ const AttemptsList: FC<{
   );
 };
 
-export default memo(AttemptsList);
+export default memo(AttemptList);

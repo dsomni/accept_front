@@ -61,6 +61,7 @@ const InitiateChatModal: FC<{
       if (!response.error) {
         onSuccess(form.values.user);
         setStartChatModal(false);
+        form.setFieldValue('message', '');
       } else {
         const id = newNotification({});
         errorNotification({

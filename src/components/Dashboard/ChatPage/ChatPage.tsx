@@ -160,13 +160,13 @@ const ChatPage: FC<{
                     {locale.dashboard.chat.search.nothingFound}
                   </div>
                 )}
-                <InitiateChatModal
-                  entity={entity}
-                  type={type}
-                  exclude={hostLogins}
-                  onSuccess={fetchInitialHosts}
-                />
               </div>
+              <InitiateChatModal
+                entity={entity}
+                type={type}
+                exclude={hostLogins}
+                onSuccess={fetchInitialHosts}
+              />
             </div>
           )}
           {currentHost !== undefined && window && (
