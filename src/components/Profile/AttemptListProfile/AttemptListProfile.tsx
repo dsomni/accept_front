@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useState } from 'react';
 import styles from './attemptListProfile.module.css';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { IAttemptDisplay } from '@custom-types/data/IAttempt';
@@ -9,7 +9,9 @@ import { getLocalDate } from '@utils/datetime';
 import Link from 'next/link';
 import { useLocale } from '@hooks/useLocale';
 import VerdictWrapper from '@ui/VerdictWrapper/VerdictWrapper';
-
+import { TaskSelect } from '@ui/selectors';
+import { useRequest } from '@hooks/useRequest';
+import { ITaskBaseInfo } from '@custom-types/data/ITask';
 const refactorAttempt = (attempt: IAttemptDisplay): any => ({
   ...attempt,
   result: {
@@ -110,24 +112,41 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
 
 const AttemptListProfile: FC<{}> = ({}) => {
   const { locale } = useLocale();
+  const [taskSearch, setTaskSearch] = useState<string[]>([]);
+
+  const { data } = useRequest<{}, ITaskBaseInfo[]>(`task/my`, 'GET');
+
   return (
-    <AttemptList
-      url={`attempt/my`}
-      activeTab
-      initialColumns={initialColumns}
-      refactorAttempt={refactorAttempt}
-      empty={<>{locale.profile.empty.attempts}</>}
-      key={4}
-      noDefault
-      classNames={{
-        wrapper: tableStyles.wrapper,
-        table: tableStyles.table,
-        headerCell: styles.headerCell,
-        cell: styles.cell,
-        even: tableStyles.even,
-        odd: tableStyles.odd,
-      }}
-    />
+    <div>
+      <TaskSelect
+        label={locale.dashboard.attemptsList.task.label}
+        placeholder={locale.dashboard.attemptsList.task.placeholder}
+        nothingFound={locale.dashboard.attemptsList.task.nothingFound}
+        tasks={data || []}
+        select={(tasks: ITaskBaseInfo[] | undefined) => {
+          if (tasks) setTaskSearch(tasks.map((task) => task.spec));
+          else setTaskSearch([]);
+        }}
+      ></TaskSelect>
+      <AttemptList
+        key={taskSearch.toString()}
+        url={`attempt/my`}
+        activeTab
+        initialColumns={initialColumns}
+        refactorAttempt={refactorAttempt}
+        empty={<>{locale.profile.empty.attempts}</>}
+        noDefault
+        classNames={{
+          wrapper: tableStyles.wrapper,
+          table: tableStyles.table,
+          headerCell: styles.headerCell,
+          cell: styles.cell,
+          even: tableStyles.even,
+          odd: tableStyles.odd,
+        }}
+        taskSearch={taskSearch}
+      />
+    </div>
   );
 };
 
