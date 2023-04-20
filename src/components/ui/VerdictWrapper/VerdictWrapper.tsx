@@ -1,7 +1,7 @@
 import { IAttemptStatus, IVerdict } from '@custom-types/data/atomic';
 import { useLocale } from '@hooks/useLocale';
 import { Tip } from '@ui/basics';
-import { FC, memo, useEffect, useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import styles from './verdictWrapper.module.css';
 
 const VerdictWrapper: FC<{
@@ -11,9 +11,6 @@ const VerdictWrapper: FC<{
   full?: boolean;
 }> = ({ status, verdict, test, full }) => {
   const { locale } = useLocale();
-  useEffect(() => {
-    console.log(status, verdict, test);
-  }, [status, verdict, test]);
 
   const verdictColor = useMemo(
     () =>
@@ -53,9 +50,20 @@ const VerdictWrapper: FC<{
       }
     >
       {full ? (
-        <span style={{ color: verdictColor }}>
-          {`${verdict?.fullText}${verdictTestString}`}
-        </span>
+        <Tip
+          label={
+            <span style={{ color: verdictColor }}>
+              {`${verdict?.fullText}${verdictTestString}`}
+            </span>
+          }
+          openDelay={200}
+          position="bottom"
+          disabled={isVerdictEmpty}
+        >
+          {status && status.spec !== 2
+            ? locale.attempt.statuses[status.spec]
+            : `${verdict?.fullText}${verdictTestString}`}
+        </Tip>
       ) : (
         <Tip
           label={
