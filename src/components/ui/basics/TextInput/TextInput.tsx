@@ -23,15 +23,19 @@ const TextInput: FC<Props> = ({
         shrink ? inputStyles.shrink : ''
       }`}
     >
-      <div className={inputStyles.labelWrapper}>
-        <div className={inputStyles.label}>
-          {props.label}
-          {props.required && (
-            <div className={inputStyles.labelRequired}>*</div>
+      {props.label && (
+        <div className={inputStyles.labelWrapper}>
+          <div className={inputStyles.label}>
+            {props.label}
+            {props.required && (
+              <div className={inputStyles.labelRequired}>*</div>
+            )}
+          </div>
+          {helperContent && (
+            <Helper dropdownContent={helperContent} />
           )}
         </div>
-        {helperContent && <Helper dropdownContent={helperContent} />}
-      </div>
+      )}
       <MantineInput
         size={shrink ? 'sm' : 'md'}
         {...props}
