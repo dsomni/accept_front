@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from 'react';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { DefaultLayout } from '@layouts/DefaultLayout';
 import { getApiUrl } from '@utils/getServerUrl';
 import { Tabs } from '@ui/basics';
@@ -15,7 +15,6 @@ import TextAnswer from '@components/Attempt/TextAnswer/TextAnswer';
 import BanModal from '@components/Attempt/BanModals/BanModal';
 import UnbanModal from '@components/Attempt/BanModals/UnbanModal';
 import { useRequest } from '@hooks/useRequest';
-import { REVALIDATION_TIME } from '@constants/PageRevalidation';
 
 function Attempt(props: { attempt: IAttempt; author: string }) {
   const attempt = props.attempt;
@@ -71,13 +70,7 @@ function Attempt(props: { attempt: IAttempt; author: string }) {
         </>
       )}
 
-      {(!!user && user.login == author) || isTeacher ? (
-        <Tabs pages={pages} defaultPage={'info'} />
-      ) : (
-        <div className={styles.notAllowed}>
-          {locale.attempt.notAllowed}
-        </div>
-      )}
+      <Tabs pages={pages} defaultPage={'info'} />
     </div>
   );
 }
@@ -90,18 +83,40 @@ export default Attempt;
 
 const API_URL = getApiUrl();
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params || typeof params?.spec !== 'string') {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
+  if (!query.spec) {
     return {
       redirect: {
         permanent: false,
-        destination: '/',
+        destination: '/404',
       },
     };
   }
+  const spec = query.spec;
+  const tournament = query.tournament;
+  const assignment = query.assignment;
+
+  const body = tournament
+    ? { base_type: 'tournament', base_spec: tournament }
+    : assignment
+    ? { base_type: 'assignment', base_spec: assignment }
+    : { base_type: 'basic', base_spec: '' };
+
   const response = await fetch(
-    `${API_URL}/api/bundle/attempt/${params.spec}`
+    `${API_URL}/api/bundle/attempt/${spec}`,
+    {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        cookie: req.headers.cookie,
+        'content-type': 'application/json',
+      } as { [key: string]: string },
+    }
   );
+
   if (response.status === 200) {
     const res = await response.json();
     return {
@@ -109,23 +124,20 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         attempt: res.attempt,
         author: res.author,
       },
-      revalidate:
-        res.attempt.status.spec === 2
-          ? REVALIDATION_TIME.attempt.finished
-          : REVALIDATION_TIME.attempt.testing,
+    };
+  }
+  if (response.status) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/${response.status}`,
+      },
     };
   }
   return {
     redirect: {
       permanent: false,
-      destination: '/404',
+      destination: `/404`,
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   };
 };

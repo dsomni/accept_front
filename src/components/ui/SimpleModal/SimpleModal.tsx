@@ -14,7 +14,7 @@ const SimpleModal: FC<{
   title?: ReactNode;
   helperContent?: IDropdownContent;
   opened: boolean;
-  close: pureCallback<void>;
+  close?: pureCallback<void>;
   children: ReactNode;
   centered?: boolean;
   hideCloseButton?: boolean;
@@ -23,7 +23,7 @@ const SimpleModal: FC<{
   title,
   helperContent,
   opened,
-  close,
+  close = () => {},
   children,
   centered,
   size,
