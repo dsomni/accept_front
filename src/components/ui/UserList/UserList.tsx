@@ -84,13 +84,11 @@ const UsersList: FC<{
     (
       response: IParticipantListBundle
     ): {
-      participants: IUserDisplayList[];
+      users: IUserDisplayList[];
       groups: IGroup[];
       roles: IRole[];
     } => ({
-      participants: response.participants.map((user) =>
-        refactorUser(user)
-      ),
+      users: response.users.map((user) => refactorUser(user)),
       groups: response.groups,
       roles: response.roles,
     }),
@@ -101,7 +99,7 @@ const UsersList: FC<{
     {},
     IParticipantListBundle,
     {
-      participants: IUserDisplayList[];
+      users: IUserDisplayList[];
       groups: IGroup[];
       roles: IRole[];
     }
@@ -187,7 +185,7 @@ const UsersList: FC<{
 
   useEffect(() => {
     if (data) {
-      applyFilters(data.participants);
+      applyFilters(data.users);
       setGroups(data.groups);
       setRoles(data.roles);
     }
@@ -225,7 +223,7 @@ const UsersList: FC<{
         }
         noDefault={noDefault}
         empty={empty || <>{locale.ui.table.emptyMessage}</>}
-        isEmpty={data?.participants.length == 0}
+        isEmpty={data?.users.length == 0}
         nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}

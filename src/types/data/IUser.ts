@@ -59,7 +59,7 @@ export interface IParticipant extends IUser {
 }
 
 export interface IParticipantListBundle {
-  participants: IParticipant[];
+  users: IParticipant[];
   groups: IGroup[];
   roles: IRole[];
 }
