@@ -4,11 +4,12 @@ import { ITableColumn } from '@custom-types/ui/ITable';
 import tableStyles from '@styles/ui/customTable.module.css';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { capitalize } from '@utils/capitalize';
-import UserList, { IParticipant } from '@ui/UserList/UserList';
 
 import styles from './participantsList.module.css';
 import { useLocale } from '@hooks/useLocale';
 import Link from 'next/link';
+import UserList from '@ui/UserList/UserList';
+import { IParticipant } from '@custom-types/data/IUser';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {

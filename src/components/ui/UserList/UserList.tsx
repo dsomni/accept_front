@@ -18,7 +18,8 @@ import Fuse from 'fuse.js';
 import { hasSubarray } from '@utils/hasSubarray';
 import { customTableSort } from '@utils/customTableSort';
 import {
-  IParticipantsListBundle,
+  IParticipant,
+  IParticipantListBundle,
   IUser,
 } from '@custom-types/data/IUser';
 import { IGroup } from '@custom-types/data/IGroup';
@@ -26,9 +27,6 @@ import { IRole } from '@custom-types/data/atomic';
 import { capitalize } from '@utils/capitalize';
 import { MultiSelect } from '@ui/basics';
 
-export interface IParticipant extends IUser {
-  banned: boolean;
-}
 interface Item<T = any> {
   value: T;
   display: string | ReactNode;
@@ -40,6 +38,7 @@ interface IUserDisplayList
   shortName: Item<string>;
   role: Item<IRole>;
   banned: Item<boolean>;
+  banReason?: Item<string>;
 }
 
 const DEFAULT_ON_PAGE = 10;
@@ -83,22 +82,15 @@ const UsersList: FC<{
 
   const processData = useCallback(
     (
-      response: IParticipantsListBundle
+      response: IParticipantListBundle
     ): {
-      users: IUserDisplayList[];
+      participants: IUserDisplayList[];
       groups: IGroup[];
       roles: IRole[];
     } => ({
-      users: [
-        ...response.users.map((user) =>
-          refactorUser({ ...user, banned: false })
-        ),
-        ...(response.banned
-          ? response.banned.map((user) =>
-              refactorUser({ ...user, banned: true })
-            )
-          : []),
-      ],
+      participants: response.participants.map((user) =>
+        refactorUser(user)
+      ),
       groups: response.groups,
       roles: response.roles,
     }),
@@ -107,9 +99,9 @@ const UsersList: FC<{
 
   const { data, loading } = useRequest<
     {},
-    IParticipantsListBundle,
+    IParticipantListBundle,
     {
-      users: IUserDisplayList[];
+      participants: IUserDisplayList[];
       groups: IGroup[];
       roles: IRole[];
     }
@@ -195,7 +187,7 @@ const UsersList: FC<{
 
   useEffect(() => {
     if (data) {
-      applyFilters(data.users);
+      applyFilters(data.participants);
       setGroups(data.groups);
       setRoles(data.roles);
     }
@@ -233,7 +225,7 @@ const UsersList: FC<{
         }
         noDefault={noDefault}
         empty={empty || <>{locale.ui.table.emptyMessage}</>}
-        isEmpty={data?.users.length == 0}
+        isEmpty={data?.participants.length == 0}
         nothingFound={<>{locale.ui.table.nothingFoundMessage}</>}
         defaultOnPage={defaultOnPage}
         onPage={[5, defaultOnPage]}

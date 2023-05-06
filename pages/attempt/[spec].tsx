@@ -70,13 +70,7 @@ function Attempt(props: { attempt: IAttempt; author: string }) {
         </>
       )}
 
-      {/* {(!!user && user.login == author) || isTeacher ? ( */}
       <Tabs pages={pages} defaultPage={'info'} />
-      {/* ) : (
-        <div className={styles.notAllowed}>
-          {locale.attempt.notAllowed}
-        </div>
-      )} */}
     </div>
   );
 }

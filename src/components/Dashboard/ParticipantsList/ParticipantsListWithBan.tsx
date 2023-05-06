@@ -1,16 +1,15 @@
 import { FC, memo, useCallback, useState } from 'react';
 import { ITableColumn } from '@custom-types/ui/ITable';
-
 import tableStyles from '@styles/ui/customTable.module.css';
 import { ILocale } from '@custom-types/ui/ILocale';
 import { capitalize } from '@utils/capitalize';
-import UserList, { IParticipant } from '@ui/UserList/UserList';
-
+import UserList from '@ui/UserList/UserList';
+import { IParticipant } from '@custom-types/data/IUser';
 import styles from './participantsList.module.css';
 import { useLocale } from '@hooks/useLocale';
 import Link from 'next/link';
-import { Button } from '@ui/basics';
-import { requestWithNotify } from '@utils/requestWithNotify';
+import { Helper } from '@ui/basics';
+import BanButton from './BanButton/BanButton';
 
 const initialColumns = (locale: ILocale): ITableColumn[] => [
   {
@@ -27,7 +26,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: false,
     hidden: false,
-    size: 8,
+    size: 16,
   },
   {
     label: locale.users.list.shortName,
@@ -44,7 +43,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 3,
+    size: 4,
   },
   {
     label: locale.users.list.role,
@@ -60,7 +59,19 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 4,
+  },
+  {
+    label: '',
+    key: 'banReason',
+    sortable: false,
+    sortFunction: (a: any, b: any): -1 | 0 | 1 =>
+      a.value !== b.value ? 0 : a.value ? 1 : -1,
+    sorted: 0,
+    allowMiddleState: false,
+    hidable: false,
+    hidden: false,
+    size: 1,
   },
   {
     label: locale.ban,
@@ -72,7 +83,7 @@ const initialColumns = (locale: ILocale): ITableColumn[] => [
     allowMiddleState: true,
     hidable: true,
     hidden: false,
-    size: 2,
+    size: 4,
   },
 ];
 
@@ -81,7 +92,7 @@ const refactorUser = (
   type: 'assignment' | 'tournament',
   user: IParticipant,
   spec: string,
-  handleBan: (_: string, __: string, ___: boolean) => void
+  handleBan: () => void
 ): any => ({
   ...user,
   login: {
@@ -128,31 +139,15 @@ const refactorUser = (
   ban: {
     value: user.banned,
     display: (
-      <>
-        {type === 'tournament' && (
-          <>
-            {!user.banned ? (
-              <Button
-                variant="outline"
-                kind="negative"
-                shrink
-                onClick={() => handleBan(user.login, spec, true)}
-              >
-                {locale.ban}
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                kind="positive"
-                shrink
-                onClick={() => handleBan(user.login, spec, false)}
-              >
-                {locale.unban}
-              </Button>
-            )}
-          </>
-        )}
-      </>
+      <BanButton user={user} spec={spec} onSuccess={handleBan} />
+    ),
+  },
+  banReason: {
+    value: 0,
+    display: (
+      <div className={styles.banReason}>
+        {user.banned && <Helper dropdownContent={user.banReason} />}
+      </div>
     ),
   },
 });
@@ -161,29 +156,12 @@ const ParticipantsListWithBan: FC<{
   type: 'assignment' | 'tournament';
   spec: string;
 }> = ({ type, spec }) => {
-  const { locale, lang } = useLocale();
+  const { locale } = useLocale();
   const [refetch, setRefetch] = useState(false);
 
-  const handleBan = useCallback(
-    (login: string, spec: string, ban: boolean) => {
-      requestWithNotify(
-        `tournament/participants/${ban ? 'ban' : 'unban'}/${spec}`,
-        'POST',
-        ban
-          ? locale.notify.tournament.banUser
-          : locale.notify.tournament.unbanUser,
-        lang,
-        () => '',
-        {
-          login,
-        },
-        () => {
-          setRefetch((val) => !val);
-        }
-      );
-    },
-    [locale, lang]
-  );
+  const handleBan = useCallback(() => {
+    setRefetch((val) => !val);
+  }, []);
 
   return (
     <div className={styles.wrapper}>

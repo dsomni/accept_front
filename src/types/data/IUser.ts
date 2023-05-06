@@ -47,12 +47,19 @@ export interface IUserListBundle {
   roles: IRole[];
 }
 
-export interface IParticipantsListBundle extends IUserListBundle {
-  banned?: IUser[];
-}
-
 export interface IUserDisplay {
   login: string;
   role: IRole;
   shortName: string;
+}
+
+export interface IParticipant extends IUser {
+  banned?: boolean;
+  banReason?: string;
+}
+
+export interface IParticipantListBundle {
+  participants: IParticipant[];
+  groups: IGroup[];
+  roles: IRole[];
 }
