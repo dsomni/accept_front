@@ -49,6 +49,7 @@ const AttemptList: FC<{
   empty?: ReactNode;
   defaultRowsOnPage?: number;
   shouldNotRefetch?: boolean;
+  attemptQuery?: string;
 }> = ({
   url,
   activeTab,

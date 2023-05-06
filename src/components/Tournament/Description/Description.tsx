@@ -136,7 +136,7 @@ const Description: FC<{
       )}
 
       <div className={styles.tasksWrapper}>
-        {!registered && <Overlay />}
+        {!(registered || tournament.status.spec == 2) && <Overlay />}
         <PrimitiveTaskTable
           tasks={tasks}
           linkQuery={`tournament=${tournament.spec}`}

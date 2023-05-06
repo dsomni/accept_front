@@ -41,7 +41,7 @@ const refactorAttempt = (
     display: (
       <a
         className={tableStyles.link}
-        href={`/attempt/${attempt.spec}`}
+        href={`/attempt/${attempt.spec}?${type}=${spec}`}
       >
         {getLocalDate(attempt.date)}
       </a>
