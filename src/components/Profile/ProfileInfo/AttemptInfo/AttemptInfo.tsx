@@ -63,6 +63,7 @@ const AttemptInfo: FC<IAttemptInfo> = ({
           label: locale.total,
           amount: total,
         }}
+        hideLabels
       />
       <BarPiePlot
         title={locale.profile.info.attempt.verdicts}
